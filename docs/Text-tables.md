@@ -79,3 +79,9 @@ ID  | Internal Name | Description
 13  | GNOMISH       | Understood *only* by the Gnome race.
 14  | TROLL         | Understood *only* by the Troll race.
 33  | GUTTERSPEAK   | Understood *only* by the Undead race.
+
+TBC Additions
+35  | DRAENEI       | Understood ONLY by the Draenai Race.
+36  | ZOMBIE        | (not currently used?)
+37  | GNOMISH BINARY| Binary language used by Alliance when drinking Binary Brew
+38  | GOBLIN BINARY | Binary language used by Horde when drinking Binary Brew

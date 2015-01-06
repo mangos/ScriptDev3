@@ -100,6 +100,13 @@ file(GLOB sources_kalimdor scripts/kalimdor/*.cpp scripts/kalimdor/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_kalimdor})
   source_group("Kalimdor Scripts" FILES ${sources_kalimdor})
 
+# --- NOT FOR ZERO ---  
+#Outlands Scripts
+file(GLOB sources_outlands scripts/outland/*.cpp scripts/outland/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_outlands})
+  source_group("Outlands Scripts" FILES ${sources_outlands})
+# --- END IF
+
 #Instance: Blackrock Depths Scripts
 file(GLOB sources_instance_ek_brd scripts/eastern_kingdoms/blackrock_mountain/blackrock_depths/*.cpp scripts/eastern_kingdoms/blackrock_mountain/blackrock_depths/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ek_brd})
@@ -146,9 +153,40 @@ file(GLOB sources_instance_ek_st scripts/eastern_kingdoms/sunken_temple/*.cpp sc
   source_group("Eastern Kingdoms Scripts\\Instances\\Sunken Temple" FILES ${sources_instance_ek_st})
 
 #Instance: Stratholme Scripts
+# --- ONLY FOR ZERO ---  
+
 file(GLOB sources_instance_ek_files scripts/eastern_kingdoms/stratholme/*.cpp scripts/eastern_kingdoms/stratholme/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ek_files})
   source_group("Eastern Kingdoms Scripts\\Instances\\Stratholme" FILES ${sources_instance_ek_files})
+
+# ELSE
+# --- END IF ---  
+
+file(GLOB sources_instance_ek_strat scripts/eastern_kingdoms/stratholme/*.cpp scripts/eastern_kingdoms/stratholme/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ek_strat})
+  source_group("Eastern Kingdoms Scripts\\Instances\\Stratholme" FILES ${sources_instance_ek_strat})
+
+#Instance: Magisters Terrace Scripts
+file(GLOB sources_instance_ek_mt scripts/eastern_kingdoms/magisters_terrace/*.cpp scripts/eastern_kingdoms/magisters_terrace/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ek_mt})
+  source_group("Eastern Kingdoms Scripts\\Instances\\Magisters Terrace" FILES ${sources_instance_ek_mt})
+  
+#Raid: Karazhan Scripts
+file(GLOB sources_raid_ek_kara scripts/eastern_kingdoms/karazhan/*.cpp scripts/eastern_kingdoms/karazhan/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ek_kara})
+  source_group("Eastern Kingdoms Scripts\\Raids\\Karazhan" FILES ${sources_raid_ek_kara})
+  
+#Raid: Sunwell Plateau Scripts
+file(GLOB sources_raid_ek_sp scripts/eastern_kingdoms/sunwell_plateau/*.cpp scripts/eastern_kingdoms/sunwell_plateau/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ek_sp})
+  source_group("Eastern Kingdoms Scripts\\Raids\\Sunwell Plateau" FILES ${sources_raid_ek_sp})
+  
+#Raid: Zul'Aman Scripts
+file(GLOB sources_raid_ek_za scripts/eastern_kingdoms/zulaman/*.cpp scripts/eastern_kingdoms/zulaman/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ek_za})
+  source_group("Eastern Kingdoms Scripts\\Raids\\Zul'Aman" FILES ${sources_raid_ek_za})
+  
+# --- END IF ---  
 
 #Raid: Molten Core Scripts
 file(GLOB sources_raid_ek_mc scripts/eastern_kingdoms/blackrock_mountain/molten_core/*.cpp scripts/eastern_kingdoms/blackrock_mountain/molten_core/*.h)
@@ -200,11 +238,30 @@ file(GLOB sources_instance_k_wc scripts/kalimdor/wailing_caverns/*.cpp scripts/k
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_wc})
   source_group("Kalimdor Scripts\\Instances\\Wailing Caverns" FILES ${sources_instance_k_wc})
 
+# --- NOT FOR ZERO ---  
+#Instance: Caverns of Time - Black Morass
+file(GLOB sources_instance_k_cot_bm scripts/kalimdor/caverns_of_time/dark_portal/*.cpp scripts/kalimdor/caverns_of_time/dark_portal/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_cot_bm})
+  source_group("Kalimdor Scripts\\Instances\\Caverns of Time\\Black Morass" FILES ${sources_instance_k_cot_bm})
+
+#Instance: Caverns of Time - Old Hillsbrad
+file(GLOB sources_instance_k_cot_oh scripts/kalimdor/caverns_of_time/old_hillsbrad/*.cpp scripts/kalimdor/caverns_of_time/old_hillsbrad/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_cot_oh})
+  source_group("Kalimdor Scripts\\Instances\\Caverns of Time\\Old Hillsbrad" FILES ${sources_instance_k_cot_oh})
+# --- END IF ---  
+  
 #Instance: Zul Farrak Scripts
 file(GLOB sources_instance_k_zf scripts/kalimdor/zulfarrak/*.cpp scripts/kalimdor/zulfarrak/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_zf})
   source_group("Kalimdor Scripts\\Instances\\Zul Farrak" FILES ${sources_instance_k_zf})
 
+# --- NOT FOR ZERO ---  
+#Raid: Caverns of Time - Mount Hyjal
+file(GLOB sources_instance_k_cot_mh scripts/kalimdor/caverns_of_time/hyjal/*.cpp scripts/kalimdor/caverns_of_time/hyjal/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_cot_mh})
+  source_group("Kalimdor Scripts\\Raids\\Caverns of Time\\Mount Hyjal" FILES ${sources_instance_k_cot_mh})
+# --- END IF ---  
+  
 #Raid: Onyxias Lair Scripts
 file(GLOB sources_raid_k_ony scripts/kalimdor/onyxias_lair/*.cpp scripts/kalimdor/onyxias_lair/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_k_ony})
@@ -219,6 +276,100 @@ file(GLOB sources_raid_k_raq scripts/kalimdor/ruins_of_ahnqiraj/*.cpp scripts/ka
 file(GLOB sources_raid_k_taq scripts/kalimdor/temple_of_ahnqiraj/*.cpp scripts/kalimdor/temple_of_ahnqiraj/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_k_taq})
   source_group("Kalimdor Scripts\\Raids\\Temple of AQ" FILES ${sources_raid_k_taq})
+
+# --- NOT FOR ZERO ---  
+
+#Instance: Auchindoun - Auchenai Crypts
+file(GLOB sources_instance_ol_aac scripts/outland/auchindoun/auchenai_crypts/*.cpp scripts/outland/auchindoun/auchenai_crypts/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ol_aac})
+  source_group("Outlands Scripts\\Instances\\Auchindoun\\Auchenai Crypts" FILES ${sources_instance_ol_aac})
+
+#Instance: Auchindoun - Mana Tombs
+file(GLOB sources_instance_ol_amt scripts/outland/auchindoun/mana_tombs/*.cpp scripts/outland/auchindoun/mana_tombs/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ol_amt})
+  source_group("Outlands Scripts\\Instances\\Auchindoun\\Mana Tombs" FILES ${sources_instance_ol_amt})
+  
+#Instance: Auchindoun - Sethekk Halls
+file(GLOB sources_instance_ol_ash scripts/outland/auchindoun/sethekk_halls/*.cpp scripts/outland/auchindoun/sethekk_halls/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ol_ash})
+  source_group("Outlands Scripts\\Instances\\Auchindoun\\Sethekk Halls" FILES ${sources_instance_ol_ash})
+  
+#Instance: Auchindoun - Shadow Labyrinth
+file(GLOB sources_instance_ol_asl scripts/outland/auchindoun/shadow_labyrinth/*.cpp scripts/outland/auchindoun/shadow_labyrinth/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ol_asl})
+  source_group("Outlands Scripts\\Instances\\Auchindoun\\Shadow Labyrinth" FILES ${sources_instance_ol_asl})
+
+#Instance: Coilfang Reservoir - Slave Pens
+file(GLOB sources_instance_ol_csp scripts/outland/coilfang_reservoir/slave_pens/*.cpp scripts/outland/coilfang_reservoir/slave_pens/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ol_csp})
+  source_group("Outlands Scripts\\Instances\\Coilfang Reservoir\\Slave Pens" FILES ${sources_instance_ol_csp})
+  
+#Instance: Coilfang Reservoir - Steam Vaults
+file(GLOB sources_instance_ol_cst scripts/outland/coilfang_reservoir/steam_vault/*.cpp scripts/outland/coilfang_reservoir/steam_vault/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ol_cst})
+  source_group("Outlands Scripts\\Instances\\Coilfang Reservoir\\Steam Vaults" FILES ${sources_instance_ol_cst})
+  
+#Instance: Coilfang Reservoir - Underbog
+file(GLOB sources_instance_ol_cu scripts/outland/coilfang_reservoir/underbog/*.cpp scripts/outland/coilfang_reservoir/underbog/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ol_cu})
+  source_group("Outlands Scripts\\Instances\\Coilfang Reservoir\\Underbog" FILES ${sources_instance_ol_cu})
+  
+#Instance: Hellfire Citadel - Blood Furnace
+file(GLOB sources_raid_ol_hbf scripts/outland/hellfire_citadel/blood_furnace/*.cpp scripts/outland/hellfire_citadel/blood_furnace/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_hbf})
+  source_group("Outlands Scripts\\Instances\\Hellfire Citadel\\Blood Furnace" FILES ${sources_raid_ol_hbf})
+  
+#Instance: Hellfire Citadel - Hellfire Ramparts
+file(GLOB sources_raid_ol_hhr scripts/outland/hellfire_citadel/hellfire_ramparts/*.cpp scripts/outland/hellfire_citadel/hellfire_ramparts/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_hhr})
+  source_group("Outlands Scripts\\Instances\\Hellfire Citadel\\Hellfire Ramparts" FILES ${sources_raid_ol_hhr})
+  
+#Instance: Hellfire Citadel - Shattered Halls
+file(GLOB sources_raid_ol_hsh scripts/outland/hellfire_citadel/shattered_halls/*.cpp scripts/outland/hellfire_citadel/shattered_halls/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_hsh})
+  source_group("Outlands Scripts\\Instances\\Hellfire Citadel\\Shattered Halls" FILES ${sources_raid_ol_hsh})  
+
+#Instance: Tempest Keep - Arcatraz
+file(GLOB sources_raid_ol_ta scripts/outland/tempest_keep/arcatraz/*.cpp scripts/outland/tempest_keep/arcatraz/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_ta})
+  source_group("Outlands Scripts\\Instances\\Tempest Keep\\Arcatraz" FILES ${sources_raid_ol_ta})
+  
+#Instance: Tempest Keep - Botanica
+file(GLOB sources_raid_ol_tb scripts/outland/tempest_keep/botanica/*.cpp scripts/outland/tempest_keep/botanica/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_tb})
+  source_group("Outlands Scripts\\Instances\\Tempest Keep\\Botanica" FILES ${sources_raid_ol_tb})
+  
+#Instance: Tempest Keep - The Mechanar
+file(GLOB sources_raid_ol_ttm scripts/outland/tempest_keep/the_mechanar/*.cpp scripts/outland/tempest_keep/the_mechanar/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_ttm})
+  source_group("Outlands Scripts\\Instances\\Tempest Keep\\The Mechanar" FILES ${sources_raid_ol_ttm})
+  
+#Raid: Hellfire Citadel - Magtheridons Lair
+file(GLOB sources_raid_ol_hml scripts/outland/hellfire_citadel/magtheridons_lair/*.cpp scripts/outland/hellfire_citadel/magtheridons_lair/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_hml})
+  source_group("Outlands Scripts\\Raids\\Hellfire Citadel\\Magtheridons Lair" FILES ${sources_raid_ol_hml})
+  
+#Raid: Tempest Keep - The Eye
+file(GLOB sources_raid_ol_tte scripts/outland/tempest_keep/the_eye/*.cpp scripts/outland/tempest_keep/the_eye/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_tte})
+  source_group("Outlands Scripts\\Raids\\Tempest Keep\\The Eye" FILES ${sources_raid_ol_tte})
+  
+#Raid: Coilfang Reservoir - Serpentshrine Cavern
+file(GLOB sources_raid_ol_csc scripts/outland/coilfang_reservoir/serpent_shrine/*.cpp scripts/outland/coilfang_reservoir/serpent_shrine/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_csc})
+  source_group("Outlands Scripts\\Raids\\Coilfang Reservoir\\Serpentshrine Cavern" FILES ${sources_raid_ol_csc})
+  
+#Raid: Black Temple
+file(GLOB sources_raid_ol_bt scripts/outland/black_temple/*.cpp scripts/outland/black_temple/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_bt})
+  source_group("Outlands Scripts\\Raids\\Black Temple" FILES ${sources_raid_ol_bt})
+  
+#Raid: Gruul's Lair
+file(GLOB sources_raid_ol_gl scripts/outland/gruuls_lair/*.cpp scripts/outland/gruuls_lair/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ol_gl})
+  source_group("Outlands Scripts\\Raids\\Gruul's Lair" FILES ${sources_raid_ol_gl})
+  
+# --- END IF ---  
 
 add_library(mangosscript STATIC
   ${mangosscript_PCH_CPP}

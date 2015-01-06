@@ -289,8 +289,11 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Check for school if specified
-        // if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
-        //    continue;
+# --- NOT FOR ZERO ---  
+        if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
+        { continue; }
+# --- END IF ---  
+		
 
         // Check for spell mechanic if specified
         if (iMechanic >= 0 && pTempSpell->Mechanic != (uint32)iMechanic)
@@ -611,7 +614,20 @@ void ScriptedAI::SetEquipmentSlots(bool bLoadDefault, int32 iMainHand, int32 iOf
 // It is assumed the information is found elswehere and can be handled by mangos. So far no luck finding such information/way to extract it.
 enum
 {
+
+# --- NOT FOR ZERO ---  
+
+    NPC_BROODLORD               = 12017,
+    NPC_VOID_REAVER             = 19516,
+    NPC_JAN_ALAI                = 23578,
+    NPC_SARTHARION              = 28860,
+    NPC_TALON_KING_IKISS        = 18473,
+    NPC_KARGATH_BLADEFIST       = 16808,
+
+# --- ELSE ---  
     NPC_BROODLORD               = 12017
+# --- END IF ---  
+
 };
 
 bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
@@ -643,6 +659,36 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
                 return false;
             }
             break;
+
+# --- NOT FOR ZERO ---  
+
+        case NPC_VOID_REAVER:                               // void reaver (calculate from center of room)
+            if (m_creature->GetDistance2d(432.59f, 371.93f) < 105.0f)
+            { return false; }
+            break;
+        case NPC_JAN_ALAI:                                  // jan'alai (calculate by Z)
+            if (fZ > 12.0f)
+            { return false; }
+            break;
+        case NPC_SARTHARION:                                // sartharion (calculate box)
+            if (fX > 3218.86f && fX < 3275.69f && fY < 572.40f && fY > 484.68f)
+            { return false; }
+            break;
+        case NPC_TALON_KING_IKISS:
+        {
+            float fX, fY, fZ;
+            m_creature->GetRespawnCoord(fX, fY, fZ);
+            if (m_creature->GetDistance2d(fX, fY) < 70.0f)
+            { return false; }
+            break;
+        }
+        case NPC_KARGATH_BLADEFIST:
+            if (fX < 255.0f && fX > 205.0f)
+            { return false; }
+            break;
+
+# --- END IF ---  
+			
         default:
             script_error_log("EnterEvadeIfOutOfCombatArea used for creature entry %u, but does not have any definition.", m_creature->GetEntry());
             return false;
