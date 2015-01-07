@@ -41,7 +41,16 @@ enum
     NPC_WRYNN                   = 1747,
     NPC_BOLVAR                  = 1748,
     NPC_PRESTOR                 = 1749,
+# --- ZERO ONLY ---
     NPC_WINDSOR                 = 12580
+# --- ELSE ---
+    NPC_WINDSOR                 = 12580,
+# --- END IF ---
+
+    // Quest 11538
+    NPC_EMISSARY_OF_HATE        = 25003,
+    NPC_IRESPEAKER              = 24999,
+    NPC_UNLEASHED_HELLION       = 25002,
 };
 
 enum SpawnIndexes

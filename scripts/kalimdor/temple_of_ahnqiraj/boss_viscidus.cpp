@@ -53,7 +53,9 @@ enum
     SPELL_VISCIDUS_EXPLODE      = 25938,
     SPELL_VISCIDUS_SUICIDE      = 26003,                    // cast when boss explodes and is below 5% Hp - should trigger 26002
 
+# --- ZERO ONLY ---  
     SPELL_MEMBRANE_VISCIDUS     = 25994,                    // damage reduction spell
+# --- END IF ---
     // SPELL_VISCIDUS_WEAKNESS   = 25926,                   // aura which procs at damage - should trigger the slow spells
     // SPELL_VISCIDUS_SHRINKS    = 25893,                   // removed from DBC
     // SPELL_VISCIDUS_SHRINKS_2  = 27934,                   // removed from DBC
@@ -83,7 +85,9 @@ struct boss_viscidusAI : public ScriptedAI
         m_uiPoisonShockTimer      = urand(7000, 12000);
         m_uiPoisonBoltVolleyTimer = urand(10000, 15000);
 
+# --- ZERO ONLY ---  
         DoCastSpellIfCan(m_creature, SPELL_MEMBRANE_VISCIDUS);
+# --- END IF ---
     }
 
     void Aggro(Unit* /*pWho*/) override

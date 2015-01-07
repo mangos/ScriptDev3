@@ -98,6 +98,13 @@ static const DialogueEntry aStadiumDialogue[] =
 static const float rookeryEventSpawnPos[3] = {43.7685f, -259.82f, 91.6483f};
 
 instance_blackrock_spire::instance_blackrock_spire(Map* pMap) : ScriptedInstance(pMap), DialogueHelper(aStadiumDialogue),
+
+# --- NOT FOR ZERO ---  
+    m_bUpperDoorOpened(false),
+    m_uiDragonspineDoorTimer(0),
+    m_uiDragonspineGoCount(0),
+# --- END IF ---
+
     m_uiFlamewreathEventTimer(0),
     m_uiFlamewreathWaveCount(0),
     m_uiStadiumEventTimer(0),
@@ -143,6 +150,19 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
             {
                 pGo->SetGoState(GO_STATE_ACTIVE);
             }
+
+# --- NOT FOR ZERO ---  
+            break;
+
+        case GO_BRAZIER_1:
+        case GO_BRAZIER_2:
+        case GO_BRAZIER_3:
+        case GO_BRAZIER_4:
+        case GO_BRAZIER_5:
+        case GO_BRAZIER_6:
+        case GO_DRAGONSPINE:
+# --- END IF ---
+
             break;
 
         case GO_ROOM_1_RUNE:
@@ -483,6 +503,22 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
     }
 }
 
+
+# --- NOT FOR ZERO ---  
+void instance_blackrock_spire::DoOpenUpperDoorIfCan(Player* pPlayer)
+{
+    if (m_bUpperDoorOpened)
+        return;
+
+    if (pPlayer->HasItemCount(ITEM_SEAL_OF_ASCENSION, 1))
+    {
+        m_uiDragonspineDoorTimer = 100;
+        m_uiDragonspineGoCount = 0;
+        m_bUpperDoorOpened = true;
+    }
+}
+# --- END IF ---  
+
 void instance_blackrock_spire::DoProcessEmberseerEvent()
 {
     if (GetData(TYPE_EMBERSEER) == DONE || GetData(TYPE_EMBERSEER) == IN_PROGRESS)
@@ -735,6 +771,42 @@ void instance_blackrock_spire::Update(uint32 uiDiff)
             m_uiFlamewreathEventTimer -= uiDiff;
         }
     }
+
+# --- NOT FOR ZERO ---  
+    // unlock dragon spine door
+    if (m_uiDragonspineDoorTimer)
+    {
+        if (m_uiDragonspineDoorTimer <= uiDiff)
+        {
+            switch (m_uiDragonspineGoCount)
+            {
+                case 0:
+                    DoUseDoorOrButton(GO_BRAZIER_1);
+                    DoUseDoorOrButton(GO_BRAZIER_2);
+                    break;
+                case 1:
+                    DoUseDoorOrButton(GO_BRAZIER_3);
+                    DoUseDoorOrButton(GO_BRAZIER_4);
+                    break;
+                case 2:
+                    DoUseDoorOrButton(GO_BRAZIER_5);
+                    DoUseDoorOrButton(GO_BRAZIER_6);
+                    break;
+                case 3:
+                    DoUseDoorOrButton(GO_DRAGONSPINE);
+                    break;
+            }
+            ++m_uiDragonspineGoCount;
+
+            if (m_uiDragonspineGoCount >= 4)
+                m_uiDragonspineDoorTimer = 0;
+            else
+                m_uiDragonspineDoorTimer = 1000;
+        }
+        else
+            m_uiDragonspineDoorTimer -= uiDiff;
+    }
+# --- END IF ---
 }
 
 void instance_blackrock_spire::StartflamewreathEventIfCan()
@@ -773,6 +845,10 @@ bool AreaTrigger_at_blackrock_spire(Player* pPlayer, AreaTriggerEntry const* pAt
         case AREATRIGGER_ENTER_UBRS:
             if (instance_blackrock_spire* pInstance = (instance_blackrock_spire*) pPlayer->GetInstanceData())
             {
+
+# --- NOT FOR ZERO ---  
+                pInstance->DoOpenUpperDoorIfCan(pPlayer);
+# --- END IF ---
                 pInstance->DoSortRoomEventMobs();
             }
             break;

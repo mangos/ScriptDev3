@@ -427,7 +427,11 @@ struct npc_disciple_of_naralexAI : public npc_escortAI
                                 {
                                     // ToDo: Make Naralex fly
                                     // sort of a hack, compare to boss_onyxia
+# --- ZERO ONLY ---  
                                     pNaralex->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
+# --- ELSE ---
+                                    pNaralex->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+# --- END IF ---
 
                                     // Set to flying
                                     pNaralex->SetLevitate(true);
@@ -529,7 +533,11 @@ bool GossipSelect_npc_disciple_of_naralex(Player* pPlayer, Creature* pCreature, 
         if (npc_disciple_of_naralexAI* pEscortAI = dynamic_cast<npc_disciple_of_naralexAI*>(pCreature->AI()))
         {
             pEscortAI->Start(false, pPlayer);               // Note: after 4.0.3 set him run = true
+# --- ZERO ONLY ---  
             pCreature->SetFactionTemporary(FACTION_ESCORT_N_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
+# --- ELSE ---
+            pCreature->SetFactionTemporary(FACTION_ESCORT_N_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
+# --- END IF ---
         }
         pPlayer->CLOSE_GOSSIP_MENU();
     }
