@@ -28,7 +28,7 @@
  * ScriptData
  * SDName:      Npc_Professions
  * SD%Complete: 80
- * SDComment:   Provides learning, unlearning and relearning options for profession specializations.
+ * SDComment: Provides learn/unlearn/relearn-options for professions. Not supported: Unlearn engineering, re-learn engineering, re-learn leatherworking.
  * SDCategory:  NPCs
  * EndScriptData
  */
@@ -237,7 +237,15 @@ bool EquippedOk(Player* pPlayer, uint32 spellId)
 
     for (int i = 0; i < 3; ++i)
     {
+# --- TWO ONLY ---
+        SpellEffectEntry const* pSpellEffect = spell->GetSpellEffect(SpellEffectIndex(i));
+        if (!pSpellEffect)
+            continue;
+
+        uint32 reqSpell = pSpellEffect->EffectTriggerSpell;
+# --- ELSE ---
         uint32 reqSpell = spell->EffectTriggerSpell[i];
+# --- END IF ---
         if (!reqSpell)
         {
             continue;

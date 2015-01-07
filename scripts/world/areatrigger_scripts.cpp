@@ -28,7 +28,7 @@
  * ScriptData
  * SDName:      Areatrigger_Scripts
  * SD%Complete: 100
- * SDComment:   Quest support: 4291, 6681, 10589/10604
+ * SDComment:   Quest support: 4291, 6681, 7632, 10589/10604
  * SDCategory:  Areatrigger
  * EndScriptData
  */
