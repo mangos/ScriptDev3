@@ -41,6 +41,11 @@
 /**
  * ContentData
  * npc_chicken_cluck          100%    support for quest 3861 (Cluck!)
+# --- NOT FOR ZERO ---
+ * npc_air_force_bots          80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
+ * npc_dancing_flames         100%    midsummer event NPC
+ * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD2
+# -- END IF ---
  * npc_garments_of_quests     100%    NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
  * npc_injured_patient         80%    patients for triage-quests (6622 and 6624)
  * npc_doctor                 100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
@@ -48,6 +53,211 @@
  * npc_redemption_target      100%    Used for the paladin quests: 1779,1781,9600,9685
  * EndContentData
  */
+ 
+# --- NOT FOR ZERO ---
+/*########
+# npc_air_force_bots
+#########*/
+
+enum SpawnType
+{
+    SPAWNTYPE_TRIPWIRE_ROOFTOP,                             // no warning, summon creature at smaller range
+    SPAWNTYPE_ALARMBOT                                      // cast guards mark and summon npc - if player shows up with that buff duration < 5 seconds attack
+};
+
+struct SpawnAssociation
+{
+    uint32 m_uiThisCreatureEntry;
+    uint32 m_uiSpawnedCreatureEntry;
+    SpawnType m_SpawnType;
+};
+
+enum
+{
+    SPELL_GUARDS_MARK               = 38067,
+    AURA_DURATION_TIME_LEFT         = 5000
+};
+
+const float RANGE_TRIPWIRE          = 15.0f;
+const float RANGE_GUARDS_MARK       = 50.0f;
+
+SpawnAssociation m_aSpawnAssociations[] =
+{
+    {2614,  15241, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Alliance)
+    {2615,  15242, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Horde)
+    {21974, 21976, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Area 52)
+    {21993, 15242, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Horde - Bat Rider)
+    {21996, 15241, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Alliance - Gryphon)
+    {21997, 21976, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Goblin - Area 52 - Zeppelin)
+    {21999, 15241, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Alliance)
+    {22001, 15242, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Horde)
+    {22002, 15242, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Ground (Horde)
+    {22003, 15241, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Ground (Alliance)
+    {22063, 21976, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Goblin - Area 52)
+    {22065, 22064, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Ethereal - Stormspire)
+    {22066, 22067, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Scryer - Dragonhawk)
+    {22068, 22064, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Ethereal - Stormspire)
+    {22069, 22064, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Stormspire)
+    {22070, 22067, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Scryer)
+    {22071, 22067, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Scryer)
+    {22078, 22077, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Aldor)
+    {22079, 22077, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Aldor - Gryphon)
+    {22080, 22077, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Aldor)
+    {22086, 22085, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Sporeggar)
+    {22087, 22085, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Sporeggar - Spore Bat)
+    {22088, 22085, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Sporeggar)
+    {22090, 22089, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Toshley's Station - Flying Machine)
+    {22124, 22122, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Cenarion)
+    {22125, 22122, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Cenarion - Stormcrow)
+    {22126, 22122, SPAWNTYPE_ALARMBOT}                      // Air Force Trip Wire - Rooftop (Cenarion Expedition)
+};
+
+struct npc_air_force_botsAI : public ScriptedAI
+{
+    npc_air_force_botsAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pSpawnAssoc = NULL;
+
+        // find the correct spawnhandling
+        for (uint8 i = 0; i < countof(m_aSpawnAssociations); ++i)
+        {
+            if (m_aSpawnAssociations[i].m_uiThisCreatureEntry == pCreature->GetEntry())
+            {
+                m_pSpawnAssoc = &m_aSpawnAssociations[i];
+                break;
+            }
+        }
+
+        if (!m_pSpawnAssoc)
+        { error_db_log("SD2: Creature template entry %u has ScriptName npc_air_force_bots, but it's not handled by that script", pCreature->GetEntry()); }
+        else
+        {
+            CreatureInfo const* spawnedTemplate = GetCreatureTemplateStore(m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+
+            if (!spawnedTemplate)
+            {
+                error_db_log("SD2: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+                m_pSpawnAssoc = NULL;
+                return;
+            }
+        }
+    }
+
+    SpawnAssociation* m_pSpawnAssoc;
+    ObjectGuid m_spawnedGuid;
+
+    void Reset() override { }
+
+    Creature* SummonGuard()
+    {
+        Creature* pSummoned = m_creature->SummonCreature(m_pSpawnAssoc->m_uiSpawnedCreatureEntry, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 300000);
+
+        if (pSummoned)
+        { m_spawnedGuid = pSummoned->GetObjectGuid(); }
+        else
+        {
+            error_db_log("SD2: npc_air_force_bots: wasn't able to spawn creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+            m_pSpawnAssoc = NULL;
+        }
+
+        return pSummoned;
+    }
+
+    Creature* GetSummonedGuard()
+    {
+        Creature* pCreature = m_creature->GetMap()->GetCreature(m_spawnedGuid);
+
+        if (pCreature && pCreature->IsAlive())
+        { return pCreature; }
+
+        return NULL;
+    }
+
+    void MoveInLineOfSight(Unit* pWho) override
+    {
+        if (!m_pSpawnAssoc)
+        { return; }
+
+        if (pWho->IsTargetableForAttack() && m_creature->IsHostileTo(pWho))
+        {
+            Player* pPlayerTarget = pWho->GetTypeId() == TYPEID_PLAYER ? (Player*)pWho : NULL;
+
+            // airforce guards only spawn for players
+            if (!pPlayerTarget)
+            { return; }
+
+            Creature* pLastSpawnedGuard = m_spawnedGuid ? GetSummonedGuard() : NULL;
+
+            // prevent calling GetCreature at next MoveInLineOfSight call - speedup
+            if (!pLastSpawnedGuard)
+            { m_spawnedGuid.Clear(); }
+
+            switch (m_pSpawnAssoc->m_SpawnType)
+            {
+                case SPAWNTYPE_ALARMBOT:
+                {
+                    if (!pWho->IsWithinDistInMap(m_creature, RANGE_GUARDS_MARK))
+                    { return; }
+
+                    Aura* pMarkAura = pWho->GetAura(SPELL_GUARDS_MARK, EFFECT_INDEX_0);
+                    if (pMarkAura)
+                    {
+                        // the target wasn't able to move out of our range within 25 seconds
+                        if (!pLastSpawnedGuard)
+                        {
+                            pLastSpawnedGuard = SummonGuard();
+
+                            if (!pLastSpawnedGuard)
+                            { return; }
+                        }
+
+                        if (pMarkAura->GetAuraDuration() < AURA_DURATION_TIME_LEFT)
+                        {
+                            if (!pLastSpawnedGuard->getVictim())
+                            { pLastSpawnedGuard->AI()->AttackStart(pWho); }
+                        }
+                    }
+                    else
+                    {
+                        if (!pLastSpawnedGuard)
+                        { pLastSpawnedGuard = SummonGuard(); }
+
+                        if (!pLastSpawnedGuard)
+                        { return; }
+
+                        pLastSpawnedGuard->CastSpell(pWho, SPELL_GUARDS_MARK, true);
+                    }
+                    break;
+                }
+                case SPAWNTYPE_TRIPWIRE_ROOFTOP:
+                {
+                    if (!pWho->IsWithinDistInMap(m_creature, RANGE_TRIPWIRE))
+                    { return; }
+
+                    if (!pLastSpawnedGuard)
+                    { pLastSpawnedGuard = SummonGuard(); }
+
+                    if (!pLastSpawnedGuard)
+                    { return; }
+
+                    // ROOFTOP only triggers if the player is on the ground
+                    if (!pPlayerTarget->IsFlying())
+                    {
+                        if (!pLastSpawnedGuard->getVictim())
+                        { pLastSpawnedGuard->AI()->AttackStart(pWho); }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+};
+
+CreatureAI* GetAI_npc_air_force_bots(Creature* pCreature)
+{
+    return new npc_air_force_botsAI(pCreature);
+}
+# --- END IF ---
 
 /*########
 # npc_chicken_cluck
@@ -164,6 +374,52 @@ bool QuestRewarded_npc_chicken_cluck(Player* /*pPlayer*/, Creature* pCreature, c
 
     return true;
 }
+
+# --- NOT FOR ZERO ---
+/*######
+## npc_dancing_flames
+######*/
+
+enum
+{
+    SPELL_FIERY_SEDUCTION = 47057
+};
+
+struct npc_dancing_flamesAI : public ScriptedAI
+{
+    npc_dancing_flamesAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+
+    void Reset() override {}
+
+    void ReceiveEmote(Player* pPlayer, uint32 uiEmote) override
+    {
+        m_creature->SetFacingToObject(pPlayer);
+
+        if (pPlayer->HasAura(SPELL_FIERY_SEDUCTION))
+        { pPlayer->RemoveAurasDueToSpell(SPELL_FIERY_SEDUCTION); }
+
+        if (pPlayer->IsMounted())
+        {
+            pPlayer->Unmount();                             // doesnt remove mount aura
+            pPlayer->RemoveSpellsCausingAura(SPELL_AURA_MOUNTED);
+        }
+
+        switch (uiEmote)
+        {
+            case TEXTEMOTE_DANCE: DoCastSpellIfCan(pPlayer, SPELL_FIERY_SEDUCTION); break;// dance -> cast SPELL_FIERY_SEDUCTION
+            case TEXTEMOTE_WAVE:  m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);      break;// wave -> wave
+            case TEXTEMOTE_JOKE:  m_creature->HandleEmote(EMOTE_STATE_LAUGH);       break;// silly -> laugh(with sound)
+            case TEXTEMOTE_BOW:   m_creature->HandleEmote(EMOTE_ONESHOT_BOW);       break;// bow -> bow
+            case TEXTEMOTE_KISS:  m_creature->HandleEmote(TEXTEMOTE_CURTSEY);       break;// kiss -> curtsey
+        }
+    }
+};
+
+CreatureAI* GetAI_npc_dancing_flames(Creature* pCreature)
+{
+    return new npc_dancing_flamesAI(pCreature);
+}
+# --- END IF ---
 
 /*######
 ## Triage quest
@@ -877,9 +1133,11 @@ bool GossipHello_npc_innkeeper(Player* pPlayer, Creature* pCreature)
     // Should only apply to innkeeper close to start areas.
     if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetAreaId()))
     {
+# --- NOT FOR ZERO ---
         // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
-        //if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
+# --- END IF ---
+        { pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1); }
     }
 
     pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
@@ -1027,12 +1285,26 @@ void AddSC_npcs_special()
 {
     Script* pNewScript;
 
+# --- NOT FOR ZERO ---
+    pNewScript = new Script;
+    pNewScript->Name = "npc_air_force_bots";
+    pNewScript->GetAI = &GetAI_npc_air_force_bots;
+    pNewScript->RegisterSelf();
+# --- END IF ---
+
     pNewScript = new Script;
     pNewScript->Name = "npc_chicken_cluck";
     pNewScript->GetAI = &GetAI_npc_chicken_cluck;
     pNewScript->pQuestAcceptNPC =   &QuestAccept_npc_chicken_cluck;
     pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_chicken_cluck;
     pNewScript->RegisterSelf();
+
+# --- NOT FOR ZERO ---
+    pNewScript = new Script;
+    pNewScript->Name = "npc_dancing_flames";
+    pNewScript->GetAI = &GetAI_npc_dancing_flames;
+    pNewScript->RegisterSelf();
+# --- END IF ---
 
     pNewScript = new Script;
     pNewScript->Name = "npc_injured_patient";
