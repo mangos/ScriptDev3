@@ -117,7 +117,7 @@ bool ItemUse_item_gor_dreks_ointment(Player* pPlayer, Item* pItem, const SpellCa
 
     return false;
 }
-## --- END IF ---
+# --- END IF ---
 # --- TWO ONLY ---
 /*#####
 # item_petrov_cluster_bombs

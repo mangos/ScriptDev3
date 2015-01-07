@@ -34,6 +34,7 @@
 #include "system/ScriptLoader.h"
 #include "system/system.h"
 #include "ScriptDevMgr.h"
+#include "Spell.h"
 
 typedef std::vector<Script*> SDScriptVec;
 int num_sc_scripts;
@@ -496,6 +497,17 @@ bool sd3::AreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
     return pTempScript->pAreaTrigger(pPlayer, atEntry);
 }
 
+# --- TWO ONLY ---
+bool SD2::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId)
+{
+    Script* pTempScript = m_scripts[pClickedCreature->GetScriptId()];
+    
+    if (!pTempScript || !pTempScript->pNpcSpellClick)
+        return false;
+    
+    return pTempScript->pNpcSpellClick(pPlayer, pClickedCreature, uiSpellId);
+}
+# --- END IF ---
 bool sd3::ProcessEvent(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
 {
     Script* pTempScript = m_scripts[GetEventIdScriptId(uiEventId)];

@@ -27,7 +27,7 @@
 /**
  * ScriptData
  * SDName:      Npcs_Special
- * SD%Complete: 0
+ * SD%Complete: 100
  * SDComment:   To be used for special NPCs that are located globally.
  * SDCategory:  NPCs
  * EndScriptData
@@ -35,6 +35,7 @@
 
 #include "precompiled.h"
 #include "escort_ai.h"
+#include "pet_ai.h"
 #include "ObjectMgr.h"
 #include "GameEventMgr.h"
 
@@ -45,11 +46,14 @@
  * npc_air_force_bots          80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
  * npc_dancing_flames         100%    midsummer event NPC
  * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD2
-# -- END IF ---
+# --- END IF ---
  * npc_garments_of_quests     100%    NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
  * npc_injured_patient         80%    patients for triage-quests (6622 and 6624)
  * npc_doctor                 100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
  * npc_innkeeper               25%    ScriptName not assigned. Innkeepers in general.
+# --- TWO ONLY ---
+ * npc_spring_rabbit            1%    Used for pet "Spring Rabbit" of Noblegarden
+# --- END IF ---
  * npc_redemption_target      100%    Used for the paladin quests: 1779,1781,9600,9685
  * EndContentData
  */

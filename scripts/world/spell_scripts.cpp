@@ -89,12 +89,44 @@ enum
     NPC_ANGRY_MURLOC            = 17102,
     ITEM_RED_SNAPPER            = 23614,
     // SPELL_SUMMON_TEST           = 49214                  // ! Just wrong spell name? It summon correct creature (17102)but does not appear to be used.
+ # --- TWO ONLY ---
+    // quest 11472
+    SPELL_ANUNIAQS_NET          = 21014,
+    GO_TASTY_REEF_FISH          = 186949,
+    NPC_REEF_SHARK              = 24637,
+    ITEM_TASTY_REEF_FISH        = 34127,
+ # --- END IF ---
 };
 
 bool EffectDummyGameObj_spell_dummy_go(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, GameObject* pGOTarget, ObjectGuid /*originalCasterGuid*/)
 {
     switch (uiSpellId)
     {
+# --- TWO ONLY ---
+        case SPELL_ANUNIAQS_NET:
+        {
+            if (uiEffIndex == EFFECT_INDEX_0)
+            {
+                if (pGOTarget->GetRespawnTime() != 0 || pGOTarget->GetEntry() != GO_TASTY_REEF_FISH || pCaster->GetTypeId() != TYPEID_PLAYER)
+                    return true;
+
+                if (urand(0, 3))
+                {
+                    if (Item* pItem = ((Player*)pCaster)->StoreNewItemInInventorySlot(ITEM_TASTY_REEF_FISH, 1))
+                        ((Player*)pCaster)->SendNewItem(pItem, 1, true, false);
+                }
+                else
+                {
+                    if (Creature* pShark = pCaster->SummonCreature(NPC_REEF_SHARK, pGOTarget->GetPositionX(), pGOTarget->GetPositionY(), pGOTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 30000))
+                        pShark->AI()->AttackStart(pCaster);
+                }
+
+                pGOTarget->SetLootState(GO_JUST_DEACTIVATED);
+                return true;
+            }
+            return true;
+        }
+# --- END IF ---
         case SPELL_CAST_FISHING_NET:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -158,10 +190,21 @@ enum
     NPC_CURED_DEER                      = 12299,
     NPC_CURED_GAZELLE                   = 12297,
 
+# --- TWO ONLY ---
+    // quest 12906/13422
+    SPELL_DISCIPLINING_ROD              = 56033,
+    SAY_RAND_WORK1                      = -1000555,
+    SAY_RAND_WORK2                      = -1000556,
+    SAY_RAND_WORK3                      = -1000557,
+    SAY_RAND_ATTACK1                    = -1000558,
+    SAY_RAND_ATTACK2                    = -1000559,
+    SAY_RAND_ATTACK3                    = -1000560,
+
     // target morbent fel
     SPELL_SACRED_CLEANSING              = 8913,
     NPC_MORBENT                         = 1200,
     NPC_WEAKENED_MORBENT                = 24782,
+# --- END IF ---
 
 # --- NOT FOR ZERO ---
     // quest 11515
@@ -174,6 +217,74 @@ enum
     NPC_OWLKIN                          = 16518,
     NPC_OWLKIN_INOC                     = 16534,
 
+ # --- TWO ONLY ---
+    // target for quest 12166)
+    SPELL_LIQUID_FIRE                   = 46770,
+    SPELL_LIQUID_FIRE_AURA              = 47972,
+
+    NPC_ELK                             = 26616,
+    NPC_GRIZZLY                         = 26643,
+
+    NPC_ELK_BUNNY                       = 27111,
+    NPC_GRIZZLY_BUNNY                   = 27112,
+
+    // for quest 12516
+    SPELL_MODIFIED_MOJO                 = 50706,
+
+    NPC_PROPHET_OF_SSERATUS             = 28068,
+    NPC_WEAK_PROPHET_OF_SSERATUS        = 28151,
+
+    // for quest 12459
+    SPELL_SEEDS_OF_NATURES_WRATH        = 49587,
+
+    NPC_REANIMATED_FROSTWYRM            = 26841,
+    NPC_TURGID                          = 27808,
+    NPC_DEATHGAZE                       = 27122,
+
+    NPC_WEAK_REANIMATED_FROSTWYRM       = 27821,
+    NPC_WEAK_TURGID                     = 27809,
+    NPC_WEAK_DEATHGAZE                  = 27807,
+
+    // quest 11982
+    SPELL_THROW_BOULDER                 = 47005,
+    SPELL_BOULBER_IMPACT                = 47007,
+    SPELL_BOULDER_TOSS_CREDIT           = 47009,
+
+    NPC_IRON_RUNESHAPER                 = 26270,
+    NPC_RUNE_REAVER                     = 26268,
+
+    // for quest 11730
+    SPELL_ULTRASONIC_SCREWDRIVER        = 46023,
+    SPELL_REPROGRAM_KILL_CREDIT         = 46027,
+
+    NPC_COLLECT_A_TRON                  = 25793,
+    SPELL_SUMMON_COLLECT_A_TRON         = 46034,
+
+    NPC_DEFENDO_TANK                    = 25758,
+    SPELL_SUMMON_DEFENDO_TANK           = 46058,
+
+    NPC_SCAVENGE_A8                     = 25752,
+    SPELL_SUMMON_SCAVENGE_A8            = 46063,
+
+    NPC_SCAVENGE_B6                     = 25792,
+    SPELL_SUMMON_SCAVENGE_B6            = 46066,
+
+    NPC_SENTRY_BOT                      = 25753,
+    SPELL_SUMMON_SENTRY_BOT             = 46068,
+
+    // target woodlands walker
+    SPELL_STRENGTH_ANCIENTS             = 47575,
+    SPELL_CREATE_BARK_WALKERS           = 47550,
+    FACTION_HOSTILE                     = 16,
+
+    EMOTE_AGGRO                         = -1000551,
+    EMOTE_CREATE                        = -1000552,
+
+    SAY_SPECIMEN                        = -1000581,
+    NPC_NEXUS_DRAKE_HATCHLING           = 26127,
+    SPELL_RAELORASZ_FIREBALL            = 46704,
+ # --- END IF ---
+
     // Quest "Disrupt the Greengill Coast" (11541)
     SPELL_ORB_OF_MURLOC_CONTROL         = 45109,
     SPELL_GREENGILL_SLAVE_FREED         = 45110,
@@ -182,23 +293,86 @@ enum
     NPC_DARKSPINE_MYRMIDON              = 25060,
     NPC_DARKSPINE_SIREN                 = 25073,
 
+ # --- TWO ONLY ---
+    // quest 14107
+    SPELL_BLESSING_OF_PEACE             = 66719,
+    NPC_FALLEN_HERO_SPIRIT              = 32149,
+    NPC_FALLEN_HERO_SPIRIT_PROXY        = 35055,
+    SAY_BLESS_1                         = -1000594,
+    SAY_BLESS_2                         = -1000595,
+    SAY_BLESS_3                         = -1000596,
+    SAY_BLESS_4                         = -1000597,
+    SAY_BLESS_5                         = -1000598,
+ # --- END IF ---
+
     // quest "The Big Bone Worm" 10930
     SPELL_FUMPING                       = 39246,
     SPELL_SUMMON_HAISHULUD              = 39248,
     NPC_SAND_GNOME                      = 22483,
     NPC_MATURE_BONE_SIFTER              = 22482,
 
+ # --- TWO ONLY ---
+    // quest 12813, by item 40587
+    SPELL_DARKMENDER_TINCTURE           = 52741,
+    SPELL_SUMMON_CORRUPTED_SCARLET      = 54415,
+    NPC_CORPSES_RISE_CREDIT_BUNNY       = 29398,
+
+    // quest 12659, item 38731
+    SPELL_AHUNAES_KNIFE                 = 52090,
+    NPC_SCALPS_KILL_CREDIT_BUNNY        = 28622,
+
+    // quest 13549
+    SPELL_TAILS_UP_GENDER_MASTER        = 62110,
+    SPELL_TAILS_UP_AURA                 = 62109,
+    SPELL_FORCE_LEOPARD_SUMMON          = 62117,
+    SPELL_FORCE_BEAR_SUMMON             = 62118,
+    NPC_FROST_LEOPARD                   = 29327,
+    NPC_ICEPAW_BEAR                     = 29319,
+    NPC_LEOPARD_KILL_CREDIT             = 33005,
+    NPC_BEAR_KILL_CREDIT                = 33006,
+    SAY_ITS_FEMALE                      = -1000642,
+    SAY_ITS_MALE                        = -1000643,
+ # --- END IF ---
+
     // quest 9849, item 24501
     SPELL_THROW_GORDAWG_BOULDER         = 32001,
     NPC_MINION_OF_GUROK                 = 18181,
 # --- END IF ---
+# --- TWO ONLY ---
+    // quest 12589
+    SPELL_HIT_APPLE                     = 51331,
+    SPELL_MISS_APPLE                    = 51332,
+    SPELL_MISS_APPLE_HIT_BIRD           = 51366,
+    SPELL_APPLE_FALLS_TO_GROUND         = 51371,
+    NPC_APPLE                           = 28053,
+    NPC_LUCKY_WILHELM                   = 28054,
+    NPC_DROSTAN                         = 28328,
+    SAY_LUCKY_HIT_1                     = -1000644,
+    SAY_LUCKY_HIT_2                     = -1000645,
+    SAY_LUCKY_HIT_3                     = -1000646,
+    SAY_LUCKY_HIT_APPLE                 = -1000647,
+    SAY_DROSTAN_GOT_LUCKY_1             = -1000648,
+    SAY_DROSTAN_GOT_LUCKY_2             = -1000649,
+    SAY_DROSTAN_HIT_BIRD_1              = -1000650,
+    SAY_DROSTAN_HIT_BIRD_2              = -1000651,
 
+    // quest 11314, item 33606
+    SPELL_LURIELLES_PENDANT             = 43340,
+    NPC_CHILL_NYMPH                     = 23678,
+    NPC_LURIELLE                        = 24117,
+    FACTION_FRIENDLY                    = 35,
+    SAY_FREE_1                          = -1000781,
+    SAY_FREE_2                          = -1000782,
+    SAY_FREE_3                          = -1000783,
+# --- END IF ---
     // npcs that are only interactable while dead
     SPELL_SHROUD_OF_DEATH               = 10848,
     SPELL_SPIRIT_PARTICLES              = 17327,
     NPC_FRANCLORN_FORGEWRIGHT           = 8888,
     NPC_GAERIYAN                        = 9299,
-
+# --- TWO ONLY ---
+    NPC_GANJO                           = 26924,
+# --- END IF ---
 # --- NOT FOR ZERO ---
     // quest 11521
     SPELL_EXPOSE_RAZORTHORN_ROOT        = 44935,
@@ -216,12 +390,53 @@ enum
     SPELL_MELODIOUS_RAPTURE_VISUAL      = 21051,
     NPC_DEEPRUN_RAT                     = 13016,
     NPC_ENTHRALLED_DEEPRUN_RAT          = 13017,
+# --- TWO ONLY ---
+    // quest 12981
+    SPELL_THROW_ICE                     = 56099,
+    SPELL_FROZEN_IRON_SCRAP             = 56101,
+    NPC_SMOLDERING_SCRAP_BUNNY          = 30169,
+    GO_SMOLDERING_SCRAP                 = 192124,
+# --- END IF ---
 };
 
 bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
 {
     switch (pAura->GetId())
     {
+# --- TWO ONLY ---
+        case SPELL_BLESSING_OF_PEACE:
+        {
+            Creature* pCreature = (Creature*)pAura->GetTarget();
+
+            if (!pCreature || pCreature->GetEntry() != NPC_FALLEN_HERO_SPIRIT)
+                return true;
+
+            if (pAura->GetEffIndex() != EFFECT_INDEX_0)
+                return true;
+
+            if (bApply)
+            {
+                switch (urand(0, 4))
+                {
+                    case 0: DoScriptText(SAY_BLESS_1, pCreature); break;
+                    case 1: DoScriptText(SAY_BLESS_2, pCreature); break;
+                    case 2: DoScriptText(SAY_BLESS_3, pCreature); break;
+                    case 3: DoScriptText(SAY_BLESS_4, pCreature); break;
+                    case 4: DoScriptText(SAY_BLESS_5, pCreature); break;
+                }
+            }
+            else
+            {
+                if (Player* pPlayer = (Player*)pAura->GetCaster())
+                {
+                    pPlayer->KilledMonsterCredit(NPC_FALLEN_HERO_SPIRIT_PROXY, pCreature->GetObjectGuid());
+                    pCreature->ForcedDespawn();
+                }
+            }
+
+            return true;
+        }
+# --- END IF ---
 # --- ZERO ONLY ---
         case SPELL_SHROUD_OF_DEATH:
         case SPELL_SPIRIT_PARTICLES:
@@ -363,7 +578,11 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
         {
             Creature* pCreature = (Creature*)pAura->GetTarget();
 
+# --- NOT TWO ---
             if (!pCreature || (pCreature->GetEntry() != NPC_FRANCLORN_FORGEWRIGHT && pCreature->GetEntry() != NPC_GAERIYAN))
+# --- ELSE ---
+            if (!pCreature || (pCreature->GetEntry() != NPC_FRANCLORN_FORGEWRIGHT && pCreature->GetEntry() != NPC_GAERIYAN && pCreature->GetEntry() != NPC_GANJO))
+# --- END IF ---
             { return false; }
 
             if (bApply)
