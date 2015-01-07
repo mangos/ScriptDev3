@@ -64,8 +64,11 @@ bool ItemUse_item_arcane_charges(Player* pPlayer, Item* pItem, const SpellCastTa
     pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
 
     if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_ARCANE_CHARGES))
+ # --- TWO ONLY ---
+    { Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_ON_GROUND); }
+ # --- ELSE ---
     { Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_ERROR); }
-
+ # --- END IF ---
     return true;
 }
 
@@ -115,6 +118,36 @@ bool ItemUse_item_gor_dreks_ointment(Player* pPlayer, Item* pItem, const SpellCa
     return false;
 }
 ## --- END IF ---
+# --- TWO ONLY ---
+/*#####
+# item_petrov_cluster_bombs
+#####*/
+
+enum
+{
+    SPELL_PETROV_BOMB           = 42406,
+    AREA_ID_SHATTERED_STRAITS   = 4064,
+    ZONE_ID_HOWLING             = 495
+};
+
+bool ItemUse_item_petrov_cluster_bombs(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
+{
+    if (pPlayer->GetZoneId() != ZONE_ID_HOWLING)
+        return false;
+
+    if (!pPlayer->GetTransport() || pPlayer->GetAreaId() != AREA_ID_SHATTERED_STRAITS)
+    {
+        pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
+
+        if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_PETROV_BOMB))
+            Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_HERE);
+
+        return true;
+    }
+
+    return false;
+}
+# --- END IF ---
 
 void AddSC_item_scripts()
 {
@@ -134,6 +167,12 @@ void AddSC_item_scripts()
     pNewScript = new Script;
     pNewScript->Name = "item_gor_dreks_ointment";
     pNewScript->pItemUse = &ItemUse_item_gor_dreks_ointment;
+    pNewScript->RegisterSelf();
+# --- END IF ---
+# --- TWO ONLY ---
+    pNewScript = new Script;
+    pNewScript->Name = "item_petrov_cluster_bombs";
+    pNewScript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
     pNewScript->RegisterSelf();
 # --- END IF ---
 }

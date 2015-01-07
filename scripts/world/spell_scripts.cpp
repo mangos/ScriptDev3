@@ -51,9 +51,23 @@
  * spell 34665
  * spell 37136
  * spell 39246
+ # --- TWO ONLY ---
+ * spell 43340
+ # --- END IF ---
  * spell 44935
  * spell 45109
  * spell 45111
+# --- END IF ---
+# --- TWO ONLY ---
+ * spell 46023
+ * spell 46770
+ * spell 47575
+ * spell 50706
+ * spell 51331
+ * spell 51332
+ * spell 51366
+ * spell 52090
+ * spell 56099
 # --- END IF ---
  * EndContentData
  */

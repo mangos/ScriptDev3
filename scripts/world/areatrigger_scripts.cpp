@@ -35,14 +35,26 @@
 
 /**
  * ContentData
+# --- TWO ONLY ---    
+ * at_aldurthar_gate                5284, 5285, 5286, 5287
+# --- END IF ---
 # --- NOT FOR ZERO ---  
  * at_coilfang_waterfall            4591
  * at_legion_teleporter             4560 Teleporter TO Invasion Point: Cataclysm
-# --- END IF
+# --- END IF ---
  * at_ravenholdt
+# --- TWO ONLY ---    
+ * at_spearborn_encampment          5030
+ * at_warsong_farms
+ * at_stormwright_shelf             5108
+# --- END IF ---
  * at_childrens_week_spot           3546, 3547, 3548, 3549, 3550, 3552
  * at_scent_larkorwi                1726, 1727, 1728, 1729, 1730, 1731, 1732, 1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740
  * at_murkdeep                      1966
+# --- TWO ONLY ---    
+ * at_hot_on_the_trail              5710, 5711, 5712, 5714, 5715, 5716
+ * at_ancient_leaf                  3587
+# --- END IF ---
  * EndContentData
  */
 
@@ -73,6 +85,36 @@ bool AreaTrigger_at_childrens_week_spot(Player* pPlayer, AreaTriggerEntry const*
     return false;
 }
 
+# --- TWO ONLY ---    
+/*######
+## Quest 13315/13351
+######*/
+
+enum
+{
+    TRIGGER_SOUTH               = 5284,
+    TRIGGER_CENTRAL             = 5285,
+    TRIGGER_NORTH               = 5286,
+    TRIGGER_NORTHWEST           = 5287,
+
+    NPC_SOUTH_GATE              = 32195,
+    NPC_CENTRAL_GATE            = 32196,
+    NPC_NORTH_GATE              = 32197,
+    NPC_NORTHWEST_GATE          = 32199
+};
+
+bool AreaTrigger_at_aldurthar_gate(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    switch (pAt->id)
+    {
+        case TRIGGER_SOUTH:     pPlayer->KilledMonsterCredit(NPC_SOUTH_GATE);     break;
+        case TRIGGER_CENTRAL:   pPlayer->KilledMonsterCredit(NPC_CENTRAL_GATE);   break;
+        case TRIGGER_NORTH:     pPlayer->KilledMonsterCredit(NPC_NORTH_GATE);     break;
+        case TRIGGER_NORTHWEST: pPlayer->KilledMonsterCredit(NPC_NORTHWEST_GATE); break;
+    }
+    return true;
+}
+# --- END IF ---
 # --- NOT FOR ZERO ---  
 /*######
 ## at_coilfang_waterfall
@@ -147,6 +189,110 @@ bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
     return false;
 }
 
+# --- TWO ONLY ---    
+/*######
+## at_spearborn_encampment
+######*/
+
+enum
+{
+    QUEST_MISTWHISPER_TREASURE          = 12575,
+    NPC_TARTEK                          = 28105,
+};
+
+// 5030
+bool AreaTrigger_at_spearborn_encampment(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    if (pPlayer->GetQuestStatus(QUEST_MISTWHISPER_TREASURE) == QUEST_STATUS_INCOMPLETE &&
+            pPlayer->GetReqKillOrCastCurrentCount(QUEST_MISTWHISPER_TREASURE, NPC_TARTEK) == 0)
+    {
+        // can only spawn one at a time, it's not a too good solution
+        if (GetClosestCreatureWithEntry(pPlayer, NPC_TARTEK, 50.0f))
+            return false;
+
+        pPlayer->SummonCreature(NPC_TARTEK, pAt->x, pAt->y, pAt->z, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, MINUTE * IN_MILLISECONDS);
+    }
+
+    return false;
+}
+
+/*######
+## at_warsong_farms
+######*/
+
+enum
+{
+    QUEST_THE_WARSONG_FARMS     = 11686,
+    NPC_CREDIT_SLAUGHTERHOUSE   = 25672,
+    NPC_CREDIT_GRAINERY         = 25669,
+    NPC_CREDIT_TORP_FARM        = 25671,
+
+    AT_SLAUGHTERHOUSE           = 4873,
+    AT_GRAINERY                 = 4871,
+    AT_TORP_FARM                = 4872
+};
+
+bool AreaTrigger_at_warsong_farms(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_THE_WARSONG_FARMS) == QUEST_STATUS_INCOMPLETE)
+    {
+        switch (pAt->id)
+        {
+            case AT_SLAUGHTERHOUSE: pPlayer->KilledMonsterCredit(NPC_CREDIT_SLAUGHTERHOUSE); break;
+            case AT_GRAINERY:       pPlayer->KilledMonsterCredit(NPC_CREDIT_GRAINERY);       break;
+            case AT_TORP_FARM:      pPlayer->KilledMonsterCredit(NPC_CREDIT_TORP_FARM);      break;
+        }
+    }
+    return true;
+}
+
+/*######
+## Quest 12548
+######*/
+
+enum
+{
+    SPELL_SHOLOZAR_TO_UNGORO_TELEPORT = 52056,
+    SPELL_UNGORO_TO_SHOLOZAR_TELEPORT = 52057,
+    AT_WAYGATE_SHOLOZAR               = 5046,
+    AT_WAYGATE_UNGORO                 = 5047,
+    QUEST_THE_MARKERS_OVERLOOK        = 12613,
+    QUEST_THE_MARKERS_PERCH           = 12559
+};
+
+bool AreaTrigger_at_waygate(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_THE_MARKERS_OVERLOOK) == QUEST_STATUS_COMPLETE && pPlayer->GetQuestStatus(QUEST_THE_MARKERS_PERCH) == QUEST_STATUS_COMPLETE)
+    {
+        switch (pAt->id)
+        {
+            case AT_WAYGATE_SHOLOZAR: pPlayer->CastSpell(pPlayer, SPELL_SHOLOZAR_TO_UNGORO_TELEPORT, false); break;
+            case AT_WAYGATE_UNGORO: pPlayer->CastSpell(pPlayer, SPELL_UNGORO_TO_SHOLOZAR_TELEPORT, false); break;
+        }
+    }
+
+    return false;
+}
+
+/*######
+## Quest 12741
+######*/
+
+enum
+{
+    QUEST_STRENGTH_OF_THE_TEMPEST            = 12741,
+    SPELL_CREATE_TRUE_POWER_OF_THE_TEMPEST   = 53067
+};
+
+bool AreaTrigger_at_stormwright_shelf(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
+{
+    if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_STRENGTH_OF_THE_TEMPEST) == QUEST_STATUS_INCOMPLETE)
+        pPlayer->CastSpell(pPlayer, SPELL_CREATE_TRUE_POWER_OF_THE_TEMPEST, false);
+
+    return true;
+}
+# --- END IF ---
+
 /*######
 ## at_scent_larkorwi
 ######*/
@@ -216,6 +362,95 @@ bool AreaTrigger_at_murkdeep(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
     return false;
 }
 
+# --- TWO ONLY ---    
+/*######
+## at_hot_on_the_trail
+######*/
+
+struct HotOnTrailData
+{
+    uint32 uiAtEntry, uiQuestEntry, uiCreditEntry, uiSpellEntry;
+};
+
+static const HotOnTrailData aHotOnTrailValues[6] =
+{
+    {5710, 24849, 38340, 71713},                    // Stormwind Bank
+    {5711, 24849, 38341, 71745},                    // Stormwind Auction House
+    {5712, 24849, 38342, 71752},                    // Stormwind Barber Shop
+    {5714, 24851, 38341, 71760},                    // Orgrimmar Auction House
+    {5715, 24851, 38340, 71759},                    // Orgrimmar Bank
+    {5716, 24851, 38342, 71758},                    // Orgrimmar Barber Shop
+};
+
+bool AreaTrigger_at_hot_on_the_trail(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
+        return false;
+
+    for (uint8 i = 0; i < 6; ++i)
+    {
+        if (pAt->id == aHotOnTrailValues[i].uiAtEntry)
+        {
+            if (pPlayer->GetQuestStatus(aHotOnTrailValues[i].uiQuestEntry) == QUEST_STATUS_INCOMPLETE &&
+                    pPlayer->GetReqKillOrCastCurrentCount(aHotOnTrailValues[i].uiQuestEntry, aHotOnTrailValues[i].uiCreditEntry) == 0)
+            {
+                pPlayer->CastSpell(pPlayer, aHotOnTrailValues[i].uiSpellEntry, true);
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+/*######
+## at_ancient_leaf
+######*/
+
+enum
+{
+    QUEST_ANCIENT_LEAF              = 7632,
+
+    NPC_VARTRUS                     = 14524,
+    NPC_STOMA                       = 14525,
+    NPC_HASTAT                      = 14526,
+
+    MAX_ANCIENTS                    = 3,
+};
+
+struct AncientSpawn
+{
+    uint32 uiEntry;
+    float fX, fY, fZ, fO;
+};
+
+static const AncientSpawn afSpawnLocations[MAX_ANCIENTS] =
+{
+    { NPC_VARTRUS, 6204.051758f, -1172.575684f, 370.079224f, 0.86052f },    // Vartus the Ancient
+    { NPC_STOMA,   6246.953613f, -1155.985718f, 366.182953f, 2.90269f },    // Stoma the Ancient
+    { NPC_HASTAT,  6193.449219f, -1137.834106f, 366.260529f, 5.77332f },    // Hastat the Ancient
+};
+
+bool AreaTrigger_at_ancient_leaf(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
+        return false;
+
+    // Handle Call Ancients event start - The area trigger summons 3 ancients
+    if (pPlayer->GetQuestStatus(QUEST_ANCIENT_LEAF) == QUEST_STATUS_COMPLETE)
+    {
+        // If ancients are already spawned, skip the rest
+        if (GetClosestCreatureWithEntry(pPlayer, NPC_VARTRUS, 50.0f) || GetClosestCreatureWithEntry(pPlayer, NPC_STOMA, 50.0f) || GetClosestCreatureWithEntry(pPlayer, NPC_HASTAT, 50.0f))
+            return true;
+
+        for (uint8 i = 0; i < MAX_ANCIENTS; ++i)
+            pPlayer->SummonCreature(afSpawnLocations[i].uiEntry, afSpawnLocations[i].fX, afSpawnLocations[i].fY, afSpawnLocations[i].fZ, afSpawnLocations[i].fO, TEMPSUMMON_TIMED_DESPAWN, 5 * MINUTE * IN_MILLISECONDS);
+    }
+
+    return false;
+}
+# --- END IF ---
+
 void AddSC_areatrigger_scripts()
 {
     Script* pNewScript;
@@ -225,6 +460,12 @@ void AddSC_areatrigger_scripts()
     pNewScript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
     pNewScript->RegisterSelf();
 
+# --- TWO ONLY ---    
+    pNewScript = new Script;
+    pNewScript->Name = "at_aldurthar_gate";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_aldurthar_gate;
+    pNewScript->RegisterSelf();
+# --- END IF ---	
 # --- NOT FOR ZERO ---  
     pNewScript = new Script;
     pNewScript->Name = "at_coilfang_waterfall";
@@ -242,6 +483,28 @@ void AddSC_areatrigger_scripts()
     pNewScript->pAreaTrigger = &AreaTrigger_at_ravenholdt;
     pNewScript->RegisterSelf();
 
+# --- TWO ONLY ---    
+    pNewScript = new Script;
+    pNewScript->Name = "at_spearborn_encampment";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_spearborn_encampment;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "at_warsong_farms";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_warsong_farms;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "at_waygate";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_waygate;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "at_stormwright_shelf";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_stormwright_shelf;
+    pNewScript->RegisterSelf();
+# --- END IF ---
+
     pNewScript = new Script;
     pNewScript->Name = "at_scent_larkorwi";
     pNewScript->pAreaTrigger = &AreaTrigger_at_scent_larkorwi;
@@ -251,4 +514,16 @@ void AddSC_areatrigger_scripts()
     pNewScript->Name = "at_murkdeep";
     pNewScript->pAreaTrigger = &AreaTrigger_at_murkdeep;
     pNewScript->RegisterSelf();
+
+# --- TWO ONLY ---    
+    pNewScript = new Script;
+    pNewScript->Name = "at_hot_on_the_trail";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_hot_on_the_trail;
+    pNewScript->RegisterSelf();
+    
+    pNewScript = new Script;
+    pNewScript->Name = "at_ancient_leaf";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_ancient_leaf;
+    pNewScript->RegisterSelf();
+# --- END IF ---
 }

@@ -101,7 +101,7 @@
 
 #define BOX_UNLEARN_LEATHER_SPEC    "Do you really want to unlearn your leatherworking specialty and lose all associated recipes? \n Cost: "
 
-# --- NOT FOR ZERO ---
+# --- NOT FOR ZERO OR TWO ---
 #define GOSSIP_LEARN_SPELLFIRE      "Please teach me how to become a Spellcloth tailor"
 #define GOSSIP_UNLEARN_SPELLFIRE    "I wish to unlearn Spellfire Tailoring"
 #define GOSSIP_LEARN_MOONCLOTH      "Please teach me how to become a Mooncloth tailor"
@@ -163,7 +163,7 @@
 #define S_LEARN_GOBLIN          20221
 #define S_LEARN_GNOMISH         20220
 
-# --- NOT FOR ZERO ---
+# --- NOT FOR ZERO OR TWO ---
 #define S_SPELLFIRE             26797
 #define S_MOONCLOTH             26798
 #define S_SHADOWEAVE            26801
@@ -180,7 +180,7 @@
 # formulas to calculate unlearning cost
 ###*/
 
-# --- NOT FOR ZERO ---
+# --- NOT FOR ZERO OR TWO ---
 int32 GetLearningCost(Player* /*pPlayer*/)                      // tailor, alchemy
 {
     return 200000;
@@ -237,7 +237,7 @@ bool EquippedOk(Player* pPlayer, uint32 spellId)
 
     for (int i = 0; i < 3; ++i)
     {
-# --- TWO ONLY ---
+# --- THREE ONLY ---
         SpellEffectEntry const* pSpellEffect = spell->GetSpellEffect(SpellEffectIndex(i));
         if (!pSpellEffect)
             continue;
@@ -881,7 +881,7 @@ bool GossipSelect_npc_prof_leather(Player* pPlayer, Creature* pCreature, uint32 
     return true;
 }
 
-# --- NOT FOR ZERO ---
+# --- NOT FOR ZERO / TWO ---
 /*###
 # start menues tailoring
 ###*/
@@ -1127,7 +1127,7 @@ void AddSC_npc_professions()
     pNewScript->pGossipSelect = &GossipSelect_npc_prof_leather;
     pNewScript->RegisterSelf();
 
-# --- NOT FOR ZERO ---
+# --- NOT FOR ZERO / TWO ---
     pNewScript = new Script;
     pNewScript->Name = "npc_prof_tailor";
     pNewScript->pGossipHello =  &GossipHello_npc_prof_tailor;

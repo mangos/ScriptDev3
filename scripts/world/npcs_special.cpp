@@ -634,7 +634,11 @@ struct npc_injured_patientAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff) override
     {
         // lower HP on every world tick makes it a useful counter, not officlone though
+# --- NOT TWO ---
         uint32 uiHPLose = uint32(0.03f * uiDiff); 
+# --- ELSE ---
+        uint32 uiHPLose = uint32(0.05f * uiDiff);
+# --- END IF ---
         if (m_creature->IsAlive() && m_creature->GetHealth() > 1 + uiHPLose)
         {
             m_creature->SetHealth(m_creature->GetHealth() - uiHPLose);
@@ -794,8 +798,14 @@ void npc_doctorAI::UpdateAI(const uint32 uiDiff)
 
             if (Creature* Patient = m_creature->SummonCreature(patientEntry, (*itr)->x, (*itr)->y, (*itr)->z, (*itr)->o, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000))
             {
+# --- NOT TWO ---
                 // 2.4.3, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
                 Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
+# --- END IF ---
+# --- TWO ONLY ---
+                // 303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
+                Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+# --- END IF ---
 
                 m_lPatientGuids.push_back(Patient->GetObjectGuid());
 
@@ -1168,6 +1178,188 @@ bool GossipSelect_npc_innkeeper(Player* pPlayer, Creature* pCreature, uint32 /*u
     return true;
 }
 
+# --- TWO ONLY ---
+/*######
+## npc_spring_rabbit
+## ATTENTION: This is actually a "fun" script, entirely done without proper source!
+######*/
+
+enum
+{
+    NPC_SPRING_RABBIT           = 32791,
+
+    SPELL_SPRING_RABBIT_JUMP    = 61724,
+    SPELL_SPRING_RABBIT_WANDER  = 61726,
+    SEPLL_SUMMON_BABY_BUNNY     = 61727,
+    SPELL_SPRING_RABBIT_IN_LOVE = 61728,
+    SPELL_SPRING_FLING          = 61875,
+};
+
+static const float DIST_START_EVENT = 15.0f;                // Guesswork
+
+struct  npc_spring_rabbitAI : public ScriptedPetAI
+{
+    npc_spring_rabbitAI(Creature* pCreature) : ScriptedPetAI(pCreature) { Reset(); }
+
+    ObjectGuid m_partnerGuid;
+    uint32 m_uiStep;
+    uint32 m_uiStepTimer;
+    float m_fMoveAngle;
+
+    void Reset() override
+    {
+        m_uiStep = 0;
+        m_uiStepTimer = 0;
+        m_partnerGuid.Clear();
+        m_fMoveAngle = 0.0f;
+    }
+
+    bool CanStartWhatRabbitsDo() { return !m_partnerGuid && !m_uiStepTimer; }
+
+    void StartWhatRabbitsDo(Creature* pPartner)
+    {
+        m_partnerGuid = pPartner->GetObjectGuid();
+        m_uiStep = 1;
+        m_uiStepTimer = 30000;
+        // Calculate meeting position
+        float m_fMoveAngle = m_creature->GetAngle(pPartner);
+        float fDist = m_creature->GetDistance(pPartner);
+        float fX, fY, fZ;
+        m_creature->GetNearPoint(m_creature, fX, fY, fZ, m_creature->GetObjectBoundingRadius(), fDist * 0.5f, m_fMoveAngle);
+
+        m_creature->GetMotionMaster()->Clear();
+        m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+    }
+
+    // Helper to get the Other Bunnies AI
+    npc_spring_rabbitAI* GetPartnerAI(Creature* pBunny = NULL)
+    {
+        if (!pBunny)
+            pBunny = m_creature->GetMap()->GetAnyTypeCreature(m_partnerGuid);
+
+        if (!pBunny)
+            return NULL;
+
+        return dynamic_cast<npc_spring_rabbitAI*>(pBunny->AI());
+    }
+
+    // Event Starts when two rabbits see each other
+    void MoveInLineOfSight(Unit* pWho) override
+    {
+        if (m_creature->getVictim())
+            return;
+
+        if (pWho->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_SPRING_RABBIT && CanStartWhatRabbitsDo() && m_creature->IsFriendlyTo(pWho) && m_creature->IsWithinDistInMap(pWho, DIST_START_EVENT, true))
+        {
+            if (npc_spring_rabbitAI* pOtherBunnyAI = GetPartnerAI((Creature*)pWho))
+            {
+                if (pOtherBunnyAI->CanStartWhatRabbitsDo())
+                {
+                    StartWhatRabbitsDo((Creature*)pWho);
+                    pOtherBunnyAI->StartWhatRabbitsDo(m_creature);
+                }
+            }
+            return;
+        }
+
+        ScriptedPetAI::MoveInLineOfSight(pWho);
+    }
+
+    bool ReachedMeetingPlace()
+    {
+        if (m_uiStep == 3)                                  // Already there
+        {
+            m_uiStepTimer = 3000;
+            m_uiStep = 2;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    void MovementInform(uint32 uiMovementType, uint32 uiData) override
+    {
+        if (uiMovementType != POINT_MOTION_TYPE || uiData != 1)
+            return;
+
+        if (!m_partnerGuid)
+            return;
+
+        m_uiStep = 3;
+        if (npc_spring_rabbitAI* pOtherBunnyAI = GetPartnerAI())
+        {
+            if (pOtherBunnyAI->ReachedMeetingPlace())
+            {
+                m_creature->SetFacingTo(pOtherBunnyAI->m_creature->GetOrientation());
+                m_uiStepTimer = 3000;
+            }
+            else
+                m_creature->SetFacingTo(m_fMoveAngle + M_PI_F * 0.5f);
+        }
+
+        // m_creature->GetMotionMaster()->MoveRandom(); // does not move around current position, hence not usefull right now
+        m_creature->GetMotionMaster()->MoveIdle();
+    }
+
+    // Overwrite ScriptedPetAI::UpdateAI, to prevent re-following while the event is active!
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (!m_partnerGuid || !m_uiStepTimer)
+        {
+            ScriptedPetAI::UpdateAI(uiDiff);
+            return;
+        }
+
+        if (m_uiStep == 6)
+            ScriptedPetAI::UpdateAI(uiDiff);                // Event nearly finished, do normal following
+
+        if (m_uiStepTimer <= uiDiff)
+        {
+            switch (m_uiStep)
+            {
+                case 1:                                     // Timer expired, before reached meeting point. Reset.
+                    Reset();
+                    break;
+
+                case 2:                                     // Called for the rabbit first reached meeting point
+                    if (Creature* pBunny = m_creature->GetMap()->GetAnyTypeCreature(m_partnerGuid))
+                        pBunny->CastSpell(pBunny, SPELL_SPRING_RABBIT_IN_LOVE, false);
+
+                    DoCastSpellIfCan(m_creature, SPELL_SPRING_RABBIT_IN_LOVE);
+                    // no break here
+                case 3:
+                    m_uiStepTimer = 5000;
+                    m_uiStep += 2;
+                    break;
+
+                case 4:                                     // Called for the rabbit first reached meeting point
+                    DoCastSpellIfCan(m_creature, SEPLL_SUMMON_BABY_BUNNY);
+                    // no break here
+                case 5:
+                    // Let owner cast achievement related spell
+                    if (Unit* pOwner = m_creature->GetCharmerOrOwner())
+                        pOwner->CastSpell(pOwner, SPELL_SPRING_FLING, true);
+
+                    m_uiStep = 6;
+                    m_uiStepTimer = 30000;
+                    break;
+                case 6:
+                    m_creature->RemoveAurasDueToSpell(SPELL_SPRING_RABBIT_IN_LOVE);
+                    Reset();
+                    break;
+            }
+        }
+        else
+            m_uiStepTimer -= uiDiff;
+    }
+};
+
+CreatureAI* GetAI_npc_spring_rabbit(Creature* pCreature)
+{
+    return new npc_spring_rabbitAI(pCreature);
+}
+# --- END IF ---
+
 /*######
 ## npc_redemption_target
 ######*/
@@ -1332,6 +1524,13 @@ void AddSC_npcs_special()
     pNewScript->pGossipHello = &GossipHello_npc_innkeeper;
     pNewScript->pGossipSelect = &GossipSelect_npc_innkeeper;
     pNewScript->RegisterSelf(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
+
+# --- TWO ONLY ---
+    pNewScript = new Script;
+    pNewScript->Name = "npc_spring_rabbit";
+    pNewScript->GetAI = &GetAI_npc_spring_rabbit;
+    pNewScript->RegisterSelf();
+# --- END IF ---
 
     pNewScript = new Script;
     pNewScript->Name = "npc_redemption_target";
