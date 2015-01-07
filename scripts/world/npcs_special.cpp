@@ -45,7 +45,7 @@
  * npc_injured_patient         80%    patients for triage-quests (6622 and 6624)
  * npc_doctor                 100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
  * npc_innkeeper               25%    ScriptName not assigned. Innkeepers in general.
- * npc_redemption_target      100%    Used for the paladin quests: 1779, 1781
+ * npc_redemption_target      100%    Used for the paladin quests: 1779,1781,9600,9685
  * EndContentData
  */
 

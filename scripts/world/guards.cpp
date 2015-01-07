@@ -35,15 +35,27 @@
 
 /**
  * ContentData
+# --- NOT FOR ZERO ---
+ * guard_azuremyst
  * guard_bluffwatcher
  * guard_contested
  * guard_darnassus
  * guard_dunmorogh
  * guard_durotar
  * guard_elwynnforest
+# --- NOT FOR ZERO ---
+ * guard_eversong
+ * guard_exodar
+# --- END IF ---
  * guard_ironforge
  * guard_mulgore
  * guard_orgrimmar
+# --- NOT FOR ZERO ---
+ * guard_shattrath
+ * guard_shattrath_aldor
+ * guard_shattrath_scryer
+ * guard_silvermoon
+# --- END IF ---
  * guard_stormwind
  * guard_teldrassil
  * guard_tirisfal
@@ -54,6 +66,12 @@
 #include "precompiled.h"
 #include "guard_ai.h"
 
+# --- NOT FOR ZERO ---
+CreatureAI* GetAI_guard_azuremyst(Creature* pCreature)
+{
+    return new guardAI(pCreature);
+}
+# --- END IF ---
 CreatureAI* GetAI_guard_bluffwatcher(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -84,6 +102,17 @@ CreatureAI* GetAI_guard_elwynnforest(Creature* pCreature)
     return new guardAI(pCreature);
 }
 
+# --- NOT FOR ZERO ---
+CreatureAI* GetAI_guard_eversong(Creature* pCreature)
+{
+    return new guardAI(pCreature);
+}
+
+CreatureAI* GetAI_guard_exodar(Creature* pCreature)
+{
+    return new guardAI(pCreature);
+}
+# --- END IF ---
 CreatureAI* GetAI_guard_ironforge(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -98,6 +127,152 @@ CreatureAI* GetAI_guard_orgrimmar(Creature* pCreature)
 {
     return new guardAI_orgrimmar(pCreature);
 }
+
+# --- NOT FOR ZERO ---
+CreatureAI* GetAI_guard_shattrath(Creature* pCreature)
+{
+    return new guardAI(pCreature);
+}
+
+/*******************************************************
+ * guard_shattrath_aldor
+ *******************************************************/
+
+struct guard_shattrath_aldorAI : public guardAI
+{
+    guard_shattrath_aldorAI(Creature* pCreature) : guardAI(pCreature) { Reset(); }
+
+    uint32 m_uiExile_Timer;
+    uint32 m_uiBanish_Timer;
+    ObjectGuid m_playerGuid;
+    bool m_bCanTeleport;
+
+    void Reset() override
+    {
+        m_uiBanish_Timer = 5000;
+        m_uiExile_Timer = 8500;
+        m_playerGuid.Clear();
+        m_bCanTeleport = false;
+    }
+
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        { return; }
+
+        if (m_bCanTeleport)
+        {
+            if (m_uiExile_Timer < uiDiff)
+            {
+                if (Player* pTarget = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                {
+                    pTarget->CastSpell(pTarget, SPELL_EXILE, true);
+                    pTarget->CastSpell(pTarget, SPELL_BANISH_TELEPORT, true);
+                }
+
+                m_playerGuid.Clear();
+                m_uiExile_Timer = 8500;
+                m_bCanTeleport = false;
+            }
+            else
+            { m_uiExile_Timer -= uiDiff; }
+        }
+        else if (m_uiBanish_Timer < uiDiff)
+        {
+            Unit* pVictim = m_creature->getVictim();
+
+            if (pVictim && pVictim->GetTypeId() == TYPEID_PLAYER)
+            {
+                DoCastSpellIfCan(pVictim, SPELL_BANISHED_SHATTRATH_A);
+                m_uiBanish_Timer = 9000;
+                m_playerGuid = pVictim->GetObjectGuid();
+                m_bCanTeleport = true;
+            }
+        }
+        else
+        { m_uiBanish_Timer -= uiDiff; }
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_guard_shattrath_aldor(Creature* pCreature)
+{
+    return new guard_shattrath_aldorAI(pCreature);
+}
+
+/*******************************************************
+ * guard_shattrath_scryer
+ *******************************************************/
+
+struct guard_shattrath_scryerAI : public guardAI
+{
+    guard_shattrath_scryerAI(Creature* pCreature) : guardAI(pCreature) { Reset(); }
+
+    uint32 m_uiExile_Timer;
+    uint32 m_uiBanish_Timer;
+    ObjectGuid m_playerGuid;
+    bool m_bCanTeleport;
+
+    void Reset() override
+    {
+        m_uiBanish_Timer = 5000;
+        m_uiExile_Timer = 8500;
+        m_playerGuid.Clear();
+        m_bCanTeleport = false;
+    }
+
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        { return; }
+
+        if (m_bCanTeleport)
+        {
+            if (m_uiExile_Timer < uiDiff)
+            {
+                if (Player* pTarget = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                {
+                    pTarget->CastSpell(pTarget, SPELL_EXILE, true);
+                    pTarget->CastSpell(pTarget, SPELL_BANISH_TELEPORT, true);
+                }
+
+                m_playerGuid.Clear();
+                m_uiExile_Timer = 8500;
+                m_bCanTeleport = false;
+            }
+            else
+            { m_uiExile_Timer -= uiDiff; }
+        }
+        else if (m_uiBanish_Timer < uiDiff)
+        {
+            Unit* pVictim = m_creature->getVictim();
+
+            if (pVictim && pVictim->GetTypeId() == TYPEID_PLAYER)
+            {
+                DoCastSpellIfCan(pVictim, SPELL_BANISHED_SHATTRATH_S);
+                m_uiBanish_Timer = 9000;
+                m_playerGuid = pVictim->GetObjectGuid();
+                m_bCanTeleport = true;
+            }
+        }
+        else
+        { m_uiBanish_Timer -= uiDiff; }
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_guard_shattrath_scryer(Creature* pCreature)
+{
+    return new guard_shattrath_scryerAI(pCreature);
+}
+
+CreatureAI* GetAI_guard_silvermoon(Creature* pCreature)
+{
+    return new guardAI(pCreature);
+}
+# --- END IF ---
 
 CreatureAI* GetAI_guard_stormwind(Creature* pCreature)
 {
@@ -122,6 +297,13 @@ CreatureAI* GetAI_guard_undercity(Creature* pCreature)
 void AddSC_guards()
 {
     Script* pNewScript;
+
+# --- NOT FOR ZERO ---
+    pNewScript = new Script;
+    pNewScript->Name = "guard_azuremyst";
+    pNewScript->GetAI = &GetAI_guard_azuremyst;
+    pNewScript->RegisterSelf();
+# --- END IF ---
 
     pNewScript = new Script;
     pNewScript->Name = "guard_bluffwatcher";
@@ -153,6 +335,18 @@ void AddSC_guards()
     pNewScript->GetAI = &GetAI_guard_elwynnforest;
     pNewScript->RegisterSelf();
 
+# --- NOT FOR ZERO ---
+    pNewScript = new Script;
+    pNewScript->Name = "guard_eversong";
+    pNewScript->GetAI = &GetAI_guard_eversong;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "guard_exodar";
+    pNewScript->GetAI = &GetAI_guard_exodar;
+    pNewScript->RegisterSelf();
+# --- END IF ---
+
     pNewScript = new Script;
     pNewScript->Name = "guard_ironforge";
     pNewScript->GetAI = &GetAI_guard_ironforge;
@@ -167,6 +361,28 @@ void AddSC_guards()
     pNewScript->Name = "guard_orgrimmar";
     pNewScript->GetAI = &GetAI_guard_orgrimmar;
     pNewScript->RegisterSelf();
+
+# --- NOT FOR ZERO ---
+    pNewScript = new Script;
+    pNewScript->Name = "guard_shattrath";
+    pNewScript->GetAI = &GetAI_guard_shattrath;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "guard_shattrath_aldor";
+    pNewScript->GetAI = &GetAI_guard_shattrath_aldor;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "guard_shattrath_scryer";
+    pNewScript->GetAI = &GetAI_guard_shattrath_scryer;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "guard_silvermoon";
+    pNewScript->GetAI = &GetAI_guard_silvermoon;
+    pNewScript->RegisterSelf();
+# --- END IF ---
 
     pNewScript = new Script;
     pNewScript->Name = "guard_stormwind";
