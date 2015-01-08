@@ -103,10 +103,10 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
  */
 void ScriptedAI::AttackStart(Unit* pWho)
 {
-# --- TWO ONLY ---
+#if defined (WOTLK)
     if (!m_creature->CanAttackByItself())
         return;
-# --- END IF ---    
+#endif    
     if (pWho && m_creature->Attack(pWho, true))             // The Attack function also uses basic checks if pWho can be attacked
     {
         m_creature->AddThreat(pWho);
@@ -144,13 +144,13 @@ void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
 
     DoMeleeAttackIfReady();
     
-# --- TWO ONLY ---
+#if defined (WOTLK)
     Unit* victim = m_creature->getVictim();
         
     const SpellEntry* potentialSpell = m_creature->ReachWithSpellAttack(victim);
     if (potentialSpell)
         m_creature->CastSpell(victim, potentialSpell->Id, true);
-# --- END IF ---
+#endif
 }
 
 /**
@@ -301,10 +301,10 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Check for school if specified
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
         if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
         { continue; }
-# --- END IF ---  
+#endif  
 		
 
         // Check for spell mechanic if specified
@@ -627,7 +627,7 @@ void ScriptedAI::SetEquipmentSlots(bool bLoadDefault, int32 iMainHand, int32 iOf
 enum
 {
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 
     NPC_BROODLORD               = 12017,
     NPC_VOID_REAVER             = 19516,
@@ -636,14 +636,14 @@ enum
     NPC_TALON_KING_IKISS        = 18473,
     NPC_KARGATH_BLADEFIST       = 16808,
 
-# --- ONE ONLY ---  
+#if defined (TBC) ---  
     NPC_BROODLORD               = 12017
-# --- END IF ---  
-# --- TWO ONLY ---
+#endif  
+#if defined (WOTLK)
     NPC_ANUBARAK                = 29120,
     NPC_SINDRAGOSA              = 36853,
     NPC_ZARITHRIAN              = 39746,
-# --- END IF ---
+#endif
 };
 
 bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
@@ -676,7 +676,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             }
             break;
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 
         case NPC_VOID_REAVER:                               // void reaver (calculate from center of room)
             if (m_creature->GetDistance2d(432.59f, 371.93f) < 105.0f)
@@ -703,8 +703,8 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             { return false; }
             break;
 
-# --- END IF ---  
-# --- TWO ONLY ---
+#endif  
+#if defined (WOTLK)
         case NPC_ANUBARAK:
             if (fY < 281.0f && fY > 228.0f)
                 return false;
@@ -717,7 +717,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             if (fZ > 87.0f)
                 return false;
             break;
-# --- END IF ---
+#endif
         default:
             script_error_log("EnterEvadeIfOutOfCombatArea used for creature entry %u, but does not have any definition.", m_creature->GetEntry());
             return false;
@@ -734,10 +734,10 @@ void Scripted_NoMovementAI::GetAIInformation(ChatHandler& reader)
 
 void Scripted_NoMovementAI::AttackStart(Unit* pWho)
 {
-# --- TWO ONLY ---
+#if defined (WOTLK)
     if (!m_creature->CanAttackByItself())
         return;
-# --- END IF ---    
+#endif    
     if (pWho && m_creature->Attack(pWho, true))
     {
         m_creature->AddThreat(pWho);

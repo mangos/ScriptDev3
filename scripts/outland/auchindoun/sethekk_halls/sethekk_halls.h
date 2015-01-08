@@ -50,13 +50,13 @@ enum
     SPELL_SUMMONING_BEAMS       = 39978,
     SPELL_RED_LIGHTNING         = 39990,
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
     ACHIEV_CRITA_TURKEY_TIME    = 11142,
     ITEM_PILGRIMS_HAT           = 46723,
     ITEM_PILGRIMS_DRESS         = 44785,
     ITEM_PILGRIMS_ROBE          = 46824,
     ITEM_PILGRIMS_ATTIRE        = 46800,
-# --- END IF ---
+#endif
 };
 
 class instance_sethekk_halls : public ScriptedInstance
@@ -73,9 +73,9 @@ class instance_sethekk_halls : public ScriptedInstance
         void SetData(uint32 uiType, uint32 uiData) override;
         uint32 GetData(uint32 uiType) const override;
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
-# --- END IF ---
+#endif
 
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override;

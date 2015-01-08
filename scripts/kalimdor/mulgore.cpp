@@ -35,15 +35,15 @@
 
 /**
  * ContentData
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
  * npc_kyle_the_frenzied
-# --- END IF ---
+#endif
  * EndContentData
  */
 
 #include "precompiled.h"
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 /*######
 # npc_kyle_the_frenzied
 ######*/
@@ -183,15 +183,15 @@ CreatureAI* GetAI_npc_kyle_the_frenzied(Creature* pCreature)
 {
     return new npc_kyle_the_frenziedAI(pCreature);
 }
-# --- END IF ---
+#endif
 void AddSC_mulgore()
 {
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name = "npc_kyle_the_frenzied";
     pNewScript->GetAI = &GetAI_npc_kyle_the_frenzied;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }

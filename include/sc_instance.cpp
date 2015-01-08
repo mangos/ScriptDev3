@@ -240,7 +240,7 @@ Creature* ScriptedInstance::GetSingleCreatureFromStorage(uint32 uiEntry, bool bS
     return NULL;
 }
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
 /**
    Helper function to start a timed achievement criteria for players in the map
 
@@ -262,7 +262,7 @@ void ScriptedInstance::DoStartTimedAchievement(AchievementCriteriaTypes criteria
     else
         debug_log("SD3: DoStartTimedAchievement attempt start achievements but no players in map.");
 }
-# --- END IF ---
+#endif
 
 /**
    Constructor for DialogueHelper

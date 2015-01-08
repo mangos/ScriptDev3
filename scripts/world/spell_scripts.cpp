@@ -36,29 +36,29 @@
 /**
  * ContentData
  * Spell 8913:  Sacred Cleansing
-# --- ZERO ONLY ---
+#if defined (CLASSIC)
  * Spell 10848: Shroud of Death
  * Spell 17327: Spirit Particles
-# --- END IF ---
+#endif
  * Spell 19512: Apply Salve
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
  * spell 21014
-# --- END IF ---
+#endif
  * Spell 21050: Melodious Rapture
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
  * spell 29528
  * spell 29866
  * spell 34665
  * spell 37136
  * spell 39246
- # --- TWO ONLY ---
+ #if defined (WOTLK)
  * spell 43340
- # --- END IF ---
+ #endif
  * spell 44935
  * spell 45109
  * spell 45111
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
  * spell 46023
  * spell 46770
  * spell 47575
@@ -68,7 +68,7 @@
  * spell 51366
  * spell 52090
  * spell 56099
-# --- END IF ---
+#endif
  * EndContentData
  */
 
@@ -80,7 +80,7 @@
  * - always return true when the spell is handled by script
  */
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
 enum
 {
     // quest 9452
@@ -89,20 +89,20 @@ enum
     NPC_ANGRY_MURLOC            = 17102,
     ITEM_RED_SNAPPER            = 23614,
     // SPELL_SUMMON_TEST           = 49214                  // ! Just wrong spell name? It summon correct creature (17102)but does not appear to be used.
- # --- TWO ONLY ---
+ #if defined (WOTLK)
     // quest 11472
     SPELL_ANUNIAQS_NET          = 21014,
     GO_TASTY_REEF_FISH          = 186949,
     NPC_REEF_SHARK              = 24637,
     ITEM_TASTY_REEF_FISH        = 34127,
- # --- END IF ---
+ #endif
 };
 
 bool EffectDummyGameObj_spell_dummy_go(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, GameObject* pGOTarget, ObjectGuid /*originalCasterGuid*/)
 {
     switch (uiSpellId)
     {
-# --- TWO ONLY ---
+#if defined (WOTLK)
         case SPELL_ANUNIAQS_NET:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -126,7 +126,7 @@ bool EffectDummyGameObj_spell_dummy_go(Unit* pCaster, uint32 uiSpellId, SpellEff
             }
             return true;
         }
-# --- END IF ---
+#endif
         case SPELL_CAST_FISHING_NET:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -154,11 +154,11 @@ bool EffectDummyGameObj_spell_dummy_go(Unit* pCaster, uint32 uiSpellId, SpellEff
 
     return false;
 }
-# --- END IF ---
+#endif
 
 enum
 {
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     // quest 9629
     SPELL_TAG_MURLOC                    = 30877,
     SPELL_TAG_MURLOC_PROC               = 30875,
@@ -178,7 +178,7 @@ enum
     SPELL_ADMINISTER_ANTIDOTE           = 34665,
     NPC_HELBOAR                         = 16880,
     NPC_DREADTUSK                       = 16992,
-# --- END IF ---
+#endif
 
     // quest 6124/6129
     SPELL_APPLY_SALVE                   = 19512,
@@ -190,7 +190,7 @@ enum
     NPC_CURED_DEER                      = 12299,
     NPC_CURED_GAZELLE                   = 12297,
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
     // quest 12906/13422
     SPELL_DISCIPLINING_ROD              = 56033,
     SAY_RAND_WORK1                      = -1000555,
@@ -204,9 +204,9 @@ enum
     SPELL_SACRED_CLEANSING              = 8913,
     NPC_MORBENT                         = 1200,
     NPC_WEAKENED_MORBENT                = 24782,
-# --- END IF ---
+#endif
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     // quest 11515
     SPELL_FEL_SIPHON_DUMMY              = 44936,
     NPC_FELBLOOD_INITIATE               = 24918,
@@ -217,7 +217,7 @@ enum
     NPC_OWLKIN                          = 16518,
     NPC_OWLKIN_INOC                     = 16534,
 
- # --- TWO ONLY ---
+ #if defined (WOTLK)
     // target for quest 12166)
     SPELL_LIQUID_FIRE                   = 46770,
     SPELL_LIQUID_FIRE_AURA              = 47972,
@@ -283,7 +283,7 @@ enum
     SAY_SPECIMEN                        = -1000581,
     NPC_NEXUS_DRAKE_HATCHLING           = 26127,
     SPELL_RAELORASZ_FIREBALL            = 46704,
- # --- END IF ---
+ #endif
 
     // Quest "Disrupt the Greengill Coast" (11541)
     SPELL_ORB_OF_MURLOC_CONTROL         = 45109,
@@ -293,7 +293,7 @@ enum
     NPC_DARKSPINE_MYRMIDON              = 25060,
     NPC_DARKSPINE_SIREN                 = 25073,
 
- # --- TWO ONLY ---
+ #if defined (WOTLK)
     // quest 14107
     SPELL_BLESSING_OF_PEACE             = 66719,
     NPC_FALLEN_HERO_SPIRIT              = 32149,
@@ -303,7 +303,7 @@ enum
     SAY_BLESS_3                         = -1000596,
     SAY_BLESS_4                         = -1000597,
     SAY_BLESS_5                         = -1000598,
- # --- END IF ---
+ #endif
 
     // quest "The Big Bone Worm" 10930
     SPELL_FUMPING                       = 39246,
@@ -311,7 +311,7 @@ enum
     NPC_SAND_GNOME                      = 22483,
     NPC_MATURE_BONE_SIFTER              = 22482,
 
- # --- TWO ONLY ---
+ #if defined (WOTLK)
     // quest 12813, by item 40587
     SPELL_DARKMENDER_TINCTURE           = 52741,
     SPELL_SUMMON_CORRUPTED_SCARLET      = 54415,
@@ -332,13 +332,13 @@ enum
     NPC_BEAR_KILL_CREDIT                = 33006,
     SAY_ITS_FEMALE                      = -1000642,
     SAY_ITS_MALE                        = -1000643,
- # --- END IF ---
+ #endif
 
     // quest 9849, item 24501
     SPELL_THROW_GORDAWG_BOULDER         = 32001,
     NPC_MINION_OF_GUROK                 = 18181,
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
     // quest 12589
     SPELL_HIT_APPLE                     = 51331,
     SPELL_MISS_APPLE                    = 51332,
@@ -364,16 +364,16 @@ enum
     SAY_FREE_1                          = -1000781,
     SAY_FREE_2                          = -1000782,
     SAY_FREE_3                          = -1000783,
-# --- END IF ---
+#endif
     // npcs that are only interactable while dead
     SPELL_SHROUD_OF_DEATH               = 10848,
     SPELL_SPIRIT_PARTICLES              = 17327,
     NPC_FRANCLORN_FORGEWRIGHT           = 8888,
     NPC_GAERIYAN                        = 9299,
-# --- TWO ONLY ---
+#if defined (WOTLK)
     NPC_GANJO                           = 26924,
-# --- END IF ---
-# --- NOT FOR ZERO ---
+#endif
+#if !defined (CLASSIC)
     // quest 11521
     SPELL_EXPOSE_RAZORTHORN_ROOT        = 44935,
     SPELL_SUMMON_RAZORTHORN_ROOT        = 44941,
@@ -383,27 +383,27 @@ enum
     //  for quest 10584
     SPELL_PROTOVOLTAIC_MAGNETO_COLLECTOR = 37136,
     NPC_ENCASED_ELECTROMENTAL           = 21731,
-# --- END IF ---
+#endif
 
     // quest 6661
     SPELL_MELODIOUS_RAPTURE             = 21050,
     SPELL_MELODIOUS_RAPTURE_VISUAL      = 21051,
     NPC_DEEPRUN_RAT                     = 13016,
     NPC_ENTHRALLED_DEEPRUN_RAT          = 13017,
-# --- TWO ONLY ---
+#if defined (WOTLK)
     // quest 12981
     SPELL_THROW_ICE                     = 56099,
     SPELL_FROZEN_IRON_SCRAP             = 56101,
     NPC_SMOLDERING_SCRAP_BUNNY          = 30169,
     GO_SMOLDERING_SCRAP                 = 192124,
-# --- END IF ---
+#endif
 };
 
 bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
 {
     switch (pAura->GetId())
     {
-# --- TWO ONLY ---
+#if defined (WOTLK)
         case SPELL_BLESSING_OF_PEACE:
         {
             Creature* pCreature = (Creature*)pAura->GetTarget();
@@ -436,8 +436,8 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
 
             return true;
         }
-# --- END IF ---
-# --- ZERO ONLY ---
+#endif
+#if defined (CLASSIC)
         case SPELL_SHROUD_OF_DEATH:
         case SPELL_SPIRIT_PARTICLES:
         {
@@ -459,8 +459,8 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
 
             return false;
         }
-# --- END IF ---
-# --- NOT FOR ZERO ---
+#endif
+#if !defined (CLASSIC)
         case SPELL_HEALING_SALVE:
         {
             if (pAura->GetEffIndex() != EFFECT_INDEX_0)
@@ -529,7 +529,7 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
 
             return true;
         }
-# --- TWO ONLY ---
+#if defined (WOTLK)
         case SPELL_RAELORASZ_FIREBALL:
         {
             if (pAura->GetEffIndex() != EFFECT_INDEX_0)
@@ -551,7 +551,7 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
             }
             return true;
         }
-# --- END IF ---
+#endif
         case SPELL_ENRAGE:
         {
             if (!bApply || pAura->GetTarget()->GetTypeId() != TYPEID_UNIT)
@@ -578,11 +578,11 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
         {
             Creature* pCreature = (Creature*)pAura->GetTarget();
 
-# --- NOT TWO ---
+#if !defined (WOTLK)
             if (!pCreature || (pCreature->GetEntry() != NPC_FRANCLORN_FORGEWRIGHT && pCreature->GetEntry() != NPC_GAERIYAN))
-# --- ELSE ---
+#else
             if (!pCreature || (pCreature->GetEntry() != NPC_FRANCLORN_FORGEWRIGHT && pCreature->GetEntry() != NPC_GAERIYAN && pCreature->GetEntry() != NPC_GANJO))
-# --- END IF ---
+#endif
             { return false; }
 
             if (bApply)
@@ -602,7 +602,7 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
             { ((Creature*)pTarget)->UpdateEntry(NPC_ENCASED_ELECTROMENTAL); }
             return true;
         }
-# --- END IF ---
+#endif
     }
 
     return false;
@@ -612,7 +612,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
 {
     switch (uiSpellId)
     {
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
         case SPELL_ADMINISTER_ANTIDOTE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -627,7 +627,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
-# --- END IF ---
+#endif
         case SPELL_APPLY_SALVE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -653,8 +653,8 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
-# --- NOT FOR ZERO ---
- # --- TWO ONLY ---
+#if !defined (CLASSIC)
+ #if defined (WOTLK)
         case SPELL_DARKMENDER_TINCTURE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -714,7 +714,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # -- END IF ---
+ #endif
         case SPELL_INOCULATE_OWLKIN:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -732,7 +732,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- TWO ONLY ---
+ #if defined (WOTLK)
         case SPELL_LIQUID_FIRE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -774,7 +774,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- END IF ---	
+ #endif	
         case SPELL_FEL_SIPHON_DUMMY:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -787,7 +787,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
-# --- END IF ---
+#endif
         case SPELL_SACRED_CLEANSING:
         {
             if (uiEffIndex == EFFECT_INDEX_1)
@@ -802,7 +802,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
-# --- TWO ONLY ---
+#if defined (WOTLK)
         case SPELL_SEEDS_OF_NATURES_WRATH:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -846,8 +846,8 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
-# --- END IF ---
-# --- NOT FOR ZERO ---
+#endif
+#if !defined (CLASSIC)
         case SPELL_TAG_MURLOC_PROC:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -857,7 +857,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- TWO ONLY ---
+ #if defined (WOTLK)
         case SPELL_THROW_BOULDER:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -906,7 +906,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- END IF ---		
+ #endif		
         case SPELL_ORB_OF_MURLOC_CONTROL:
         {
             pCreatureTarget->CastSpell(pCaster, SPELL_GREENGILL_SLAVE_FREED, true);
@@ -952,7 +952,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- TWO ONLY ---
+ #if defined (WOTLK)
         case SPELL_AHUNAES_KNIFE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -1011,7 +1011,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- END IF ---		
+ #endif		
         case SPELL_THROW_GORDAWG_BOULDER:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -1035,7 +1035,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- TWO ONLY ---
+ #if defined (WOTLK)
         case SPELL_HIT_APPLE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -1100,7 +1100,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- END IF ---
+ #endif
         case SPELL_EXPOSE_RAZORTHORN_ROOT:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -1119,7 +1119,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
-# --- END IF ---
+#endif
         case SPELL_MELODIOUS_RAPTURE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -1137,7 +1137,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
- # --- TWO ONLY ---
+ #if defined (WOTLK)
         case SPELL_THROW_ICE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -1157,7 +1157,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
-# --- END IF ---
+#endif
     }
 
     return false;
@@ -1167,12 +1167,12 @@ void AddSC_spell_scripts()
 {
     Script* pNewScript;
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     pNewScript = new Script;
     pNewScript->Name = "spell_dummy_go";
     pNewScript->pEffectDummyGO = &EffectDummyGameObj_spell_dummy_go;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "spell_dummy_npc";

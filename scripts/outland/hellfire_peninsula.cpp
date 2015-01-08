@@ -883,7 +883,7 @@ bool EffectDummyCreature_npc_colonel_jules(Unit* pCaster, uint32 uiSpellId, Spel
     return false;
 }
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
 /*######
 ## npc_magister_aledis
 ######*/
@@ -1005,7 +1005,7 @@ CreatureAI* GetAI_npc_magister_aledis(Creature* pCreature)
 {
     return new npc_magister_aledisAI(pCreature);
 }
-# --- END IF ---
+#endif
 
 void AddSC_hellfire_peninsula()
 {
@@ -1053,10 +1053,10 @@ void AddSC_hellfire_peninsula()
     pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_colonel_jules;
     pNewScript->RegisterSelf();
     
-# --- TWO ONLY ---
+#if defined (WOTLK)
     pNewScript = new Script;
     pNewScript->Name = "npc_magister_aledis";
     pNewScript->GetAI = &GetAI_npc_magister_aledis;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }

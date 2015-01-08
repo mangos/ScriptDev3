@@ -1408,7 +1408,7 @@ bool QuestAccept_npc_drijya(Player* pPlayer, Creature* pCreature, const Quest* p
     return false;
 }
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
 /*######
 ## npc_dimensius
 ######*/
@@ -1554,7 +1554,7 @@ CreatureAI* GetAI_npc_dimensius(Creature* pCreature)
 {
     return new npc_dimensiusAI(pCreature);
 }
-# --- END IF ---
+#endif
 
 void AddSC_netherstorm()
 {
@@ -1614,10 +1614,10 @@ void AddSC_netherstorm()
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_drijya;
     pNewScript->RegisterSelf();
 
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
     pNewScript = new Script;
     pNewScript->Name = "npc_dimensius";
     pNewScript->GetAI = &GetAI_npc_dimensius;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }

@@ -38,9 +38,9 @@ enum
 {
     EMOTE_DEEP_BREATH               = -1548056,
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
     SPELL_LURKER_SPAWN_TRIGGER      = 54587,
-# --- END IF ---
+#endif
     SPELL_WHIRL                     = 37660,
     SPELL_GEYSER                    = 37478,
     SPELL_SPOUT                     = 37431,                // trigger spells 37429, 37430
@@ -49,9 +49,9 @@ enum
     SPELL_WATERBOLT                 = 37138,
     SPELL_SUBMERGE                  = 37550,
 
-# --- NOT TWO ---
+#if !defined (WOTLK)
     NPC_LURKER_BELOW                = 21217,
-# --- END IF ---
+#endif
     NPC_COILFANG_AMBUSHER           = 21865,
     NPC_COILFANG_GUARDIAN           = 21873,
 
@@ -86,9 +86,9 @@ static const AddsLocations aLurkerLoc[MAX_SUBMERGE_ADDS] =
     {NPC_COILFANG_GUARDIAN, 42.471f, -445.115f, -19.76f},
 };
 
-# --- NOT TWO ---
+#if !defined (WOTLK)
 static const float afLurkerSpawnPos[4] = {40.4058f, -417.108f, -21.5911f, 3.03312f};
-# --- END IF ---
+#endif
 
 struct boss_the_lurker_belowAI : public Scripted_NoMovementAI
 {
@@ -186,10 +186,10 @@ struct boss_the_lurker_belowAI : public Scripted_NoMovementAI
 
         switch (m_uiPhase)
         {
-# --- TWO ONLY ---
+#if defined (WOTLK)
             case PHASE_EMERGEING:
                 break;
-# --- END IF --
+#endif
             case PHASE_SPOUT:
 
                 if (m_uiSpoutEndTimer < uiDiff)
@@ -308,11 +308,11 @@ bool GOUse_go_strange_pool(Player* pPlayer, GameObject* pGo)
         {
             if (pInstance->GetData(TYPE_THELURKER_EVENT) == NOT_STARTED || pInstance->GetData(TYPE_THELURKER_EVENT) == FAIL)
             {
-# --- NOT TWO ---
+#if !defined (WOTLK)
                 pPlayer->SummonCreature(NPC_LURKER_BELOW, afLurkerSpawnPos[0], afLurkerSpawnPos[1], afLurkerSpawnPos[2], afLurkerSpawnPos[3], TEMPSUMMON_DEAD_DESPAWN, 0);
-# --- ELSE ---
+#else
                 pPlayer->CastSpell(pPlayer, SPELL_LURKER_SPAWN_TRIGGER, true);
-# --- END IF ---
+#endif
                 pInstance->SetData(TYPE_THELURKER_EVENT, IN_PROGRESS);
                 return true;
             }

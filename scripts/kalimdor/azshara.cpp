@@ -35,11 +35,11 @@
 
 /**
  * ContentData
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 * npc_rizzle_sprysprocket
  * npc_depth_charge
  * go_southfury_moonstone
-# --- END IF ---
+#endif
  * mobs_spitelashes
  * npc_loramus_thalipedes
  * EndContentData
@@ -47,7 +47,7 @@
 
 #include "precompiled.h"
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 #include "escort_ai.h"
 
 /*#####
@@ -258,7 +258,7 @@ bool GOUse_go_southfury_moonstone(Player* pPlayer, GameObject* /*pGo*/)
 
     return false;
 }
-# --- END IF ---
+#endif
 
 /*######
 ## mobs_spitelashes
@@ -502,7 +502,7 @@ void AddSC_azshara()
     Script* pNewScript;
 
     pNewScript = new Script;
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     pNewScript->Name = "npc_rizzle_sprysprocket";
     pNewScript->GetAI = &GetAI_npc_rizzle_sprysprocket;
     pNewScript->pGossipHello = &GossipHello_npc_rizzle_sprysprocket;
@@ -520,7 +520,7 @@ void AddSC_azshara()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-# --- END IF ---
+#endif
     pNewScript->Name = "mobs_spitelashes";
     pNewScript->GetAI = &GetAI_mobs_spitelashes;
     pNewScript->RegisterSelf();

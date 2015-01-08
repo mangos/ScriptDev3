@@ -41,11 +41,11 @@ enum
     NPC_WRYNN                   = 1747,
     NPC_BOLVAR                  = 1748,
     NPC_PRESTOR                 = 1749,
-# --- ZERO ONLY ---
+#if defined (CLASSIC)
     NPC_WINDSOR                 = 12580
-# --- ELSE ---
+#else
     NPC_WINDSOR                 = 12580,
-# --- END IF ---
+#endif
 
     // Quest 11538
     NPC_EMISSARY_OF_HATE        = 25003,

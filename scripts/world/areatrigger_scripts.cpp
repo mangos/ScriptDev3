@@ -35,26 +35,26 @@
 
 /**
  * ContentData
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
  * at_aldurthar_gate                5284, 5285, 5286, 5287
-# --- END IF ---
-# --- NOT FOR ZERO ---  
+#endif
+#if !defined (CLASSIC)  
  * at_coilfang_waterfall            4591
  * at_legion_teleporter             4560 Teleporter TO Invasion Point: Cataclysm
-# --- END IF ---
+#endif
  * at_ravenholdt
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
  * at_spearborn_encampment          5030
  * at_warsong_farms
  * at_stormwright_shelf             5108
-# --- END IF ---
+#endif
  * at_childrens_week_spot           3546, 3547, 3548, 3549, 3550, 3552
  * at_scent_larkorwi                1726, 1727, 1728, 1729, 1730, 1731, 1732, 1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740
  * at_murkdeep                      1966
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
  * at_hot_on_the_trail              5710, 5711, 5712, 5714, 5715, 5716
  * at_ancient_leaf                  3587
-# --- END IF ---
+#endif
  * EndContentData
  */
 
@@ -85,7 +85,7 @@ bool AreaTrigger_at_childrens_week_spot(Player* pPlayer, AreaTriggerEntry const*
     return false;
 }
 
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
 /*######
 ## Quest 13315/13351
 ######*/
@@ -114,8 +114,8 @@ bool AreaTrigger_at_aldurthar_gate(Player* pPlayer, AreaTriggerEntry const* pAt)
     }
     return true;
 }
-# --- END IF ---
-# --- NOT FOR ZERO ---  
+#endif
+#if !defined (CLASSIC)  
 /*######
 ## at_coilfang_waterfall
 ######*/
@@ -167,7 +167,7 @@ bool AreaTrigger_at_legion_teleporter(Player* pPlayer, AreaTriggerEntry const* /
     }
     return false;
 }
-# --- END IF ---
+#endif
 
 /*######
 ## at_ravenholdt
@@ -189,7 +189,7 @@ bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
     return false;
 }
 
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
 /*######
 ## at_spearborn_encampment
 ######*/
@@ -291,7 +291,7 @@ bool AreaTrigger_at_stormwright_shelf(Player* pPlayer, AreaTriggerEntry const* /
 
     return true;
 }
-# --- END IF ---
+#endif
 
 /*######
 ## at_scent_larkorwi
@@ -362,7 +362,7 @@ bool AreaTrigger_at_murkdeep(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
     return false;
 }
 
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
 /*######
 ## at_hot_on_the_trail
 ######*/
@@ -449,7 +449,7 @@ bool AreaTrigger_at_ancient_leaf(Player* pPlayer, AreaTriggerEntry const* pAt)
 
     return false;
 }
-# --- END IF ---
+#endif
 
 void AddSC_areatrigger_scripts()
 {
@@ -460,13 +460,13 @@ void AddSC_areatrigger_scripts()
     pNewScript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
     pNewScript->RegisterSelf();
 
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
     pNewScript = new Script;
     pNewScript->Name = "at_aldurthar_gate";
     pNewScript->pAreaTrigger = &AreaTrigger_at_aldurthar_gate;
     pNewScript->RegisterSelf();
-# --- END IF ---	
-# --- NOT FOR ZERO ---  
+#endif	
+#if !defined (CLASSIC)  
     pNewScript = new Script;
     pNewScript->Name = "at_coilfang_waterfall";
     pNewScript->pAreaTrigger = &AreaTrigger_at_coilfang_waterfall;
@@ -476,14 +476,14 @@ void AddSC_areatrigger_scripts()
     pNewScript->Name = "at_legion_teleporter";
     pNewScript->pAreaTrigger = &AreaTrigger_at_legion_teleporter;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "at_ravenholdt";
     pNewScript->pAreaTrigger = &AreaTrigger_at_ravenholdt;
     pNewScript->RegisterSelf();
 
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
     pNewScript = new Script;
     pNewScript->Name = "at_spearborn_encampment";
     pNewScript->pAreaTrigger = &AreaTrigger_at_spearborn_encampment;
@@ -503,7 +503,7 @@ void AddSC_areatrigger_scripts()
     pNewScript->Name = "at_stormwright_shelf";
     pNewScript->pAreaTrigger = &AreaTrigger_at_stormwright_shelf;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "at_scent_larkorwi";
@@ -515,7 +515,7 @@ void AddSC_areatrigger_scripts()
     pNewScript->pAreaTrigger = &AreaTrigger_at_murkdeep;
     pNewScript->RegisterSelf();
 
-# --- TWO ONLY ---    
+#if defined (WOTLK)    
     pNewScript = new Script;
     pNewScript->Name = "at_hot_on_the_trail";
     pNewScript->pAreaTrigger = &AreaTrigger_at_hot_on_the_trail;
@@ -525,5 +525,5 @@ void AddSC_areatrigger_scripts()
     pNewScript->Name = "at_ancient_leaf";
     pNewScript->pAreaTrigger = &AreaTrigger_at_ancient_leaf;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }

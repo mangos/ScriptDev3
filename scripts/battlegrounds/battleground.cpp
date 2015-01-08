@@ -54,9 +54,9 @@ enum
 
     SPELL_SPIRIT_HEAL               = 22012,                // Spirit Heal
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     SPELL_SPIRIT_HEAL_MANA          = 44535,                // in battlegrounds player get this no-mana-cost-buff
-# --- END IF ---
+#endif
 
 
     SPELL_WAITING_TO_RESURRECT      = 2584                  // players who cancel this aura don't want a resurrection
@@ -106,14 +106,14 @@ struct npc_spirit_guideAI : public ScriptedAI
         }
     }
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     void SpellHitTarget(Unit* pUnit, const SpellEntry* pSpellEntry) override
     {
         if (pSpellEntry->Id == SPELL_SPIRIT_HEAL && pUnit->GetTypeId() == TYPEID_PLAYER
             && pUnit->HasAura(SPELL_WAITING_TO_RESURRECT))
         { pUnit->CastSpell(pUnit, SPELL_SPIRIT_HEAL_MANA, true); }
     }
-# --- END IF ---
+#endif
 };
 
 bool GossipHello_npc_spirit_guide(Player* pPlayer, Creature* /*pCreature*/)

@@ -30,12 +30,12 @@
 void AddScripts();
 void AddEasternKingdomsScripts();
 void AddKalimdorScripts();
-# --- NOT ZERO ---
+#if !defined (CLASSIC)
 void AddOutlandsScripts();
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
 void AddNorthrendScripts();
-# --- END IF ---
+#endif
 void AddWorldScripts();
 void AddBattlegroundScripts();
 

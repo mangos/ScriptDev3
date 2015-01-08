@@ -112,9 +112,9 @@ struct boss_thekalBaseAI : public ScriptedAI
         m_creature->RemoveAllAurasOnDeath();
         m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
         m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
-# --- END IF ---
+#endif
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         m_creature->ClearAllReactives();
@@ -403,11 +403,11 @@ struct boss_thekalAI : public boss_thekalBaseAI
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_TIGERS) == CAST_OK)
                     {
 
-# --- ZERO ONLY ---  
+#if defined (CLASSIC)  
                         m_uiSummonTigersTimer = 50000;
-# --- ELSE ---
+#else
                         m_uiSummonTigersTimer = urand(10000, 14000);
-# --- END IF ---
+#endif
                     }
                 }
                 else

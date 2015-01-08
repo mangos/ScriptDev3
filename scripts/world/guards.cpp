@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
  * guard_azuremyst
  * guard_bluffwatcher
  * guard_contested
@@ -43,19 +43,19 @@
  * guard_dunmorogh
  * guard_durotar
  * guard_elwynnforest
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
  * guard_eversong
  * guard_exodar
-# --- END IF ---
+#endif
  * guard_ironforge
  * guard_mulgore
  * guard_orgrimmar
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
  * guard_shattrath
  * guard_shattrath_aldor
  * guard_shattrath_scryer
  * guard_silvermoon
-# --- END IF ---
+#endif
  * guard_stormwind
  * guard_teldrassil
  * guard_tirisfal
@@ -66,12 +66,12 @@
 #include "precompiled.h"
 #include "guard_ai.h"
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
 CreatureAI* GetAI_guard_azuremyst(Creature* pCreature)
 {
     return new guardAI(pCreature);
 }
-# --- END IF ---
+#endif
 CreatureAI* GetAI_guard_bluffwatcher(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -102,7 +102,7 @@ CreatureAI* GetAI_guard_elwynnforest(Creature* pCreature)
     return new guardAI(pCreature);
 }
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
 CreatureAI* GetAI_guard_eversong(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -112,7 +112,7 @@ CreatureAI* GetAI_guard_exodar(Creature* pCreature)
 {
     return new guardAI(pCreature);
 }
-# --- END IF ---
+#endif
 CreatureAI* GetAI_guard_ironforge(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -128,7 +128,7 @@ CreatureAI* GetAI_guard_orgrimmar(Creature* pCreature)
     return new guardAI_orgrimmar(pCreature);
 }
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
 CreatureAI* GetAI_guard_shattrath(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -272,7 +272,7 @@ CreatureAI* GetAI_guard_silvermoon(Creature* pCreature)
 {
     return new guardAI(pCreature);
 }
-# --- END IF ---
+#endif
 
 CreatureAI* GetAI_guard_stormwind(Creature* pCreature)
 {
@@ -298,12 +298,12 @@ void AddSC_guards()
 {
     Script* pNewScript;
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     pNewScript = new Script;
     pNewScript->Name = "guard_azuremyst";
     pNewScript->GetAI = &GetAI_guard_azuremyst;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "guard_bluffwatcher";
@@ -335,7 +335,7 @@ void AddSC_guards()
     pNewScript->GetAI = &GetAI_guard_elwynnforest;
     pNewScript->RegisterSelf();
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     pNewScript = new Script;
     pNewScript->Name = "guard_eversong";
     pNewScript->GetAI = &GetAI_guard_eversong;
@@ -345,7 +345,7 @@ void AddSC_guards()
     pNewScript->Name = "guard_exodar";
     pNewScript->GetAI = &GetAI_guard_exodar;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "guard_ironforge";
@@ -362,7 +362,7 @@ void AddSC_guards()
     pNewScript->GetAI = &GetAI_guard_orgrimmar;
     pNewScript->RegisterSelf();
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     pNewScript = new Script;
     pNewScript->Name = "guard_shattrath";
     pNewScript->GetAI = &GetAI_guard_shattrath;
@@ -382,7 +382,7 @@ void AddSC_guards()
     pNewScript->Name = "guard_silvermoon";
     pNewScript->GetAI = &GetAI_guard_silvermoon;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "guard_stormwind";

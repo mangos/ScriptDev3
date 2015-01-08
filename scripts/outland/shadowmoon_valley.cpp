@@ -543,7 +543,7 @@ struct npc_wildaAI : public npc_escortAI
         }
     }
 
-# --- NOT TWO ---
+#if !defined (WOTLK)
     void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
@@ -560,8 +560,8 @@ struct npc_wildaAI : public npc_escortAI
             case 2: DoScriptText(SAY_WIL_PROGRESS5, m_creature); break;
         }
     }
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
     void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
@@ -570,8 +570,8 @@ struct npc_wildaAI : public npc_escortAI
                 pSummoned->AI()->AttackStart(pPlayer);
         }
     }
-# --- END IF ---
-# --- NOT TWO ---
+#endif
+#if !defined (WOTLK)
     void DoSpawnAssassin()
     {
         // unknown where they actually appear
@@ -580,8 +580,8 @@ struct npc_wildaAI : public npc_escortAI
 
         m_creature->SummonCreature(NPC_COILSKAR_ASSASSIN, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000);
     }
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
     // wrapper to spawn assassin and do text
     void DoSpawnAssassin(uint8 uiCount = 1)
     {
@@ -609,9 +609,9 @@ struct npc_wildaAI : public npc_escortAI
             case 6: DoScriptText(SAY_WIL_AGGRO_2, m_creature); break;
         }
     }
-# --- END IF ---
+#endif
 
-# --- NOT TWO ---
+#if !defined (WOTLK)
     void Aggro(Unit* pWho) override
     {
         // don't always use
@@ -629,9 +629,9 @@ struct npc_wildaAI : public npc_escortAI
             }
         }
     }
-# --- END IF
+#endif
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
     // free the water spirits
     void DoFreeSpirits()
     {
@@ -662,14 +662,14 @@ struct npc_wildaAI : public npc_escortAI
         for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
             (*itr)->ForcedDespawn(6000);
     }
-# --- END IF ---
+#endif
 
     void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         { return; }
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
         if (m_uiLightningTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHAIN_LIGHTNING) == CAST_OK)
@@ -685,7 +685,7 @@ struct npc_wildaAI : public npc_escortAI
         }
         else
             m_uiShockTimer -= uiDiff;
-# --- END IF ---
+#endif
         
         if (m_creature->GetHealthPercent() <= 30.0f)
         {
@@ -712,12 +712,12 @@ bool QuestAccept_npc_wilda(Player* pPlayer, Creature* pCreature, const Quest* pQ
     if (pQuest->GetQuestId() == QUEST_ESCAPE_COILSCAR)
     {
         DoScriptText(SAY_WIL_START, pCreature, pPlayer);
-# --- NOT TWO ---
+#if !defined (WOTLK)
         pCreature->SetFactionTemporary(FACTION_EARTHEN, TEMPFACTION_RESTORE_RESPAWN);
-# --- ELSE ---
+#else
         pCreature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
         pCreature->SetLevitate(false);
-# --- END IF ---
+#endif
 
         if (npc_wildaAI* pEscortAI = dynamic_cast<npc_wildaAI*>(pCreature->AI()))
         { pEscortAI->Start(false, pPlayer, pQuest); }
@@ -1519,15 +1519,15 @@ const static EventLocations aDamnationLocations[] =
     { -3600.68f, 1886.58f, 47.24f, 1.81f},     // 1 earth spirit summon loc
     { -3597.19f, 1887.46f, 47.24f, 1.77f},     // 2 water spirit summon loc
     { -3593.18f, 1888.27f, 47.24f, 1.77f},     // 3 air spirit summon loc
-# --- NOT TWO ---
+#if !defined (WOTLK)
     { -3595.36f, 1869.78f, 47.24f},            // 4 fight ready move loc
     { -3635.90f, 1860.94f, 52.93f},            // 5 elementals move loc
     { -3599.71f, 1897.94f, 47.24f}             // 6 epilogue move loc
-# --- ELSE ---
+#else
     { -3595.36f, 1869.78f, 47.24f},            // 4 fight ready move loc
     { -3635.90f, 1860.94f, 52.93f},            // 5 elementals move loc
     { -3599.71f, 1897.94f, 47.24f}             // 6 epilogue move loc
-# --- END IF ---
+#endif
 };
 
 struct npc_spawned_oronok_tornheartAI : public ScriptedAI, private DialogueHelper
@@ -1944,11 +1944,11 @@ struct npc_veneratus_spawn_nodeAI : public Scripted_NoMovementAI
         }
     }
 
-# --- NOT TWO ---
+#if !defined (WOTLK)
     void UpdateAI(const uint32 uiDiff) override { }
-# --- ELSE ---
+#else
     void UpdateAI(const uint32 /* uiDiff */) override { }
-# --- END IF ---
+#endif
 };
 
 CreatureAI* GetAI_npc_veneratus_spawn_node(Creature* pCreature)

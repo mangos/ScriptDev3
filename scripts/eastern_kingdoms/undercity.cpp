@@ -36,16 +36,16 @@
 /**
  * ContentData
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
  * npc_lady_sylvanas_windrunner
-# --- END IF ---
+#endif
 
  * EndContentData
  */
 
 #include "precompiled.h"
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 /*######
 ## npc_lady_sylvanas_windrunner
 ######*/
@@ -168,11 +168,11 @@ bool QuestRewarded_npc_lady_sylvanas_windrunner(Player* /*pPlayer*/, Creature* p
 
     return true;
 }
-# --- END IF ---
+#endif
 void AddSC_undercity()
 {
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     Script* pNewScript;
 
     pNewScript = new Script;
@@ -180,5 +180,5 @@ void AddSC_undercity()
     pNewScript->GetAI = &GetAI_npc_lady_sylvanas_windrunner;
     pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_lady_sylvanas_windrunner;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }

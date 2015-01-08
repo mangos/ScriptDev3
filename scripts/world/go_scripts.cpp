@@ -36,15 +36,15 @@
 /**
  * ContentData
  * go_barov_journal
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
  * go_ethereum_prison
  * go_ethereum_stasis
-# --- END IF ---
+#endif
  * go_andorhal_tower
-# --- TWO ONLY ---
+#if defined (WOTLK)
  * go_scourge_enclosure
  * go_lab_work_reagents
-# --- END IF ---
+#endif
  * EndContentData
  */
 
@@ -69,7 +69,7 @@ bool GOUse_go_barov_journal(Player* pPlayer, GameObject* /*pGo*/)
     return true;
 }
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 /*######
 ## go_ethereum_prison
 ######*/
@@ -169,8 +169,8 @@ bool GOUse_go_jump_a_tron(Player* pPlayer, GameObject* pGo)
 
     return false;
 }
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
 /*######
 ## go_mysterious_snow_mound
 ######*/
@@ -231,7 +231,7 @@ bool GOUse_go_tele_to_violet_stand(Player* pPlayer, GameObject* /*pGo*/)
 
     return true;
 }
-# --- END IF ---
+#endif
 
 /*######
 ## go_andorhal_tower
@@ -279,7 +279,7 @@ bool GOUse_go_andorhal_tower(Player* pPlayer, GameObject* pGo)
     return true;
 }
 
-# --- NOT TWO ---
+#if !defined (WOTLK)
 enum 
 {
     GOSSIP_TABLE_THEKA = 1653,
@@ -295,9 +295,9 @@ bool GossipHelloGO_table_theka(Player* pPlayer, GameObject* pGo)
 
     return true;
 }
-# --- END IF ---
+#endif
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
 /*######
 ## go_scourge_enclosure
 ######*/
@@ -361,7 +361,7 @@ bool GOUse_go_lab_work_reagents(Player* pPlayer, GameObject* pGo)
 
     return false;
 }
-# --- END IF ---
+#endif
 
 void AddSC_go_scripts()
 {
@@ -372,7 +372,7 @@ void AddSC_go_scripts()
     pNewScript->pGOUse =          &GOUse_go_barov_journal;
     pNewScript->RegisterSelf();
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     pNewScript = new Script;
     pNewScript->Name = "go_ethereum_prison";
     pNewScript->pGOUse =          &GOUse_go_ethereum_prison;
@@ -387,8 +387,8 @@ void AddSC_go_scripts()
     pNewScript->Name = "go_jump_a_tron";
     pNewScript->pGOUse =          &GOUse_go_jump_a_tron;
     pNewScript->RegisterSelf();
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
     pNewScript = new Script;
     pNewScript->Name = "go_mysterious_snow_mound";
     pNewScript->pGOUse =          &GOUse_go_mysterious_snow_mound;
@@ -403,21 +403,21 @@ void AddSC_go_scripts()
     pNewScript->Name = "go_tele_to_violet_stand";
     pNewScript->pGOUse =          &GOUse_go_tele_to_violet_stand;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "go_andorhal_tower";
     pNewScript->pGOUse =          &GOUse_go_andorhal_tower;
     pNewScript->RegisterSelf();
 
-# --- NOT TWO ---
+#if !defined (WOTLK)
     pNewScript = new Script;
     pNewScript->Name = "go_table_theka";
     pNewScript->pGossipHelloGO =  &GossipHelloGO_table_theka;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
     pNewScript = new Script;
     pNewScript->Name = "go_scourge_enclosure";
     pNewScript->pGOUse =          &GOUse_go_scourge_enclosure;
@@ -427,5 +427,5 @@ void AddSC_go_scripts()
     pNewScript->Name = "go_lab_work_reagents";
     pNewScript->pGOUse =          &GOUse_go_lab_work_reagents;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }

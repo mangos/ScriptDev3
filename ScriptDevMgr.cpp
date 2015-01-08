@@ -497,7 +497,7 @@ bool sd3::AreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
     return pTempScript->pAreaTrigger(pPlayer, atEntry);
 }
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
 bool SD3::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId)
 {
     Script* pTempScript = m_scripts[pClickedCreature->GetScriptId()];
@@ -507,7 +507,7 @@ bool SD3::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSp
     
     return pTempScript->pNpcSpellClick(pPlayer, pClickedCreature, uiSpellId);
 }
-# --- END IF ---
+#endif
 bool sd3::ProcessEvent(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
 {
     Script* pTempScript = m_scripts[GetEventIdScriptId(uiEventId)];

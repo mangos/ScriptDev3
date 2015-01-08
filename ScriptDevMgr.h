@@ -74,9 +74,9 @@ public:
     static bool GOUse(Player*, GameObject*);
     static bool ItemUse(Player*, Item*, SpellCastTargets const&);
     static bool AreaTrigger(Player*, AreaTriggerEntry const*);
-# --- TWO ONLY ---
+#if defined (WOTLK)
     static bool NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId);
-# --- END IF ---
+#endif
     static bool ProcessEvent(uint32, Object*, Object*, bool);
     static bool EffectDummyCreature(Unit*, uint32, SpellEffectIndex, Creature*, ObjectGuid);
     static bool EffectDummyGameObject(Unit*, uint32, SpellEffectIndex, GameObject*, ObjectGuid);
@@ -129,11 +129,11 @@ struct Script
         pDialogStatusNPC(NULL), pDialogStatusGO(NULL),
         pQuestAcceptNPC(NULL), pQuestAcceptGO(NULL), pQuestAcceptItem(NULL),
         pQuestRewardedNPC(NULL), pQuestRewardedGO(NULL),
-# --- NOT TWO ---
+#if !defined (WOTLK)
         pGOUse(NULL), pItemUse(NULL), pAreaTrigger(NULL), pProcessEventId(NULL),
-# --- ELSE ---
+#else
         pGOUse(NULL), pItemUse(NULL), pAreaTrigger(NULL), pNpcSpellClick(NULL), pProcessEventId(NULL),
-# --- END IF ---
+#endif
         pEffectDummyNPC(NULL), pEffectDummyGO(NULL), pEffectDummyItem(NULL), pEffectScriptEffectNPC(NULL),
         pEffectAuraDummy(NULL), GetAI(NULL), GetInstanceData(NULL)
     {}
@@ -156,9 +156,9 @@ struct Script
     bool (*pGOUse)(Player*, GameObject*);
     bool (*pItemUse)(Player*, Item*, SpellCastTargets const&);
     bool (*pAreaTrigger)(Player*, AreaTriggerEntry const*);
-# --- TWO ONLY ---
+#if defined (WOTLK)
     bool (*pNpcSpellClick)(Player*, Creature*, uint32);
-# --- END IF ---
+#endif
     bool (*pProcessEventId)(uint32, Object*, Object*, bool);
     bool (*pEffectDummyNPC)(Unit*, uint32, SpellEffectIndex, Creature*, ObjectGuid);
     bool (*pEffectDummyGO)(Unit*, uint32, SpellEffectIndex, GameObject*, ObjectGuid);

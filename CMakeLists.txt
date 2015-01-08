@@ -105,7 +105,7 @@ file(GLOB sources_kalimdor scripts/kalimdor/*.cpp scripts/kalimdor/*.h)
 file(GLOB sources_outlands scripts/outland/*.cpp scripts/outland/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_outlands})
   source_group("Outlands Scripts" FILES ${sources_outlands})
-# --- END IF
+# --- END IF ---
 # --- TWO ONLY ---
 #Northrend Scripts
 file(GLOB sources_northrend scripts/northrend/*.cpp scripts/northrend/*.h)
@@ -262,7 +262,7 @@ file(GLOB sources_instance_k_cot_oh scripts/kalimdor/caverns_of_time/old_hillsbr
 file(GLOB sources_instance_k_cot_cos scripts/kalimdor/caverns_of_time/culling_of_stratholme/*.cpp scripts/kalimdor/caverns_of_time/culling_of_stratholme/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_cot_cos})
   source_group("Kalimdor Scripts\\Instances\\Caverns of Time\\Culling of Stratholme" FILES ${sources_instance_k_cot_cos})
-# --- END IF
+# --- END IF ---
   
 #Instance: Zul Farrak Scripts
 file(GLOB sources_instance_k_zf scripts/kalimdor/zulfarrak/*.cpp scripts/kalimdor/zulfarrak/*.h)

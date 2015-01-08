@@ -42,23 +42,23 @@
 /**
  * ContentData
  * npc_chicken_cluck          100%    support for quest 3861 (Cluck!)
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
  * npc_air_force_bots          80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
  * npc_dancing_flames         100%    midsummer event NPC
  * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD3
-# --- END IF ---
+#endif
  * npc_garments_of_quests     100%    NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
  * npc_injured_patient         80%    patients for triage-quests (6622 and 6624)
  * npc_doctor                 100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
  * npc_innkeeper               25%    ScriptName not assigned. Innkeepers in general.
-# --- TWO ONLY ---
+#if defined (WOTLK)
  * npc_spring_rabbit            1%    Used for pet "Spring Rabbit" of Noblegarden
-# --- END IF ---
+#endif
  * npc_redemption_target      100%    Used for the paladin quests: 1779,1781,9600,9685
  * EndContentData
  */
  
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
 /*########
 # npc_air_force_bots
 #########*/
@@ -261,7 +261,7 @@ CreatureAI* GetAI_npc_air_force_bots(Creature* pCreature)
 {
     return new npc_air_force_botsAI(pCreature);
 }
-# --- END IF ---
+#endif
 
 /*########
 # npc_chicken_cluck
@@ -379,7 +379,7 @@ bool QuestRewarded_npc_chicken_cluck(Player* /*pPlayer*/, Creature* pCreature, c
     return true;
 }
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
 /*######
 ## npc_dancing_flames
 ######*/
@@ -423,7 +423,7 @@ CreatureAI* GetAI_npc_dancing_flames(Creature* pCreature)
 {
     return new npc_dancing_flamesAI(pCreature);
 }
-# --- END IF ---
+#endif
 
 /*######
 ## Triage quest
@@ -638,11 +638,11 @@ struct npc_injured_patientAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff) override
     {
         // lower HP on every world tick makes it a useful counter, not officlone though
-# --- NOT TWO ---
+#if !defined (WOTLK)
         uint32 uiHPLose = uint32(0.03f * uiDiff); 
-# --- ELSE ---
+#else
         uint32 uiHPLose = uint32(0.05f * uiDiff);
-# --- END IF ---
+#endif
         if (m_creature->IsAlive() && m_creature->GetHealth() > 1 + uiHPLose)
         {
             m_creature->SetHealth(m_creature->GetHealth() - uiHPLose);
@@ -802,14 +802,14 @@ void npc_doctorAI::UpdateAI(const uint32 uiDiff)
 
             if (Creature* Patient = m_creature->SummonCreature(patientEntry, (*itr)->x, (*itr)->y, (*itr)->z, (*itr)->o, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000))
             {
-# --- NOT TWO ---
+#if !defined (WOTLK)
                 // 2.4.3, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
                 Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
                 // 303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
                 Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
-# --- END IF ---
+#endif
 
                 m_lPatientGuids.push_back(Patient->GetObjectGuid());
 
@@ -1147,10 +1147,10 @@ bool GossipHello_npc_innkeeper(Player* pPlayer, Creature* pCreature)
     // Should only apply to innkeeper close to start areas.
     if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetAreaId()))
     {
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
         // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
         if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
-# --- END IF ---
+#endif
         { pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1); }
     }
 
@@ -1182,7 +1182,7 @@ bool GossipSelect_npc_innkeeper(Player* pPlayer, Creature* pCreature, uint32 /*u
     return true;
 }
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
 /*######
 ## npc_spring_rabbit
 ## ATTENTION: This is actually a "fun" script, entirely done without proper source!
@@ -1362,7 +1362,7 @@ CreatureAI* GetAI_npc_spring_rabbit(Creature* pCreature)
 {
     return new npc_spring_rabbitAI(pCreature);
 }
-# --- END IF ---
+#endif
 
 /*######
 ## npc_redemption_target
@@ -1481,12 +1481,12 @@ void AddSC_npcs_special()
 {
     Script* pNewScript;
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     pNewScript = new Script;
     pNewScript->Name = "npc_air_force_bots";
     pNewScript->GetAI = &GetAI_npc_air_force_bots;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "npc_chicken_cluck";
@@ -1495,12 +1495,12 @@ void AddSC_npcs_special()
     pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_chicken_cluck;
     pNewScript->RegisterSelf();
 
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     pNewScript = new Script;
     pNewScript->Name = "npc_dancing_flames";
     pNewScript->GetAI = &GetAI_npc_dancing_flames;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "npc_injured_patient";
@@ -1529,12 +1529,12 @@ void AddSC_npcs_special()
     pNewScript->pGossipSelect = &GossipSelect_npc_innkeeper;
     pNewScript->RegisterSelf(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
     pNewScript = new Script;
     pNewScript->Name = "npc_spring_rabbit";
     pNewScript->GetAI = &GetAI_npc_spring_rabbit;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "npc_redemption_target";

@@ -35,9 +35,9 @@
 
 /**
  * ContentData
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
  * npc_clintar_dw_spirit
-# --- END IF ---
+#endif
  * npc_keeper_remulos
  * boss_eranikus
  * EndContentData
@@ -48,7 +48,7 @@
 #include "ObjectMgr.h"
 
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 /*######
 # npc_clintar_dw_spirit
 ####*/
@@ -185,7 +185,7 @@ bool EffectDummyCreature_npc_clintar_dw_spirit(Unit* pCaster, uint32 spellId, Sp
     }
     return true;
 }
-# --- END IF ---
+#endif
 
 /*######
 ## npc_keeper_remulos
@@ -1067,13 +1067,13 @@ void AddSC_moonglade()
 {
     Script* pNewScript;
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     pNewScript = new Script;
     pNewScript->Name = "npc_clintar_dw_spirit";
     pNewScript->GetAI = &GetAI_npc_clintar_dw_spirit;
     pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_clintar_dw_spirit;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "npc_keeper_remulos";

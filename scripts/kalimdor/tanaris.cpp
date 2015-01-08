@@ -36,9 +36,9 @@
 /**
  * ContentData
  * mob_aquementas
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
  * npc_custodian_of_time
-# --- END IF ---
+#endif
  * npc_oox17tn
  * npc_stone_watcher_of_norgannon
  * npc_tooga
@@ -156,7 +156,7 @@ CreatureAI* GetAI_mob_aquementas(Creature* pCreature)
     return new mob_aquementasAI(pCreature);
 }
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 /*######
 ## npc_custodian_of_time
 ######*/
@@ -245,7 +245,7 @@ CreatureAI* GetAI_npc_custodian_of_time(Creature* pCreature)
 {
     return new npc_custodian_of_timeAI(pCreature);
 }
-# --- END IF ---
+#endif
 
 /*######
 ## npc_oox17tn
@@ -669,12 +669,12 @@ void AddSC_tanaris()
     pNewScript->GetAI = &GetAI_mob_aquementas;
     pNewScript->RegisterSelf();
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     pNewScript = new Script;
     pNewScript->Name = "npc_custodian_of_time";
     pNewScript->GetAI = &GetAI_npc_custodian_of_time;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
     pNewScript = new Script;
     pNewScript->Name = "npc_oox17tn";
     pNewScript->GetAI = &GetAI_npc_oox17tn;

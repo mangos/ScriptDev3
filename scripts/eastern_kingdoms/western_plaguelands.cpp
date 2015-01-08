@@ -120,7 +120,7 @@ CreatureAI* GetAI_npc_the_scourge_cauldron(Creature* pCreature)
     return new npc_the_scourge_cauldronAI(pCreature);
 }
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 /*######
 ## npc_anchorite_truuen
 ######*/
@@ -243,7 +243,7 @@ bool QuestAccept_npc_anchorite_truuen(Player* pPlayer, Creature* pCreature, cons
 
     return true;
 }
-# --- END IF ---
+#endif
 
 /*######
 ## npc_taelan_fordring
@@ -429,9 +429,9 @@ struct npc_taelan_fordringAI: public npc_escortAI, private DialogueHelper
             m_creature->ClearComboPointHolders();
             m_creature->RemoveAllAurasOnDeath();
             m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
             m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
-# --- END IF ---
+#endif
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             m_creature->ClearAllReactives();
             m_creature->GetMotionMaster()->Clear();
@@ -1095,14 +1095,14 @@ void AddSC_western_plaguelands()
 
     pNewScript = new Script;
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     pNewScript->Name = "npc_anchorite_truuen";
     pNewScript->GetAI = &GetAI_npc_anchorite_truuen;
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_anchorite_truuen;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-# --- END IF ---
+#endif
 
     pNewScript->Name = "npc_taelan_fordring";
     pNewScript->GetAI = &GetAI_npc_taelan_fordring;

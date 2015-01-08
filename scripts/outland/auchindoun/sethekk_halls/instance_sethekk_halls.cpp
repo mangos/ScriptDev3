@@ -143,7 +143,7 @@ void instance_sethekk_halls::Load(const char* chrIn)
     OUT_LOAD_INST_DATA_COMPLETE;
 }
 
-# --- TWO ONLY ---
+#if defined (WOTLK)
 bool instance_sethekk_halls::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
 {
     if (uiCriteriaId != ACHIEV_CRITA_TURKEY_TIME)
@@ -155,7 +155,7 @@ bool instance_sethekk_halls::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, P
     return pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_HAT, 1) && (pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_DRESS, 1)
             || pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_ROBE, 1) || pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_ATTIRE, 1));
 }
-# --- END IF ---
+#endif
 
 InstanceData* GetInstanceData_instance_sethekk_halls(Map* pMap)
 {

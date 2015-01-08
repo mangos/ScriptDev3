@@ -35,16 +35,16 @@
 
 /**
  * ContentData
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
  * item_arcane_charges                 Prevent use if player is not flying (cannot cast while on ground)
  * item_flying_machine(i34060,i34061)  Engineering crafted flying machines
  * item_gor_dreks_ointment(i30175)     Protecting Our Own(q10488)
-# --- END IF ---
+#endif
  * EndContentData
  */
 
 #include "precompiled.h"
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
 #include "Spell.h"
 
 /*#####
@@ -64,11 +64,11 @@ bool ItemUse_item_arcane_charges(Player* pPlayer, Item* pItem, const SpellCastTa
     pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
 
     if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_ARCANE_CHARGES))
- # --- TWO ONLY ---
+ #if defined (WOTLK)
     { Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_ON_GROUND); }
- # --- ELSE ---
+ #else
     { Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_ERROR); }
- # --- END IF ---
+ #endif
     return true;
 }
 
@@ -117,8 +117,8 @@ bool ItemUse_item_gor_dreks_ointment(Player* pPlayer, Item* pItem, const SpellCa
 
     return false;
 }
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
 /*#####
 # item_petrov_cluster_bombs
 #####*/
@@ -147,11 +147,11 @@ bool ItemUse_item_petrov_cluster_bombs(Player* pPlayer, Item* pItem, const Spell
 
     return false;
 }
-# --- END IF ---
+#endif
 
 void AddSC_item_scripts()
 {
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
     Script* pNewScript;
 
     pNewScript = new Script;
@@ -168,11 +168,11 @@ void AddSC_item_scripts()
     pNewScript->Name = "item_gor_dreks_ointment";
     pNewScript->pItemUse = &ItemUse_item_gor_dreks_ointment;
     pNewScript->RegisterSelf();
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
     pNewScript = new Script;
     pNewScript->Name = "item_petrov_cluster_bombs";
     pNewScript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }

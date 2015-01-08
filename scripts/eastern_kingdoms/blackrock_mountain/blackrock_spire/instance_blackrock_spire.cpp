@@ -99,11 +99,11 @@ static const float rookeryEventSpawnPos[3] = {43.7685f, -259.82f, 91.6483f};
 
 instance_blackrock_spire::instance_blackrock_spire(Map* pMap) : ScriptedInstance(pMap), DialogueHelper(aStadiumDialogue),
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     m_bUpperDoorOpened(false),
     m_uiDragonspineDoorTimer(0),
     m_uiDragonspineGoCount(0),
-# --- END IF ---
+#endif
 
     m_uiFlamewreathEventTimer(0),
     m_uiFlamewreathWaveCount(0),
@@ -151,7 +151,7 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             }
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
             break;
 
         case GO_BRAZIER_1:
@@ -161,7 +161,7 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
         case GO_BRAZIER_5:
         case GO_BRAZIER_6:
         case GO_DRAGONSPINE:
-# --- END IF ---
+#endif
 
             break;
 
@@ -504,7 +504,7 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
 }
 
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 void instance_blackrock_spire::DoOpenUpperDoorIfCan(Player* pPlayer)
 {
     if (m_bUpperDoorOpened)
@@ -517,7 +517,7 @@ void instance_blackrock_spire::DoOpenUpperDoorIfCan(Player* pPlayer)
         m_bUpperDoorOpened = true;
     }
 }
-# --- END IF ---  
+#endif  
 
 void instance_blackrock_spire::DoProcessEmberseerEvent()
 {
@@ -772,7 +772,7 @@ void instance_blackrock_spire::Update(uint32 uiDiff)
         }
     }
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     // unlock dragon spine door
     if (m_uiDragonspineDoorTimer)
     {
@@ -806,7 +806,7 @@ void instance_blackrock_spire::Update(uint32 uiDiff)
         else
             m_uiDragonspineDoorTimer -= uiDiff;
     }
-# --- END IF ---
+#endif
 }
 
 void instance_blackrock_spire::StartflamewreathEventIfCan()
@@ -846,9 +846,9 @@ bool AreaTrigger_at_blackrock_spire(Player* pPlayer, AreaTriggerEntry const* pAt
             if (instance_blackrock_spire* pInstance = (instance_blackrock_spire*) pPlayer->GetInstanceData())
             {
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
                 pInstance->DoOpenUpperDoorIfCan(pPlayer);
-# --- END IF ---
+#endif
                 pInstance->DoSortRoomEventMobs();
             }
             break;

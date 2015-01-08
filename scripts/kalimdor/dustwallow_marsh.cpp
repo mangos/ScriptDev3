@@ -35,24 +35,24 @@
 
 /**
  * ContentData
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
  * mobs_risen_husk_spirit
  * npc_restless_apparition
-# --- END IF ---
+#endif
  * npc_morokk
  * npc_ogron
  * npc_private_hendel
  * npc_stinky_ignatz
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
  * at_nats_landing
  * boss_tethyr
-# --- END IF ---
+#endif
  * EndContentData
  */
 
 #include "precompiled.h"
 #include "escort_ai.h"
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 #include "TemporarySummon.h"
 
 /*######
@@ -198,7 +198,7 @@ CreatureAI* GetAI_npc_restless_apparition(Creature* pCreature)
 {
     return new npc_restless_apparitionAI(pCreature);
 }
-# --- END IF ---
+#endif
 
 /*######
 ## npc_morokk
@@ -869,7 +869,7 @@ bool QuestAccept_npc_stinky_ignatz(Player* pPlayer, Creature* pCreature, const Q
     return true;
 }
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
 /*######
 ## at_nats_landing
 ######*/
@@ -1140,12 +1140,12 @@ CreatureAI* GetAI_boss_tethyr(Creature* pCreature)
 {
     return new boss_tethyrAI(pCreature);
 }
-# --- END IF ---
+#endif
 void AddSC_dustwallow_marsh()
 {
     Script* pNewScript;
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     pNewScript = new Script;
     pNewScript->Name = "mobs_risen_husk_spirit";
     pNewScript->GetAI = &GetAI_mobs_risen_husk_spirit;
@@ -1155,7 +1155,7 @@ void AddSC_dustwallow_marsh()
     pNewScript->Name = "npc_restless_apparition";
     pNewScript->GetAI = &GetAI_npc_restless_apparition;
     pNewScript->RegisterSelf();
-# --- NOT FOR ZERO ---
+#if !defined (CLASSIC)
 
     pNewScript = new Script;
     pNewScript->Name = "npc_morokk";
@@ -1181,7 +1181,7 @@ void AddSC_dustwallow_marsh()
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_stinky_ignatz;
     pNewScript->RegisterSelf();
 
-# --- NOT FOR ZERO ---  
+#if !defined (CLASSIC)  
     pNewScript = new Script;
     pNewScript->Name = "at_nats_landing";
     pNewScript->pAreaTrigger = &AreaTrigger_at_nats_landing;
@@ -1191,5 +1191,5 @@ void AddSC_dustwallow_marsh()
     pNewScript->Name = "boss_tethyr";
     pNewScript->GetAI = &GetAI_boss_tethyr;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }

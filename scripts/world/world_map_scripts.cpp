@@ -151,7 +151,7 @@ InstanceData* GetInstanceData_world_map_kalimdor(Map* pMap)
     return new world_map_kalimdor(pMap);
 }
 
-# --- NOT ZERO ---
+#if !defined (CLASSIC)
 /* *********************************************************
  *                     OUTLAND
  */
@@ -198,8 +198,8 @@ InstanceData* GetInstanceData_world_map_outland(Map* pMap)
 {
     return new world_map_outland(pMap);
 }
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
 /* *********************************************************
  *                     NORTHREND
  */
@@ -214,7 +214,7 @@ InstanceData* GetInstanceData_world_map_northrend(Map* pMap)
 {
     return new world_map_northrend(pMap);
 }
-# --- END IF ---
+#endif
 
 void AddSC_world_map_scripts()
 {
@@ -230,16 +230,16 @@ void AddSC_world_map_scripts()
     pNewScript->GetInstanceData = &GetInstanceData_world_map_kalimdor;
     pNewScript->RegisterSelf();
 
-# --- NOT ZERO ---
+#if !defined (CLASSIC)
     pNewScript = new Script;
     pNewScript->Name = "world_map_outland";
     pNewScript->GetInstanceData = &GetInstanceData_world_map_outland;
     pNewScript->RegisterSelf();
-# --- END IF ---
-# --- TWO ONLY ---
+#endif
+#if defined (WOTLK)
     pNewScript = new Script;
     pNewScript->Name = "world_map_northrend";
     pNewScript->GetInstanceData = &GetInstanceData_world_map_northrend;
     pNewScript->RegisterSelf();
-# --- END IF ---
+#endif
 }
