@@ -45,7 +45,7 @@
 # --- NOT FOR ZERO ---
  * npc_air_force_bots          80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
  * npc_dancing_flames         100%    midsummer event NPC
- * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD2
+ * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD3
 # --- END IF ---
  * npc_garments_of_quests     100%    NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
  * npc_injured_patient         80%    patients for triage-quests (6622 and 6624)
@@ -133,14 +133,14 @@ struct npc_air_force_botsAI : public ScriptedAI
         }
 
         if (!m_pSpawnAssoc)
-        { error_db_log("SD2: Creature template entry %u has ScriptName npc_air_force_bots, but it's not handled by that script", pCreature->GetEntry()); }
+        { error_db_log("SD3: Creature template entry %u has ScriptName npc_air_force_bots, but it's not handled by that script", pCreature->GetEntry()); }
         else
         {
             CreatureInfo const* spawnedTemplate = GetCreatureTemplateStore(m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
 
             if (!spawnedTemplate)
             {
-                error_db_log("SD2: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+                error_db_log("SD3: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
                 m_pSpawnAssoc = NULL;
                 return;
             }
@@ -160,7 +160,7 @@ struct npc_air_force_botsAI : public ScriptedAI
         { m_spawnedGuid = pSummoned->GetObjectGuid(); }
         else
         {
-            error_db_log("SD2: npc_air_force_bots: wasn't able to spawn creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+            error_db_log("SD3: npc_air_force_bots: wasn't able to spawn creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
             m_pSpawnAssoc = NULL;
         }
 

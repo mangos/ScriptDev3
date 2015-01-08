@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +27,7 @@
 /* ScriptData
 SDName: Boss_Warlord_Najentus
 SD%Complete: 90
-SDComment: Core spell support for Needle Spine (spells 39992, 39835) missing, no change from SD2 needed
+SDComment: Core spell support for Needle Spine (spells 39992, 39835) missing, no change from SD3 needed
 SDCategory: Black Temple
 EndScriptData */
 

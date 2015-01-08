@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -238,7 +239,7 @@ bool GossipSelect_npc_barnes(Player* pPlayer, Creature* pCreature, uint32 /*uiSe
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
             {
                 pInstance->SetData(TYPE_OPERA_PERFORMANCE, OPERA_EVENT_WIZARD_OZ);
-                outstring_log("SD2: %s manually set Opera event to EVENT_OZ", pPlayer->GetGuidStr().c_str());
+                outstring_log("SD3: %s manually set Opera event to EVENT_OZ", pPlayer->GetGuidStr().c_str());
             }
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
@@ -246,7 +247,7 @@ bool GossipSelect_npc_barnes(Player* pPlayer, Creature* pCreature, uint32 /*uiSe
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
             {
                 pInstance->SetData(TYPE_OPERA_PERFORMANCE, OPERA_EVENT_RED_RIDING_HOOD);
-                outstring_log("SD2: %s manually set Opera event to EVENT_HOOD", pPlayer->GetGuidStr().c_str());
+                outstring_log("SD3: %s manually set Opera event to EVENT_HOOD", pPlayer->GetGuidStr().c_str());
             }
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
@@ -254,7 +255,7 @@ bool GossipSelect_npc_barnes(Player* pPlayer, Creature* pCreature, uint32 /*uiSe
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
             {
                 pInstance->SetData(TYPE_OPERA_PERFORMANCE, OPERA_EVENT_ROMULO_AND_JUL);
-                outstring_log("SD2: %s manually set Opera event to EVENT_RAJ", pPlayer->GetGuidStr().c_str());
+                outstring_log("SD3: %s manually set Opera event to EVENT_RAJ", pPlayer->GetGuidStr().c_str());
             }
             break;
     }

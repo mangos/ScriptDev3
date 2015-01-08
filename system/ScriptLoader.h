@@ -30,6 +30,12 @@
 void AddScripts();
 void AddEasternKingdomsScripts();
 void AddKalimdorScripts();
+# --- NOT ZERO ---
+void AddOutlandsScripts();
+# --- END IF ---
+# --- TWO ONLY ---
+void AddNorthrendScripts();
+# --- END IF ---
 void AddWorldScripts();
 void AddBattlegroundScripts();
 

@@ -4,6 +4,7 @@
  * the default database scripting in mangos-one.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -535,7 +536,7 @@ void instance_karazhan::DoPrepareOperaStage(Creature* pOrganizer)
     if (!pOrganizer)
         return;
 
-    debug_log("SD2: Barnes Opera Event - Introduction complete - preparing encounter %d", GetData(TYPE_OPERA_PERFORMANCE));
+    debug_log("SD3: Barnes Opera Event - Introduction complete - preparing encounter %d", GetData(TYPE_OPERA_PERFORMANCE));
 
     // summon the bosses and respawn the stage background
     switch (GetData(TYPE_OPERA_PERFORMANCE))

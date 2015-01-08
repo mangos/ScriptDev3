@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -356,7 +357,7 @@ void instance_dark_portal::DoSpawnNextPortal()
         if (uiTmp >= m_uiCurrentRiftId)
         { ++uiTmp; }
 
-        debug_log("SD2: instance_dark_portal: SetRiftId %u, old was id %u.", uiTmp, m_uiCurrentRiftId);
+        debug_log("SD3: instance_dark_portal: SetRiftId %u, old was id %u.", uiTmp, m_uiCurrentRiftId);
 
         m_uiCurrentRiftId = uiTmp;
 

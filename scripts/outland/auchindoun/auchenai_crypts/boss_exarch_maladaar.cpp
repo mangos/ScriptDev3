@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,10 +127,12 @@ struct mob_stolen_soulAI : public ScriptedAI
                     DoCastSpellIfCan(m_creature->getVictim(), SPELL_MOONFIRE);
                     m_uiSpellTimer = 10000;
                     break;
-//                case CLASS_DEATH_KNIGHT:
-//                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_PLAGUE_STRIKE);
-//                    m_uiSpellTimer = 10000;
-//                    break;
+# --- TWO ONLY ---
+                case CLASS_DEATH_KNIGHT:
+                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_PLAGUE_STRIKE);
+                    m_uiSpellTimer = 10000;
+                    break;
+# -- END IF ---
             }
         }
         else

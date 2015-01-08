@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -205,7 +206,7 @@ void instance_zulaman::OnObjectCreate(GameObject* pGo)
 
 void instance_zulaman::SetData(uint32 uiType, uint32 uiData)
 {
-    debug_log("SD2: Instance Zulaman: SetData received for type %u with data %u", uiType, uiData);
+    debug_log("SD3: Instance Zulaman: SetData received for type %u with data %u", uiType, uiData);
 
     switch (uiType)
     {
@@ -515,14 +516,14 @@ void instance_zulaman::Update(uint32 uiDiff)
 
             if (m_auiEncounter[TYPE_RUN_EVENT_TIME] == 0)
             {
-                debug_log("SD2: Instance Zulaman: event time reach end, event failed.");
+                debug_log("SD3: Instance Zulaman: event time reach end, event failed.");
                 SetData(TYPE_EVENT_RUN, FAIL);
                 return;
             }
 
             --m_auiEncounter[TYPE_RUN_EVENT_TIME];
             SetData(TYPE_RUN_EVENT_TIME, m_auiEncounter[TYPE_RUN_EVENT_TIME]);
-            debug_log("SD2: Instance Zulaman: minute decrease to %u.", m_auiEncounter[TYPE_RUN_EVENT_TIME]);
+            debug_log("SD3: Instance Zulaman: minute decrease to %u.", m_auiEncounter[TYPE_RUN_EVENT_TIME]);
 
             m_uiEventTimer = MINUTE * IN_MILLISECONDS;
         }

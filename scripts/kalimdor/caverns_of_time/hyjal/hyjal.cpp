@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,7 +123,7 @@ bool GossipSelect_npc_jaina_proudmoore(Player* pPlayer, Creature* pCreature, uin
                 break;
             case GOSSIP_ACTION_INFO_DEF:
                 pJainaAI->m_bDebugMode = !pJainaAI->m_bDebugMode;
-                debug_log("SD2: HyjalAI - Debug mode has been toggled %s", pJainaAI->m_bDebugMode ? "on" : "off");
+                debug_log("SD3: HyjalAI - Debug mode has been toggled %s", pJainaAI->m_bDebugMode ? "on" : "off");
                 break;
         }
     }
@@ -194,7 +195,7 @@ bool GossipSelect_npc_thrall(Player* pPlayer, Creature* pCreature, uint32 /*uiSe
                 break;
             case GOSSIP_ACTION_INFO_DEF:
                 pThrallAI->m_bDebugMode = !pThrallAI->m_bDebugMode;
-                debug_log("SD2: HyjalAI - Debug mode has been toggled %s", pThrallAI->m_bDebugMode ? "on" : "off");
+                debug_log("SD3: HyjalAI - Debug mode has been toggled %s", pThrallAI->m_bDebugMode ? "on" : "off");
                 break;
         }
     }

@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -378,7 +379,7 @@ void hyjalAI::SummonNextWave()
         else
         {
             m_uiNextWaveTimer = 15000;
-            debug_log("SD2: HyjalAI: debug mode is enabled. Next Wave in 15 seconds");
+            debug_log("SD3: HyjalAI: debug mode is enabled. Next Wave in 15 seconds");
         }
     }
     else

@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,7 +139,7 @@ void instance_old_hillsbrad::HandleThrallRelocation()
 
     if (Creature* pThrall = GetSingleCreatureFromStorage(NPC_THRALL))
     {
-        debug_log("SD2: Instance Old Hillsbrad: Thrall relocation");
+        debug_log("SD3: Instance Old Hillsbrad: Thrall relocation");
 
         if (!pThrall->IsAlive())
         { pThrall->Respawn(); }
@@ -173,7 +174,7 @@ void instance_old_hillsbrad::SetData(uint32 uiType, uint32 uiData)
                 ++m_uiBarrelCount;
                 DoUpdateWorldState(WORLD_STATE_OH, m_uiBarrelCount);
 
-                debug_log("SD2: Instance Old Hillsbrad: go_barrel_old_hillsbrad count %u", m_uiBarrelCount);
+                debug_log("SD3: Instance Old Hillsbrad: go_barrel_old_hillsbrad count %u", m_uiBarrelCount);
 
                 // Set encounter to done, and spawn Liutenant Drake
                 if (m_uiBarrelCount == MAX_BARRELS)
@@ -210,7 +211,7 @@ void instance_old_hillsbrad::SetData(uint32 uiType, uint32 uiData)
                         }
                     }
                     else
-                    { debug_log("SD2: Instance Old Hillsbrad: SetData (Type: %u Data %u) cannot find any pPlayer.", uiType, uiData); }
+                    { debug_log("SD3: Instance Old Hillsbrad: SetData (Type: %u Data %u) cannot find any pPlayer.", uiType, uiData); }
 
                     SetData(TYPE_BARREL_DIVERSION, DONE);
                 }
@@ -232,14 +233,14 @@ void instance_old_hillsbrad::SetData(uint32 uiType, uint32 uiData)
                 if (m_uiThrallEventCount <= MAX_WIPE_COUNTER)
                 {
                     ++m_uiThrallEventCount;
-                    debug_log("SD2: Instance Old Hillsbrad: Thrall event failed %u times.", m_uiThrallEventCount);
+                    debug_log("SD3: Instance Old Hillsbrad: Thrall event failed %u times.", m_uiThrallEventCount);
 
                     // reset Thrall on timer
                     m_uiThrallResetTimer = 30000;
                 }
                 // If we already respawned Thrall too many times, the event is failed for good
                 else if (m_uiThrallEventCount > MAX_WIPE_COUNTER)
-                { debug_log("SD2: Instance Old Hillsbrad: Thrall event failed %u times. Reset instance required.", m_uiThrallEventCount); }
+                { debug_log("SD3: Instance Old Hillsbrad: Thrall event failed %u times. Reset instance required.", m_uiThrallEventCount); }
             }
             break;
         case TYPE_DRAKE:
@@ -248,7 +249,7 @@ void instance_old_hillsbrad::SetData(uint32 uiType, uint32 uiData)
         case TYPE_ESCORT_INN:
         case TYPE_EPOCH:
             m_auiEncounter[uiType] = uiData;
-            debug_log("SD2: Instance Old Hillsbrad: Thrall event type %u adjusted to data %u.", uiType, uiData);
+            debug_log("SD3: Instance Old Hillsbrad: Thrall event type %u adjusted to data %u.", uiType, uiData);
             break;
     }
 

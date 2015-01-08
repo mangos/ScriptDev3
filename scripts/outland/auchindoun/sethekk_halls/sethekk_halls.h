@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +49,14 @@ enum
     SPELL_PORTAL                = 39952,
     SPELL_SUMMONING_BEAMS       = 39978,
     SPELL_RED_LIGHTNING         = 39990,
+
+# --- TWO ONLY ---
+    ACHIEV_CRITA_TURKEY_TIME    = 11142,
+    ITEM_PILGRIMS_HAT           = 46723,
+    ITEM_PILGRIMS_DRESS         = 44785,
+    ITEM_PILGRIMS_ROBE          = 46824,
+    ITEM_PILGRIMS_ATTIRE        = 46800,
+# --- END IF ---
 };
 
 class instance_sethekk_halls : public ScriptedInstance
@@ -63,6 +72,10 @@ class instance_sethekk_halls : public ScriptedInstance
 
         void SetData(uint32 uiType, uint32 uiData) override;
         uint32 GetData(uint32 uiType) const override;
+
+# --- TWO ONLY ---
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
+# --- END IF ---
 
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override;

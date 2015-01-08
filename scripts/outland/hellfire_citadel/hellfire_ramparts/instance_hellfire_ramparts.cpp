@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +72,7 @@ void instance_ramparts::OnObjectCreate(GameObject* pGo)
 
 void instance_ramparts::SetData(uint32 uiType, uint32 uiData)
 {
-    debug_log("SD2: Instance Ramparts: SetData received for type %u with data %u", uiType, uiData);
+    debug_log("SD3: Instance Ramparts: SetData received for type %u with data %u", uiType, uiData);
 
     switch (uiType)
     {

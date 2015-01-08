@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,6 +142,20 @@ void instance_sethekk_halls::Load(const char* chrIn)
 
     OUT_LOAD_INST_DATA_COMPLETE;
 }
+
+# --- TWO ONLY ---
+bool instance_sethekk_halls::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
+{
+    if (uiCriteriaId != ACHIEV_CRITA_TURKEY_TIME)
+        return false;
+
+    if (!pSource)
+        return false;
+
+    return pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_HAT, 1) && (pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_DRESS, 1)
+            || pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_ROBE, 1) || pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_ATTIRE, 1));
+}
+# --- END IF ---
 
 InstanceData* GetInstanceData_instance_sethekk_halls(Map* pMap)
 {

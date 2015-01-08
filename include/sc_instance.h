@@ -80,6 +80,11 @@ class ScriptedInstance : public InstanceData
             DoOrSimulateScriptTextForMap(iTextEntry, uiCreatureEntry, instance, GetSingleCreatureFromStorage(uiCreatureEntry, true));
         }
 
+# --- TWO ONLY ---
+        // Starts a timed achievement criteria for all players in instance
+        void DoStartTimedAchievement(AchievementCriteriaTypes criteriaType, uint32 uiTimedCriteriaMiscId);
+# --- END IF ---
+
     protected:
         // Storage for GO-Guids and NPC-Guids
         typedef std::map<uint32, ObjectGuid> EntryGuidMap;

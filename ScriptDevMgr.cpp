@@ -498,7 +498,7 @@ bool sd3::AreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
 }
 
 # --- TWO ONLY ---
-bool SD2::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId)
+bool SD3::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId)
 {
     Script* pTempScript = m_scripts[pClickedCreature->GetScriptId()];
     

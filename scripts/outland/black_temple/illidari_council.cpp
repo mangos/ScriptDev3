@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -343,13 +344,21 @@ struct boss_illidari_councilAI : public ScriptedAI
         }
     }
 
+# --- NOT TWO ---
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+# --- ELSE ---
+    void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
+# --- END IF ---
     {
         int32 uiDamageTaken = (int32)uiDamage;
         m_creature->CastCustomSpell(m_creature, SPELL_SHARED_RULE_DAM, &uiDamageTaken, NULL, NULL, true);
     }
 
+# --- NOT TWO ---
     void HealedBy(Unit* pHealer, uint32& uiHealedAmount) override
+# --- ELSE ---
+    void HealedBy(Unit* /* pHealer */, uint32& uiHealedAmount) override
+# --- END IF ---
     {
         int32 uHealTaken = (int32)uiHealedAmount;
         m_creature->CastCustomSpell(m_creature, SPELL_SHARED_RULE_HEAL, &uHealTaken, NULL, NULL, true);

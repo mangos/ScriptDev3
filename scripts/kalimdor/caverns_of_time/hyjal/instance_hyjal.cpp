@@ -4,6 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -169,7 +170,7 @@ void instance_mount_hyjal::SetData(uint32 uiType, uint32 uiData)
             break;
     }
 
-    debug_log("SD2: Instance Hyjal: Instance data updated for event %u (Data=%u)", uiType, uiData);
+    debug_log("SD3: Instance Hyjal: Instance data updated for event %u (Data=%u)", uiType, uiData);
 
     if (uiData == DONE)
     {

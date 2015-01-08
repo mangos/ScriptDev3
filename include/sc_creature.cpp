@@ -103,6 +103,10 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
  */
 void ScriptedAI::AttackStart(Unit* pWho)
 {
+# --- TWO ONLY ---
+    if (!m_creature->CanAttackByItself())
+        return;
+# --- END IF ---    
     if (pWho && m_creature->Attack(pWho, true))             // The Attack function also uses basic checks if pWho can be attacked
     {
         m_creature->AddThreat(pWho);
@@ -139,6 +143,14 @@ void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
     }
 
     DoMeleeAttackIfReady();
+    
+# --- TWO ONLY ---
+    Unit* victim = m_creature->getVictim();
+        
+    const SpellEntry* potentialSpell = m_creature->ReachWithSpellAttack(victim);
+    if (potentialSpell)
+        m_creature->CastSpell(victim, potentialSpell->Id, true);
+# --- END IF ---
 }
 
 /**
@@ -624,10 +636,14 @@ enum
     NPC_TALON_KING_IKISS        = 18473,
     NPC_KARGATH_BLADEFIST       = 16808,
 
-# --- ELSE ---  
+# --- ONE ONLY ---  
     NPC_BROODLORD               = 12017
 # --- END IF ---  
-
+# --- TWO ONLY ---
+    NPC_ANUBARAK                = 29120,
+    NPC_SINDRAGOSA              = 36853,
+    NPC_ZARITHRIAN              = 39746,
+# --- END IF ---
 };
 
 bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
@@ -688,7 +704,20 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             break;
 
 # --- END IF ---  
-			
+# --- TWO ONLY ---
+        case NPC_ANUBARAK:
+            if (fY < 281.0f && fY > 228.0f)
+                return false;
+            break;
+        case NPC_SINDRAGOSA:
+            if (fX > 4314.0f)
+                return false;
+            break;
+        case NPC_ZARITHRIAN:
+            if (fZ > 87.0f)
+                return false;
+            break;
+# --- END IF ---
         default:
             script_error_log("EnterEvadeIfOutOfCombatArea used for creature entry %u, but does not have any definition.", m_creature->GetEntry());
             return false;
@@ -705,6 +734,10 @@ void Scripted_NoMovementAI::GetAIInformation(ChatHandler& reader)
 
 void Scripted_NoMovementAI::AttackStart(Unit* pWho)
 {
+# --- TWO ONLY ---
+    if (!m_creature->CanAttackByItself())
+        return;
+# --- END IF ---    
     if (pWho && m_creature->Attack(pWho, true))
     {
         m_creature->AddThreat(pWho);
