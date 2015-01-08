@@ -138,7 +138,11 @@ struct boss_ahuneAI : public Scripted_NoMovementAI
         m_creature->ForcedDespawn();
     }
 
+# --- NOT TWO ---
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+# --- ELSE ---
+    void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
+# --- END IF ---
     {
         // it's not clear whether this should work like this or should be handled by the proc aura
         if (Creature* pCore = m_creature->GetMap()->GetCreature(m_frozenCoreGuid))
@@ -300,7 +304,11 @@ struct npc_frozen_coreAI : public Scripted_NoMovementAI
         DoCastSpellIfCan(m_creature, SPELL_ICE_SPEAR_AURA, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
     }
 
+# --- NOT TWO ---
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+# --- ELSE ---
+    void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
+# --- END IF ---
     {
         // it's not clear whether this should work like this or should be handled by the proc aura
         if (Creature* pAhune = m_creature->GetMap()->GetCreature(m_ahuheGuid))

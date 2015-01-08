@@ -38,7 +38,9 @@ enum
 {
     EMOTE_DEEP_BREATH               = -1548056,
 
-    // SPELL_LURKER_SPAWN_TRIGGER    = 54587,               // spell used only after 243
+# --- TWO ONLY ---
+    SPELL_LURKER_SPAWN_TRIGGER      = 54587,
+# --- END IF ---
     SPELL_WHIRL                     = 37660,
     SPELL_GEYSER                    = 37478,
     SPELL_SPOUT                     = 37431,                // trigger spells 37429, 37430
@@ -47,7 +49,9 @@ enum
     SPELL_WATERBOLT                 = 37138,
     SPELL_SUBMERGE                  = 37550,
 
+# --- NOT TWO ---
     NPC_LURKER_BELOW                = 21217,
+# --- END IF ---
     NPC_COILFANG_AMBUSHER           = 21865,
     NPC_COILFANG_GUARDIAN           = 21873,
 
@@ -82,7 +86,9 @@ static const AddsLocations aLurkerLoc[MAX_SUBMERGE_ADDS] =
     {NPC_COILFANG_GUARDIAN, 42.471f, -445.115f, -19.76f},
 };
 
+# --- NOT TWO ---
 static const float afLurkerSpawnPos[4] = {40.4058f, -417.108f, -21.5911f, 3.03312f};
+# --- END IF ---
 
 struct boss_the_lurker_belowAI : public Scripted_NoMovementAI
 {
@@ -180,6 +186,10 @@ struct boss_the_lurker_belowAI : public Scripted_NoMovementAI
 
         switch (m_uiPhase)
         {
+# --- TWO ONLY ---
+            case PHASE_EMERGEING:
+                break;
+# --- END IF --
             case PHASE_SPOUT:
 
                 if (m_uiSpoutEndTimer < uiDiff)
@@ -298,7 +308,11 @@ bool GOUse_go_strange_pool(Player* pPlayer, GameObject* pGo)
         {
             if (pInstance->GetData(TYPE_THELURKER_EVENT) == NOT_STARTED || pInstance->GetData(TYPE_THELURKER_EVENT) == FAIL)
             {
+# --- NOT TWO ---
                 pPlayer->SummonCreature(NPC_LURKER_BELOW, afLurkerSpawnPos[0], afLurkerSpawnPos[1], afLurkerSpawnPos[2], afLurkerSpawnPos[3], TEMPSUMMON_DEAD_DESPAWN, 0);
+# --- ELSE ---
+                pPlayer->CastSpell(pPlayer, SPELL_LURKER_SPAWN_TRIGGER, true);
+# --- END IF ---
                 pInstance->SetData(TYPE_THELURKER_EVENT, IN_PROGRESS);
                 return true;
             }

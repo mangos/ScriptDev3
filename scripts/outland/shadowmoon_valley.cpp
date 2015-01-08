@@ -27,7 +27,7 @@
 /* ScriptData
 SDName: Shadowmoon_Valley
 SD%Complete: 100
-SDComment: Quest support: 11020, 10458, 10480, 10481, 10514, 10540, 10588, 10781, 10804, 10854.
+SDComment: Quest support: 11020, 10451, 10458, 10480, 10481, 10514, 10540, 10588, 10781, 10804, 10854.
 SDCategory: Shadowmoon Valley
 EndScriptData */
 
@@ -472,7 +472,10 @@ enum
 // this script needs verification
 struct npc_wildaAI : public npc_escortAI
 {
-    npc_wildaAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_wildaAI(Creature* pCreature) : npc_escortAI(pCreature)
+    {
+        Reset();
+    }
 
     uint32 m_uiHealingTimer;
 
@@ -540,6 +543,7 @@ struct npc_wildaAI : public npc_escortAI
         }
     }
 
+# --- NOT TWO ---
     void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
@@ -556,7 +560,18 @@ struct npc_wildaAI : public npc_escortAI
             case 2: DoScriptText(SAY_WIL_PROGRESS5, m_creature); break;
         }
     }
-
+# --- END IF ---
+# --- TWO ONLY ---
+    void JustSummoned(Creature* pSummoned) override
+    {
+        if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
+        {
+            if (Player* pPlayer = GetPlayerForEscort())
+                pSummoned->AI()->AttackStart(pPlayer);
+        }
+    }
+# --- END IF ---
+# --- NOT TWO ---
     void DoSpawnAssassin()
     {
         // unknown where they actually appear
@@ -565,7 +580,38 @@ struct npc_wildaAI : public npc_escortAI
 
         m_creature->SummonCreature(NPC_COILSKAR_ASSASSIN, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000);
     }
+# --- END IF ---
+# --- TWO ONLY ---
+    // wrapper to spawn assassin and do text
+    void DoSpawnAssassin(uint8 uiCount = 1)
+    {
+        // unknown where they actually appear
+        float fX, fY, fZ;
+        for (uint8 i = 0; i < uiCount; ++i)
+        {
+            m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f, fX, fY, fZ);
+            m_creature->SummonCreature(NPC_COILSKAR_ASSASSIN, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 10000);
+        }
 
+        // random chance to yell
+        if (roll_chance_i(20))
+            return;
+        
+        // random text when assassin is summoned
+        switch (urand(0, 6))
+        {
+            case 0: DoScriptText(SAY_WIL_PROGRESS_1, m_creature); break;
+            case 1: DoScriptText(SAY_WIL_PROGRESS_2, m_creature); break;
+            case 2: DoScriptText(SAY_WIL_PROGRESS_3, m_creature); break;
+            case 3: DoScriptText(SAY_WIL_PROGRESS_4, m_creature); break;
+            case 4: DoScriptText(SAY_WIL_PROGRESS_5, m_creature); break;
+            case 5: DoScriptText(SAY_WIL_AGGRO_1, m_creature); break;
+            case 6: DoScriptText(SAY_WIL_AGGRO_2, m_creature); break;
+        }
+    }
+# --- END IF ---
+
+# --- NOT TWO ---
     void Aggro(Unit* pWho) override
     {
         // don't always use
@@ -583,13 +629,64 @@ struct npc_wildaAI : public npc_escortAI
             }
         }
     }
+# --- END IF
+
+# --- TWO ONLY ---
+    // free the water spirits
+    void DoFreeSpirits()
+    {
+        std::list<Creature*> lSpiritsInRange;
+        GetCreatureListWithEntryInGrid(lSpiritsInRange, m_creature, NPC_CAPTURED_WATER_SPIRIT, 50.0f);
+        
+        if (lSpiritsInRange.empty())
+            return;
+
+        // all spirits follow
+        for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
+        {
+            (*itr)->RemoveAurasDueToSpell(SPELL_WATER_BUBBLE);
+            (*itr)->GetMotionMaster()->MoveFollow(m_creature, m_creature->GetDistance(*itr) * 0.25f, M_PI_F/2 + m_creature->GetAngle(*itr));
+            (*itr)->SetLevitate(false);
+        }
+    }
+    
+    void DoDespawnSpirits()
+    {
+        std::list<Creature*> lSpiritsInRange;
+        GetCreatureListWithEntryInGrid(lSpiritsInRange, m_creature, NPC_CAPTURED_WATER_SPIRIT, 50.0f);
+        
+        if (lSpiritsInRange.empty())
+            return;
+        
+        // all spirits follow
+        for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
+            (*itr)->ForcedDespawn(6000);
+    }
+# --- END IF ---
 
     void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         { return; }
 
-        // TODO: add more abilities
+# --- TWO ONLY ---
+        if (m_uiLightningTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHAIN_LIGHTNING) == CAST_OK)
+                m_uiLightningTimer = 4000;
+        }
+        else
+            m_uiLightningTimer -= uiDiff;
+        
+        if (m_uiShockTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_SHOCK) == CAST_OK)
+                m_uiShockTimer = 10000;
+        }
+        else
+            m_uiShockTimer -= uiDiff;
+# --- END IF ---
+        
         if (m_creature->GetHealthPercent() <= 30.0f)
         {
             if (m_uiHealingTimer < uiDiff)
@@ -615,7 +712,12 @@ bool QuestAccept_npc_wilda(Player* pPlayer, Creature* pCreature, const Quest* pQ
     if (pQuest->GetQuestId() == QUEST_ESCAPE_COILSCAR)
     {
         DoScriptText(SAY_WIL_START, pCreature, pPlayer);
+# --- NOT TWO ---
         pCreature->SetFactionTemporary(FACTION_EARTHEN, TEMPFACTION_RESTORE_RESPAWN);
+# --- ELSE ---
+        pCreature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
+        pCreature->SetLevitate(false);
+# --- END IF ---
 
         if (npc_wildaAI* pEscortAI = dynamic_cast<npc_wildaAI*>(pCreature->AI()))
         { pEscortAI->Start(false, pPlayer, pQuest); }
@@ -1417,9 +1519,15 @@ const static EventLocations aDamnationLocations[] =
     { -3600.68f, 1886.58f, 47.24f, 1.81f},     // 1 earth spirit summon loc
     { -3597.19f, 1887.46f, 47.24f, 1.77f},     // 2 water spirit summon loc
     { -3593.18f, 1888.27f, 47.24f, 1.77f},     // 3 air spirit summon loc
+# --- NOT TWO ---
     { -3595.36f, 1869.78f, 47.24f},            // 4 fight ready move loc
     { -3635.90f, 1860.94f, 52.93f},            // 5 elementals move loc
     { -3599.71f, 1897.94f, 47.24f}             // 6 epilogue move loc
+# --- ELSE ---
+    { -3595.36f, 1869.78f, 47.24f},            // 4 fight ready move loc
+    { -3635.90f, 1860.94f, 52.93f},            // 5 elementals move loc
+    { -3599.71f, 1897.94f, 47.24f}             // 6 epilogue move loc
+# --- END IF ---
 };
 
 struct npc_spawned_oronok_tornheartAI : public ScriptedAI, private DialogueHelper
@@ -1836,7 +1944,11 @@ struct npc_veneratus_spawn_nodeAI : public Scripted_NoMovementAI
         }
     }
 
+# --- NOT TWO ---
     void UpdateAI(const uint32 uiDiff) override { }
+# --- ELSE ---
+    void UpdateAI(const uint32 /* uiDiff */) override { }
+# --- END IF ---
 };
 
 CreatureAI* GetAI_npc_veneratus_spawn_node(Creature* pCreature)
