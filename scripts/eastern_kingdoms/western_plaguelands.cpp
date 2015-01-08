@@ -36,6 +36,9 @@
 /**
  * ContentData
  * npc_the_scourge_cauldron
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
+ * npc_anchorite_truuen
+#endif
  * npc_taelan_fordring
  * npc_isillien
  * npc_tirion_fordring

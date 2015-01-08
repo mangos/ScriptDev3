@@ -630,7 +630,7 @@ enum
 #if defined (CLASSIC)  
     NPC_BROODLORD               = 12017
 #endif  
-#if defined (TBC) && defined (WOTLK)
+#if defined (TBC) || defined (WOTLK)
     NPC_BROODLORD               = 12017,
     NPC_VOID_REAVER             = 19516,
     NPC_JAN_ALAI                = 23578,

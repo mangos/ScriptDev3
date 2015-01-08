@@ -623,7 +623,7 @@ bool GOUse_go_pirate_treasure(Player* pPlayer, GameObject* pGo)
 
 void SpawnPirates(Player* pPlayer, uint32 iNumberOfPirates)
 {
-    for (int i; i<iNumberOfPirates; i++)
+    for (uint8 i = 0; i<iNumberOfPirates; i++)
     {
         // spawn 4 or 5 sailor boys
         switch (urand(0, 2))

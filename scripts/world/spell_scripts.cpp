@@ -190,7 +190,7 @@ enum
     NPC_CURED_DEER                      = 12299,
     NPC_CURED_GAZELLE                   = 12297,
 
-#if defined (WOTLK)
+#if defined (TBC) || defined (WOTLK)
     // quest 12906/13422
     SPELL_DISCIPLINING_ROD              = 56033,
     SAY_RAND_WORK1                      = -1000555,
