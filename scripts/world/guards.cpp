@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
  * guard_azuremyst
  * guard_bluffwatcher
  * guard_contested
@@ -43,14 +43,14 @@
  * guard_dunmorogh
  * guard_durotar
  * guard_elwynnforest
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
  * guard_eversong
  * guard_exodar
 #endif
  * guard_ironforge
  * guard_mulgore
  * guard_orgrimmar
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
  * guard_shattrath
  * guard_shattrath_aldor
  * guard_shattrath_scryer
@@ -66,7 +66,7 @@
 #include "precompiled.h"
 #include "guard_ai.h"
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 CreatureAI* GetAI_guard_azuremyst(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -102,7 +102,7 @@ CreatureAI* GetAI_guard_elwynnforest(Creature* pCreature)
     return new guardAI(pCreature);
 }
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 CreatureAI* GetAI_guard_eversong(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -128,7 +128,7 @@ CreatureAI* GetAI_guard_orgrimmar(Creature* pCreature)
     return new guardAI_orgrimmar(pCreature);
 }
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 CreatureAI* GetAI_guard_shattrath(Creature* pCreature)
 {
     return new guardAI(pCreature);
@@ -298,7 +298,7 @@ void AddSC_guards()
 {
     Script* pNewScript;
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     pNewScript = new Script;
     pNewScript->Name = "guard_azuremyst";
     pNewScript->GetAI = &GetAI_guard_azuremyst;
@@ -335,7 +335,7 @@ void AddSC_guards()
     pNewScript->GetAI = &GetAI_guard_elwynnforest;
     pNewScript->RegisterSelf();
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     pNewScript = new Script;
     pNewScript->Name = "guard_eversong";
     pNewScript->GetAI = &GetAI_guard_eversong;
@@ -362,7 +362,7 @@ void AddSC_guards()
     pNewScript->GetAI = &GetAI_guard_orgrimmar;
     pNewScript->RegisterSelf();
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     pNewScript = new Script;
     pNewScript->Name = "guard_shattrath";
     pNewScript->GetAI = &GetAI_guard_shattrath;

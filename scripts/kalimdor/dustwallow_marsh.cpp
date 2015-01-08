@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * mobs_risen_husk_spirit
  * npc_restless_apparition
 #endif
@@ -43,7 +43,7 @@
  * npc_ogron
  * npc_private_hendel
  * npc_stinky_ignatz
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * at_nats_landing
  * boss_tethyr
 #endif
@@ -52,7 +52,7 @@
 
 #include "precompiled.h"
 #include "escort_ai.h"
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 #include "TemporarySummon.h"
 
 /*######
@@ -869,7 +869,7 @@ bool QuestAccept_npc_stinky_ignatz(Player* pPlayer, Creature* pCreature, const Q
     return true;
 }
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 /*######
 ## at_nats_landing
 ######*/
@@ -1145,7 +1145,7 @@ void AddSC_dustwallow_marsh()
 {
     Script* pNewScript;
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     pNewScript = new Script;
     pNewScript->Name = "mobs_risen_husk_spirit";
     pNewScript->GetAI = &GetAI_mobs_risen_husk_spirit;
@@ -1155,7 +1155,7 @@ void AddSC_dustwallow_marsh()
     pNewScript->Name = "npc_restless_apparition";
     pNewScript->GetAI = &GetAI_npc_restless_apparition;
     pNewScript->RegisterSelf();
-#if !defined (CLASSIC)
+#endif
 
     pNewScript = new Script;
     pNewScript->Name = "npc_morokk";
@@ -1181,7 +1181,7 @@ void AddSC_dustwallow_marsh()
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_stinky_ignatz;
     pNewScript->RegisterSelf();
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     pNewScript = new Script;
     pNewScript->Name = "at_nats_landing";
     pNewScript->pAreaTrigger = &AreaTrigger_at_nats_landing;

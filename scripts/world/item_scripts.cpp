@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
  * item_arcane_charges                 Prevent use if player is not flying (cannot cast while on ground)
  * item_flying_machine(i34060,i34061)  Engineering crafted flying machines
  * item_gor_dreks_ointment(i30175)     Protecting Our Own(q10488)
@@ -44,7 +44,7 @@
  */
 
 #include "precompiled.h"
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 #include "Spell.h"
 
 /*#####
@@ -151,7 +151,7 @@ bool ItemUse_item_petrov_cluster_bombs(Player* pPlayer, Item* pItem, const Spell
 
 void AddSC_item_scripts()
 {
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     Script* pNewScript;
 
     pNewScript = new Script;

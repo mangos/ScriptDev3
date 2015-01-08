@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * npc_clintar_dw_spirit
 #endif
  * npc_keeper_remulos
@@ -48,7 +48,7 @@
 #include "ObjectMgr.h"
 
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 /*######
 # npc_clintar_dw_spirit
 ####*/
@@ -1067,7 +1067,7 @@ void AddSC_moonglade()
 {
     Script* pNewScript;
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     pNewScript = new Script;
     pNewScript->Name = "npc_clintar_dw_spirit";
     pNewScript->GetAI = &GetAI_npc_clintar_dw_spirit;

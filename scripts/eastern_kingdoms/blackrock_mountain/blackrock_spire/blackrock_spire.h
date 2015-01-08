@@ -65,7 +65,7 @@ enum
     GO_DRAKKISATH_DOOR_2        = 175947,
 
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     // upper spire entrance
     GO_DRAGONSPINE              = 164725,
     GO_BRAZIER_1                = 175528,
@@ -94,7 +94,7 @@ enum
     GO_EMBERSEER_RUNE_6         = 175271,
     GO_EMBERSEER_RUNE_7         = 175272,
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     ITEM_SEAL_OF_ASCENSION      = 12344,
 #endif
 
@@ -157,7 +157,7 @@ class instance_blackrock_spire : public ScriptedInstance, private DialogueHelper
         void DoProcessEmberseerEvent();
 
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
         void DoOpenUpperDoorIfCan(Player* pPlayer);
 #endif
         void DoSortRoomEventMobs();
@@ -173,7 +173,7 @@ class instance_blackrock_spire : public ScriptedInstance, private DialogueHelper
         void DoSendNextFlamewreathWave();
 
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
         bool m_bUpperDoorOpened;
 #endif
 
@@ -181,7 +181,7 @@ class instance_blackrock_spire : public ScriptedInstance, private DialogueHelper
         std::string m_strInstData;
 
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
         uint32 m_uiDragonspineDoorTimer;
         uint32 m_uiDragonspineGoCount;
 #endif

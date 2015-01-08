@@ -54,7 +54,7 @@ enum
 
     SPELL_SPIRIT_HEAL               = 22012,                // Spirit Heal
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     SPELL_SPIRIT_HEAL_MANA          = 44535,                // in battlegrounds player get this no-mana-cost-buff
 #endif
 
@@ -106,7 +106,7 @@ struct npc_spirit_guideAI : public ScriptedAI
         }
     }
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     void SpellHitTarget(Unit* pUnit, const SpellEntry* pSpellEntry) override
     {
         if (pSpellEntry->Id == SPELL_SPIRIT_HEAL && pUnit->GetTypeId() == TYPEID_PLAYER

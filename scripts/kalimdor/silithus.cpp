@@ -102,7 +102,7 @@ enum
     EMOTE_ANACHRONOS_PICKUP             = -1000769,
     SAY_ANACHRONOS_EPILOGUE_8           = -1000770,
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     // The transform spell for Anachronos was removed from DBC
     DISPLAY_ID_BRONZE_DRAGON            = 15500,
 #endif
@@ -709,7 +709,7 @@ struct npc_anachronos_the_ancientAI : public ScriptedAI, private DialogueHelper
                         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
                         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
-#else
+#endif
                         m_creature->SetLevitate(true);
                         m_creature->GetMotionMaster()->MovePoint(0, aEternalBoardMovement[9].m_fX, aEternalBoardMovement[9].m_fY, aEternalBoardMovement[9].m_fZ);
                         m_creature->ForcedDespawn(10000);

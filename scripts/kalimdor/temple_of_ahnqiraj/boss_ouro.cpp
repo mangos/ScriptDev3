@@ -60,7 +60,7 @@ enum
     SPELL_SUMMON_TRIGGER    = 26284,
 
     SPELL_SUMMON_OURO       = 26642,
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     SPELL_QUAKE             = 26093,
 #endif
 
@@ -320,7 +320,7 @@ struct npc_ouro_spawnerAI : public Scripted_NoMovementAI
     npc_ouro_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {Reset();}
 
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     uint32 m_uiQuakeTimer;
 #endif
     bool m_bHasSummoned;
@@ -328,7 +328,7 @@ struct npc_ouro_spawnerAI : public Scripted_NoMovementAI
     void Reset() override
     {
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
         m_uiQuakeTimer = 1000;
 #endif
         m_bHasSummoned = false;
@@ -370,7 +370,7 @@ struct npc_ouro_spawnerAI : public Scripted_NoMovementAI
     void UpdateAI(const uint32 uiDiff) override
     {
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
         if (m_bHasSummoned)
         {
             if (m_uiQuakeTimer < uiDiff)

@@ -41,11 +41,11 @@
  * Spell 17327: Spirit Particles
 #endif
  * Spell 19512: Apply Salve
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
  * spell 21014
 #endif
  * Spell 21050: Melodious Rapture
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
  * spell 29528
  * spell 29866
  * spell 34665
@@ -80,7 +80,7 @@
  * - always return true when the spell is handled by script
  */
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 enum
 {
     // quest 9452
@@ -158,7 +158,7 @@ bool EffectDummyGameObj_spell_dummy_go(Unit* pCaster, uint32 uiSpellId, SpellEff
 
 enum
 {
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     // quest 9629
     SPELL_TAG_MURLOC                    = 30877,
     SPELL_TAG_MURLOC_PROC               = 30875,
@@ -206,7 +206,7 @@ enum
     NPC_WEAKENED_MORBENT                = 24782,
 #endif
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     // quest 11515
     SPELL_FEL_SIPHON_DUMMY              = 44936,
     NPC_FELBLOOD_INITIATE               = 24918,
@@ -373,7 +373,7 @@ enum
 #if defined (WOTLK)
     NPC_GANJO                           = 26924,
 #endif
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     // quest 11521
     SPELL_EXPOSE_RAZORTHORN_ROOT        = 44935,
     SPELL_SUMMON_RAZORTHORN_ROOT        = 44941,
@@ -460,7 +460,7 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
             return false;
         }
 #endif
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
         case SPELL_HEALING_SALVE:
         {
             if (pAura->GetEffIndex() != EFFECT_INDEX_0)
@@ -578,7 +578,7 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
         {
             Creature* pCreature = (Creature*)pAura->GetTarget();
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
             if (!pCreature || (pCreature->GetEntry() != NPC_FRANCLORN_FORGEWRIGHT && pCreature->GetEntry() != NPC_GAERIYAN))
 #else
             if (!pCreature || (pCreature->GetEntry() != NPC_FRANCLORN_FORGEWRIGHT && pCreature->GetEntry() != NPC_GAERIYAN && pCreature->GetEntry() != NPC_GANJO))
@@ -612,7 +612,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
 {
     switch (uiSpellId)
     {
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
         case SPELL_ADMINISTER_ANTIDOTE:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -653,7 +653,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
  #if defined (WOTLK)
         case SPELL_DARKMENDER_TINCTURE:
         {
@@ -788,6 +788,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             return true;
         }
 #endif
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
         case SPELL_SACRED_CLEANSING:
         {
             if (uiEffIndex == EFFECT_INDEX_1)
@@ -802,6 +803,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             }
             return true;
         }
+#endif
 #if defined (WOTLK)
         case SPELL_SEEDS_OF_NATURES_WRATH:
         {
@@ -847,7 +849,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             return true;
         }
 #endif
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
         case SPELL_TAG_MURLOC_PROC:
         {
             if (uiEffIndex == EFFECT_INDEX_0)
@@ -1167,7 +1169,7 @@ void AddSC_spell_scripts()
 {
     Script* pNewScript;
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     pNewScript = new Script;
     pNewScript->Name = "spell_dummy_go";
     pNewScript->pEffectDummyGO = &EffectDummyGameObj_spell_dummy_go;

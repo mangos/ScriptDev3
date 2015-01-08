@@ -36,7 +36,7 @@
 /**
  * ContentData
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * npc_lady_sylvanas_windrunner
 #endif
 
@@ -45,7 +45,7 @@
 
 #include "precompiled.h"
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 /*######
 ## npc_lady_sylvanas_windrunner
 ######*/
@@ -172,7 +172,7 @@ bool QuestRewarded_npc_lady_sylvanas_windrunner(Player* /*pPlayer*/, Creature* p
 void AddSC_undercity()
 {
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     Script* pNewScript;
 
     pNewScript = new Script;

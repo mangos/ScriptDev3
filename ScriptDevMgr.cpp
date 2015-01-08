@@ -34,7 +34,6 @@
 #include "system/ScriptLoader.h"
 #include "system/system.h"
 #include "ScriptDevMgr.h"
-#include "Spell.h"
 
 typedef std::vector<Script*> SDScriptVec;
 int num_sc_scripts;
@@ -196,7 +195,7 @@ void Script::RegisterSelf(bool bReportError)
 //************************************
 //*** Functions to be used by core ***
 
-void sd3::FreeScriptLibrary()
+void SD3::FreeScriptLibrary()
 {
     // Free Spell Summary
     delete []SpellSummary;
@@ -214,7 +213,7 @@ void sd3::FreeScriptLibrary()
     setScriptLibraryErrorFile(NULL, NULL);
 }
 
-void sd3::InitScriptLibrary()
+void SD3::InitScriptLibrary()
 {
     // ScriptDev3 startup
     outstring_log("  ___         _      _   ___          ___ ");
@@ -278,12 +277,12 @@ void sd3::InitScriptLibrary()
     outstring_log(">> Loaded %i C++ Scripts.", num_sc_scripts);
 }
 
-char const* sd3::GetScriptLibraryVersion()
+char const* SD3::GetScriptLibraryVersion()
 {
     return strSD3Version.c_str();
 }
 
-bool sd3::GossipHello(Player* pPlayer, Creature* pCreature)
+bool SD3::GossipHello(Player* pPlayer, Creature* pCreature)
 {
     Script* pTempScript = m_scripts[pCreature->GetScriptId()];
 
@@ -297,7 +296,7 @@ bool sd3::GossipHello(Player* pPlayer, Creature* pCreature)
     return pTempScript->pGossipHello(pPlayer, pCreature);
 }
 
-bool sd3::GOGossipHello(Player* pPlayer, GameObject* pGo)
+bool SD3::GOGossipHello(Player* pPlayer, GameObject* pGo)
 {
     Script* pTempScript = m_scripts[pGo->GetGOInfo()->ScriptId];
 
@@ -311,7 +310,7 @@ bool sd3::GOGossipHello(Player* pPlayer, GameObject* pGo)
     return pTempScript->pGossipHelloGO(pPlayer, pGo);
 }
 
-bool sd3::GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool SD3::GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     debug_log("sd3: Gossip selection, sender: %u, action: %u", uiSender, uiAction);
 
@@ -327,7 +326,7 @@ bool sd3::GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, ui
     return pTempScript->pGossipSelect(pPlayer, pCreature, uiSender, uiAction);
 }
 
-bool sd3::GOGossipSelect(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint32 uiAction)
+bool SD3::GOGossipSelect(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint32 uiAction)
 {
     debug_log("sd3: GO Gossip selection, sender: %u, action: %u", uiSender, uiAction);
 
@@ -343,7 +342,7 @@ bool sd3::GOGossipSelect(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint
     return pTempScript->pGossipSelectGO(pPlayer, pGo, uiSender, uiAction);
 }
 
-bool sd3::GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction, const char* sCode)
+bool SD3::GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction, const char* sCode)
 {
     debug_log("sd3: Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
 
@@ -359,7 +358,7 @@ bool sd3::GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSe
     return pTempScript->pGossipSelectWithCode(pPlayer, pCreature, uiSender, uiAction, sCode);
 }
 
-bool sd3::GOGossipSelectWithCode(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint32 uiAction, const char* sCode)
+bool SD3::GOGossipSelectWithCode(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint32 uiAction, const char* sCode)
 {
     debug_log("sd3: GO Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
 
@@ -375,7 +374,7 @@ bool sd3::GOGossipSelectWithCode(Player* pPlayer, GameObject* pGo, uint32 uiSend
     return pTempScript->pGossipSelectGOWithCode(pPlayer, pGo, uiSender, uiAction, sCode);
 }
 
-bool sd3::QuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
+bool SD3::QuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
 {
     Script* pTempScript = m_scripts[pCreature->GetScriptId()];
 
@@ -389,7 +388,7 @@ bool sd3::QuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
     return pTempScript->pQuestAcceptNPC(pPlayer, pCreature, pQuest);
 }
 
-bool sd3::QuestRewarded(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
+bool SD3::QuestRewarded(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
 {
     Script* pTempScript = m_scripts[pCreature->GetScriptId()];
 
@@ -403,7 +402,7 @@ bool sd3::QuestRewarded(Player* pPlayer, Creature* pCreature, Quest const* pQues
     return pTempScript->pQuestRewardedNPC(pPlayer, pCreature, pQuest);
 }
 
-uint32 sd3::GetNPCDialogStatus(Player* pPlayer, Creature* pCreature)
+uint32 SD3::GetNPCDialogStatus(Player* pPlayer, Creature* pCreature)
 {
     Script* pTempScript = m_scripts[pCreature->GetScriptId()];
 
@@ -417,7 +416,7 @@ uint32 sd3::GetNPCDialogStatus(Player* pPlayer, Creature* pCreature)
     return pTempScript->pDialogStatusNPC(pPlayer, pCreature);
 }
 
-uint32 sd3::GetGODialogStatus(Player* pPlayer, GameObject* pGo)
+uint32 SD3::GetGODialogStatus(Player* pPlayer, GameObject* pGo)
 {
     Script* pTempScript = m_scripts[pGo->GetGOInfo()->ScriptId];
 
@@ -431,7 +430,7 @@ uint32 sd3::GetGODialogStatus(Player* pPlayer, GameObject* pGo)
     return pTempScript->pDialogStatusGO(pPlayer, pGo);
 }
 
-bool sd3::ItemQuestAccept(Player* pPlayer, Item* pItem, Quest const* pQuest)
+bool SD3::ItemQuestAccept(Player* pPlayer, Item* pItem, Quest const* pQuest)
 {
     Script* pTempScript = m_scripts[pItem->GetProto()->ScriptId];
 
@@ -445,7 +444,7 @@ bool sd3::ItemQuestAccept(Player* pPlayer, Item* pItem, Quest const* pQuest)
     return pTempScript->pQuestAcceptItem(pPlayer, pItem, pQuest);
 }
 
-bool sd3::GOUse(Player* pPlayer, GameObject* pGo)
+bool SD3::GOUse(Player* pPlayer, GameObject* pGo)
 {
     Script* pTempScript = m_scripts[pGo->GetGOInfo()->ScriptId];
 
@@ -457,7 +456,7 @@ bool sd3::GOUse(Player* pPlayer, GameObject* pGo)
     return pTempScript->pGOUse(pPlayer, pGo);
 }
 
-bool sd3::GOQuestAccept(Player* pPlayer, GameObject* pGo, const Quest* pQuest)
+bool SD3::GOQuestAccept(Player* pPlayer, GameObject* pGo, const Quest* pQuest)
 {
     Script* pTempScript = m_scripts[pGo->GetGOInfo()->ScriptId];
 
@@ -471,7 +470,7 @@ bool sd3::GOQuestAccept(Player* pPlayer, GameObject* pGo, const Quest* pQuest)
     return pTempScript->pQuestAcceptGO(pPlayer, pGo, pQuest);
 }
 
-bool sd3::GOQuestRewarded(Player* pPlayer, GameObject* pGo, Quest const* pQuest)
+bool SD3::GOQuestRewarded(Player* pPlayer, GameObject* pGo, Quest const* pQuest)
 {
     Script* pTempScript = m_scripts[pGo->GetGOInfo()->ScriptId];
 
@@ -485,7 +484,7 @@ bool sd3::GOQuestRewarded(Player* pPlayer, GameObject* pGo, Quest const* pQuest)
     return pTempScript->pQuestRewardedGO(pPlayer, pGo, pQuest);
 }
 
-bool sd3::AreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
+bool SD3::AreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
 {
     Script* pTempScript = m_scripts[GetAreaTriggerScriptId(atEntry->id)];
 
@@ -508,7 +507,7 @@ bool SD3::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSp
     return pTempScript->pNpcSpellClick(pPlayer, pClickedCreature, uiSpellId);
 }
 #endif
-bool sd3::ProcessEvent(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+bool SD3::ProcessEvent(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
 {
     Script* pTempScript = m_scripts[GetEventIdScriptId(uiEventId)];
 
@@ -521,7 +520,7 @@ bool sd3::ProcessEvent(uint32 uiEventId, Object* pSource, Object* pTarget, bool 
     return pTempScript->pProcessEventId(uiEventId, pSource, pTarget, bIsStart);
 }
 
-CreatureAI* sd3::GetCreatureAI(Creature* pCreature)
+CreatureAI* SD3::GetCreatureAI(Creature* pCreature)
 {
     Script* pTempScript = m_scripts[pCreature->GetScriptId()];
 
@@ -533,7 +532,7 @@ CreatureAI* sd3::GetCreatureAI(Creature* pCreature)
     return pTempScript->GetAI(pCreature);
 }
 
-bool sd3::ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets)
+bool SD3::ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets)
 {
     Script* pTempScript = m_scripts[pItem->GetProto()->ScriptId];
 
@@ -545,7 +544,7 @@ bool sd3::ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets)
     return pTempScript->pItemUse(pPlayer, pItem, targets);
 }
 
-bool sd3::EffectDummyCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
+bool SD3::EffectDummyCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
 {
     Script* pTempScript = m_scripts[pTarget->GetScriptId()];
 
@@ -557,7 +556,7 @@ bool sd3::EffectDummyCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex ef
     return pTempScript->pEffectDummyNPC(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
-bool sd3::EffectDummyGameObject(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, GameObject* pTarget, ObjectGuid originalCasterGuid)
+bool SD3::EffectDummyGameObject(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, GameObject* pTarget, ObjectGuid originalCasterGuid)
 {
     Script* pTempScript = m_scripts[pTarget->GetGOInfo()->ScriptId];
 
@@ -569,7 +568,7 @@ bool sd3::EffectDummyGameObject(Unit* pCaster, uint32 spellId, SpellEffectIndex 
     return pTempScript->pEffectDummyGO(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
-bool sd3::EffectDummyItem(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Item* pTarget, ObjectGuid originalCasterGuid)
+bool SD3::EffectDummyItem(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Item* pTarget, ObjectGuid originalCasterGuid)
 {
     Script* pTempScript = m_scripts[pTarget->GetProto()->ScriptId];
 
@@ -581,7 +580,7 @@ bool sd3::EffectDummyItem(Unit* pCaster, uint32 spellId, SpellEffectIndex effInd
     return pTempScript->pEffectDummyItem(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
-bool sd3::EffectScriptEffectCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
+bool SD3::EffectScriptEffectCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
 {
     Script* pTempScript = m_scripts[pTarget->GetScriptId()];
 
@@ -593,7 +592,7 @@ bool sd3::EffectScriptEffectCreature(Unit* pCaster, uint32 spellId, SpellEffectI
     return pTempScript->pEffectScriptEffectNPC(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
-bool sd3::AuraDummy(Aura const* pAura, bool bApply)
+bool SD3::AuraDummy(Aura const* pAura, bool bApply)
 {
     Script* pTempScript = m_scripts[((Creature*)pAura->GetTarget())->GetScriptId()];
 
@@ -605,7 +604,7 @@ bool sd3::AuraDummy(Aura const* pAura, bool bApply)
     return pTempScript->pEffectAuraDummy(pAura, bApply);
 }
 
-InstanceData* sd3::CreateInstanceData(Map* pMap)
+InstanceData* SD3::CreateInstanceData(Map* pMap)
 {
     Script* pTempScript = m_scripts[pMap->GetScriptId()];
 

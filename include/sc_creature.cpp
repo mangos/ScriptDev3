@@ -301,7 +301,7 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Check for school if specified
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
         if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
         { continue; }
 #endif  
@@ -627,17 +627,16 @@ void ScriptedAI::SetEquipmentSlots(bool bLoadDefault, int32 iMainHand, int32 iOf
 enum
 {
 
-#if !defined (CLASSIC)  
-
+#if defined (CLASSIC)  
+    NPC_BROODLORD               = 12017
+#endif  
+#if defined (TBC) && defined (WOTLK)
     NPC_BROODLORD               = 12017,
     NPC_VOID_REAVER             = 19516,
     NPC_JAN_ALAI                = 23578,
     NPC_SARTHARION              = 28860,
     NPC_TALON_KING_IKISS        = 18473,
     NPC_KARGATH_BLADEFIST       = 16808,
-
-#if defined (TBC) ---  
-    NPC_BROODLORD               = 12017
 #endif  
 #if defined (WOTLK)
     NPC_ANUBARAK                = 29120,
@@ -675,9 +674,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
                 return false;
             }
             break;
-
-#if !defined (CLASSIC)  
-
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
         case NPC_VOID_REAVER:                               // void reaver (calculate from center of room)
             if (m_creature->GetDistance2d(432.59f, 371.93f) < 105.0f)
             { return false; }

@@ -543,7 +543,7 @@ struct npc_wildaAI : public npc_escortAI
         }
     }
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
@@ -571,7 +571,7 @@ struct npc_wildaAI : public npc_escortAI
         }
     }
 #endif
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     void DoSpawnAssassin()
     {
         // unknown where they actually appear
@@ -611,7 +611,7 @@ struct npc_wildaAI : public npc_escortAI
     }
 #endif
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     void Aggro(Unit* pWho) override
     {
         // don't always use
@@ -712,7 +712,7 @@ bool QuestAccept_npc_wilda(Player* pPlayer, Creature* pCreature, const Quest* pQ
     if (pQuest->GetQuestId() == QUEST_ESCAPE_COILSCAR)
     {
         DoScriptText(SAY_WIL_START, pCreature, pPlayer);
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
         pCreature->SetFactionTemporary(FACTION_EARTHEN, TEMPFACTION_RESTORE_RESPAWN);
 #else
         pCreature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
@@ -1519,7 +1519,7 @@ const static EventLocations aDamnationLocations[] =
     { -3600.68f, 1886.58f, 47.24f, 1.81f},     // 1 earth spirit summon loc
     { -3597.19f, 1887.46f, 47.24f, 1.77f},     // 2 water spirit summon loc
     { -3593.18f, 1888.27f, 47.24f, 1.77f},     // 3 air spirit summon loc
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     { -3595.36f, 1869.78f, 47.24f},            // 4 fight ready move loc
     { -3635.90f, 1860.94f, 52.93f},            // 5 elementals move loc
     { -3599.71f, 1897.94f, 47.24f}             // 6 epilogue move loc
@@ -1944,7 +1944,7 @@ struct npc_veneratus_spawn_nodeAI : public Scripted_NoMovementAI
         }
     }
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     void UpdateAI(const uint32 uiDiff) override { }
 #else
     void UpdateAI(const uint32 /* uiDiff */) override { }

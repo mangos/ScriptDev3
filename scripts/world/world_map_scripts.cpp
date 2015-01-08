@@ -151,7 +151,7 @@ InstanceData* GetInstanceData_world_map_kalimdor(Map* pMap)
     return new world_map_kalimdor(pMap);
 }
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 /* *********************************************************
  *                     OUTLAND
  */
@@ -230,7 +230,7 @@ void AddSC_world_map_scripts()
     pNewScript->GetInstanceData = &GetInstanceData_world_map_kalimdor;
     pNewScript->RegisterSelf();
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     pNewScript = new Script;
     pNewScript->Name = "world_map_outland";
     pNewScript->GetInstanceData = &GetInstanceData_world_map_outland;

@@ -344,7 +344,7 @@ struct boss_illidari_councilAI : public ScriptedAI
         }
     }
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
 #else
     void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
@@ -354,7 +354,7 @@ struct boss_illidari_councilAI : public ScriptedAI
         m_creature->CastCustomSpell(m_creature, SPELL_SHARED_RULE_DAM, &uiDamageTaken, NULL, NULL, true);
     }
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     void HealedBy(Unit* pHealer, uint32& uiHealedAmount) override
 #else
     void HealedBy(Unit* /* pHealer */, uint32& uiHealedAmount) override

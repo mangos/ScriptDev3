@@ -976,7 +976,7 @@ struct npc_reginald_windsorAI : public npc_escortAI, private DialogueHelper
                 m_creature->RemoveAllAurasOnDeath();
                 m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
                 m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
 #endif
 

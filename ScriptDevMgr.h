@@ -129,7 +129,7 @@ struct Script
         pDialogStatusNPC(NULL), pDialogStatusGO(NULL),
         pQuestAcceptNPC(NULL), pQuestAcceptGO(NULL), pQuestAcceptItem(NULL),
         pQuestRewardedNPC(NULL), pQuestRewardedGO(NULL),
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
         pGOUse(NULL), pItemUse(NULL), pAreaTrigger(NULL), pProcessEventId(NULL),
 #else
         pGOUse(NULL), pItemUse(NULL), pAreaTrigger(NULL), pNpcSpellClick(NULL), pProcessEventId(NULL),

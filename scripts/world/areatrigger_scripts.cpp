@@ -38,7 +38,7 @@
 #if defined (WOTLK)    
  * at_aldurthar_gate                5284, 5285, 5286, 5287
 #endif
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * at_coilfang_waterfall            4591
  * at_legion_teleporter             4560 Teleporter TO Invasion Point: Cataclysm
 #endif
@@ -115,7 +115,7 @@ bool AreaTrigger_at_aldurthar_gate(Player* pPlayer, AreaTriggerEntry const* pAt)
     return true;
 }
 #endif
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 /*######
 ## at_coilfang_waterfall
 ######*/
@@ -466,7 +466,7 @@ void AddSC_areatrigger_scripts()
     pNewScript->pAreaTrigger = &AreaTrigger_at_aldurthar_gate;
     pNewScript->RegisterSelf();
 #endif	
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     pNewScript = new Script;
     pNewScript->Name = "at_coilfang_waterfall";
     pNewScript->pAreaTrigger = &AreaTrigger_at_coilfang_waterfall;

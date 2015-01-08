@@ -30,10 +30,10 @@
 void AddScripts();
 void AddEasternKingdomsScripts();
 void AddKalimdorScripts();
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 void AddOutlandsScripts();
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 void AddNorthrendScripts();
 #endif
 void AddWorldScripts();

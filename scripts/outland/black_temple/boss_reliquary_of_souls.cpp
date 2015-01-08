@@ -91,7 +91,7 @@ enum
     SPELL_SUMMON_ESSENCE_DESIRE     = 41493,
     SPELL_SUMMON_ESSENCE_ANGER      = 41496,
     SPELL_SUMMON_ENSLAVED_SOUL      = 41537,
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     SPELL_SUBMERGE_VISUAL           = 28819,
 #endif
 
@@ -238,7 +238,7 @@ struct boss_reliquary_of_soulsAI : public Scripted_NoMovementAI
         m_uiSoulDeathCount = 0;
         m_uiSoulSummonedCount = 0;
         m_uiAnimResetTimer = 2000;
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
         // Reset animation - visual effect similar to EMOTE_ONESHOT_EMERGE
         m_creature->RemoveAurasDueToSpell(SPELL_SUBMERGE_VISUAL);
 #else
@@ -267,7 +267,7 @@ struct boss_reliquary_of_soulsAI : public Scripted_NoMovementAI
         {
             if (m_uiAnimationTimer <= uiDiff)
             {
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
                 // Visual effect similar to EMOTE_ONESHOT_SUBMERGE
                 if (DoCastSpellIfCan(m_creature, SPELL_SUBMERGE_VISUAL) == CAST_OK)
 #else

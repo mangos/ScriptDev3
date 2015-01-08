@@ -49,7 +49,7 @@ enum
     SPELL_WATERBOLT                 = 37138,
     SPELL_SUBMERGE                  = 37550,
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     NPC_LURKER_BELOW                = 21217,
 #endif
     NPC_COILFANG_AMBUSHER           = 21865,
@@ -86,7 +86,7 @@ static const AddsLocations aLurkerLoc[MAX_SUBMERGE_ADDS] =
     {NPC_COILFANG_GUARDIAN, 42.471f, -445.115f, -19.76f},
 };
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
 static const float afLurkerSpawnPos[4] = {40.4058f, -417.108f, -21.5911f, 3.03312f};
 #endif
 
@@ -308,7 +308,7 @@ bool GOUse_go_strange_pool(Player* pPlayer, GameObject* pGo)
         {
             if (pInstance->GetData(TYPE_THELURKER_EVENT) == NOT_STARTED || pInstance->GetData(TYPE_THELURKER_EVENT) == FAIL)
             {
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
                 pPlayer->SummonCreature(NPC_LURKER_BELOW, afLurkerSpawnPos[0], afLurkerSpawnPos[1], afLurkerSpawnPos[2], afLurkerSpawnPos[3], TEMPSUMMON_DEAD_DESPAWN, 0);
 #else
                 pPlayer->CastSpell(pPlayer, SPELL_LURKER_SPAWN_TRIGGER, true);

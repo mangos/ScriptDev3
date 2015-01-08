@@ -99,7 +99,7 @@ static const float rookeryEventSpawnPos[3] = {43.7685f, -259.82f, 91.6483f};
 
 instance_blackrock_spire::instance_blackrock_spire(Map* pMap) : ScriptedInstance(pMap), DialogueHelper(aStadiumDialogue),
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     m_bUpperDoorOpened(false),
     m_uiDragonspineDoorTimer(0),
     m_uiDragonspineGoCount(0),
@@ -151,7 +151,7 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             }
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
             break;
 
         case GO_BRAZIER_1:
@@ -504,7 +504,7 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
 }
 
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 void instance_blackrock_spire::DoOpenUpperDoorIfCan(Player* pPlayer)
 {
     if (m_bUpperDoorOpened)
@@ -772,7 +772,7 @@ void instance_blackrock_spire::Update(uint32 uiDiff)
         }
     }
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     // unlock dragon spine door
     if (m_uiDragonspineDoorTimer)
     {
@@ -846,7 +846,7 @@ bool AreaTrigger_at_blackrock_spire(Player* pPlayer, AreaTriggerEntry const* pAt
             if (instance_blackrock_spire* pInstance = (instance_blackrock_spire*) pPlayer->GetInstanceData())
             {
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
                 pInstance->DoOpenUpperDoorIfCan(pPlayer);
 #endif
                 pInstance->DoSortRoomEventMobs();

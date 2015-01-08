@@ -712,7 +712,7 @@ struct boss_thaddiusAddsAI : public ScriptedAI
         m_creature->RemoveAllAurasOnDeath();
         m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
         m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
 #endif
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);

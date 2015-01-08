@@ -36,7 +36,7 @@
 /**
  * ContentData
  * go_barov_journal
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * go_ethereum_prison
  * go_ethereum_stasis
 #endif
@@ -69,7 +69,7 @@ bool GOUse_go_barov_journal(Player* pPlayer, GameObject* /*pGo*/)
     return true;
 }
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 /*######
 ## go_ethereum_prison
 ######*/
@@ -279,7 +279,7 @@ bool GOUse_go_andorhal_tower(Player* pPlayer, GameObject* pGo)
     return true;
 }
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
 enum 
 {
     GOSSIP_TABLE_THEKA = 1653,
@@ -372,7 +372,7 @@ void AddSC_go_scripts()
     pNewScript->pGOUse =          &GOUse_go_barov_journal;
     pNewScript->RegisterSelf();
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     pNewScript = new Script;
     pNewScript->Name = "go_ethereum_prison";
     pNewScript->pGOUse =          &GOUse_go_ethereum_prison;
@@ -410,7 +410,7 @@ void AddSC_go_scripts()
     pNewScript->pGOUse =          &GOUse_go_andorhal_tower;
     pNewScript->RegisterSelf();
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     pNewScript = new Script;
     pNewScript->Name = "go_table_theka";
     pNewScript->pGossipHelloGO =  &GossipHelloGO_table_theka;

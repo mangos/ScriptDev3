@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * npc_kyle_the_frenzied
 #endif
  * EndContentData
@@ -43,7 +43,7 @@
 
 #include "precompiled.h"
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 /*######
 # npc_kyle_the_frenzied
 ######*/
@@ -186,7 +186,7 @@ CreatureAI* GetAI_npc_kyle_the_frenzied(Creature* pCreature)
 #endif
 void AddSC_mulgore()
 {
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     Script* pNewScript;
 
     pNewScript = new Script;

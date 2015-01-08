@@ -120,7 +120,7 @@ CreatureAI* GetAI_npc_the_scourge_cauldron(Creature* pCreature)
     return new npc_the_scourge_cauldronAI(pCreature);
 }
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 /*######
 ## npc_anchorite_truuen
 ######*/
@@ -429,7 +429,7 @@ struct npc_taelan_fordringAI: public npc_escortAI, private DialogueHelper
             m_creature->ClearComboPointHolders();
             m_creature->RemoveAllAurasOnDeath();
             m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
             m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
 #endif
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -1095,7 +1095,7 @@ void AddSC_western_plaguelands()
 
     pNewScript = new Script;
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     pNewScript->Name = "npc_anchorite_truuen";
     pNewScript->GetAI = &GetAI_npc_anchorite_truuen;
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_anchorite_truuen;

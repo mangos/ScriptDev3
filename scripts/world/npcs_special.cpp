@@ -42,7 +42,7 @@
 /**
  * ContentData
  * npc_chicken_cluck          100%    support for quest 3861 (Cluck!)
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
  * npc_air_force_bots          80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
  * npc_dancing_flames         100%    midsummer event NPC
  * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD3
@@ -58,7 +58,7 @@
  * EndContentData
  */
  
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 /*########
 # npc_air_force_bots
 #########*/
@@ -379,7 +379,7 @@ bool QuestRewarded_npc_chicken_cluck(Player* /*pPlayer*/, Creature* pCreature, c
     return true;
 }
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 /*######
 ## npc_dancing_flames
 ######*/
@@ -638,7 +638,7 @@ struct npc_injured_patientAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff) override
     {
         // lower HP on every world tick makes it a useful counter, not officlone though
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
         uint32 uiHPLose = uint32(0.03f * uiDiff); 
 #else
         uint32 uiHPLose = uint32(0.05f * uiDiff);
@@ -802,7 +802,7 @@ void npc_doctorAI::UpdateAI(const uint32 uiDiff)
 
             if (Creature* Patient = m_creature->SummonCreature(patientEntry, (*itr)->x, (*itr)->y, (*itr)->z, (*itr)->o, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000))
             {
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
                 // 2.4.3, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
                 Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
 #endif
@@ -1147,7 +1147,7 @@ bool GossipHello_npc_innkeeper(Player* pPlayer, Creature* pCreature)
     // Should only apply to innkeeper close to start areas.
     if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetAreaId()))
     {
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
         // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
         if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
 #endif
@@ -1481,7 +1481,7 @@ void AddSC_npcs_special()
 {
     Script* pNewScript;
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     pNewScript = new Script;
     pNewScript->Name = "npc_air_force_bots";
     pNewScript->GetAI = &GetAI_npc_air_force_bots;
@@ -1495,7 +1495,7 @@ void AddSC_npcs_special()
     pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_chicken_cluck;
     pNewScript->RegisterSelf();
 
-#if !defined (CLASSIC)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     pNewScript = new Script;
     pNewScript->Name = "npc_dancing_flames";
     pNewScript->GetAI = &GetAI_npc_dancing_flames;

@@ -45,12 +45,13 @@ enum
     NPC_WINDSOR                 = 12580
 #else
     NPC_WINDSOR                 = 12580,
-#endif
 
     // Quest 11538
-    NPC_EMISSARY_OF_HATE        = 25003,
-    NPC_IRESPEAKER              = 24999,
-    NPC_UNLEASHED_HELLION       = 25002,
+    NPC_EMISSARY_OF_HATE = 25003,
+    NPC_IRESPEAKER = 24999,
+    NPC_UNLEASHED_HELLION = 25002,
+#endif
+
 };
 
 enum SpawnIndexes

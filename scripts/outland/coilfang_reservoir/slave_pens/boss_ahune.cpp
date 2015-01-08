@@ -138,7 +138,7 @@ struct boss_ahuneAI : public Scripted_NoMovementAI
         m_creature->ForcedDespawn();
     }
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
 #else
     void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
@@ -304,7 +304,7 @@ struct npc_frozen_coreAI : public Scripted_NoMovementAI
         DoCastSpellIfCan(m_creature, SPELL_ICE_SPEAR_AURA, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
     }
 
-#if !defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC)
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
 #else
     void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override

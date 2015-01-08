@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 * npc_rizzle_sprysprocket
  * npc_depth_charge
  * go_southfury_moonstone
@@ -47,7 +47,7 @@
 
 #include "precompiled.h"
 
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
 #include "escort_ai.h"
 
 /*#####
@@ -502,7 +502,7 @@ void AddSC_azshara()
     Script* pNewScript;
 
     pNewScript = new Script;
-#if !defined (CLASSIC)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     pNewScript->Name = "npc_rizzle_sprysprocket";
     pNewScript->GetAI = &GetAI_npc_rizzle_sprysprocket;
     pNewScript->pGossipHello = &GossipHello_npc_rizzle_sprysprocket;
