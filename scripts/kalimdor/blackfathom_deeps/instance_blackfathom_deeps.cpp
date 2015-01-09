@@ -28,7 +28,7 @@
  * ScriptData
  * SDName:      Instance_Blackfathom_Deeps
  * SD%Complete: 50
- * SDComment:   None
+ * SDComment:   Quest support: 6921
  * SDCategory:  Blackfathom Deeps
  * EndScriptData
  */
@@ -155,13 +155,19 @@ void instance_blackfathom_deeps::SetData(uint32 uiType, uint32 uiData)
                 DoUseDoorOrButton(GO_PORTAL_DOOR);
             }
             break;
+#if defined (CLASSIC) || defined (TBC)
         case TYPE_STONE:
             if (m_auiEncounter[2] != DONE && uiData == DONE)
             {
                 m_auiEncounter[2] = uiData;
             }
             break;
-
+#endif
+#if defined (WOTLK)
+        case TYPE_AQUANIS:
+            m_auiEncounter[2] = uiData;;
+            break;
+#endif
     }
 
     if (uiData == DONE)
@@ -186,8 +192,10 @@ uint32 instance_blackfathom_deeps::GetData(uint32 uiType) const
             return m_auiEncounter[0];
         case TYPE_SHRINE:
             return m_auiEncounter[1];
+#if defined (CLASSIC) || defined (TBC)
         case TYPE_STONE:
             return m_auiEncounter[2];
+#endif
         default:
             return 0;
     }
@@ -219,6 +227,11 @@ void instance_blackfathom_deeps::Load(const char* chrIn)
 
 void instance_blackfathom_deeps::OnCreatureDeath(Creature* pCreature)
 {
+#if defined (WOTLK)
+    if (pCreature->GetEntry() == NPC_BARON_AQUANIS)
+        { SetData(TYPE_AQUANIS, DONE); }
+#endif
+        
     // Only use this function if shrine event is in progress
     if (m_auiEncounter[1] != IN_PROGRESS)
     {
@@ -327,6 +340,7 @@ bool GOUse_go_fire_of_akumai(Player* /*pPlayer*/, GameObject* pGo)
 
 bool GOUse_go_fathom_stone(Player* pPlayer, GameObject* pGo)
 {
+#if defined (CLASSIC) || defined (TBC)
     ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 
     if (!pInstance)
@@ -345,6 +359,20 @@ bool GOUse_go_fathom_stone(Player* pPlayer, GameObject* pGo)
 
     pInstance->SetData(TYPE_STONE, DONE);
     return true;
+#endif
+#if defined (WOTLK)
+    instance_blackfathom_deeps* pInstance = (instance_blackfathom_deeps*)pGo->GetInstanceData();
+    if (!pInstance)
+        { return true; }
+        
+    if (pInstance->GetData(TYPE_AQUANIS) == NOT_STARTED)
+    {
+        pPlayer->SummonCreature(NPC_BARON_AQUANIS, afAquanisPos[0], afAquanisPos[1], afAquanisPos[2], afAquanisPos[3], TEMPSUMMON_DEAD_DESPAWN, 0);
+        pInstance->SetData(TYPE_AQUANIS, IN_PROGRESS);
+    }
+    
+    return false;
+#endif
 }
 
 void AddSC_instance_blackfathom_deeps()

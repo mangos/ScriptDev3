@@ -875,8 +875,9 @@ struct npc_marshal_windsorAI : public npc_escortAI
                 }
                 break;
             case 15:
-                // ToDo: fix this emote!
-                // m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
+#if defined (WOTLK)
+                m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
+#endif
                 break;
             case 16:
                 if (m_pInstance)
@@ -888,8 +889,9 @@ struct npc_marshal_windsorAI : public npc_escortAI
                 DoScriptText(SAY_WINDSOR_EQUIPMENT_2, m_creature);
                 break;
             case 19:
-                // ToDo: fix this emote!
-                // m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
+#if defined (WOTLK)
+                m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
+#endif
                 break;
             case 20:
                 if (m_pInstance)

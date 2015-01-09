@@ -345,9 +345,14 @@ struct npc_netherspite_portalAI : public Scripted_NoMovementAI
         m_uiOrientationTimer = 0;
     }
 
+#if defined (CLASSIC) || defined (TBC)
     void MoveInLineOfSight(Unit* pWho) { }
     void AttackStart(Unit* pWho) { }
-
+#endif
+#if defined (WOTLK)
+    void MoveInLineOfSight(Unit* /*pWho*/) { }
+    void AttackStart(Unit* /*pWho*/) { }
+#endif
     void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
     {
         if (eventType == AI_EVENT_CUSTOM_A)

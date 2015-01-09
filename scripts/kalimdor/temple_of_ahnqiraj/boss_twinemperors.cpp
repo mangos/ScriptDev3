@@ -120,7 +120,12 @@ struct boss_twin_emperorsAI : public ScriptedAI
     }
 
     // Workaround for the shared health pool
+#if defined (CLASSIC) || defined (TBC)
     void HealedBy(Unit* pHealer, uint32& uiHealedAmount) override
+#endif
+#if defined (WOTLK)
+    void HealedBy(Unit* /*pHealer*/, uint32& uiHealedAmount) override
+#endif
     {
         if (!m_pInstance)
         {

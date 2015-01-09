@@ -115,10 +115,12 @@ struct npc_shadowfang_prisonerAI : public npc_escortAI
                     DoScriptText(EMOTE_UNLOCK_DOOR_AD, m_creature);
                 }
                 break;
-//            case 12:
-//                if (m_uiNpcEntry != NPC_ASH)
-//                    m_creature->HandleEmote(EMOTE_ONESHOT_USESTANDING);
-//                break;
+#if defined (WOTLK)
+            case 12:
+                if (m_uiNpcEntry != NPC_ASH)
+                    m_creature->HandleEmote(EMOTE_ONESHOT_USESTANDING);
+                break;
+#endif
             case 13:
                 if (m_uiNpcEntry == NPC_ASH)
                 {

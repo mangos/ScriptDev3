@@ -47,7 +47,7 @@
 #include "../scripts/world/world_map_scripts.h"
 #include "escort_ai.h"
 
-
+#if defined (CLASSIC) || defined (TBC)
 /*######
 ## npc_tyrion
 ######*/
@@ -68,7 +68,7 @@ bool QuestAccept_npc_tyrion(Player* pPlayer, Creature* pCreature, const Quest* p
 
     return true;
 }
-
+#endif
 
 /*######
 ## npc_bartleby
@@ -1160,6 +1160,7 @@ bool GossipSelect_npc_reginald_windsor(Player* pPlayer, Creature* pCreature, uin
     return true;
 }
 
+#if defined (CLASSIC) || defined (TBC)
 /*######
 ## npc_tyrion_spybot
 ######*/
@@ -1303,6 +1304,7 @@ CreatureAI* GetAI_npc_tyrion_spybot(Creature* pCreature)
 {
     return new npc_tyrion_spybotAI(pCreature);
 }
+#endif
 
 void AddSC_stormwind_city()
 {

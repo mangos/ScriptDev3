@@ -89,7 +89,7 @@ void instance_temple_of_ahnqiraj::DoHandleTempleAreaTrigger(uint32 uiTriggerId)
         }
         m_bIsEmperorsIntroDone = true;
     }
-#if defined (CLASSIC)  
+#if defined (CLASSIC) || defined (WOTLK) 
     else if (uiTriggerId == AREATRIGGER_SARTURA)
     {
         if (GetData(TYPE_SARTURA) == NOT_STARTED || GetData(TYPE_SARTURA) == FAIL)
@@ -231,9 +231,10 @@ void instance_temple_of_ahnqiraj::SetData(uint32 uiType, uint32 uiData)
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3] << " "
                    << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6] << " " << m_auiEncounter[7] << " "
-#if defined (CLASSIC)  
+#if defined (CLASSIC) || defined (WOTLK)
                    << m_auiEncounter[8] << " " << m_auiEncounter[9];
-#else
+#endif
+#if defined (TBC)
                    << m_auiEncounter[8];
 #endif
 
@@ -344,6 +345,7 @@ InstanceData* GetInstanceData_instance_temple_of_ahnqiraj(Map* pMap)
 
 bool AreaTrigger_at_temple_ahnqiraj(Player* pPlayer, AreaTriggerEntry const* pAt)
 {
+#if defined (CLASSIC) || defined (TBC)
     if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
     {
         return false;
@@ -370,7 +372,19 @@ bool AreaTrigger_at_temple_ahnqiraj(Player* pPlayer, AreaTriggerEntry const* pAt
                     pSartura->SetInCombatWithZone(); 
                 } 
     } 
+#endif
+#if defined (WOTLK)
+    if (pAt->id == AREATRIGGER_TWIN_EMPERORS || pAt->id == AREATRIGGER_SARTURA)
+    {
+        if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
+            return false;
 
+        if (instance_temple_of_ahnqiraj* pInstance = (instance_temple_of_ahnqiraj*)pPlayer->GetInstanceData())
+        {
+            pInstance->DoHandleTempleAreaTrigger(pAt->id);
+        }
+    }
+#endif
     return false;
 }
 

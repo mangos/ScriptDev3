@@ -36,7 +36,13 @@
 #include "precompiled.h"
 #include "onyxias_lair.h"
 
+#if defined (CLASSIC) || defined (TBC)
 instance_onyxias_lair::instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap)
+#endif
+#if defined (WOTLK)
+instance_onyxias_lair::instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap),
+    m_uiAchievWhelpsCount(0)
+#endif
 {
     Initialize();
 }
@@ -59,6 +65,12 @@ void instance_onyxias_lair::OnCreatureCreate(Creature* pCreature)
         case NPC_ONYXIA_TRIGGER:
             m_mNpcEntryGuidStore[NPC_ONYXIA_TRIGGER] = pCreature->GetObjectGuid();
             break;
+#if defined (WOTLK)
+        case NPC_ONYXIA_WHELP:
+            if (m_uiEncounter >= DATA_LIFTOFF && time_t(m_tPhaseTwoStart + TIME_LIMIT_MANY_WHELPS) >= time(NULL))
+                ++m_uiAchievWhelpsCount;
+            break;
+#endif
     }
 }
 
@@ -70,7 +82,13 @@ void instance_onyxias_lair::SetData(uint32 uiType, uint32 uiData)
     }
 
     m_uiEncounter = uiData;
-
+#if defined (WOTLK)
+    if (uiData == IN_PROGRESS)
+    {
+        DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_ONYXIA_ID);
+        m_uiAchievWhelpsCount = 0;
+    }
+#endif
     if (uiData == DATA_LIFTOFF)
     {
         m_tPhaseTwoStart = time(NULL);
@@ -78,6 +96,23 @@ void instance_onyxias_lair::SetData(uint32 uiType, uint32 uiData)
 
     // Currently no reason to save anything
 }
+
+#if defined (WOTLK)
+bool instance_onyxias_lair::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* /*pSource*/, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
+{
+    switch (uiCriteriaId)
+    {
+        case ACHIEV_CRIT_MANY_WHELPS_N:
+        case ACHIEV_CRIT_MANY_WHELPS_H:
+            return m_uiAchievWhelpsCount >= ACHIEV_CRIT_REQ_MANY_WHELPS;
+        case ACHIEV_CRIT_NO_BREATH_N:
+        case ACHIEV_CRIT_NO_BREATH_H:
+            return m_uiEncounter != DATA_PLAYER_TOASTED;
+        default:
+            return false;
+    }
+}
+#endif
 
 InstanceData* GetInstanceData_instance_onyxias_lair(Map* pMap)
 {

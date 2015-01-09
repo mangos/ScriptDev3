@@ -42,7 +42,12 @@ void ScriptedInstance::DoUseDoorOrButton(ObjectGuid guid, uint32 uiWithRestoreTi
 
     if (GameObject* pGo = instance->GetGameObject(guid))
     {
+#if defined (CLASSIC) || defined (TBC)
         if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
+#endif
+#if defined (WOTLK)
+        if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON || pGo->GetGoType() == GAMEOBJECT_TYPE_TRAPDOOR)
+#endif
         {
             if (pGo->getLootState() == GO_READY)
             {
@@ -92,7 +97,13 @@ void ScriptedInstance::DoRespawnGameObject(ObjectGuid guid, uint32 uiTimeToDespa
     {
         // not expect any of these should ever be handled
         if (pGo->GetGoType() == GAMEOBJECT_TYPE_FISHINGNODE || pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR ||
+#if defined (CLASSIC) || defined (TBC)
             pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON || pGo->GetGoType() == GAMEOBJECT_TYPE_TRAP)
+#endif
+#if defined (WOTLK)
+            pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
+#endif
+
         {
             return;
         }

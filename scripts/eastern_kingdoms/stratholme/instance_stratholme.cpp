@@ -935,6 +935,8 @@ void instance_stratholme::Update(uint32 uiDiff)
 
                 // Check if player is near The Unforgiven
                 // If a player is near, then we do not need to check other player locations, therefore stop checking - break out of this
+// TODO: IsNearWaypoint is missing from TWO
+
                 if (pPlayer->IsNearWaypoint(fPlayerXposition, fPlayerYposition, fPlayerZposition, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, 4, 4, 4))
                 {
                     Creature* pTheUnforgiven = pPlayer->SummonCreature(NPC_THE_UNFORGIVEN, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, aStratholmeLocation[8].m_fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 7200000);

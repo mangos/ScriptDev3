@@ -122,24 +122,52 @@ void instance_molten_core::SetData(uint32 uiType, uint32 uiData)
             break;
         case TYPE_MAGMADAR:
             m_auiEncounter[uiType] = uiData;
+#if defined (WOTLK)
+            if (uiData == DONE)
+                { DoUseDoorOrButton(GO_RUNE_KRESS); }
+#endif
             break;
         case TYPE_GEHENNAS:
             m_auiEncounter[uiType] = uiData;
+#if defined (WOTLK)
+            if (uiData == DONE)
+                { DoUseDoorOrButton(GO_RUNE_MOHN); }
+#endif
             break;
         case TYPE_GARR:
             m_auiEncounter[uiType] = uiData;
+#if defined (WOTLK)
+            if (uiData == DONE)
+                { DoUseDoorOrButton(GO_RUNE_BLAZ); }
+#endif
             break;
         case TYPE_SHAZZRAH:
             m_auiEncounter[uiType] = uiData;
+#if defined (WOTLK)
+            if (uiData == DONE)
+                { DoUseDoorOrButton(GO_RUNE_MAZJ); }
+#endif
             break;
         case TYPE_GEDDON:
             m_auiEncounter[uiType] = uiData;
+#if defined (WOTLK)
+            if (uiData == DONE)
+                { DoUseDoorOrButton(GO_RUNE_ZETH); }
+#endif
             break;
         case TYPE_GOLEMAGG:
             m_auiEncounter[uiType] = uiData;
+#if defined (WOTLK)
+            if (uiData == DONE)
+                { DoUseDoorOrButton(GO_RUNE_THERI); }
+#endif
             break;
         case TYPE_SULFURON:
             m_auiEncounter[uiType] = uiData;
+#if defined (WOTLK)
+            if (uiData == DONE)
+                { DoUseDoorOrButton(GO_RUNE_KORO); }
+#endif
             break;
         case TYPE_MAJORDOMO:
             m_auiEncounter[uiType] = uiData;
@@ -154,12 +182,22 @@ void instance_molten_core::SetData(uint32 uiType, uint32 uiData)
     }
 
     // Check if Majordomo can be summoned
+#if defined (CLASSIC) || defined (TBC)
     if (uiData == SPECIAL)
+#endif
+#if defined (WOTLK)
+    if (uiData == DONE)
+#endif
     {
         DoSpawnMajordomoIfCan(false);
     }
 
+#if defined (CLASSIC) || defined (TBC)
     if (uiData == DONE || uiData == SPECIAL)
+#endif
+#if defined (WOTLK)
+    if (uiData == DONE)
+#endif
     {
         OUT_SAVE_INST_DATA;
 
@@ -204,7 +242,12 @@ void instance_molten_core::DoSpawnMajordomoIfCan(bool bByPlayerEnter)
     // Check if all rune bosses are done
     for (uint8 i = TYPE_MAGMADAR; i < TYPE_MAJORDOMO; ++i)
     {
+#if defined (CLASSIC) || defined (TBC)
         if (m_auiEncounter[i] != SPECIAL)
+#endif
+#if defined (WOTLK)
+        if (m_auiEncounter[i] != DONE)
+#endif
         {
             return;
         }

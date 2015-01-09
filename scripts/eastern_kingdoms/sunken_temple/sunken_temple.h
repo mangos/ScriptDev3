@@ -107,7 +107,12 @@ static const uint32 m_aAtalaiStatueEvents[MAX_STATUES] = {EVENT_ID_STATUE_1, EVE
 
 struct SummonLocations
 {
+#if defined (CLASSIC) || defined (TBC)
     float m_fX, m_fY, m_fZ, m_fO;
+#endif
+#if defined (WOTLK)
+    float m_fX, m_fY, m_fZ, m_Orientation;
+#endif
 };
 
 static const SummonLocations aSunkenTempleLocation[] =
@@ -120,8 +125,14 @@ static const SummonLocations aSunkenTempleLocation[] =
 // Summon location for the suppressors
 static const SummonLocations aHakkariDoorLocations[2] =
 {
+#if defined (CLASSIC) || defined (TBC)
     { -420.629f, 276.682f, -90.827f},
     { -512.015f, 276.134f, -90.827f}
+#endif
+#if defined (WOTLK)
+    { -420.629f, 276.682f, -90.827f, 0.0f},
+    { -512.015f, 276.134f, -90.827f, 0.0f}
+#endif
 };
 
 class instance_sunken_temple : public ScriptedInstance

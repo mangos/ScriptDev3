@@ -36,7 +36,13 @@
 #include "precompiled.h"
 #include "shadowfang_keep.h"
 
+#if defined (CLASSIC) || defined (TBC)
 instance_shadowfang_keep::instance_shadowfang_keep(Map* pMap) : ScriptedInstance(pMap)
+#endif
+#if defined (WOTLK)
+instance_shadowfang_keep::instance_shadowfang_keep(Map* pMap) : ScriptedInstance(pMap),
+    m_uiApothecaryDead(0)
+#endif
 {
     Initialize();
 }
@@ -53,6 +59,13 @@ void instance_shadowfang_keep::OnCreatureCreate(Creature* pCreature)
         case NPC_ASH:
         case NPC_ADA:
         case NPC_FENRUS:
+#if defined (WOTLK)
+        case NPC_HUMMEL:
+        case NPC_FRYE:
+        case NPC_BAXTER:
+        case NPC_APOTHECARY_GENERATOR:
+        case NPC_VALENTINE_BOSS_MGR:
+#endif
             break;
         case NPC_VINCENT:
             // If Arugal has done the intro, make Vincent dead!
@@ -93,6 +106,10 @@ void instance_shadowfang_keep::OnObjectCreate(GameObject* pGo)
             }
             break;
         case GO_ARUGAL_FOCUS:
+#if defined (WOTLK)
+        case GO_APOTHECARE_VIALS:
+        case GO_CHEMISTRY_SET:
+#endif
             break;
 
         default:
@@ -100,6 +117,37 @@ void instance_shadowfang_keep::OnObjectCreate(GameObject* pGo)
     }
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
+
+#if defined (WOTLK)
+void instance_shadowfang_keep::OnCreatureDeath(Creature* pCreature)
+{
+    switch (pCreature->GetEntry())
+    {
+            // Remove lootable flag from Hummel
+            // Instance data is set to SPECIAL because the encounter depends on multiple bosses
+        case NPC_HUMMEL:
+            pCreature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+            DoScriptText(SAY_HUMMEL_DEATH, pCreature);
+            // no break;
+        case NPC_FRYE:
+        case NPC_BAXTER:
+            SetData(TYPE_APOTHECARY, SPECIAL);
+            break;
+    }
+}
+
+void instance_shadowfang_keep::OnCreatureEvade(Creature* pCreature)
+{
+    switch (pCreature->GetEntry())
+    {
+        case NPC_HUMMEL:
+        case NPC_FRYE:
+        case NPC_BAXTER:
+            SetData(TYPE_APOTHECARY, FAIL);
+            break;
+    }
+}
+#endif
 
 void instance_shadowfang_keep::DoSpeech()
 {
@@ -161,6 +209,29 @@ void instance_shadowfang_keep::SetData(uint32 uiType, uint32 uiData)
                 }
             }
             break;
+#if defined (WOTLK)
+        case TYPE_APOTHECARY:
+            // Reset apothecary counter on fail
+            if (uiData == IN_PROGRESS)
+                m_uiApothecaryDead = 0;
+            if (uiData == SPECIAL)
+            {
+                ++m_uiApothecaryDead;
+
+                // Set Hummel as lootable only when the others are dead
+                if (m_uiApothecaryDead == MAX_APOTHECARY)
+                {
+                    if (Creature* pHummel = GetSingleCreatureFromStorage(NPC_HUMMEL))
+                        pHummel->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
+                    SetData(TYPE_APOTHECARY, DONE);
+                }
+            }
+            // We don't want to store the SPECIAL data
+            else
+                m_auiEncounter[6] = uiData;
+            break;
+#endif
     }
 
     if (uiData == DONE)
@@ -169,8 +240,12 @@ void instance_shadowfang_keep::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3]
+#if defined (CLASSIC) || defined (TBC)
                    << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
-
+#endif
+#if defined (WOTLK)
+                   << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6];
+#endif
         m_strInstData = saveStream.str();
 
         SaveToDB();
@@ -192,7 +267,10 @@ uint32 instance_shadowfang_keep::GetData(uint32 uiType) const
             return m_auiEncounter[3];
         case TYPE_INTRO:
             return m_auiEncounter[4];
-
+#if defined (WOTLK)
+        case TYPE_APOTHECARY:
+            return m_auiEncounter[6];
+#endif
         default:
             return 0;
     }
@@ -210,8 +288,12 @@ void instance_shadowfang_keep::Load(const char* chrIn)
 
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
+#if defined (CLASSIC) || defined (TBC)
                >> m_auiEncounter[4] >> m_auiEncounter[5];
-
+#endif
+#if defined (WOTLK)
+               >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6];
+#endif
     for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)

@@ -60,7 +60,8 @@ enum
     EMOTE_PROGRESS_8        = -1000272,
     SAY_PROGRESS_9          = -1000273,
 
-    QUEST_SUNKEN_TREASURE   = 665,    ENTRY_VENGEFUL_SURGE    = 2776
+    QUEST_SUNKEN_TREASURE   = 665,
+    ENTRY_VENGEFUL_SURGE    = 2776
 };
 
 struct npc_professor_phizzlethorpeAI : public npc_escortAI

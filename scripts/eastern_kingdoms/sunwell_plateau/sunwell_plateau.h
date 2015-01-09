@@ -66,11 +66,15 @@ enum
     GO_BOSS_COLLISION_2         = 188524,
     GO_ICE_BARRIER              = 188119,           // used to block the players path during the Brutallus intro event
     GO_FIRE_BARRIER             = 188075,           // door after felmyst
+#if defined (CLASSIC) || defined (TBC)
     GO_FIRST_GATE               = 187766,           // door between felmyst and eredar twins
     GO_SECOND_GATE              = 187764,           // door after eredar twins
+#endif
     GO_MURU_ENTER_GATE          = 187990,           // muru gates
     GO_MURU_EXIT_GATE           = 188118,
+#if defined (CLASSIC) || defined (TBC)
     GO_THIRD_GATE               = 187765,           // door after muru; why another?
+#endif
 
     GO_ORB_BLUE_FLIGHT_1        = 188115,           // orbs used in the Kil'jaeden fight
     GO_ORB_BLUE_FLIGHT_2        = 188116,
@@ -111,16 +115,31 @@ struct EventLocations
 static const EventLocations aMadrigosaLoc[] =
 {
     {1463.82f, 661.212f, 19.79f, 4.88f},            // reload spawn loc - the place where to spawn Felmyst
+#if defined (CLASSIC) || defined (TBC)
     {1463.82f, 661.212f, 39.234f},                  // fly loc during the cinematig
+#endif
+#if defined (WOTLK)
+    {1463.82f, 661.212f, 39.234f, 0}                // fly loc during the cinematig
+#endif
 };
 
 static const EventLocations aKalecLoc[] =
 {
     {1573.146f, 755.2025f, 99.524f, 3.59f},         // spawn loc
+#if defined (CLASSIC) || defined (TBC)
     {1474.235f, 624.0703f, 29.325f},                // first move
     {1511.655f, 550.7028f, 25.510f},                // open door
     {1648.255f, 519.377f, 165.848f},                // fly away
+#endif
+#if defined (WOTLK)
+    {1474.235f, 624.0703f, 29.325f, 0},             // first move
+    {1511.655f, 550.7028f, 25.510f, 0},             // open door
+    {1648.255f, 519.377f, 165.848f, 0},             // fly away
+#endif
 };
+#if defined (WOTLK)
+static const float afMuruSpawnLoc[4] = { 1816.25f, 625.484f, 69.603f, 5.624f };
+#endif
 
 class instance_sunwell_plateau : public ScriptedInstance, private DialogueHelper
 {

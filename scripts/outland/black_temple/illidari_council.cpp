@@ -346,7 +346,8 @@ struct boss_illidari_councilAI : public ScriptedAI
 
 #if defined (CLASSIC) || defined (TBC)
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
-#else
+#endif
+#if defined (WOTLK)
     void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
 #endif
     {
@@ -356,7 +357,8 @@ struct boss_illidari_councilAI : public ScriptedAI
 
 #if defined (CLASSIC) || defined (TBC)
     void HealedBy(Unit* pHealer, uint32& uiHealedAmount) override
-#else
+#endif
+#if defined (WOTLK)
     void HealedBy(Unit* /* pHealer */, uint32& uiHealedAmount) override
 #endif
     {

@@ -337,6 +337,8 @@ struct boss_eye_of_cthunAI : public Scripted_NoMovementAI
                 }
 
                 break;
+            default:
+                break;
         }
 
         if (m_uiClawTentacleTimer < uiDiff)
@@ -709,7 +711,8 @@ struct boss_cthunAI : public Scripted_NoMovementAI
                 {
                     m_uiPhaseTimer -= uiDiff;
                 }
-
+                break;
+            default:
                 break;
         }
 
@@ -877,9 +880,12 @@ bool AreaTrigger_at_stomach_cthun(Player* pPlayer, AreaTriggerEntry const* pAt)
 
         // Note: because of the missing spell id 26224, we will use basic jump movement
         // Disabled because of the missing jump effect
-        // pPlayer->GetMotionMaster()->MoveJump(afCthunLocations[3][0], afCthunLocations[3][1], afCthunLocations[3][2], pPlayer->GetSpeed(MOVE_RUN)*5, 0);
-
-        // Note: this should actually be handled by at_stomach_2!
+#if defined (WOTLK)
+        pPlayer->GetMotionMaster()->MoveJump(afCthunLocations[3][0], afCthunLocations[3][1], afCthunLocations[3][2], pPlayer->GetSpeed(MOVE_RUN) * 5, 0);
+    }
+    else if (pAt->id == AREATRIGGER_STOMACH_2)
+    {
+#endif
         if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
         {
             if (Creature* pCthun = pInstance->GetSingleCreatureFromStorage(NPC_CTHUN))

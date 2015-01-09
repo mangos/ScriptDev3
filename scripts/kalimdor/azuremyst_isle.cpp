@@ -85,7 +85,12 @@ struct npc_draenei_survivorAI : public ScriptedAI
 
         m_creature->CastSpell(m_creature, SPELL_IRRIDATION, true);
 
+#if defined (CLASSIC) || defined (TBC)
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
+#endif
+#if defined (WOTLK)
+        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+#endif
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IN_COMBAT);
         m_creature->SetHealth(int(m_creature->GetMaxHealth()*.1));
         m_creature->SetStandState(UNIT_STAND_STATE_SLEEP);
@@ -112,9 +117,19 @@ struct npc_draenei_survivorAI : public ScriptedAI
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
+#if defined (CLASSIC) || defined (TBC)
         if (pSpell->Id == 28880)
+#endif
+#if defined (WOTLK)
+        if (pSpell->IsFitToFamilyMask(UI64LIT(0x0000000000000000), 0x080000000))
+#endif
         {
+#if defined (CLASSIC) || defined (TBC)
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
+#endif
+#if defined (WOTLK)
+            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+#endif
             m_creature->SetStandState(UNIT_STAND_STATE_STAND);
 
             m_creature->CastSpell(m_creature, SPELL_STUNNED, true);

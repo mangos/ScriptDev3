@@ -41,8 +41,10 @@
  * npc_twiggy_flathead
  * at_twiggy_flathead
  * npc_wizzlecrank_shredder
+#if defined (CLASSIC) || defined (TBC)
  * npc_regthar_deathgate
  * npc_horde_defender
+#endif
  * EndContentData
  */
 
@@ -697,6 +699,7 @@ CreatureAI* GetAI_npc_wizzlecranks_shredder(Creature* pCreature)
     return new npc_wizzlecranks_shredderAI(pCreature);
 }
 
+#if defined (CLASSIC) || defined (TBC)
 /*#####
 ## npc_regthar_deathgate
 #####*/
@@ -1222,7 +1225,7 @@ CreatureAI* GetAI_npc_horde_defender(Creature* pCreature)
 {
     return new npc_horde_defenderAI(pCreature);
 }
-
+#endif
 void AddSC_the_barrens()
 {
     Script* pNewScript;
@@ -1259,7 +1262,7 @@ void AddSC_the_barrens()
     pNewScript->GetAI = &GetAI_npc_wizzlecranks_shredder;
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_wizzlecranks_shredder;
     pNewScript->RegisterSelf();
-
+#if defined (CLASSIC) || defined (TBC)
     pNewScript = new Script;
     pNewScript->Name = "npc_regthar_deathgate";
     pNewScript->pGossipHello = &GossipHello_npc_regthar_deathgate;
@@ -1271,4 +1274,5 @@ void AddSC_the_barrens()
     pNewScript->Name = "npc_horde_defender";
     pNewScript->GetAI = &GetAI_npc_horde_defender;
     pNewScript->RegisterSelf();
+#endif
 }

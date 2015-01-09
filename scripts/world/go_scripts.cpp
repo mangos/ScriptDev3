@@ -40,6 +40,11 @@
  * go_ethereum_prison
  * go_ethereum_stasis
 #endif
+#if defined (WOTLK)
+ * go_mysterious_snow_mound
+ * go_tele_to_dalaran_crystal
+ * go_tele_to_violet_stand
+#endif
  * go_andorhal_tower
 #if defined (WOTLK)
  * go_scourge_enclosure

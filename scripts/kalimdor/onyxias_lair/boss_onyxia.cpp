@@ -45,11 +45,29 @@ enum
     EMOTE_BREATH                = -1249004,
 
     SPELL_WINGBUFFET            = 18500,
+#if defined (WOTLK)
+    SPELL_WINGBUFFET_H          = 69293,
+#endif
     SPELL_FLAMEBREATH           = 18435,
+#if defined (WOTLK)
+    SPELL_FLAMEBREATH_H         = 68970,
+#endif
+#if defined (CLASSIC) || defined (TBC)
     SPELL_CLEAVE                = 19983,
     SPELL_TAILSWEEP             = 15847,
+#endif
+#if defined (WOTLK)
+    SPELL_CLEAVE                = 68868,
+    SPELL_TAILSWEEP             = 68867,
+#endif
+#if defined (WOTLK)
+    SPELL_TAILSWEEP_H           = 69286,
+#endif
     SPELL_KNOCK_AWAY            = 19633,
     SPELL_FIREBALL              = 18392,
+#if defined (WOTLK)
+    SPELL_FIREBALL_H            = 68926,
+#endif
 
     // Not much choise about these. We have to make own defintion on the direction/start-end point
     SPELL_BREATH_NORTH_TO_SOUTH = 17086,                    // 20x in "array"
@@ -72,6 +90,9 @@ enum
     SPELL_HEATED_GROUND         = 22191,                    // Prevent players from hiding in the tunnels when it is time for Onyxia's breath
 
     SPELL_SUMMONWHELP           = 17646,                    // TODO this spell is only a summon spell, but would need a spell to activate the eggs
+#if defined (WOTLK)
+    SPELL_SUMMON_LAIR_GUARD     = 68968,
+#endif
 
     MAX_WHELPS_PER_PACK         = 40,
 
@@ -114,6 +135,9 @@ static const float afSpawnLocations[3][3] =
 {
     { -30.127f, -254.463f, -89.440f},                       // whelps
     { -30.817f, -177.106f, -89.258f},                       // whelps
+#if defined (WOTLK)
+    { -126.57f, -214.609f, -71.446f}                        // guardians
+#endif
 };
 
 struct boss_onyxiaAI : public ScriptedAI
@@ -121,9 +145,15 @@ struct boss_onyxiaAI : public ScriptedAI
     boss_onyxiaAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (instance_onyxias_lair*)pCreature->GetInstanceData();
+#if defined (WOTLK)
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+#endif
         Reset();
     }
 
+#if defined (WOTLK)
+    bool m_bIsRegularMode;
+#endif
     instance_onyxias_lair* m_pInstance;
 
     uint8 m_uiPhase;
@@ -141,6 +171,9 @@ struct boss_onyxiaAI : public ScriptedAI
     uint32 m_uiSummonWhelpsTimer;
     uint32 m_uiBellowingRoarTimer;
     uint32 m_uiWhelpTimer;
+#if defined (WOTLK)
+    uint32 m_uiSummonGuardTimer;
+#endif
 
     uint8 m_uiSummonCount;
 
@@ -170,6 +203,9 @@ struct boss_onyxiaAI : public ScriptedAI
         m_uiSummonWhelpsTimer = 60000;
         m_uiBellowingRoarTimer = 30000;
         m_uiWhelpTimer = 1000;
+#if defined (WOTLK)
+        m_uiSummonGuardTimer = 15000;
+#endif
 
         m_uiSummonCount = 0;
 
@@ -274,7 +310,12 @@ struct boss_onyxiaAI : public ScriptedAI
         {
             case POINT_ID_IN_AIR:
                 // sort of a hack, it is unclear how this really work but the values are valid
+#if defined (CLASSIC) || defined (TBC)
                 m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
+#endif
+#if defined (WOTLK)
+                m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+#endif
                 m_creature->SetLevitate(true);
                 m_uiPhaseTimer = 1000;                          // Movement to Initial North Position is delayed
                 return;
@@ -353,7 +394,12 @@ struct boss_onyxiaAI : public ScriptedAI
             {
                 if (m_uiFlameBreathTimer < uiDiff)
                 {
+#if defined (CLASSIC) || defined (TBC)
                     if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAMEBREATH) == CAST_OK)
+#endif
+#if defined (WOTLK)
+                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FLAMEBREATH : SPELL_FLAMEBREATH_H) == CAST_OK)
+#endif
                     {
                         m_uiFlameBreathTimer = urand(10000, 20000);
                     }
@@ -365,7 +411,12 @@ struct boss_onyxiaAI : public ScriptedAI
 
                 if (m_uiTailSweepTimer < uiDiff)
                 {
+#if defined (CLASSIC) || defined (TBC)
                     if (DoCastSpellIfCan(m_creature, SPELL_TAILSWEEP) == CAST_OK)
+#endif
+#if defined (WOTLK)
+                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_TAILSWEEP : SPELL_TAILSWEEP_H) == CAST_OK)
+#endif
                     {
                         m_uiTailSweepTimer = urand(15000, 20000);
                     }
@@ -389,7 +440,12 @@ struct boss_onyxiaAI : public ScriptedAI
 
                 if (m_uiWingBuffetTimer < uiDiff)
                 {
+#if defined (CLASSIC) || defined (TBC)
                     if (DoCastSpellIfCan(m_creature, SPELL_WINGBUFFET) == CAST_OK)
+#endif
+#if defined (WOTLK)
+                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_WINGBUFFET : SPELL_WINGBUFFET_H) == CAST_OK)
+#endif
                     {
                         m_uiWingBuffetTimer = urand(15000, 30000);
                     }
@@ -424,7 +480,12 @@ struct boss_onyxiaAI : public ScriptedAI
                     m_creature->GetMotionMaster()->MoveIdle();
                     m_creature->SetTargetGuid(ObjectGuid());
 
+#if defined (CLASSIC) || defined (TBC)
                     float fGroundZ = m_creature->GetMap()->GetHeight(aMoveData[POINT_ID_SOUTH].fX, aMoveData[POINT_ID_SOUTH].fY, aMoveData[POINT_ID_SOUTH].fZ);
+#endif
+#if defined (WOTLK)
+                    float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), aMoveData[POINT_ID_SOUTH].fX, aMoveData[POINT_ID_SOUTH].fY, aMoveData[POINT_ID_SOUTH].fZ);
+#endif
                     m_creature->GetMotionMaster()->MovePoint(POINT_ID_LIFTOFF, aMoveData[POINT_ID_SOUTH].fX, aMoveData[POINT_ID_SOUTH].fY, fGroundZ);
                     return;
                 }
@@ -439,7 +500,12 @@ struct boss_onyxiaAI : public ScriptedAI
                     m_uiPhase = PHASE_BREATH_POST;
                     DoScriptText(SAY_PHASE_3_TRANS, m_creature);
 
+#if defined (CLASSIC) || defined (TBC)
                     float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+#endif
+#if defined (WOTLK)
+                    float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+#endif
                     m_creature->GetMotionMaster()->MoveFlyOrLand(POINT_ID_LAND, m_creature->GetPositionX(), m_creature->GetPositionY(), fGroundZ, false);
                     return;
                 }
@@ -480,7 +546,12 @@ struct boss_onyxiaAI : public ScriptedAI
                 {
                     if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     {
+#if defined (CLASSIC) || defined (TBC)
                         if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
+#endif
+#if defined (WOTLK)
+                        if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_FIREBALL : SPELL_FIREBALL_H) == CAST_OK)
+#endif
                         {
                             m_uiFireballTimer = urand(3000, 5000);
                         }
@@ -511,6 +582,19 @@ struct boss_onyxiaAI : public ScriptedAI
                         m_uiSummonWhelpsTimer -= uiDiff;
                     }
                 }
+
+#if defined (WOTLK)
+                if (m_uiSummonGuardTimer < uiDiff)
+                {
+                    if (!m_creature->IsNonMeleeSpellCasted(false))
+                    {
+                        m_creature->CastSpell(afSpawnLocations[2][0], afSpawnLocations[2][1], afSpawnLocations[2][2], SPELL_SUMMON_LAIR_GUARD, true);
+                        m_uiSummonGuardTimer = 30000;
+                    }
+                }
+                else
+                    m_uiSummonGuardTimer -= uiDiff;
+#endif
 
                 break;
             }
@@ -553,6 +637,19 @@ struct boss_onyxiaAI : public ScriptedAI
                 break;
         }
     }
+
+#if defined (WOTLK)
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
+    {
+        // Check if players are hit by Onyxia's Deep Breath
+        if (pTarget->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+            return;
+
+        // All and only the Onyxia Deep Breath Spells have these visuals
+        if (pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_A || pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_B)
+            m_pInstance->SetData(TYPE_ONYXIA, DATA_PLAYER_TOASTED);
+    }
+#endif
 };
 
 CreatureAI* GetAI_boss_onyxia(Creature* pCreature)

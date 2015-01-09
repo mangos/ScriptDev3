@@ -35,13 +35,18 @@
 
 /**
  * ContentData
+#if defined (CLASSIC) || defined (TBC)
  * go_molten_core_rune
+#endif
  * EndContentData
  */
 
 #include "precompiled.h"
+#if defined (CLASSIC) || defined (TBC)
 #include "molten_core.h"
+#endif
 
+#if defined (CLASSIC) || defined (TBC)
 /*######
 ## go_molten_core_rune
 ######*/
@@ -72,13 +77,15 @@ bool GOUse_go_molten_core_rune(Player* pPlayer, GameObject* pGo)
 
     return true;
 }
-
+#endif
 void AddSC_molten_core()
 {
+#if defined (CLASSIC) || defined (TBC)
     Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name = "go_molten_core_rune";
     pNewScript->pGOUse = &GOUse_go_molten_core_rune;
     pNewScript->RegisterSelf();
+#endif
 }

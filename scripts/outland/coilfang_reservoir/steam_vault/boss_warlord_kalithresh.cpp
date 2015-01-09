@@ -162,6 +162,7 @@ struct boss_warlord_kalithreshAI : public ScriptedAI
         }
 
         // Move to closest distiller
+#if defined (CLASSIC) || defined (TBC)
         if (m_uiRageTimer)
         {
             if (m_uiRageTimer <= uiDiff)
@@ -187,7 +188,24 @@ struct boss_warlord_kalithreshAI : public ScriptedAI
             else
             { m_uiRageTimer -= uiDiff; }
         }
+#endif
+#if defined (WOTLK)
+        if (m_uiRageTimer < uiDiff)
+        {
+            if (Creature* pDistiller = GetClosestCreatureWithEntry(m_creature, NPC_NAGA_DISTILLER, 100.0f))
+            {
+                float fX, fY, fZ;
+                pDistiller->GetContactPoint(m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
+                m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                SetCombatMovement(false);
+                m_distillerGuid = pDistiller->GetObjectGuid();
+            }
 
+            m_uiRageTimer = urand(35000, 45000);
+        }
+        else
+            { m_uiRageTimer -= uiDiff; }
+#endif
         // Reflection_Timer
         if (m_uiReflectionTimer < uiDiff)
         {

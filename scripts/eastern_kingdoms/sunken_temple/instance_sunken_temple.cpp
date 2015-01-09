@@ -242,7 +242,12 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
                     return;
                 }
 
+#if defined (CLASSIC) || defined (TBC)
                 if (Creature* pShade = pPlayer->SummonCreature(NPC_SHADE_OF_HAKKAR, aSunkenTempleLocation[1].m_fX, aSunkenTempleLocation[1].m_fY, aSunkenTempleLocation[1].m_fZ, aSunkenTempleLocation[1].m_fO, TEMPSUMMON_MANUAL_DESPAWN, 0))
+#endif
+#if defined (WOTLK)
+                if (Creature* pShade = pPlayer->SummonCreature(NPC_SHADE_OF_HAKKAR, aSunkenTempleLocation[1].m_fX, aSunkenTempleLocation[1].m_fY, aSunkenTempleLocation[1].m_fZ, aSunkenTempleLocation[1].m_Orientation, TEMPSUMMON_MANUAL_DESPAWN, 0))
+#endif
                 {
                     m_mNpcEntryGuidStore[NPC_SHADE_OF_HAKKAR] = pShade->GetObjectGuid();
                     pShade->SetRespawnDelay(DAY);
@@ -308,7 +313,12 @@ void instance_sunken_temple::DoSpawnAtalarionIfCan()
         return;
     }
 
+#if defined (CLASSIC) || defined (TBC)
     pPlayer->SummonCreature(NPC_ATALARION, aSunkenTempleLocation[0].m_fX, aSunkenTempleLocation[0].m_fY, aSunkenTempleLocation[0].m_fZ, aSunkenTempleLocation[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+#endif
+#if defined (WOTLK)
+    pPlayer->SummonCreature(NPC_ATALARION, aSunkenTempleLocation[0].m_fX, aSunkenTempleLocation[0].m_fY, aSunkenTempleLocation[0].m_fZ, aSunkenTempleLocation[0].m_Orientation, TEMPSUMMON_DEAD_DESPAWN, 0);
+#endif
 
     // Spawn the idol of Hakkar
     DoRespawnGameObject(GO_IDOL_OF_HAKKAR, 30 * MINUTE);
@@ -486,7 +496,12 @@ void instance_sunken_temple::Update(uint32 uiDiff)
 
             // Summon npc at random door; movement and script handled in DB
             uint8 uiSummonLoc = urand(0, 1);
+#if defined (CLASSIC) || defined (TBC)
             pShade->SummonCreature(NPC_SUPPRESSOR, aHakkariDoorLocations[uiSummonLoc].m_fX, aHakkariDoorLocations[uiSummonLoc].m_fY, aHakkariDoorLocations[uiSummonLoc].m_fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+#endif
+#if defined (WOTLK)
+            pShade->SummonCreature(NPC_SUPPRESSOR, aHakkariDoorLocations[uiSummonLoc].m_fX, aHakkariDoorLocations[uiSummonLoc].m_fY, aHakkariDoorLocations[uiSummonLoc].m_fZ, aHakkariDoorLocations[uiSummonLoc].m_Orientation, TEMPSUMMON_DEAD_DESPAWN, 0);
+#endif
 
             // This timer is finished now
             m_uiSupressorTimer = 0;

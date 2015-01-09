@@ -285,7 +285,12 @@ struct boss_brutallusAI : public ScriptedAI, private DialogueHelper
                 break;
             case YELL_MADR_ICE_BARRIER:
                 if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
+#if defined (CLASSIC) || defined (TBC)
                 { pMadrigosa->CastSpell(pMadrigosa, SPELL_FREEZE, true); }
+#endif
+#if defined (WOTLK)
+                    { pMadrigosa->CastSpell(pMadrigosa, SPELL_FREEZE, false); }
+#endif
                 break;
             case YELL_MADR_INTRO:
                 if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
@@ -298,7 +303,12 @@ struct boss_brutallusAI : public ScriptedAI, private DialogueHelper
             case SPELL_FROST_BREATH:
                 if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
                 {
+#if defined (CLASSIC) || defined (TBC)
                     pMadrigosa->CastSpell(m_creature, SPELL_FROST_BREATH, true);
+#endif
+#if defined (WOTLK)
+                    { pMadrigosa->CastSpell(m_creature, SPELL_FROST_BREATH, false); }
+#endif
                     pMadrigosa->GetMotionMaster()->MoveIdle();
                 }
                 break;

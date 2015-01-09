@@ -36,7 +36,9 @@
 /**
  * ContentData
  * npc_kaya
+#if defined (CLASSIC) || defined (TBC)
  * npc_piznik
+#endif
  * EndContentData
  */
 
@@ -120,6 +122,7 @@ bool QuestAccept_npc_kaya(Player* pPlayer, Creature* pCreature, Quest const* pQu
     return true;
 }
 
+#if defined (CLASSIC) || defined (TBC)
 /*#####
 ## npc_piznik
 #####*/
@@ -325,7 +328,7 @@ CreatureAI* GetAI_npc_piznik(Creature* pCreature)
 {
     return new npc_piznikAI(pCreature);
 }
-
+#endif
 /*######
 ## AddSC
 ######*/
@@ -339,10 +342,11 @@ void AddSC_stonetalon_mountains()
     pNewScript->GetAI = &GetAI_npc_kaya;
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_kaya;
     pNewScript->RegisterSelf();
-
+#if defined (CLASSIC) || defined (TBC)
     pNewScript = new Script;
     pNewScript->Name = "npc_piznik";
     pNewScript->GetAI = &GetAI_npc_piznik;
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_piznik;
     pNewScript->RegisterSelf();
+#endif
 }

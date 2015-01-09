@@ -74,12 +74,15 @@ enum
     GO_RUNE_THERI               = 176954,                   // Golemagg
     GO_RUNE_KORO                = 176951,                   // Sulfuron
 
+#if defined (CLASSIC) || defined (TBC)
     MAX_MOLTEN_RUNES            = 7,
+#endif
     MAX_MAJORDOMO_ADDS          = 8,
     FACTION_MAJORDOMO_FRIENDLY  = 1080,
     SAY_MAJORDOMO_SPAWN         = -1409004,
 };
 
+#if defined (CLASSIC) || defined (TBC)
 struct sRuneEncounters
 {
     uint32 m_uiRuneEntry, m_uiType;
@@ -95,6 +98,7 @@ static const sRuneEncounters m_aMoltenCoreRunes[MAX_MOLTEN_RUNES] =
     {GO_RUNE_THERI, TYPE_GOLEMAGG},
     {GO_RUNE_KORO,  TYPE_SULFURON}
 };
+#endif
 
 struct sSpawnLocation
 {
@@ -105,7 +109,7 @@ struct sSpawnLocation
 static sSpawnLocation m_aMajordomoLocations[2] =
 {
     {NPC_MAJORDOMO, 758.089f, -1176.71f, -118.640f, 3.12414f},  // Summon fight position
-    {NPC_MAJORDOMO, 847.103f, -816.153f, -229.775f, 4.344f} // Summon and teleport location (near Ragnaros)
+    {NPC_MAJORDOMO, 847.103f, -816.153f, -229.775f, 4.344f}     // Summon and teleport location (near Ragnaros)
 };
 
 class instance_molten_core : public ScriptedInstance

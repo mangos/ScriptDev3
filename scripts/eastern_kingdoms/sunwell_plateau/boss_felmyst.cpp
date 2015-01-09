@@ -195,7 +195,12 @@ struct boss_felmystAI : public ScriptedAI
         if (m_pInstance)
         { m_pInstance->SetData(TYPE_FELMYST, IN_PROGRESS); }
 
+#if defined (CLASSIC) || defined (TBC)
         float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+#endif
+#if defined (WOTLK)
+        float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+#endif
         m_creature->GetMotionMaster()->MovePoint(PHASE_TRANSITION, pWho->GetPositionX(), pWho->GetPositionY(), fGroundZ, false);
         m_creature->HandleEmote(EMOTE_ONESHOT_LAND);
     }
@@ -249,7 +254,12 @@ struct boss_felmystAI : public ScriptedAI
                 if (m_uiCorruptionCount == 3)
                 {
                     m_uiPhase = PHASE_TRANSITION;
+#if defined (CLASSIC) || defined (TBC)
                     float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+#endif
+#if defined (WOTLK)
+                    float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+#endif
                     m_creature->GetMotionMaster()->MovePoint(PHASE_TRANSITION, m_creature->getVictim()->GetPositionX(), m_creature->getVictim()->GetPositionY(), fGroundZ, false);
                     return;
                 }

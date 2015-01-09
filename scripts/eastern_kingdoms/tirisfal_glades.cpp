@@ -177,7 +177,9 @@ struct npc_calvin_montagueAI : public ScriptedAI
                     ++m_uiPhase;
                     break;
                 case 3:
+#if defined (CLASSIC) || defined (TBC)
                     m_creature->SetStandState(UNIT_STAND_STATE_STAND); //otherwise he is sitting until server restart
+#endif
                     EnterEvadeMode();
                     break;
             }

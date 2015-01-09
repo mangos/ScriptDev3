@@ -82,6 +82,7 @@ bool instance_sunwell_plateau::IsEncounterInProgress() const
 
 void instance_sunwell_plateau::OnPlayerEnter(Player* pPlayer)
 {
+#if defined (CLASSIC) || defined (TBC)
     // Return if Felmyst already dead, or Brutallus alive
     if (m_auiEncounter[TYPE_BRUTALLUS] != DONE || m_auiEncounter[TYPE_FELMYST] == DONE)
     { return; }
@@ -92,6 +93,23 @@ void instance_sunwell_plateau::OnPlayerEnter(Player* pPlayer)
 
     // Summon Felmyst in reload case
     pPlayer->SummonCreature(NPC_FELMYST, aMadrigosaLoc[0].m_fX, aMadrigosaLoc[0].m_fY, aMadrigosaLoc[0].m_fZ, aMadrigosaLoc[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+#endif
+#if defined (WOTLK)
+    // Spawn Felmyst if not already dead and Brutallus is complete
+    if (m_auiEncounter[TYPE_BRUTALLUS] == DONE && m_auiEncounter[TYPE_FELMYST] != DONE)
+    {
+        // Summon Felmyst in reload case if not already summoned
+        if (!GetSingleCreatureFromStorage(NPC_FELMYST, true))
+            pPlayer->SummonCreature(NPC_FELMYST, aMadrigosaLoc[0].m_fX, aMadrigosaLoc[0].m_fY, aMadrigosaLoc[0].m_fZ, aMadrigosaLoc[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0, true);
+    }
+    
+    // Spawn M'uru after the Eredar Twins
+    if (m_auiEncounter[TYPE_EREDAR_TWINS] == DONE && m_auiEncounter[TYPE_MURU] != DONE)
+    {
+        if (!GetSingleCreatureFromStorage(NPC_MURU, true))
+            pPlayer->SummonCreature(NPC_MURU, afMuruSpawnLoc[0], afMuruSpawnLoc[1], afMuruSpawnLoc[2], afMuruSpawnLoc[3], TEMPSUMMON_DEAD_DESPAWN, 0, true);
+    }
+#endif    
 }
 
 void instance_sunwell_plateau::OnCreatureCreate(Creature* pCreature)
@@ -173,12 +191,14 @@ void instance_sunwell_plateau::OnObjectCreate(GameObject* pGo)
             if (m_auiEncounter[TYPE_KALECGOS] == DONE && m_auiEncounter[TYPE_BRUTALLUS] == DONE && m_auiEncounter[TYPE_FELMYST] == DONE)
             { pGo->SetGoState(GO_STATE_ACTIVE); }
             break;
+#if defined (CLASSIC) || defined (TBC)
         case GO_FIRST_GATE:
             break;
         case GO_SECOND_GATE:
             if (m_auiEncounter[TYPE_EREDAR_TWINS] == DONE)
             { pGo->SetGoState(GO_STATE_ACTIVE); }
             break;
+#endif
         case GO_MURU_ENTER_GATE:
             if (m_auiEncounter[TYPE_EREDAR_TWINS] == DONE)
             { pGo->SetGoState(GO_STATE_ACTIVE); }
@@ -187,10 +207,12 @@ void instance_sunwell_plateau::OnObjectCreate(GameObject* pGo)
             if (m_auiEncounter[TYPE_MURU] == DONE)
             { pGo->SetGoState(GO_STATE_ACTIVE); }
             break;
+#if defined (CLASSIC) || defined (TBC)
         case GO_THIRD_GATE:
             if (m_auiEncounter[TYPE_MURU] == DONE)
             { pGo->SetGoState(GO_STATE_ACTIVE); }
             break;
+#endif
         case GO_ORB_BLUE_FLIGHT_1:
         case GO_ORB_BLUE_FLIGHT_2:
         case GO_ORB_BLUE_FLIGHT_3:
@@ -239,8 +261,14 @@ void instance_sunwell_plateau::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[uiType] = uiData;
             if (uiData == DONE)
             {
+#if defined (CLASSIC) || defined (TBC)
                 DoUseDoorOrButton(GO_SECOND_GATE);
                 DoUseDoorOrButton(GO_MURU_ENTER_GATE);
+#endif
+#if defined (WOTLK)
+                if (Player* pPlayer = GetPlayerInMap())
+                    pPlayer->SummonCreature(NPC_MURU, afMuruSpawnLoc[0], afMuruSpawnLoc[1], afMuruSpawnLoc[2], afMuruSpawnLoc[3], TEMPSUMMON_DEAD_DESPAWN, 0, true);
+#endif
             }
             break;
         case TYPE_MURU:
@@ -250,7 +278,9 @@ void instance_sunwell_plateau::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(GO_MURU_EXIT_GATE);
+#if defined (CLASSIC) || defined (TBC)
                 DoUseDoorOrButton(GO_THIRD_GATE);
+#endif
             }
             else if (uiData == IN_PROGRESS)
             { m_uiMuruBerserkTimer = 10 * MINUTE * IN_MILLISECONDS; }

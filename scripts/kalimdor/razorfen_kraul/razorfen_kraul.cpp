@@ -233,7 +233,12 @@ struct npc_snufflenose_gopherAI : public ScriptedPetAI
         // Always need to find new ones
         for (std::list<GameObject*>::const_iterator itr = lTubbersInRange.begin(); itr != lTubbersInRange.end(); ++itr)
         {
+#if defined (CLASSIC) || defined (TBC)
             if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && (*itr)->IsWithinLOSInMap(m_creature) && (*itr)->GetDistanceZ(m_creature) <= 6.0f)
+#endif
+#if defined (WOTLK)
+            if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && (*itr)->IsWithinLOSInMap(m_creature))
+#endif
             {
                 pNearestTubber = *itr;
                 break;
@@ -266,7 +271,12 @@ CreatureAI* GetAI_npc_snufflenose_gopher(Creature* pCreature)
     return new npc_snufflenose_gopherAI(pCreature);
 }
 
+#if defined (CLASSIC) || defined (TBC)
 bool EffectDummyCreature_npc_snufflenose_gopher(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
+#endif
+#if defined (WOTLK)
+bool EffectDummyCreature_npc_snufflenose_gopher(Unit* /*pCaster*/, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
+#endif
 {
     // always check spellid and effectindex
     if (uiSpellId == SPELL_SNUFFLENOSE_COMMAND && uiEffIndex == EFFECT_INDEX_0)

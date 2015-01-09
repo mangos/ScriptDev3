@@ -403,12 +403,14 @@ void instance_zulaman::SendNextBearWave(Unit* pTarget)
 
             // For the first wave we need to make them jump to the ground before attacking
             // Jump movement is not working on 2.4.3 yet
-            /*if (!m_uiBearEventPhase)
+#if defined (WOTLK)
+            if (!m_uiBearEventPhase)
             {
                 float fX, fY, fZ;
                 pTemp->GetRandomPoint(35.31f, 1412.24f, 2.04f, 3.0f, fX, fY, fZ);
-                pTemp->GetMotionMaster()->MoveJump(fX, fY, fZ, pTemp->GetSpeed(MOVE_RUN)*2, 5.0f);
-            }*/
+                pTemp->GetMotionMaster()->MoveJump(fX, fY, fZ, pTemp->GetSpeed(MOVE_RUN) * 2, 5.0f);
+            }
+#endif
         }
     }
 

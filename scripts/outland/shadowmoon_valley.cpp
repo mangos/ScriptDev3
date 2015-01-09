@@ -449,13 +449,29 @@ bool EffectDummyCreature_npc_dragonmaw_peon(Unit* pCaster, uint32 uiSpellId, Spe
 enum
 {
     SAY_WIL_START               = -1000381,
+#if defined (CLASSIC) || defined (TBC)
     SAY_WIL_AGGRO1              = -1000382,
     SAY_WIL_AGGRO2              = -1000383,
     SAY_WIL_PROGRESS1           = -1000384,
     SAY_WIL_PROGRESS2           = -1000385,
+#endif
+#if defined (WOTLK)
+    SAY_WIL_AGGRO_1             = -1000382,
+    SAY_WIL_AGGRO_2             = -1000383,
+    SAY_WIL_FREE_SPIRITS        = -1000384,
+#endif
     SAY_WIL_FIND_EXIT           = -1000386,
+#if defined (CLASSIC) || defined (TBC)
     SAY_WIL_PROGRESS4           = -1000387,
     SAY_WIL_PROGRESS5           = -1000388,
+#endif
+#if defined (WOTLK)
+    SAY_WIL_PROGRESS_1          = -1000385,
+    SAY_WIL_PROGRESS_2          = -1000387,
+    SAY_WIL_PROGRESS_3          = -1000388,
+    SAY_WIL_PROGRESS_4          = -1001168,
+    SAY_WIL_PROGRESS_5          = -1001169,
+#endif
     SAY_WIL_JUST_AHEAD          = -1000389,
     SAY_WIL_END                 = -1000390,
 
@@ -463,10 +479,18 @@ enum
     SPELL_EARTHBING_TOTEM       = 15786,
     SPELL_FROST_SHOCK           = 12548,
     SPELL_HEALING_WAVE          = 12491,
+#if defined (WOTLK)
+    SPELL_WATER_BUBBLE          = 35929,
+#endif
 
     QUEST_ESCAPE_COILSCAR       = 10451,
     NPC_COILSKAR_ASSASSIN       = 21044,
+#if defined (CLASSIC) || defined (TBC)
     FACTION_EARTHEN             = 1726                      // guessed
+#endif
+#if defined (WOTLK)
+    NPC_CAPTURED_WATER_SPIRIT   = 21029,
+#endif
 };
 
 // this script needs verification
@@ -474,23 +498,59 @@ struct npc_wildaAI : public npc_escortAI
 {
     npc_wildaAI(Creature* pCreature) : npc_escortAI(pCreature)
     {
+#if defined (WOTLK)
+        // the creature is floating in a prison; no quest available first;
+        // the floating prison setup and quest flag restore is handled by DB
+        m_creature->SetLevitate(true);
+        m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+#endif
         Reset();
     }
 
     uint32 m_uiHealingTimer;
+#if defined (WOTLK)
+    uint32 m_uiShockTimer;
+    uint32 m_uiLightningTimer;
+#endif
 
     void Reset() override
     {
         m_uiHealingTimer = 0;
+#if defined (WOTLK)
+        m_uiShockTimer = 1000;
+        m_uiLightningTimer = 2000;
+#endif
     }
+
+#if defined (WOTLK)
+    void Aggro(Unit* pWho) override
+    {
+        if (roll_chance_i(30))
+            DoCastSpellIfCan(m_creature, SPELL_EARTHBING_TOTEM);
+    }
+    
+    void AttackStart(Unit* pWho) override
+    {
+        if (m_creature->Attack(pWho, true))
+        {
+            m_creature->AddThreat(pWho);
+            m_creature->SetInCombatWith(pWho);
+            pWho->SetInCombatWith(m_creature);
+            DoStartMovement(pWho, 10.0f);
+        }
+    }
+#endif
 
     void WaypointReached(uint32 uiPointId) override
     {
+#if defined (CLASSIC) || defined (TBC)
         Player* pPlayer = GetPlayerForEscort();
 
         if (!pPlayer)
         { return; }
+#endif
 
+#if defined (CLASSIC) || defined (TBC)
         switch (uiPointId)
         {
             case 13:
@@ -541,6 +601,45 @@ struct npc_wildaAI : public npc_escortAI
                 pPlayer->GroupEventHappens(QUEST_ESCAPE_COILSCAR, m_creature);
                 break;
         }
+#endif
+#if defined (WOTLK)
+        switch (uiPointId)
+        {
+            case 8:
+            case 26:
+            case 30:
+            case 32:
+            case 39:
+            case 43:
+            case 51:
+                DoSpawnAssassin();
+                break;
+            case 13:
+                if (Player* pPlayer = GetPlayerForEscort())
+                    DoScriptText(SAY_WIL_FREE_SPIRITS, m_creature, pPlayer);
+                DoFreeSpirits();
+                break;
+            case 14:
+                DoScriptText(SAY_WIL_FIND_EXIT, m_creature);
+                break;
+            case 15:
+                DoSpawnAssassin(2);
+                break;
+            case 40:
+                if (Player* pPlayer = GetPlayerForEscort())
+                    DoScriptText(SAY_WIL_JUST_AHEAD, m_creature, pPlayer);
+                break;
+            case 52:
+                if (Player* pPlayer = GetPlayerForEscort())
+                {
+                    DoDespawnSpirits();
+                    m_creature->SetFacingToObject(pPlayer);
+                    DoScriptText(SAY_WIL_END, m_creature, pPlayer);
+                    pPlayer->GroupEventHappens(QUEST_ESCAPE_COILSCAR, m_creature);
+                }
+                break;
+        }
+#endif
     }
 
 #if defined (CLASSIC) || defined (TBC)
@@ -714,7 +813,8 @@ bool QuestAccept_npc_wilda(Player* pPlayer, Creature* pCreature, const Quest* pQ
         DoScriptText(SAY_WIL_START, pCreature, pPlayer);
 #if defined (CLASSIC) || defined (TBC)
         pCreature->SetFactionTemporary(FACTION_EARTHEN, TEMPFACTION_RESTORE_RESPAWN);
-#else
+#endif
+#if defined (WOTLK)
         pCreature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
         pCreature->SetLevitate(false);
 #endif
@@ -1523,10 +1623,11 @@ const static EventLocations aDamnationLocations[] =
     { -3595.36f, 1869.78f, 47.24f},            // 4 fight ready move loc
     { -3635.90f, 1860.94f, 52.93f},            // 5 elementals move loc
     { -3599.71f, 1897.94f, 47.24f}             // 6 epilogue move loc
-#else
-    { -3595.36f, 1869.78f, 47.24f},            // 4 fight ready move loc
-    { -3635.90f, 1860.94f, 52.93f},            // 5 elementals move loc
-    { -3599.71f, 1897.94f, 47.24f}             // 6 epilogue move loc
+#endif
+#if defined (WOTLK)
+    { -3595.36f, 1869.78f, 47.24f, 0},            // 4 fight ready move loc
+    { -3635.90f, 1860.94f, 52.93f, 0},            // 5 elementals move loc
+    { -3599.71f, 1897.94f, 47.24f, 0}             // 6 epilogue move loc
 #endif
 };
 
@@ -1946,7 +2047,8 @@ struct npc_veneratus_spawn_nodeAI : public Scripted_NoMovementAI
 
 #if defined (CLASSIC) || defined (TBC)
     void UpdateAI(const uint32 uiDiff) override { }
-#else
+#endif
+#if defined (WOTLK)
     void UpdateAI(const uint32 /* uiDiff */) override { }
 #endif
 };

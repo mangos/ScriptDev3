@@ -55,6 +55,9 @@ struct boss_golemaggAI : public ScriptedAI
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
+#if defined (WOTLK)
+        DoCastSpellIfCan(m_creature, SPELL_MAGMA_SPLASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
+#endif
     }
 
     ScriptedInstance* m_pInstance;
@@ -70,8 +73,9 @@ struct boss_golemaggAI : public ScriptedAI
         m_uiEarthquakeTimer = 3 * IN_MILLISECONDS;
         m_uiBuffTimer       = 1.5 * IN_MILLISECONDS;
         m_bEnraged = false;
-
+#if defined (WOTLK)
         m_creature->CastSpell(m_creature, SPELL_MAGMA_SPLASH, true);
+#endif
     }
 
     void Aggro(Unit* /*pWho*/) override
@@ -96,6 +100,9 @@ struct boss_golemaggAI : public ScriptedAI
         {
             m_pInstance->SetData(TYPE_GOLEMAGG, FAIL);
         }
+#if defined (WOTLK)
+        DoCastSpellIfCan(m_creature, SPELL_MAGMA_SPLASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
+#endif
     }
 
     void UpdateAI(const uint32 uiDiff) override

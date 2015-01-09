@@ -99,7 +99,7 @@ static const float rookeryEventSpawnPos[3] = {43.7685f, -259.82f, 91.6483f};
 
 instance_blackrock_spire::instance_blackrock_spire(Map* pMap) : ScriptedInstance(pMap), DialogueHelper(aStadiumDialogue),
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC)
     m_bUpperDoorOpened(false),
     m_uiDragonspineDoorTimer(0),
     m_uiDragonspineGoCount(0),
@@ -150,10 +150,9 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
             {
                 pGo->SetGoState(GO_STATE_ACTIVE);
             }
-
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
             break;
 
+#if defined (TBC)
         case GO_BRAZIER_1:
         case GO_BRAZIER_2:
         case GO_BRAZIER_3:
@@ -161,10 +160,8 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
         case GO_BRAZIER_5:
         case GO_BRAZIER_6:
         case GO_DRAGONSPINE:
-#endif
-
             break;
-
+#endif
         case GO_ROOM_1_RUNE:
             m_aRoomRuneGuid[0] = pGo->GetObjectGuid();
             return;
@@ -504,7 +501,7 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
 }
 
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC)
 void instance_blackrock_spire::DoOpenUpperDoorIfCan(Player* pPlayer)
 {
     if (m_bUpperDoorOpened)
@@ -772,7 +769,7 @@ void instance_blackrock_spire::Update(uint32 uiDiff)
         }
     }
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC)
     // unlock dragon spine door
     if (m_uiDragonspineDoorTimer)
     {
@@ -846,7 +843,7 @@ bool AreaTrigger_at_blackrock_spire(Player* pPlayer, AreaTriggerEntry const* pAt
             if (instance_blackrock_spire* pInstance = (instance_blackrock_spire*) pPlayer->GetInstanceData())
             {
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC)    
                 pInstance->DoOpenUpperDoorIfCan(pPlayer);
 #endif
                 pInstance->DoSortRoomEventMobs();
@@ -870,7 +867,6 @@ bool AreaTrigger_at_blackrock_spire(Player* pPlayer, AreaTriggerEntry const* pAt
                 {
                     pRend->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
                 }
-
                 pInstance->SetData(TYPE_STADIUM, IN_PROGRESS);
             }
             break;

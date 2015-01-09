@@ -144,6 +144,17 @@ struct mob_fireswornAI : public ScriptedAI
         m_uiImmolateTimer = urand(4000, 8000);              // These times are probably wrong
         m_uiSeparationCheckTimer = 5000;
     }
+    
+#if defined (WOTLK)
+    void JustDied(Unit* /*pKiller*/) override
+    {
+        if (m_pInstance)
+        {
+            if (Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR))
+                pGarr->CastSpell(pGarr, SPELL_ENRAGE, true, NULL, NULL, m_creature->GetObjectGuid());
+        }
+    }
+#endif
 
     void UpdateAI(const uint32 uiDiff) override
     {
@@ -167,6 +178,10 @@ struct mob_fireswornAI : public ScriptedAI
 
         if (m_uiSeparationCheckTimer < uiDiff)
         {
+#if defined (WOTLK)
+            if (!m_pInstance)
+                return;
+#endif            
             // Distance guesswork, but should be ok
             Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR);
             if (pGarr && pGarr->IsAlive() && !m_creature->IsWithinDist2d(pGarr->GetPositionX(), pGarr->GetPositionY(), 50.0f))

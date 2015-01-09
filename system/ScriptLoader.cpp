@@ -78,7 +78,6 @@ void AddSC_boss_vexallus();
 void AddSC_boss_priestess_delrissa();
 void AddSC_instance_magisters_terrace();
 void AddSC_magisters_terrace();
-
 #endif  
 
 void AddSC_boss_lucifron();                          // molten_core
@@ -93,6 +92,7 @@ void AddSC_boss_majordomo();
 void AddSC_boss_ragnaros();
 void AddSC_instance_molten_core();
 void AddSC_molten_core();
+
 #if defined (CLASSIC) || defined (TBC)
 void AddSC_boss_anubrekhan();                        // naxxramas
 void AddSC_boss_four_horsemen();
@@ -111,6 +111,7 @@ void AddSC_boss_sapphiron();
 void AddSC_boss_thaddius();
 void AddSC_instance_naxxramas();
 #endif
+
 #if defined (WOTLK)
 void AddSC_ebon_hold();                              // scarlet_enclave
 #endif
@@ -451,9 +452,7 @@ void AddSC_instance_dire_maul();
 void AddSC_boss_noxxion();                           // maraudon
 void AddSC_boss_onyxia();                            // onyxias_lair
 void AddSC_instance_onyxias_lair();
-#if defined (CLASSIC) || defined (TBC)
 void AddSC_npc_onyxian_warder();
-#endif
 void AddSC_razorfen_downs();                         // razorfen_downs
 void AddSC_instance_razorfen_kraul();                // razorfen_kraul
 void AddSC_razorfen_kraul();
@@ -487,8 +486,8 @@ void AddSC_azshara();
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
 void AddSC_azuremyst_isle();
 void AddSC_bloodmyst_isle();
-
 #endif
+
 void AddSC_boss_azuregos();
 void AddSC_darkshore();
 void AddSC_desolace();

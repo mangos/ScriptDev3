@@ -403,9 +403,10 @@ struct boss_thekalAI : public boss_thekalBaseAI
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_TIGERS) == CAST_OK)
                     {
 
-#if defined (CLASSIC)  
+#if defined (CLASSIC) || defined (WOTLK) 
                         m_uiSummonTigersTimer = 50000;
-#else
+#endif
+#if defined (TBC)
                         m_uiSummonTigersTimer = urand(10000, 14000);
 #endif
                     }

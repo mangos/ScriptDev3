@@ -66,7 +66,7 @@ enum
     SPELL_SUMMON_DARKNESS           = 46269,    // summons 25879 by missile
 
     // portal spells
-    SPELL_SENTINEL_SUMMONER_VISUAL  = 45989,    // hits the summoner, so it will summon the sentinel
+    SPELL_SENTINEL_SUMMONER_VISUAL  = 45989,    // hits the summoner, so it will summon the sentinel; triggers 45988
     SPELL_SUMMON_SENTINEL_SUMMONER  = 45978,
     SPELL_TRANSFORM_VISUAL_1        = 46178,    // Visual - has Muru as script target
     SPELL_TRANSFORM_VISUAL_2        = 46208,    // Visual - has Muru as script target
@@ -74,6 +74,19 @@ enum
     // Muru npcs
     NPC_VOID_SENTINEL_SUMMONER      = 25782,
     NPC_VOID_SENTINEL               = 25772,    // scripted in Acid
+#if defined (WOTLK)
+    NPC_DARK_FIEND                  = 25744,
+    
+    // darkness spells
+    SPELL_VOID_ZONE_VISUAL          = 46265,
+    SPELL_VOID_ZONE_PERIODIC        = 46262,
+    SPELL_SUMMON_DARK_FIEND         = 46263,
+    
+    // singularity spells
+    SPELL_BLACK_HOLE_VISUAL         = 46242,
+    SPELL_BLACK_HOLE_VISUAL_2       = 46247,
+    SPELL_BLACK_HOLE_PASSIVE        = 46228,
+#endif
 
     MAX_TRANSFORM_CASTS             = 10
 };
@@ -257,11 +270,13 @@ struct boss_entropiusAI : public ScriptedAI
     {
         if (m_pInstance)
         { m_pInstance->SetData(TYPE_MURU, DONE); }
-
+#if defined (CLASSIC) || defined (TBC)
         // Despawn summoned creatures
         DespawnSummonedCreatures();
+#endif
     }
 
+#if defined (CLASSIC) || defined (TBC)
     void JustSummoned(Creature* pSummoned) override
     {
         // Add the Darkness and Singularity into the list
@@ -277,7 +292,7 @@ struct boss_entropiusAI : public ScriptedAI
             { pTemp->ForcedDespawn(); }
         }
     }
-
+#endif
     void JustReachedHome() override
     {
         if (m_pInstance)
@@ -285,12 +300,19 @@ struct boss_entropiusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MURU, FAIL);
 
             // respawn muru
+#if defined (CLASSIC) || defined (TBC)
             if (Creature* pMuru = m_pInstance->GetSingleCreatureFromStorage(NPC_MURU))
             { pMuru->Respawn(); }
+#endif
+#if defined (WOTLK)
+            m_creature->SummonCreature(NPC_MURU, afMuruSpawnLoc[0], afMuruSpawnLoc[1], afMuruSpawnLoc[2], afMuruSpawnLoc[3], TEMPSUMMON_DEAD_DESPAWN, 0, true);
+#endif
         }
 
         // despawn boss and summons for reset
+#if defined (CLASSIC) || defined (TBC)
         DespawnSummonedCreatures();
+#endif
         m_creature->ForcedDespawn();
     }
 
@@ -417,6 +439,7 @@ struct npc_portal_targetAI : public Scripted_NoMovementAI
     }
 };
 
+#if defined (CLASSIC) || defined (TBC)
 /*######
 ## npc_void_sentinel_summoner
 ######*/
@@ -448,6 +471,96 @@ struct npc_void_sentinel_summonerAI : public Scripted_NoMovementAI
 
     void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
+#endif
+
+#if defined (WOTLK)
+/*######
+## npc_darkness
+######*/
+
+struct  npc_darknessAI : public Scripted_NoMovementAI
+{
+    npc_darknessAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    
+    uint32 m_uiActiveTimer;
+
+    void Reset() override
+    {
+        DoCastSpellIfCan(m_creature, SPELL_VOID_ZONE_VISUAL, CAST_TRIGGERED);
+        m_uiActiveTimer = 5000;
+    }
+    
+    void AttackStart(Unit* /*pWho*/) override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
+
+    void JustSummoned(Creature* pSummoned) override
+    {
+        if (pSummoned->GetEntry() == NPC_DARK_FIEND)
+            pSummoned->SetInCombatWithZone();
+    }
+    
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (m_uiActiveTimer)
+        {
+            if (m_uiActiveTimer <= uiDiff)
+            {
+                DoCastSpellIfCan(m_creature, SPELL_VOID_ZONE_PERIODIC, CAST_TRIGGERED);
+                DoCastSpellIfCan(m_creature, SPELL_SUMMON_DARK_FIEND, CAST_TRIGGERED);
+                m_uiActiveTimer = 0;
+            }
+            else
+                m_uiActiveTimer -= uiDiff;
+        }
+    }
+};
+
+/*######
+## npc_singularity
+######*/
+
+struct  npc_singularityAI : public Scripted_NoMovementAI
+{
+    npc_singularityAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+
+    uint32 m_uiActiveTimer;
+    uint8 m_uiActivateStage;
+
+    void Reset() override
+    {
+        DoCastSpellIfCan(m_creature, SPELL_BLACK_HOLE_VISUAL, CAST_TRIGGERED);
+        m_uiActiveTimer = 1000;
+        m_uiActivateStage = 0;
+    }
+
+    void AttackStart(Unit* /*pWho*/) override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
+
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (m_uiActiveTimer)
+        {
+            if (m_uiActiveTimer <= uiDiff)
+            {
+                switch (m_uiActivateStage)
+                {
+                    case 0:
+                        if (DoCastSpellIfCan(m_creature, SPELL_BLACK_HOLE_VISUAL_2) == CAST_OK)
+                            m_uiActiveTimer = 4000;
+                        break;
+                    case 1:
+                        if (DoCastSpellIfCan(m_creature, SPELL_BLACK_HOLE_PASSIVE) == CAST_OK)
+                            m_uiActiveTimer = 0;
+                        break;
+                }
+                ++m_uiActivateStage;
+            }
+            else
+                m_uiActiveTimer -= uiDiff;
+        }
+    }
+};
+#endif
 
 CreatureAI* GetAI_boss_muru(Creature* pCreature)
 {
@@ -464,10 +577,24 @@ CreatureAI* GetAI_npc_portal_target(Creature* pCreature)
     return new npc_portal_targetAI(pCreature);
 }
 
+#if defined (CLASSIC) || defined (TBC)
 CreatureAI* GetAI_npc_void_sentinel_summoner(Creature* pCreature)
 {
     return new npc_void_sentinel_summonerAI(pCreature);
 }
+#endif
+
+#if defined (WOTLK)
+CreatureAI* GetAI_npc_darkness(Creature* pCreature)
+{
+    return new npc_darknessAI(pCreature);
+}
+
+CreatureAI* GetAI_npc_singularity(Creature* pCreature)
+{
+    return new npc_singularityAI(pCreature);
+}
+#endif
 
 void AddSC_boss_muru()
 {
@@ -488,8 +615,21 @@ void AddSC_boss_muru()
     pNewScript->GetAI = &GetAI_npc_portal_target;
     pNewScript->RegisterSelf();
 
+#if defined (CLASSIC) || defined (TBC)
     pNewScript = new Script;
     pNewScript->Name = "npc_void_sentinel_summoner";
     pNewScript->GetAI = &GetAI_npc_void_sentinel_summoner;
     pNewScript->RegisterSelf();
+#endif
+#if defined (WOTLK)
+    pNewScript = new Script;
+    pNewScript->Name = "npc_darkness";
+    pNewScript->GetAI = &GetAI_npc_darkness;
+    pNewScript->RegisterSelf();
+    
+    pNewScript = new Script;
+    pNewScript->Name = "npc_singularity";
+    pNewScript->GetAI = &GetAI_npc_singularity;
+    pNewScript->RegisterSelf();
+#endif
 }

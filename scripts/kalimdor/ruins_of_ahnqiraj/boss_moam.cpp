@@ -78,7 +78,12 @@ struct boss_moamAI : public ScriptedAI
     void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(EMOTE_AGGRO, m_creature);
+#if defined (CLASSIC) || defined (TBC)
         m_creature->SetMaxPower(POWER_MANA, m_creature->GetCreatureInfo()->MaxLevelMana);
+#endif
+#if defined (WOTLK)
+        m_creature->SetMaxPower(POWER_MANA, m_creature->GetCreatureInfo()->MaxLevelHealth);
+#endif
     }
 
     void UpdateAI(const uint32 uiDiff) override

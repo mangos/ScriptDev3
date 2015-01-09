@@ -29,7 +29,12 @@
 
 enum
 {
+#if defined (CLASSIC) || defined (TBC)
     MAX_ENCOUNTER           = 6,
+#endif
+#if defined (WOTLK)
+    MAX_ENCOUNTER           = 7,
+#endif
 
     TYPE_FREE_NPC           = 1,
     TYPE_RETHILGORE         = 2,
@@ -37,6 +42,9 @@ enum
     TYPE_NANDOS             = 4,
     TYPE_INTRO              = 5,
     TYPE_VOIDWALKER         = 6,
+#if defined (WOTLK)
+    TYPE_APOTHECARY         = 7,
+#endif
 
     SAY_BOSS_DIE_AD         = -1033007,
     SAY_BOSS_DIE_AS         = -1033008,
@@ -48,10 +56,25 @@ enum
     NPC_FENRUS              = 4274,                         // used to summon Arugal in Fenrus event
     NPC_VINCENT             = 4444,                         // Vincent should be "dead" is Arugal is done the intro already
 
+#if defined (WOTLK)
+    NPC_HUMMEL              = 36296,                        // Love is in the Air event
+    NPC_FRYE                = 36272,
+    NPC_BAXTER              = 36565,
+    NPC_VALENTINE_BOSS_MGR  = 36643,                        // controller npc for the apothecary event
+    NPC_APOTHECARY_GENERATOR = 36212,                       // the npc which summons the crazed apothecary
+#endif
     GO_COURTYARD_DOOR       = 18895,                        // door to open when talking to NPC's
     GO_SORCERER_DOOR        = 18972,                        // door to open when Fenrus the Devourer
     GO_ARUGAL_DOOR          = 18971,                        // door to open when Wolf Master Nandos
     GO_ARUGAL_FOCUS         = 18973,                        // this generates the lightning visual in the Fenrus event
+#if defined (WOTLK)
+    GO_APOTHECARE_VIALS     = 190678,                       // move position for Baxter
+    GO_CHEMISTRY_SET        = 200335,                       // move position for Frye
+
+    SAY_HUMMEL_DEATH        = -1033025,
+
+    MAX_APOTHECARY          = 3,
+#endif
 };
 
 class instance_shadowfang_keep : public ScriptedInstance
@@ -65,6 +88,10 @@ class instance_shadowfang_keep : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo) override;
         void DoSpeech();
 
+#if defined (WOTLK)
+        void OnCreatureDeath(Creature* pCreature) override;
+        void OnCreatureEvade(Creature* pCreature);
+#endif
         void SetData(uint32 uiType, uint32 uiData) override;
         uint32 GetData(uint32 uiType) const override;
 
@@ -74,6 +101,9 @@ class instance_shadowfang_keep : public ScriptedInstance
     private:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
+#if defined (WOTLK)
+        uint8 m_uiApothecaryDead;
+#endif
 };
 
 #endif
