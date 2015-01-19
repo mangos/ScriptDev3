@@ -478,7 +478,7 @@ void AddSC_razorfen_downs()
     pNewScript->RegisterSelf();
     
     pNewScript = new Script;
-    pNewScript->Name = "npc_tomb_creature"; // repressents both Tomb Fiends and Tomb Reavers
+    pNewScript->Name = "npc_tomb_creature"; // represents both Tomb Fiends and Tomb Reavers
     pNewScript->GetAI = &GetAI_npc_tomb_creature;
     pNewScript->RegisterSelf();
     
