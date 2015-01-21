@@ -223,7 +223,7 @@ class instance_stratholme : public ScriptedInstance
         GuidList m_luiGuardGUIDs;
 
         // this ensures that the code that deals with the initial spawning of The Unforgiven and its adds (Vengful Phantoms) is only run once
-        bool bTheUnforgivenSpawnHasTriggered = false;
+        bool m_bTheUnforgivenSpawnHasTriggered;
 };
 
 #endif
