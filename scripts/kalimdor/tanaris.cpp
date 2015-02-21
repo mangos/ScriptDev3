@@ -652,7 +652,7 @@ bool GOUse_go_inconspicuous_landmark(Player* pPlayer, GameObject* pGo)
     SpawnPirates(pPlayer, iTotalPirates);
 
     // spawn chest
-    pPlayer->SummonGameObject(GO_PIRATE_TREASURE, -10117.715f, -4051.644f, 5.407f, 0.0f, SPAWN_DURATION);
+    pGo->SummonGameObject(GO_PIRATE_TREASURE, -10117.715f, -4051.644f, 5.407f, 0.0f, 60);
     return true;
 }
 void AddSC_tanaris()
