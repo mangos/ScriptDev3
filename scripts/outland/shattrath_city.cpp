@@ -569,7 +569,7 @@ enum
 
 struct npc_salsalabimAI : public ScriptedAI
 {
-    npc_salsalabimAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_salsalabimAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiMagneticPullTimer;
 

@@ -263,7 +263,7 @@ CreatureAI* GetAI_boss_selin_fireheart(Creature* pCreature)
 
 struct mob_fel_crystalAI : public ScriptedAI
 {
-    mob_fel_crystalAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mob_fel_crystalAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     GuidSet m_sWretchedGuids;
 

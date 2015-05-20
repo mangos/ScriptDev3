@@ -313,7 +313,7 @@ CreatureAI* GetAI_npc_azure_ring_captain(Creature* pCreature)
 
 struct  npc_arcane_beamAI : public ScriptedAI
 {
-    npc_arcane_beamAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_arcane_beamAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override
     {
@@ -347,7 +347,7 @@ CreatureAI* GetAI_npc_arcane_beam(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_centrifuge_coreAI : public Scripted_NoMovementAI
 {
-    npc_centrifuge_coreAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_centrifuge_coreAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     // Note: visual already handled in creature_template_addon
     void Reset() override { }

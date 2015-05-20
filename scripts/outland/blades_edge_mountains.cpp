@@ -71,7 +71,7 @@ static const uint32 aNetherDrakeEntries[MAX_ENTRIES] = {NPC_PROTO, NPC_ADOLESCEN
 
 struct mobs_nether_drakeAI : public ScriptedAI
 {
-    mobs_nether_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mobs_nether_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bIsNihil;
     uint32 m_uiNihilSpeechTimer;
@@ -279,7 +279,7 @@ static const uint32 aOgreEntries[] = {19995, 19998, 20334, 20723, 20726, 20730, 
 
 struct npc_bloodmaul_stout_triggerAI : public ScriptedAI
 {
-    npc_bloodmaul_stout_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_bloodmaul_stout_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiStartTimer;
     bool m_bHasValidOgre;
@@ -502,7 +502,7 @@ static const SimonGame aApexisGameData[4] =
 
 struct npc_simon_game_bunnyAI : public ScriptedAI
 {
-    npc_simon_game_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_simon_game_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint8 m_uiGamePhase;
 

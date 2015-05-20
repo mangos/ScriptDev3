@@ -1145,7 +1145,7 @@ CreatureAI* GetAI_mob_vesperon(Creature* pCreature)
 
 struct  mob_twilight_eggsAI : public Scripted_NoMovementAI
 {
-    mob_twilight_eggsAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    mob_twilight_eggsAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiHatchTimer;
 
@@ -1246,7 +1246,7 @@ CreatureAI* GetAI_npc_tenebron_egg_controller(Creature* pCreature)
 
 struct  npc_flame_tsunamiAI : public ScriptedAI
 {
-    npc_flame_tsunamiAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_flame_tsunamiAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiTsunamiTimer;
 

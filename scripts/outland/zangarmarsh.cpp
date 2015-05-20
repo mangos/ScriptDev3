@@ -108,7 +108,7 @@ enum
 
 struct npc_kayra_longmaneAI : public npc_escortAI
 {
-    npc_kayra_longmaneAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_kayra_longmaneAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     void WaypointReached(uint32 i) override
     {
@@ -210,7 +210,7 @@ enum
 
 struct npc_fhwoorAI : public npc_escortAI
 {
-    npc_fhwoorAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_fhwoorAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     uint32 m_uiStompTimer;
     uint32 m_uiShockTimer;

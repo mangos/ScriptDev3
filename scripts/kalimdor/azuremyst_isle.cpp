@@ -355,7 +355,7 @@ enum
 
 struct npc_magwinAI : public npc_escortAI
 {
-    npc_magwinAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_magwinAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     void WaypointReached(uint32 uiPointId) override
     {

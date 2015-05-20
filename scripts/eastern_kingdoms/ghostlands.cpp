@@ -60,7 +60,7 @@ enum
 
 struct npc_ranger_lilathaAI : public npc_escortAI
 {
-    npc_ranger_lilathaAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_ranger_lilathaAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     ObjectGuid m_goCageGuid;
     ObjectGuid m_heliosGuid;

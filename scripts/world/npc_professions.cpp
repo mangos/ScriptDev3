@@ -1107,12 +1107,14 @@ bool GossipSelect_npc_prof_tailor(Player* pPlayer, Creature* pCreature, uint32 u
     return true;
 }*/
 
+
 /*###
 #
 ###*/
 
 void AddSC_npc_professions()
 {
+#if defined (TBC)
     Script* pNewScript;
 
     pNewScript = new Script;
@@ -1127,7 +1129,6 @@ void AddSC_npc_professions()
     pNewScript->pGossipSelect = &GossipSelect_npc_prof_leather;
     pNewScript->RegisterSelf();
 
-#if defined (TBC)
     pNewScript = new Script;
     pNewScript->Name = "npc_prof_tailor";
     pNewScript->pGossipHello =  &GossipHello_npc_prof_tailor;

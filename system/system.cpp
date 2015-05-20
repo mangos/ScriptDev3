@@ -26,10 +26,10 @@
 
 #include "precompiled.h"
 #include "system.h"
-#include "../config-sd3.h"
 #include "ProgressBar.h"
 #include "ObjectMgr.h"
 #include "Database/DatabaseEnv.h"
+#include "SystemConfig.h"
 
 DatabaseType SD3Database;
 std::string  strSD3Version;
@@ -137,7 +137,7 @@ void SystemMgr::LoadScriptWaypoints()
                 continue;
             }
 
-            if (!pCInfo->ScriptID)
+            if (!sScriptMgr.GetBoundScriptId(SCRIPTED_UNIT, pTemp.uiCreatureEntry))
             {
                 error_db_log("sd3: DB table script_waypoint has waypoint for creature entry %u, but creature does not have ScriptName defined and then useless.", pTemp.uiCreatureEntry);
             }

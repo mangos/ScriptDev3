@@ -512,7 +512,7 @@ struct npc_target_triggerAI : public Scripted_NoMovementAI
 // ToDo: move this script to eventAI
 struct mob_abyssalAI : public ScriptedAI
 {
-    mob_abyssalAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mob_abyssalAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiFireBlastTimer;
     uint32 m_uiDespawnTimer;

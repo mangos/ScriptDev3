@@ -69,7 +69,7 @@ enum
 #if defined (CLASSIC)  
     SPELL_MEMBRANE_VISCIDUS     = 25994,                    // damage reduction spell
 #endif
-    // SPELL_VISCIDUS_WEAKNESS   = 25926,                   // aura which procs at damage - should trigger the slow spells - removed from DBC
+    // SPELL_VISCIDUS_WEAKNESS   = 25926,                   // aura which procs at damage - should trigger the slow spells
     // SPELL_VISCIDUS_SHRINKS    = 25893,                   // removed from DBC
     // SPELL_VISCIDUS_SHRINKS_2  = 27934,                   // removed from DBC
     // SPELL_VISCIDUS_GROWS      = 25897,                   // removed from DBC
@@ -105,15 +105,19 @@ enum
 static const uint32 auiGlobSummonSpells[MAX_VISCIDUS_GLOBS] = { 25865, 25866, 25867, 25868, 25869, 25870, 25871, 25872, 25873, 25874, 25875, 25876, 25877, 25878, 25879, 25880, 25881, 25882, 25883, 25884 };
 #endif
 
-struct boss_viscidusAI : public ScriptedAI
-{
-    boss_viscidusAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        Reset();
-    }
 
-    ScriptedInstance* m_pInstance;
+struct boss_viscidus : public CreatureScript
+{
+    boss_viscidus() : CreatureScript("boss_viscidus") {}
+
+    struct boss_viscidusAI : public ScriptedAI
+    {
+        boss_viscidusAI(Creature* pCreature) : ScriptedAI(pCreature)
+        {
+            m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        }
+
+        ScriptedInstance* m_pInstance;
     
 #if defined (WOTLK)
     uint8 m_uiPhase;
@@ -122,15 +126,15 @@ struct boss_viscidusAI : public ScriptedAI
     uint32 m_uiToxinTimer;
     uint32 m_uiExplodeDelayTimer;
 #endif
-    uint32 m_uiPoisonShockTimer;
-    uint32 m_uiPoisonBoltVolleyTimer;
+        uint32 m_uiPoisonShockTimer;
+        uint32 m_uiPoisonBoltVolleyTimer;
     
 #if defined (WOTLK)
     GuidList m_lGlobesGuidList;
 #endif
 
-    void Reset() override
-    {
+        void Reset() override
+        {
 #if defined (WOTLK)
         m_uiPhase                 = PHASE_NORMAL;
         m_uiHitCount              = 0;
@@ -138,8 +142,8 @@ struct boss_viscidusAI : public ScriptedAI
         m_uiExplodeDelayTimer     = 0;
         m_uiToxinTimer            = 30000;
 #endif
-        m_uiPoisonShockTimer      = urand(7000, 12000);
-        m_uiPoisonBoltVolleyTimer = urand(10000, 15000);
+            m_uiPoisonShockTimer = urand(7000, 12000);
+            m_uiPoisonBoltVolleyTimer = urand(10000, 15000);
 
 #if defined (WOTLK)
         SetCombatMovement(true);
@@ -148,39 +152,39 @@ struct boss_viscidusAI : public ScriptedAI
         m_creature->SetObjectScale(DEFAULT_OBJECT_SCALE);
 #endif
 #if defined (CLASSIC)  
-        DoCastSpellIfCan(m_creature, SPELL_MEMBRANE_VISCIDUS);
+            DoCastSpellIfCan(m_creature, SPELL_MEMBRANE_VISCIDUS);
 #endif
-    }
-
-    void Aggro(Unit* /*pWho*/) override
-    {
-        DoCastSpellIfCan(m_creature, SPELL_TOXIN);
-
-        if (m_pInstance)
-        {
-            m_pInstance->SetData(TYPE_VISCIDUS, IN_PROGRESS);
         }
-    }
 
-    void JustReachedHome() override
-    {
-        if (m_pInstance)
+        void Aggro(Unit* /*pWho*/) override
         {
-            m_pInstance->SetData(TYPE_VISCIDUS, FAIL);
+            DoCastSpellIfCan(m_creature, SPELL_TOXIN);
+
+            if (m_pInstance)
+            {
+                m_pInstance->SetData(TYPE_VISCIDUS, IN_PROGRESS);
+            }
+        }
+
+        void JustReachedHome() override
+        {
+            if (m_pInstance)
+            {
+                m_pInstance->SetData(TYPE_VISCIDUS, FAIL);
         
 #if defined (WOTLK)
         DoCastSpellIfCan(m_creature, SPELL_DESPAWN_GLOBS, CAST_TRIGGERED);
 #endif
+            }
         }
-    }
 
-    void JustDied(Unit* /*pKiller*/) override
-    {
-        if (m_pInstance)
+        void JustDied(Unit* /*pKiller*/) override
         {
-            m_pInstance->SetData(TYPE_VISCIDUS, DONE);
+            if (m_pInstance)
+            {
+                m_pInstance->SetData(TYPE_VISCIDUS, DONE);
+            }
         }
-    }
     
 #if defined (WOTLK)
     void JustSummoned(Creature* pSummoned) override
@@ -336,11 +340,11 @@ struct boss_viscidusAI : public ScriptedAI
     }
 #endif
 
-    void UpdateAI(const uint32 uiDiff) override
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        void UpdateAI(const uint32 uiDiff) override
         {
-            return;
+            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
+                return;
         }
         
 #if defined (WOTLK)
@@ -365,44 +369,39 @@ struct boss_viscidusAI : public ScriptedAI
             return;
 #endif
 
-        if (m_uiPoisonShockTimer < uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature, SPELL_POISON_SHOCK) == CAST_OK)
+            if (m_uiPoisonShockTimer < uiDiff)
             {
-                m_uiPoisonShockTimer = urand(7000, 12000);
+                if (DoCastSpellIfCan(m_creature, SPELL_POISON_SHOCK) == CAST_OK)
+                {
+                    m_uiPoisonShockTimer = urand(7000, 12000);
+                }
             }
-        }
-        else
-            { m_uiPoisonShockTimer -= uiDiff; }
+            else
+            {
+                m_uiPoisonShockTimer -= uiDiff;
+            }
 
-        if (m_uiPoisonBoltVolleyTimer < uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature, SPELL_POISONBOLT_VOLLEY) == CAST_OK)
+            if (m_uiPoisonBoltVolleyTimer < uiDiff)
             {
-                m_uiPoisonBoltVolleyTimer = urand(10000, 15000);
+                if (DoCastSpellIfCan(m_creature, SPELL_POISONBOLT_VOLLEY) == CAST_OK)
+                {
+                    m_uiPoisonBoltVolleyTimer = urand(10000, 15000);
+                }
             }
+            else
+            {
+                m_uiPoisonBoltVolleyTimer -= uiDiff;
+            }
+
+            DoMeleeAttackIfReady();
         }
-        else
-            { m_uiPoisonBoltVolleyTimer -= uiDiff; }
-        
-#if defined (WOTLK)
-        if (m_uiToxinTimer < uiDiff)
-        {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                m_creature->SummonCreature(NPC_VISCIDUS_TRIGGER, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_DEAD_DESPAWN, 0);
-            m_uiToxinTimer = 30000;
-        }
-        else
-            m_uiToxinTimer -= uiDiff;
-#endif
-        DoMeleeAttackIfReady();
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new boss_viscidusAI(pCreature);
     }
 };
-
-CreatureAI* GetAI_boss_viscidus(Creature* pCreature)
-{
-    return new boss_viscidusAI(pCreature);
-}
 
 #if defined (WOTLK)
 bool EffectAuraDummy_spell_aura_dummy_viscidus_freeze(const Aura* pAura, bool bApply)
@@ -436,12 +435,19 @@ CreatureAI* GetAI_npc_glob_of_viscidus(Creature* pCreature)
 
 void AddSC_boss_viscidus()
 {
-    Script* pNewScript;
+    Script* s;
+    s = new boss_viscidus();
+    s->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "boss_viscidus";
-    pNewScript->GetAI = &GetAI_boss_viscidus;
-    pNewScript->RegisterSelf();
+#if defined (WOTLK)
+    s = new npc_glob_of_viscidus;
+    s->RegisterSelf();
+#endif
+
+    //pNewScript = new Script;
+    //pNewScript->Name = "boss_viscidus";
+    //pNewScript->GetAI = &GetAI_boss_viscidus;
+    //pNewScript->RegisterSelf();
     
 #if defined (WOTLK)
     pNewScript = new Script;

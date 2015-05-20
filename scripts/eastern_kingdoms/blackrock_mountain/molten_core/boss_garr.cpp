@@ -50,100 +50,116 @@ enum
     SPELL_SEPARATION_ANXIETY    = 23492,                    // Used if separated too far from Garr, 21095 use unknown.
 };
 
-struct boss_garrAI : public ScriptedAI
+struct boss_garr : public CreatureScript
 {
-    boss_garrAI(Creature* pCreature) : ScriptedAI(pCreature)
+    boss_garr() : CreatureScript("boss_garr") {}
+
+    struct boss_garrAI : public ScriptedAI
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        Reset();
-    }
-
-    ScriptedInstance* m_pInstance;
-
-    uint32 m_uiAntiMagicPulseTimer;
-    uint32 m_uiMagmaShacklesTimer;
-
-    void Reset() override
-    {
-        m_uiAntiMagicPulseTimer = 25000;
-        m_uiMagmaShacklesTimer = 15000;
-    }
-
-    void Aggro(Unit* /*pWho*/) override
-    {
-        if (m_pInstance)
+        boss_garrAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            m_pInstance->SetData(TYPE_GARR, IN_PROGRESS);
-        }
-    }
-
-    void JustDied(Unit* /*pKiller*/) override
-    {
-        if (m_pInstance)
-        {
-            m_pInstance->SetData(TYPE_GARR, DONE);
-        }
-    }
-
-    void JustReachedHome() override
-    {
-        if (m_pInstance)
-        {
-            m_pInstance->SetData(TYPE_GARR, FAIL);
-        }
-    }
-
-    void UpdateAI(const uint32 uiDiff) override
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-        {
-            return;
+            m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         }
 
-        // AntiMagicPulse_Timer
-        if (m_uiAntiMagicPulseTimer < uiDiff)
+        ScriptedInstance* m_pInstance;
+
+        uint32 m_uiAntiMagicPulseTimer;
+        uint32 m_uiMagmaShacklesTimer;
+
+        void Reset() override
         {
-            if (DoCastSpellIfCan(m_creature, SPELL_ANTIMAGICPULSE) == CAST_OK)
+            m_uiAntiMagicPulseTimer = 25000;
+            m_uiMagmaShacklesTimer = 15000;
+        }
+
+        void Aggro(Unit* /*pWho*/) override
+        {
+            if (m_pInstance)
             {
-                m_uiAntiMagicPulseTimer = urand(10000, 15000);
+                m_pInstance->SetData(TYPE_GARR, IN_PROGRESS);
             }
         }
-        else
-            { m_uiAntiMagicPulseTimer -= uiDiff; }
 
-        // MagmaShackles_Timer
-        if (m_uiMagmaShacklesTimer < uiDiff)
+        void JustDied(Unit* /*pKiller*/) override
         {
-            if (DoCastSpellIfCan(m_creature, SPELL_MAGMASHACKLES) == CAST_OK)
+            if (m_pInstance)
             {
-                m_uiMagmaShacklesTimer = urand(8000, 12000);
+                m_pInstance->SetData(TYPE_GARR, DONE);
             }
         }
-        else
-            { m_uiMagmaShacklesTimer -= uiDiff; }
 
-        DoMeleeAttackIfReady();
+        void JustReachedHome() override
+        {
+            if (m_pInstance)
+            {
+                m_pInstance->SetData(TYPE_GARR, FAIL);
+            }
+        }
+
+        void UpdateAI(const uint32 uiDiff) override
+        {
+            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
+                return;
+            }
+
+            // AntiMagicPulse_Timer
+            if (m_uiAntiMagicPulseTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_ANTIMAGICPULSE) == CAST_OK)
+                {
+                    m_uiAntiMagicPulseTimer = urand(10000, 15000);
+                }
+            }
+            else
+            {
+                m_uiAntiMagicPulseTimer -= uiDiff;
+            }
+
+            // MagmaShackles_Timer
+            if (m_uiMagmaShacklesTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_MAGMASHACKLES) == CAST_OK)
+                {
+                    m_uiMagmaShacklesTimer = urand(8000, 12000);
+                }
+            }
+            else
+            {
+                m_uiMagmaShacklesTimer -= uiDiff;
+            }
+
+            DoMeleeAttackIfReady();
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new boss_garrAI(pCreature);
     }
 };
 
-struct mob_fireswornAI : public ScriptedAI
+struct mob_firesworn : public CreatureScript
 {
-    mob_fireswornAI(Creature* pCreature) : ScriptedAI(pCreature)
+    mob_firesworn() : CreatureScript("mob_firesworn") {}
+
+    struct mob_fireswornAI : public ScriptedAI
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        Reset();
-    }
+        mob_fireswornAI(Creature* pCreature) : ScriptedAI(pCreature)
+        {
+            m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        }
 
-    ScriptedInstance* m_pInstance;
+        ScriptedInstance* m_pInstance;
 
-    uint32 m_uiImmolateTimer;
-    uint32 m_uiSeparationCheckTimer;
+        uint32 m_uiImmolateTimer;
+        uint32 m_uiSeparationCheckTimer;
 
-    void Reset() override
-    {
-        m_uiImmolateTimer = urand(4000, 8000);              // These times are probably wrong
-        m_uiSeparationCheckTimer = 5000;
-    }
+        void Reset() override
+        {
+            m_uiImmolateTimer = urand(4000, 8000);              // These times are probably wrong
+            m_uiSeparationCheckTimer = 5000;
+        }
     
 #if defined (WOTLK)
     void JustDied(Unit* /*pKiller*/) override
@@ -156,77 +172,79 @@ struct mob_fireswornAI : public ScriptedAI
     }
 #endif
 
-    void UpdateAI(const uint32 uiDiff) override
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        void UpdateAI(const uint32 uiDiff) override
         {
-            return;
-        }
-
-        // Immolate_Timer
-        if (m_uiImmolateTimer < uiDiff)
-        {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             {
-                if (DoCastSpellIfCan(pTarget, SPELL_IMMOLATE) == CAST_OK)
+                return;
+            }
+
+            // Immolate_Timer
+            if (m_uiImmolateTimer < uiDiff)
+            {
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
-                    m_uiImmolateTimer = urand(5000, 10000);
+                    if (DoCastSpellIfCan(pTarget, SPELL_IMMOLATE) == CAST_OK)
+                    {
+                        m_uiImmolateTimer = urand(5000, 10000);
+                    }
                 }
             }
-        }
-        else { m_uiImmolateTimer -= uiDiff; }
+            else { m_uiImmolateTimer -= uiDiff; }
 
-        if (m_uiSeparationCheckTimer < uiDiff)
-        {
+            if (m_uiSeparationCheckTimer < uiDiff)
+            {
 #if defined (WOTLK)
             if (!m_pInstance)
                 return;
 #endif            
-            // Distance guesswork, but should be ok
-            Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR);
-            if (pGarr && pGarr->IsAlive() && !m_creature->IsWithinDist2d(pGarr->GetPositionX(), pGarr->GetPositionY(), 50.0f))
+                // Distance guesswork, but should be ok
+                Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR);
+                if (pGarr && pGarr->IsAlive() && !m_creature->IsWithinDist2d(pGarr->GetPositionX(), pGarr->GetPositionY(), 50.0f))
+                {
+                    DoCastSpellIfCan(m_creature, SPELL_SEPARATION_ANXIETY, CAST_TRIGGERED);
+                }
+
+                m_uiSeparationCheckTimer = 5000;
+            }
+            else
             {
-                DoCastSpellIfCan(m_creature, SPELL_SEPARATION_ANXIETY, CAST_TRIGGERED);
+                m_uiSeparationCheckTimer -= uiDiff;
             }
 
-            m_uiSeparationCheckTimer = 5000;
-        }
-        else
-            { m_uiSeparationCheckTimer -= uiDiff; }
+            // Cast Erruption and let them die
+            if (m_creature->GetHealthPercent() <= 10.0f)
+            {
+                DoCastSpellIfCan(m_creature->getVictim(), SPELL_ERUPTION);
+                m_creature->SetDeathState(JUST_DIED);
+                m_creature->RemoveCorpse();
+            }
 
-        // Cast Erruption and let them die
-        if (m_creature->GetHealthPercent() <= 10.0f)
-        {
-            DoCastSpellIfCan(m_creature->getVictim(), SPELL_ERUPTION);
-            m_creature->SetDeathState(JUST_DIED);
-            m_creature->RemoveCorpse();
+            DoMeleeAttackIfReady();
         }
+    };
 
-        DoMeleeAttackIfReady();
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new mob_fireswornAI(pCreature);
     }
 };
 
-CreatureAI* GetAI_boss_garr(Creature* pCreature)
-{
-    return new boss_garrAI(pCreature);
-}
-
-CreatureAI* GetAI_mob_firesworn(Creature* pCreature)
-{
-    return new mob_fireswornAI(pCreature);
-}
-
 void AddSC_boss_garr()
 {
-    Script* pNewScript;
+    Script* s;
+    s = new boss_garr();
+    s->RegisterSelf();
+    s = new mob_firesworn();
+    s->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "boss_garr";
-    pNewScript->GetAI = &GetAI_boss_garr;
-    pNewScript->RegisterSelf();
+    //pNewScript = new Script;
+    //pNewScript->Name = "boss_garr";
+    //pNewScript->GetAI = &GetAI_boss_garr;
+    //pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "mob_firesworn";
-    pNewScript->GetAI = &GetAI_mob_firesworn;
-    pNewScript->RegisterSelf();
+    //pNewScript = new Script;
+    //pNewScript->Name = "mob_firesworn";
+    //pNewScript->GetAI = &GetAI_mob_firesworn;
+    //pNewScript->RegisterSelf();
 }

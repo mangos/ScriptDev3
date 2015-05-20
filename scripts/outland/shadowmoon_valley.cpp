@@ -70,7 +70,7 @@ enum
 
 struct mob_mature_netherwing_drakeAI : public ScriptedAI
 {
-    mob_mature_netherwing_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mob_mature_netherwing_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_playerGuid;
 
@@ -303,7 +303,7 @@ enum
 
 struct npc_dragonmaw_peonAI : public ScriptedAI
 {
-    npc_dragonmaw_peonAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_dragonmaw_peonAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_playerGuid;
     uint32 m_uiPoisonTimer;
@@ -1375,7 +1375,7 @@ enum
 
 struct npc_totem_of_spiritsAI : public ScriptedPetAI
 {
-    npc_totem_of_spiritsAI(Creature* pCreature) : ScriptedPetAI(pCreature) { Reset(); }
+    npc_totem_of_spiritsAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
 
     void Reset() override {}
 
@@ -1910,7 +1910,7 @@ enum
 
 struct npc_domesticated_felboarAI : public ScriptedAI
 {
-    npc_domesticated_felboarAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_domesticated_felboarAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiTuberTimer;
     uint8 m_uiTuberStage;
@@ -2030,7 +2030,7 @@ enum
 
 struct npc_veneratus_spawn_nodeAI : public Scripted_NoMovementAI
 {
-    npc_veneratus_spawn_nodeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_veneratus_spawn_nodeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
 

@@ -336,7 +336,7 @@ bool EffectScriptEffectCreature_npc_iron_construct(Unit* /*pCaster*/, uint32 uiS
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_scorchAI : public Scripted_NoMovementAI
 {
-    npc_scorchAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_scorchAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }

@@ -69,7 +69,7 @@ static const float aWebWrapLoc[MAX_WEB_WRAP_POSITIONS][3] =
 
 struct  npc_web_wrapAI : public ScriptedAI
 {
-    npc_web_wrapAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_web_wrapAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_victimGuid;
     uint32 m_uiWebWrapTimer;

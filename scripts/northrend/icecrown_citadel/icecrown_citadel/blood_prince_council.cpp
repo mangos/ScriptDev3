@@ -234,7 +234,7 @@ CreatureAI* GetAI_npc_queen_lanathel_intro(Creature* pCreature)
 
 struct  npc_ball_of_flameAI : public ScriptedAI
 {
-    npc_ball_of_flameAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_ball_of_flameAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bHasFlamesCasted;
 
@@ -286,7 +286,7 @@ CreatureAI* GetAI_npc_ball_of_flame(Creature* pCreature)
 
 struct  npc_kinetic_bombAI : public ScriptedAI
 {
-    npc_kinetic_bombAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_kinetic_bombAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override
     {
@@ -327,7 +327,7 @@ CreatureAI* GetAI_npc_kinetic_bomb(Creature* pCreature)
 
 struct  npc_dark_nucleusAI : public ScriptedAI
 {
-    npc_dark_nucleusAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_dark_nucleusAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiDistanceCheck;
 

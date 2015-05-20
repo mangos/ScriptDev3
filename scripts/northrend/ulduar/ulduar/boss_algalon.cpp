@@ -665,7 +665,7 @@ CreatureAI* GetAI_npc_living_constellation(Creature* pCreature)
 
 struct  npc_worm_holeAI : public Scripted_NoMovementAI
 {
-    npc_worm_holeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_worm_holeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiDarkMatterTimer;
 
@@ -712,7 +712,7 @@ CreatureAI* GetAI_npc_worm_hole(Creature* pCreature)
 
 struct  npc_black_holeAI : public Scripted_NoMovementAI
 {
-    npc_black_holeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_black_holeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     bool m_bIsDespawned;
 
@@ -759,7 +759,7 @@ CreatureAI* GetAI_npc_black_hole(Creature* pCreature)
 
 struct  npc_collapsing_starAI : public ScriptedAI
 {
-    npc_collapsing_starAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_collapsing_starAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }

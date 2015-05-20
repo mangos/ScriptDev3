@@ -52,7 +52,7 @@ static uint32 m_auiBosses[] = {NPC_AZBARIN, NPC_DUKE_SINGEN, NPC_ERATHIUS, NPC_G
 
 struct  npc_gurgthockAI : public ScriptedAI
 {
-    npc_gurgthockAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_gurgthockAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_playerGuid;
 
@@ -115,7 +115,7 @@ enum
 
 struct  npc_ghoul_feeding_bunnyAI : public ScriptedAI
 {
-    npc_ghoul_feeding_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_ghoul_feeding_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiAttractTimer;
 

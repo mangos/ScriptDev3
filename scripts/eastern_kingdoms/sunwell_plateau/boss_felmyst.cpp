@@ -486,7 +486,7 @@ CreatureAI* GetAI_boss_felmyst(Creature* pCreature)
 
 struct npc_demonic_vaporAI : public ScriptedAI
 {
-    npc_demonic_vaporAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_demonic_vaporAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override
     {

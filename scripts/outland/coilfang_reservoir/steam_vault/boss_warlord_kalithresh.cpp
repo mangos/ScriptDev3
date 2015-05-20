@@ -254,7 +254,7 @@ bool EffectAuraDummy_spell_aura_dummy_warlord_rage(const Aura* pAura, bool bAppl
 
 struct mob_naga_distillerAI : public Scripted_NoMovementAI
 {
-    mob_naga_distillerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    mob_naga_distillerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override
     {

@@ -71,19 +71,24 @@ static uint32 TriggerOrphanSpell[6][3] =
     {3552, 14305, 65054}                                    // Spooky Lighthouse
 };
 
-bool AreaTrigger_at_childrens_week_spot(Player* pPlayer, AreaTriggerEntry const* pAt)
+struct at_childrens_week_spot : public AreaTriggerScript
 {
-    for (uint8 i = 0; i < 6; ++i)
+    at_childrens_week_spot() : AreaTriggerScript("at_childrens_week_spot") {}
+
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->id == TriggerOrphanSpell[i][0] &&
-            pPlayer->GetMiniPet() && pPlayer->GetMiniPet()->GetEntry() == TriggerOrphanSpell[i][1])
+        for (uint8 i = 0; i < 6; ++i)
         {
-            pPlayer->CastSpell(pPlayer, TriggerOrphanSpell[i][2], true);
-            return true;
+            if (pAt->id == TriggerOrphanSpell[i][0] &&
+                pPlayer->GetMiniPet() && pPlayer->GetMiniPet()->GetEntry() == TriggerOrphanSpell[i][1])
+            {
+                pPlayer->CastSpell(pPlayer, TriggerOrphanSpell[i][2], true);
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
+};
 
 #if defined (WOTLK)    
 /*######
@@ -103,17 +108,22 @@ enum
     NPC_NORTHWEST_GATE          = 32199
 };
 
-bool AreaTrigger_at_aldurthar_gate(Player* pPlayer, AreaTriggerEntry const* pAt)
+struct at_aldurthar_gate : public AreaTriggerScript
 {
-    switch (pAt->id)
+    at_aldurthar_gate() : AreaTriggerScript("at_aldurthar_gate") {}
+
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        case TRIGGER_SOUTH:     pPlayer->KilledMonsterCredit(NPC_SOUTH_GATE);     break;
-        case TRIGGER_CENTRAL:   pPlayer->KilledMonsterCredit(NPC_CENTRAL_GATE);   break;
-        case TRIGGER_NORTH:     pPlayer->KilledMonsterCredit(NPC_NORTH_GATE);     break;
-        case TRIGGER_NORTHWEST: pPlayer->KilledMonsterCredit(NPC_NORTHWEST_GATE); break;
+        switch (pAt->id)
+        {
+            case TRIGGER_SOUTH:     pPlayer->KilledMonsterCredit(NPC_SOUTH_GATE);     break;
+            case TRIGGER_CENTRAL:   pPlayer->KilledMonsterCredit(NPC_CENTRAL_GATE);   break;
+            case TRIGGER_NORTH:     pPlayer->KilledMonsterCredit(NPC_NORTH_GATE);     break;
+            case TRIGGER_NORTHWEST: pPlayer->KilledMonsterCredit(NPC_NORTHWEST_GATE); break;
+        }
+        return false;
     }
-    return true;
-}
+};
 #endif
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
 /*######
@@ -125,15 +135,22 @@ enum
     GO_COILFANG_WATERFALL   = 184212
 };
 
-bool AreaTrigger_at_coilfang_waterfall(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
+struct at_coilfang_waterfall : public AreaTriggerScript
 {
-    if (GameObject* pGo = GetClosestGameObjectWithEntry(pPlayer, GO_COILFANG_WATERFALL, 35.0f))
+    at_coilfang_waterfall() : AreaTriggerScript("at_coilfang_waterfall") {}
+
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pGo->getLootState() == GO_READY)
-        { pGo->UseDoorOrButton(); }
+        if (GameObject* pGo = GetClosestGameObjectWithEntry(pPlayer, GO_COILFANG_WATERFALL, 35.0f))
+        {
+            if (pGo->getLootState() == GO_READY)
+            {
+                pGo->UseDoorOrButton();
+            }
+        }
+        return false;
     }
-    return false;
-}
+};
 
 /*######
 ## at_legion_teleporter
@@ -148,25 +165,31 @@ enum
     QUEST_GAINING_ACCESS_H  = 10604
 };
 
-bool AreaTrigger_at_legion_teleporter(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
+struct at_legion_teleporter : public AreaTriggerScript
 {
-    if (pPlayer->IsAlive() && !pPlayer->IsInCombat())
+    at_legion_teleporter() : AreaTriggerScript("at_legion_teleporter") {}
+
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
     {
-        if (pPlayer->GetTeam() == ALLIANCE && pPlayer->GetQuestRewardStatus(QUEST_GAINING_ACCESS_A))
+        if (pPlayer->IsAlive() && !pPlayer->IsInCombat())
         {
-            pPlayer->CastSpell(pPlayer, SPELL_TELE_A_TO, false);
-            return true;
+            if (pPlayer->GetTeam() == ALLIANCE && pPlayer->GetQuestRewardStatus(QUEST_GAINING_ACCESS_A))
+            {
+                pPlayer->CastSpell(pPlayer, SPELL_TELE_A_TO, false);
+                return true;
+            }
+
+            if (pPlayer->GetTeam() == HORDE && pPlayer->GetQuestRewardStatus(QUEST_GAINING_ACCESS_H))
+            {
+                pPlayer->CastSpell(pPlayer, SPELL_TELE_H_TO, false);
+                return true;
+            }
+            return false;
         }
 
-        if (pPlayer->GetTeam() == HORDE && pPlayer->GetQuestRewardStatus(QUEST_GAINING_ACCESS_H))
-        {
-            pPlayer->CastSpell(pPlayer, SPELL_TELE_H_TO, false);
-            return true;
-        }
         return false;
     }
-    return false;
-}
+};
 #endif
 
 /*######
@@ -179,15 +202,20 @@ enum
     NPC_RAVENHOLDT          = 13936
 };
 
-bool AreaTrigger_at_ravenholdt(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
+struct at_ravenholdt : public AreaTriggerScript
 {
-    if (pPlayer->GetQuestStatus(QUEST_MANOR_RAVENHOLDT) == QUEST_STATUS_INCOMPLETE)
-    {
-        pPlayer->KilledMonsterCredit(NPC_RAVENHOLDT);
-    }
+    at_ravenholdt() : AreaTriggerScript("at_ravenholdt") {}
 
-    return false;
-}
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
+    {
+        if (pPlayer->GetQuestStatus(QUEST_MANOR_RAVENHOLDT) == QUEST_STATUS_INCOMPLETE)
+        {
+            pPlayer->KilledMonsterCredit(NPC_RAVENHOLDT);
+        }
+
+        return false;
+    }
+};
 
 #if defined (WOTLK)    
 /*######
@@ -201,20 +229,25 @@ enum
 };
 
 // 5030
-bool AreaTrigger_at_spearborn_encampment(Player* pPlayer, AreaTriggerEntry const* pAt)
+struct at_spearborn_encampment : public AreaTriggerScript
 {
-    if (pPlayer->GetQuestStatus(QUEST_MISTWHISPER_TREASURE) == QUEST_STATUS_INCOMPLETE &&
-            pPlayer->GetReqKillOrCastCurrentCount(QUEST_MISTWHISPER_TREASURE, NPC_TARTEK) == 0)
+    at_spearborn_encampment() : AreaTriggerScript("at_spearborn_encampment") {}
+
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
     {
-        // can only spawn one at a time, it's not a too good solution
-        if (GetClosestCreatureWithEntry(pPlayer, NPC_TARTEK, 50.0f))
-            return false;
+        if (pPlayer->GetQuestStatus(QUEST_MISTWHISPER_TREASURE) == QUEST_STATUS_INCOMPLETE &&
+                pPlayer->GetReqKillOrCastCurrentCount(QUEST_MISTWHISPER_TREASURE, NPC_TARTEK) == 0)
+        {
+            // can only spawn one at a time, it's not a too good solution
+            if (GetClosestCreatureWithEntry(pPlayer, NPC_TARTEK, 50.0f))
+                return false;
 
-        pPlayer->SummonCreature(NPC_TARTEK, pAt->x, pAt->y, pAt->z, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, MINUTE * IN_MILLISECONDS);
+            pPlayer->SummonCreature(NPC_TARTEK, pAt->x, pAt->y, pAt->z, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, MINUTE * IN_MILLISECONDS);
+        }
+
+        return false;
     }
-
-    return false;
-}
+};
 
 /*######
 ## at_warsong_farms
@@ -232,19 +265,25 @@ enum
     AT_TORP_FARM                = 4872
 };
 
-bool AreaTrigger_at_warsong_farms(Player* pPlayer, AreaTriggerEntry const* pAt)
+struct at_warsong_farms : public AreaTriggerScript
 {
-    if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_THE_WARSONG_FARMS) == QUEST_STATUS_INCOMPLETE)
+    at_warsong_farms() : AreaTriggerScript("at_warsong_farms") {}
+
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
     {
-        switch (pAt->id)
+        if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_THE_WARSONG_FARMS) == QUEST_STATUS_INCOMPLETE)
         {
-            case AT_SLAUGHTERHOUSE: pPlayer->KilledMonsterCredit(NPC_CREDIT_SLAUGHTERHOUSE); break;
-            case AT_GRAINERY:       pPlayer->KilledMonsterCredit(NPC_CREDIT_GRAINERY);       break;
-            case AT_TORP_FARM:      pPlayer->KilledMonsterCredit(NPC_CREDIT_TORP_FARM);      break;
+            switch (pAt->id)
+            {
+                case AT_SLAUGHTERHOUSE: pPlayer->KilledMonsterCredit(NPC_CREDIT_SLAUGHTERHOUSE); break;
+                case AT_GRAINERY:       pPlayer->KilledMonsterCredit(NPC_CREDIT_GRAINERY);       break;
+                case AT_TORP_FARM:      pPlayer->KilledMonsterCredit(NPC_CREDIT_TORP_FARM);      break;
+            }
         }
+
+        return false;
     }
-    return true;
-}
+};
 
 /*######
 ## Quest 12548
@@ -260,19 +299,25 @@ enum
     QUEST_THE_MARKERS_PERCH           = 12559
 };
 
-bool AreaTrigger_at_waygate(Player* pPlayer, AreaTriggerEntry const* pAt)
+struct at_waygate : public AreaTriggerScript
 {
-    if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_THE_MARKERS_OVERLOOK) == QUEST_STATUS_COMPLETE && pPlayer->GetQuestStatus(QUEST_THE_MARKERS_PERCH) == QUEST_STATUS_COMPLETE)
-    {
-        switch (pAt->id)
-        {
-            case AT_WAYGATE_SHOLOZAR: pPlayer->CastSpell(pPlayer, SPELL_SHOLOZAR_TO_UNGORO_TELEPORT, false); break;
-            case AT_WAYGATE_UNGORO: pPlayer->CastSpell(pPlayer, SPELL_UNGORO_TO_SHOLOZAR_TELEPORT, false); break;
-        }
-    }
+    at_waygate() : AreaTriggerScript("at_waygate") {}
 
-    return false;
-}
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
+    {
+        if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_THE_MARKERS_OVERLOOK) == QUEST_STATUS_COMPLETE && pPlayer->GetQuestStatus(QUEST_THE_MARKERS_PERCH) == QUEST_STATUS_COMPLETE)
+        {
+            switch (pAt->id)
+            {
+                case AT_WAYGATE_SHOLOZAR: pPlayer->CastSpell(pPlayer, SPELL_SHOLOZAR_TO_UNGORO_TELEPORT, false); break;
+                case AT_WAYGATE_UNGORO: pPlayer->CastSpell(pPlayer, SPELL_UNGORO_TO_SHOLOZAR_TELEPORT, false); break;
+            }
+        }
+
+        return false;
+    }
+};
+
 
 /*######
 ## Quest 12741
@@ -284,13 +329,20 @@ enum
     SPELL_CREATE_TRUE_POWER_OF_THE_TEMPEST   = 53067
 };
 
-bool AreaTrigger_at_stormwright_shelf(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
+struct at_stormwright_shelf : public AreaTriggerScript
 {
-    if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_STRENGTH_OF_THE_TEMPEST) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->CastSpell(pPlayer, SPELL_CREATE_TRUE_POWER_OF_THE_TEMPEST, false);
+    at_stormwright_shelf() : AreaTriggerScript("at_stormwright_shelf") {}
 
-    return true;
-}
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
+    {
+        if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_STRENGTH_OF_THE_TEMPEST) == QUEST_STATUS_INCOMPLETE)
+        {
+            pPlayer->CastSpell(pPlayer, SPELL_CREATE_TRUE_POWER_OF_THE_TEMPEST, false);
+        }
+
+        return false;
+    }
+};
 #endif
 
 /*######
@@ -303,64 +355,74 @@ enum
     NPC_LARKORWI_MATE           = 9683
 };
 
-bool AreaTrigger_at_scent_larkorwi(Player* pPlayer, AreaTriggerEntry const* pAt)
+struct at_scent_larkorwi : public AreaTriggerScript
 {
-    if (pPlayer->IsAlive() && !pPlayer->isGameMaster() && pPlayer->GetQuestStatus(QUEST_SCENT_OF_LARKORWI) == QUEST_STATUS_INCOMPLETE)
-    {
-        if (!GetClosestCreatureWithEntry(pPlayer, NPC_LARKORWI_MATE, 25.0f, false, false))
-        {
-            pPlayer->SummonCreature(NPC_LARKORWI_MATE, pAt->x, pAt->y, pAt->z, 3.3f, TEMPSUMMON_TIMED_OOC_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
-        }
-    }
+    at_scent_larkorwi() : AreaTriggerScript("at_scent_larkorwi") {}
 
-    return false;
-}
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
+    {
+        if (pPlayer->IsAlive() && !pPlayer->isGameMaster() && pPlayer->GetQuestStatus(QUEST_SCENT_OF_LARKORWI) == QUEST_STATUS_INCOMPLETE)
+        {
+            if (!GetClosestCreatureWithEntry(pPlayer, NPC_LARKORWI_MATE, 25.0f, false, false))
+            {
+                pPlayer->SummonCreature(NPC_LARKORWI_MATE, pAt->x, pAt->y, pAt->z, 3.3f, TEMPSUMMON_TIMED_OOC_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
+            }
+        }
+
+        return false;
+    }
+};
 
 /*######
 ## at_murkdeep
 ######*/
 
-bool AreaTrigger_at_murkdeep(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
+struct at_murkdeep : public AreaTriggerScript
 {
-    // Handle Murkdeep event start
-    // The area trigger summons 3 Greymist Coastrunners; The rest of the event is handled by world map scripts
-    if (pPlayer->IsAlive() && !pPlayer->isGameMaster() && pPlayer->GetQuestStatus(QUEST_WANTED_MURKDEEP) == QUEST_STATUS_INCOMPLETE)
+    at_murkdeep() : AreaTriggerScript("at_murkdeep") {}
+
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
     {
-        ScriptedMap* pScriptedMap = (ScriptedMap*)pPlayer->GetInstanceData();
-        if (!pScriptedMap)
+        // Handle Murkdeep event start
+        // The area trigger summons 3 Greymist Coastrunners; The rest of the event is handled by world map scripts
+        if (pPlayer->IsAlive() && !pPlayer->isGameMaster() && pPlayer->GetQuestStatus(QUEST_WANTED_MURKDEEP) == QUEST_STATUS_INCOMPLETE)
         {
-            return false;
-        }
-
-        // If Murkdeep is already spawned, skip the rest
-        if (pScriptedMap->GetSingleCreatureFromStorage(NPC_MURKDEEP, true))
-        {
-            return true;
-        }
-
-        // Check if there are already coastrunners (dead or alive) around the area
-        if (GetClosestCreatureWithEntry(pPlayer, NPC_GREYMIST_COASTRUNNNER, 60.0f, false, false))
-        {
-            return true;
-        }
-
-        float fX, fY, fZ;
-        for (uint8 i = 0; i < 3; ++i)
-        {
-            // Spawn locations are defined in World Maps Scripts.h
-            pPlayer->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][0], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][1], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][2], 5.0f, fX, fY, fZ);
-
-            if (Creature* pTemp = pPlayer->SummonCreature(NPC_GREYMIST_COASTRUNNNER, fX, fY, fZ, aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][3], TEMPSUMMON_DEAD_DESPAWN, 0))
+            ScriptedMap* pScriptedMap = (ScriptedMap*)pPlayer->GetInstanceData();
+            if (!pScriptedMap)
             {
-                pTemp->SetWalk(false);
-                pTemp->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_MOVE][0], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][1], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][2], 5.0f, fX, fY, fZ);
-                pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                return false;
+            }
+
+            // If Murkdeep is already spawned, skip the rest
+            if (pScriptedMap->GetSingleCreatureFromStorage(NPC_MURKDEEP, true))
+            {
+                return true;
+            }
+
+            // Check if there are already coastrunners (dead or alive) around the area
+            if (GetClosestCreatureWithEntry(pPlayer, NPC_GREYMIST_COASTRUNNNER, 60.0f, false, false))
+            {
+                return true;
+            }
+
+            float fX, fY, fZ;
+            for (uint8 i = 0; i < 3; ++i)
+            {
+                // Spawn locations are defined in World Maps Scripts.h
+                pPlayer->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][0], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][1], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][2], 5.0f, fX, fY, fZ);
+
+                if (Creature* pTemp = pPlayer->SummonCreature(NPC_GREYMIST_COASTRUNNNER, fX, fY, fZ, aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][3], TEMPSUMMON_DEAD_DESPAWN, 0))
+                {
+                    pTemp->SetWalk(false);
+                    pTemp->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_MOVE][0], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][1], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][2], 5.0f, fX, fY, fZ);
+                    pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                }
             }
         }
-    }
 
-    return false;
-}
+        return false;
+    }
+};
 
 #if defined (WOTLK)    
 /*######
@@ -453,77 +515,60 @@ bool AreaTrigger_at_ancient_leaf(Player* pPlayer, AreaTriggerEntry const* pAt)
 
 void AddSC_areatrigger_scripts()
 {
-    Script* pNewScript;
+    Script* s;
+    s = new at_childrens_week_spot();
+    s->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_childrens_week_spot";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
-    pNewScript->RegisterSelf();
-
-#if defined (WOTLK)    
-    pNewScript = new Script;
-    pNewScript->Name = "at_aldurthar_gate";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_aldurthar_gate;
-    pNewScript->RegisterSelf();
+#if defined (WOTLK) || defined (CATA)    
+    s = new at_aldurthar_gate();
+    s->RegisterSelf();
 #endif	
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
-    pNewScript = new Script;
-    pNewScript->Name = "at_coilfang_waterfall";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_coilfang_waterfall;
-    pNewScript->RegisterSelf();
+    s = new at_coilfang_waterfall();
+    s->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_legion_teleporter";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_legion_teleporter;
-    pNewScript->RegisterSelf();
+    s = new at_legion_teleporter();
+    s->RegisterSelf();
+#endif
+    s = new at_ravenholdt();
+    s->RegisterSelf();
+
+#if defined (WOTLK) || defined (CATA)    
+    s = new at_spearborn_encampment();
+    s->RegisterSelf();
+
+    s = new at_warsong_farms();
+    s->RegisterSelf();
+
+    s = new at_waygate();
+    s->RegisterSelf();
+
+    s = new at_stormwright_shelf();
+    s->RegisterSelf();
 #endif
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_ravenholdt";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_ravenholdt;
-    pNewScript->RegisterSelf();
+    s = new at_scent_larkorwi();
+    s->RegisterSelf();
+    s = new at_murkdeep();
+    s->RegisterSelf();
 
-#if defined (WOTLK)    
-    pNewScript = new Script;
-    pNewScript->Name = "at_spearborn_encampment";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_spearborn_encampment;
-    pNewScript->RegisterSelf();
+    //pNewScript = new Script;
+    //pNewScript->Name = "at_childrens_week_spot";
+    //pNewScript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
+    //pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_warsong_farms";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_warsong_farms;
-    pNewScript->RegisterSelf();
+    //pNewScript = new Script;
+    //pNewScript->Name = "at_ravenholdt";
+    //pNewScript->pAreaTrigger = &AreaTrigger_at_ravenholdt;
+    //pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_waygate";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_waygate;
-    pNewScript->RegisterSelf();
+    //pNewScript = new Script;
+    //pNewScript->Name = "at_scent_larkorwi";
+    //pNewScript->pAreaTrigger = &AreaTrigger_at_scent_larkorwi;
+    //pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_stormwright_shelf";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_stormwright_shelf;
-    pNewScript->RegisterSelf();
-#endif
-
-    pNewScript = new Script;
-    pNewScript->Name = "at_scent_larkorwi";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_scent_larkorwi;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "at_murkdeep";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_murkdeep;
-    pNewScript->RegisterSelf();
-
-#if defined (WOTLK)    
-    pNewScript = new Script;
-    pNewScript->Name = "at_hot_on_the_trail";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_hot_on_the_trail;
-    pNewScript->RegisterSelf();
-    
-    pNewScript = new Script;
-    pNewScript->Name = "at_ancient_leaf";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_ancient_leaf;
-    pNewScript->RegisterSelf();
-#endif
+    //pNewScript = new Script;
+    //pNewScript->Name = "at_murkdeep";
+    //pNewScript->pAreaTrigger = &AreaTrigger_at_murkdeep;
+    //pNewScript->RegisterSelf();
 }

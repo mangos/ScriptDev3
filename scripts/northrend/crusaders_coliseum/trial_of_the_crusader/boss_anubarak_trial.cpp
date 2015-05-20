@@ -408,7 +408,7 @@ CreatureAI* GetAI_boss_anubarak_trial(Creature* pCreature)
 
 struct  npc_anubarak_trial_spikeAI : public ScriptedAI
 {
-    npc_anubarak_trial_spikeAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_anubarak_trial_spikeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     PursuingSpikesPhases m_Phase;
     uint32 m_PhaseSwitchTimer;
@@ -540,7 +540,7 @@ bool EffectDummyCreature_spell_dummy_permafrost(Unit* pCaster, uint32 uiSpellId,
 
 struct  npc_anubarak_trial_frostsphereAI : public Scripted_NoMovementAI
 {
-    npc_anubarak_trial_frostsphereAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_anubarak_trial_frostsphereAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     bool m_bPermafrost;
 
@@ -610,7 +610,7 @@ CreatureAI* GetAI_npc_anubarak_trial_frostsphere(Creature* pCreature)
 // TODO Remove this 'script' when combat movement can be proper prevented from core-side
 struct  npc_nerubian_borrowAI : public Scripted_NoMovementAI
 {
-    npc_nerubian_borrowAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_nerubian_borrowAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }

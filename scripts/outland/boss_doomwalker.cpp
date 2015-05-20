@@ -56,7 +56,7 @@ enum
 
 struct boss_doomwalkerAI : public ScriptedAI
 {
-    boss_doomwalkerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    boss_doomwalkerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiChainTimer;
     uint32 m_uiOverrunTimer;

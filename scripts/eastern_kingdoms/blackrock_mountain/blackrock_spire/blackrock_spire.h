@@ -31,6 +31,10 @@ enum
 {
     MAX_ENCOUNTER               = 6,
     MAX_ROOMS                   = 7,
+    DO_ACTIVATE_RUNES           = 0,
+    DO_SORT_MOBS                = 1,
+    DO_EMBERSEER_EVENT          = 2,
+    DO_FLAMEWREATH_EVENT        = 3,
 
     TYPE_ROOM_EVENT             = 0,
     TYPE_EMBERSEER              = 1,
@@ -101,7 +105,9 @@ enum
     MAX_STADIUM_WAVES           = 7,
     MAX_STADIUM_MOBS_PER_WAVE   = 5,
 
-    FACTION_BLACK_DRAGON        = 103
+    FACTION_BLACK_DRAGON        = 103,
+
+    SPELL_ENCAGE_EMBERSEER      = 15281,    // cast by Blackhand Incarcerator
 };
 
 struct SpawnLocation

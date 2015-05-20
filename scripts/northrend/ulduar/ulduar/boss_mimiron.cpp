@@ -1623,7 +1623,7 @@ CreatureAI* GetAI_boss_aerial_unit(Creature* pCreature)
 
 struct  npc_proximity_mineAI : public Scripted_NoMovementAI
 {
-    npc_proximity_mineAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_proximity_mineAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiExplodeTimer;
 
@@ -1864,7 +1864,7 @@ CreatureAI* GetAI_npc_mimiron_flames(Creature* pCreature)
 // TODO Move this 'script' to EventAI when combat can be proper prevented from core-side
 struct  npc_frost_bombAI : public Scripted_NoMovementAI
 {
-    npc_frost_bombAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_frost_bombAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiExplosionTimer;
     uint32 m_uiFireClearTimer;
@@ -1921,7 +1921,7 @@ CreatureAI* GetAI_npc_frost_bomb(Creature* pCreature)
 
 struct  npc_rocket_strikeAI : public Scripted_NoMovementAI
 {
-    npc_rocket_strikeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_rocket_strikeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override
     {
@@ -1952,7 +1952,7 @@ CreatureAI* GetAI_npc_rocket_strike(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  boss_leviathan_mk2_turretAI : public Scripted_NoMovementAI
 {
-    boss_leviathan_mk2_turretAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    boss_leviathan_mk2_turretAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }
@@ -1972,7 +1972,7 @@ CreatureAI* GetAI_boss_leviathan_mk2_turret(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_computerAI : public Scripted_NoMovementAI
 {
-    npc_computerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_computerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }

@@ -200,7 +200,7 @@ CreatureAI* GetAI_boss_amanitar(Creature* pCreature)
 
 struct  npc_amanitar_mushroomAI : public Scripted_NoMovementAI
 {
-    npc_amanitar_mushroomAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_amanitar_mushroomAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
 

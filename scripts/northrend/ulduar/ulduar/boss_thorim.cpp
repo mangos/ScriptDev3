@@ -1011,7 +1011,7 @@ CreatureAI* GetAI_npc_runic_colossus(Creature* pCreature)
 
 struct  npc_thunder_orbAI : public Scripted_NoMovementAI
 {
-    npc_thunder_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_thunder_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiTriggerTimer;
 

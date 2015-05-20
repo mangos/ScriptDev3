@@ -240,7 +240,7 @@ struct  boss_baltharusAI : public ScriptedAI
 
 struct  npc_baltharus_cloneAI : public ScriptedAI
 {
-    npc_baltharus_cloneAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_baltharus_cloneAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiBladeTempestTimer;
     uint32 m_uiEnervatingBrandTimer;

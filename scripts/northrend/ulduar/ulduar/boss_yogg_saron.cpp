@@ -1442,7 +1442,7 @@ CreatureAI* GetAI_npc_constrictor_tentacle(Creature* pCreature)
 
 struct  npc_ominous_cloudAI : public Scripted_NoMovementAI
 {
-    npc_ominous_cloudAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_ominous_cloudAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiDelayTimer;
 
@@ -1500,7 +1500,7 @@ CreatureAI* GetAI_npc_ominous_cloud(Creature* pCreature)
 
 struct  npc_death_rayAI : public ScriptedAI
 {
-    npc_death_rayAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_death_rayAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiDeathRayTimer;
 
@@ -1592,7 +1592,7 @@ bool NpcSpellClick_npc_descent_madness(Player* pPlayer, Creature* pClickedCreatu
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_laughing_skullAI : public Scripted_NoMovementAI
 {
-    npc_laughing_skullAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_laughing_skullAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }
@@ -1611,7 +1611,7 @@ CreatureAI* GetAI_npc_laughing_skull(Creature* pCreature)
 
 struct  npc_keeper_mimironAI : public Scripted_NoMovementAI
 {
-    npc_keeper_mimironAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_keeper_mimironAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiMatrixTimer;
 
@@ -1656,7 +1656,7 @@ CreatureAI* GetAI_npc_keeper_mimiron(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_keeper_thorimAI : public Scripted_NoMovementAI
 {
-    npc_keeper_thorimAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_keeper_thorimAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }

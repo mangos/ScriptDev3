@@ -480,7 +480,7 @@ struct npc_void_sentinel_summonerAI : public Scripted_NoMovementAI
 
 struct  npc_darknessAI : public Scripted_NoMovementAI
 {
-    npc_darknessAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_darknessAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
     
     uint32 m_uiActiveTimer;
 
@@ -521,7 +521,7 @@ struct  npc_darknessAI : public Scripted_NoMovementAI
 
 struct  npc_singularityAI : public Scripted_NoMovementAI
 {
-    npc_singularityAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_singularityAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiActiveTimer;
     uint8 m_uiActivateStage;

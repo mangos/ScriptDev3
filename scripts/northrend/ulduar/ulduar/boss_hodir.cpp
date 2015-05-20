@@ -426,7 +426,7 @@ bool ProcessEventId_event_boss_hodir(uint32 uiEventId, Object* pSource, Object* 
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_icicle_targetAI : public Scripted_NoMovementAI
 {
-    npc_icicle_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_icicle_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override
     {

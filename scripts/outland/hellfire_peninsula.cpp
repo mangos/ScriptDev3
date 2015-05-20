@@ -63,7 +63,7 @@ enum
 
 struct npc_aeranasAI : public ScriptedAI
 {
-    npc_aeranasAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_aeranasAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiFactionTimer;
     uint32 m_uiEnvelopingWindsTimer;
@@ -467,7 +467,7 @@ enum
 
 struct npc_fel_guard_houndAI : public ScriptedPetAI
 {
-    npc_fel_guard_houndAI(Creature* pCreature) : ScriptedPetAI(pCreature) { Reset(); }
+    npc_fel_guard_houndAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
 
     uint32 m_uiPoodadTimer;
 

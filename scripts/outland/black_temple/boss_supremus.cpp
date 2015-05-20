@@ -72,7 +72,7 @@ const float RANGE_MOLTEN_PUNCH      = 40.0;
 // TODO Remove this 'script' when combat movement can be proper prevented from core-side
 struct molten_flameAI : public Scripted_NoMovementAI
 {
-    molten_flameAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    molten_flameAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override {}
     void AttackStart(Unit* /*pWho*/) override {}
@@ -83,7 +83,7 @@ struct molten_flameAI : public Scripted_NoMovementAI
 // TODO Remove this 'script' when combat movement can be proper prevented from core-side
 struct npc_volcanoAI : public Scripted_NoMovementAI
 {
-    npc_volcanoAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_volcanoAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override {}
     void AttackStart(Unit* /*pWho*/) override {}

@@ -884,7 +884,7 @@ bool GossipHello_npc_warchief_blackhand(Player* pPlayer, Creature* pCreature)
 
 struct npc_human_conjurerAI : public npc_chess_piece_genericAI
 {
-    npc_human_conjurerAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_human_conjurerAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -960,7 +960,7 @@ bool GossipHello_npc_human_conjurer(Player* pPlayer, Creature* pCreature)
 
 struct npc_orc_warlockAI : public npc_chess_piece_genericAI
 {
-    npc_orc_warlockAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_orc_warlockAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -1036,7 +1036,7 @@ bool GossipHello_npc_orc_warlock(Player* pPlayer, Creature* pCreature)
 
 struct npc_human_footmanAI : public npc_chess_piece_genericAI
 {
-    npc_human_footmanAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_human_footmanAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -1126,7 +1126,7 @@ bool GossipHello_npc_human_footman(Player* pPlayer, Creature* pCreature)
 
 struct npc_orc_gruntAI : public npc_chess_piece_genericAI
 {
-    npc_orc_gruntAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_orc_gruntAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -1216,7 +1216,7 @@ bool GossipHello_npc_orc_grunt(Player* pPlayer, Creature* pCreature)
 
 struct npc_water_elementalAI : public npc_chess_piece_genericAI
 {
-    npc_water_elementalAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_water_elementalAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -1292,7 +1292,7 @@ bool GossipHello_npc_water_elemental(Player* pPlayer, Creature* pCreature)
 
 struct npc_summoned_daemonAI : public npc_chess_piece_genericAI
 {
-    npc_summoned_daemonAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_summoned_daemonAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -1368,7 +1368,7 @@ bool GossipHello_npc_summoned_daemon(Player* pPlayer, Creature* pCreature)
 
 struct npc_human_chargerAI : public npc_chess_piece_genericAI
 {
-    npc_human_chargerAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_human_chargerAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -1444,7 +1444,7 @@ bool GossipHello_npc_human_charger(Player* pPlayer, Creature* pCreature)
 
 struct npc_orc_wolfAI : public npc_chess_piece_genericAI
 {
-    npc_orc_wolfAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_orc_wolfAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -1520,7 +1520,7 @@ bool GossipHello_npc_orc_wolf(Player* pPlayer, Creature* pCreature)
 
 struct npc_human_clericAI : public npc_chess_piece_genericAI
 {
-    npc_human_clericAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_human_clericAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {
@@ -1596,7 +1596,7 @@ bool GossipHello_npc_human_cleric(Player* pPlayer, Creature* pCreature)
 
 struct npc_orc_necrolyteAI : public npc_chess_piece_genericAI
 {
-    npc_orc_necrolyteAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { Reset(); }
+    npc_orc_necrolyteAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
 
     void JustDied(Unit* pKiller) override
     {

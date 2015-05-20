@@ -78,7 +78,7 @@ static const float aHighborneLoc[MAX_LAMENTERS][4] =
 
 struct npc_lady_sylvanas_windrunnerAI : public ScriptedAI
 {
-    npc_lady_sylvanas_windrunnerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_lady_sylvanas_windrunnerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiLamentEventTimer;
     uint32 m_uiSummonTimer;

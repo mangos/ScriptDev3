@@ -51,7 +51,7 @@ const uint32 possibleSpawns[31] = {17322, 17661, 17496, 17522, 17340, 17352, 173
 
 struct mob_webbed_creatureAI : public Scripted_NoMovementAI
 {
-    mob_webbed_creatureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    mob_webbed_creatureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }

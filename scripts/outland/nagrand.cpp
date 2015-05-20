@@ -194,7 +194,7 @@ static float m_afAmbushB[] = { -1491.554321f, 8506.483398f, 1.248f};
 
 struct npc_nagrand_captiveAI : public npc_escortAI
 {
-    npc_nagrand_captiveAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_nagrand_captiveAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     uint32 m_uiChainLightningTimer;
     uint32 m_uiHealTimer;
@@ -360,7 +360,7 @@ enum
 
 struct npc_creditmarker_visit_with_ancestorsAI : public ScriptedAI
 {
-    npc_creditmarker_visit_with_ancestorsAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_creditmarker_visit_with_ancestorsAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override {}
 
@@ -422,7 +422,7 @@ static const float afRethhedronPos[2][3] =
 
 struct npc_rethhedronAI : public ScriptedAI
 {
-    npc_rethhedronAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_rethhedronAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiCrippleTimer;
     uint32 m_uiShadowBoltTimer;

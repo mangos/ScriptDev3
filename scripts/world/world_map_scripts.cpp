@@ -36,60 +36,71 @@
 #include "precompiled.h"
 #include "world_map_scripts.h"
 
+// for non-instantiable maps, ZoneScript provides excessive mechanic, but nevertheless
+
 /* *********************************************************
  *                  EASTERN KINGDOMS
  */
-struct world_map_eastern_kingdoms : public ScriptedMap
+struct map_eastern_kingdoms : public ZoneScript
 {
-    world_map_eastern_kingdoms(Map* pMap) : ScriptedMap(pMap) {}
+    map_eastern_kingdoms() : ZoneScript("world_map_eastern_kingdoms") {}
 
-    void OnCreatureCreate(Creature* pCreature)
+    struct world_map_eastern_kingdoms : public ScriptedMap
     {
-        switch (pCreature->GetEntry())
+        world_map_eastern_kingdoms(Map* pMap) : ScriptedMap(pMap) {}
+
+        void OnCreatureCreate(Creature* pCreature)
         {
+            switch (pCreature->GetEntry())
+            {
             case NPC_JONATHAN:
             case NPC_WRYNN:
             case NPC_BOLVAR:
             case NPC_PRESTOR:
             case NPC_WINDSOR:
                 m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+            }
         }
+
+        void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
+    };
+
+    InstanceData* GetInstanceData(Map* pMap) override
+    {
+        return new world_map_eastern_kingdoms(pMap);
     }
-
-    void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
 };
-
-InstanceData* GetInstanceData_world_map_eastern_kingdoms(Map* pMap)
-{
-    return new world_map_eastern_kingdoms(pMap);
-}
 
 /* *********************************************************
  *                     KALIMDOR
  */
-struct world_map_kalimdor : public ScriptedMap
+struct map_kalimdor : public ZoneScript
 {
-    world_map_kalimdor(Map* pMap) : ScriptedMap(pMap) { Initialize(); }
+    map_kalimdor() : ZoneScript("world_map_kalimdor") {}
 
-    uint8 m_uiMurkdeepAdds_KilledAddCount;
-
-    void Initialize()
+    struct world_map_kalimdor : public ScriptedMap
     {
-        m_uiMurkdeepAdds_KilledAddCount = 0;
-    }
+        world_map_kalimdor(Map* pMap) : ScriptedMap(pMap) { Initialize(); }
 
-    void OnCreatureCreate(Creature* pCreature)
-    {
-        if (pCreature->GetEntry() == NPC_MURKDEEP)
+        uint8 m_uiMurkdeepAdds_KilledAddCount;
+
+        void Initialize()
         {
-            m_mNpcEntryGuidStore[NPC_MURKDEEP] = pCreature->GetObjectGuid();
+            m_uiMurkdeepAdds_KilledAddCount = 0;
         }
-    }
 
-    void OnCreatureDeath(Creature* pCreature)
-    {
-        switch (pCreature->GetEntry())
+        void OnCreatureCreate(Creature* pCreature)
         {
+            if (pCreature->GetEntry() == NPC_MURKDEEP)
+            {
+                m_mNpcEntryGuidStore[NPC_MURKDEEP] = pCreature->GetObjectGuid();
+            }
+        }
+
+        void OnCreatureDeath(Creature* pCreature)
+        {
+            switch (pCreature->GetEntry())
+            {
             case NPC_GREYMIST_COASTRUNNNER:
                 if (pCreature->IsTemporarySummon())         // Only count the ones summoned for Murkdeep quest
                 {
@@ -140,42 +151,49 @@ struct world_map_kalimdor : public ScriptedMap
                     }
                 }
                 break;
+            }
         }
+
+        void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
+    };
+
+    InstanceData* GetInstanceData(Map* pMap) override
+    {
+        return new world_map_kalimdor(pMap);
     }
-
-    void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
 };
-
-InstanceData* GetInstanceData_world_map_kalimdor(Map* pMap)
-{
-    return new world_map_kalimdor(pMap);
-}
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
 /* *********************************************************
  *                     OUTLAND
  */
-struct world_map_outland : public ScriptedMap
+struct map_outland : public ZoneScript
 {
-    world_map_outland(Map* pMap) : ScriptedMap(pMap) { Initialize(); }
+    map_outland() : ZoneScript("world_map_outland") {}
 
-    uint8 m_uiEmissaryOfHate_KilledAddCount;
-
-    void Initialize()
+    struct world_map_outland : public ScriptedMap
     {
-        m_uiEmissaryOfHate_KilledAddCount = 0;
-    }
+        world_map_outland(Map* pMap) : ScriptedMap(pMap) { Initialize(); }
 
-    void OnCreatureCreate(Creature* pCreature)
-    {
-        if (pCreature->GetEntry() == NPC_EMISSARY_OF_HATE)
-        { m_mNpcEntryGuidStore[NPC_EMISSARY_OF_HATE] = pCreature->GetObjectGuid(); }
-    }
+        uint8 m_uiEmissaryOfHate_KilledAddCount;
 
-    void OnCreatureDeath(Creature* pCreature)
-    {
-        switch (pCreature->GetEntry())
+        void Initialize()
         {
+            m_uiEmissaryOfHate_KilledAddCount = 0;
+        }
+
+        void OnCreatureCreate(Creature* pCreature)
+        {
+            if (pCreature->GetEntry() == NPC_EMISSARY_OF_HATE)
+            {
+                m_mNpcEntryGuidStore[NPC_EMISSARY_OF_HATE] = pCreature->GetObjectGuid();
+            }
+        }
+
+        void OnCreatureDeath(Creature* pCreature)
+        {
+            switch (pCreature->GetEntry())
+            {
             case NPC_IRESPEAKER:
             case NPC_UNLEASHED_HELLION:
                 if (!GetSingleCreatureFromStorage(NPC_EMISSARY_OF_HATE, true))
@@ -191,55 +209,73 @@ struct world_map_outland : public ScriptedMap
         }
     }
 
-    void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
-};
+        void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
+    };
 
-InstanceData* GetInstanceData_world_map_outland(Map* pMap)
-{
-    return new world_map_outland(pMap);
-}
+    InstanceData* GetInstanceData(Map* pMap) override
+    {
+        return new world_map_outland(pMap);
+    }
+};
 #endif
 #if defined (WOTLK)
 /* *********************************************************
  *                     NORTHREND
  */
-struct  world_map_northrend : public ScriptedMap
+struct  map_northrend : public ZoneScript
 {
-    world_map_northrend(Map* pMap) : ScriptedMap(pMap) {}
+    map_northrend() : ZoneScript("world_map_northrend") {}
 
-    void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
+    struct world_map_northrend : public ScriptedMap
+    {
+        world_map_northrend(Map* pMap) : ScriptedMap(pMap) {}
+
+        void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
+    };
+
+    InstanceData* GetInstanceData(Map* pMap) override
+    {
+        return new world_map_northrend(pMap);
+    }
 };
-
-InstanceData* GetInstanceData_world_map_northrend(Map* pMap)
-{
-    return new world_map_northrend(pMap);
-}
 #endif
 
 void AddSC_world_map_scripts()
 {
-    Script* pNewScript;
-
-    pNewScript = new Script;
-    pNewScript->Name = "world_map_eastern_kingdoms";
-    pNewScript->GetInstanceData = &GetInstanceData_world_map_eastern_kingdoms;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "world_map_kalimdor";
-    pNewScript->GetInstanceData = &GetInstanceData_world_map_kalimdor;
-    pNewScript->RegisterSelf();
-
+    Script* s;
+    s = new map_eastern_kingdoms();
+    s->RegisterSelf();
+    s = new map_kalimdor();
+    s->RegisterSelf();
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
-    pNewScript = new Script;
-    pNewScript->Name = "world_map_outland";
-    pNewScript->GetInstanceData = &GetInstanceData_world_map_outland;
-    pNewScript->RegisterSelf();
+    s = new map_outland();
+    s->RegisterSelf();
 #endif
-#if defined (WOTLK)
-    pNewScript = new Script;
-    pNewScript->Name = "world_map_northrend";
-    pNewScript->GetInstanceData = &GetInstanceData_world_map_northrend;
-    pNewScript->RegisterSelf();
+#if defined (WOTLK) || defined (CATA)
+    s = new map_northrend();
+    s->RegisterSelf();
 #endif
+
+    //pNewScript = new Script;
+    //pNewScript->Name = "world_map_eastern_kingdoms";
+    //pNewScript->GetInstanceData = &GetInstanceData_world_map_eastern_kingdoms;
+    //pNewScript->RegisterSelf();
+
+    //pNewScript = new Script;
+    //pNewScript->Name = "world_map_kalimdor";
+    //pNewScript->GetInstanceData = &GetInstanceData_world_map_kalimdor;
+    //pNewScript->RegisterSelf();
+
+//#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+    //pNewScript = new Script;
+    //pNewScript->Name = "world_map_outland";
+    //pNewScript->GetInstanceData = &GetInstanceData_world_map_outland;
+    //pNewScript->RegisterSelf();
+//#endif
+//#if defined (WOTLK)
+    //pNewScript = new Script;
+    //pNewScript->Name = "world_map_northrend";
+    //pNewScript->GetInstanceData = &GetInstanceData_world_map_northrend;
+    //pNewScript->RegisterSelf();
+//#endif
 }

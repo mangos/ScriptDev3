@@ -52,7 +52,7 @@ enum
 
 struct npc_converted_sentryAI : public ScriptedAI
 {
-    npc_converted_sentryAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_converted_sentryAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiCreditTimer;
 

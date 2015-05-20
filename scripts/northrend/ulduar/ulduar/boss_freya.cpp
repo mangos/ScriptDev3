@@ -745,7 +745,7 @@ struct  three_nature_alliesAI : public ScriptedAI
 
 struct  npc_water_spiritAI : public three_nature_alliesAI
 {
-    npc_water_spiritAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { Reset(); }
+    npc_water_spiritAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { }
 
     uint32 m_uiTidalWaveTimer;
 
@@ -786,7 +786,7 @@ CreatureAI* GetAI_npc_water_spirit(Creature* pCreature)
 
 struct  npc_snaplasherAI : public three_nature_alliesAI
 {
-    npc_snaplasherAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { Reset(); }
+    npc_snaplasherAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { }
 
     void Reset() override
     {
@@ -810,7 +810,7 @@ CreatureAI* GetAI_npc_snaplasher(Creature* pCreature)
 
 struct  npc_storm_lasherAI : public three_nature_alliesAI
 {
-    npc_storm_lasherAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { Reset(); }
+    npc_storm_lasherAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { }
 
     uint32 m_uiLightningLashTimer;
     uint32 m_uiStormBoltTimer;
@@ -992,7 +992,7 @@ CreatureAI* GetAI_npc_iron_roots(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_healthy_sporeAI : public Scripted_NoMovementAI
 {
-    npc_healthy_sporeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_healthy_sporeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override
     {

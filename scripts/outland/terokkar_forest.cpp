@@ -67,7 +67,7 @@ enum
 
 struct mob_unkor_the_ruthlessAI : public ScriptedAI
 {
-    mob_unkor_the_ruthlessAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mob_unkor_the_ruthlessAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bCanDoQuest;
     uint32 m_uiUnfriendlyTimer;
@@ -218,7 +218,7 @@ static float m_afAmbushB2[] = { -2890.604980f, 5331.938965f, -11.282f};
 
 struct npc_akunoAI : public npc_escortAI
 {
-    npc_akunoAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_akunoAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     uint32 m_uiChainLightningTimer;
 
@@ -312,7 +312,7 @@ enum
 
 struct npc_hungry_nether_rayAI : public ScriptedPetAI
 {
-    npc_hungry_nether_rayAI(Creature* pCreature) : ScriptedPetAI(pCreature) { Reset(); }
+    npc_hungry_nether_rayAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
 
     void Reset() override { }
 
@@ -606,7 +606,7 @@ enum
 
 struct npc_mana_bomb_exp_triggerAI : public ScriptedAI
 {
-    npc_mana_bomb_exp_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_mana_bomb_exp_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     GameObject* pManaBomb;
 
@@ -744,7 +744,7 @@ bool GOUse_go_veil_skith_cage(Player* pPlayer, GameObject* pGo)
 
 struct npc_captive_child : public ScriptedAI
 {
-    npc_captive_child(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_captive_child(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override {}
 
@@ -937,7 +937,7 @@ static const float aLuangaSpawnCoords[3] = { -3507.203f, 4084.619f, 92.947f};
 
 struct npc_skywingAI : public npc_escortAI
 {
-    npc_skywingAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_skywingAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     uint32 m_uiCycloneTimer;
     uint8 m_uiCycloneCounter;
@@ -1054,7 +1054,7 @@ enum
 
 struct npc_cenarion_sparrowhawkAI : public ScriptedAI
 {
-    npc_cenarion_sparrowhawkAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_cenarion_sparrowhawkAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiSurveyTimer;
     bool m_bFirstTimer;
@@ -1151,7 +1151,7 @@ enum
 
 struct npc_skyguard_prisonerAI : public npc_escortAI
 {
-    npc_skyguard_prisonerAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_skyguard_prisonerAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     void Reset() override { }
 

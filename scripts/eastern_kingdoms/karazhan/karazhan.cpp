@@ -467,7 +467,7 @@ CreatureAI* GetAI_npc_image_of_medivhAI(Creature* pCreature)
 
 struct npc_image_arcanagosAI : public ScriptedAI
 {
-    npc_image_arcanagosAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_image_arcanagosAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override { }
 

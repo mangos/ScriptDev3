@@ -252,7 +252,7 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
 
 struct mob_water_globuleAI : public ScriptedAI
 {
-    mob_water_globuleAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mob_water_globuleAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiTargetTimer;
 

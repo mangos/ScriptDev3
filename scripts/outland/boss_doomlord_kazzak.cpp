@@ -61,7 +61,7 @@ enum
 
 struct boss_doomlordkazzakAI : public ScriptedAI
 {
-    boss_doomlordkazzakAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    boss_doomlordkazzakAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiShadowVolleyTimer;
     uint32 m_uiCleaveTimer;

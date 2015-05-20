@@ -365,7 +365,7 @@ CreatureAI* GetAI_boss_krick(Creature* pCreature)
 
 struct  npc_exploding_orbAI : public Scripted_NoMovementAI
 {
-    npc_exploding_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_exploding_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint8 m_uiGrowCount;
 

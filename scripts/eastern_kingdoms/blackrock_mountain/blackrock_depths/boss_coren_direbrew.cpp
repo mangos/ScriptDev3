@@ -69,7 +69,7 @@ enum
 
 struct boss_coren_direbrewAI : public ScriptedAI
 {
-    boss_coren_direbrewAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    boss_coren_direbrewAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiDisarmTimer;
     uint32 m_uiChargeTimer;

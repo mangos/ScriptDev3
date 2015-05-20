@@ -401,7 +401,7 @@ enum
 
 struct npc_commander_dawnforgeAI : public ScriptedAI
 {
-    npc_commander_dawnforgeAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_commander_dawnforgeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_playerGuid;
     ObjectGuid m_ardonisGuid;
@@ -646,7 +646,7 @@ enum
 
 struct npc_bessyAI : public npc_escortAI
 {
-    npc_bessyAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_bessyAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     void WaypointReached(uint32 uiPointId) override
     {
@@ -861,7 +861,7 @@ enum
 
 struct npc_zeppitAI : public ScriptedPetAI
 {
-    npc_zeppitAI(Creature* pCreature) : ScriptedPetAI(pCreature) { Reset(); }
+    npc_zeppitAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
 
     void Reset() override { }
 
@@ -914,7 +914,7 @@ enum
 
 struct npc_protectorate_demolitionistAI : public npc_escortAI
 {
-    npc_protectorate_demolitionistAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_protectorate_demolitionistAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     uint32 m_uiEventTimer;
     uint8 m_uiEventStage;
@@ -1064,7 +1064,7 @@ enum
 
 struct npc_captured_vanguardAI : public npc_escortAI
 {
-    npc_captured_vanguardAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_captured_vanguardAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     uint32 m_uiGlaiveTimer;
     uint32 m_uiHamstringTimer;
@@ -1184,7 +1184,7 @@ enum
 
 struct npc_drijyaAI : public npc_escortAI
 {
-    npc_drijyaAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_drijyaAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     uint8 m_uiSpawnCount;
     uint32 m_uiSpawnImpTimer;
@@ -1432,7 +1432,7 @@ static const uint32 auiShadowRainSpells[5] = { 37399, 37405, 37397, 37396, 37409
 
 struct  npc_dimensiusAI : public Scripted_NoMovementAI
 {
-    npc_dimensiusAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_dimensiusAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiSpiralTimer;
     uint32 m_uiVaultTimer;

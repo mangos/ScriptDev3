@@ -488,7 +488,7 @@ CreatureAI* GetAI_boss_heart_deconstructor(Creature* pCreature)
 
 struct  npc_scrapbotAI : public ScriptedAI
 {
-    npc_scrapbotAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_scrapbotAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bIsHealed;
 
@@ -522,7 +522,7 @@ CreatureAI* GetAI_npc_scrapbot(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_xt_toy_pileAI : public Scripted_NoMovementAI
 {
-    npc_xt_toy_pileAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_xt_toy_pileAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }

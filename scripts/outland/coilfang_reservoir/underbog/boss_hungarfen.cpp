@@ -121,7 +121,7 @@ CreatureAI* GetAI_boss_hungarfen(Creature* pCreature)
 
 struct mob_underbog_mushroomAI : public ScriptedAI
 {
-    mob_underbog_mushroomAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mob_underbog_mushroomAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiGrowTimer;
     uint32 m_uiShrinkTimer;

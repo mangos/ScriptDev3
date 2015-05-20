@@ -782,7 +782,7 @@ bool GossipSelect_npc_expedition_commander(Player* pPlayer, Creature* pCreature,
 
 struct  npc_razorscale_spawnerAI : public Scripted_NoMovementAI
 {
-    npc_razorscale_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_razorscale_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiSpawnTimer;
     bool m_bIsSentinelSpawn;
@@ -843,7 +843,7 @@ CreatureAI* GetAI_npc_razorscale_spawner(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_harpoon_fire_stateAI : public Scripted_NoMovementAI
 {
-    npc_harpoon_fire_stateAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_harpoon_fire_stateAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }

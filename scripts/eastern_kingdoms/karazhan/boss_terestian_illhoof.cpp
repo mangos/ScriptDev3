@@ -239,7 +239,7 @@ struct boss_terestianAI : public ScriptedAI
 
 struct npc_fiendish_portalAI : public ScriptedAI
 {
-    npc_fiendish_portalAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_fiendish_portalAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiSummonTimer;
 
@@ -269,7 +269,7 @@ struct npc_fiendish_portalAI : public ScriptedAI
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct mob_demon_chainAI : public Scripted_NoMovementAI
 {
-    mob_demon_chainAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    mob_demon_chainAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }

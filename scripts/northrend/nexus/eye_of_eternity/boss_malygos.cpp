@@ -577,7 +577,7 @@ CreatureAI* GetAI_boss_malygos(Creature* pCreature)
 
 struct  npc_power_sparkAI : public ScriptedAI
 {
-    npc_power_sparkAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_power_sparkAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override
     {

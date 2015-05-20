@@ -195,7 +195,7 @@ CreatureAI* GetAI_boss_anomalus(Creature* pCreature)
 
 struct  mob_chaotic_riftAI : public Scripted_NoMovementAI
 {
-    mob_chaotic_riftAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    mob_chaotic_riftAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiChargedRemoveTimer;
 

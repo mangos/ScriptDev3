@@ -110,7 +110,7 @@ static Yell KillingDelay[] =
 
 struct mob_omrogg_headsAI : public ScriptedAI
 {
-    mob_omrogg_headsAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mob_omrogg_headsAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiDeathTimer;
     bool m_bDeathYell;

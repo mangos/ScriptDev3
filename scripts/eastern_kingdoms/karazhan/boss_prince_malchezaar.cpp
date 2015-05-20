@@ -350,7 +350,7 @@ CreatureAI* GetAI_boss_malchezaar(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct npc_infernal_targetAI : public Scripted_NoMovementAI
 {
-    npc_infernal_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_infernal_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }

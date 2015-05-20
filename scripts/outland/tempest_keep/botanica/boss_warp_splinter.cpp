@@ -158,7 +158,7 @@ struct boss_warp_splinterAI : public ScriptedAI
 #####*/
 struct npc_saplingAI  : public ScriptedAI
 {
-    npc_saplingAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_saplingAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override
     {

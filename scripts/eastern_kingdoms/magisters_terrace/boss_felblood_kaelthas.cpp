@@ -449,7 +449,7 @@ struct boss_felblood_kaelthasAI : public ScriptedAI, private DialogueHelper
 
 struct mob_felkael_phoenixAI : public ScriptedAI
 {
-    mob_felkael_phoenixAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    mob_felkael_phoenixAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiBurnTimer;
 
@@ -574,7 +574,7 @@ struct mob_felkael_phoenixAI : public ScriptedAI
 // TODO Remove this 'script' when combat movement can be proper prevented from core-side
 struct mob_felkael_phoenix_eggAI : public Scripted_NoMovementAI
 {
-    mob_felkael_phoenix_eggAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    mob_felkael_phoenix_eggAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override {}
     void MoveInLineOfSight(Unit* /*pWho*/) override {}

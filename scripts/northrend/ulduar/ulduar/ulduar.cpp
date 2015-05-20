@@ -365,7 +365,7 @@ enum
 
 struct  npc_storm_tempered_keeperAI : public ScriptedAI
 {
-    npc_storm_tempered_keeperAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_storm_tempered_keeperAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiCheckBuddyTimer;
     uint32 m_uiLightningTimer;
@@ -469,7 +469,7 @@ CreatureAI* GetAI_npc_storm_tempered_keeper(Creature* pCreature)
 
 struct  npc_charged_sphereAI : public ScriptedAI
 {
-    npc_charged_sphereAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_charged_sphereAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bIsCharged;
     uint32 m_uiBuddyEntry;

@@ -108,7 +108,7 @@ enum SpecialSurprise
 
 struct  npc_a_special_surpriseAI : public ScriptedAI
 {
-    npc_a_special_surpriseAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_a_special_surpriseAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiExecuteSpeech_Timer;
     uint32 m_uiExecuteSpeech_Counter;
@@ -545,7 +545,7 @@ int32 m_auiRandomSay[] =
 
 struct  npc_death_knight_initiateAI : public ScriptedAI
 {
-    npc_death_knight_initiateAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_death_knight_initiateAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_duelerGuid;
     uint8 m_uiDuelStartStage;
@@ -780,7 +780,7 @@ enum eKoltira
 
 struct  npc_koltira_deathweaverAI : public npc_escortAI
 {
-    npc_koltira_deathweaverAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_koltira_deathweaverAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     uint32 m_uiWave;
     uint32 m_uiWave_Timer;
@@ -958,7 +958,7 @@ enum
 
 struct  npc_unworthy_initiate_anchorAI : public ScriptedAI
 {
-    npc_unworthy_initiate_anchorAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_unworthy_initiate_anchorAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_myInitiateGuid;
     ObjectGuid m_myPrisonGuid;
@@ -2852,7 +2852,7 @@ CreatureAI* GetAI_npc_fellow_death_knight(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_lich_king_light_dawnAI : public ScriptedAI
 {
-    npc_lich_king_light_dawnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_lich_king_light_dawnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }
@@ -2885,7 +2885,7 @@ enum
 
 struct  npc_acherus_deathchargerAI : public ScriptedAI
 {
-    npc_acherus_deathchargerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_acherus_deathchargerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bIsRiderDead;
 

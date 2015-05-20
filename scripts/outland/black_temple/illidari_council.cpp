@@ -373,7 +373,7 @@ struct boss_illidari_councilAI : public ScriptedAI
 
 struct boss_gathios_the_shattererAI : public boss_illidari_councilAI
 {
-    boss_gathios_the_shattererAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { Reset(); }
+    boss_gathios_the_shattererAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { }
 
     uint32 m_uiConsecrationTimer;
     uint32 m_uiHammerOfJusticeTimer;
@@ -481,7 +481,7 @@ struct boss_gathios_the_shattererAI : public boss_illidari_councilAI
 
 struct boss_high_nethermancer_zerevorAI : public boss_illidari_councilAI
 {
-    boss_high_nethermancer_zerevorAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { Reset(); }
+    boss_high_nethermancer_zerevorAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { }
 
     uint32 m_uiBlizzardTimer;
     uint32 m_uiFlamestrikeTimer;
@@ -586,7 +586,7 @@ struct boss_high_nethermancer_zerevorAI : public boss_illidari_councilAI
 
 struct boss_lady_malandeAI : public boss_illidari_councilAI
 {
-    boss_lady_malandeAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { Reset(); }
+    boss_lady_malandeAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { }
 
     uint32 m_uiEmpoweredSmiteTimer;
     uint32 m_uiCircleOfHealingTimer;
@@ -677,7 +677,7 @@ struct boss_lady_malandeAI : public boss_illidari_councilAI
 
 struct boss_veras_darkshadowAI : public boss_illidari_councilAI
 {
-    boss_veras_darkshadowAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { Reset(); }
+    boss_veras_darkshadowAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { }
 
     uint32 m_uiDeadlyPoisonTimer;
     uint32 m_uiVanishTimer;

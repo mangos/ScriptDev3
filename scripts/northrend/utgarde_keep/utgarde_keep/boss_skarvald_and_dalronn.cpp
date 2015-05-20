@@ -171,7 +171,7 @@ struct  boss_s_and_d_dummyAI : public ScriptedAI
 
 struct  boss_skarvaldAI : public boss_s_and_d_dummyAI
 {
-    boss_skarvaldAI(Creature* pCreature) : boss_s_and_d_dummyAI(pCreature) { Reset(); }
+    boss_skarvaldAI(Creature* pCreature) : boss_s_and_d_dummyAI(pCreature) { }
 
     uint32 m_uiYellDelayTimer;
     uint32 m_uiChargeTimer;
@@ -256,7 +256,7 @@ CreatureAI* GetAI_boss_skarvald(Creature* pCreature)
 
 struct  boss_dalronnAI : public boss_s_and_d_dummyAI
 {
-    boss_dalronnAI(Creature* pCreature) : boss_s_and_d_dummyAI(pCreature) { Reset(); }
+    boss_dalronnAI(Creature* pCreature) : boss_s_and_d_dummyAI(pCreature) { }
 
     uint32 m_uiDebilitateTimer;
     uint32 m_uiShadowBoltTimer;

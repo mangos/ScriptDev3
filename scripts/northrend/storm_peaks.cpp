@@ -54,7 +54,7 @@ enum
 
 struct  npc_floating_spiritAI : public ScriptedAI
 {
-    npc_floating_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_floating_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override
     {
@@ -129,7 +129,7 @@ enum
 
 struct  npc_injured_minerAI : public npc_escortAI
 {
-    npc_injured_minerAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_injured_minerAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     void Reset() override { }
 

@@ -50,7 +50,7 @@ enum
 
 struct  npc_depleted_war_golemAI : public ScriptedPetAI
 {
-    npc_depleted_war_golemAI(Creature* pCreature) : ScriptedPetAI(pCreature) { Reset(); }
+    npc_depleted_war_golemAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
 
     void Reset() override { }
 
@@ -395,7 +395,7 @@ enum
 
 struct  npc_emilyAI : public npc_escortAI
 {
-    npc_emilyAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_emilyAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     ObjectGuid m_floppyGuid;
 

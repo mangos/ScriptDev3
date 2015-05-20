@@ -58,7 +58,7 @@ enum
 
 struct  npc_ancient_male_vrykulAI : public ScriptedAI
 {
-    npc_ancient_male_vrykulAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_ancient_male_vrykulAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bEventInProgress;
     uint32 m_uiPhase;
@@ -172,7 +172,7 @@ static float afCenter[] = {801.88f, -4721.87f, -96.143f};
 // TODO: make prisoners help (unclear if summoned or using npc's from surrounding cages (summon inside small cages?))
 struct  npc_daegarnAI : public ScriptedAI
 {
-    npc_daegarnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_daegarnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bEventInProgress;
     ObjectGuid m_playerGuid;
@@ -284,7 +284,7 @@ enum
 
 struct  npc_silvermoon_harryAI : public ScriptedAI
 {
-    npc_silvermoon_harryAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_silvermoon_harryAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bHarryBeaten;
     uint32 m_uiBlastWaveTimer;
@@ -759,7 +759,7 @@ enum
 
 struct  npc_firecrackers_bunnyAI : public ScriptedAI
 {
-    npc_firecrackers_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_firecrackers_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiStartTimer;
     bool m_bHasValidBat;
@@ -869,7 +869,7 @@ enum
 
 struct  npc_apothecary_hanesAI : public npc_escortAI
 {
-    npc_apothecary_hanesAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_apothecary_hanesAI(Creature* pCreature) : npc_escortAI(pCreature) { }
     uint32 m_uiHealingTimer;
 
     void Reset() override

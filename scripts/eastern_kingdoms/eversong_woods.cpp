@@ -359,7 +359,7 @@ enum
 
 struct npc_apprentice_mirvedaAI : public ScriptedAI
 {
-    npc_apprentice_mirvedaAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_apprentice_mirvedaAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint8 m_uiMobCount;
     uint32 m_uiFireballTimer;

@@ -414,7 +414,7 @@ struct essence_base_AI : public ScriptedAI
 
 struct boss_essence_of_sufferingAI : public essence_base_AI
 {
-    boss_essence_of_sufferingAI(Creature* pCreature) : essence_base_AI(pCreature) { Reset(); }
+    boss_essence_of_sufferingAI(Creature* pCreature) : essence_base_AI(pCreature) { }
 
     uint32 m_uiEnrageTimer;
     uint32 m_uiSoulDrainTimer;
@@ -473,7 +473,7 @@ struct boss_essence_of_sufferingAI : public essence_base_AI
 
 struct boss_essence_of_desireAI : public essence_base_AI
 {
-    boss_essence_of_desireAI(Creature* pCreature) : essence_base_AI(pCreature) { Reset(); }
+    boss_essence_of_desireAI(Creature* pCreature) : essence_base_AI(pCreature) { }
 
     uint32 m_uiRuneShieldTimer;
     uint32 m_uiDeadenTimer;

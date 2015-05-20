@@ -24,16 +24,23 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef SC_CONFIG_H
-#define SC_CONFIG_H
+#ifndef SC_PRECOMPILED_H
+#define SC_PRECOMPILED_H
 
-#include "Platform/CompilerDefs.h"
-//#include "revision.h"
-#include "sd3_revision_nr.h"
-#include "SystemConfig.h"
+#include "system/ScriptDevMgr.h"
+#include "Object.h"
+#include "Unit.h"
+#include "Creature.h"
+#include "CreatureAI.h"
+#include "GameObject.h"
+#include "sc_creature.h"
+#include "sc_gossip.h"
+#include "sc_grid_searchers.h"
+#include "sc_instance.h"
+#include "SpellAuras.h"
+#include "World.h"
 
-#ifndef SCRIPTDEV3_VERSION
-  #define SCRIPTDEV3_VERSION "Revision [" SD3_REVISION_NR "] (" REVISION_ID ") " REVISION_DATE " " REVISION_TIME
-#endif
+// sc_gossip.h:             ADD_GOSSIP_ITEM_EXTENDED outcommented box-money (Required until professions are fixed)
+// sc_creature.cpp:         Used in ScriptedAI::SelectSpell, outcommented SchoolMask
 
 #endif

@@ -226,7 +226,7 @@ enum
 
 struct  npc_injured_rainspeakerAI : public npc_escortAI
 {
-    npc_injured_rainspeakerAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
+    npc_injured_rainspeakerAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
     void Reset() override { }
 
@@ -474,7 +474,7 @@ static const StillAtItData aStillAtItMachines[2] =
 
 struct  npc_tipsy_mcmanusAI : public ScriptedAI
 {
-    npc_tipsy_mcmanusAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_tipsy_mcmanusAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint8 m_uiTaskIndex;
     uint32 m_uiTaskOwnerEntry;

@@ -411,7 +411,7 @@ CreatureAI* GetAI_boss_aran(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct npc_shade_of_aran_blizzardAI : public ScriptedAI
 {
-    npc_shade_of_aran_blizzardAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_shade_of_aran_blizzardAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }

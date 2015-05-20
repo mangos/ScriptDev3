@@ -641,7 +641,7 @@ CreatureAI* GetAI_npc_hodir_fury_reticle(Creature* pCreature)
 // TODO Remove this 'script' when combat can be proper prevented from core-side
 struct  npc_hodir_furyAI : public Scripted_NoMovementAI
 {
-    npc_hodir_furyAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_hodir_furyAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void AttackStart(Unit* /*pWho*/) override { }
@@ -703,7 +703,7 @@ CreatureAI* GetAI_npc_freya_ward(Creature* pCreature)
 // TODO Move this 'script' to eventAI when combat can be proper prevented from core-side
 struct  npc_mimiron_infernoAI : public Scripted_NoMovementAI
 {
-    npc_mimiron_infernoAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_mimiron_infernoAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     uint32 m_uiMimironInfernoTimer;
 

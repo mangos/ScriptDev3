@@ -1425,7 +1425,7 @@ struct boss_maievAI : public ScriptedAI, private DialogueHelper
 
 struct npc_cage_trap_triggerAI : public ScriptedAI
 {
-    npc_cage_trap_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_cage_trap_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     bool m_bActive;
 
@@ -1573,7 +1573,7 @@ struct npc_flame_of_azzinothAI : public ScriptedAI
 
 struct npc_shadow_demonAI : public ScriptedAI
 {
-    npc_shadow_demonAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_shadow_demonAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_targetGuid;
 

@@ -422,7 +422,7 @@ struct mob_fel_orc_convertAI : public ScriptedAI
 // NOTE: this creature are also summoned by other spells, for different creatures
 struct mob_lesser_shadow_fissureAI : public Scripted_NoMovementAI
 {
-    mob_lesser_shadow_fissureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    mob_lesser_shadow_fissureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }

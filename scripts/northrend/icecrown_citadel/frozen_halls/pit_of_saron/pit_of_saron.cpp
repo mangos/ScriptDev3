@@ -48,7 +48,7 @@ enum
 
 struct  npc_ymirjar_deathbringerAI : public ScriptedAI
 {
-    npc_ymirjar_deathbringerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_ymirjar_deathbringerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiShadowBoltTimer;
 

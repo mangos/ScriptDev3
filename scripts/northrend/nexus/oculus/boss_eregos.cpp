@@ -254,7 +254,7 @@ CreatureAI* GetAI_boss_eregos(Creature* pCreature)
 
 struct  npc_planar_anomalyAI : public ScriptedAI
 {
-    npc_planar_anomalyAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_planar_anomalyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiPlanarBlastTimer;
     bool m_bHasBlastCasted;

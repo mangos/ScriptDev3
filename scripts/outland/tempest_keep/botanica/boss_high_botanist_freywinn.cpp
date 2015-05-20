@@ -55,7 +55,7 @@ enum
 
 struct boss_high_botanist_freywinnAI : public ScriptedAI
 {
-    boss_high_botanist_freywinnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    boss_high_botanist_freywinnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     uint32 m_uiSummonSeedlingTimer;
     uint32 m_uiTreeFormTimer;

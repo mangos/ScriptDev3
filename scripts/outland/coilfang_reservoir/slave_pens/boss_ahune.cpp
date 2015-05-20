@@ -291,7 +291,7 @@ CreatureAI* GetAI_boss_ahune(Creature* pCreature)
 
 struct npc_frozen_coreAI : public Scripted_NoMovementAI
 {
-    npc_frozen_coreAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_frozen_coreAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     ObjectGuid m_ahuheGuid;
 
@@ -341,7 +341,7 @@ CreatureAI* GetAI_npc_frozen_core(Creature* pCreature)
 
 struct npc_ice_spear_bunnyAI : public Scripted_NoMovementAI
 {
-    npc_ice_spear_bunnyAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    npc_ice_spear_bunnyAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     ObjectGuid m_iceSpearGuid;
 

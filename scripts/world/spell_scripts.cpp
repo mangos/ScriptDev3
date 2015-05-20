@@ -199,12 +199,12 @@ enum
     SAY_RAND_ATTACK1                    = -1000558,
     SAY_RAND_ATTACK2                    = -1000559,
     SAY_RAND_ATTACK3                    = -1000560,
+#endif
 
     // target morbent fel
     SPELL_SACRED_CLEANSING              = 8913,
     NPC_MORBENT                         = 1200,
     NPC_WEAKENED_MORBENT                = 24782,
-#endif
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
     // quest 11515
@@ -399,10 +399,14 @@ enum
 #endif
 };
 
-bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
+struct aura_spirit_particles : public AuraScript
 {
-    switch (pAura->GetId())
+    aura_spirit_particles() : AuraScript("aura_spirit_particles") {}
+
+    bool OnDummyApply(const Aura* pAura, bool bApply) override
     {
+        switch (pAura->GetId())
+        {
 #if defined (WOTLK)
         case SPELL_BLESSING_OF_PEACE:
         {
@@ -457,7 +461,7 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
                 pCreature->m_AuraFlags &= ~UNIT_AURAFLAG_ALIVE_INVISIBLE;
             }
 
-            return false;
+            return false;   //TODO why? true
         }
 #endif
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
@@ -605,8 +609,80 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
 #endif
     }
 
-    return false;
-}
+        return false;
+    }
+};
+struct spell_apply_salve : public SpellScript
+{
+    spell_apply_salve() : SpellScript("spell_apply_salve") {}
+
+    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
+    {
+        if (uiSpellId == SPELL_APPLY_SALVE && uiEffIndex == EFFECT_INDEX_0)
+        {
+            if (pCaster->GetTypeId() != TYPEID_PLAYER)
+            {
+                return true;
+            }
+
+            Creature *pCreatureTarget = pTarget->ToCreature();
+            if (pCreatureTarget->GetEntry() != NPC_SICKLY_DEER && pCreatureTarget->GetEntry() != NPC_SICKLY_GAZELLE)
+            {
+                return true;
+            }
+
+            // Update entry, remove aura, set the kill credit and despawn
+            uint32 uiUpdateEntry = pCreatureTarget->GetEntry() == NPC_SICKLY_DEER ? NPC_CURED_DEER : NPC_CURED_GAZELLE;
+            pCreatureTarget->RemoveAurasDueToSpell(SPELL_SICKLY_AURA);
+            pCreatureTarget->UpdateEntry(uiUpdateEntry);
+            ((Player*)pCaster)->KilledMonsterCredit(uiUpdateEntry);
+            pCreatureTarget->ForcedDespawn(20000);
+        }
+        return true;
+    }
+};
+
+struct spell_sacred_cleansing : public SpellScript
+{
+    spell_sacred_cleansing() : SpellScript("spell_sacred_cleansing") {}
+
+    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
+    {
+        if (uiSpellId == SPELL_SACRED_CLEANSING && uiEffIndex == EFFECT_INDEX_1)
+        {
+            if (pTarget->ToCreature() && pTarget->GetEntry() != NPC_MORBENT)
+            {
+                return true;
+            }
+            pTarget->ToCreature()->UpdateEntry(NPC_WEAKENED_MORBENT);
+        }
+        return true;
+    }
+};
+
+struct spell_melodious_rapture : public SpellScript
+{
+    spell_melodious_rapture() : SpellScript("spell_melodious_rapture") {}
+
+    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
+    {
+        if (uiSpellId == SPELL_MELODIOUS_RAPTURE && uiEffIndex == EFFECT_INDEX_0)
+        {
+            Creature *pCreatureTarget = pTarget->ToCreature();
+            if (pCaster->GetTypeId() != TYPEID_PLAYER && pCreatureTarget->GetEntry() != NPC_DEEPRUN_RAT)
+            {
+                return true;
+            }
+
+            pCreatureTarget->UpdateEntry(NPC_ENTHRALLED_DEEPRUN_RAT);
+            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_MELODIOUS_RAPTURE_VISUAL, false);
+            pCreatureTarget->GetMotionMaster()->MoveFollow(pCaster, frand(0.5f, 3.0f), frand(M_PI_F * 0.8f, M_PI_F * 1.2f));
+
+            ((Player*)pCaster)->KilledMonsterCredit(NPC_ENTHRALLED_DEEPRUN_RAT);
+        }
+        return true;
+    }
+};
 
 bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
 {
@@ -1167,18 +1243,24 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
 
 void AddSC_spell_scripts()
 {
-    Script* pNewScript;
+    Script* s;
+    s = new aura_spirit_particles();
+    s->RegisterSelf();
+    s = new spell_apply_salve();
+    s->RegisterSelf();
+    s = new spell_sacred_cleansing();
+    s->RegisterSelf();
+    s = new spell_melodious_rapture();
+    s->RegisterSelf();
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
-    pNewScript = new Script;
-    pNewScript->Name = "spell_dummy_go";
-    pNewScript->pEffectDummyGO = &EffectDummyGameObj_spell_dummy_go;
-    pNewScript->RegisterSelf();
+    s = new spell_dummy_go;
+    s->RegisterSelf();
 #endif
 
-    pNewScript = new Script;
-    pNewScript->Name = "spell_dummy_npc";
-    pNewScript->pEffectDummyNPC = &EffectDummyCreature_spell_dummy_npc;
-    pNewScript->pEffectAuraDummy = &EffectAuraDummy_spell_aura_dummy_npc;
-    pNewScript->RegisterSelf();
+    //pNewScript = new Script;
+    //pNewScript->Name = "spell_dummy_npc";
+    //pNewScript->pEffectDummyNPC = &EffectDummyCreature_spell_dummy_npc;
+    //pNewScript->pEffectAuraDummy = &EffectAuraDummy_spell_aura_dummy_npc;
+    //pNewScript->RegisterSelf();
 }

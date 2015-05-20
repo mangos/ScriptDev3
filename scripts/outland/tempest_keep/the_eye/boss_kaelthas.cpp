@@ -824,7 +824,7 @@ struct advisor_base_ai : public ScriptedAI
 
 struct boss_thaladred_the_darkenerAI : public advisor_base_ai
 {
-    boss_thaladred_the_darkenerAI(Creature* pCreature) : advisor_base_ai(pCreature) { Reset(); }
+    boss_thaladred_the_darkenerAI(Creature* pCreature) : advisor_base_ai(pCreature) { }
 
     uint32 m_uiGazeTimer;
     uint32 m_uiRendTimer;
@@ -908,7 +908,7 @@ struct boss_thaladred_the_darkenerAI : public advisor_base_ai
 
 struct boss_lord_sanguinarAI : public advisor_base_ai
 {
-    boss_lord_sanguinarAI(Creature* pCreature) : advisor_base_ai(pCreature) { Reset(); }
+    boss_lord_sanguinarAI(Creature* pCreature) : advisor_base_ai(pCreature) { }
 
     uint32 m_uiFearTimer;
 
@@ -956,7 +956,7 @@ struct boss_lord_sanguinarAI : public advisor_base_ai
 
 struct boss_grand_astromancer_capernianAI : public advisor_base_ai
 {
-    boss_grand_astromancer_capernianAI(Creature* pCreature) : advisor_base_ai(pCreature) { Reset(); }
+    boss_grand_astromancer_capernianAI(Creature* pCreature) : advisor_base_ai(pCreature) { }
 
     uint32 m_uiFireballTimer;
     uint32 m_uiConflagrationTimer;
@@ -1045,7 +1045,7 @@ struct boss_grand_astromancer_capernianAI : public advisor_base_ai
 
 struct boss_master_engineer_telonicusAI : public advisor_base_ai
 {
-    boss_master_engineer_telonicusAI(Creature* pCreature) : advisor_base_ai(pCreature) { Reset(); }
+    boss_master_engineer_telonicusAI(Creature* pCreature) : advisor_base_ai(pCreature) { }
 
     uint32 m_uiBombTimer;
     uint32 m_uiRemoteToyTimer;
@@ -1231,7 +1231,7 @@ struct mob_phoenix_tkAI : public ScriptedAI
 // TODO Remove this 'script' when combat movement can be proper prevented from core-side
 struct mob_phoenix_egg_tkAI : public Scripted_NoMovementAI
 {
-    mob_phoenix_egg_tkAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+    mob_phoenix_egg_tkAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
     void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }

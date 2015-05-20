@@ -354,7 +354,7 @@ struct boss_archimondeAI : public ScriptedAI
 /* This is the script for the Doomfire Spirit Mob. This mob controls the doomfire npc and allows it to move randomly around the map. */
 struct npc_doomfire_spiritAI : public ScriptedAI
 {
-    npc_doomfire_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_doomfire_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
     ObjectGuid m_doomfireGuid;
 

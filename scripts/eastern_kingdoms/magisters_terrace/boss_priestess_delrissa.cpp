@@ -397,7 +397,7 @@ enum
 
 struct npc_kagani_nightstrikeAI : public priestess_companion_commonAI
 {
-    npc_kagani_nightstrikeAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { Reset(); }
+    npc_kagani_nightstrikeAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
 
     uint32 m_uiGougeTimer;
     uint32 m_uiKickTimer;
@@ -513,7 +513,7 @@ enum
 
 struct npc_ellris_duskhallowAI : public priestess_companion_commonAI
 {
-    npc_ellris_duskhallowAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { Reset(); }
+    npc_ellris_duskhallowAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
 
     uint32 m_uiImmolateTimer;
     uint32 m_uiShadowBoltTimer;
@@ -639,7 +639,7 @@ enum
 
 struct npc_eramas_brightblazeAI : public priestess_companion_commonAI
 {
-    npc_eramas_brightblazeAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { Reset(); }
+    npc_eramas_brightblazeAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
 
     uint32 m_uiKnockdownTimer;
     uint32 m_uiSnapKickTimer;
@@ -700,7 +700,7 @@ enum
 
 struct npc_yazzaiAI : public priestess_companion_commonAI
 {
-    npc_yazzaiAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { Reset(); }
+    npc_yazzaiAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
 
     bool m_bHasIceBlocked;
 
@@ -840,7 +840,7 @@ enum
 
 struct npc_warlord_salarisAI : public priestess_companion_commonAI
 {
-    npc_warlord_salarisAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { Reset(); }
+    npc_warlord_salarisAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
 
     uint32 m_uiInterceptStunTimer;
     uint32 m_uiDisarmTimer;
@@ -954,7 +954,7 @@ enum
 
 struct npc_garaxxasAI : public priestess_companion_commonAI
 {
-    npc_garaxxasAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { Reset(); }
+    npc_garaxxasAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
 
     uint32 m_uiAimedShotTimer;
     uint32 m_uiShootTimer;
@@ -1085,7 +1085,7 @@ enum
 
 struct npc_apokoAI : public priestess_companion_commonAI
 {
-    npc_apokoAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { Reset(); }
+    npc_apokoAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
 
     uint32 m_uiTotemTimer;
     uint32 m_uiWarStompTimer;
@@ -1185,7 +1185,7 @@ enum
 
 struct npc_zelfanAI : public priestess_companion_commonAI
 {
-    npc_zelfanAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { Reset(); }
+    npc_zelfanAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
 
     uint32 m_uiGoblinDragonGunTimer;
     uint32 m_uiRocketLaunchTimer;

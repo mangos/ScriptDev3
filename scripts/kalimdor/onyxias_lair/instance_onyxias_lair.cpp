@@ -36,52 +36,60 @@
 #include "precompiled.h"
 #include "onyxias_lair.h"
 
+struct is_onyxias_lair : public InstanceScript
+{
+    is_onyxias_lair() : InstanceScript("instance_onyxias_lair") {}
+
+    class instance_onyxias_lair : public ScriptedInstance
+    {
+    public:
 #if defined (CLASSIC) || defined (TBC)
-instance_onyxias_lair::instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap)
+        instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap)
 #endif
 #if defined (WOTLK)
-instance_onyxias_lair::instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap),
-    m_uiAchievWhelpsCount(0)
+        instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap), m_uiAchievWhelpsCount(0)
 #endif
-{
-    Initialize();
-}
+        {
+            Initialize();
+        }
 
-void instance_onyxias_lair::Initialize()
-{
-    m_uiEncounter = NOT_STARTED;
-    m_tPhaseTwoStart = time(NULL);
-}
+        ~instance_onyxias_lair() {}
 
-bool instance_onyxias_lair::IsEncounterInProgress() const
-{
-    return m_uiEncounter == IN_PROGRESS || m_uiEncounter >= DATA_LIFTOFF;
-}
+        void Initialize() override
+        {
+            m_uiEncounter = NOT_STARTED;
+            m_tPhaseTwoStart = time(NULL);
+        }
 
-void instance_onyxias_lair::OnCreatureCreate(Creature* pCreature)
-{
-    switch (pCreature->GetEntry())
-    {
-        case NPC_ONYXIA_TRIGGER:
-            m_mNpcEntryGuidStore[NPC_ONYXIA_TRIGGER] = pCreature->GetObjectGuid();
-            break;
+        bool IsEncounterInProgress() const override
+        {
+            return m_uiEncounter == IN_PROGRESS || m_uiEncounter >= DATA_LIFTOFF;
+        }
+
+        void OnCreatureCreate(Creature* pCreature) override
+        {
+            switch (pCreature->GetEntry())
+            {
+            case NPC_ONYXIA_TRIGGER:
+                m_mNpcEntryGuidStore[NPC_ONYXIA_TRIGGER] = pCreature->GetObjectGuid();
+                break;
 #if defined (WOTLK)
         case NPC_ONYXIA_WHELP:
             if (m_uiEncounter >= DATA_LIFTOFF && time_t(m_tPhaseTwoStart + TIME_LIMIT_MANY_WHELPS) >= time(NULL))
                 ++m_uiAchievWhelpsCount;
             break;
 #endif
-    }
-}
+            }
+        }
 
-void instance_onyxias_lair::SetData(uint32 uiType, uint32 uiData)
-{
-    if (uiType != TYPE_ONYXIA)
-    {
-        return;
-    }
+        void SetData(uint32 uiType, uint32 uiData) override
+        {
+            if (uiType != TYPE_ONYXIA)
+            {
+                return;
+            }
 
-    m_uiEncounter = uiData;
+            m_uiEncounter = uiData;
 #if defined (WOTLK)
     if (uiData == IN_PROGRESS)
     {
@@ -89,13 +97,13 @@ void instance_onyxias_lair::SetData(uint32 uiType, uint32 uiData)
         m_uiAchievWhelpsCount = 0;
     }
 #endif
-    if (uiData == DATA_LIFTOFF)
-    {
-        m_tPhaseTwoStart = time(NULL);
-    }
+            if (uiData == DATA_LIFTOFF)
+            {
+                m_tPhaseTwoStart = time(NULL);
+            }
 
-    // Currently no reason to save anything
-}
+            // Currently no reason to save anything
+        }
 
 #if defined (WOTLK)
 bool instance_onyxias_lair::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* /*pSource*/, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
@@ -114,17 +122,26 @@ bool instance_onyxias_lair::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Pl
 }
 #endif
 
-InstanceData* GetInstanceData_instance_onyxias_lair(Map* pMap)
-{
-    return new instance_onyxias_lair(pMap);
-}
+    protected:
+        uint32 m_uiEncounter;
+
+        time_t m_tPhaseTwoStart;
+    };
+
+    InstanceData* GetInstanceData(Map* pMap) override
+    {
+        return new instance_onyxias_lair(pMap);
+    }
+};
 
 void AddSC_instance_onyxias_lair()
 {
-    Script* pNewScript;
+    Script* s;
+    s = new is_onyxias_lair();
+    s->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "instance_onyxias_lair";
-    pNewScript->GetInstanceData = &GetInstanceData_instance_onyxias_lair;
-    pNewScript->RegisterSelf();
+    //pNewScript = new Script;
+    //pNewScript->Name = "instance_onyxias_lair";
+    //pNewScript->GetInstanceData = &GetInstanceData_instance_onyxias_lair;
+    //pNewScript->RegisterSelf();
 }
