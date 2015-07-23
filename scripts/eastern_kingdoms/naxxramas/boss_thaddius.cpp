@@ -351,7 +351,6 @@ struct npc_tesla_coil : public CreatureScript
         uint32 m_uiSetupTimer;
         uint32 m_uiOverloadTimer;
 
-        void Reset() override {}
         void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void Aggro(Unit* /*pWho*/) override

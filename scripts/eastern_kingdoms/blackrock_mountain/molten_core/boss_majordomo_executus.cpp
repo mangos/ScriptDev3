@@ -197,7 +197,7 @@ struct boss_majordomo : public CreatureScript
                 m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
 
                 // Relocate here
-                debug_log("sd3: boss_majordomo_executus: Relocate to Ragnaros' Lair on respawn");
+                debug_log("SD3: boss_majordomo_executus: Relocate to Ragnaros' Lair on respawn");
                 m_creature->GetMap()->CreatureRelocation(m_creature, m_aMajordomoLocations[1].m_fX, m_aMajordomoLocations[1].m_fY, m_aMajordomoLocations[1].m_fZ, m_aMajordomoLocations[1].m_fO);
                 m_creature->SetActiveObjectState(false);
             }
@@ -232,7 +232,7 @@ struct boss_majordomo : public CreatureScript
             if (m_bHasEncounterFinished)
             {
                 // Needed for proper respawn handling
-                debug_log("sd3: boss_majordomo_executus: Set active");
+                debug_log("SD3: boss_majordomo_executus: Set active");
                 m_creature->SetActiveObjectState(true);
             }
         }
@@ -487,7 +487,6 @@ struct boss_majordomo : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (InstanceData* pInstance = pCreature->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_RAGNAROS) == NOT_STARTED || pInstance->GetData(TYPE_RAGNAROS) == FAIL)

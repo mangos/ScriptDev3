@@ -321,8 +321,6 @@ struct npc_prospector_remtravel : public CreatureScript
             }
         }
 
-        void Reset() override { }
-
         void Aggro(Unit* pWho) override
         {
             if (urand(0, 1))
@@ -382,8 +380,6 @@ struct npc_threshwackonator : public CreatureScript
     {
         npc_threshwackonatorAI(Creature* pCreature) : FollowerAI(pCreature) { }
 
-        void Reset() override {}
-
         void MoveInLineOfSight(Unit* pWho) override
         {
             FollowerAI::MoveInLineOfSight(pWho);
@@ -418,7 +414,6 @@ struct npc_threshwackonator : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pPlayer->GetQuestStatus(QUEST_GYROMAST_REV) == QUEST_STATUS_INCOMPLETE)
         {
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_INSERT_KEY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
@@ -658,8 +653,6 @@ struct npc_therylune : public CreatureScript
     struct npc_theryluneAI : public npc_escortAI
     {
         npc_theryluneAI(Creature* pCreature) : npc_escortAI(pCreature) { }
-
-        void Reset() override {}
 
         void WaypointReached(uint32 uiPointId) override
         {

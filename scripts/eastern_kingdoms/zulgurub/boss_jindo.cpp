@@ -222,14 +222,14 @@ struct boss_jindo : public CreatureScript
     }
 };
 
-// HACK script! Should not need to have totems in sd3
+// HACK script! Should not need to have totems in SD3
 struct mob_healing_ward : public CreatureScript
 {
     mob_healing_ward() : CreatureScript("mob_healing_ward") {}
 
     struct mob_healing_wardAI : public ScriptedAI
     {
-        mob_healing_wardAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_healing_wardAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
         uint32 m_uiHealTimer;
 

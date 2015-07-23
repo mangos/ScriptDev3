@@ -65,8 +65,6 @@ struct npc_dorius_stonetender : public CreatureScript
     {
         npc_dorius_stonetenderAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
-        void Reset() override { }
-
         void Aggro(Unit* pWho) override
         {
             DoScriptText(urand(0, 1) ? SAY_DORIUS_AGGRO_1 : SAY_DORIUS_AGGRO_2, m_creature, pWho);

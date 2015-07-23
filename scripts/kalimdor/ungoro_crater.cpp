@@ -67,8 +67,6 @@ struct npc_ame01 : public CreatureScript
     {
         npc_ame01AI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
-        void Reset() override {}
-
         void WaypointReached(uint32 uiPointId) override
         {
             switch (uiPointId)

@@ -41,8 +41,8 @@
  */
 
 #include "precompiled.h"
-#include "razorfen_downs.h"
 #include "escort_ai.h"
+#include "razorfen_downs.h"
 
 /*###
 # npc_belnistrasz

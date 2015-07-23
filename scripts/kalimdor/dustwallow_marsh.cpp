@@ -69,77 +69,96 @@ enum
     NPC_RISEN_SPIRIT                 = 23554
 };
 
-struct mobs_risen_husk_spiritAI : public ScriptedAI
+struct mobs_risen_husk_spirit : public CreatureScript
 {
-    mobs_risen_husk_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    mobs_risen_husk_spirit() : CreatureScript("mobs_risen_husk_spirit") {}
 
-    uint32 m_uiConsumeFlesh_Timer;
-    uint32 m_uiIntangiblePresence_Timer;
-
-    Player* m_pCreditPlayer;
-
-    void Reset() override
+    struct mobs_risen_husk_spiritAI : public ScriptedAI
     {
-        m_uiConsumeFlesh_Timer = 10000;
-        m_uiIntangiblePresence_Timer = 5000;
+        mobs_risen_husk_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
-        m_pCreditPlayer = NULL;
-    }
+        uint32 m_uiConsumeFlesh_Timer;
+        uint32 m_uiIntangiblePresence_Timer;
 
-    void JustSummoned(Creature* pSummoned) override
-    {
-        if (m_pCreditPlayer)
-        { m_pCreditPlayer->KilledMonsterCredit(pSummoned->GetEntry(), pSummoned->GetObjectGuid()); }
-    }
+        Player* m_pCreditPlayer;
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
-    {
-        if (uiDamage < m_creature->GetHealth())
-        { return; }
-
-        if (Player* pPlayer = pDoneBy->GetCharmerOrOwnerPlayerOrPlayerItself())
+        void Reset() override
         {
-            if (pPlayer->GetQuestStatus(QUEST_WHATS_HAUNTING_WITCH_HILL) == QUEST_STATUS_INCOMPLETE)
+            m_uiConsumeFlesh_Timer = 10000;
+            m_uiIntangiblePresence_Timer = 5000;
+
+            m_pCreditPlayer = NULL;
+        }
+
+        void JustSummoned(Creature* pSummoned) override
+        {
+            if (m_pCreditPlayer)
             {
-                m_pCreditPlayer = pPlayer;
-                m_creature->CastSpell(pDoneBy, SPELL_SUMMON_RESTLESS_APPARITION, true);
+                m_pCreditPlayer->KilledMonsterCredit(pSummoned->GetEntry(), pSummoned->GetObjectGuid());
             }
         }
-    }
 
-    void UpdateAI(const uint32 uiDiff) override
+        void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+        {
+            if (uiDamage < m_creature->GetHealth())
+            {
+                return;
+            }
+
+            if (Player* pPlayer = pDoneBy->GetCharmerOrOwnerPlayerOrPlayerItself())
+            {
+                if (pPlayer->GetQuestStatus(QUEST_WHATS_HAUNTING_WITCH_HILL) == QUEST_STATUS_INCOMPLETE)
+                {
+                    m_pCreditPlayer = pPlayer;
+                    m_creature->CastSpell(pDoneBy, SPELL_SUMMON_RESTLESS_APPARITION, true);
+                }
+            }
+        }
+
+        void UpdateAI(const uint32 uiDiff) override
+        {
+            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
+                return;
+            }
+
+            if (m_uiConsumeFlesh_Timer < uiDiff)
+            {
+                if (m_creature->GetEntry() == NPC_RISEN_HUSK)
+                {
+                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_CONSUME_FLESH);
+                }
+
+                m_uiConsumeFlesh_Timer = 15000;
+            }
+            else
+            {
+                m_uiConsumeFlesh_Timer -= uiDiff;
+            }
+
+            if (m_uiIntangiblePresence_Timer < uiDiff)
+            {
+                if (m_creature->GetEntry() == NPC_RISEN_SPIRIT)
+                {
+                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_INTANGIBLE_PRESENCE);
+                }
+
+                m_uiIntangiblePresence_Timer = 20000;
+            }
+            else
+            {
+                m_uiIntangiblePresence_Timer -= uiDiff;
+            }
+
+            DoMeleeAttackIfReady();
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
     {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-        { return; }
-
-        if (m_uiConsumeFlesh_Timer < uiDiff)
-        {
-            if (m_creature->GetEntry() == NPC_RISEN_HUSK)
-            { DoCastSpellIfCan(m_creature->getVictim(), SPELL_CONSUME_FLESH); }
-
-            m_uiConsumeFlesh_Timer = 15000;
-        }
-        else
-        { m_uiConsumeFlesh_Timer -= uiDiff; }
-
-        if (m_uiIntangiblePresence_Timer < uiDiff)
-        {
-            if (m_creature->GetEntry() == NPC_RISEN_SPIRIT)
-            { DoCastSpellIfCan(m_creature->getVictim(), SPELL_INTANGIBLE_PRESENCE); }
-
-            m_uiIntangiblePresence_Timer = 20000;
-        }
-        else
-        { m_uiIntangiblePresence_Timer -= uiDiff; }
-
-        DoMeleeAttackIfReady();
+        return new mobs_risen_husk_spiritAI(pCreature);
     }
 };
-
-CreatureAI* GetAI_mobs_risen_husk_spirit(Creature* pCreature)
-{
-    return new mobs_risen_husk_spiritAI(pCreature);
-}
 
 /*######
 ## npc_restless_apparition
@@ -157,26 +176,32 @@ enum
     SAY_RAND_8      = -1000550
 };
 
-struct npc_restless_apparitionAI : public ScriptedAI
+struct npc_restless_apparition : public CreatureScript
 {
-    npc_restless_apparitionAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    npc_restless_apparition() : CreatureScript("npc_restless_apparition") {}
 
-    uint32 m_uiTalk_Timer;
-
-    void Reset() override
+    struct npc_restless_apparitionAI : public ScriptedAI
     {
-        m_uiTalk_Timer = 1000;
-    }
+        npc_restless_apparitionAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
-    void UpdateAI(const uint32 uiDiff) override
-    {
-        if (!m_uiTalk_Timer)
-        { return; }
+        uint32 m_uiTalk_Timer;
 
-        if (m_uiTalk_Timer <= uiDiff)
+        void Reset() override
         {
-            switch (urand(0, 7))
+            m_uiTalk_Timer = 1000;
+        }
+
+        void UpdateAI(const uint32 uiDiff) override
+        {
+            if (!m_uiTalk_Timer)
             {
+                return;
+            }
+
+            if (m_uiTalk_Timer <= uiDiff)
+            {
+                switch (urand(0, 7))
+                {
                 case 0: DoScriptText(SAY_RAND_1, m_creature); break;
                 case 1: DoScriptText(SAY_RAND_2, m_creature); break;
                 case 2: DoScriptText(SAY_RAND_3, m_creature); break;
@@ -185,19 +210,22 @@ struct npc_restless_apparitionAI : public ScriptedAI
                 case 5: DoScriptText(SAY_RAND_6, m_creature); break;
                 case 6: DoScriptText(SAY_RAND_7, m_creature); break;
                 case 7: DoScriptText(SAY_RAND_8, m_creature); break;
-            }
+                }
 
-            m_uiTalk_Timer = 0;
+                m_uiTalk_Timer = 0;
+            }
+            else
+            {
+                m_uiTalk_Timer -= uiDiff;
+            }
         }
-        else
-        { m_uiTalk_Timer -= uiDiff; }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_restless_apparitionAI(pCreature);
     }
 };
-
-CreatureAI* GetAI_npc_restless_apparition(Creature* pCreature)
-{
-    return new npc_restless_apparitionAI(pCreature);
-}
 #endif
 
 /*######
@@ -227,8 +255,6 @@ struct npc_morokk : public CreatureScript
         }
 
         bool m_bIsSuccess;
-
-        void Reset() override {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -708,8 +734,6 @@ struct npc_private_hendel : public CreatureScript
     {
         npc_private_hendelAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
-        void Reset() override {}
-
         void AttackedBy(Unit* pAttacker) override
         {
             if (m_creature->getVictim())
@@ -795,8 +819,6 @@ struct npc_stinky_ignatz : public CreatureScript
         }
 
         ObjectGuid m_bogbeanPlantGuid;
-
-        void Reset() override {}
 
         void Aggro(Unit* pWho) override
         {
@@ -887,7 +909,6 @@ struct npc_stinky_ignatz : public CreatureScript
             pCreature->AI()->SendAIEvent(AI_EVENT_START_ESCORT, pPlayer, pCreature, pQuest->GetQuestId());
             return true;
         }
-
         return false;
     }
 };
@@ -903,20 +924,27 @@ enum
     NPC_LURKING_SHARK  = 23928
 };
 
-bool AreaTrigger_at_nats_landing(Player* pPlayer, const AreaTriggerEntry* /*pAt*/)
+struct at_nats_landing : public AreaTriggerScript
 {
-    if (pPlayer->GetQuestStatus(QUEST_NATS_BARGAIN) == QUEST_STATUS_INCOMPLETE && pPlayer->HasAura(SPELL_FISH_PASTE))
+    at_nats_landing() : AreaTriggerScript("at_nats_landing") {}
+
+    bool OnTrigger(Player* pPlayer, const AreaTriggerEntry* /*pAt*/) override
     {
-        Creature* pShark = GetClosestCreatureWithEntry(pPlayer, NPC_LURKING_SHARK, 20.0f);
+        if (pPlayer->GetQuestStatus(QUEST_NATS_BARGAIN) == QUEST_STATUS_INCOMPLETE && pPlayer->HasAura(SPELL_FISH_PASTE))
+        {
+            Creature* pShark = GetClosestCreatureWithEntry(pPlayer, NPC_LURKING_SHARK, 20.0f);
 
-        if (!pShark)
-        { pShark = pPlayer->SummonCreature(NPC_LURKING_SHARK, -4246.243f, -3922.356f, -7.488f, 5.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 100000); }
+            if (!pShark)
+            {
+                pShark = pPlayer->SummonCreature(NPC_LURKING_SHARK, -4246.243f, -3922.356f, -7.488f, 5.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 100000);
+            }
 
-        pShark->AI()->AttackStart(pPlayer);
-        return false;
+            pShark->AI()->AttackStart(pPlayer);
+            return false;
+        }
+        return true;
     }
-    return true;
-}
+};
 
 /*######
 ## boss_tethyr
@@ -945,224 +973,228 @@ enum
     PHASE_SPOUT                 = 2,
 };
 
-struct boss_tethyrAI : public Scripted_NoMovementAI
+struct boss_tethyr : public CreatureScript
 {
-    boss_tethyrAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
-    {
-        // send world states to player summoner
-        if (m_creature->IsTemporarySummon())
-            m_summonerGuid = ((TemporarySummon*)m_creature)->GetSummonerGuid();
+    boss_tethyr() : CreatureScript("boss_tethyr") {}
 
-        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_summonerGuid))
+    struct boss_tethyrAI : public Scripted_NoMovementAI
+    {
+        boss_tethyrAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
         {
-            pPlayer->SendUpdateWorldState(WORLD_STATE_TETHYR_SHOW, 1);
-            pPlayer->SendUpdateWorldState(WORLD_STATE_TETHYR_COUNT, MAX_MARKSMEN);
+            // send world states to player summoner
+            if (m_creature->IsTemporarySummon())
+                m_summonerGuid = ((TemporarySummon*)m_creature)->GetSummonerGuid();
+
+            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_summonerGuid))
+            {
+                pPlayer->SendUpdateWorldState(WORLD_STATE_TETHYR_SHOW, 1);
+                pPlayer->SendUpdateWorldState(WORLD_STATE_TETHYR_COUNT, MAX_MARKSMEN);
+            }
+
+            m_creature->SetLevitate(true);
         }
 
-        m_creature->SetLevitate(true);
-        Reset();
-    }
+        ObjectGuid m_summonerGuid;
 
-    ObjectGuid m_summonerGuid;
+        uint8 m_uiPhase;
+        uint8 m_uiMarksmenKilled;
+        uint32 m_uiWaterBoltTimer;
+        uint32 m_uiSpoutEndTimer;
 
-    uint8 m_uiPhase;
-    uint8 m_uiMarksmenKilled;
-    uint32 m_uiWaterBoltTimer;
-    uint32 m_uiSpoutEndTimer;
-
-    void Reset() override
-    {
-        m_uiPhase           = PHASE_NORMAL;
-        m_uiMarksmenKilled  = 0;
-        m_uiWaterBoltTimer  = urand(0, 1000);
-        m_uiSpoutEndTimer   = 7000;
-    }
-
-    void JustReachedHome() override
-    {
-        // cleanup
-        DoEncounterCleanup();
-        m_creature->ForcedDespawn(5000);
-    }
-
-    void JustDied(Unit* /*pVictim*/) override
-    {
-        // quest complete and cleanup
-        if (Player* pSummoner = m_creature->GetMap()->GetPlayer(m_summonerGuid))
-            pSummoner->GroupEventHappens(QUEST_ID_TETHYR, m_creature);
-
-        // ToDo: trigger some fireworks!
-        DoEncounterCleanup();
-    }
-
-    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
-    {
-        if (uiMotionType == WAYPOINT_MOTION_TYPE)
+        void Reset() override
         {
-            // start attacking
-            if (uiPointId == 12)
+            m_uiPhase = PHASE_NORMAL;
+            m_uiMarksmenKilled = 0;
+            m_uiWaterBoltTimer = urand(0, 1000);
+            m_uiSpoutEndTimer = 7000;
+        }
+
+        void JustReachedHome() override
+        {
+            // cleanup
+            DoEncounterCleanup();
+            m_creature->ForcedDespawn(5000);
+        }
+
+        void JustDied(Unit* /*pVictim*/) override
+        {
+            // quest complete and cleanup
+            if (Player* pSummoner = m_creature->GetMap()->GetPlayer(m_summonerGuid))
+                pSummoner->GroupEventHappens(QUEST_ID_TETHYR, m_creature);
+
+            // ToDo: trigger some fireworks!
+            DoEncounterCleanup();
+        }
+
+        void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
+        {
+            if (uiMotionType == WAYPOINT_MOTION_TYPE)
             {
-                // make cannons usable
-                std::list<GameObject*> lCannonsInRange;
-                GetGameObjectListWithEntryInGrid(lCannonsInRange, m_creature, GO_COVE_CANNON, 100.0f);
-
-                for (std::list<GameObject*>::const_iterator itr = lCannonsInRange.begin(); itr != lCannonsInRange.end(); ++itr)
-                    (*itr)->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
-
-                // attack all marksmen
-                std::list<Creature*> lMarksmenInRange;
-                GetCreatureListWithEntryInGrid(lMarksmenInRange, m_creature, NPC_THERAMORE_MARKSMAN, 100.0f);
-
-                for (std::list<Creature*>::const_iterator itr = lMarksmenInRange.begin(); itr != lMarksmenInRange.end(); ++itr)
+                // start attacking
+                if (uiPointId == 12)
                 {
-                    (*itr)->AI()->AttackStart(m_creature);
-                    AttackStart(*itr);
-                }
-            }
-        }
-        else if (uiMotionType == POINT_MOTION_TYPE)
-        {
-            // Spout on cannon point reach
-            if (uiPointId)
-            {
-                if (DoCastSpellIfCan(m_creature, urand(0, 1) ? SPELL_SPOUT_LEFT : SPELL_SPOUT_RIGHT, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                {
-                    // Remove the target focus
-                    m_creature->SetTargetGuid(ObjectGuid());
-                    m_uiPhase = PHASE_SPOUT;
-                }
-            }
-        }
-    }
+                    // make cannons usable
+                    std::list<GameObject*> lCannonsInRange;
+                    GetGameObjectListWithEntryInGrid(lCannonsInRange, m_creature, GO_COVE_CANNON, 100.0f);
 
-    void KilledUnit(Unit* pVictim) override
-    {
-        // count the marksmen
-        if (pVictim->GetEntry() != NPC_THERAMORE_MARKSMAN)
-            return;
+                    for (std::list<GameObject*>::const_iterator itr = lCannonsInRange.begin(); itr != lCannonsInRange.end(); ++itr)
+                        (*itr)->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
 
-        ++m_uiMarksmenKilled;
+                    // attack all marksmen
+                    std::list<Creature*> lMarksmenInRange;
+                    GetCreatureListWithEntryInGrid(lMarksmenInRange, m_creature, NPC_THERAMORE_MARKSMAN, 100.0f);
 
-        // update world state
-        if (Player* pSummoner = m_creature->GetMap()->GetPlayer(m_summonerGuid))
-        {
-            pSummoner->SendUpdateWorldState(WORLD_STATE_TETHYR_COUNT, MAX_MARKSMEN - m_uiMarksmenKilled);
-
-            // fail quest if all marksmen are killed
-            if (m_uiMarksmenKilled == MAX_MARKSMEN)
-            {
-                pSummoner->FailQuest(QUEST_ID_TETHYR);
-                EnterEvadeMode();
-            }
-        }
-    }
-
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
-    {
-        // spout on cannon
-        if (pCaster->GetEntry() == NPC_THERAMORE_CANNON && pSpell->Id == SPELL_CANNON_BLAST_DMG)
-        {
-            if (m_uiPhase == PHASE_SPOUT)
-                return;
-
-            // not all cannons have same distance range
-            uint8 uiDistMod = pCaster->GetPositionY() > -4650.0f ? 6 : 5;
-
-            float fX, fY, fZ;
-            pCaster->GetContactPoint(m_creature, fX, fY, fZ, uiDistMod * ATTACK_DISTANCE);
-            m_creature->GetMotionMaster()->MovePoint(1, fX, fY, m_creature->GetPositionZ());
-
-            m_uiWaterBoltTimer = 10000;
-        }
-    }
-
-    // function to cleanup the world states and GO flags
-    void DoEncounterCleanup()
-    {
-        // remove world state
-        if (Player* pSummoner = m_creature->GetMap()->GetPlayer(m_summonerGuid))
-            pSummoner->SendUpdateWorldState(WORLD_STATE_TETHYR_SHOW, 0);
-
-        // reset all cannons
-        std::list<GameObject*> lCannonsInRange;
-        GetGameObjectListWithEntryInGrid(lCannonsInRange, m_creature, GO_COVE_CANNON, 100.0f);
-
-        for (std::list<GameObject*>::const_iterator itr = lCannonsInRange.begin(); itr != lCannonsInRange.end(); ++itr)
-            (*itr)->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
-
-        // despawn all marksmen
-        std::list<Creature*> lMarksmenInRange;
-        GetCreatureListWithEntryInGrid(lMarksmenInRange, m_creature, NPC_THERAMORE_MARKSMAN, 100.0f);
-
-        for (std::list<Creature*>::const_iterator itr = lMarksmenInRange.begin(); itr != lMarksmenInRange.end(); ++itr)
-            (*itr)->ForcedDespawn(30000);
-    }
-
-    // Custom threat management
-    bool SelectCustomHostileTarget()
-    {
-        // Not started combat or evading prevented
-        if (!m_creature->IsInCombat() || m_creature->HasAuraType(SPELL_AURA_MOD_TAUNT))
-            return false;
-
-        // Check if there are still enemies (marksmen) in the threatList
-        ThreatList const& threatList = m_creature->GetThreatManager().getThreatList();
-        for (ThreatList::const_iterator itr = threatList.begin(); itr != threatList.end(); ++itr)
-        {
-            if ((*itr)->getUnitGuid().IsCreature())
-                return true;
-        }
-
-        EnterEvadeMode();
-        return false;
-    }
-
-    void UpdateAI(const uint32 uiDiff) override
-    {
-        if (!SelectCustomHostileTarget())
-            return;
-
-        if (m_uiPhase == PHASE_SPOUT)
-        {
-            if (m_uiSpoutEndTimer < uiDiff)
-            {
-                // Remove rotation auras
-                m_creature->RemoveAurasDueToSpell(SPELL_SPOUT_LEFT);
-                m_creature->RemoveAurasDueToSpell(SPELL_SPOUT_RIGHT);
-
-                m_uiPhase = PHASE_NORMAL;
-                m_uiSpoutEndTimer = 7000;
-                m_uiWaterBoltTimer = urand(0, 1000);
-            }
-            else
-                m_uiSpoutEndTimer -= uiDiff;
-        }
-        else if (m_uiPhase == PHASE_NORMAL)
-        {
-            if (m_uiWaterBoltTimer < uiDiff)
-            {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                {
-                    if (DoCastSpellIfCan(pTarget, SPELL_WATER_BOLT) == CAST_OK)
+                    for (std::list<Creature*>::const_iterator itr = lMarksmenInRange.begin(); itr != lMarksmenInRange.end(); ++itr)
                     {
-                        // mimic boss turning because of the missing threat system
-                        m_creature->SetTargetGuid(pTarget->GetObjectGuid());
-                        m_creature->SetInFront(pTarget);
-
-                        m_uiWaterBoltTimer = urand(0, 1000);
+                        (*itr)->AI()->AttackStart(m_creature);
+                        AttackStart(*itr);
                     }
                 }
             }
-            else
-                m_uiWaterBoltTimer -= uiDiff;
+            else if (uiMotionType == POINT_MOTION_TYPE)
+            {
+                // Spout on cannon point reach
+                if (uiPointId)
+                {
+                    if (DoCastSpellIfCan(m_creature, urand(0, 1) ? SPELL_SPOUT_LEFT : SPELL_SPOUT_RIGHT, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                    {
+                        // Remove the target focus
+                        m_creature->SetTargetGuid(ObjectGuid());
+                        m_uiPhase = PHASE_SPOUT;
+                    }
+                }
+            }
         }
+
+        void KilledUnit(Unit* pVictim) override
+        {
+            // count the marksmen
+            if (pVictim->GetEntry() != NPC_THERAMORE_MARKSMAN)
+                return;
+
+            ++m_uiMarksmenKilled;
+
+            // update world state
+            if (Player* pSummoner = m_creature->GetMap()->GetPlayer(m_summonerGuid))
+            {
+                pSummoner->SendUpdateWorldState(WORLD_STATE_TETHYR_COUNT, MAX_MARKSMEN - m_uiMarksmenKilled);
+
+                // fail quest if all marksmen are killed
+                if (m_uiMarksmenKilled == MAX_MARKSMEN)
+                {
+                    pSummoner->FailQuest(QUEST_ID_TETHYR);
+                    EnterEvadeMode();
+                }
+            }
+        }
+
+        void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+        {
+            // spout on cannon
+            if (pCaster->GetEntry() == NPC_THERAMORE_CANNON && pSpell->Id == SPELL_CANNON_BLAST_DMG)
+            {
+                if (m_uiPhase == PHASE_SPOUT)
+                    return;
+
+                // not all cannons have same distance range
+                uint8 uiDistMod = pCaster->GetPositionY() > -4650.0f ? 6 : 5;
+
+                float fX, fY, fZ;
+                pCaster->GetContactPoint(m_creature, fX, fY, fZ, uiDistMod * ATTACK_DISTANCE);
+                m_creature->GetMotionMaster()->MovePoint(1, fX, fY, m_creature->GetPositionZ());
+
+                m_uiWaterBoltTimer = 10000;
+            }
+        }
+
+        // function to cleanup the world states and GO flags
+        void DoEncounterCleanup()
+        {
+            // remove world state
+            if (Player* pSummoner = m_creature->GetMap()->GetPlayer(m_summonerGuid))
+                pSummoner->SendUpdateWorldState(WORLD_STATE_TETHYR_SHOW, 0);
+
+            // reset all cannons
+            std::list<GameObject*> lCannonsInRange;
+            GetGameObjectListWithEntryInGrid(lCannonsInRange, m_creature, GO_COVE_CANNON, 100.0f);
+
+            for (std::list<GameObject*>::const_iterator itr = lCannonsInRange.begin(); itr != lCannonsInRange.end(); ++itr)
+                (*itr)->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+
+            // despawn all marksmen
+            std::list<Creature*> lMarksmenInRange;
+            GetCreatureListWithEntryInGrid(lMarksmenInRange, m_creature, NPC_THERAMORE_MARKSMAN, 100.0f);
+
+            for (std::list<Creature*>::const_iterator itr = lMarksmenInRange.begin(); itr != lMarksmenInRange.end(); ++itr)
+                (*itr)->ForcedDespawn(30000);
+        }
+
+        // Custom threat management
+        bool SelectCustomHostileTarget()
+        {
+            // Not started combat or evading prevented
+            if (!m_creature->IsInCombat() || m_creature->HasAuraType(SPELL_AURA_MOD_TAUNT))
+                return false;
+
+            // Check if there are still enemies (marksmen) in the threatList
+            ThreatList const& threatList = m_creature->GetThreatManager().getThreatList();
+            for (ThreatList::const_iterator itr = threatList.begin(); itr != threatList.end(); ++itr)
+            {
+                if ((*itr)->getUnitGuid().IsCreature())
+                    return true;
+            }
+
+            EnterEvadeMode();
+            return false;
+        }
+
+        void UpdateAI(const uint32 uiDiff) override
+        {
+            if (!SelectCustomHostileTarget())
+                return;
+
+            if (m_uiPhase == PHASE_SPOUT)
+            {
+                if (m_uiSpoutEndTimer < uiDiff)
+                {
+                    // Remove rotation auras
+                    m_creature->RemoveAurasDueToSpell(SPELL_SPOUT_LEFT);
+                    m_creature->RemoveAurasDueToSpell(SPELL_SPOUT_RIGHT);
+
+                    m_uiPhase = PHASE_NORMAL;
+                    m_uiSpoutEndTimer = 7000;
+                    m_uiWaterBoltTimer = urand(0, 1000);
+                }
+                else
+                    m_uiSpoutEndTimer -= uiDiff;
+            }
+            else if (m_uiPhase == PHASE_NORMAL)
+            {
+                if (m_uiWaterBoltTimer < uiDiff)
+                {
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        if (DoCastSpellIfCan(pTarget, SPELL_WATER_BOLT) == CAST_OK)
+                        {
+                            // mimic boss turning because of the missing threat system
+                            m_creature->SetTargetGuid(pTarget->GetObjectGuid());
+                            m_creature->SetInFront(pTarget);
+
+                            m_uiWaterBoltTimer = urand(0, 1000);
+                        }
+                    }
+                }
+                else
+                    m_uiWaterBoltTimer -= uiDiff;
+            }
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new boss_tethyrAI(pCreature);
     }
 };
-
-CreatureAI* GetAI_boss_tethyr(Creature* pCreature)
-{
-    return new boss_tethyrAI(pCreature);
-}
 #endif
 void AddSC_dustwallow_marsh()
 {
@@ -1177,23 +1209,21 @@ void AddSC_dustwallow_marsh()
     s->RegisterSelf();
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
-    s = new risen_husk_spirit;
+    s = new mobs_risen_husk_spirit();
     s->RegisterSelf();
-
-    s = new npc_restless_apparition;
+    s = new npc_restless_apparition();
     s->RegisterSelf();
 
 #endif
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
-    s = new at_nats_landing;
+    s = new boss_tethyr();
+    s->RegisterSelf();
+    s = new at_nats_landing();
     s->RegisterSelf();
 
-    s = new boss_tethyr;
-    s->RegisterSelf();
 #endif
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     //pNewScript = new Script;
     //pNewScript->Name = "mobs_risen_husk_spirit";
     //pNewScript->GetAI = &GetAI_mobs_risen_husk_spirit;
@@ -1202,13 +1232,6 @@ void AddSC_dustwallow_marsh()
     //pNewScript = new Script;
     //pNewScript->Name = "npc_restless_apparition";
     //pNewScript->GetAI = &GetAI_npc_restless_apparition;
-    //pNewScript->RegisterSelf();
-//#endif
-
-    //pNewScript = new Script;
-    //pNewScript->Name = "npc_morokk";
-    //pNewScript->GetAI = &GetAI_npc_morokk;
-    //pNewScript->pQuestAcceptNPC = &QuestAccept_npc_morokk;
     //pNewScript->RegisterSelf();
 
     //pNewScript = new Script;
@@ -1227,9 +1250,7 @@ void AddSC_dustwallow_marsh()
     //pNewScript->Name = "npc_stinky_ignatz";
     //pNewScript->GetAI = &GetAI_npc_stinky_ignatz;
     //pNewScript->pQuestAcceptNPC = &QuestAccept_npc_stinky_ignatz;
-    //pNewScript->RegisterSelf();
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     //pNewScript = new Script;
     //pNewScript->Name = "at_nats_landing";
     //pNewScript->pAreaTrigger = &AreaTrigger_at_nats_landing;
@@ -1238,6 +1259,4 @@ void AddSC_dustwallow_marsh()
     //pNewScript = new Script;
     //pNewScript->Name = "boss_tethyr";
     //pNewScript->GetAI = &GetAI_boss_tethyr;
-    //pNewScript->RegisterSelf();
-//#endif
 }

@@ -53,7 +53,6 @@ struct npc_mountaineer_pebblebitty : public CreatureScript  //TODO localisation
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pCreature->IsQuestGiver())
         {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());

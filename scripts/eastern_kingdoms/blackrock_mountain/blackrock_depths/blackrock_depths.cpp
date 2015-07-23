@@ -350,7 +350,7 @@ struct npc_grimstone : public CreatureScript
                     if (m_pInstance)
                     {
                         m_pInstance->SetData(TYPE_RING_OF_LAW, DONE);
-                    debug_log("sd3: npc_grimstone: event reached end and set complete.");
+                        debug_log("SD3: npc_grimstone: event reached end and set complete.");
                     }
                     break;
             }
@@ -543,7 +543,6 @@ struct npc_kharan_mighthammer : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pCreature->IsQuestGiver())
         {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
@@ -1113,7 +1112,6 @@ struct npc_dughal_stormwing : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE)
         {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ID_DUGHAL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
@@ -1157,7 +1155,6 @@ struct npc_tobias_seecher : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pPlayer->GetQuestStatus(QUEST_JAIL_BREAK) == QUEST_STATUS_INCOMPLETE)
         {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ID_TOBIAS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
@@ -1209,7 +1206,6 @@ struct boss_doomrel : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_TOMB_OF_SEVEN) == NOT_STARTED || pInstance->GetData(TYPE_TOMB_OF_SEVEN) == FAIL)

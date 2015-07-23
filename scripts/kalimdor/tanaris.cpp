@@ -193,19 +193,25 @@ enum
     QUEST_ID_CAVERNS_OF_TIME    = 10277,
 };
 
-struct npc_custodian_of_timeAI : public npc_escortAI
+struct npc_custodian_of_time : public CreatureScript
 {
-    npc_custodian_of_timeAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+    npc_custodian_of_time() : CreatureScript("npc_custodian_of_time") {}
 
-    void WaypointReached(uint32 uiPointId) override
+    struct npc_custodian_of_timeAI : public npc_escortAI
     {
-        Player* pPlayer = GetPlayerForEscort();
+        npc_custodian_of_timeAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-        if (!pPlayer)
-        { return; }
-
-        switch (uiPointId)
+        void WaypointReached(uint32 uiPointId) override
         {
+            Player* pPlayer = GetPlayerForEscort();
+
+            if (!pPlayer)
+            {
+                return;
+            }
+
+            switch (uiPointId)
+            {
             case 0: DoScriptText(WHISPER_CUSTODIAN_1, m_creature, pPlayer); break;
             case 1: DoScriptText(WHISPER_CUSTODIAN_2, m_creature, pPlayer); break;
             case 2: DoScriptText(WHISPER_CUSTODIAN_3, m_creature, pPlayer); break;
@@ -227,33 +233,36 @@ struct npc_custodian_of_timeAI : public npc_escortAI
                 DoScriptText(WHISPER_CUSTODIAN_14, m_creature, pPlayer);
                 DoCastSpellIfCan(pPlayer, SPELL_QID_10277);
                 break;
-        }
-    }
-
-    void MoveInLineOfSight(Unit* pWho) override
-    {
-        if (HasEscortState(STATE_ESCORT_ESCORTING))
-        { return; }
-
-        if (pWho->GetTypeId() == TYPEID_PLAYER)
-        {
-            if (pWho->HasAura(SPELL_CUSTODIAN_OF_TIME) && ((Player*)pWho)->GetQuestStatus(QUEST_ID_CAVERNS_OF_TIME) == QUEST_STATUS_INCOMPLETE)
-            {
-                float fRadius = 10.0f;
-
-                if (m_creature->IsWithinDistInMap(pWho, fRadius))
-                { Start(false, (Player*)pWho); }
             }
         }
+
+        void MoveInLineOfSight(Unit* pWho) override
+        {
+            if (HasEscortState(STATE_ESCORT_ESCORTING))
+            {
+                return;
+            }
+
+            if (pWho->GetTypeId() == TYPEID_PLAYER)
+            {
+                if (pWho->HasAura(SPELL_CUSTODIAN_OF_TIME) && ((Player*)pWho)->GetQuestStatus(QUEST_ID_CAVERNS_OF_TIME) == QUEST_STATUS_INCOMPLETE)
+                {
+                    float fRadius = 10.0f;
+
+                    if (m_creature->IsWithinDistInMap(pWho, fRadius))
+                    {
+                        Start(false, (Player*)pWho);
+                    }
+                }
+            }
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_custodian_of_timeAI(pCreature);
     }
-
-    void Reset() override { }
 };
-
-CreatureAI* GetAI_npc_custodian_of_time(Creature* pCreature)
-{
-    return new npc_custodian_of_timeAI(pCreature);
-}
 #endif
 
 /*######
@@ -322,8 +331,6 @@ struct npc_oox17tn : public CreatureScript
                 break;
             }
         }
-
-        void Reset() override { }
 
         void Aggro(Unit* /*who*/) override
         {
@@ -394,7 +401,6 @@ struct npc_stone_watcher_of_norgannon : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pCreature->IsQuestGiver())
         {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
@@ -709,7 +715,7 @@ void AddSC_tanaris()
     s->RegisterSelf();
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
-    s = new npc_custodian_of_time;
+    s = new npc_custodian_of_time();
     s->RegisterSelf();
 #endif
 
@@ -734,6 +740,10 @@ void AddSC_tanaris()
     //pNewScript->Name = "mob_aquementas";
     //pNewScript->GetAI = &GetAI_mob_aquementas;
     //pNewScript->RegisterSelf();
+
+    //pNewScript = new Script;
+    //pNewScript->Name = "npc_custodian_of_time";
+    //pNewScript->GetAI = &GetAI_npc_custodian_of_time;
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_oox17tn";

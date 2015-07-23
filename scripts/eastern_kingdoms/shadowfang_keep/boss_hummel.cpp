@@ -24,6 +24,7 @@ SDComment: The bosses are handled in eventAI; The event needs more research; onl
 SDCategory: Shadowfang Keep
 EndScriptData */
 
+#if defined (WOTLK)
 #include "precompiled.h"
 #include "shadowfang_keep.h"
 
@@ -274,3 +275,4 @@ void AddSC_boss_hummel()
     pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_apothecary_hummel;
     pNewScript->RegisterSelf();
 }
+#endif

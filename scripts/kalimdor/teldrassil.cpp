@@ -63,8 +63,6 @@ struct npc_mist : public CreatureScript
     {
         npc_mistAI(Creature* pCreature) : FollowerAI(pCreature) { }
 
-        void Reset() override { }
-
         void MoveInLineOfSight(Unit* pWho) override
         {
             FollowerAI::MoveInLineOfSight(pWho);

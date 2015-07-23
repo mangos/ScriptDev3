@@ -67,7 +67,7 @@ enum
 //common AI part
 struct boss_emerald_dragonAI : public ScriptedAI
 {
-    boss_emerald_dragonAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+    boss_emerald_dragonAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
     uint32 m_uiEventCounter;
 

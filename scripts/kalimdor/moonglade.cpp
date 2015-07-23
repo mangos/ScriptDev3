@@ -70,20 +70,26 @@ enum
     NPC_ASPECT_OF_RAVEN     = 22915,
 };
 
-struct npc_clintar_dw_spiritAI : public npc_escortAI
+struct npc_clintar_dw_spirit : public CreatureScript
 {
-    npc_clintar_dw_spiritAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+    npc_clintar_dw_spirit() : CreatureScript("npc_clintar_dw_spirit") {}
 
-    void WaypointReached(uint32 i) override
+    struct npc_clintar_dw_spiritAI : public npc_escortAI
     {
-        Player* pPlayer = GetPlayerForEscort();
+        npc_clintar_dw_spiritAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
-        if (!pPlayer)
-        { return; }
-
-        // visual details here probably need refinement
-        switch (i)
+        void WaypointReached(uint32 i) override
         {
+            Player* pPlayer = GetPlayerForEscort();
+
+            if (!pPlayer)
+            {
+                return;
+            }
+
+            // visual details here probably need refinement
+            switch (i)
+            {
             case 0:
                 DoScriptText(SAY_START, m_creature, pPlayer);
                 break;
@@ -112,79 +118,91 @@ struct npc_clintar_dw_spiritAI : public npc_escortAI
                 DoScriptText(SAY_END, m_creature, pPlayer);
                 pPlayer->TalkedToCreature(m_creature->GetEntry(), m_creature->GetObjectGuid());
                 break;
+            }
         }
-    }
 
-    void Aggro(Unit* /*who*/) override
+        void Aggro(Unit* /*who*/) override
+        {
+            DoScriptText(urand(0, 1) ? SAY_AGGRO_1 : SAY_AGGRO_2, m_creature);
+        }
+
+        void Reset() override
+        {
+            if (HasEscortState(STATE_ESCORT_ESCORTING))
+            {
+                return;
+            }
+
+            // m_creature are expected to always be spawned, but not visible for player
+            // spell casted from quest_template.SrcSpell require this to be this way
+            // we handle the triggered spell to get a "hook" to our guy so he can be escorted on quest accept
+
+            if (CreatureInfo const* pTemp = GetCreatureTemplateStore(m_creature->GetEntry()))
+            {
+                m_creature->SetDisplayId(Creature::ChooseDisplayId(pTemp));
+            }
+
+            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            m_creature->SetVisibility(VISIBILITY_OFF);
+        }
+
+        void JustSummoned(Creature* summoned) override
+        {
+            summoned->AI()->AttackStart(m_creature);
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
     {
-        DoScriptText(urand(0, 1) ? SAY_AGGRO_1 : SAY_AGGRO_2, m_creature);
-    }
-
-    void Reset() override
-    {
-        if (HasEscortState(STATE_ESCORT_ESCORTING))
-        { return; }
-
-        // m_creature are expected to always be spawned, but not visible for player
-        // spell casted from quest_template.SrcSpell require this to be this way
-        // we handle the triggered spell to get a "hook" to our guy so he can be escorted on quest accept
-
-        if (CreatureInfo const* pTemp = GetCreatureTemplateStore(m_creature->GetEntry()))
-        { m_creature->SetDisplayId(Creature::ChooseDisplayId(pTemp)); }
-
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        m_creature->SetVisibility(VISIBILITY_OFF);
-    }
-
-    // called only from EffectDummy
-    void DoStart(Unit* pStarter)
-    {
-        // not the best way, maybe check in DummyEffect if this creature are "free" and not in escort.
-        if (HasEscortState(STATE_ESCORT_ESCORTING))
-        { return; }
-
-        m_creature->SetVisibility(VISIBILITY_ON);
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        Start(false, pStarter && pStarter->GetTypeId() == TYPEID_PLAYER ? (Player*)pStarter : NULL);
-    }
-
-    void JustSummoned(Creature* summoned) override
-    {
-        summoned->AI()->AttackStart(m_creature);
+        return new npc_clintar_dw_spiritAI(pCreature);
     }
 };
 
-CreatureAI* GetAI_npc_clintar_dw_spirit(Creature* pCreature)
-{
-    return new npc_clintar_dw_spiritAI(pCreature);
-}
-
 // we expect this spell to be triggered from spell casted at questAccept
-bool EffectDummyCreature_npc_clintar_dw_spirit(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
+struct spell_emerald_dream : public SpellScript
 {
-    // always check spellid and effectindex
-    if (spellId == SPELL_EMERALD_DREAM && effIndex == EFFECT_INDEX_0)
+    spell_emerald_dream() : SpellScript("spell_emerald_dream") {}
+
+    bool EffectDummy(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
-        if (pCaster->GetTypeId() != TYPEID_PLAYER || pCaster->HasAura(SPELL_EMERALD_DREAM))
-        { return true; }
+        // always check spellid and effectindex
+        if (spellId == SPELL_EMERALD_DREAM && effIndex == EFFECT_INDEX_0)
+        {
+            Creature *pCreatureTarget = pTarget->ToCreature();
+            if (pCaster->GetTypeId() != TYPEID_PLAYER || pCaster->HasAura(SPELL_EMERALD_DREAM))
+            {
+                return true;
+            }
 
-        if (pCreatureTarget->GetEntry() != NPC_CLINTAR_DW_SPIRIT)
-        { return true; }
+            if (pCreatureTarget->GetEntry() != NPC_CLINTAR_DW_SPIRIT)
+            {
+                return true;
+            }
 
-        if (CreatureInfo const* pTemp = GetCreatureTemplateStore(NPC_CLINTAR_SPIRIT))
-        { pCreatureTarget->SetDisplayId(Creature::ChooseDisplayId(pTemp)); }
-        else
-        { return true; }
+            if (CreatureInfo const* pTemp = GetCreatureTemplateStore(NPC_CLINTAR_SPIRIT))
+            {
+                pCreatureTarget->SetDisplayId(Creature::ChooseDisplayId(pTemp));
+            }
+            else
+            {
+                return true;
+            }
 
-        // done here, escort can start
-        if (npc_clintar_dw_spiritAI* pSpiritAI = dynamic_cast<npc_clintar_dw_spiritAI*>(pCreatureTarget->AI()))
-        { pSpiritAI->DoStart(pCaster); }
+            // done here, escort can start
+            npc_escortAI *pSpiritAI = (npc_escortAI*)pCreatureTarget->AI();
+            if (!pSpiritAI->HasEscortState(STATE_ESCORT_ESCORTING))
+            {
+                pCreatureTarget->SetVisibility(VISIBILITY_ON);
+                pCreatureTarget->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                pSpiritAI->Start(false, pCaster && pCaster->GetTypeId() == TYPEID_PLAYER ? (Player*)pCaster : NULL);
+            }
 
-        // always return true when we are handling this spell and effect
+            // always return true when we are handling this spell and effect
+            return true;
+        }
         return true;
     }
-    return true;
-}
+};
 #endif
 
 /*######
@@ -1123,17 +1141,18 @@ struct boss_eranikus : public CreatureScript
 void AddSC_moonglade()
 {
     Script* s;
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+    s = new npc_clintar_dw_spirit();
+    s->RegisterSelf();
+    s = new spell_emerald_dream();
+    s->RegisterSelf();
+#endif
     s = new npc_keeper_remulos();
     s->RegisterSelf();
     s = new boss_eranikus();
     s->RegisterSelf();
     s = new spell_conjure_rift();
     s->RegisterSelf();
-
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
-    s = new npc_clintar_dw_spirit;
-    s->RegisterSelf();
-#endif
 
 
 //#if defined (TBC) || defined (WOTLK) || defined (CATA)    

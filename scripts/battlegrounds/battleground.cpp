@@ -58,7 +58,6 @@ enum
     SPELL_SPIRIT_HEAL_MANA          = 44535,                // in battlegrounds player get this no-mana-cost-buff
 #endif
 
-
     SPELL_WAITING_TO_RESURRECT      = 2584                  // players who cancel this aura don't want a resurrection
 };
 
@@ -68,7 +67,6 @@ struct npc_spirit_guide : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* /*pCreature*/) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         pPlayer->CastSpell(pPlayer, SPELL_WAITING_TO_RESURRECT, true);
         return true;
     }
@@ -78,9 +76,8 @@ struct npc_spirit_guide : public CreatureScript
         npc_spirit_guideAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pCreature->SetActiveObjectState(true);
+            Reset();
         }
-
-        void Reset() override {}
 
         void UpdateAI(const uint32 /*uiDiff*/) override
         {
@@ -114,7 +111,7 @@ struct npc_spirit_guide : public CreatureScript
                 // repop player again - now this node won't be counted and another node is searched
                 pPlayer->RepopAtGraveyard();
             }
-        }
+    }
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
     void SpellHitTarget(Unit* pUnit, const SpellEntry* pSpellEntry) override
@@ -122,9 +119,9 @@ struct npc_spirit_guide : public CreatureScript
         if (pSpellEntry->Id == SPELL_SPIRIT_HEAL && pUnit->GetTypeId() == TYPEID_PLAYER
             && pUnit->HasAura(SPELL_WAITING_TO_RESURRECT))
         { pUnit->CastSpell(pUnit, SPELL_SPIRIT_HEAL_MANA, true); }
-    }
-#endif
+        }
     };
+#endif
 
     CreatureAI* GetAI(Creature* pCreature) override
     {

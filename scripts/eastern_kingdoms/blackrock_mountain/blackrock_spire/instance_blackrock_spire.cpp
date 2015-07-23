@@ -105,18 +105,18 @@ struct is_blackrock_spire : public InstanceScript
     {
     public:
         instance_blackrock_spire(Map* pMap) : ScriptedInstance(pMap), DialogueHelper(aStadiumDialogue),
-
-#if defined (TBC)
-            m_bUpperDoorOpened(false),
-            m_uiDragonspineDoorTimer(0),
-            m_uiDragonspineGoCount(0),
-#endif
-
             m_uiFlamewreathEventTimer(0),
             m_uiFlamewreathWaveCount(0),
             m_uiStadiumEventTimer(0),
             m_uiStadiumWaves(0),
+#if defined (TBC)
+            m_uiStadiumMobsAlive(0),
+            m_uiDragonspineDoorTimer(0),
+            m_uiDragonspineGoCount(0),
+            m_bUpperDoorOpened(false)
+#else
             m_uiStadiumMobsAlive(0)
+#endif
         {
             Initialize();
         }
@@ -162,14 +162,14 @@ struct is_blackrock_spire : public InstanceScript
                 break;
 
 #if defined (TBC)
-            case GO_BRAZIER_1:
-            case GO_BRAZIER_2:
-            case GO_BRAZIER_3:
-            case GO_BRAZIER_4:
-            case GO_BRAZIER_5:
-            case GO_BRAZIER_6:
-            case GO_DRAGONSPINE:
-                break;
+        case GO_BRAZIER_1:
+        case GO_BRAZIER_2:
+        case GO_BRAZIER_3:
+        case GO_BRAZIER_4:
+        case GO_BRAZIER_5:
+        case GO_BRAZIER_6:
+        case GO_DRAGONSPINE:
+            break;
 #endif
             case GO_ROOM_1_RUNE:
                 m_aRoomRuneGuid[0] = pGo->GetObjectGuid();
@@ -479,7 +479,9 @@ struct is_blackrock_spire : public InstanceScript
 
         void SetData64(uint32 type, uint64 guid) override
         {
-            if (type == NPC_PYROGUARD_EMBERSEER)
+            switch (type)
+            {
+            case NPC_PYROGUARD_EMBERSEER:
             {
                 Creature *ember = instance->GetCreature(ObjectGuid(guid));
 
@@ -490,6 +492,14 @@ struct is_blackrock_spire : public InstanceScript
                         pIncarcerator->CastSpell(ember, SPELL_ENCAGE_EMBERSEER, false);
                     }
                 }
+                break;
+            }
+            case MAX_ENCOUNTER:
+                if (Player* pPlayer = instance->GetPlayer(ObjectGuid(guid)))
+                    DoOpenUpperDoorIfCan(pPlayer);
+                break;
+            default:
+                break;
             }
         }
 
@@ -515,8 +525,22 @@ struct is_blackrock_spire : public InstanceScript
                 }
             }
 
-            OUT_LOAD_INST_DATA_COMPLETE;
         }
+
+#if defined (TBC)
+        void DoOpenUpperDoorIfCan(Player* pPlayer)
+        {
+            if (m_bUpperDoorOpened)
+                return;
+
+            if (pPlayer->HasItemCount(ITEM_SEAL_OF_ASCENSION, 1))
+            {
+                m_uiDragonspineDoorTimer = 100;
+                m_uiDragonspineGoCount = 0;
+                m_bUpperDoorOpened = true;
+            }
+        }
+#endif  
 
         void Update(uint32 uiDiff) override
         {
@@ -582,22 +606,6 @@ struct is_blackrock_spire : public InstanceScript
             }
 #endif
         }
-
-#if defined (TBC)
-        void instance_blackrock_spire::DoOpenUpperDoorIfCan(Player* pPlayer)
-        {
-            if (m_bUpperDoorOpened)
-                return;
-
-            if (pPlayer->HasItemCount(ITEM_SEAL_OF_ASCENSION, 1))
-            {
-                m_uiDragonspineDoorTimer = 100;
-                m_uiDragonspineGoCount = 0;
-                m_bUpperDoorOpened = true;
-            }
-        }
-#endif  
-
 
         void JustDidDialogueStep(int32 iEntry) override
         {
@@ -878,6 +886,10 @@ struct is_blackrock_spire : public InstanceScript
         uint8 m_uiStadiumWaves;
         uint8 m_uiStadiumMobsAlive;
 
+        bool m_bUpperDoorOpened;
+        uint32 m_uiDragonspineGoCount;
+        uint32 m_uiDragonspineDoorTimer;
+
         ObjectGuid m_aRoomRuneGuid[MAX_ROOMS];
         GuidList m_alRoomEventMobGUIDSorted[MAX_ROOMS];
         GuidList m_lRoomEventMobGUIDList;
@@ -907,11 +919,8 @@ struct at_blackrock_spire : public AreaTriggerScript
         case AREATRIGGER_ENTER_UBRS:
             if (InstanceData* pInstance = pPlayer->GetInstanceData())
             {
-
-#if defined (TBC)    
-                pInstance->DoOpenUpperDoorIfCan(pPlayer);
-#endif
                 pInstance->SetData(MAX_ENCOUNTER, DO_SORT_MOBS);
+                pInstance->SetData64(MAX_ENCOUNTER, pPlayer->GetObjectGuid().GetRawValue());
             }
             break;
         case AREATRIGGER_STADIUM:

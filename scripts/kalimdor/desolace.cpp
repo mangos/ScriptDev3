@@ -153,7 +153,6 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pPlayer->HasAura(SPELL_KODO_KOMBO_PLAYER_BUFF) && pCreature->HasAura(SPELL_KODO_KOMBO_DESPAWN_BUFF))
         {
             // the expected quest objective
@@ -224,8 +223,6 @@ struct npc_dalinda_malem : public CreatureScript
     struct npc_dalinda_malemAI : public npc_escortAI
     {
         npc_dalinda_malemAI(Creature* m_creature) : npc_escortAI(m_creature) { }
-
-        void Reset() override {}
 
         void JustStartedEscort() override
         {
@@ -329,8 +326,6 @@ struct npc_melizza_brimbuzzle : public CreatureScript
         DialogueHelper(aIntroDialogue)
         {
         }
-
-        void Reset() override {}
 
         void JustStartedEscort() override
         {

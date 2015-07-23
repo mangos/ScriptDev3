@@ -109,7 +109,7 @@ void ScriptedPetAI::ResetPetCombat()
 
     m_creature->AttackStop();
 
-    debug_log("sd3: ScriptedPetAI reset pet combat and stop attack.");
+    debug_log("SD3: ScriptedPetAI reset pet combat and stop attack.");
     Reset();
 }
 

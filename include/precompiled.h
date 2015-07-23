@@ -1,10 +1,9 @@
 /**
- * ScriptDev3 is an extension for mangos providing enhanced features for
+ * ScriptDev2 is an extension for mangos providing enhanced features for
  * area triggers, creatures, game objects, instances, items, and spells beyond
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2014-2015  MaNGOS  <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,25 +23,20 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef DEF_STEAM_VAULT_H
-#define DEF_STEAM_VAULT_H
+#ifndef SC_PRECOMPILED_H
+#define SC_PRECOMPILED_H
 
-enum
-{
-    MAX_ENCOUNTER                   = 3,
+#include "../ScriptDevMgr.h"
+#include "Object.h"
+#include "Unit.h"
+#include "Creature.h"
+#include "CreatureAI.h"
+#include "GameObject.h"
+#include "sc_creature.h"
+#include "sc_gossip.h"
+#include "sc_grid_searchers.h"
+#include "sc_instance.h"
+#include "SpellAuras.h"
 
-    TYPE_HYDROMANCER_THESPIA        = 0,
-    TYPE_MEKGINEER_STEAMRIGGER      = 1,
-    TYPE_WARLORD_KALITHRESH         = 2,
-
-    NPC_NAGA_DISTILLER              = 17954,
-    NPC_STEAMRIGGER                 = 17796,
-    NPC_KALITHRESH                  = 17798,
-    // NPC_THESPIA                   = 17797,
-
-    GO_MAIN_CHAMBERS_DOOR           = 183049,
-    GO_ACCESS_PANEL_HYDRO           = 184125,
-    GO_ACCESS_PANEL_MEK             = 184126,
-};
 
 #endif

@@ -70,8 +70,6 @@ struct npc_kaya : public CreatureScript
     {
         npc_kayaAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
-        void Reset() override { }
-
         void JustSummoned(Creature* pSummoned) override
         {
             pSummoned->AI()->AttackStart(m_creature);

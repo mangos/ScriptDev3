@@ -303,8 +303,6 @@ struct npc_ruul_snowhoof : public CreatureScript
     {
         npc_ruul_snowhoofAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
-        void Reset() override {}
-
         void WaypointReached(uint32 uiPointId) override
         {
             switch (uiPointId)

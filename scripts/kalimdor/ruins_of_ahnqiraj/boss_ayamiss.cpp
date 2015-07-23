@@ -324,8 +324,6 @@ struct npc_hive_zara_larva : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset() override { }
-
         void AttackStart(Unit* pWho) override
         {
             // don't attack anything during the Ayamiss encounter

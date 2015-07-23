@@ -435,7 +435,7 @@ struct npc_disciple_of_naralex : public CreatureScript
 #if defined (CLASSIC)  
                                 pNaralex->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
-                                    pNaralex->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+                                    pNaralex->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
 #endif
 
                                 // Set to flying
@@ -505,7 +505,6 @@ struct npc_disciple_of_naralex : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         ScriptedInstance* m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
         if (pCreature->IsQuestGiver())

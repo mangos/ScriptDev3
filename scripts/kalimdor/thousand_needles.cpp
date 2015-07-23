@@ -67,8 +67,6 @@ struct npc_kanati : public CreatureScript
     {
         npc_kanatiAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
-        void Reset() override { }
-
         void WaypointReached(uint32 uiPointId) override
         {
             switch (uiPointId)
@@ -156,8 +154,6 @@ struct npc_lakota_windsong : public CreatureScript
     {
         npc_lakota_windsongAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
-        void Reset() override { }
-
         void WaypointReached(uint32 uiPointId) override
         {
             switch (uiPointId)
@@ -242,8 +238,6 @@ struct npc_paoka_swiftmountain : public CreatureScript
     struct npc_paoka_swiftmountainAI : public npc_escortAI
     {
         npc_paoka_swiftmountainAI(Creature* pCreature) : npc_escortAI(pCreature) { }
-
-        void Reset() override { }
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -401,7 +395,6 @@ struct npc_plucky_johnson : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pPlayer->GetQuestStatus(QUEST_SCOOP) == QUEST_STATUS_INCOMPLETE)
         {
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_QUEST, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);

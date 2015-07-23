@@ -159,8 +159,6 @@ struct npc_shadowfang_prisoner : public CreatureScript
             }
         }
 
-        void Reset() override {}
-
         // Let's prevent Adamant from charging into Ashcrombe's cell
         // And beating the crap out of him and vice versa XD
         void AttackStart(Unit* pWho) override
@@ -186,7 +184,6 @@ struct npc_shadowfang_prisoner : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
         if (pInstance && pInstance->GetData(TYPE_FREE_NPC) != DONE && pInstance->GetData(TYPE_RETHILGORE) == DONE)

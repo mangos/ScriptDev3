@@ -274,8 +274,8 @@ void instance_shadowfang_keep::OnCreatureEvade(Creature* pCreature)
             case TYPE_INTRO:
                 return m_auiEncounter[4];
 #if defined (WOTLK)
-        case TYPE_APOTHECARY:
-            return m_auiEncounter[6];
+            case TYPE_APOTHECARY:
+                return m_auiEncounter[6];
 #endif
             default:
                 return 0;

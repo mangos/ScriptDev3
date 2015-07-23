@@ -214,7 +214,7 @@ void FollowerAI::EnterEvadeMode()
 
     if (HasFollowState(STATE_FOLLOW_INPROGRESS))
     {
-        debug_log("sd3: FollowerAI left combat, returning to CombatStartPosition.");
+        debug_log("SD3: FollowerAI left combat, returning to CombatStartPosition.");
 
         if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() == CHASE_MOTION_TYPE)
         {
@@ -242,7 +242,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
         {
             if (HasFollowState(STATE_FOLLOW_COMPLETE) && !HasFollowState(STATE_FOLLOW_POSTEVENT))
             {
-                debug_log("sd3: FollowerAI is set completed, despawns.");
+                debug_log("SD3: FollowerAI is set completed, despawns.");
                 m_creature->ForcedDespawn();
                 return;
             }
@@ -253,7 +253,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
             {
                 if (HasFollowState(STATE_FOLLOW_RETURNING))
                 {
-                    debug_log("sd3: FollowerAI is returning to leader.");
+                    debug_log("SD3: FollowerAI is returning to leader.");
 
                     RemoveFollowState(STATE_FOLLOW_RETURNING);
                     m_creature->GetMotionMaster()->MoveFollow(pPlayer, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
@@ -284,7 +284,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
 
             if (bIsMaxRangeExceeded)
             {
-                debug_log("sd3: FollowerAI failed because player/group was to far away or not found");
+                debug_log("SD3: FollowerAI failed because player/group was to far away or not found");
                 m_creature->ForcedDespawn();
                 return;
             }
@@ -337,7 +337,7 @@ void FollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const
 {
     if (m_creature->getVictim())
     {
-        debug_log("sd3: FollowerAI attempt to StartFollow while in combat.");
+        debug_log("SD3: FollowerAI attempt to StartFollow while in combat.");
         return;
     }
 
@@ -361,7 +361,7 @@ void FollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const
     {
         m_creature->GetMotionMaster()->Clear();
         m_creature->GetMotionMaster()->MoveIdle();
-        debug_log("sd3: FollowerAI start with WAYPOINT_MOTION_TYPE, set to MoveIdle.");
+        debug_log("SD3: FollowerAI start with WAYPOINT_MOTION_TYPE, set to MoveIdle.");
     }
 
     m_creature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
@@ -370,7 +370,7 @@ void FollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const
 
     m_creature->GetMotionMaster()->MoveFollow(pLeader, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
 
-    debug_log("sd3: FollowerAI start follow %s (Guid %s)", pLeader->GetName(), m_leaderGuid.GetString().c_str());
+    debug_log("SD3: FollowerAI start follow %s (Guid %s)", pLeader->GetName(), m_leaderGuid.GetString().c_str());
 }
 
 Player* FollowerAI::GetLeaderForFollower()
@@ -391,7 +391,7 @@ Player* FollowerAI::GetLeaderForFollower()
 
                     if (pMember && pMember->IsAlive() && m_creature->IsWithinDistInMap(pMember, MAX_PLAYER_DISTANCE))
                     {
-                        debug_log("sd3: FollowerAI GetLeader changed and returned new leader.");
+                        debug_log("SD3: FollowerAI GetLeader changed and returned new leader.");
                         m_leaderGuid = pMember->GetObjectGuid();
                         return pMember;
                     }
@@ -400,7 +400,7 @@ Player* FollowerAI::GetLeaderForFollower()
         }
     }
 
-    debug_log("sd3: FollowerAI GetLeader can not find suitable leader.");
+    debug_log("SD3: FollowerAI GetLeader can not find suitable leader.");
     return NULL;
 }
 

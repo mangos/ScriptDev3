@@ -667,7 +667,6 @@ struct npc_blastmaster_emi_shortfuse : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (InstanceData* pInstance = pCreature->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_GRUBBIS) == NOT_STARTED || pInstance->GetData(TYPE_GRUBBIS) == FAIL)

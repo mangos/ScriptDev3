@@ -459,7 +459,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
         m_bEventStarted = false;
         m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
 #endif
-    }
+        }
 
         void JustDied(Unit* /*pKiller*/)
         {

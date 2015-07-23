@@ -76,7 +76,7 @@ void ScriptedInstance::DoUseDoorOrButton(uint32 uiEntry, uint32 uiWithRestoreTim
     else
         // Output log, possible reason is not added GO to storage, or not yet loaded
     {
-        debug_log("sd3: Script call DoUseDoorOrButton(by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
+        debug_log("SD3: Script call DoUseDoorOrButton(by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
     }
 }
 
@@ -129,7 +129,7 @@ void ScriptedInstance::DoToggleGameObjectFlags(uint32 uiEntry, uint32 uiGOflags,
     else
         // Output log, possible reason is not added GO to storage, or not yet loaded
     {
-        debug_log("sd3: Script call ToogleTameObjectFlags (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
+        debug_log("SD3: Script call ToogleTameObjectFlags (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
     }
 }
 
@@ -171,7 +171,7 @@ void ScriptedInstance::DoRespawnGameObject(uint32 uiEntry, uint32 uiTimeToDespaw
     else
         // Output log, possible reason is not added GO to storage, or not yet loaded;
     {
-        debug_log("sd3: Script call DoRespawnGameObject(by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
+        debug_log("SD3: Script call DoRespawnGameObject(by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
     }
 }
 
@@ -197,7 +197,7 @@ void ScriptedInstance::DoUpdateWorldState(uint32 uiStateId, uint32 uiStateData)
     }
     else
     {
-        debug_log("sd3: DoUpdateWorldState attempt send data but no players in map.");
+        debug_log("SD3: DoUpdateWorldState attempt send data but no players in map.");
     }
 }
 

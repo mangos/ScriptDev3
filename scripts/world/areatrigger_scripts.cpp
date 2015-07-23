@@ -139,7 +139,7 @@ struct at_coilfang_waterfall : public AreaTriggerScript
 {
     at_coilfang_waterfall() : AreaTriggerScript("at_coilfang_waterfall") {}
 
-    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
     {
         if (GameObject* pGo = GetClosestGameObjectWithEntry(pPlayer, GO_COILFANG_WATERFALL, 35.0f))
         {
@@ -186,7 +186,6 @@ struct at_legion_teleporter : public AreaTriggerScript
             }
             return false;
         }
-
         return false;
     }
 };
@@ -523,13 +522,6 @@ void AddSC_areatrigger_scripts()
     s = new at_aldurthar_gate();
     s->RegisterSelf();
 #endif	
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
-    s = new at_coilfang_waterfall();
-    s->RegisterSelf();
-
-    s = new at_legion_teleporter();
-    s->RegisterSelf();
-#endif
     s = new at_ravenholdt();
     s->RegisterSelf();
 
@@ -552,10 +544,27 @@ void AddSC_areatrigger_scripts()
     s = new at_murkdeep();
     s->RegisterSelf();
 
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+    s = new at_coilfang_waterfall();
+    s->RegisterSelf();
+
+    s = new at_legion_teleporter();
+    s->RegisterSelf();
+#endif
+
     //pNewScript = new Script;
     //pNewScript->Name = "at_childrens_week_spot";
     //pNewScript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
     //pNewScript->RegisterSelf();
+
+    //pNewScript = new Script;
+    //pNewScript->Name = "at_coilfang_waterfall";
+    //pNewScript->pAreaTrigger = &AreaTrigger_at_coilfang_waterfall;
+    //pNewScript->RegisterSelf();
+
+    //pNewScript = new Script;
+    //pNewScript->Name = "at_legion_teleporter";
+    //pNewScript->pAreaTrigger = &AreaTrigger_at_legion_teleporter;
 
     //pNewScript = new Script;
     //pNewScript->Name = "at_ravenholdt";

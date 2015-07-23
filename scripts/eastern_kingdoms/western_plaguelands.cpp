@@ -60,8 +60,6 @@ struct npc_the_scourge_cauldron : public CreatureScript
     {
         npc_the_scourge_cauldronAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
-        void Reset() override {}
-
         void DoDie()
         {
             // summoner dies here
@@ -155,27 +153,29 @@ enum
     QUEST_ID_TOMB_LIGHTBRINGER  = 9446,
 };
 
-struct npc_anchorite_truuenAI: public npc_escortAI
+struct npc_anchorite_truuen : public CreatureScript
 {
-    npc_anchorite_truuenAI(Creature* pCreature): npc_escortAI(pCreature) { }
+    npc_anchorite_truuen() : CreatureScript("npc_anchorite_truuen") {}
 
-    ObjectGuid m_utherGhostGuid;
-
-    void Reset() override { }
-
-    void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
+    struct npc_anchorite_truuenAI : public npc_escortAI
     {
-        if (eventType == AI_EVENT_START_ESCORT && pInvoker->GetTypeId() == TYPEID_PLAYER)
+        npc_anchorite_truuenAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+
+        ObjectGuid m_utherGhostGuid;
+
+        void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
         {
-            DoScriptText(SAY_BEGIN, m_creature);
-            Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue));
+            if (eventType == AI_EVENT_START_ESCORT && pInvoker->GetTypeId() == TYPEID_PLAYER)
+            {
+                DoScriptText(SAY_BEGIN, m_creature);
+                Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue));
+            }
         }
-    }
 
-    void WaypointReached(uint32 uiPointId) override
-    {
-        switch (uiPointId)
+        void WaypointReached(uint32 uiPointId) override
         {
+            switch (uiPointId)
+            {
             case 4:
                 DoScriptText(SAY_FIRST_STOP, m_creature);
                 break;
@@ -227,30 +227,31 @@ struct npc_anchorite_truuenAI: public npc_escortAI
             case 41:
                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
                 break;
+            }
         }
+
+        void JustSummoned(Creature* pSummoned) override
+        {
+            if (pSummoned->GetEntry() != NPC_GHOST_OF_UTHER)
+                pSummoned->AI()->AttackStart(m_creature);
+            else
+                m_utherGhostGuid = pSummoned->GetObjectGuid();
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_anchorite_truuenAI(pCreature);
     }
 
-    void JustSummoned(Creature* pSummoned) override
+    bool OnQuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest) override
     {
-        if (pSummoned->GetEntry() != NPC_GHOST_OF_UTHER)
-            pSummoned->AI()->AttackStart(m_creature);
-        else
-            m_utherGhostGuid = pSummoned->GetObjectGuid();
+        if (pQuest->GetQuestId() == QUEST_ID_TOMB_LIGHTBRINGER)
+            pCreature->AI()->SendAIEvent(AI_EVENT_START_ESCORT, pPlayer, pCreature, pQuest->GetQuestId());
+
+        return true;
     }
 };
-
-CreatureAI* GetAI_npc_anchorite_truuen(Creature* pCreature)
-{
-    return new npc_anchorite_truuenAI(pCreature);
-}
-
-bool QuestAccept_npc_anchorite_truuen(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
-{
-    if (pQuest->GetQuestId() == QUEST_ID_TOMB_LIGHTBRINGER)
-        pCreature->AI()->SendAIEvent(AI_EVENT_START_ESCORT, pPlayer, pCreature, pQuest->GetQuestId());
-
-    return true;
-}
 #endif
 
 /*######
@@ -1128,6 +1129,8 @@ void AddSC_western_plaguelands()
     s = new npc_tirion_fordring();
     s->RegisterSelf();
     s = new spell_npc_taelan_fordring();
+    s->RegisterSelf();
+    s = new npc_anchorite_truuen();
     s->RegisterSelf();
 
     //pNewScript = new Script;

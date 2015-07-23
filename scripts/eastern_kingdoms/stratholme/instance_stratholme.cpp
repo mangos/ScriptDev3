@@ -257,7 +257,7 @@ struct is_stratholme : public InstanceScript
                     DoOrSimulateScriptTextForThisInstance(SAY_ANNOUNCE_RUN_START, NPC_BARON);
 
                     m_uiBaronRunTimer = 45 * MINUTE * IN_MILLISECONDS;
-                    debug_log("sd3: Instance Stratholme: Baron run in progress.");
+                    debug_log("SD3: Instance Stratholme: Baron run in progress.");
                     break;
                 case FAIL:
                     // may add code to remove aura from players, but in theory the time should be up already and removed.
@@ -327,12 +327,12 @@ struct is_stratholme : public InstanceScript
                                 pRamstein->GetMotionMaster()->MovePoint(0, aStratholmeLocation[3].m_fX, aStratholmeLocation[3].m_fY, aStratholmeLocation[3].m_fZ);
                             }
 
-                        debug_log("sd3: Instance Stratholme - Slaughter event: Ramstein spawned.");
+                            debug_log("SD3: Instance Stratholme - Slaughter event: Ramstein spawned.");
                         }
                     }
                     else
                     {
-                    debug_log("sd3: Instance Stratholme - Slaughter event: %u Abomination left to kill.", uiCount);
+                        debug_log("SD3: Instance Stratholme - Slaughter event: %u Abomination left to kill.", uiCount);
                     }
                 }
                 // After fail aggroing Ramstein means wipe on Ramstein, so close door again
@@ -362,7 +362,7 @@ struct is_stratholme : public InstanceScript
                             }
                         }
 
-                    debug_log("sd3: Instance Stratholme - Slaughter event: Summoned 5 guards.");
+                        debug_log("SD3: Instance Stratholme - Slaughter event: Summoned 5 guards.");
                     }
                 }
                 // Open Door again and stop Abomination
@@ -770,7 +770,7 @@ struct is_stratholme : public InstanceScript
                     DoOrSimulateScriptTextForThisInstance(SAY_ANNOUNCE_RUN_FAIL, NPC_BARON);
 
                     m_uiBaronRunTimer = 0;
-            debug_log("sd3: Instance Stratholme: Baron run event reached end. Event has state %u.", GetData(TYPE_BARON_RUN));
+                    debug_log("SD3: Instance Stratholme: Baron run event reached end. Event has state %u.", GetData(TYPE_BARON_RUN));
                 }
                 else
                 {
@@ -895,7 +895,7 @@ struct is_stratholme : public InstanceScript
                 DoUseDoorOrButton(GO_PORT_GAUNTLET);
                 DoUseDoorOrButton(GO_PORT_SLAUGTHER);
 
-                debug_log("sd3: Instance Stratholme: Open slaughter square.");
+                debug_log("SD3: Instance Stratholme: Open slaughter square.");
 
                 return true;
             }

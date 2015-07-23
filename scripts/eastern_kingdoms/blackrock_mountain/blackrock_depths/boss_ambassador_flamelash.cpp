@@ -50,7 +50,7 @@ struct boss_ambassador_flamelash : public CreatureScript
 
     struct boss_ambassador_flamelashAI : public ScriptedAI
     {
-        boss_ambassador_flamelashAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_ambassador_flamelashAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
         uint32 m_uiSpiritTimer;
         int Rand;

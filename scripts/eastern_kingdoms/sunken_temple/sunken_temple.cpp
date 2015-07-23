@@ -119,7 +119,6 @@ struct npc_malfurion : public CreatureScript
         uint32 m_uiSayTimer;
         uint32 m_uiSpeech;
 
-        void Reset() override {}
         void UpdateAI(const uint32 uiDiff) override
         {
             // We are in Sunken Temple

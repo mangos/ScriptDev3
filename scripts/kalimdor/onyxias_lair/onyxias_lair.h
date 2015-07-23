@@ -54,30 +54,4 @@ enum
 #endif
 };
 
-class instance_onyxias_lair : public ScriptedInstance
-{
-    public:
-        instance_onyxias_lair(Map* pMap);
-        ~instance_onyxias_lair() {}
-
-        void Initialize() override;
-
-        bool IsEncounterInProgress() const override;
-
-        void OnCreatureCreate(Creature* pCreature) override;
-
-        void SetData(uint32 uiType, uint32 uiData) override;
-
-#if defined (WOTLK)
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
-#endif
-    protected:
-        uint32 m_uiEncounter;
-#if defined (WOTLK)
-        uint32 m_uiAchievWhelpsCount;
-#endif
-
-        time_t m_tPhaseTwoStart;
-};
-
 #endif

@@ -303,7 +303,6 @@ struct npc_general_andorov : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_RAJAXX) == IN_PROGRESS)

@@ -55,8 +55,6 @@ struct npc_ragged_john : public CreatureScript
     {
         npc_ragged_johnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
-        void Reset() override {}
-
         void MoveInLineOfSight(Unit* who) override
         {
             if (who->HasAura(16468, EFFECT_INDEX_0))
@@ -92,7 +90,6 @@ struct npc_ragged_john : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override   //TODO localisation setup
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pCreature->IsQuestGiver())
         {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());

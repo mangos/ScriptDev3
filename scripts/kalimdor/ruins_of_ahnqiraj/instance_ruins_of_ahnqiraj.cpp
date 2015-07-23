@@ -213,26 +213,24 @@ struct is_ruins_of_ahnqiraj : public InstanceScript
             case NPC_CAPTAIN_QEEZ:
             case NPC_QIRAJI_WARRIOR:
             case NPC_SWARMGUARD_NEEDLER:
-            {
-                                           // If event isn't started by Andorov, return
-                                           if (GetData(TYPE_RAJAXX) != IN_PROGRESS)
-                                           {
-                                               return;
-                                           }
+                // If event isn't started by Andorov, return
+                if (GetData(TYPE_RAJAXX) != IN_PROGRESS)
+                {
+                    return;
+                }
 
-                                           // Check if the dead creature belongs to the current wave
-                                           if (m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].find(pCreature->GetObjectGuid()) != m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].end())
-                                           {
-                                               m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].erase(pCreature->GetObjectGuid());
+                // Check if the dead creature belongs to the current wave
+                if (m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].find(pCreature->GetObjectGuid()) != m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].end())
+                {
+                    m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].erase(pCreature->GetObjectGuid());
 
-                                               // If all the soldiers from the current wave are dead, then send the next one
-                                               if (m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].empty())
-                                               {
-                                                   DoSendNextArmyWave();
-                                               }
-                                           }
-                                           break;
-            }
+                    // If all the soldiers from the current wave are dead, then send the next one
+                    if (m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].empty())
+                    {
+                        DoSendNextArmyWave();
+                    }
+                }
+                break;
             }
         }
 

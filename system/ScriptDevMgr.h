@@ -270,57 +270,6 @@ struct AchievementScript : public Script
     AchievementScript(const char* name) : Script(SCRIPTED_ACHIEVEMENT, name) {}
 };
 
-//struct Script
-//{
-//    Script() :
-//        pGossipHello(NULL), pGossipHelloGO(NULL), pGossipSelect(NULL), pGossipSelectGO(NULL),
-//        pGossipSelectWithCode(NULL), pGossipSelectGOWithCode(NULL),
-//        pDialogStatusNPC(NULL), pDialogStatusGO(NULL),
-//        pQuestAcceptNPC(NULL), pQuestAcceptGO(NULL), pQuestAcceptItem(NULL),
-//        pQuestRewardedNPC(NULL), pQuestRewardedGO(NULL),
-//#if defined (CLASSIC) || defined (TBC)
-//        pGOUse(NULL), pItemUse(NULL), pAreaTrigger(NULL), pProcessEventId(NULL),
-//#else
-//        pGOUse(NULL), pItemUse(NULL), pAreaTrigger(NULL), pNpcSpellClick(NULL), pProcessEventId(NULL),
-//#endif
-//        pEffectDummyNPC(NULL), pEffectDummyGO(NULL), pEffectDummyItem(NULL), pEffectScriptEffectNPC(NULL),
-//        pEffectAuraDummy(NULL), GetAI(NULL), GetInstanceData(NULL)
-//    {}
-//
-//    std::string Name;
-//
-//    bool (*pGossipHello)(Player*, Creature*);
-//    bool (*pGossipHelloGO)(Player*, GameObject*);
-//    bool (*pGossipSelect)(Player*, Creature*, uint32, uint32);
-//    bool (*pGossipSelectGO)(Player*, GameObject*, uint32, uint32);
-//    bool (*pGossipSelectWithCode)(Player*, Creature*, uint32, uint32, const char*);
-//    bool (*pGossipSelectGOWithCode)(Player*, GameObject*, uint32, uint32, const char*);
-//    uint32(*pDialogStatusNPC)(Player*, Creature*);
-//    uint32(*pDialogStatusGO)(Player*, GameObject*);
-//    bool (*pQuestAcceptNPC)(Player*, Creature*, Quest const*);
-//    bool (*pQuestAcceptGO)(Player*, GameObject*, Quest const*);
-//    bool (*pQuestAcceptItem)(Player*, Item*, Quest const*);
-//    bool (*pQuestRewardedNPC)(Player*, Creature*, Quest const*);
-//    bool (*pQuestRewardedGO)(Player*, GameObject*, Quest const*);
-//    bool (*pGOUse)(Player*, GameObject*);
-//    bool (*pItemUse)(Player*, Item*, SpellCastTargets const&);
-//    bool (*pAreaTrigger)(Player*, AreaTriggerEntry const*);
-//#if defined (WOTLK)
-//    bool (*pNpcSpellClick)(Player*, Creature*, uint32);
-//#endif
-//    bool (*pProcessEventId)(uint32, Object*, Object*, bool);
-//    bool (*pEffectDummyNPC)(Unit*, uint32, SpellEffectIndex, Creature*, ObjectGuid);
-//    bool (*pEffectDummyGO)(Unit*, uint32, SpellEffectIndex, GameObject*, ObjectGuid);
-//    bool (*pEffectDummyItem)(Unit*, uint32, SpellEffectIndex, Item*, ObjectGuid);
-//    bool (*pEffectScriptEffectNPC)(Unit*, uint32, SpellEffectIndex, Creature*, ObjectGuid);
-//    bool (*pEffectAuraDummy)(const Aura*, bool);
-//
-//    CreatureAI* (*GetAI)(Creature*);
-//    InstanceData* (*GetInstanceData)(Map*);
-//
-//    void RegisterSelf(bool bReportError = true);
-//};
-
 // *********************************************************
 // ************* Some functions used globally **************
 

@@ -349,8 +349,6 @@ bool SD3::GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSe
         return false;
     }
 
-    //pPlayer->PlayerTalkClass->ClearMenus();
-
     return pTempScript->ToCreatureScript()->OnGossipSelectWithCode(pPlayer, pCreature, uiSender, uiAction, sCode);
 }
 
@@ -364,8 +362,6 @@ bool SD3::GOGossipSelectWithCode(Player* pPlayer, GameObject* pGo, uint32 uiSend
     {
         return false;
     }
-
-    //pPlayer->PlayerTalkClass->ClearMenus();
 
     return pTempScript->ToGameObjectScript()->OnGossipSelectWithCode(pPlayer, pGo, uiSender, uiAction, sCode);
 }
@@ -525,7 +521,6 @@ CreatureAI* SD3::GetCreatureAI(Creature* pCreature)
     {
         return NULL;
     }
-
     CreatureAI* ai = pTempScript->ToCreatureScript()->GetAI(pCreature);
     if (ai)
         ai->Reset();
@@ -642,11 +637,3 @@ InstanceData* SD3::CreateInstanceData(Map* pMap)
 
     return pTempScript->ToInstanceScript()->GetInstanceData(pMap);
 }
-
-//#ifdef WIN32
-//#  include <windows.h>
-//BOOL APIENTRY DllMain(HANDLE /*hModule*/, DWORD /*ul_reason_for_call*/, LPVOID /*lpReserved*/)
-//{
-//    return true;
-//}
-//#endif

@@ -116,92 +116,108 @@ SpawnAssociation m_aSpawnAssociations[] =
     {22126, 22122, SPAWNTYPE_ALARMBOT}                      // Air Force Trip Wire - Rooftop (Cenarion Expedition)
 };
 
-struct npc_air_force_botsAI : public ScriptedAI
+struct npc_air_force_bots : public CreatureScript
 {
-    npc_air_force_botsAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pSpawnAssoc = NULL;
+    npc_air_force_bots() : CreatureScript("npc_air_force_bots") {}
 
-        // find the correct spawnhandling
-        for (uint8 i = 0; i < countof(m_aSpawnAssociations); ++i)
+    struct npc_air_force_botsAI : public ScriptedAI
+    {
+        npc_air_force_botsAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            if (m_aSpawnAssociations[i].m_uiThisCreatureEntry == pCreature->GetEntry())
+            m_pSpawnAssoc = NULL;
+
+            // find the correct spawnhandling
+            for (uint8 i = 0; i < countof(m_aSpawnAssociations); ++i)
             {
-                m_pSpawnAssoc = &m_aSpawnAssociations[i];
-                break;
+                if (m_aSpawnAssociations[i].m_uiThisCreatureEntry == pCreature->GetEntry())
+                {
+                    m_pSpawnAssoc = &m_aSpawnAssociations[i];
+                    break;
+                }
+            }
+
+            if (!m_pSpawnAssoc)
+            {
+                error_db_log("SD3: Creature template entry %u has ScriptName npc_air_force_bots, but it's not handled by that script", pCreature->GetEntry());
+            }
+            else
+            {
+                CreatureInfo const* spawnedTemplate = GetCreatureTemplateStore(m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+
+                if (!spawnedTemplate)
+                {
+                    error_db_log("SD3: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+                    m_pSpawnAssoc = NULL;
+                    return;
+                }
             }
         }
 
-        if (!m_pSpawnAssoc)
-        { error_db_log("SD3: Creature template entry %u has ScriptName npc_air_force_bots, but it's not handled by that script", pCreature->GetEntry()); }
-        else
-        {
-            CreatureInfo const* spawnedTemplate = GetCreatureTemplateStore(m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+        SpawnAssociation* m_pSpawnAssoc;
+        ObjectGuid m_spawnedGuid;
 
-            if (!spawnedTemplate)
+        Creature* SummonGuard()
+        {
+            Creature* pSummoned = m_creature->SummonCreature(m_pSpawnAssoc->m_uiSpawnedCreatureEntry, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 300000);
+
+            if (pSummoned)
             {
-                error_db_log("SD3: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+                m_spawnedGuid = pSummoned->GetObjectGuid();
+            }
+            else
+            {
+                error_db_log("SD3: npc_air_force_bots: wasn't able to spawn creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
                 m_pSpawnAssoc = NULL;
+            }
+
+            return pSummoned;
+        }
+
+        Creature* GetSummonedGuard()
+        {
+            Creature* pCreature = m_creature->GetMap()->GetCreature(m_spawnedGuid);
+
+            if (pCreature && pCreature->IsAlive())
+            {
+                return pCreature;
+            }
+
+            return NULL;
+        }
+
+        void MoveInLineOfSight(Unit* pWho) override
+        {
+            if (!m_pSpawnAssoc)
+            {
                 return;
             }
-        }
-    }
 
-    SpawnAssociation* m_pSpawnAssoc;
-    ObjectGuid m_spawnedGuid;
-
-    void Reset() override { }
-
-    Creature* SummonGuard()
-    {
-        Creature* pSummoned = m_creature->SummonCreature(m_pSpawnAssoc->m_uiSpawnedCreatureEntry, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 300000);
-
-        if (pSummoned)
-        { m_spawnedGuid = pSummoned->GetObjectGuid(); }
-        else
-        {
-            error_db_log("SD3: npc_air_force_bots: wasn't able to spawn creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
-            m_pSpawnAssoc = NULL;
-        }
-
-        return pSummoned;
-    }
-
-    Creature* GetSummonedGuard()
-    {
-        Creature* pCreature = m_creature->GetMap()->GetCreature(m_spawnedGuid);
-
-        if (pCreature && pCreature->IsAlive())
-        { return pCreature; }
-
-        return NULL;
-    }
-
-    void MoveInLineOfSight(Unit* pWho) override
-    {
-        if (!m_pSpawnAssoc)
-        { return; }
-
-        if (pWho->IsTargetableForAttack() && m_creature->IsHostileTo(pWho))
-        {
-            Player* pPlayerTarget = pWho->GetTypeId() == TYPEID_PLAYER ? (Player*)pWho : NULL;
-
-            // airforce guards only spawn for players
-            if (!pPlayerTarget)
-            { return; }
-
-            Creature* pLastSpawnedGuard = m_spawnedGuid ? GetSummonedGuard() : NULL;
-
-            // prevent calling GetCreature at next MoveInLineOfSight call - speedup
-            if (!pLastSpawnedGuard)
-            { m_spawnedGuid.Clear(); }
-
-            switch (m_pSpawnAssoc->m_SpawnType)
+            if (pWho->IsTargetableForAttack() && m_creature->IsHostileTo(pWho))
             {
+                Player* pPlayerTarget = pWho->GetTypeId() == TYPEID_PLAYER ? (Player*)pWho : NULL;
+
+                // airforce guards only spawn for players
+                if (!pPlayerTarget)
+                {
+                    return;
+                }
+
+                Creature* pLastSpawnedGuard = m_spawnedGuid ? GetSummonedGuard() : NULL;
+
+                // prevent calling GetCreature at next MoveInLineOfSight call - speedup
+                if (!pLastSpawnedGuard)
+                {
+                    m_spawnedGuid.Clear();
+                }
+
+                switch (m_pSpawnAssoc->m_SpawnType)
+                {
                 case SPAWNTYPE_ALARMBOT:
                 {
                     if (!pWho->IsWithinDistInMap(m_creature, RANGE_GUARDS_MARK))
-                    { return; }
+                    {
+                        return;
+                    }
 
                     Aura* pMarkAura = pWho->GetAura(SPELL_GUARDS_MARK, EFFECT_INDEX_0);
                     if (pMarkAura)
@@ -212,22 +228,30 @@ struct npc_air_force_botsAI : public ScriptedAI
                             pLastSpawnedGuard = SummonGuard();
 
                             if (!pLastSpawnedGuard)
-                            { return; }
+                            {
+                                return;
+                            }
                         }
 
                         if (pMarkAura->GetAuraDuration() < AURA_DURATION_TIME_LEFT)
                         {
                             if (!pLastSpawnedGuard->getVictim())
-                            { pLastSpawnedGuard->AI()->AttackStart(pWho); }
+                            {
+                                pLastSpawnedGuard->AI()->AttackStart(pWho);
+                            }
                         }
                     }
                     else
                     {
                         if (!pLastSpawnedGuard)
-                        { pLastSpawnedGuard = SummonGuard(); }
+                        {
+                            pLastSpawnedGuard = SummonGuard();
+                        }
 
                         if (!pLastSpawnedGuard)
-                        { return; }
+                        {
+                            return;
+                        }
 
                         pLastSpawnedGuard->CastSpell(pWho, SPELL_GUARDS_MARK, true);
                     }
@@ -236,31 +260,40 @@ struct npc_air_force_botsAI : public ScriptedAI
                 case SPAWNTYPE_TRIPWIRE_ROOFTOP:
                 {
                     if (!pWho->IsWithinDistInMap(m_creature, RANGE_TRIPWIRE))
-                    { return; }
+                    {
+                        return;
+                    }
 
                     if (!pLastSpawnedGuard)
-                    { pLastSpawnedGuard = SummonGuard(); }
+                    {
+                        pLastSpawnedGuard = SummonGuard();
+                    }
 
                     if (!pLastSpawnedGuard)
-                    { return; }
+                    {
+                        return;
+                    }
 
                     // ROOFTOP only triggers if the player is on the ground
                     if (!pPlayerTarget->IsFlying())
                     {
                         if (!pLastSpawnedGuard->getVictim())
-                        { pLastSpawnedGuard->AI()->AttackStart(pWho); }
+                        {
+                            pLastSpawnedGuard->AI()->AttackStart(pWho);
+                        }
                     }
                     break;
                 }
+                }
             }
         }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_air_force_botsAI(pCreature);
     }
 };
-
-CreatureAI* GetAI_npc_air_force_bots(Creature* pCreature)
-{
-    return new npc_air_force_botsAI(pCreature);
-}
 #endif
 
 /*########
@@ -393,40 +426,45 @@ enum
     SPELL_FIERY_SEDUCTION = 47057
 };
 
-struct npc_dancing_flamesAI : public ScriptedAI
+struct npc_dancing_flames : public CreatureScript
 {
-    npc_dancing_flamesAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    npc_dancing_flames() : CreatureScript("npc_dancing_flames") {}
 
-    void Reset() override {}
-
-    void ReceiveEmote(Player* pPlayer, uint32 uiEmote) override
+    struct npc_dancing_flamesAI : public ScriptedAI
     {
-        m_creature->SetFacingToObject(pPlayer);
+        npc_dancing_flamesAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
-        if (pPlayer->HasAura(SPELL_FIERY_SEDUCTION))
-        { pPlayer->RemoveAurasDueToSpell(SPELL_FIERY_SEDUCTION); }
-
-        if (pPlayer->IsMounted())
+        void ReceiveEmote(Player* pPlayer, uint32 uiEmote) override
         {
-            pPlayer->Unmount();                             // doesnt remove mount aura
-            pPlayer->RemoveSpellsCausingAura(SPELL_AURA_MOUNTED);
-        }
+            m_creature->SetFacingToObject(pPlayer);
 
-        switch (uiEmote)
-        {
+            if (pPlayer->HasAura(SPELL_FIERY_SEDUCTION))
+            {
+                pPlayer->RemoveAurasDueToSpell(SPELL_FIERY_SEDUCTION);
+            }
+
+            if (pPlayer->IsMounted())
+            {
+                pPlayer->Unmount();                             // doesnt remove mount aura
+                pPlayer->RemoveSpellsCausingAura(SPELL_AURA_MOUNTED);
+            }
+
+            switch (uiEmote)
+            {
             case TEXTEMOTE_DANCE: DoCastSpellIfCan(pPlayer, SPELL_FIERY_SEDUCTION); break;// dance -> cast SPELL_FIERY_SEDUCTION
             case TEXTEMOTE_WAVE:  m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);      break;// wave -> wave
             case TEXTEMOTE_JOKE:  m_creature->HandleEmote(EMOTE_STATE_LAUGH);       break;// silly -> laugh(with sound)
             case TEXTEMOTE_BOW:   m_creature->HandleEmote(EMOTE_ONESHOT_BOW);       break;// bow -> bow
             case TEXTEMOTE_KISS:  m_creature->HandleEmote(TEXTEMOTE_CURTSEY);       break;// kiss -> curtsey
+            }
         }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_dancing_flamesAI(pCreature);
     }
 };
-
-CreatureAI* GetAI_npc_dancing_flames(Creature* pCreature)
-{
-    return new npc_dancing_flamesAI(pCreature);
-}
 #endif
 
 /*######
@@ -532,7 +570,12 @@ struct npc_doctor : public CreatureScript
             m_uiPatientSavedCount = 0;
 
             m_lPatientGuids.clear();
-            m_vPatientSummonCoordinates.clear();
+            if (!m_vPatientSummonCoordinates.empty())
+            {
+                for (std::vector<Location*>::iterator itr = m_vPatientSummonCoordinates.begin(); itr != m_vPatientSummonCoordinates.end(); ++itr)
+                    delete (*itr);
+                m_vPatientSummonCoordinates.clear();
+            }
 
             m_bIsEventInProgress = false;
 
@@ -553,13 +596,13 @@ struct npc_doctor : public CreatureScript
             case DOCTOR_ALLIANCE:
                 for (uint8 i = 0; i < ALLIANCE_COORDS; ++i)
                 {
-                    m_vPatientSummonCoordinates.push_back(&AllianceCoords[i]);
+                    m_vPatientSummonCoordinates.push_back(new Location(AllianceCoords[i]));
                 }
                 break;
             case DOCTOR_HORDE:
                 for (uint8 i = 0; i < HORDE_COORDS; ++i)
                 {
-                    m_vPatientSummonCoordinates.push_back(&HordeCoords[i]);
+                    m_vPatientSummonCoordinates.push_back(new Location(HordeCoords[i]));
                 }
                 break;
             }
@@ -697,8 +740,10 @@ struct npc_doctor : public CreatureScript
                         if (CreatureAI* pPatientAI = Patient->AI())
                         {
                             SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, Patient);
+
                             //pPatientAI->m_doctorGuid = m_creature->GetObjectGuid();
                             //pPatientAI->m_pCoord = *itr;
+                            delete (*itr);
                             m_vPatientSummonCoordinates.erase(itr);
                         }
                     }
@@ -711,7 +756,14 @@ struct npc_doctor : public CreatureScript
                 }
             }
         }
+
+
     };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_doctorAI(pCreature);
+    }
 
     bool OnQuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest) override
     {
@@ -724,11 +776,6 @@ struct npc_doctor : public CreatureScript
         }
 
         return true;
-    }
-
-    CreatureAI* GetAI(Creature* pCreature) override
-    {
-        return new npc_doctorAI(pCreature);
     }
 };
 
@@ -944,7 +991,7 @@ struct npc_garments_of_quests : public CreatureScript
             m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
             // expect database to have RegenHealth=0
             m_creature->SetHealth(int(m_creature->GetMaxHealth() * 0.7));
-        m_creature->SetPvP(true);   // allow the mob to be healed by player
+            m_creature->SetPvP(true);   // allow the mob to be healed by player
         }
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
@@ -1134,7 +1181,7 @@ struct npc_guardian : public CreatureScript
 
     struct npc_guardianAI : public ScriptedAI
     {
-        npc_guardianAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_guardianAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
         void Reset() override
         {
@@ -1176,7 +1223,7 @@ enum
     SPELL_TRICK_OR_TREAT            = 24751,                // create item or random buff
     SPELL_TRICK_OR_TREATED          = 24755,                // buff player get when tricked or treated
 };
-
+//TODO prepare for localisation
 #define GOSSIP_ITEM_TRICK_OR_TREAT  "Trick or Treat!"
 #define GOSSIP_ITEM_WHAT_TO_DO      "What can I do at an Inn?"
 
@@ -1186,7 +1233,6 @@ struct npc_innkeeper : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         pPlayer->PrepareGossipMenu(pCreature, pPlayer->GetDefaultGossipMenuForSource(pCreature));
 
         if (IsHolidayActive(HOLIDAY_HALLOWS_END) && !pPlayer->HasAura(SPELL_TRICK_OR_TREATED, EFFECT_INDEX_0))
@@ -1201,7 +1247,9 @@ struct npc_innkeeper : public CreatureScript
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
         if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
 #endif
-        { pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1); }
+            {
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            }
         }
 
         pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
@@ -1509,7 +1557,6 @@ struct npc_redemption_target : public CreatureScript
                 if (m_uiEvadeTimer <= uiDiff)
                 {
                     EnterEvadeMode();
-                    m_uiEvadeTimer = 0;
                 }
                 else
                 {
@@ -1525,18 +1572,18 @@ struct npc_redemption_target : public CreatureScript
     }
 };
 
-struct spell_npc_redemption_target : public SpellScript
+struct spell_symbol_of_life : public SpellScript
 {
-    spell_npc_redemption_target() : SpellScript("spell_npc_redemption_target") {}
+    spell_symbol_of_life() : SpellScript("spell_symbol_of_life") {}
 
-    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pCreatureTarget, ObjectGuid /*originalCasterGuid*/) override
+    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
         // always check spellid and effectindex
         if ((uiSpellId == SPELL_SYMBOL_OF_LIFE || uiSpellId == SPELL_SHIMMERING_VESSEL) && uiEffIndex == EFFECT_INDEX_0)
         {
-            if (CreatureAI* pTargetAI = pCreatureTarget->ToCreature()->AI())
+            if (CreatureAI* pTargetAI = pTarget->ToCreature()->AI())
             {
-                pTargetAI->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget->ToCreature());//>DoReviveSelf(pCaster->GetObjectGuid());
+                pTargetAI->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pTarget->ToCreature());//>DoReviveSelf(pCaster->GetObjectGuid());
             }
 
             // always return true when we are handling this spell and effect
@@ -1550,8 +1597,16 @@ struct spell_npc_redemption_target : public SpellScript
 void AddSC_npcs_special()
 {
     Script* s;
+    s = new npc_air_force_bots();
+    s->RegisterSelf();
     s = new npc_chicken_cluck();
     s->RegisterSelf();
+
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+    s = new npc_dancing_flames();
+    s->RegisterSelf();
+#endif
+
     s = new npc_doctor();
     s->RegisterSelf();
     s = new npc_injured_patient();
@@ -1561,19 +1616,14 @@ void AddSC_npcs_special()
     s = new npc_guardian();
     s->RegisterSelf();
     s = new npc_innkeeper();
-    s->RegisterSelf(false);
+    s->RegisterSelf();
     s = new npc_redemption_target();
     s->RegisterSelf();
-    s = new spell_npc_redemption_target();
+    s = new spell_symbol_of_life();
     s->RegisterSelf();
-
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
-    s = new npc_dancing_flames;
-    s->RegisterSelf();
-#endif
 
 #if defined (WOTLK) || defined (CATA) 
-    s = new npc_spring_rabbit;
+    s = new npc_spring_rabbit();
     s->RegisterSelf();
 #endif
 

@@ -85,8 +85,6 @@ struct npc_willix_the_importer : public CreatureScript
     {
         npc_willix_the_importerAI(Creature* m_creature) : npc_escortAI(m_creature) { }
 
-        void Reset() override {}
-
         // Exact use of these texts remains unknown, it seems that he should only talk when he initiates the attack or he is the first who is attacked by a npc
         void Aggro(Unit* pWho) override
         {

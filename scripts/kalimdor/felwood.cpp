@@ -63,7 +63,7 @@ enum
     NPC_WINNA                   = 9996,
     NPC_CORRUPT_SABER           = 10042
 };
-
+//TODO
 #define GOSSIP_ITEM_RELEASE     "I want to release the corrupted saber to Winna."
 
 struct npc_kitten : public CreatureScript
@@ -89,8 +89,6 @@ struct npc_kitten : public CreatureScript
         }
 
         uint32 m_uiMoonwellCooldown;
-
-        void Reset() override { }
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -171,7 +169,6 @@ struct npc_corrupt_saber : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pPlayer->GetQuestStatus(QUEST_CORRUPT_SABER) == QUEST_STATUS_INCOMPLETE)
         {
             if (GetClosestCreatureWithEntry(pCreature, NPC_WINNA, INTERACTION_DISTANCE))

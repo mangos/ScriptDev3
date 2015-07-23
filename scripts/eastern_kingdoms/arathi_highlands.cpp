@@ -72,8 +72,6 @@ struct npc_professor_phizzlethorpe : public CreatureScript
     {
         npc_professor_phizzlethorpeAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
-        void Reset() override { }
-
         void WaypointReached(uint32 uiPointId) override
         {
             Player* pPlayer = GetPlayerForEscort();

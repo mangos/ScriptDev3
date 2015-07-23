@@ -69,8 +69,6 @@ struct npc_00x09hl : public CreatureScript
     {
         npc_00x09hlAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
-        void Reset() override { }
-
         void WaypointReached(uint32 uiPointId) override
         {
             switch (uiPointId)

@@ -525,12 +525,10 @@ struct boss_onyxia : public CreatureScript
                                          m_uiMovementTimer = 25000;
                                          return;
                                      case 1:                             // a point on the left side
-                                     {
-                                                                             // C++ is stupid, so add -1 with +7
-                                                                             m_uiMovePoint += NUM_MOVE_POINT - 1;
-                                                                             m_uiMovePoint %= NUM_MOVE_POINT;
-                                                                             break;
-                                     }
+                                        // C++ is stupid, so add -1 with +7
+                                        m_uiMovePoint += NUM_MOVE_POINT - 1;
+                                        m_uiMovePoint %= NUM_MOVE_POINT;
+                                        break;
                                      case 2:                             // a point on the right side
                                          ++m_uiMovePoint %= NUM_MOVE_POINT;
                                          break;

@@ -269,8 +269,6 @@ struct npc_defias_traitor : public CreatureScript
         {
             DoScriptText(urand(0, 1) ? SAY_AGGRO_1 : SAY_AGGRO_2, m_creature, pWho);
         }
-
-        void Reset() override { }
     };
 
     bool OnQuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest) override

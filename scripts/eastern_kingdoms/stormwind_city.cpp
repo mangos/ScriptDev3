@@ -96,8 +96,6 @@ struct npc_bartleby : public CreatureScript
         {
         }
 
-        void Reset() override {}
-
         void AttackedBy(Unit* pAttacker) override
         {
             if (m_creature->getVictim())
@@ -165,8 +163,6 @@ struct npc_dashel_stonefist : public CreatureScript
         {
         }
 
-        void Reset() override {}
-
         void AttackedBy(Unit* pAttacker) override
         {
             if (m_creature->getVictim())
@@ -230,7 +226,6 @@ struct npc_lady_katrana_prestor : public CreatureScript //TODO localisation
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pCreature->IsQuestGiver())
         {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
@@ -323,8 +318,6 @@ struct npc_squire_rowe : public CreatureScript
 
         ObjectGuid m_windsorGuid;
         ObjectGuid m_horseGuid;
-
-        void Reset() override { }
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -455,7 +448,6 @@ struct npc_squire_rowe : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         // Allow gossip if quest 6402 is completed but not yet rewarded or 6402 is rewarded but 6403 isn't yet completed
         if ((pPlayer->GetQuestStatus(QUEST_STORMWIND_RENDEZVOUS) == QUEST_STATUS_COMPLETE && !pPlayer->GetQuestRewardStatus(QUEST_STORMWIND_RENDEZVOUS)) ||
             (pPlayer->GetQuestRewardStatus(QUEST_STORMWIND_RENDEZVOUS) && pPlayer->GetQuestStatus(QUEST_THE_GREAT_MASQUERADE) != QUEST_STATUS_COMPLETE))
@@ -1146,7 +1138,6 @@ struct npc_reginald_windsor : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         bool bIsEventReady = false;
 
         if (npc_reginald_windsorAI* pReginaldAI = dynamic_cast<npc_reginald_windsorAI*>(pCreature->AI()))
@@ -1356,6 +1347,8 @@ void AddSC_stormwind_city()
     s->RegisterSelf();
     s = new npc_reginald_windsor();
     s->RegisterSelf();
+    //s = new npc_tyrion_spybot();
+    //s->RegisterSelf();
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_bartleby";

@@ -48,7 +48,7 @@ struct boss_jandicebarov : public CreatureScript
 
     struct boss_jandicebarovAI : public ScriptedAI
     {
-        boss_jandicebarovAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_jandicebarovAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
         uint32 m_uiCurseOfBloodTimer;
         uint32 m_uiIllusionTimer;

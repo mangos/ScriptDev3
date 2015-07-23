@@ -66,7 +66,6 @@ struct npc_beaten_corpse : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pPlayer->GetQuestStatus(QUEST_LOST_IN_BATTLE) == QUEST_STATUS_INCOMPLETE ||
             pPlayer->GetQuestStatus(QUEST_LOST_IN_BATTLE) == QUEST_STATUS_COMPLETE)
         {
@@ -118,8 +117,6 @@ struct npc_gilthares : public CreatureScript
     struct npc_giltharesAI : public npc_escortAI
     {
         npc_giltharesAI(Creature* pCreature) : npc_escortAI(pCreature) { }
-
-        void Reset() override { }
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -389,7 +386,7 @@ struct npc_twiggy_flathead : public CreatureScript
                 return true;
             }
 
-            debug_log("sd3: npc_twiggy_flathead event already in progress, need to wait.");
+            debug_log("SD3: npc_twiggy_flathead event already in progress, need to wait.");
             return false;
         }
 
@@ -1154,7 +1151,6 @@ struct npc_regthar_deathgate : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        //pPlayer->PlayerTalkClass->ClearMenus();
         if (pCreature->IsQuestGiver())
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
@@ -1330,7 +1326,7 @@ void AddSC_the_barrens()
     //pNewScript->GetAI = &GetAI_npc_wizzlecranks_shredder;
     //pNewScript->pQuestAcceptNPC = &QuestAccept_npc_wizzlecranks_shredder;
     //pNewScript->RegisterSelf();
-//#if defined (CLASSIC) || defined (TBC)
+
     //pNewScript = new Script;
     //pNewScript->Name = "npc_regthar_deathgate";
     //pNewScript->pGossipHello = &GossipHello_npc_regthar_deathgate;
@@ -1342,5 +1338,4 @@ void AddSC_the_barrens()
     //pNewScript->Name = "npc_horde_defender";
     //pNewScript->GetAI = &GetAI_npc_horde_defender;
     //pNewScript->RegisterSelf();
-//#endif
 }

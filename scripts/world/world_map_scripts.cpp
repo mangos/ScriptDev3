@@ -206,8 +206,8 @@ struct map_outland : public ZoneScript
                     }
                 }
                 break;
+            }
         }
-    }
 
         void SetData(uint32 /*uiType*/, uint32 /*uiData*/) {}
     };

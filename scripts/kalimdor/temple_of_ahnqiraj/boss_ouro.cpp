@@ -233,7 +233,7 @@ struct boss_ouro : public CreatureScript
 #if defined (CLASSIC)  
                             DoCastSpellIfCan(m_creature, SPELL_SUMMON_OURO_MOUNDS, CAST_TRIGGERED);
 #else
-                        DoCastSpellIfCan(m_creature, SPELL_SUMMON_OURO_MOUND, CAST_TRIGGERED);
+                            DoCastSpellIfCan(m_creature, SPELL_SUMMON_OURO_MOUND, CAST_TRIGGERED);
 #endif
                             DoCastSpellIfCan(m_creature, SPELL_SUMMON_TRIGGER, CAST_TRIGGERED);
 
@@ -377,22 +377,21 @@ struct npc_ouro_spawner : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override
-        {
-
+    void UpdateAI(const uint32 uiDiff) override
+    {
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
-            if (m_bHasSummoned)
+        if (m_bHasSummoned)
+        {
+            if (m_uiQuakeTimer < uiDiff)
             {
-                if (m_uiQuakeTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_QUAKE) == CAST_OK)
-                    { m_uiQuakeTimer = 1000; }
-                }
-                else
-                { m_uiQuakeTimer -= uiDiff; }
+                if (DoCastSpellIfCan(m_creature, SPELL_QUAKE) == CAST_OK)
+                { m_uiQuakeTimer = 1000; }
             }
-#endif
+            else
+            { m_uiQuakeTimer -= uiDiff; }
         }
+#endif
+    }
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
