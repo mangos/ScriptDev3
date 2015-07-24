@@ -185,18 +185,20 @@ struct npc_lady_sylvanas_windrunner : public CreatureScript
         return true;
     }
 };
+#endif
 
 void AddSC_undercity()
 {
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     Script* s;
 
     s = new npc_lady_sylvanas_windrunner();
     s->RegisterSelf();
+#endif
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_lady_sylvanas_windrunner";
     //pNewScript->GetAI = &GetAI_npc_lady_sylvanas_windrunner;
     //pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_lady_sylvanas_windrunner;
     //pNewScript->RegisterSelf();
-#endif
 }

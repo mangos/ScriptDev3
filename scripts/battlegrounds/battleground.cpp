@@ -111,22 +111,24 @@ struct npc_spirit_guide : public CreatureScript
                 // repop player again - now this node won't be counted and another node is searched
                 pPlayer->RepopAtGraveyard();
             }
-    }
+        }
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
-    void SpellHitTarget(Unit* pUnit, const SpellEntry* pSpellEntry) override
-    {
-        if (pSpellEntry->Id == SPELL_SPIRIT_HEAL && pUnit->GetTypeId() == TYPEID_PLAYER
-            && pUnit->HasAura(SPELL_WAITING_TO_RESURRECT))
-        { pUnit->CastSpell(pUnit, SPELL_SPIRIT_HEAL_MANA, true); }
+        void SpellHitTarget(Unit* pUnit, const SpellEntry* pSpellEntry) override
+        {
+            if (pSpellEntry->Id == SPELL_SPIRIT_HEAL && pUnit->GetTypeId() == TYPEID_PLAYER
+                && pUnit->HasAura(SPELL_WAITING_TO_RESURRECT))
+            { pUnit->CastSpell(pUnit, SPELL_SPIRIT_HEAL_MANA, true); }
         }
-    };
 #endif
+    };
 
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     CreatureAI* GetAI(Creature* pCreature) override
     {
         return new npc_spirit_guideAI(pCreature);
     }
+#endif
 };
 
 void AddSC_battleground()

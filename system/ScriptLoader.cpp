@@ -453,7 +453,7 @@ void AddSC_boss_noxxion();                           // maraudon
 void AddSC_boss_onyxia();                            // onyxias_lair
 void AddSC_instance_onyxias_lair();
 void AddSC_npc_onyxian_warder();
-void AddSC_instance_razorfen_downs();               // razorfen_downs
+void AddSC_instance_razorfen_downs();                // razorfen_downs
 void AddSC_razorfen_downs();
 void AddSC_instance_razorfen_kraul();                // razorfen_kraul
 void AddSC_razorfen_kraul();

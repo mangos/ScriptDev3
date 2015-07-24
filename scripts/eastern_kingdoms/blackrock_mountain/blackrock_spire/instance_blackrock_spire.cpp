@@ -494,10 +494,12 @@ struct is_blackrock_spire : public InstanceScript
                 }
                 break;
             }
+#if defined (TBC)
             case MAX_ENCOUNTER:
                 if (Player* pPlayer = instance->GetPlayer(ObjectGuid(guid)))
                     DoOpenUpperDoorIfCan(pPlayer);
                 break;
+#endif
             default:
                 break;
             }
@@ -525,6 +527,9 @@ struct is_blackrock_spire : public InstanceScript
                 }
             }
 
+#if defined (CLASSIC)
+            OUT_LOAD_INST_DATA_COMPLETE;
+#endif
         }
 
 #if defined (TBC)
@@ -886,10 +891,11 @@ struct is_blackrock_spire : public InstanceScript
         uint8 m_uiStadiumWaves;
         uint8 m_uiStadiumMobsAlive;
 
+#if defined (TBC)
         bool m_bUpperDoorOpened;
         uint32 m_uiDragonspineGoCount;
         uint32 m_uiDragonspineDoorTimer;
-
+#endif
         ObjectGuid m_aRoomRuneGuid[MAX_ROOMS];
         GuidList m_alRoomEventMobGUIDSorted[MAX_ROOMS];
         GuidList m_lRoomEventMobGUIDList;
@@ -920,7 +926,9 @@ struct at_blackrock_spire : public AreaTriggerScript
             if (InstanceData* pInstance = pPlayer->GetInstanceData())
             {
                 pInstance->SetData(MAX_ENCOUNTER, DO_SORT_MOBS);
+#if defined (TBC)
                 pInstance->SetData64(MAX_ENCOUNTER, pPlayer->GetObjectGuid().GetRawValue());
+#endif
             }
             break;
         case AREATRIGGER_STADIUM:

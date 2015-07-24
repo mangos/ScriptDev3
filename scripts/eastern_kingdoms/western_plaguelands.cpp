@@ -1130,9 +1130,10 @@ void AddSC_western_plaguelands()
     s->RegisterSelf();
     s = new spell_npc_taelan_fordring();
     s->RegisterSelf();
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     s = new npc_anchorite_truuen();
     s->RegisterSelf();
-
+#endif
     //pNewScript = new Script;
     //pNewScript->Name = "npc_the_scourge_cauldron";
     //pNewScript->GetAI = &GetAI_npc_the_scourge_cauldron;

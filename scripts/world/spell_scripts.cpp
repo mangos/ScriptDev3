@@ -416,29 +416,28 @@ struct aura_spirit_particles : public AuraScript
     {
         switch (pAura->GetId())
         {
-        case SPELL_SHROUD_OF_DEATH:
-        case SPELL_SPIRIT_PARTICLES:
-        {
-            Creature* pCreature = (Creature*)pAura->GetTarget();
-
-            if (!pCreature || (pCreature->GetEntry() != NPC_FRANCLORN_FORGEWRIGHT && pCreature->GetEntry() != NPC_GAERIYAN))
+            case SPELL_SHROUD_OF_DEATH:
+            case SPELL_SPIRIT_PARTICLES:
             {
-                return false;
-            }
+                Creature* pCreature = (Creature*)pAura->GetTarget();
 
-            if (bApply)
-            {
-                pCreature->m_AuraFlags |= UNIT_AURAFLAG_ALIVE_INVISIBLE;
-            }
-            else
-            {
-                pCreature->m_AuraFlags &= ~UNIT_AURAFLAG_ALIVE_INVISIBLE;
-            }
+                if (!pCreature || (pCreature->GetEntry() != NPC_FRANCLORN_FORGEWRIGHT && pCreature->GetEntry() != NPC_GAERIYAN))
+                {
+                    return false;
+                }
 
-            return false;   //TODO why? true
+                if (bApply)
+                {
+                    pCreature->m_AuraFlags |= UNIT_AURAFLAG_ALIVE_INVISIBLE;
+                }
+                else
+                {
+                    pCreature->m_AuraFlags &= ~UNIT_AURAFLAG_ALIVE_INVISIBLE;
+                }
+
+                return false;   //TODO why? true
+            }
         }
-        }
-
         return false;
     }
 };
@@ -598,6 +597,7 @@ struct aura_photovoltaic_magneto_collector : public AuraScript
         return true;
     }
 };
+#endif
 
 struct spell_apply_salve : public SpellScript
 {
@@ -715,51 +715,50 @@ struct spell_inoculate_owlkin : public SpellScript
         return true;
     }
 };
- #endif
 
- #if defined (WOTLK)
-        case SPELL_LIQUID_FIRE:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pCaster->GetTypeId() == TYPEID_PLAYER)
-                {
-                    if (pCreatureTarget->HasAura(SPELL_LIQUID_FIRE_AURA))
-                        return true;
+ //#if defined (WOTLK)
+ //       case SPELL_LIQUID_FIRE:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               if (pCaster->GetTypeId() == TYPEID_PLAYER)
+ //               {
+ //                   if (pCreatureTarget->HasAura(SPELL_LIQUID_FIRE_AURA))
+ //                       return true;
 
-                    if (pCreatureTarget->GetEntry() == NPC_ELK)
-                    {
-                        pCreatureTarget->CastSpell(pCreatureTarget, SPELL_LIQUID_FIRE_AURA, true);
-                        ((Player*)pCaster)->KilledMonsterCredit(NPC_ELK_BUNNY);
-                    }
-                    else if (pCreatureTarget->GetEntry() == NPC_GRIZZLY)
-                    {
-                        pCreatureTarget->CastSpell(pCreatureTarget, SPELL_LIQUID_FIRE_AURA, true);
-                        ((Player*)pCaster)->KilledMonsterCredit(NPC_GRIZZLY_BUNNY);
-                    }
-                }
-                return true;
-            }
-            return true;
-        }
-        case SPELL_MODIFIED_MOJO:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pCreatureTarget->GetEntry() != NPC_PROPHET_OF_SSERATUS)
-                    return true;
+ //                   if (pCreatureTarget->GetEntry() == NPC_ELK)
+ //                   {
+ //                       pCreatureTarget->CastSpell(pCreatureTarget, SPELL_LIQUID_FIRE_AURA, true);
+ //                       ((Player*)pCaster)->KilledMonsterCredit(NPC_ELK_BUNNY);
+ //                   }
+ //                   else if (pCreatureTarget->GetEntry() == NPC_GRIZZLY)
+ //                   {
+ //                       pCreatureTarget->CastSpell(pCreatureTarget, SPELL_LIQUID_FIRE_AURA, true);
+ //                       ((Player*)pCaster)->KilledMonsterCredit(NPC_GRIZZLY_BUNNY);
+ //                   }
+ //               }
+ //               return true;
+ //           }
+ //           return true;
+ //       }
+ //       case SPELL_MODIFIED_MOJO:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               if (pCreatureTarget->GetEntry() != NPC_PROPHET_OF_SSERATUS)
+ //                   return true;
 
-                // Apparently done before updateEntry, so need to make a way to handle that
-                // "Mmm, more mojo"
-                // "%s drinks the Mojo"
-                // "NOOOOOOOOOOOOooooooo...............!"
+ //               // Apparently done before updateEntry, so need to make a way to handle that
+ //               // "Mmm, more mojo"
+ //               // "%s drinks the Mojo"
+ //               // "NOOOOOOOOOOOOooooooo...............!"
 
-                pCreatureTarget->UpdateEntry(NPC_WEAK_PROPHET_OF_SSERATUS);
-                return true;
-            }
-            return true;
-        }
- #endif	
+ //               pCreatureTarget->UpdateEntry(NPC_WEAK_PROPHET_OF_SSERATUS);
+ //               return true;
+ //           }
+ //           return true;
+ //       }
+ //#endif	
 struct spell_fel_siphon_dummy : public SpellScript
 {
     spell_fel_siphon_dummy() : SpellScript("spell_fel_siphon_dummy") {}
@@ -779,51 +778,52 @@ struct spell_fel_siphon_dummy : public SpellScript
     }
 };
 #endif
-#if defined (WOTLK)
-        case SPELL_SEEDS_OF_NATURES_WRATH:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                uint32 uiNewEntry = 0;
-
-                switch (pCreatureTarget->GetEntry())
-                {
-                    case NPC_REANIMATED_FROSTWYRM:  uiNewEntry = NPC_WEAK_REANIMATED_FROSTWYRM; break;
-                    case NPC_TURGID:                uiNewEntry = NPC_WEAK_TURGID; break;
-                    case NPC_DEATHGAZE:             uiNewEntry = NPC_WEAK_DEATHGAZE; break;
-                }
-
-                if (uiNewEntry)
-                    pCreatureTarget->UpdateEntry(uiNewEntry);
-
-                return true;
-            }
-            return true;
-        }
-        case SPELL_STRENGTH_ANCIENTS:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pCaster->GetTypeId() == TYPEID_PLAYER)
-                {
-                    if (urand(0, 1))
-                    {
-                        DoScriptText(EMOTE_AGGRO, pCreatureTarget);
-                        pCreatureTarget->setFaction(FACTION_HOSTILE);
-                        pCreatureTarget->AI()->AttackStart(pCaster);
-                    }
-                    else
-                    {
-                        DoScriptText(EMOTE_CREATE, pCreatureTarget);
-                        pCaster->CastSpell(pCaster, SPELL_CREATE_BARK_WALKERS, true);
-                        pCreatureTarget->ForcedDespawn(5000);
-                    }
-                }
-                return true;
-            }
-            return true;
-        }
-#endif
+//#if defined (WOTLK)
+//        case SPELL_SEEDS_OF_NATURES_WRATH:
+//        {
+//            if (uiEffIndex == EFFECT_INDEX_0)
+//            {
+//                uint32 uiNewEntry = 0;
+//
+//                switch (pCreatureTarget->GetEntry())
+//                {
+//                    case NPC_REANIMATED_FROSTWYRM:  uiNewEntry = NPC_WEAK_REANIMATED_FROSTWYRM; break;
+//                    case NPC_TURGID:                uiNewEntry = NPC_WEAK_TURGID; break;
+//                    case NPC_DEATHGAZE:             uiNewEntry = NPC_WEAK_DEATHGAZE; break;
+//                }
+//
+//                if (uiNewEntry)
+//                    pCreatureTarget->UpdateEntry(uiNewEntry);
+//
+//                return true;
+//            }
+//            return true;
+//        }
+//        case SPELL_STRENGTH_ANCIENTS:
+//        {
+//            if (uiEffIndex == EFFECT_INDEX_0)
+//            {
+//                if (pCaster->GetTypeId() == TYPEID_PLAYER)
+//                {
+//                    if (urand(0, 1))
+//                    {
+//                        DoScriptText(EMOTE_AGGRO, pCreatureTarget);
+//                        pCreatureTarget->setFaction(FACTION_HOSTILE);
+//                        pCreatureTarget->AI()->AttackStart(pCaster);
+//                    }
+//                    else
+//                    {
+//                        DoScriptText(EMOTE_CREATE, pCreatureTarget);
+//                        pCaster->CastSpell(pCaster, SPELL_CREATE_BARK_WALKERS, true);
+//                        pCreatureTarget->ForcedDespawn(5000);
+//                    }
+//                }
+//                return true;
+//            }
+//            return true;
+//        }
+//
+//#endif
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
 struct spell_tag_murloc_proc : public SpellScript
 {
@@ -831,82 +831,88 @@ struct spell_tag_murloc_proc : public SpellScript
 
     bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
-            if (uiSpellId == SPELL_TAG_MURLOC_PROC && uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pTarget->GetEntry() == NPC_BLACKSILT_MURLOC)
-                { pTarget->ToCreature()->UpdateEntry(NPC_TAGGED_MURLOC); }
-            }
-            return true;
-    }
-};
-#endif
- #if defined (WOTLK)
-        case SPELL_THROW_BOULDER:
+        if (uiSpellId == SPELL_TAG_MURLOC_PROC && uiEffIndex == EFFECT_INDEX_0)
         {
-            if (uiEffIndex == EFFECT_INDEX_0)
+            if (pTarget->GetEntry() == NPC_BLACKSILT_MURLOC)
             {
-                if (pCaster->GetTypeId() != TYPEID_PLAYER)
-                    return true;
-
-                if (pCreatureTarget->GetEntry() != NPC_IRON_RUNESHAPER && pCreatureTarget->GetEntry() != NPC_RUNE_REAVER)
-                    return true;
-
-                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_BOULBER_IMPACT, true);
-                pCaster->CastSpell(pCaster, SPELL_BOULDER_TOSS_CREDIT, true);
-
-                return true;
+                pTarget->ToCreature()->UpdateEntry(NPC_TAGGED_MURLOC);
             }
-            return true;
         }
-        case SPELL_ULTRASONIC_SCREWDRIVER:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pCreatureTarget->IsCorpse())
-                {
-                    uint32 newSpellId = 0;
-
-                    switch (pCreatureTarget->GetEntry())
-                    {
-                        case NPC_COLLECT_A_TRON:    newSpellId = SPELL_SUMMON_COLLECT_A_TRON; break;
-                        case NPC_DEFENDO_TANK:      newSpellId = SPELL_SUMMON_DEFENDO_TANK; break;
-                        case NPC_SCAVENGE_A8:       newSpellId = SPELL_SUMMON_SCAVENGE_A8; break;
-                        case NPC_SCAVENGE_B6:       newSpellId = SPELL_SUMMON_SCAVENGE_B6; break;
-                        case NPC_SENTRY_BOT:        newSpellId = SPELL_SUMMON_SENTRY_BOT; break;
-                    }
-
-                    if (const SpellEntry* pSpell = GetSpellStore()->LookupEntry(newSpellId))
-                    {
-                        pCaster->CastSpell(pCreatureTarget, pSpell->Id, true);
-
-                        if (Pet* pPet = pCaster->FindGuardianWithEntry(pSpell->EffectMiscValue[uiEffIndex]))
-                            pPet->CastSpell(pCaster, SPELL_REPROGRAM_KILL_CREDIT, true);
-
-                        pCreatureTarget->ForcedDespawn();
-                    }
-                }
-                return true;
-            }
-            return true;
-        }
- #endif		
-struct spell_orb_of_murloc_control : public SpellScript
-{
-    spell_orb_of_murloc_control() : SpellScript("spell_orb_of_murloc_control") {}
-
-    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override //SPELL_ORB_OF_MURLOC_CONTROL
-    {
-        Creature* pCreatureTarget = pTarget->ToCreature();
-        pCreatureTarget->CastSpell(pCaster, SPELL_GREENGILL_SLAVE_FREED, true);
-
-        // Freed Greengill Slave
-        pCreatureTarget->UpdateEntry(NPC_FREED_GREENGILL_SLAVE);
-
-        pCreatureTarget->CastSpell(pCreatureTarget, SPELL_ENRAGE, true);
-
         return true;
     }
 };
+#endif
+ //#if defined (WOTLK)
+ //       case SPELL_THROW_BOULDER:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               if (pCaster->GetTypeId() != TYPEID_PLAYER)
+ //                   return true;
+
+ //               if (pCreatureTarget->GetEntry() != NPC_IRON_RUNESHAPER && pCreatureTarget->GetEntry() != NPC_RUNE_REAVER)
+ //                   return true;
+
+ //               pCreatureTarget->CastSpell(pCreatureTarget, SPELL_BOULBER_IMPACT, true);
+ //               pCaster->CastSpell(pCaster, SPELL_BOULDER_TOSS_CREDIT, true);
+
+ //               return true;
+ //           }
+ //           return true;
+ //       }
+ //       case SPELL_ULTRASONIC_SCREWDRIVER:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               if (pCreatureTarget->IsCorpse())
+ //               {
+ //                   uint32 newSpellId = 0;
+
+ //                   switch (pCreatureTarget->GetEntry())
+ //                   {
+ //                       case NPC_COLLECT_A_TRON:    newSpellId = SPELL_SUMMON_COLLECT_A_TRON; break;
+ //                       case NPC_DEFENDO_TANK:      newSpellId = SPELL_SUMMON_DEFENDO_TANK; break;
+ //                       case NPC_SCAVENGE_A8:       newSpellId = SPELL_SUMMON_SCAVENGE_A8; break;
+ //                       case NPC_SCAVENGE_B6:       newSpellId = SPELL_SUMMON_SCAVENGE_B6; break;
+ //                       case NPC_SENTRY_BOT:        newSpellId = SPELL_SUMMON_SENTRY_BOT; break;
+ //                   }
+
+ //                   if (const SpellEntry* pSpell = GetSpellStore()->LookupEntry(newSpellId))
+ //                   {
+ //                       pCaster->CastSpell(pCreatureTarget, pSpell->Id, true);
+
+ //                       if (Pet* pPet = pCaster->FindGuardianWithEntry(pSpell->EffectMiscValue[uiEffIndex]))
+ //                           pPet->CastSpell(pCaster, SPELL_REPROGRAM_KILL_CREDIT, true);
+
+ //                       pCreatureTarget->ForcedDespawn();
+ //                   }
+ //               }
+ //               return true;
+ //           }
+ //           return true;
+ //       }
+ //   };
+
+ //#endif
+
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+struct spell_orb_of_murloc_control : public SpellScript
+    {
+        spell_orb_of_murloc_control() : SpellScript("spell_orb_of_murloc_control") {}
+
+        bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override //SPELL_ORB_OF_MURLOC_CONTROL
+        {
+            Creature* pCreatureTarget = pTarget->ToCreature();
+            pCreatureTarget->CastSpell(pCaster, SPELL_GREENGILL_SLAVE_FREED, true);
+
+            // Freed Greengill Slave
+            pCreatureTarget->UpdateEntry(NPC_FREED_GREENGILL_SLAVE);
+
+            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_ENRAGE, true);
+
+            return true;
+        }
+    };
 
 struct spell_fumping : public SpellScript
 {
@@ -946,66 +952,70 @@ struct spell_fumping : public SpellScript
         return true;
     }
 };
- #if defined (WOTLK)
-        case SPELL_AHUNAES_KNIFE:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pCaster->GetTypeId() != TYPEID_PLAYER)
-                    return true;
+#endif
 
-                ((Player*)pCaster)->KilledMonsterCredit(NPC_SCALPS_KILL_CREDIT_BUNNY);
-                pCreatureTarget->ForcedDespawn();
-                return true;
-            }
-            return true;
-        }
-        case SPELL_TAILS_UP_GENDER_MASTER:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                bool isMale = urand(0, 1);
-                Player* pPlayer = pCreatureTarget->GetLootRecipient();
+ //#if defined (WOTLK)
+ //       case SPELL_AHUNAES_KNIFE:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               if (pCaster->GetTypeId() != TYPEID_PLAYER)
+ //                   return true;
 
-                if (isMale)
-                    DoScriptText(SAY_ITS_MALE, pCreatureTarget, pPlayer);
-                else
-                    DoScriptText(SAY_ITS_FEMALE, pCreatureTarget, pPlayer);
+ //               ((Player*)pCaster)->KilledMonsterCredit(NPC_SCALPS_KILL_CREDIT_BUNNY);
+ //               pCreatureTarget->ForcedDespawn();
+ //               return true;
+ //           }
+ //           return true;
+ //       }
+ //       case SPELL_TAILS_UP_GENDER_MASTER:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               bool isMale = urand(0, 1);
+ //               Player* pPlayer = pCreatureTarget->GetLootRecipient();
 
-                switch (pCreatureTarget->GetEntry())
-                {
-                    case NPC_FROST_LEOPARD:
-                    {
-                        if (isMale)
-                            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_TAILS_UP_AURA, true);
-                        else
-                        {
-                            pPlayer->KilledMonsterCredit(NPC_LEOPARD_KILL_CREDIT, pCreatureTarget->GetObjectGuid());
-                            pCreatureTarget->CastSpell(pPlayer, SPELL_FORCE_LEOPARD_SUMMON, true);
-                            pCreatureTarget->ForcedDespawn();
-                        }
+ //               if (isMale)
+ //                   DoScriptText(SAY_ITS_MALE, pCreatureTarget, pPlayer);
+ //               else
+ //                   DoScriptText(SAY_ITS_FEMALE, pCreatureTarget, pPlayer);
 
-                        break;
-                    }
-                    case NPC_ICEPAW_BEAR:
-                    {
-                        if (isMale)
-                            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_TAILS_UP_AURA, true);
-                        else
-                        {
-                            pPlayer->KilledMonsterCredit(NPC_BEAR_KILL_CREDIT, pCreatureTarget->GetObjectGuid());
-                            pCreatureTarget->CastSpell(pPlayer, SPELL_FORCE_BEAR_SUMMON, true);
-                            pCreatureTarget->ForcedDespawn();
-                        }
+ //               switch (pCreatureTarget->GetEntry())
+ //               {
+ //                   case NPC_FROST_LEOPARD:
+ //                   {
+ //                       if (isMale)
+ //                           pCreatureTarget->CastSpell(pCreatureTarget, SPELL_TAILS_UP_AURA, true);
+ //                       else
+ //                       {
+ //                           pPlayer->KilledMonsterCredit(NPC_LEOPARD_KILL_CREDIT, pCreatureTarget->GetObjectGuid());
+ //                           pCreatureTarget->CastSpell(pPlayer, SPELL_FORCE_LEOPARD_SUMMON, true);
+ //                           pCreatureTarget->ForcedDespawn();
+ //                       }
 
-                        break;
-                    }
-                }
-                return true;
-            }
-            return true;
-        }
- #endif
+ //                       break;
+ //                   }
+ //                   case NPC_ICEPAW_BEAR:
+ //                   {
+ //                       if (isMale)
+ //                           pCreatureTarget->CastSpell(pCreatureTarget, SPELL_TAILS_UP_AURA, true);
+ //                       else
+ //                       {
+ //                           pPlayer->KilledMonsterCredit(NPC_BEAR_KILL_CREDIT, pCreatureTarget->GetObjectGuid());
+ //                           pCreatureTarget->CastSpell(pPlayer, SPELL_FORCE_BEAR_SUMMON, true);
+ //                           pCreatureTarget->ForcedDespawn();
+ //                       }
+
+ //                       break;
+ //                   }
+ //               }
+ //               return true;
+ //           }
+ //           return true;
+ //       }
+ //#endif
+
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 struct spell_throw_gordawg_boulder : public SpellScript
 {
     spell_throw_gordawg_boulder() : SpellScript("spell_throw_gordawg_boulder") {}
@@ -1037,72 +1047,75 @@ struct spell_throw_gordawg_boulder : public SpellScript
         return true;
     }
 };
- #if defined (WOTLK)
-        case SPELL_HIT_APPLE:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pCaster->GetTypeId() == TYPEID_PLAYER)
-                    ((Player*)pCaster)->KilledMonsterCredit(pCreatureTarget->GetEntry(), pCreatureTarget->GetObjectGuid());
+#endif
+//#if defined (WOTLK)
+ //       case SPELL_HIT_APPLE:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               if (pCaster->GetTypeId() == TYPEID_PLAYER)
+ //                   ((Player*)pCaster)->KilledMonsterCredit(pCreatureTarget->GetEntry(), pCreatureTarget->GetObjectGuid());
 
-                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_APPLE_FALLS_TO_GROUND, false);
+ //               pCreatureTarget->CastSpell(pCreatureTarget, SPELL_APPLE_FALLS_TO_GROUND, false);
 
-                if (Creature* pLuckyWilhelm = GetClosestCreatureWithEntry(pCreatureTarget, NPC_LUCKY_WILHELM, 2 * INTERACTION_DISTANCE))
-                    DoScriptText(SAY_LUCKY_HIT_APPLE, pLuckyWilhelm);
-            }
-            return true;
-        }
-        case SPELL_MISS_APPLE:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                switch (urand(1, 3))
-                {
-                    case 1: DoScriptText(SAY_LUCKY_HIT_1, pCreatureTarget); break;
-                    case 2: DoScriptText(SAY_LUCKY_HIT_2, pCreatureTarget); break;
-                    case 3: DoScriptText(SAY_LUCKY_HIT_3, pCreatureTarget); break;
-                }
+ //               if (Creature* pLuckyWilhelm = GetClosestCreatureWithEntry(pCreatureTarget, NPC_LUCKY_WILHELM, 2 * INTERACTION_DISTANCE))
+ //                   DoScriptText(SAY_LUCKY_HIT_APPLE, pLuckyWilhelm);
+ //           }
+ //           return true;
+ //       }
+ //       case SPELL_MISS_APPLE:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               switch (urand(1, 3))
+ //               {
+ //                   case 1: DoScriptText(SAY_LUCKY_HIT_1, pCreatureTarget); break;
+ //                   case 2: DoScriptText(SAY_LUCKY_HIT_2, pCreatureTarget); break;
+ //                   case 3: DoScriptText(SAY_LUCKY_HIT_3, pCreatureTarget); break;
+ //               }
 
-                if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 4 * INTERACTION_DISTANCE))
-                    DoScriptText(urand(0, 1) ? SAY_DROSTAN_GOT_LUCKY_1 : SAY_DROSTAN_GOT_LUCKY_2, pDrostan);
-            }
-            return true;
-        }
-        case SPELL_MISS_APPLE_HIT_BIRD:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 5 * INTERACTION_DISTANCE))
-                    DoScriptText(urand(0, 1) ? SAY_DROSTAN_HIT_BIRD_1 : SAY_DROSTAN_HIT_BIRD_2, pDrostan);
+ //               if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 4 * INTERACTION_DISTANCE))
+ //                   DoScriptText(urand(0, 1) ? SAY_DROSTAN_GOT_LUCKY_1 : SAY_DROSTAN_GOT_LUCKY_2, pDrostan);
+ //           }
+ //           return true;
+ //       }
+ //       case SPELL_MISS_APPLE_HIT_BIRD:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 5 * INTERACTION_DISTANCE))
+ //                   DoScriptText(urand(0, 1) ? SAY_DROSTAN_HIT_BIRD_1 : SAY_DROSTAN_HIT_BIRD_2, pDrostan);
 
-                pCreatureTarget->DealDamage(pCreatureTarget, pCreatureTarget->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-            }
-            return true;
-        }
-        case SPELL_LURIELLES_PENDANT:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pCreatureTarget->GetEntry() != NPC_CHILL_NYMPH || pCaster->GetTypeId() != TYPEID_PLAYER)
-                    return true;
+ //               pCreatureTarget->DealDamage(pCreatureTarget, pCreatureTarget->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+ //           }
+ //           return true;
+ //       }
+ //       case SPELL_LURIELLES_PENDANT:
+ //       {
+ //           if (uiEffIndex == EFFECT_INDEX_0)
+ //           {
+ //               if (pCreatureTarget->GetEntry() != NPC_CHILL_NYMPH || pCaster->GetTypeId() != TYPEID_PLAYER)
+ //                   return true;
 
-                switch (urand(0, 2))
-                {
-                    case 0: DoScriptText(SAY_FREE_1, pCreatureTarget); break;
-                    case 1: DoScriptText(SAY_FREE_2, pCreatureTarget); break;
-                    case 2: DoScriptText(SAY_FREE_3, pCreatureTarget); break;
-                }
+ //               switch (urand(0, 2))
+ //               {
+ //                   case 0: DoScriptText(SAY_FREE_1, pCreatureTarget); break;
+ //                   case 1: DoScriptText(SAY_FREE_2, pCreatureTarget); break;
+ //                   case 2: DoScriptText(SAY_FREE_3, pCreatureTarget); break;
+ //               }
 
-                ((Player*)pCaster)->KilledMonsterCredit(NPC_LURIELLE);
-                pCreatureTarget->SetFactionTemporary(FACTION_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
-                pCreatureTarget->DeleteThreatList();
-                pCreatureTarget->AttackStop(true);
-                pCreatureTarget->GetMotionMaster()->MoveFleeing(pCaster, 7);
-                pCreatureTarget->ForcedDespawn(7 * IN_MILLISECONDS);
-            }
-            return true;
-        }
- #endif
+ //               ((Player*)pCaster)->KilledMonsterCredit(NPC_LURIELLE);
+ //               pCreatureTarget->SetFactionTemporary(FACTION_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
+ //               pCreatureTarget->DeleteThreatList();
+ //               pCreatureTarget->AttackStop(true);
+ //               pCreatureTarget->GetMotionMaster()->MoveFleeing(pCaster, 7);
+ //               pCreatureTarget->ForcedDespawn(7 * IN_MILLISECONDS);
+ //           }
+ //           return true;
+ //       }
+ //#endif
+
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
 struct spell_expose_rathorthorn_root : public SpellScript
 {
     spell_expose_rathorthorn_root() : SpellScript("spell_expose_rathorthorn_root") {}
@@ -1130,40 +1143,47 @@ struct spell_expose_rathorthorn_root : public SpellScript
         return true;
     }
 };
- #if defined (WOTLK)
-        case SPELL_THROW_ICE:
-        {
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                if (pCreatureTarget->GetEntry() != NPC_SMOLDERING_SCRAP_BUNNY)
-                    return true;
-
-                if (GameObject* pScrap = GetClosestGameObjectWithEntry(pCreatureTarget, GO_SMOLDERING_SCRAP, 5.0f))
-                {
-                    if (pScrap->GetRespawnTime() != 0)
-                        return true;
-
-                    pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FROZEN_IRON_SCRAP, true);
-                    pScrap->SetLootState(GO_JUST_DEACTIVATED);
-                    pCreatureTarget->ForcedDespawn(1000);
-                }
-            }
-            return true;
-        }
-
-    }
-
-    return false;
-}
 #endif
+// #if defined (WOTLK)
+//        case SPELL_THROW_ICE:
+//        {
+//            if (uiEffIndex == EFFECT_INDEX_0)
+//            {
+//                if (pCreatureTarget->GetEntry() != NPC_SMOLDERING_SCRAP_BUNNY)
+//                    return true;
+//
+//                if (GameObject* pScrap = GetClosestGameObjectWithEntry(pCreatureTarget, GO_SMOLDERING_SCRAP, 5.0f))
+//                {
+//                    if (pScrap->GetRespawnTime() != 0)
+//                        return true;
+//
+//                    pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FROZEN_IRON_SCRAP, true);
+//                    pScrap->SetLootState(GO_JUST_DEACTIVATED);
+//                    pCreatureTarget->ForcedDespawn(1000);
+//                }
+//            }
+//            return true;
+//        }
+//
+//    }
+//
+//    return false;
+//}
+//#endif
 
 void AddSC_spell_scripts()
 {
     Script* s;
-
-    s = new spell_cast_fishing_net();
-    s->RegisterSelf();
     s = new aura_spirit_particles();
+    s->RegisterSelf();
+    s = new spell_apply_salve();
+    s->RegisterSelf();
+    s = new spell_sacred_cleansing();
+    s->RegisterSelf();
+    s = new spell_melodious_rapture();
+    s->RegisterSelf();
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+    s = new spell_cast_fishing_net();
     s->RegisterSelf();
     s = new aura_healing_salve();
     s->RegisterSelf();
@@ -1177,20 +1197,12 @@ void AddSC_spell_scripts()
     s->RegisterSelf();
     s = new aura_photovoltaic_magneto_collector();
     s->RegisterSelf();
-    s = new spell_apply_salve();
-    s->RegisterSelf();
-    s = new spell_sacred_cleansing();
-    s->RegisterSelf();
-    s = new spell_melodious_rapture();
-    s->RegisterSelf();
     s = new spell_administer_antidote();
     s->RegisterSelf();
     s = new spell_inoculate_owlkin();
     s->RegisterSelf();
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
     s = new spell_fel_siphon_dummy();
     s->RegisterSelf();
-#endif
     s = new spell_tag_murloc_proc();
     s->RegisterSelf();
     s = new spell_orb_of_murloc_control();
@@ -1201,4 +1213,5 @@ void AddSC_spell_scripts()
     s->RegisterSelf();
     s = new spell_expose_rathorthorn_root();
     s->RegisterSelf();
+#endif
 }

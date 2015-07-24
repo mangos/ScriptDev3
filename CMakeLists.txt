@@ -92,7 +92,7 @@ endif()
 
 #Kalimdor Scripts
 set (GLOBIGNORE azuremyst_isle.cpp azuremyst_isle.h)
-file(GLOB sources_kalimdor scripts/kalimdor/*.cpp scripts/kalimdor/*.h )
+file(GLOB sources_kalimdor scripts/kalimdor/*.cpp scripts/kalimdor/*.h)
 
 # --- Remove Azuremyst and BloodMyst Isle from classic
 IF("${MANGOS_EXP}" STREQUAL "CLASSIC")

@@ -40,6 +40,7 @@
  */
 
 #include "precompiled.h"
+#include "GameEventMgr.h"
 
 /*######
 ## mob_yenniku

@@ -740,7 +740,6 @@ struct npc_doctor : public CreatureScript
                         if (CreatureAI* pPatientAI = Patient->AI())
                         {
                             SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, Patient);
-
                             //pPatientAI->m_doctorGuid = m_creature->GetObjectGuid();
                             //pPatientAI->m_pCoord = *itr;
                             delete (*itr);
@@ -756,8 +755,6 @@ struct npc_doctor : public CreatureScript
                 }
             }
         }
-
-
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -1557,6 +1554,9 @@ struct npc_redemption_target : public CreatureScript
                 if (m_uiEvadeTimer <= uiDiff)
                 {
                     EnterEvadeMode();
+#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+                    m_uiEvadeTimer = 0;
+#endif
                 }
                 else
                 {
@@ -1597,12 +1597,12 @@ struct spell_symbol_of_life : public SpellScript
 void AddSC_npcs_special()
 {
     Script* s;
-    s = new npc_air_force_bots();
-    s->RegisterSelf();
     s = new npc_chicken_cluck();
     s->RegisterSelf();
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
+    s = new npc_air_force_bots();
+    s->RegisterSelf();
     s = new npc_dancing_flames();
     s->RegisterSelf();
 #endif
@@ -1616,7 +1616,7 @@ void AddSC_npcs_special()
     s = new npc_guardian();
     s->RegisterSelf();
     s = new npc_innkeeper();
-    s->RegisterSelf();
+    s->RegisterSelf(false);
     s = new npc_redemption_target();
     s->RegisterSelf();
     s = new spell_symbol_of_life();
