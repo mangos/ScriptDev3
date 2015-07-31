@@ -430,6 +430,7 @@ void AddEasternKingdomsScripts()
 
 // kalimdor
 void AddSC_instance_blackfathom_deeps();             // blackfathom_deeps
+void AddSC_blackfathom_deeps();
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
 void AddSC_boss_aeonus();                            // COT, dark_portal
@@ -512,6 +513,7 @@ void AddSC_winterspring();
 void AddKalimdorScripts()
 {
     AddSC_instance_blackfathom_deeps();                     // blackfathom deeps
+    AddSC_blackfathom_deeps();
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
     AddSC_boss_aeonus();                                    // CoT, dark_portal

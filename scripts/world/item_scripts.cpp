@@ -108,13 +108,9 @@ struct item_arcane_charges : public ItemScript
         pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
 
         if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_ARCANE_CHARGES))
- #if defined (WOTLK)
-    { Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_ON_GROUND); }
- #else
         {
             Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_ERROR);
         }
- #endif
         return true;
     }
 };
