@@ -216,11 +216,11 @@ void SD3::FreeScriptLibrary()
 void SD3::InitScriptLibrary()
 {
     // ScriptDev3 startup
-    outstring_log("  ___         _      _   ___          ___ ");
-    outstring_log(" / __| __ _ _(_)_ __| |_|   \\ _____ _|_  )");
-    outstring_log(" \\__ \\/ _| '_| | '_ \\  _| |) / -_) V // / ");
-    outstring_log(" |___/\\__|_| |_| .__/\\__|___/\\___|\\_//___|");
-    outstring_log("               |_|                        ");
+    outstring_log("   ___         _      _   ___            ____");
+    outstring_log("  / __| __ _ _(_)_ __| |_|   \\ _____ __ |__ /");
+    outstring_log("  \\__ \\/ _| '_| | '_ \\  _| |) / -_) V /  |_ \\");
+    outstring_log("  |___/\\__|_| |_| .__/\\__|___/\\___|\\_/  |___/");
+    outstring_log("                |_|                          ");
     outstring_log("                     https://getmangos.eu/\n");
 
     // Get configuration file
