@@ -24,7 +24,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "precompiled.h"//..\bindings\scripts\include\precompiled.h"
+#include "precompiled.h"
 #include "Config/Config.h"
 #include "SystemConfig.h"
 #include "Database/DatabaseEnv.h"
@@ -39,17 +39,15 @@ typedef std::vector<Script*> SDScriptVec;
 int num_sc_scripts;
 SDScriptVec m_scripts;
 
-Config SD3Config;
-
 void FillSpellSummary();
 
 void LoadDatabase()
 {
-    std::string strSD3DBinfo = SD3Config.GetStringDefault("ScriptDev3DatabaseInfo", "");
+    std::string strSD3DBinfo = sConfig.GetStringDefault("WorldDatabaseInfo", "");
 
     if (strSD3DBinfo.empty())
     {
-        script_error_log("Missing Scriptdev3 database info from configuration file. Load database aborted.");
+        script_error_log("Missing World database info from configuration file (WorldDatabaseInfo). Load database aborted.");
         return;
     }
 
@@ -59,7 +57,6 @@ void LoadDatabase()
         outstring_log("sd3: ScriptDev3 database initialized.");
         outstring_log("\n");
 
-        pSystemMgr.LoadVersion();
         pSystemMgr.LoadScriptTexts();
         pSystemMgr.LoadScriptTextsCustom();
         pSystemMgr.LoadScriptGossipTexts();
@@ -223,31 +220,9 @@ void SD3::InitScriptLibrary()
     outstring_log("                |_|                          ");
     outstring_log("                     https://getmangos.eu/\n");
 
-    // Get configuration file
-    bool configFailure = false;
-    if (!SD3Config.SetSource(MANGOSD_CONFIG_LOCATION))
-    {
-        configFailure = true;
-    }
-    else
-    {
-        outstring_log("sd3: Using configuration file %s", MANGOSD_CONFIG_LOCATION);
-    }
-
     // Set SD3 Error Log File
-    std::string SD3LogFile = SD3Config.GetStringDefault("SD3ErrorLogFile", "scriptdev3-errors.log");
+    std::string SD3LogFile = sConfig.GetStringDefault("SD3ErrorLogFile", "scriptdev3-errors.log");
     setScriptLibraryErrorFile(SD3LogFile.c_str(), "SD3");
-
-    if (configFailure)
-    {
-        script_error_log("Unable to open configuration file. Database will be unaccessible. Configuration values will use default.");
-    }
-
-    // Check config file version
-    if (SD3Config.GetIntDefault("ConfVersion", 0) != MANGOSD_CONFIG_VERSION)
-    {
-        script_error_log("Configuration file version doesn't match expected version. Some config variables may be wrong or missing.");
-    }
 
     outstring_log("\n");
 

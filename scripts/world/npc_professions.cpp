@@ -1171,9 +1171,9 @@ private:
 
 void AddSC_npc_professions()
 {
+#if defined (TBC) || defined (WOTLK)
     Script* s;
 
-#if defined (TBC) || defined (WOTLK)
     s = new npc_prof_blacksmith();
     s->RegisterSelf();
     s = new npc_prof_leather();

@@ -44,35 +44,6 @@ SystemMgr& SystemMgr::Instance()
     return pSysMgr;
 }
 
-void SystemMgr::LoadVersion()
-{
-    // Get Version information
-    QueryResult* pResult = SD3Database.PQuery("SELECT version FROM SD3_db_version LIMIT 1");
-
-    if (pResult)
-    {
-        Field* pFields = pResult->Fetch();
-
-        strSD3Version = pFields[0].GetCppString();
-
-        delete pResult;
-    }
-    else
-    {
-        script_error_log("Missing `SD3_db_version` information.");
-    }
-
-    // Setup version info and display it
-    if (strSD3Version.empty())
-    {
-        strSD3Version.append("ScriptDev2 ");
-    }
-
-    strSD3Version.append(MANGOS_FULLVERSION("*", "*", "*", "*"));
-
-    outstring_log("Loading %s", strSD3Version.c_str());
-}
-
 void SystemMgr::LoadScriptTexts()
 {
     outstring_log("SD3: Loading Script Texts...");

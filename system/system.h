@@ -64,7 +64,6 @@ class SystemMgr
         typedef UNORDERED_MAP<uint32, std::vector<ScriptPointMove> > PointMoveMap;
 
         // Database
-        void LoadVersion();
         void LoadScriptTexts();
         void LoadScriptTextsCustom();
         void LoadScriptGossipTexts();
