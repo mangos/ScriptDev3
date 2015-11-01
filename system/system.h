@@ -27,9 +27,6 @@
 #ifndef SC_SYSTEM_H
 #define SC_SYSTEM_H
 
-extern DatabaseType SD3Database;
-extern std::string  strSD3Version;                          // version info: database entry and revision
-
 #define TEXT_SOURCE_RANGE -1000000                          // the amount of entries each text source has available
 
 #define TEXT_SOURCE_TEXT_START      TEXT_SOURCE_RANGE
@@ -51,8 +48,6 @@ struct ScriptPointMove
     uint32 uiWaitTime;
 };
 
-#define pSystemMgr SystemMgr::Instance()
-
 class SystemMgr
 {
     public:
@@ -63,7 +58,7 @@ class SystemMgr
 
         typedef UNORDERED_MAP<uint32, std::vector<ScriptPointMove> > PointMoveMap;
 
-        // Database
+        // SD3 Database Bindings
         void LoadScriptTexts();
         void LoadScriptTextsCustom();
         void LoadScriptGossipTexts();
@@ -86,5 +81,7 @@ class SystemMgr
     protected:
         PointMoveMap    m_mPointMoveMap;                    // coordinates for waypoints
 };
+
+#define pSystemMgr SystemMgr::Instance()
 
 #endif

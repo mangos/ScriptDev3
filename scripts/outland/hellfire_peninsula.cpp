@@ -1017,7 +1017,7 @@ struct npc_caretaker_dilandrus : public CreatureScript
         {
             if (uVisitGraveTimer <= uiDiff)
             {
-                uint32 uGraveNumber;
+                uint32 uGraveNumber = 0;
                 if (uCurrentStage == 1) // walk to grave
                 {
                     // time to visit grave

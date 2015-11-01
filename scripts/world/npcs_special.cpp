@@ -1477,6 +1477,7 @@ enum
     NPC_BLOOD_KNIGHT            = 17768,        // blood elf side
 };
 
+#if defined(CLASSIC)
 struct npc_redemption_target : public CreatureScript
 {
     npc_redemption_target() : CreatureScript("npc_redemption_target") {}
@@ -1572,6 +1573,31 @@ struct npc_redemption_target : public CreatureScript
     }
 };
 
+#endif
+#if defined (CLASSIC)
+struct spell_npc_redemption_target : public SpellScript
+{
+    spell_npc_redemption_target() : SpellScript("spell_npc_redemption_target") {}
+
+    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pCreatureTarget, ObjectGuid /*originalCasterGuid*/) override
+    {
+        // always check spellid and effectindex
+        if ((uiSpellId == SPELL_SYMBOL_OF_LIFE || uiSpellId == SPELL_SHIMMERING_VESSEL) && uiEffIndex == EFFECT_INDEX_0)
+        {
+            if (CreatureAI* pTargetAI = pCreatureTarget->ToCreature()->AI())
+            {
+                pTargetAI->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget->ToCreature());//>DoReviveSelf(pCaster->GetObjectGuid());
+            }
+
+            // always return true when we are handling this spell and effect
+            return true;
+        }
+
+        return false;
+    }
+};
+#endif
+#if defined(TBC)
 struct spell_symbol_of_life : public SpellScript
 {
     spell_symbol_of_life() : SpellScript("spell_symbol_of_life") {}
@@ -1593,7 +1619,7 @@ struct spell_symbol_of_life : public SpellScript
         return false;
     }
 };
-
+#endif
 void AddSC_npcs_special()
 {
     Script* s;
@@ -1617,11 +1643,16 @@ void AddSC_npcs_special()
     s->RegisterSelf();
     s = new npc_innkeeper();
     s->RegisterSelf(false);
+#if defined(CLASSIC)
     s = new npc_redemption_target();
     s->RegisterSelf();
+    s = new spell_npc_redemption_target();
+    s->RegisterSelf();
+#endif
+#if defined(TBC)
     s = new spell_symbol_of_life();
     s->RegisterSelf();
-
+#endif
 #if defined (WOTLK) || defined (CATA) 
     s = new npc_spring_rabbit();
     s->RegisterSelf();

@@ -301,11 +301,10 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Check for school if specified
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
         if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
         { continue; }
-#endif  
-		
+#endif
 
         // Check for spell mechanic if specified
         if (iMechanic >= 0 && pTempSpell->Mechanic != (uint32)iMechanic)

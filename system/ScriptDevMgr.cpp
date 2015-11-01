@@ -39,36 +39,16 @@ typedef std::vector<Script*> SDScriptVec;
 int num_sc_scripts;
 SDScriptVec m_scripts;
 
+Config SD3Config;
+
 void FillSpellSummary();
 
-void LoadDatabase()
+void LoadSD3Bindings()
 {
-    std::string strSD3DBinfo = sConfig.GetStringDefault("WorldDatabaseInfo", "");
-
-    if (strSD3DBinfo.empty())
-    {
-        script_error_log("Missing World database info from configuration file (WorldDatabaseInfo). Load database aborted.");
-        return;
-    }
-
-    // Initialize connection to DB
-    if (SD3Database.Initialize(strSD3DBinfo.c_str()))
-    {
-        outstring_log("sd3: ScriptDev3 database initialized.");
-        outstring_log("\n");
-
-        pSystemMgr.LoadScriptTexts();
-        pSystemMgr.LoadScriptTextsCustom();
-        pSystemMgr.LoadScriptGossipTexts();
-        pSystemMgr.LoadScriptWaypoints();
-    }
-    else
-    {
-        script_error_log("Unable to connect to Database. Load database aborted.");
-        return;
-    }
-
-    SD3Database.HaltDelayThread();
+    pSystemMgr.LoadScriptTexts();
+    pSystemMgr.LoadScriptTextsCustom();
+    pSystemMgr.LoadScriptGossipTexts();
+    pSystemMgr.LoadScriptWaypoints();
 }
 
 struct TSpellSummary
@@ -144,7 +124,7 @@ void DoOrSimulateScriptTextForMap(int32 iTextEntry, uint32 uiCreatureEntry, Map*
         return;
     }
 
-    debug_log("sd3: DoOrSimulateScriptTextForMap: text entry=%i, Sound=%u, Type=%u, Language=%u, Emote=%u",
+    debug_log("[SD3]: DoOrSimulateScriptTextForMap: text entry=%i, Sound=%u, Type=%u, Language=%u, Emote=%u",
                 iTextEntry, pData->SoundId, pData->Type, pData->LanguageId, pData->Emote);
 
     if (pData->Type != CHAT_TYPE_ZONE_YELL)
@@ -220,16 +200,32 @@ void SD3::InitScriptLibrary()
     outstring_log("                |_|                          ");
     outstring_log("                     https://getmangos.eu/\n");
 
+    // Get configuration file
+    bool configFailure = false;
+    if (!SD3Config.SetSource(MANGOSD_CONFIG_LOCATION))
+    {
+        configFailure = true;
+    }
+    else
+    {
+        outstring_log("[SD3]: Using configuration file %s", MANGOSD_CONFIG_LOCATION);
+    }
+
     // Set SD3 Error Log File
     std::string SD3LogFile = sConfig.GetStringDefault("SD3ErrorLogFile", "scriptdev3-errors.log");
     setScriptLibraryErrorFile(SD3LogFile.c_str(), "SD3");
 
+    if (configFailure)
+    {
+        script_error_log("[SD2]: Unable to open configuration file. Configuration values will use default.");
+    }
+
     outstring_log("\n");
 
-    // Load database (must be called after SD3Config.SetSource).
-    LoadDatabase();
+    // Load SD3 Script Bindings from the database
+    LoadSD3Bindings();
 
-    outstring_log("sd3: Loading C++ scripts");
+    outstring_log("[SD3]: Loading C++ scripts");
     BarGoLink bar(1);
     bar.step();
 
@@ -245,7 +241,7 @@ void SD3::InitScriptLibrary()
     {
         if (!m_scripts[i])
         {
-            script_error_log("No script found for ScriptName '%s'.", GetScriptName(i));
+            script_error_log("[SD3]: No script found for ScriptName '%s'.", GetScriptName(i));
         }
     }
 
@@ -254,7 +250,7 @@ void SD3::InitScriptLibrary()
 
 char const* SD3::GetScriptLibraryVersion()
 {
-    return strSD3Version.c_str();
+    return "[SD3] for MaNGOS";
 }
 
 bool SD3::GossipHello(Player* pPlayer, Creature* pCreature)
@@ -287,7 +283,7 @@ bool SD3::GOGossipHello(Player* pPlayer, GameObject* pGo)
 
 bool SD3::GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    debug_log("sd3: Gossip selection, sender: %u, action: %u", uiSender, uiAction);
+    debug_log("[SD3]: Gossip selection, sender: %u, action: %u", uiSender, uiAction);
 
     Script* pTempScript = m_scripts[pCreature->GetScriptId()];
 
@@ -301,7 +297,7 @@ bool SD3::GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, ui
 
 bool SD3::GOGossipSelect(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint32 uiAction)
 {
-    debug_log("sd3: GO Gossip selection, sender: %u, action: %u", uiSender, uiAction);
+    debug_log("[SD3]: GO Gossip selection, sender: %u, action: %u", uiSender, uiAction);
 
     Script* pTempScript = m_scripts[pGo->GetScriptId()];
 
@@ -315,7 +311,7 @@ bool SD3::GOGossipSelect(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint
 
 bool SD3::GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction, const char* sCode)
 {
-    debug_log("sd3: Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
+    debug_log("[SD3]: Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
 
     Script* pTempScript = m_scripts[pCreature->GetScriptId()];
 
@@ -329,7 +325,7 @@ bool SD3::GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSe
 
 bool SD3::GOGossipSelectWithCode(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint32 uiAction, const char* sCode)
 {
-    debug_log("sd3: GO Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
+    debug_log("[SD3]: GO Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
 
     Script* pTempScript = m_scripts[pGo->GetScriptId()];
 
@@ -496,6 +492,7 @@ CreatureAI* SD3::GetCreatureAI(Creature* pCreature)
     {
         return NULL;
     }
+
     CreatureAI* ai = pTempScript->ToCreatureScript()->GetAI(pCreature);
     if (ai)
         ai->Reset();

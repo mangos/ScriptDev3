@@ -29,14 +29,8 @@
 #include "ProgressBar.h"
 #include "ObjectMgr.h"
 #include "Database/DatabaseEnv.h"
-#include "SystemConfig.h"
 
-DatabaseType SD3Database;
-std::string  strSD3Version;
-
-SystemMgr::SystemMgr()
-{
-}
+SystemMgr::SystemMgr() { }
 
 SystemMgr& SystemMgr::Instance()
 {
@@ -46,20 +40,20 @@ SystemMgr& SystemMgr::Instance()
 
 void SystemMgr::LoadScriptTexts()
 {
-    outstring_log("SD3: Loading Script Texts...");
-    LoadMangosStrings(SD3Database, "script_texts", TEXT_SOURCE_TEXT_START, TEXT_SOURCE_TEXT_END, true);
+    outstring_log("[SD3]: Loading Script Texts...");
+    LoadMangosStrings(WorldDatabase, "script_texts", TEXT_SOURCE_TEXT_START, TEXT_SOURCE_TEXT_END, true);
 }
 
 void SystemMgr::LoadScriptTextsCustom()
 {
-    outstring_log("SD3: Loading Custom Texts...");
-    LoadMangosStrings(SD3Database, "custom_texts", TEXT_SOURCE_CUSTOM_START, TEXT_SOURCE_CUSTOM_END, true);
+    outstring_log("[SD3]: Loading Custom Texts...");
+    LoadMangosStrings(WorldDatabase, "custom_texts", TEXT_SOURCE_CUSTOM_START, TEXT_SOURCE_CUSTOM_END, true);
 }
 
 void SystemMgr::LoadScriptGossipTexts()
 {
-    outstring_log("SD3: Loading Gossip Texts...");
-    LoadMangosStrings(SD3Database, "gossip_texts", TEXT_SOURCE_GOSSIP_START, TEXT_SOURCE_GOSSIP_END);
+    outstring_log("[SD3]: Loading Gossip Texts...");
+    LoadMangosStrings(WorldDatabase, "gossip_texts", TEXT_SOURCE_GOSSIP_START, TEXT_SOURCE_GOSSIP_END);
 }
 
 void SystemMgr::LoadScriptWaypoints()
@@ -70,16 +64,16 @@ void SystemMgr::LoadScriptWaypoints()
     uint64 uiCreatureCount = 0;
 
     // Load Waypoints
-    QueryResult* pResult = SD3Database.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
+    QueryResult* pResult = WorldDatabase.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
     if (pResult)
     {
         uiCreatureCount = pResult->GetRowCount();
         delete pResult;
     }
 
-    outstring_log("SD3: Loading Script Waypoints for " UI64FMTD " creature(s)...", uiCreatureCount);
+    outstring_log("[SD3]: Loading Script Waypoints for " UI64FMTD " creature(s)...", uiCreatureCount);
 
-    pResult = SD3Database.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
+    pResult = WorldDatabase.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
 
     if (pResult)
     {
@@ -104,13 +98,13 @@ void SystemMgr::LoadScriptWaypoints()
 
             if (!pCInfo)
             {
-                error_db_log("SD3: DB table script_waypoint has waypoint for nonexistent creature entry %u", pTemp.uiCreatureEntry);
+                error_db_log("[SD3]: DB table script_waypoint has waypoint for nonexistent creature entry %u", pTemp.uiCreatureEntry);
                 continue;
             }
 
             if (!sScriptMgr.GetBoundScriptId(SCRIPTED_UNIT, pCInfo->Entry))
             {
-                error_db_log("SD3: DB table script_waypoint has waypoint for creature entry %u, but creature does not have ScriptName defined and then useless.", pTemp.uiCreatureEntry);
+                error_db_log("[SD3]: DB table script_waypoint has waypoint for creature entry %u, but creature does not have ScriptName defined and then useless.", pTemp.uiCreatureEntry);
             }
 
             m_mPointMoveMap[uiEntry].push_back(pTemp);
