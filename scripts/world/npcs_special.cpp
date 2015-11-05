@@ -1642,7 +1642,7 @@ void AddSC_npcs_special()
     s = new npc_guardian();
     s->RegisterSelf();
     s = new npc_innkeeper();
-    s->RegisterSelf(false);;
+    s->RegisterSelf(false);
 #if defined(CLASSIC)
     s = new npc_redemption_target();
     s->RegisterSelf()
