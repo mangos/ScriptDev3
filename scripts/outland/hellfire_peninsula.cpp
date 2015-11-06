@@ -1222,7 +1222,9 @@ void AddSC_hellfire_peninsula()
     s = new npc_demoniac_scryer();
     s->RegisterSelf();
     s = new npc_wounded_blood_elf();
-    s->RegisterSelf();
+    s->RegisterSelf();	
+    s = new spell_inform_dog();
+    s->RegisterSelf();	
     s = new npc_fel_guard_hound();
     s->RegisterSelf();
     s = new npc_anchorite_barada();

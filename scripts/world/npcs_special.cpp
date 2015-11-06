@@ -1477,7 +1477,7 @@ enum
     NPC_BLOOD_KNIGHT            = 17768,        // blood elf side
 };
 
-#if defined(CLASSIC)
+#if defined(CLASSIC) || defined(TBC) || defined(WOTLK)
 struct npc_redemption_target : public CreatureScript
 {
     npc_redemption_target() : CreatureScript("npc_redemption_target") {}
@@ -1574,7 +1574,7 @@ struct npc_redemption_target : public CreatureScript
 };
 
 #endif
-#if defined (CLASSIC)
+#if defined(CLASSIC)
 struct spell_npc_redemption_target : public SpellScript
 {
     spell_npc_redemption_target() : SpellScript("spell_npc_redemption_target") {}
@@ -1643,9 +1643,11 @@ void AddSC_npcs_special()
     s->RegisterSelf();
     s = new npc_innkeeper();
     s->RegisterSelf(false);
-#if defined(CLASSIC)
+#if defined(CLASSIC) || defined(TBC) || defined(WOTLK)
     s = new npc_redemption_target();
     s->RegisterSelf();
+#endif
+#if defined(CLASSIC)
     s = new spell_npc_redemption_target();
     s->RegisterSelf();
 #endif
