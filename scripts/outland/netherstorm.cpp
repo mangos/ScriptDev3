@@ -1615,6 +1615,12 @@ enum
 // order based on the increasing range of damage
 static const uint32 auiShadowRainSpells[5] = { 37399, 37405, 37397, 37396, 37409 };
 
+
+
+struct npc_dimensius : public CreatureScript
+{
+    npc_dimensius() : CreatureScript("npc_dimensius") {}
+
 struct  npc_dimensiusAI : public Scripted_NoMovementAI
 {
     npc_dimensiusAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
@@ -1739,6 +1745,8 @@ CreatureAI* GetAI_npc_dimensius(Creature* pCreature)
 {
     return new npc_dimensiusAI(pCreature);
 }
+};
+
 #endif
 
 void AddSC_netherstorm()
@@ -1821,9 +1829,12 @@ void AddSC_netherstorm()
     //pNewScript->RegisterSelf();
 
 #if defined (WOTLK)    
-    pNewScript = new Script;
+    s = new npc_dimensius();
+    s->RegisterSelf();
+
+	/*pNewScript = new Script;
     pNewScript->Name = "npc_dimensius";
     pNewScript->GetAI = &GetAI_npc_dimensius;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf();*/
 #endif
 }

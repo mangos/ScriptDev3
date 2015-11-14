@@ -35,9 +35,7 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * npc_kyle_the_frenzied
-#endif
  * EndContentData
  */
 

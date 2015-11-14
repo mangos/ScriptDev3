@@ -174,6 +174,9 @@ struct CreatureScript : public Script
     virtual uint32 OnDialogEnd(Player*, Creature*) { return 0; }
     virtual bool OnQuestAccept(Player*, Creature*, Quest const*) { return false; }
     virtual bool OnQuestRewarded(Player*, Creature*, Quest const*) { return false; }
+#if defined (WOTLK)
+    virtual bool OnSpellClick(Player*, Creature*, uint32) { return false; }
+#endif
 
     virtual CreatureAI* GetAI(Creature*) { return NULL; }
 };
@@ -257,7 +260,9 @@ struct AuraScript : public Script
     //bool IsValid() override { return bool(sSpellStore.LookupEntry(spellID)); }
 
     virtual bool OnDummyApply(const Aura*, bool) { return false; }
-    //virtual bool OnDummyTick(const Aura*) { return false; }   [-ZERO:] no AURA_RERIODIC_DUMMY
+#if defined (TBC) || defined (WOTLK)
+    virtual bool OnDummyTick(const Aura*) { return false; }
+#endif
 };
 
 struct ConditionScript : public Script

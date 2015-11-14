@@ -105,8 +105,9 @@ struct spell_cast_fishing_net : public SpellScript
     bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
  #if defined (WOTLK)
-        case SPELL_ANUNIAQS_NET:
+        if (uiSpellId == SPELL_ANUNIAQS_NET)
         {
+            GameObject* pGOTarget = pTarget->ToGameObject();
             if (uiEffIndex == EFFECT_INDEX_0)
             {
                 if (pGOTarget->GetRespawnTime() != 0 || pGOTarget->GetEntry() != GO_TASTY_REEF_FISH || pCaster->GetTypeId() != TYPEID_PLAYER)
@@ -679,17 +680,19 @@ struct spell_administer_antidote : public SpellScript
     bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
         if (uiSpellId == SPELL_ADMINISTER_ANTIDOTE && uiEffIndex == EFFECT_INDEX_0)
+        {
+            if (pTarget->GetEntry() != NPC_HELBOAR)
             {
-                if (pTarget->GetEntry() != NPC_HELBOAR)
-                { return true; }
-
-                // possible needs check for quest state, to not have any effect when quest really complete
-                //TODO implement it as a DB condition for CheckCast()
-
-                pTarget->ToCreature()->UpdateEntry(NPC_DREADTUSK);
                 return true;
             }
+
+            // possible needs check for quest state, to not have any effect when quest really complete
+            //TODO implement it as a DB condition for CheckCast()
+
+            pTarget->ToCreature()->UpdateEntry(NPC_DREADTUSK);
             return true;
+        }
+        return true;
     }
 };
 
@@ -702,7 +705,9 @@ struct spell_inoculate_owlkin : public SpellScript
         if (uiSpellId == SPELL_INOCULATE_OWLKIN && uiEffIndex == EFFECT_INDEX_0)
         {
             if (pTarget->GetEntry() != NPC_OWLKIN)
-            { return true; }
+            {
+                return true;
+            }
 
             pTarget->ToCreature()->UpdateEntry(NPC_OWLKIN_INOC);
             ((Player*)pCaster)->KilledMonsterCredit(NPC_OWLKIN_INOC);
@@ -768,7 +773,9 @@ struct spell_fel_siphon_dummy : public SpellScript
         if (uiSpellId == SPELL_FEL_SIPHON_DUMMY && uiEffIndex == EFFECT_INDEX_0)
         {
             if (pTarget->GetEntry() != NPC_FELBLOOD_INITIATE)
-            { return true; }
+            {
+                return true;
+            }
 
             pTarget->ToCreature()->UpdateEntry(NPC_EMACIATED_FELBLOOD);
             return true;
@@ -897,22 +904,22 @@ struct spell_tag_murloc_proc : public SpellScript
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
 struct spell_orb_of_murloc_control : public SpellScript
+{
+    spell_orb_of_murloc_control() : SpellScript("spell_orb_of_murloc_control") {}
+
+    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override //SPELL_ORB_OF_MURLOC_CONTROL
     {
-        spell_orb_of_murloc_control() : SpellScript("spell_orb_of_murloc_control") {}
+        Creature* pCreatureTarget = pTarget->ToCreature();
+        pCreatureTarget->CastSpell(pCaster, SPELL_GREENGILL_SLAVE_FREED, true);
 
-        bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override //SPELL_ORB_OF_MURLOC_CONTROL
-        {
-            Creature* pCreatureTarget = pTarget->ToCreature();
-            pCreatureTarget->CastSpell(pCaster, SPELL_GREENGILL_SLAVE_FREED, true);
+        // Freed Greengill Slave
+        pCreatureTarget->UpdateEntry(NPC_FREED_GREENGILL_SLAVE);
 
-            // Freed Greengill Slave
-            pCreatureTarget->UpdateEntry(NPC_FREED_GREENGILL_SLAVE);
+        pCreatureTarget->CastSpell(pCreatureTarget, SPELL_ENRAGE, true);
 
-            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_ENRAGE, true);
-
-            return true;
-        }
-    };
+        return true;
+    }
+};
 
 struct spell_fumping : public SpellScript
 {
@@ -1144,32 +1151,33 @@ struct spell_expose_rathorthorn_root : public SpellScript
     }
 };
 #endif
-// #if defined (WOTLK)
-//        case SPELL_THROW_ICE:
-//        {
-//            if (uiEffIndex == EFFECT_INDEX_0)
-//            {
-//                if (pCreatureTarget->GetEntry() != NPC_SMOLDERING_SCRAP_BUNNY)
-//                    return true;
-//
-//                if (GameObject* pScrap = GetClosestGameObjectWithEntry(pCreatureTarget, GO_SMOLDERING_SCRAP, 5.0f))
-//                {
-//                    if (pScrap->GetRespawnTime() != 0)
-//                        return true;
-//
-//                    pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FROZEN_IRON_SCRAP, true);
-//                    pScrap->SetLootState(GO_JUST_DEACTIVATED);
-//                    pCreatureTarget->ForcedDespawn(1000);
-//                }
-//            }
-//            return true;
-//        }
-//
-//    }
-//
-//    return false;
-//}
-//#endif
+#if defined (WOTLK)
+struct spell_throw_ice : public SpellScript
+{
+    spell_throw_ice() : SpellScript("spell_throw_ice") {}
+
+    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
+    {
+        if (uiEffIndex == EFFECT_INDEX_0)
+        {
+            Creature *pCreatureTarget = pTarget->ToCreature();
+            if (pCreatureTarget->GetEntry() != NPC_SMOLDERING_SCRAP_BUNNY)
+                return true;
+
+            if (GameObject* pScrap = GetClosestGameObjectWithEntry(pCreatureTarget, GO_SMOLDERING_SCRAP, 5.0f))
+            {
+                if (pScrap->GetRespawnTime() != 0)
+                    return true;
+
+                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FROZEN_IRON_SCRAP, true);
+                pScrap->SetLootState(GO_JUST_DEACTIVATED);
+                pCreatureTarget->ForcedDespawn(1000);
+            }
+        }
+        return true;
+    }
+};
+#endif
 
 void AddSC_spell_scripts()
 {
@@ -1212,6 +1220,10 @@ void AddSC_spell_scripts()
     s = new spell_throw_gordawg_boulder();
     s->RegisterSelf();
     s = new spell_expose_rathorthorn_root();
+    s->RegisterSelf();
+#endif
+#if defined (WOTLK)
+    s = new spell_throw_ice();
     s->RegisterSelf();
 #endif
 }

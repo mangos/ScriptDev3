@@ -80,3 +80,6 @@ enum
 */
 
 #endif
+#if defined(WOTLK)
+static const float afAquanisPos[4] = { -782.21f, -63.26f, -42.43f, 2.36f };
+#endif

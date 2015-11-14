@@ -482,8 +482,12 @@ struct is_sunken_temple : public InstanceScript
                 return;
             }
 
+#if defined(CLASSIC) || defined(TBC)
             pPlayer->SummonCreature(NPC_ATALARION, aSunkenTempleLocation[0].m_fX, aSunkenTempleLocation[0].m_fY, aSunkenTempleLocation[0].m_fZ, aSunkenTempleLocation[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
-
+#endif
+#if defined(WOTLK)
+            pPlayer->SummonCreature(NPC_ATALARION, aSunkenTempleLocation[0].m_fX, aSunkenTempleLocation[0].m_fY, aSunkenTempleLocation[0].m_fZ, aSunkenTempleLocation[0].m_Orientation, TEMPSUMMON_DEAD_DESPAWN, 0);
+#endif
             // Spawn the idol of Hakkar
             DoRespawnGameObject(GO_IDOL_OF_HAKKAR, 30 * MINUTE);
 

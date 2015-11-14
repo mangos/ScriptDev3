@@ -35,18 +35,18 @@
 
 /**
  * ContentData
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
  * go_molten_core_rune
 #endif
  * EndContentData
  */
 
 #include "precompiled.h"
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
 #include "molten_core.h"
 #endif
 
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
 
 /*######
 ## go_molten_core_rune
@@ -77,7 +77,7 @@ struct go_molten_core_rune : public GameObjectScript
 #endif
 void AddSC_molten_core()
 {
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
     Script* s;
     s = new go_molten_core_rune();
     s->RegisterSelf();

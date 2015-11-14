@@ -233,6 +233,7 @@ struct boss_zumrah : public CreatureScript
 void AddSC_boss_zumrah()
 {
     Script* s;
+
     s = new boss_zumrah();
     s->RegisterSelf();
 

@@ -93,7 +93,7 @@ struct npc_draenei_survivor : public CreatureScript
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
 #endif
 #if defined (WOTLK)
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 #endif
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IN_COMBAT);
             m_creature->SetHealth(int(m_creature->GetMaxHealth()*.1));
@@ -125,14 +125,14 @@ struct npc_draenei_survivor : public CreatureScript
             if (pSpell->Id == 28880)
 #endif
 #if defined (WOTLK)
-        if (pSpell->IsFitToFamilyMask(UI64LIT(0x0000000000000000), 0x080000000))
+            if (pSpell->IsFitToFamilyMask(UI64LIT(0x0000000000000000), 0x080000000))
 #endif
             {
 #if defined (CLASSIC) || defined (TBC)
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
 #endif
 #if defined (WOTLK)
-            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 #endif
                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
 

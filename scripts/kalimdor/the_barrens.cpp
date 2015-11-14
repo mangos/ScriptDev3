@@ -41,10 +41,8 @@
  * npc_twiggy_flathead
  * at_twiggy_flathead
  * npc_wizzlecrank_shredder
-#if defined (CLASSIC) || defined (TBC)
  * npc_regthar_deathgate
  * npc_horde_defender
-#endif
  * EndContentData
  */
 
@@ -734,7 +732,6 @@ struct npc_wizzlecranks_shredder : public CreatureScript
     }
 };
 
-#if defined (CLASSIC) || defined (TBC)
 /*#####
 ## npc_regthar_deathgate
 #####*/
@@ -1271,7 +1268,7 @@ struct horde_defender : public CreatureScript
         return new npc_horde_defenderAI(pCreature);
     }
 };
-#endif
+
 void AddSC_the_barrens()
 {
     Script* s;
@@ -1287,12 +1284,10 @@ void AddSC_the_barrens()
     s->RegisterSelf();
     s = new npc_wizzlecranks_shredder();
     s->RegisterSelf();
-#if defined (CLASSIC) || defined (TBC)
     s = new npc_regthar_deathgate();
     s->RegisterSelf();
     s = new horde_defender();
     s->RegisterSelf();
-#endif
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_beaten_corpse";

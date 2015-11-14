@@ -40,7 +40,6 @@
  */
 
 #include "precompiled.h"
-#include "GameEventMgr.h"
 
 /*######
 ## mob_yenniku
@@ -129,7 +128,6 @@ struct mob_yenniku : public CreatureScript
         return new mob_yennikuAI(_Creature);
     }
 };
-
 
 /*######
 ##

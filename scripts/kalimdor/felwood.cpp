@@ -548,7 +548,7 @@ struct npc_captured_arkonarin : public CreatureScript
                 pSummoned->AI()->AttackStart(m_creature);
             else if (pSummoned->GetEntry() == NPC_SPIRT_TREY)
             {
-#if defined(TBC)
+#if defined(TBC) || defined(WOTLK)
                 DoScriptText(SAY_TREY_BETRAYER, pSummoned);
 #endif
                 m_treyGuid = pSummoned->GetObjectGuid();
@@ -615,7 +615,7 @@ struct npc_captured_arkonarin : public CreatureScript
                 SetRun(false);
                 break;
 #endif
-#if defined(TBC)
+#if defined(TBC) || defined(WOTLK)
                 DoScriptText(SAY_ESCAPE_DEMONS, m_creature);
                 m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5082.068f, -490.084f, 296.856f, 5.15f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
                 m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5084.135f, -489.187f, 296.832f, 5.15f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
@@ -630,7 +630,7 @@ struct npc_captured_arkonarin : public CreatureScript
                 m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5082.929f, -492.193f, 296.677f, 5.43f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
                 break;
 #endif
-#if defined(TBC)
+#if defined(TBC) || defined(WOTLK)
             case 43:
                 SetRun(false);
                 break;
@@ -652,7 +652,7 @@ struct npc_captured_arkonarin : public CreatureScript
                 DoScriptText(SAY_FRESH_AIR, m_creature);
                 break;
             case 105:
-#if defined(TBC)
+#if defined(TBC) || defined(WOTLK)
                 m_creature->SummonCreature(NPC_SPIRT_TREY, 4844.839f, -395.763f, 350.603f, 6.25f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
 #endif
 #if defined(CLASSIC)

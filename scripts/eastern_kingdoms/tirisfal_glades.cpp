@@ -190,9 +190,7 @@ struct npc_calvin_montague : public CreatureScript
                     ++m_uiPhase;
                     break;
                 case 3:
-#if defined (CLASSIC) || defined (TBC)
                     m_creature->SetStandState(UNIT_STAND_STATE_STAND); //otherwise he is sitting until server restart
-#endif
                     EnterEvadeMode();
                     break;
                 }

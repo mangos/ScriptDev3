@@ -54,9 +54,9 @@
 
 enum
 {
-    BLUE_OGRE_BREW = 32783,
-    RED_OGRE_BREW = 32784,
-    TRANCHANTES = 3522
+    BLUE_OGRE_BREW  = 32783,
+    RED_OGRE_BREW   = 32784,
+    TRANCHANTES     = 3522
 };
 
 struct item_ogre_brew : public ItemScript
@@ -182,30 +182,35 @@ struct item_gor_dreks_ointment : public ItemScript
 # item_petrov_cluster_bombs
 #####*/
 
-enum
+struct item_petrov_cluster_bombs : public ItemScript
 {
-    SPELL_PETROV_BOMB           = 42406,
-    AREA_ID_SHATTERED_STRAITS   = 4064,
-    ZONE_ID_HOWLING             = 495
-};
+    item_petrov_cluster_bombs() : ItemScript("item_petrov_cluster_bombs") {}
 
-bool ItemUse_item_petrov_cluster_bombs(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
-{
-    if (pPlayer->GetZoneId() != ZONE_ID_HOWLING)
-        return false;
-
-    if (!pPlayer->GetTransport() || pPlayer->GetAreaId() != AREA_ID_SHATTERED_STRAITS)
+    enum
     {
-        pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
+        SPELL_PETROV_BOMB = 42406,
+        AREA_ID_SHATTERED_STRAITS = 4064,
+        ZONE_ID_HOWLING = 495
+    };
 
-        if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_PETROV_BOMB))
-            Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_HERE);
+    bool ItemUse_item_petrov_cluster_bombs(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
+    {
+        if (pPlayer->GetZoneId() != ZONE_ID_HOWLING)
+            return false;
 
-        return true;
+        if (!pPlayer->GetTransport() || pPlayer->GetAreaId() != AREA_ID_SHATTERED_STRAITS)
+        {
+            pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
+
+            if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_PETROV_BOMB))
+                Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_HERE);
+
+            return true;
+        }
+
+        return false;
     }
-
-    return false;
-}
+};
 #endif
 
 void AddSC_item_scripts()
@@ -238,9 +243,12 @@ void AddSC_item_scripts()
     //pNewScript->RegisterSelf();
 #endif
 #if defined (WOTLK)
-    pNewScript = new Script;
-    pNewScript->Name = "item_petrov_cluster_bombs";
-    pNewScript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
-    pNewScript->RegisterSelf();
+    s = new item_petrov_cluster_bombs();
+    s->RegisterSelf();
+
+//    pNewScript = new Script;
+//    pNewScript->Name = "item_petrov_cluster_bombs";
+//    pNewScript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
+//    pNewScript->RegisterSelf();
 #endif
 }

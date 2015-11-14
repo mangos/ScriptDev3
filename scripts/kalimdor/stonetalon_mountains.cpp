@@ -36,9 +36,7 @@
 /**
  * ContentData
  * npc_kaya
-#if defined (CLASSIC) || defined (TBC)
  * npc_piznik
-#endif
  * EndContentData
  */
 
@@ -126,7 +124,6 @@ struct npc_kaya : public CreatureScript
     }
 };
 
-#if defined (CLASSIC) || defined (TBC)
 /*#####
 ## npc_piznik
 #####*/
@@ -231,7 +228,12 @@ struct npc_piznik : public CreatureScript
 
         void JustDied(Unit* /*pKiller*/)
         {
+#if defined (CLASSIC) || defined (TBC)
             if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(m_uiPlayerGUID)))
+#endif
+#if defined (WOTLK)
+            if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(ObjectGuid(m_uiPlayerGUID))))
+#endif
             {
                 pPlayer->SendQuestFailed(QUEST_GERENZOS_ORDERS);
             }
@@ -259,7 +261,12 @@ struct npc_piznik : public CreatureScript
 
             if (m_uiEventTimer < uiDiff)  //Event should be completed after 7 minutes even if waves are alive
             {
+#if defined (CLASSIC) || defined (TBC)
                 if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(m_uiPlayerGUID)))
+#endif
+#if defined (WOTLK)
+                if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(ObjectGuid(m_uiPlayerGUID))))
+#endif
                 {
                     pPlayer->GroupEventHappens(QUEST_GERENZOS_ORDERS, m_creature);
                 }
@@ -335,7 +342,7 @@ struct npc_piznik : public CreatureScript
         return new npc_piznikAI(pCreature);
     }
 };
-#endif
+
 /*######
 ## AddSC
 ######*/

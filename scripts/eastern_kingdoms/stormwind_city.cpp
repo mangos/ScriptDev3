@@ -47,13 +47,15 @@
 #include "../scripts/world/world_map_scripts.h"
 #include "escort_ai.h"
 
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
 /*######
 ## npc_tyrion
 ######*/
 
 enum
 {
+    FACTION_ENEMY       = 168,
+    QUEST_BEAT          = 1640,
     QUEST_THE_ATTACK    = 434
 };
 
@@ -65,9 +67,9 @@ struct npc_tyrion : public CreatureScript
     {
         if (pQuest->GetQuestId() == QUEST_THE_ATTACK)
         {
-            pCreature->GetMap()->MonsterYellToMap(pCreature->GetGUID(), -1000824, LANG_UNIVERSAL, pPlayer);
-            //         pCreature->SetFactionTemporary(FACTION_ENEMY, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
-            //         pCreature->AI()->AttackStart(pPlayer);
+            pCreature->GetMap()->MonsterYellToMap(pCreature->GetObjectGuid(), -1000824, LANG_UNIVERSAL, pPlayer);
+            pCreature->SetFactionTemporary(FACTION_ENEMY, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
+            pCreature->AI()->AttackStart(pPlayer);
             return true;
         }
 
@@ -79,12 +81,6 @@ struct npc_tyrion : public CreatureScript
 /*######
 ## npc_bartleby
 ######*/
-
-enum
-{
-    FACTION_ENEMY       = 168,
-    QUEST_BEAT          = 1640
-};
 
 struct npc_bartleby : public CreatureScript
 {
@@ -1181,7 +1177,7 @@ struct npc_reginald_windsor : public CreatureScript
     }
 };
 
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
 /*######
 ## npc_tyrion_spybot
 ######*/
@@ -1335,8 +1331,8 @@ struct npc_tyrion_spybot : public CreatureScript
 void AddSC_stormwind_city()
 {
     Script* s;
-    //s = new npc_tyrion(); //also npc_tyrion_spybot : probably not completed stuff, TODO
-    //s->RegisterSelf();
+    s = new npc_tyrion(); //also npc_tyrion_spybot : probably not completed stuff, TODO
+    s->RegisterSelf();
     s = new npc_bartleby();
     s->RegisterSelf();
     s = new npc_dashel_stonefist();
@@ -1347,8 +1343,8 @@ void AddSC_stormwind_city()
     s->RegisterSelf();
     s = new npc_reginald_windsor();
     s->RegisterSelf();
-    //s = new npc_tyrion_spybot();
-    //s->RegisterSelf();
+    s = new npc_tyrion_spybot();
+    s->RegisterSelf();
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_bartleby";

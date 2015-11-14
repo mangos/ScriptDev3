@@ -475,6 +475,7 @@ struct boss_cthun : public CreatureScript
             // Kill any player from the stomach on evade - this is because C'thun can not be soloed.
             for (GuidList::const_iterator itr = m_lPlayersInStomachList.begin(); itr != m_lPlayersInStomachList.end(); ++itr)
             {
+            // Workaround for missing spell 26648
                 if (Player* pPlayer = m_creature->GetMap()->GetPlayer(*itr))
                 {
 #if defined (CLASSIC)  

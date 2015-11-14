@@ -103,7 +103,7 @@ endif()
     source_group("Kalimdor Scripts" FILES ${sources_kalimdor})
 
 # --- NOT FOR ZERO ---  
-IF(("${MANGOS_EXP}" STREQUAL "TBC") OR (WOTLK) OR (CATA))
+IF(("${MANGOS_EXP}" STREQUAL "TBC") OR ("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 #Outlands Scripts
 file(GLOB sources_outlands scripts/outland/*.cpp scripts/outland/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_outlands})
@@ -112,7 +112,7 @@ endif()
 # --- END IF ---
 
 # --- TWO / Three ---
-if ((WOTLK) OR (CATA))
+if (("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 #Northrend Scripts
 file(GLOB sources_northrend scripts/northrend/*.cpp scripts/northrend/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_northrend})
@@ -186,13 +186,13 @@ file(GLOB sources_instance_ek_files scripts/eastern_kingdoms/stratholme/*.cpp sc
     source_group("Eastern Kingdoms Scripts\\Instances\\Stratholme" FILES ${sources_instance_ek_files})
 endif()
 
-IF(("${MANGOS_EXP}" STREQUAL "TBC") OR (WOTLK) OR (CATA))
+IF(("${MANGOS_EXP}" STREQUAL "TBC") OR ("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 file(GLOB sources_instance_ek_strat scripts/eastern_kingdoms/stratholme/*.cpp scripts/eastern_kingdoms/stratholme/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ek_strat})
   source_group("Eastern Kingdoms Scripts\\Instances\\Stratholme" FILES ${sources_instance_ek_strat})
 endif()
 
-IF(("${MANGOS_EXP}" STREQUAL "TBC") OR (WOTLK) OR (CATA))
+IF(("${MANGOS_EXP}" STREQUAL "TBC") OR ("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 #Instance: Magisters Terrace Scripts
 file(GLOB sources_instance_ek_mt scripts/eastern_kingdoms/magisters_terrace/*.cpp scripts/eastern_kingdoms/magisters_terrace/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ek_mt})
@@ -226,10 +226,12 @@ file(GLOB sources_raid_ek_bwl scripts/eastern_kingdoms/blackrock_mountain/blackw
     source_group("Eastern Kingdoms Scripts\\Raids\\Blackwing Lair" FILES ${sources_raid_ek_bwl})
 
 # --- NOT TWO ---
+IF(("${MANGOS_EXP}" STREQUAL "CLASSIC") OR ("${MANGOS_EXP}" STREQUAL "TBC"))
 #Raid: Naxxramas Scripts
 file(GLOB sources_raid_ek_naxx scripts/eastern_kingdoms/naxxramas/*.cpp scripts/eastern_kingdoms/naxxramas/*.h)
     LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ek_naxx})
     source_group("Eastern Kingdoms Scripts\\Raids\\Naxxramas" FILES ${sources_raid_ek_naxx})
+endif()
 # --- END IF ---
 
 #Raid: Zul Gurub Scripts
@@ -268,7 +270,7 @@ file(GLOB sources_instance_k_wc scripts/kalimdor/wailing_caverns/*.cpp scripts/k
     source_group("Kalimdor Scripts\\Instances\\Wailing Caverns" FILES ${sources_instance_k_wc})
 
 # --- NOT FOR ZERO ---  
-IF(("${MANGOS_EXP}" STREQUAL "TBC") OR (WOTLK) OR (CATA))
+IF(("${MANGOS_EXP}" STREQUAL "TBC") OR ("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 #Instance: Caverns of Time - Black Morass
 file(GLOB sources_instance_k_cot_bm scripts/kalimdor/caverns_of_time/dark_portal/*.cpp scripts/kalimdor/caverns_of_time/dark_portal/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_cot_bm})
@@ -281,8 +283,8 @@ file(GLOB sources_instance_k_cot_oh scripts/kalimdor/caverns_of_time/old_hillsbr
 endif()
 # --- END IF ---  
 
-# --- TWO ONLY ---
-if ((WOTLK) OR (CATA))
+# --- TWO /THREE ONLY ---
+if (("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 #Instance: Caverns of Time - Culling of Stratholme
 file(GLOB sources_instance_k_cot_cos scripts/kalimdor/caverns_of_time/culling_of_stratholme/*.cpp scripts/kalimdor/caverns_of_time/culling_of_stratholme/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_cot_cos})
@@ -297,7 +299,7 @@ file(GLOB sources_instance_k_zf scripts/kalimdor/zulfarrak/*.cpp scripts/kalimdo
 
 # --- NOT FOR ZERO ---  
 #Raid: Caverns of Time - Mount Hyjal
-IF(("${MANGOS_EXP}" STREQUAL "TBC") OR (WOTLK) OR (CATA))
+IF(("${MANGOS_EXP}" STREQUAL "TBC") OR ("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 file(GLOB sources_instance_k_cot_mh scripts/kalimdor/caverns_of_time/hyjal/*.cpp scripts/kalimdor/caverns_of_time/hyjal/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_k_cot_mh})
   source_group("Kalimdor Scripts\\Raids\\Caverns of Time\\Mount Hyjal" FILES ${sources_instance_k_cot_mh})
@@ -320,7 +322,7 @@ file(GLOB sources_raid_k_taq scripts/kalimdor/temple_of_ahnqiraj/*.cpp scripts/k
     source_group("Kalimdor Scripts\\Raids\\Temple of AQ" FILES ${sources_raid_k_taq})
 
 # --- NOT FOR ZERO ---  
-IF(("${MANGOS_EXP}" STREQUAL "TBC") OR (WOTLK) OR (CATA))
+IF(("${MANGOS_EXP}" STREQUAL "TBC") OR ("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 #Instance: Auchindoun - Auchenai Crypts
 file(GLOB sources_instance_ol_aac scripts/outland/auchindoun/auchenai_crypts/*.cpp scripts/outland/auchindoun/auchenai_crypts/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_ol_aac})
@@ -414,7 +416,7 @@ endif()
 # --- END IF ---
 
 # --- TWO ONLY ---
-if ((WOTLK) OR (CATA))
+if (("${MANGOS_EXP}" STREQUAL "WOTLK") OR ("${MANGOS_EXP}" STREQUAL "CATA"))
 #Instance: Azjol Nerub
 file(GLOB sources_instance_nr_aznj scripts/northrend/azjol-nerub/azjol-nerub/*.cpp scripts/northrend/azjol-nerub/azjol-nerub/*.h)
   LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_nr_aznj})

@@ -212,6 +212,8 @@ struct is_molten_core : public InstanceScript
                 }
                 // no break here!
             case TYPE_LUCIFRON:
+                m_auiEncounter[uiType] = uiData;
+                break;
             case TYPE_MAGMADAR:
                 m_auiEncounter[uiType] = uiData;
 #if defined (WOTLK)
@@ -308,7 +310,7 @@ struct is_molten_core : public InstanceScript
             }
 #endif
 
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
             if (save)
 #endif
 #if defined (WOTLK)
@@ -414,7 +416,7 @@ struct is_molten_core : public InstanceScript
             // Check if all rune bosses are done
             for (uint8 i = TYPE_MAGMADAR; i < TYPE_MAJORDOMO; ++i)
             {
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
                 if (m_auiEncounter[i] != SPECIAL)
 #endif
 #if defined (WOTLK)

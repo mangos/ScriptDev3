@@ -49,7 +49,7 @@ enum
     SPELL_IMPALE                = 39061,
     SPELL_WARLORDS_RAGE         = 37081,        // triggers 36453
     SPELL_WARLORDS_RAGE_NAGA    = 31543,        // triggers 37076
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
     SPELL_WARLORDS_RAGE_AURA    = 36453,
 #endif
 };

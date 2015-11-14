@@ -586,6 +586,7 @@ struct npc_fel_guard_hound : public CreatureScript
     }
 };
 
+#if defined (TBC) || defined (WOTLK)
 struct spell_inform_dog : public SpellScript
 {
     spell_inform_dog() : SpellScript("spell_inform_dog") {}
@@ -611,6 +612,7 @@ struct spell_inform_dog : public SpellScript
         return false;
     }
 };
+#endif
 
 /*######
 ## npc_anchorite_barada
@@ -1101,6 +1103,10 @@ enum
     SPELL_FIREBALL                  = 20823,
 };
 
+struct npc_magister_aledis : public CreatureScript
+{
+    npc_magister_aledis() : CreatureScript("npc_magister_aledis") {}
+
 struct  npc_magister_aledisAI : public ScriptedAI
 {
     npc_magister_aledisAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -1209,6 +1215,7 @@ CreatureAI* GetAI_npc_magister_aledis(Creature* pCreature)
 {
     return new npc_magister_aledisAI(pCreature);
 }
+};
 #endif
 
 void AddSC_hellfire_peninsula()
@@ -1222,9 +1229,7 @@ void AddSC_hellfire_peninsula()
     s = new npc_demoniac_scryer();
     s->RegisterSelf();
     s = new npc_wounded_blood_elf();
-    s->RegisterSelf();	
-    s = new spell_inform_dog();
-    s->RegisterSelf();	
+    s->RegisterSelf();
     s = new npc_fel_guard_hound();
     s->RegisterSelf();
     s = new npc_anchorite_barada();
@@ -1235,6 +1240,11 @@ void AddSC_hellfire_peninsula()
     s->RegisterSelf();
     s = new npc_caretaker_dilandrus();
     s->RegisterSelf();
+
+#if defined (TBC) || defined (WOTLK)
+    s = new spell_inform_dog();
+    s->RegisterSelf();
+#endif
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_aeranas";
@@ -1279,9 +1289,12 @@ void AddSC_hellfire_peninsula()
     //pNewScript->RegisterSelf();
     
 #if defined (WOTLK)
-    pNewScript = new Script;
-    pNewScript->Name = "npc_magister_aledis";
-    pNewScript->GetAI = &GetAI_npc_magister_aledis;
-    pNewScript->RegisterSelf();
+    s = new npc_magister_aledis();
+    s->RegisterSelf();
+    
+    //pNewScript = new Script;
+    //pNewScript->Name = "npc_magister_aledis";
+    //pNewScript->GetAI = &GetAI_npc_magister_aledis;
+    //pNewScript->RegisterSelf();
 #endif
 }

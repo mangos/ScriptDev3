@@ -126,7 +126,7 @@ struct boss_pyroguard_emberseer : public CreatureScript
                         return;
                     }
 
-                    m_pInstance->SetData64(NPC_PYROGUARD_EMBERSEER, m_creature->GetGUID());
+                    m_pInstance->SetData64(NPC_PYROGUARD_EMBERSEER, m_creature->GetObjectGuid());
 
                     m_uiEncageTimer = 0;
                 }

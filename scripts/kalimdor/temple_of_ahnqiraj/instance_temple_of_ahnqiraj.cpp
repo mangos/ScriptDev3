@@ -218,10 +218,10 @@ struct is_temple_of_ahnqiraj : public InstanceScript
                 std::ostringstream saveStream;
                 saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3] << " "
                     << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6] << " " << m_auiEncounter[7] << " "
-#if defined (CLASSIC) || defined (WOTLK)
+#if defined (CLASSIC)
                     << m_auiEncounter[8] << " " << m_auiEncounter[9];
 #endif
-#if defined (TBC)
+#if defined (TBC) || defined (WOTLK)
                    << m_auiEncounter[8];
 #endif
 
@@ -372,7 +372,6 @@ struct at_temple_ahnqiraj : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-#if defined (CLASSIC) || defined (TBC)
         if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
         {
             return false;
@@ -399,19 +398,7 @@ struct at_temple_ahnqiraj : public AreaTriggerScript
                 pSartura->SetInCombatWithZone();
             }
         }
-#endif
-#if defined (WOTLK)
-    if (pAt->id == AREATRIGGER_TWIN_EMPERORS || pAt->id == AREATRIGGER_SARTURA)
-    {
-        if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
-            return false;
 
-        if (instance_temple_of_ahnqiraj* pInstance = (instance_temple_of_ahnqiraj*)pPlayer->GetInstanceData())
-        {
-            pInstance->DoHandleTempleAreaTrigger(pAt->id);
-        }
-    }
-#endif
         return false;
     }
 };

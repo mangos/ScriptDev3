@@ -69,7 +69,7 @@ enum
     GO_DRAKKISATH_DOOR_2        = 175947,
 
 
-#if defined (TBC) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK)  || defined (CATA)    
     // upper spire entrance
     GO_DRAGONSPINE              = 164725,
     GO_BRAZIER_1                = 175528,
@@ -98,7 +98,7 @@ enum
     GO_EMBERSEER_RUNE_6         = 175271,
     GO_EMBERSEER_RUNE_7         = 175272,
 
-#if defined (TBC) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA)    
     ITEM_SEAL_OF_ASCENSION      = 12344,
 #endif
 
@@ -148,6 +148,5 @@ static const uint32 aStadiumEventNpcs[MAX_STADIUM_WAVES][5] =
     {NPC_CHROMATIC_WHELP, NPC_CHROMATIC_WHELP, NPC_CHROMATIC_DRAGON, NPC_CHROMATIC_DRAGON, NPC_BLACKHAND_HANDLER},
     {NPC_CHROMATIC_WHELP, NPC_CHROMATIC_WHELP, NPC_CHROMATIC_DRAGON, NPC_CHROMATIC_DRAGON, NPC_BLACKHAND_HANDLER},
 };
-
 
 #endif

@@ -1543,7 +1543,7 @@ void AddSC_bosses_opera()
 
     s = new boss_bigbadwolf();
     s->RegisterSelf();
-	
+
     // Romeo And Juliet
     s = new boss_julianne();
     s->RegisterSelf();

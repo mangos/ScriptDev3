@@ -508,7 +508,7 @@ struct spell_serving_mutton : public SpellScript
 enum
 {
     SAY_WIL_START               = -1000381,
-#if defined (TBC)
+#if defined (TBC) || defined (WOTLK)
     SAY_WIL_AGGRO1              = -1000382,
     SAY_WIL_AGGRO2              = -1000383,
     SAY_WIL_PROGRESS1           = -1000384,
@@ -520,7 +520,7 @@ enum
     SAY_WIL_FREE_SPIRITS        = -1000384,
 #endif
     SAY_WIL_FIND_EXIT           = -1000386,
-#if defined (TBC)
+#if defined (TBC) || defined (WOTLK)
     SAY_WIL_PROGRESS4           = -1000387,
     SAY_WIL_PROGRESS5           = -1000388,
 #endif
@@ -544,8 +544,8 @@ enum
 
     QUEST_ESCAPE_COILSCAR       = 10451,
     NPC_COILSKAR_ASSASSIN       = 21044,
-#if defined (CLASSIC) || defined (TBC)
-    FACTION_EARTHEN             = 1726                      // guessed
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
+    FACTION_EARTHEN             = 1726,                      // guessed
 #endif
 #if defined (WOTLK)
     NPC_CAPTURED_WATER_SPIRIT   = 21029,
@@ -559,14 +559,14 @@ struct npc_wilda : public CreatureScript
 
     struct npc_wildaAI : public npc_escortAI
     {
-        npc_wildaAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_wildaAI(Creature* pCreature) : npc_escortAI(pCreature) { 
 #if defined (WOTLK)
         // the creature is floating in a prison; no quest available first;
         // the floating prison setup and quest flag restore is handled by DB
         m_creature->SetLevitate(true);
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
 #endif
-
+    }
         uint32 m_uiHealingTimer;
 #if defined (WOTLK)
         uint32 m_uiShockTimer;
@@ -601,7 +601,7 @@ struct npc_wilda : public CreatureScript
     }
 #endif
 
-#if defined (TBC)
+#if defined (TBC) || defined (WOTLK)
         void WaypointReached(uint32 uiPointId) override
         {
             Player* pPlayer = GetPlayerForEscort();
@@ -702,7 +702,7 @@ struct npc_wilda : public CreatureScript
 #endif
         }
 
-#if defined (TBC)
+#if defined (TBC) 
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
@@ -710,6 +710,8 @@ struct npc_wilda : public CreatureScript
                 pSummoned->AI()->AttackStart(m_creature);
             }
         }
+#endif
+#if defined (TBC)  || defined (WOTLK)
 
         // this is very unclear, random say without no real relevance to script/event
         void DoRandomSay()
@@ -732,7 +734,7 @@ struct npc_wilda : public CreatureScript
         }
     }
 #endif
-#if defined (TBC)
+#if defined (TBC) 
         void DoSpawnAssassin()
         {
             // unknown where they actually appear
@@ -880,7 +882,7 @@ struct npc_wilda : public CreatureScript
         if (pQuest->GetQuestId() == QUEST_ESCAPE_COILSCAR)
         {
             DoScriptText(SAY_WIL_START, pCreature, pPlayer);
-#if defined (TBC)
+#if defined (TBC) || defined (WOTLK)
             pCreature->SetFactionTemporary(FACTION_EARTHEN, TEMPFACTION_RESTORE_RESPAWN);
 #endif
 #if defined (WOTLK)
@@ -1621,6 +1623,7 @@ struct spell_totem_of_spirits : public SpellScript
     }
 };
 
+#if defined (TBC) || defined (WOTLK) 
 struct aura_elemental_sieve : public AuraScript
 {
     aura_elemental_sieve() : AuraScript("aura_elemental_sieve") {}
@@ -1667,6 +1670,7 @@ struct aura_elemental_sieve : public AuraScript
         return true;
     }
 };
+#endif
 
 struct event_spell_soul_captured_credit : public MapEventScript
 {
@@ -2278,12 +2282,12 @@ struct npc_veneratus_spawn_node : public CreatureScript
             }
         }
 
-#if defined (TBC)
+#if defined (TBC) || defined (WOTLK)
         void UpdateAI(const uint32 uiDiff) override { }
 #endif
-#if defined (WOTLK)
-    void UpdateAI(const uint32 /* uiDiff */) override { }
-#endif
+//#if defined (WOTLK)
+//    void UpdateAI(const uint32 /* uiDiff */) override { }
+//
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -2324,6 +2328,10 @@ void AddSC_shadowmoon_valley()
     s->RegisterSelf();
     s = new spell_totem_of_spirits();
     s->RegisterSelf();
+#if defined (TBC) || defined (WOTLK) 
+    s = new aura_elemental_sieve();
+    s->RegisterSelf();
+#endif
 
     //pNewScript = new Script;
     //pNewScript->Name = "mob_mature_netherwing_drake";

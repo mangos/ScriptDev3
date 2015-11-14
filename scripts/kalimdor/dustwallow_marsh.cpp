@@ -35,18 +35,14 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * mobs_risen_husk_spirit
  * npc_restless_apparition
-#endif
  * npc_morokk
  * npc_ogron
  * npc_private_hendel
  * npc_stinky_ignatz
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
  * at_nats_landing
  * boss_tethyr
-#endif
  * EndContentData
  */
 

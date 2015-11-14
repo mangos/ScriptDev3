@@ -64,7 +64,7 @@ enum
     SPELL_QUAKE             = 26093,
 #endif
 
-    // other spells - not used
+    // other spells - not used TODO check this "synced mess"
     // SPELL_SUMMON_SCARABS    = 26060,                     // triggered after 30 secs - cast by the Dirt Mounds
 #if defined (CLASSIC)  
     SPELL_DIRTMOUND_PASSIVE = 26092,                        // casts 26093 every 1 sec
@@ -353,7 +353,7 @@ struct npc_ouro_spawner : public CreatureScript
 #if defined (CLASSIC)  
                 if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_OURO, CAST_TRIGGERED) == CAST_OK)
 #else
-            if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_OURO) == CAST_OK)
+                if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_OURO) == CAST_OK)
 #endif
                 {
 #if defined (CLASSIC)  

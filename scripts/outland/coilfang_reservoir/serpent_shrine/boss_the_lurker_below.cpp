@@ -49,7 +49,7 @@ enum
     SPELL_WATERBOLT                 = 37138,
     SPELL_SUBMERGE                  = 37550,
 
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
     NPC_LURKER_BELOW                = 21217,
 #endif
     NPC_COILFANG_AMBUSHER           = 21865,
@@ -86,7 +86,7 @@ static const AddsLocations aLurkerLoc[MAX_SUBMERGE_ADDS] =
     {NPC_COILFANG_GUARDIAN, 42.471f, -445.115f, -19.76f},
 };
 
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
 static const float afLurkerSpawnPos[4] = {40.4058f, -417.108f, -21.5911f, 3.03312f};
 #endif
 struct boss_the_lurker_below : public CreatureScript

@@ -78,9 +78,8 @@ struct go_fathom_stone : public GameObjectScript
 
     bool OnUse(Player* pPlayer, GameObject* pGo) override
     {
-#if defined (CLASSIC) || defined (TBC)
         ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
-
+#if defined (CLASSIC) || defined (TBC)
         if (!pInstance)
         {
             return false;
@@ -99,17 +98,16 @@ struct go_fathom_stone : public GameObjectScript
         return true;
 #endif
 #if defined (WOTLK)
-    instance_blackfathom_deeps* pInstance = (instance_blackfathom_deeps*)pGo->GetInstanceData();
-    if (!pInstance)
+        if (!pInstance)
         { return true; }
         
-    if (pInstance->GetData(TYPE_AQUANIS) == NOT_STARTED)
-    {
-        pPlayer->SummonCreature(NPC_BARON_AQUANIS, afAquanisPos[0], afAquanisPos[1], afAquanisPos[2], afAquanisPos[3], TEMPSUMMON_DEAD_DESPAWN, 0);
-        pInstance->SetData(TYPE_AQUANIS, IN_PROGRESS);
-    }
+        if (pInstance->GetData(TYPE_AQUANIS) == NOT_STARTED)
+        {
+            pPlayer->SummonCreature(NPC_BARON_AQUANIS, afAquanisPos[0], afAquanisPos[1], afAquanisPos[2], afAquanisPos[3], TEMPSUMMON_DEAD_DESPAWN, 0);
+            pInstance->SetData(TYPE_AQUANIS, IN_PROGRESS);
+        }
     
-    return false;
+        return false;
 #endif
     }
 };

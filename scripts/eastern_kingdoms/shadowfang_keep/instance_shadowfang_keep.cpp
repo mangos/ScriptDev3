@@ -125,47 +125,35 @@ struct is_shadowfang_keep : public InstanceScript
         }
 
 #if defined (WOTLK)
-void instance_shadowfang_keep::OnCreatureDeath(Creature* pCreature)
-{
-    switch (pCreature->GetEntry())
-    {
-            // Remove lootable flag from Hummel
-            // Instance data is set to SPECIAL because the encounter depends on multiple bosses
-        case NPC_HUMMEL:
-            pCreature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
-            DoScriptText(SAY_HUMMEL_DEATH, pCreature);
-            // no break;
-        case NPC_FRYE:
-        case NPC_BAXTER:
-            SetData(TYPE_APOTHECARY, SPECIAL);
-            break;
-    }
-}
-
-void instance_shadowfang_keep::OnCreatureEvade(Creature* pCreature)
-{
-    switch (pCreature->GetEntry())
-    {
-        case NPC_HUMMEL:
-        case NPC_FRYE:
-        case NPC_BAXTER:
-            SetData(TYPE_APOTHECARY, FAIL);
-            break;
-    }
-}
-#endif
-
-        void DoSpeech()
+        void OnCreatureDeath(Creature* pCreature) override
         {
-            Creature* pAda = GetSingleCreatureFromStorage(NPC_ADA);
-            Creature* pAsh = GetSingleCreatureFromStorage(NPC_ASH);
-
-            if (pAda && pAda->IsAlive() && pAsh && pAsh->IsAlive())
+            switch (pCreature->GetEntry())
             {
-                DoScriptText(SAY_BOSS_DIE_AD, pAda);
-                DoScriptText(SAY_BOSS_DIE_AS, pAsh);
+                // Remove lootable flag from Hummel
+                // Instance data is set to SPECIAL because the encounter depends on multiple bosses
+            case NPC_HUMMEL:
+                pCreature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+                DoScriptText(SAY_HUMMEL_DEATH, pCreature);
+                // no break;
+            case NPC_FRYE:
+            case NPC_BAXTER:
+                SetData(TYPE_APOTHECARY, SPECIAL);
+                break;
             }
         }
+
+        void OnCreatureEvade(Creature* pCreature) override
+        {
+            switch (pCreature->GetEntry())
+            {
+            case NPC_HUMMEL:
+            case NPC_FRYE:
+            case NPC_BAXTER:
+                SetData(TYPE_APOTHECARY, FAIL);
+                break;
+            }
+        }
+#endif
 
         void SetData(uint32 uiType, uint32 uiData) override
         {
@@ -312,10 +300,23 @@ void instance_shadowfang_keep::OnCreatureEvade(Creature* pCreature)
             OUT_LOAD_INST_DATA_COMPLETE;
         }
 
+        private:
+            void DoSpeech()
+            {
+                Creature* pAda = GetSingleCreatureFromStorage(NPC_ADA);
+                Creature* pAsh = GetSingleCreatureFromStorage(NPC_ASH);
 
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+                if (pAda && pAda->IsAlive() && pAsh && pAsh->IsAlive())
+                {
+                    DoScriptText(SAY_BOSS_DIE_AD, pAda);
+                    DoScriptText(SAY_BOSS_DIE_AS, pAsh);
+                }
+            }
+
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
+        
+            uint8 m_uiApothecaryDead;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

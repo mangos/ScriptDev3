@@ -217,7 +217,7 @@ void SD3::InitScriptLibrary()
 
     if (configFailure)
     {
-        script_error_log("[SD2]: Unable to open configuration file. Configuration values will use default.");
+        script_error_log("[SD3]: Unable to open configuration file. Configuration values will use default.");
     }
 
     outstring_log("\n");
@@ -464,10 +464,10 @@ bool SD3::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSp
 {
     Script* pTempScript = m_scripts[pClickedCreature->GetScriptId()];
     
-    if (!pTempScript || !pTempScript->pNpcSpellClick)
+    if (!pTempScript || !pTempScript->ToCreatureScript())
         return false;
     
-    return pTempScript->pNpcSpellClick(pPlayer, pClickedCreature, uiSpellId);
+    return pTempScript->ToCreatureScript()->OnSpellClick(pPlayer, pClickedCreature, uiSpellId);
 }
 #endif
 //the analogous method OnMapEvent exists also in the ZoneScript class and there it should have a higher priority. TODO

@@ -459,7 +459,7 @@ struct is_arcatraz : public InstanceScript
                         pTemp->SetWalk(false);
                         pTemp->GetMotionMaster()->MovePoint(0, aEntranceMoveLoc[0], aEntranceMoveLoc[1], aEntranceMoveLoc[2]);
                     }
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
                     m_uiEntranceEventTimer = urand(0, 10) ? urand(1000, 2000) : urand(5000, 7000);
 #endif
 #if defined (WOTLK)
