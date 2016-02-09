@@ -79,9 +79,6 @@ struct boss_gothik : public CreatureScript
         ScriptedInstance* m_pInstance;
 
         GuidList m_lSummonedAddGuids;
-        GuidList m_lTraineeSummonPosGuids;
-        GuidList m_lDeathKnightSummonPosGuids;
-        GuidList m_lRiderSummonPosGuids;
 
         uint8 m_uiPhase;
         uint8 m_uiSpeech;
@@ -124,9 +121,6 @@ struct boss_gothik : public CreatureScript
             }
 
             m_lSummonedAddGuids.clear();
-            m_lTraineeSummonPosGuids.clear();
-            m_lDeathKnightSummonPosGuids.clear();
-            m_lRiderSummonPosGuids.clear();
         }
 
         void Aggro(Unit* /*pWho*/) override
@@ -141,8 +135,7 @@ struct boss_gothik : public CreatureScript
             // Make immune
             m_creature->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_ALL, true);
 
-            m_pInstance->SetData(TYPE_SIGNAL_3, 0);
-            PrepareSummonPlaces();
+            m_pInstance->SetData(TYPE_SIGNAL_3, 0);    //Set trigger map and summon positions; Q: may be joined with IN_PROGRESS?
         }
 
         bool IsCentralDoorClosed()
@@ -161,26 +154,7 @@ struct boss_gothik : public CreatureScript
 
         bool HasPlayersInLeftSide()
         {
-            Map::PlayerList const& lPlayers = m_pInstance->instance->GetPlayers();
-
-            if (lPlayers.isEmpty())
-            {
-                return false;
-            }
-
-            for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
-            {
-                if (Player* pPlayer = itr->getSource())
-                {
-                    m_pInstance->SetData64(TYPE_SIGNAL_4, pPlayer->GetObjectGuid().GetRawValue());
-                    if (!m_pInstance->GetData(TYPE_SIGNAL_4) && pPlayer->IsAlive())
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return m_pInstance && bool(m_pInstance->GetData(TYPE_SIGNAL_4));
         }
 
         void KilledUnit(Unit* pVictim) override
@@ -209,92 +183,10 @@ struct boss_gothik : public CreatureScript
             }
         }
 
-        void PrepareSummonPlaces()
+        void SummonAdds(uint32 uiSummonEntry)
         {
-            std::list<Creature*> lSummonList;
-            while (uint64 guid = m_pInstance->GetData64(TYPE_SIGNAL_5))
-            {
-                if (Creature *c = m_pInstance->instance->GetCreature(ObjectGuid(guid)))
-                    lSummonList.push_back(c);
-            }
-            //m_pInstance->GetGothSummonPointCreatures(lSummonList, true);
-
-            if (lSummonList.empty())
-            {
-                return;
-            }
-
-            // Trainees and Rider
-            uint8 index = 0;
-            uint8 uiTraineeCount = 3;
-            lSummonList.sort(ObjectDistanceOrder(m_creature));
-            for (std::list<Creature*>::iterator itr = lSummonList.begin(); itr != lSummonList.end(); ++itr)
-            {
-                if (*itr)
-                {
-                    if (uiTraineeCount == 0)
-                    {
-                        break;
-                    }
-                    if (index == 1)
-                    {
-                        m_lRiderSummonPosGuids.push_back((*itr)->GetObjectGuid());
-                    }
-                    else
-                    {
-                        m_lTraineeSummonPosGuids.push_back((*itr)->GetObjectGuid());
-                        --uiTraineeCount;
-                    }
-                    index++;
-                }
-            }
-
-            // DeathKnights
-            uint8 uiDeathKnightCount = 2;
-            //lSummonList.sort(ObjectDistanceOrderReversed(m_creature));
-            for (std::list<Creature*>::reverse_iterator itr = lSummonList.rbegin(); itr != lSummonList.rend(); ++itr)
-            {
-                if (*itr)
-                {
-                    if (uiDeathKnightCount == 0)
-                    {
-                        break;
-                    }
-                    m_lDeathKnightSummonPosGuids.push_back((*itr)->GetObjectGuid());
-                    --uiDeathKnightCount;
-                }
-            }
-        }
-
-        void SummonAdds(bool /*bRightSide*/, uint32 uiSummonEntry)
-        {
-            GuidList* plSummonPosGuids;
-            switch (uiSummonEntry)
-            {
-            case NPC_UNREL_TRAINEE:
-                plSummonPosGuids = &m_lTraineeSummonPosGuids;
-                break;
-            case NPC_UNREL_DEATH_KNIGHT:
-                plSummonPosGuids = &m_lDeathKnightSummonPosGuids;
-                break;
-            case NPC_UNREL_RIDER:
-                plSummonPosGuids = &m_lRiderSummonPosGuids;
-                break;
-            default:
-                return;
-            }
-            if (plSummonPosGuids->empty())
-            {
-                return;
-            }
-
-            for (GuidList::iterator itr = plSummonPosGuids->begin(); itr != plSummonPosGuids->end(); ++itr)
-            {
-                if (Creature* pPos = m_creature->GetMap()->GetCreature(*itr))
-                {
-                    m_creature->SummonCreature(uiSummonEntry, pPos->GetPositionX(), pPos->GetPositionY(), pPos->GetPositionZ(), pPos->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 0);
-                }
-            }
+            if (m_pInstance)
+                m_pInstance->SetData(TYPE_SIGNAL_11, uiSummonEntry);
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -308,12 +200,10 @@ struct boss_gothik : public CreatureScript
 
         void SummonedCreatureJustDied(Creature* pSummoned) override
         {
-            m_lSummonedAddGuids.remove(pSummoned->GetObjectGuid());
-
             if (!m_pInstance)
-            {
                 return;
-            }
+
+            m_lSummonedAddGuids.remove(pSummoned->GetObjectGuid());
 
             m_pInstance->SetData64(TYPE_SIGNAL_6, pSummoned->GetObjectGuid().GetRawValue());
             if (Creature* pAnchor = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(TYPE_SIGNAL_6))))
@@ -379,7 +269,7 @@ struct boss_gothik : public CreatureScript
             case PHASE_BALCONY:                            // Do summoning
                 if (m_uiTraineeTimer < uiDiff)
                 {
-                    SummonAdds(true, NPC_UNREL_TRAINEE);
+                    SummonAdds(NPC_UNREL_TRAINEE);
                     m_uiTraineeTimer = 20 * IN_MILLISECONDS;
                 }
                 else
@@ -388,7 +278,7 @@ struct boss_gothik : public CreatureScript
                 }
                 if (m_uiDeathKnightTimer < uiDiff)
                 {
-                    SummonAdds(true, NPC_UNREL_DEATH_KNIGHT);
+                    SummonAdds(NPC_UNREL_DEATH_KNIGHT);
                     m_uiDeathKnightTimer = 25 * IN_MILLISECONDS;
                 }
                 else
@@ -397,7 +287,7 @@ struct boss_gothik : public CreatureScript
                 }
                 if (m_uiRiderTimer < uiDiff)
                 {
-                    SummonAdds(true, NPC_UNREL_RIDER);
+                    SummonAdds(NPC_UNREL_RIDER);
                     m_uiRiderTimer = 30 * IN_MILLISECONDS;
                 }
                 else

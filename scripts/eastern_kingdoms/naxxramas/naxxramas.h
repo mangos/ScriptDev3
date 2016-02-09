@@ -90,6 +90,7 @@ enum
     TYPE_SIGNAL_8               = MAX_ENCOUNTER + 7,
     TYPE_SIGNAL_9               = MAX_ENCOUNTER + 8,
     TYPE_SIGNAL_10              = MAX_ENCOUNTER + 9,
+    TYPE_SIGNAL_11              = MAX_ENCOUNTER + 10,
 
     MAX_HEIGAN_TRAP_AREAS       = 4,
 

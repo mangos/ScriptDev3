@@ -219,9 +219,9 @@ Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBe
 }
 
 /// Returns a pointer to a loaded GameObject that was stored in m_mGoEntryGuidStore. Can return NULL
-GameObject* ScriptedInstance::GetSingleGameObjectFromStorage(uint32 uiEntry)
+GameObject* ScriptedInstance::GetSingleGameObjectFromStorage(uint32 uiEntry) const
 {
-    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(uiEntry);
+    EntryGuidMap::const_iterator find = m_mGoEntryGuidStore.find(uiEntry);
     if (find != m_mGoEntryGuidStore.end())
     {
         return instance->GetGameObject(find->second);

@@ -52,7 +52,7 @@ class ScriptedInstance : public InstanceData
         ~ScriptedInstance() {}
 
         // Default accessor functions
-        GameObject* GetSingleGameObjectFromStorage(uint32 uiEntry);
+        GameObject* GetSingleGameObjectFromStorage(uint32 uiEntry) const;
         Creature* GetSingleCreatureFromStorage(uint32 uiEntry, bool bSkipDebugLog = false) const;
 
         // Change active state of doors or buttons
