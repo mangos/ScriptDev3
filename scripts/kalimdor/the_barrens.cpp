@@ -1279,7 +1279,7 @@ struct npc_kolkar_invader : public CreatureScript
 
     struct npc_kolkar_invaderAI : public ScriptedAI
     {
-    	npc_kolkar_invaderAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_kolkar_invaderAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
         uint64 i_victimGuid = 0;
         bool m_bCreatureFound = false;
@@ -1290,11 +1290,11 @@ struct npc_kolkar_invader : public CreatureScript
 
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*miscValue*/)
         {
-        	if (eventType == AI_EVENT_CUSTOM_A)
-        	{
-        		m_creature->AddThreat(pInvoker, 0.0f);
-        		pSender->AddThreat(m_creature->ToUnit(), 0.0f);
-        	}
+            if (eventType == AI_EVENT_CUSTOM_A)
+            {
+                m_creature->AddThreat(pInvoker, 0.0f);
+                pSender->AddThreat(m_creature->ToUnit(), 0.0f);
+            }
         }
 
         void EnterEvadeMode() override
@@ -1356,41 +1356,41 @@ struct npc_kolkar_invader : public CreatureScript
 
 struct npc_warlord_kromzar : public CreatureScript
 {
-	npc_warlord_kromzar() : CreatureScript("npc_warlord_kromzar") {}
+    npc_warlord_kromzar() : CreatureScript("npc_warlord_kromzar") {}
 
     struct npc_warlord_kromzarAI : public npc_escortAI
     {
-    	npc_warlord_kromzarAI(Creature* pCreature) : npc_escortAI(pCreature) {}
+        npc_warlord_kromzarAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
-		void Reset() {}
+        void Reset() {}
 
-		void WaypointReached(uint32 uiPointId)
-		{
+        void WaypointReached(uint32 uiPointId)
+        {
 
-		}
+        }
 
-		void JustDied(Unit* /**/)
-		{
-			m_creature->CastSpell(m_creature->ToUnit(), 13965, true);
-		}
+        void JustDied(Unit* /**/)
+        {
+            m_creature->CastSpell(m_creature->ToUnit(), 13965, true);
+        }
 
-		void JustRespawned() override
-		{
-			DoScriptText(YELL_STRONGEST, m_creature);
-			m_creature->SummonCreature(NPC_KOLKAR_INVADER, SpawnPointsKromzar[0].fX, SpawnPointsKromzar[0].fY, SpawnPointsKromzar[0].fZ, SpawnPointsKromzar[0].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 40000);
-			m_creature->SummonCreature(NPC_KOLKAR_STORMSEER, SpawnPointsKromzar[2].fX, SpawnPointsKromzar[2].fY, SpawnPointsKromzar[2].fZ, SpawnPointsKromzar[2].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 40000);
-			Start(false, NULL, NULL, false, true);
-		}
+        void JustRespawned() override
+        {
+            DoScriptText(YELL_STRONGEST, m_creature);
+            m_creature->SummonCreature(NPC_KOLKAR_INVADER, SpawnPointsKromzar[0].fX, SpawnPointsKromzar[0].fY, SpawnPointsKromzar[0].fZ, SpawnPointsKromzar[0].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 40000);
+            m_creature->SummonCreature(NPC_KOLKAR_STORMSEER, SpawnPointsKromzar[2].fX, SpawnPointsKromzar[2].fY, SpawnPointsKromzar[2].fZ, SpawnPointsKromzar[2].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 40000);
+            Start(false, NULL, NULL, false, true);
+        }
 
-	    void UpdateEscortAI(const uint32 uiDiff) override
-	    {
-	        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-	            return;
+        void UpdateEscortAI(const uint32 uiDiff) override
+        {
+            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                return;
 
-	        DoMeleeAttackIfReady();
-	    }
+            DoMeleeAttackIfReady();
+        }
 
-	};
+    };
     
     CreatureAI* GetAI(Creature* pCreature) override
     {
