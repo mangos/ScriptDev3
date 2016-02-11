@@ -1118,7 +1118,7 @@ void AddScripts()
 
 #if defined (WOTLK)
     AddNorthrendScripts();
-#endif	
+#endif    
 
     AddBattlegroundScripts();
 }

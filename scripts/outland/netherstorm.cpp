@@ -1832,7 +1832,7 @@ void AddSC_netherstorm()
     s = new npc_dimensius();
     s->RegisterSelf();
 
-	/*pNewScript = new Script;
+    /*pNewScript = new Script;
     pNewScript->Name = "npc_dimensius";
     pNewScript->GetAI = &GetAI_npc_dimensius;
     pNewScript->RegisterSelf();*/

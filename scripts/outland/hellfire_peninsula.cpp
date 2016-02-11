@@ -997,7 +997,7 @@ static const float aGraveYardLocation[11][4] =
 
 struct npc_caretaker_dilandrus : public CreatureScript
 {        
-	   npc_caretaker_dilandrus() : CreatureScript("npc_caretaker_dilandrus") {}
+       npc_caretaker_dilandrus() : CreatureScript("npc_caretaker_dilandrus") {}
 
     struct npc_caretaker_dilandrusAI : public ScriptedAI
     {
@@ -1083,7 +1083,7 @@ struct npc_caretaker_dilandrus : public CreatureScript
         }
 
     };
-		
+        
     CreatureAI* GetAI(Creature* pCreature) override
     {
         return new npc_caretaker_dilandrusAI(pCreature);

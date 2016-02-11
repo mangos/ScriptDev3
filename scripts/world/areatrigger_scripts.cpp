@@ -532,7 +532,7 @@ void AddSC_areatrigger_scripts()
 #if defined (WOTLK) || defined (CATA)    
     s = new at_aldurthar_gate();
     s->RegisterSelf();
-#endif	
+#endif    
     s = new at_ravenholdt();
     s->RegisterSelf();
 
