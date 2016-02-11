@@ -39,18 +39,21 @@
 enum
 {
     // kri
+	SPELL_THRASH            = 8876,
     SPELL_CLEAVE            = 26350,
     SPELL_TOXIC_VOLLEY      = 25812,
-    SPELL_SUMMON_CLOUD      = 26590,            // summons 15933
+	SPELL_TOXIC_VAPORS      = 25786,
 
     // vem
     SPELL_CHARGE            = 26561,
     SPELL_VENGEANCE         = 25790,
-    SPELL_KNOCKBACK         = 26027,
+	SPELL_KNOCKBACK         = 18670,
+	SPELL_KNOCKDOWN         = 19128,
 
     // yauj
     SPELL_HEAL              = 25807,
     SPELL_FEAR              = 26580,
+	SPELL_RAVAGE            = 3242,
 
     NPC_YAUJ_BROOD          = 15621
 };
@@ -64,6 +67,9 @@ struct boss_kri : public CreatureScript
         boss_kriAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+
+			// Thrash
+			DoCastSpellIfCan(m_creature, SPELL_THRASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
         }
 
         ScriptedInstance* m_pInstance;
@@ -80,7 +86,7 @@ struct boss_kri : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             // poison cloud on death
-            DoCastSpellIfCan(m_creature, SPELL_SUMMON_CLOUD, CAST_TRIGGERED);
+			DoCastSpellIfCan(m_creature, SPELL_TOXIC_VAPORS, CAST_TRIGGERED);
 
             if (!m_pInstance)
             {
@@ -90,8 +96,17 @@ struct boss_kri : public CreatureScript
             // If the other 2 bugs are still alive, make unlootable
             if (m_pInstance->GetData(TYPE_BUG_TRIO) != DONE)
             {
-                m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+				m_creature->SetLootRecipient(nullptr);
                 m_pInstance->SetData(TYPE_BUG_TRIO, SPECIAL);
+
+				if (Creature* pVem = m_pInstance->GetSingleCreatureFromStorage(NPC_VEM))
+				{
+					m_creature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pVem);
+				}
+				if (Creature* pYauj = m_pInstance->GetSingleCreatureFromStorage(NPC_YAUJ))
+				{
+					m_creature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pYauj);
+				}
             }
         }
 
@@ -102,6 +117,17 @@ struct boss_kri : public CreatureScript
                 m_pInstance->SetData(TYPE_BUG_TRIO, FAIL);
             }
         }
+
+		void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
+		{
+			if (!(pSender->GetEntry() == NPC_VEM || pSender->GetEntry() == NPC_YAUJ))
+				return;
+
+			if (m_creature->IsInCombat())
+			{
+				m_creature->SetHealth(m_creature->GetMaxHealth());
+			}
+		}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -162,11 +188,13 @@ struct boss_vem : public CreatureScript
 
         uint32 m_uiChargeTimer;
         uint32 m_uiKnockBackTimer;
+		uint32 m_uiKnockDownTimer;
 
         void Reset() override
         {
             m_uiChargeTimer = urand(15000, 27000);
             m_uiKnockBackTimer = urand(8000, 20000);
+			m_uiKnockDownTimer = urand(10000, 23000);
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -182,8 +210,17 @@ struct boss_vem : public CreatureScript
             // If the other 2 bugs are still alive, make unlootable
             if (m_pInstance->GetData(TYPE_BUG_TRIO) != DONE)
             {
-                m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+				m_creature->SetLootRecipient(nullptr);
                 m_pInstance->SetData(TYPE_BUG_TRIO, SPECIAL);
+
+				if (Creature* pKri = m_pInstance->GetSingleCreatureFromStorage(NPC_KRI))
+				{
+					m_creature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pKri);
+				}
+				if (Creature* pYauj = m_pInstance->GetSingleCreatureFromStorage(NPC_YAUJ))
+				{
+					m_creature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pYauj);
+				}
             }
         }
 
@@ -194,6 +231,17 @@ struct boss_vem : public CreatureScript
                 m_pInstance->SetData(TYPE_BUG_TRIO, FAIL);
             }
         }
+
+		void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
+		{
+			if (!(pSender->GetEntry() == NPC_KRI || pSender->GetEntry() == NPC_YAUJ))
+				return;
+
+			if (m_creature->IsInCombat())
+			{
+				m_creature->SetHealth(m_creature->GetMaxHealth());
+			}
+		}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -222,7 +270,7 @@ struct boss_vem : public CreatureScript
             // KnockBack_Timer
             if (m_uiKnockBackTimer < uiDiff)
             {
-                if (DoCastSpellIfCan(m_creature, SPELL_KNOCKBACK) == CAST_OK)
+				if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_KNOCKBACK) == CAST_OK)
                 {
                     if (m_creature->GetThreatManager().getThreat(m_creature->getVictim()))
                     {
@@ -236,6 +284,17 @@ struct boss_vem : public CreatureScript
             {
                 m_uiKnockBackTimer -= uiDiff;
             }
+
+			// KnockDown_Timer
+			if (m_uiKnockDownTimer < uiDiff)
+			{
+				if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_KNOCKDOWN) == CAST_OK)
+				{
+					m_uiKnockDownTimer = urand(15000, 25000);
+				}
+			}
+			else
+				m_uiKnockDownTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -262,11 +321,13 @@ struct boss_yauj : public CreatureScript
 
         uint32 m_uiHealTimer;
         uint32 m_uiFearTimer;
+		uint32 m_uiRavageTimer;
 
         void Reset() override
         {
             m_uiHealTimer = urand(25000, 40000);
             m_uiFearTimer = urand(12000, 24000);
+			m_uiRavageTimer = urand(18000, 20000);
         }
 
         void JustDied(Unit* /*Killer*/) override
@@ -287,8 +348,17 @@ struct boss_yauj : public CreatureScript
             // If the other 2 bugs are still alive, make unlootable
             if (m_pInstance->GetData(TYPE_BUG_TRIO) != DONE)
             {
-                m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+				m_creature->SetLootRecipient(nullptr);
                 m_pInstance->SetData(TYPE_BUG_TRIO, SPECIAL);
+
+				if (Creature* pKri = m_pInstance->GetSingleCreatureFromStorage(NPC_KRI))
+				{
+					m_creature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pKri);
+				}
+				if (Creature* pVem = m_pInstance->GetSingleCreatureFromStorage(NPC_VEM))
+				{
+					m_creature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pVem);
+				}
             }
         }
 
@@ -299,6 +369,17 @@ struct boss_yauj : public CreatureScript
                 m_pInstance->SetData(TYPE_BUG_TRIO, FAIL);
             }
         }
+
+		void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
+		{
+			if (!(pSender->GetEntry() == NPC_KRI || pSender->GetEntry() == NPC_VEM))
+				return;
+
+			if (m_creature->IsInCombat())
+			{
+				m_creature->SetHealth(m_creature->GetMaxHealth());
+			}
+		}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -337,6 +418,17 @@ struct boss_yauj : public CreatureScript
             {
                 m_uiHealTimer -= uiDiff;
             }
+
+			// Ravage_Timer
+			if (m_uiRavageTimer < uiDiff)
+			{
+				if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_RAVAGE) == CAST_OK)
+				{
+					m_uiRavageTimer = 16000;
+				}
+			}
+			else
+				m_uiRavageTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
