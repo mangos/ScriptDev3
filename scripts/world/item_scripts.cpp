@@ -39,7 +39,7 @@
  * item_arcane_charges                 Prevent use if player is not flying (cannot cast while on ground)
  * item_flying_machine(i34060,i34061)  Engineering crafted flying machines
  * item_gor_dreks_ointment(i30175)     Protecting Our Own(q10488)
- * item_ogre_brew					   Prevent use if player not in 3522 area
+ * item_ogre_brew                       Prevent use if player not in 3522 area
 #endif
  * EndContentData
  */

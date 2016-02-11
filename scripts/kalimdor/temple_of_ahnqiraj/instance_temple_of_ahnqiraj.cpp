@@ -95,9 +95,9 @@ struct is_temple_of_ahnqiraj : public InstanceScript
                 {
                     break;
                 }
-			case NPC_KRI:
-			case NPC_VEM:
-			case NPC_YAUJ:
+            case NPC_KRI:
+            case NPC_VEM:
+            case NPC_YAUJ:
             case NPC_SARTURA:
             case NPC_VEKLOR:
             case NPC_VEKNILASH:
