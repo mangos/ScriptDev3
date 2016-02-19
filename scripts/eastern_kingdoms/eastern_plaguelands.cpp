@@ -68,8 +68,10 @@ enum
 
     QUEST_BALANCE_OF_LIGHT_AND_SHADOW   = 7622,
 
-    MAX_PEASANTS                        = 12,
+    MAX_PEASANTS                        = 13,
     MAX_ARCHERS                         = 8,
+    MAX_PEASANTS_TO_SAVE                = 50,
+    MAX_PEASANTS_TO_DIE                 = 15,
 };
 
 static const float aArcherSpawn[8][4] =
@@ -127,10 +129,11 @@ struct npc_eris_havenfire : public CreatureScript
             {
             case NPC_INJURED_PEASANT:
             case NPC_PLAGUED_PEASANT:
-                float fX, fY, fZ;
-                pSummoned->GetRandomPoint(aPeasantMoveLoc[0], aPeasantMoveLoc[1], aPeasantMoveLoc[2], 10.0f, fX, fY, fZ);
-                pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
-                m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
+                {
+                    float fX, fY, fZ;
+                    pSummoned->GetRandomPoint(aPeasantMoveLoc[0], aPeasantMoveLoc[1], aPeasantMoveLoc[2], 10.0f, fX, fY, fZ);
+                    pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                }
                 break;
             case NPC_SCOURGE_FOOTSOLDIER:
             case NPC_THE_CLEANER:
@@ -139,8 +142,22 @@ struct npc_eris_havenfire : public CreatureScript
                     pSummoned->AI()->AttackStart(pPlayer);
                 }
                 break;
-            case NPC_SCOURGE_ARCHER:
-                // ToDo: make these ones attack the peasants
+            case NPC_SCOURGE_ARCHER:    // these should attack the peasants - who are not spawned yet
+                //{
+                //    std::vector<ObjectGuid> peasantGUID;
+                //    for (GuidList::const_iterator it = m_lSummonedGuidList.begin(); it != m_lSummonedGuidList.end(); ++it)
+                //    {
+                //        if ((*it).GetEntry() == NPC_INJURED_PEASANT || (*it).GetEntry() == NPC_PLAGUED_PEASANT)
+                //        {
+                //            if (Creature* peasant = m_creature->GetMap()->GetCreature(*it))
+                //                if (peasant->IsAlive() && pSummoned->IsInRange(peasant, 5.0f, 30.0f))
+                //                    peasantGUID.push_back(*it);
+                //        }
+                //    }
+                //    ObjectGuid victimGUID = peasantGUID[urand(0, peasantGUID.size() - 1)];
+                //    if (Creature* victim = m_creature->GetMap()->GetCreature(victimGUID))
+                //        pSummoned->AI()->AttackStart(victim);   // ot Creature::Attack(victim, false) ?
+                //}
                 break;
             }
 
@@ -149,30 +166,28 @@ struct npc_eris_havenfire : public CreatureScript
 
         void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
         {
-            if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            if (uiMotionType != POINT_MOTION_TYPE || uiPointId != 1)
             {
                 return;
             }
 
-            if (uiPointId)
+            ++m_uiSaveCounter;
+            pSummoned->GetMotionMaster()->Clear();
+
+            pSummoned->RemoveAllAuras();
+            pSummoned->CastSpell(pSummoned, SPELL_ENTER_THE_LIGHT_DND, false);
+            pSummoned->ForcedDespawn(10000);
+            m_lSummonedGuidList.remove(pSummoned->GetObjectGuid());
+
+            // Event ended
+            if (m_uiSaveCounter >= MAX_PEASANTS_TO_SAVE)
             {
-                ++m_uiSaveCounter;
-                pSummoned->GetMotionMaster()->Clear();
-
-                pSummoned->RemoveAllAuras();
-                pSummoned->CastSpell(pSummoned, SPELL_ENTER_THE_LIGHT_DND, false);
-                pSummoned->ForcedDespawn(10000);
-
-                // Event ended
-                if (m_uiSaveCounter >= 50 && m_uiCurrentWave == 5)
-                {
-                    DoBalanceEventEnd();
-                }
-                // Phase ended
-                else if (m_uiSaveCounter + m_uiKillCounter == m_uiCurrentWave * MAX_PEASANTS)
-                {
-                    DoHandlePhaseEnd();
-                }
+                DoBalanceEventEnd();
+            }
+            // Phase ended
+            else if (m_uiSaveCounter + m_uiKillCounter == m_uiCurrentWave * MAX_PEASANTS)
+            {
+                DoHandlePhaseEnd();
             }
         }
 
@@ -183,7 +198,7 @@ struct npc_eris_havenfire : public CreatureScript
                 ++m_uiKillCounter;
 
                 // If more than 15 peasants have died, then fail the quest
-                if (m_uiKillCounter == MAX_PEASANTS)
+                if (m_uiKillCounter >= MAX_PEASANTS_TO_DIE)
                 {
                     if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                     {
@@ -191,52 +206,52 @@ struct npc_eris_havenfire : public CreatureScript
                     }
 
                     DoScriptText(SAY_EVENT_FAIL_1, m_creature);
-                    m_uiSadEndTimer = 4000;
+                    m_uiSadEndTimer = 1*IN_MILLISECONDS;
+                    m_uiEventTimer = 0;
                 }
                 else if (m_uiSaveCounter + m_uiKillCounter == m_uiCurrentWave * MAX_PEASANTS)
                 {
                     DoHandlePhaseEnd();
                 }
             }
+            m_lSummonedGuidList.remove(pSummoned->GetObjectGuid());
         }
 
         void DoSummonWave(uint32 uiSummonId = 0)
         {
             float fX, fY, fZ;
 
-            if (!uiSummonId)
+            switch (uiSummonId)
             {
+            case NPC_SCOURGE_FOOTSOLDIER:
+                {
+                    uint8 uiRand = urand(2, 3);
+                    for (uint8 i = 0; i < uiRand; ++i)
+                    {
+                        m_creature->GetRandomPoint(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2], 15.0f, fX, fY, fZ);
+                        m_creature->SummonCreature(NPC_SCOURGE_FOOTSOLDIER, fX, fY, fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+                    }
+                }
+                break;
+            case NPC_SCOURGE_ARCHER:
+                for (uint8 i = 0; i < MAX_ARCHERS; ++i)
+                    m_creature->SummonCreature(NPC_SCOURGE_ARCHER, aArcherSpawn[i][0], aArcherSpawn[i][1], aArcherSpawn[i][2], aArcherSpawn[i][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                break;
+            default:
                 for (uint8 i = 0; i < MAX_PEASANTS; ++i)
                 {
                     uint32 uiSummonEntry = roll_chance_i(70) ? NPC_INJURED_PEASANT : NPC_PLAGUED_PEASANT;
                     m_creature->GetRandomPoint(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2], 10.0f, fX, fY, fZ);
-                    if (Creature* pTemp = m_creature->SummonCreature(uiSummonEntry, fX, fY, fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0))
+                    if (Creature* pTemp = m_creature->SummonCreature(uiSummonEntry, fX, fY, fZ, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 10*MINUTE*IN_MILLISECONDS))
                     {
                         // Only the first mob needs to yell
                         if (!i)
-                        {
                             DoScriptText(aPeasantSpawnYells[urand(0, 2)], pTemp);
-                        }
                     }
                 }
 
                 ++m_uiCurrentWave;
-            }
-            else if (uiSummonId == NPC_SCOURGE_FOOTSOLDIER)
-            {
-                uint8 uiRand = urand(2, 3);
-                for (uint8 i = 0; i < uiRand; ++i)
-                {
-                    m_creature->GetRandomPoint(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2], 15.0f, fX, fY, fZ);
-                    m_creature->SummonCreature(NPC_SCOURGE_FOOTSOLDIER, fX, fY, fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
-                }
-            }
-            else if (uiSummonId == NPC_SCOURGE_ARCHER)
-            {
-                for (uint8 i = 0; i < MAX_ARCHERS; ++i)
-                {
-                    m_creature->SummonCreature(NPC_SCOURGE_ARCHER, aArcherSpawn[i][0], aArcherSpawn[i][1], aArcherSpawn[i][2], aArcherSpawn[i][3], TEMPSUMMON_DEAD_DESPAWN, 0);
-                }
+                break;
             }
         }
 
@@ -279,15 +294,12 @@ struct npc_eris_havenfire : public CreatureScript
         {
             for (GuidList::const_iterator itr = m_lSummonedGuidList.begin(); itr != m_lSummonedGuidList.end(); ++itr)
             {
-                if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
-                {
-                    if (bIsEventEnd && (pTemp->GetEntry() == NPC_INJURED_PEASANT || pTemp->GetEntry() == NPC_PLAGUED_PEASANT))
-                    {
-                        continue;
-                    }
+                if (bIsEventEnd && ((*itr).GetEntry() == NPC_INJURED_PEASANT || (*itr).GetEntry() == NPC_PLAGUED_PEASANT))
+                    continue;
 
-                    pTemp->ForcedDespawn();
-                }
+                if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
+                    if (pTemp->IsAlive())
+                        pTemp->ForcedDespawn();
             }
         }
 
@@ -330,6 +342,7 @@ struct npc_eris_havenfire : public CreatureScript
                     m_creature->ForcedDespawn(5000);
                     DoDespawnSummons();
                     m_uiSadEndTimer = 0;
+                    EnterEvadeMode();
                 }
                 else
                 {

@@ -252,6 +252,8 @@ struct npc_morokk : public CreatureScript
 
         bool m_bIsSuccess;
 
+        void Reset() override {}
+
         void WaypointReached(uint32 uiPointId) override
         {
             switch (uiPointId)
@@ -718,8 +720,15 @@ enum
 
     NPC_SENTRY                  = 5184,                     // helps hendel
     NPC_JAINA                   = 4968,                     // appears once hendel gives up
-    NPC_TERVOSH                 = 4967
+    NPC_TERVOSH                 = 4967,
 };
+
+struct SpawnLocation
+{
+    float x, y, z, o;
+};
+static SpawnLocation posTervos = { -2901.878f, -3356.302f, 31.315f, 0.9035f };
+static SpawnLocation posJaina  = { -2902.956f, -3355.234f, 31.325f, 0.9192f };
 
 // TODO: develop this further, end event not created
 struct npc_private_hendel : public CreatureScript
@@ -729,6 +738,8 @@ struct npc_private_hendel : public CreatureScript
     struct npc_private_hendelAI : public ScriptedAI
     {
         npc_private_hendelAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+
+        void Reset() override {}
 
         void AttackedBy(Unit* pAttacker) override
         {
@@ -747,7 +758,7 @@ struct npc_private_hendel : public CreatureScript
 
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
         {
-            if (uiDamage > m_creature->GetHealth() || m_creature->GetHealthPercent() < 20.0f)
+            if (m_creature->HealthBelowPctDamaged(20, uiDamage))
             {
                 uiDamage = 0;
 
@@ -755,8 +766,13 @@ struct npc_private_hendel : public CreatureScript
                 {
                     pPlayer->GroupEventHappens(QUEST_MISSING_DIPLO_PT16, m_creature);
                 }
-
                 DoScriptText(EMOTE_SURRENDER, m_creature);
+
+                m_creature->SummonCreature(NPC_TERVOSH, posTervos.x, posTervos.y, posTervos.z, posTervos.o,
+                    TEMPSUMMON_TIMED_DESPAWN, 60 * IN_MILLISECONDS);
+                m_creature->SummonCreature(NPC_JAINA, posJaina.x, posJaina.y, posJaina.z, posJaina.o,
+                    TEMPSUMMON_TIMED_DESPAWN, 60 * IN_MILLISECONDS);
+
                 EnterEvadeMode();
             }
         }
@@ -815,6 +831,8 @@ struct npc_stinky_ignatz : public CreatureScript
         }
 
         ObjectGuid m_bogbeanPlantGuid;
+
+        void Reset() override {}
 
         void Aggro(Unit* pWho) override
         {
