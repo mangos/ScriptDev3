@@ -537,7 +537,7 @@ bool SD3::ItemDelete(Player* pPlayer, Item* pItem)
 }
 
 // NOTE! test if sScriptMgr is allowed here, or else add script id on upper level to the parameters
-bool SD3::EffectDummyCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
+bool SD3::EffectDummyUnit(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Unit* pTarget, ObjectGuid originalCasterGuid)
 {
     Script* pTempScript = m_scripts[sScriptMgr.GetBoundScriptId(SCRIPTED_SPELL, spellId | effIndex << 24)];
 
@@ -573,7 +573,7 @@ bool SD3::EffectDummyItem(Unit* pCaster, uint32 spellId, SpellEffectIndex effInd
     return pTempScript->ToSpellScript()->EffectDummy(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
-bool SD3::EffectScriptEffectCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
+bool SD3::EffectScriptEffectUnit(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Unit* pTarget, ObjectGuid originalCasterGuid)
 {
     Script* pTempScript = m_scripts[sScriptMgr.GetBoundScriptId(SCRIPTED_SPELL, spellId | effIndex << 24)];
 

@@ -81,10 +81,10 @@ public:
     static bool NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId);
 #endif
     static bool ProcessEvent(uint32, Object*, Object*, bool);
-    static bool EffectDummyCreature(Unit*, uint32, SpellEffectIndex, Creature*, ObjectGuid);
+    static bool EffectDummyUnit(Unit*, uint32, SpellEffectIndex, Unit*, ObjectGuid);
     static bool EffectDummyGameObject(Unit*, uint32, SpellEffectIndex, GameObject*, ObjectGuid);
     static bool EffectDummyItem(Unit*, uint32, SpellEffectIndex, Item*, ObjectGuid);
-    static bool EffectScriptEffectCreature(Unit*, uint32, SpellEffectIndex, Creature*, ObjectGuid);
+    static bool EffectScriptEffectUnit(Unit*, uint32, SpellEffectIndex, Unit*, ObjectGuid);
     static bool AuraDummy(Aura const *, bool);
     //static bool AuraDummyTick(Aura const*);         [-ZERO:] no dummy ticks. TODO
 };
@@ -251,7 +251,7 @@ struct SpellScript : public Script
     //bool IsValid() override { return bool(sSpellStore.LookupEntry(spellID)); }
 
     virtual bool EffectDummy(Unit*, uint32, SpellEffectIndex, Object*, ObjectGuid) { return false; }
-    virtual bool EffectScriptEffect(Unit*, uint32, SpellEffectIndex, Creature*, ObjectGuid) { return false; }
+    virtual bool EffectScriptEffect(Unit*, uint32, SpellEffectIndex, Unit*, ObjectGuid) { return false; }
 };
 
 struct AuraScript : public Script
