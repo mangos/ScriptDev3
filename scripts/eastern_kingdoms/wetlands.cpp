@@ -60,7 +60,9 @@ enum
     SPELL_STEALTH               = 1785,
     SPELL_CALL_FRIENDS          = 16457,                    // summons 1x friend
     NPC_SLIMS_FRIEND            = 4971,
-    NPC_TAPOKE_SLIM_JAHN        = 4962
+    NPC_TAPOKE_SLIM_JAHN        = 4962,
+    WAYPOINT_MAILBOX            = 2,
+    WAYPOINT_GATE                = 6
 };
 
 static const DialogueEntry aDiplomatDialogue[] =
@@ -77,36 +79,53 @@ struct npc_tapoke_slim_jahn : public CreatureScript
 
     struct npc_tapoke_slim_jahnAI : public npc_escortAI, private DialogueHelper
     {
-        npc_tapoke_slim_jahnAI(Creature* pCreature) : npc_escortAI(pCreature),
-        DialogueHelper(aDiplomatDialogue)
+        npc_tapoke_slim_jahnAI(Creature* pCreature) : m_bFriendSummoned(false), m_bEventComplete(false),
+        friendGUID(ObjectGuid()), npc_escortAI(pCreature), DialogueHelper(aDiplomatDialogue)
         {
         }
-
-        bool m_bFriendSummoned;
-        bool m_bEventComplete;
 
         void Reset() override
         {
             if (!HasEscortState(STATE_ESCORT_ESCORTING))
             {
+                friendGUID.Clear();
                 m_bFriendSummoned = false;
                 m_bEventComplete = false;
             }
+        }
+
+        void AttackedBy(Unit* pAttacker) override
+        {
+            if (m_creature->getVictim())
+            {
+                return;
+            }
+
+            if (m_creature->IsFriendlyTo(pAttacker))
+            {
+                return;
+            }
+
+            AttackStart(pAttacker);
         }
 
         void WaypointReached(uint32 uiPointId) override
         {
             switch (uiPointId)
             {
-            case 2:
+            case WAYPOINT_MAILBOX:
                 SetRun();
                 m_creature->RemoveAurasDueToSpell(SPELL_STEALTH);
                 m_creature->SetFactionTemporary(FACTION_ENEMY, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
                 break;
-            case 6:
+
+            case WAYPOINT_GATE:
                 // fail the quest if he escapes
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     JustDied(pPlayer);
+                }
+                m_creature->ForcedDespawn(5000);
                 break;
             }
         }
@@ -130,6 +149,7 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             {
                 pSummoned->AI()->AttackStart(pPlayer);
             }
+            friendGUID = pSummoned->GetObjectGuid();
         }
 
         void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
@@ -137,19 +157,22 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             if (!HasEscortState(STATE_ESCORT_ESCORTING))
                 return;
 
-            if (m_creature->GetHealthPercent() < 20.0f || uiDamage > m_creature->GetHealth())
+            if (m_creature->HealthBelowPctDamaged(20, uiDamage))
             {
+                uiDamage = 0;
+
+                 if (Player* pPlayer = GetPlayerForEscort())
+                 {
+                     pPlayer->GroupEventHappens(QUEST_MISSING_DIPLO_PT11, m_creature);
+                     if(Creature* pFriend = m_creature->GetMap()->GetCreature(friendGUID))
+                     {
+                         pFriend->ForcedDespawn(0);
+                     }
+                 }
                 // despawn friend - Note: may not work on guardian pets
-                if (Creature* pFriend = GetClosestCreatureWithEntry(m_creature, NPC_SLIMS_FRIEND, 10.0f))
-                {
-                    DoScriptText(SAY_FRIEND_DEFEAT, pFriend);
-                    pFriend->ForcedDespawn(1000);
-                }
 
                 // set escort on pause and evade
-                uiDamage = 0;
                 m_bEventComplete = true;
-
                 SetEscortPaused(true);
                 EnterEvadeMode();
             }
@@ -201,6 +224,7 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             return NULL;
         }
 
+
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             DialogueUpdate(uiDiff);
@@ -210,6 +234,11 @@ struct npc_tapoke_slim_jahn : public CreatureScript
 
             DoMeleeAttackIfReady();
         }
+
+    private:
+        ObjectGuid friendGUID;
+        bool m_bFriendSummoned;
+        bool m_bEventComplete;
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

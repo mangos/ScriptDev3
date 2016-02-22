@@ -220,7 +220,7 @@ struct boss_emeriss : public CreatureScript
         }
 
         // Corruption of Earth at 75%, 50% and 25%
-        bool DoSpecialDragonAbility()
+        bool DoSpecialDragonAbility() override
         {
             if (DoCastSpellIfCan(m_creature, SPELL_CORRUPTION_OF_EARTH) == CAST_OK)
             {
@@ -233,7 +233,7 @@ struct boss_emeriss : public CreatureScript
             return false;
         }
 
-        bool UpdateDragonAI(const uint32 uiDiff)
+        bool UpdateDragonAI(const uint32 uiDiff) override
         {
             // Volatile Infection Timer
             if (m_uiVolatileInfectionTimer < uiDiff)
@@ -294,7 +294,7 @@ struct boss_lethon : public CreatureScript
         }
 
         // Summon a spirit which moves toward the boss and heals him for each player hit by the spell; used at 75%, 50% and 25%
-        bool DoSpecialDragonAbility()
+        bool DoSpecialDragonAbility() override
         {
             if (DoCastSpellIfCan(m_creature, SPELL_DRAW_SPIRIT) == CAST_OK)
             {
@@ -480,7 +480,7 @@ struct boss_taerar : public CreatureScript
             m_uiShadesDead = 0;
         }
 
-        bool UpdateDragonAI(const uint32 uiDiff)
+        bool UpdateDragonAI(const uint32 uiDiff) override
         {
             // Timer to unbanish the boss
             if (m_uiShadesTimeoutTimer)
@@ -575,7 +575,7 @@ struct boss_ysondre : public CreatureScript
         }
 
         // Summon Druids - TODO FIXME (spell not understood)
-        bool DoSpecialDragonAbility()
+        bool DoSpecialDragonAbility() override
         {
             DoScriptText(SAY_SUMMON_DRUIDS, m_creature);
 
@@ -587,7 +587,7 @@ struct boss_ysondre : public CreatureScript
             return true;
         }
 
-        bool UpdateDragonAI(const uint32 uiDiff)
+        bool UpdateDragonAI(const uint32 uiDiff) override
         {
             // Lightning Wave Timer
             if (m_uiLightningWaveTimer < uiDiff)

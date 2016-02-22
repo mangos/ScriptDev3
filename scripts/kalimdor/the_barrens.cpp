@@ -116,6 +116,8 @@ struct npc_gilthares : public CreatureScript
     {
         npc_giltharesAI(Creature* pCreature) : npc_escortAI(pCreature) { }
 
+        void Reset() override { }
+
         void WaypointReached(uint32 uiPointId) override
         {
             Player* pPlayer = GetPlayerForEscort();
@@ -868,6 +870,8 @@ struct npc_regthar_deathgate : public CreatureScript
 
         void JustSummoned(Creature* pSummoned)
         {
+            SendAIEventAround(AI_EVENT_CUSTOM_A, pSummoned->ToUnit(), 0, 40.0f);
+
             if (pSummoned->GetEntry() == NPC_HORDE_DEFENDER) //replace died creature from list with new spawned one
             {
                 if (m_uiPhaseCount == 2)
@@ -931,6 +935,10 @@ struct npc_regthar_deathgate : public CreatureScript
                     lCreatureList.push_back(pSummoned);
                 }
             }
+            if (pSummoned->GetEntry() == NPC_WARLORD_KROMZAR)
+            {
+                DoScriptText(YELL_STRONGEST, m_creature);
+            }
         }
 
         void SummonedCreatureJustDied(Creature* pKilled)
@@ -978,6 +986,8 @@ struct npc_regthar_deathgate : public CreatureScript
             if (pKilled->GetEntry() == NPC_WARLORD_KROMZAR)
             {
                 DoScriptText(YELL_RETREAT, m_creature);
+                pKilled->SummonGameObject(164690, pKilled->GetPositionX(), pKilled->GetPositionY(), pKilled->GetPositionZ(),
+                               4.12f, 60000);
                 m_uiPhaseCount = 4;
             }
 
@@ -1205,8 +1215,17 @@ struct horde_defender : public CreatureScript
         void EnterEvadeMode() override
         {
             m_creature->RemoveAllAurasOnEvade();
-            m_creature->DeleteThreatList();
+//            m_creature->DeleteThreatList();
             m_creature->SetLootRecipient(NULL);
+        }
+
+        void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*miscValue*/)
+        {
+            if (eventType == AI_EVENT_CUSTOM_A)
+            {
+                m_creature->AddThreat(pInvoker, 0.0f);
+                pSender->AddThreat(m_creature->ToUnit(), 0.0f);
+            }
         }
 
         void Aggro(Unit* /*pWho*/) override
@@ -1269,6 +1288,139 @@ struct horde_defender : public CreatureScript
     }
 };
 
+/*#####
+## npc_kolkar_invader
+#####*/
+
+struct kolkar_invader : public CreatureScript
+{
+    kolkar_invader() : CreatureScript("npc_kolkar_invader") {}
+
+    struct npc_kolkar_invaderAI : public ScriptedAI
+    {
+        npc_kolkar_invaderAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+
+        uint64 i_victimGuid = 0;
+        bool m_bCreatureFound = false;
+
+        void Reset()
+        {
+        }
+
+        void JustRespawned()
+        {
+        }
+
+        void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*miscValue*/)
+        {
+            if (eventType == AI_EVENT_CUSTOM_A)
+            {
+                m_creature->AddThreat(pInvoker, 0.0f);
+                pSender->AddThreat(m_creature->ToUnit(), 0.0f);
+            }
+        }
+
+        void EnterEvadeMode() override
+        {
+            m_creature->RemoveAllAurasOnEvade();
+            //m_creature->DeleteThreatList();
+            m_creature->SetLootRecipient(NULL);
+        }
+
+        void MoveInLineOfSight(Unit* u) override
+        {
+            if (m_creature->CanInitiateAttack() && u->IsTargetableForAttack() &&
+                m_creature->IsHostileTo(u) && u->isInAccessablePlaceFor(m_creature))
+            {
+                float attackRadius = 38.0f;
+                if (m_creature->IsWithinDistInMap(u, attackRadius) && m_creature->IsWithinLOSInMap(u))
+                {
+                    if (!m_creature->getVictim())
+                    {
+                        AttackStart(u);
+
+                    }
+                }
+            }
+        }
+
+
+
+        void UpdateAI(const uint32 /*uiDiff*/)
+        {
+            if (!m_creature->getVictim())
+            {
+                Creature* pCreature = GetClosestCreatureWithEntry(m_creature, NPC_HORDE_DEFENDER |  NPC_HORDE_AXE_THROWER , 38.0f);
+                if (!pCreature && m_bCreatureFound)
+                {
+                    m_creature->GetMotionMaster()->MoveTargetedHome();
+                    m_bCreatureFound = false;
+                }
+                if (pCreature)
+                {
+                    AttackStart(pCreature);
+                    m_bCreatureFound = true;
+                }
+            }
+            DoMeleeAttackIfReady();
+        }
+
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_kolkar_invaderAI(pCreature);
+    }
+};
+
+/*#####
+## NPC_WARLORD_KROMZAR
+#####*/
+
+struct warlord_kromzar : public CreatureScript
+{
+    warlord_kromzar() : CreatureScript("npc_warlord_kromzar") {}
+
+    struct npc_warlord_kromzarAI : public npc_escortAI
+    {
+        npc_warlord_kromzarAI(Creature* pCreature) : npc_escortAI(pCreature) {}
+
+        void Reset() {}
+
+        void WaypointReached(uint32 uiPointId)
+        {
+
+        }
+
+        void JustDied(Unit* /**/)
+        {
+            m_creature->CastSpell(m_creature->ToUnit(), 13965, true);
+        }
+
+        void JustRespawned() override
+        {
+            DoScriptText(YELL_STRONGEST, m_creature);
+            m_creature->SummonCreature(NPC_KOLKAR_INVADER, SpawnPointsKromzar[0].fX, SpawnPointsKromzar[0].fY, SpawnPointsKromzar[0].fZ, SpawnPointsKromzar[0].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 40000);
+            m_creature->SummonCreature(NPC_KOLKAR_STORMSEER, SpawnPointsKromzar[2].fX, SpawnPointsKromzar[2].fY, SpawnPointsKromzar[2].fZ, SpawnPointsKromzar[2].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 40000);
+            Start(false, NULL, NULL, false, true);
+        }
+
+        void UpdateEscortAI(const uint32 uiDiff) override
+        {
+            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                return;
+
+            DoMeleeAttackIfReady();
+        }
+
+    };
+    
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_warlord_kromzarAI(pCreature);
+    }
+};
+
 void AddSC_the_barrens()
 {
     Script* s;
@@ -1287,6 +1439,10 @@ void AddSC_the_barrens()
     s = new npc_regthar_deathgate();
     s->RegisterSelf();
     s = new horde_defender();
+    s->RegisterSelf();
+    s = new kolkar_invader();
+    s->RegisterSelf();
+    s = new warlord_kromzar();
     s->RegisterSelf();
 
     //pNewScript = new Script;
