@@ -788,28 +788,31 @@ struct mob_zealot_zath : public CreatureScript
         }
     };
 
-CreatureAI* GetAI(Creature* pCreature) override
-{
-    return new mob_zealot_zathAI(pCreature);
-}
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new mob_zealot_zathAI(pCreature);
+    }
 };
 
 struct spell_thekal_resurrection : public SpellScript
 {
     spell_thekal_resurrection() : SpellScript("spell_thekal_resurrection") {}
 
-    bool EffectDummyCreature_thekal_resurrection(Unit* /*pCaster*/, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
+    bool EffectDummy(Unit* /*pCaster*/, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
-        // always check spellid and effectindex
-        if (uiSpellId == SPELL_RESURRECT && uiEffIndex == EFFECT_INDEX_0)
+        if (Creature* pCreatureTarget = pTarget->ToCreature())
         {
-            if (boss_thekalBaseAI* pFakerAI = dynamic_cast<boss_thekalBaseAI*>(pCreatureTarget->AI()))
+            // always check spellid and effectindex
+            if (uiSpellId == SPELL_RESURRECT && uiEffIndex == EFFECT_INDEX_0)
             {
-                pFakerAI->Revive();
-            }
+                if (boss_thekalBaseAI* pFakerAI = dynamic_cast<boss_thekalBaseAI*>(pCreatureTarget->AI()))
+                {
+                    pFakerAI->Revive();
+                }
 
-            // always return true when we are handling this spell and effect
-            return true;
+                // always return true when we are handling this spell and effect
+                return true;
+            }
         }
 
         return false;
