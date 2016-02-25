@@ -1300,8 +1300,8 @@ struct kolkar_invader : public CreatureScript
     {
         npc_kolkar_invaderAI(Creature* pCreature) : ScriptedAI(pCreature) { }
 
-        uint64 i_victimGuid = 0;
-        bool m_bCreatureFound = false;
+        uint64 i_victimGuid;
+        bool m_bCreatureFound;
 
         void Reset()
         {
