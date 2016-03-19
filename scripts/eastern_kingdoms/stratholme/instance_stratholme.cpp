@@ -43,53 +43,21 @@ struct EventLocation
 
 static const EventLocation aStratholmeLocation[] =
 {
-#if defined (CLASSIC) || defined (TBC)
-    { 3725.577f, -3599.484f, 142.367f },                      // Barthilas door run
-#endif
-#if defined (WOTLK)
-    {3725.577f, -3599.484f, 142.367f, 0},                   // Barthilas door run
-#endif
+    { 3725.577f, -3599.484f, 142.367f, 0.0f },                // Barthilas door run
     { 4068.284f, -3535.678f, 122.771f, 2.50f },               // Barthilas tele
     { 4032.643f, -3378.546f, 119.752f, 4.74f },               // Ramstein summon loc
-#if defined (CLASSIC) || defined (TBC)
-    { 4032.843f, -3390.246f, 119.732f },                      // Ramstein move loc
-#endif
-#if defined (WOTLK)
-    {4032.843f, -3390.246f, 119.732f, 0},                   // Ramstein move loc
-#endif
+    { 4032.843f, -3390.246f, 119.732f, 0.0f },                // Ramstein move loc
     { 3969.357f, -3391.871f, 119.116f, 5.91f },               // Skeletons summon loc
-#if defined (CLASSIC) || defined (TBC)
-    { 4033.044f, -3431.031f, 119.055f },                      // Skeletons move loc
-#endif
-#if defined (WOTLK)
-    {4033.044f, -3431.031f, 119.055f, 0},                   // Skeletons move loc
-#endif
+    { 4033.044f, -3431.031f, 119.055f, 0.0f },                // Skeletons move loc
     { 4032.602f, -3378.506f, 119.752f, 4.74f },               // Guards summon loc
-#if defined (CLASSIC) || defined (TBC)
-    { 4042.575f, -3337.929f, 115.059f },                      // Ysida move loc
-#endif
-#if defined (WOTLK)
-    {4042.575f, -3337.929f, 115.059f, 0},                    // Ysida move loc
-#endif
-
-#if defined (CLASSIC) || defined (TBC)
+    { 4042.575f, -3337.929f, 115.059f, 0.0f },                // Ysida move loc
     { 3713.681f, -3427.814f, 131.198f, 6.2f }                 // The Unforgiven spawn area
-#endif
-#if defined (WOTLK)
-    {3713.681f, -3427.814f, 131.198f, 6.2f}                 // The Unforgiven spawn area
-#endif
 };
 
 static const EventLocation aTimmyLocation[] =
 {
     { 3696.851f, -3152.736f, 127.661f, 4.024f },              // Timmy spawn loc
-#if defined (CLASSIC) || defined (TBC)
-    { 3668.603f, -3183.314f, 126.215f }                       // Courtyard mobs sort point
-#endif
-#if defined (WOTLK) || defined (CATA)
-    {3668.603f, -3183.314f, 126.215f, 0}                    // Courtyard mobs sort point
-#endif
-
+    { 3668.603f, -3183.314f, 126.215f, 0.0f }                 // Courtyard mobs sort point
 };
 
 struct ZigguratStore

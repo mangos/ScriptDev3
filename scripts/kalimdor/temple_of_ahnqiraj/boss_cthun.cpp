@@ -338,7 +338,8 @@ struct boss_eye_of_cthun : public CreatureScript
                 {
                     m_uiDarkGlareEndTimer -= uiDiff;
                 }
-
+                break;
+            default:    // should here an error to be roported? or just no special for other phases?
                 break;
             }
 
@@ -478,10 +479,10 @@ struct boss_cthun : public CreatureScript
             // Workaround for missing spell 26648
                 if (Player* pPlayer = m_creature->GetMap()->GetPlayer(*itr))
                 {
-#if defined (CLASSIC)  
+#if defined (CLASSIC)
                     pPlayer->CastSpell(pPlayer, SPELL_PORT_OUT_STOMACH_EFFECT, true);
 #else
-                m_creature->DealDamage(pPlayer, pPlayer->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    m_creature->DealDamage(pPlayer, pPlayer->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
 #endif
                 }
             }
@@ -737,6 +738,8 @@ struct boss_cthun : public CreatureScript
                 }
 
                 break;
+            default:
+                break;
             }
 
             if (m_uiGiantClawTentacleTimer < uiDiff)
@@ -937,10 +940,10 @@ struct at_stomach_cthun : public AreaTriggerScript
             // Note: because of the missing spell id 26224, we will use basic jump movement
             // Disabled because of the missing jump effect
 #if defined (WOTLK)
-        pPlayer->GetMotionMaster()->MoveJump(afCthunLocations[3][0], afCthunLocations[3][1], afCthunLocations[3][2], pPlayer->GetSpeed(MOVE_RUN) * 5, 0);
-    }
-    else if (pAt->id == AREATRIGGER_STOMACH_2)
-    {
+            pPlayer->GetMotionMaster()->MoveJump(afCthunLocations[3][0], afCthunLocations[3][1], afCthunLocations[3][2], pPlayer->GetSpeed(MOVE_RUN) * 5, 0);
+        }
+        else if (pAt->id == AREATRIGGER_STOMACH_2)
+        {
 #endif
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
             {

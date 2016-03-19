@@ -100,7 +100,7 @@ struct boss_garr : public CreatureScript
             }
         }
 
-        void DamageTaken(Unit *damager, uint32 &damage) override
+        void DamageTaken(Unit* /*damager*/, uint32 &damage) override
         {
             if (!m_bHasFreed && m_creature->HealthBelowPctDamaged(50, damage))
             {

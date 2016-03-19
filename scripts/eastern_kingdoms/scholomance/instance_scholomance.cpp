@@ -282,7 +282,7 @@ struct is_scholomance : public InstanceScript
             }
         }
 
-        void OnPlayerEnter(Player* pPlayer) override
+        void OnPlayerEnter(Player* /*pPlayer*/) override
         {
             // Summon Gandling if can
             DoSpawnGandlingIfCan(true);

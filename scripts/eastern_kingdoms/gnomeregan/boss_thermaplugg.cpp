@@ -212,6 +212,8 @@ struct boss_thermaplugg : public CreatureScript
                 for (uint8 i = 0; i < MAX_GNOME_FACES; ++i)
                     DoDeactivateBombFace(i);
                 break;
+            default:
+                break;
             }
         }
 
@@ -351,7 +353,7 @@ struct spell_boss_thermaplugg : public SpellScript
 {
     spell_boss_thermaplugg() : SpellScript("spell_boss_thermaplugg") {}
 
-    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pCreatureTarget, ObjectGuid /*originalCasterGuid*/) override
+    bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* /*pCreatureTarget*/, ObjectGuid /*originalCasterGuid*/) override
     {
         if ((uiSpellId != SPELL_ACTIVATE_BOMB_A && uiSpellId != SPELL_ACTIVATE_BOMB_B) || uiEffIndex != EFFECT_INDEX_0)
         {

@@ -46,9 +46,9 @@ struct is_blackrock_depths : public InstanceScript
         instance_blackrock_depths(Map* pMap) : ScriptedInstance(pMap),
             m_uiBarAleCount(0),
             m_uiCofferDoorsOpened(0),
-            m_uiDwarfRound(0),
             m_uiDwarfFightTimer(0),
-            m_uiArenaCenterAT(0)
+            m_uiArenaCenterAT(0),
+            m_uiDwarfRound(0)
         {
             Initialize();
         }

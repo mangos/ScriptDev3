@@ -44,8 +44,8 @@ struct is_zulfarrak : public InstanceScript
     {
     public:
         instance_zulfarrak(Map* pMap) : ScriptedInstance(pMap),
-            m_uiPyramidEventTimer(0),
-            m_uiGraveyardSearcherGuid(0)
+            m_uiGraveyardSearcherGuid(0),
+            m_uiPyramidEventTimer(0)
         {
             Initialize();
         }

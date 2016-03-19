@@ -113,8 +113,8 @@ struct is_shadowfang_keep : public InstanceScript
                 break;
             case GO_ARUGAL_FOCUS:
 #if defined (WOTLK)
-        case GO_APOTHECARE_VIALS:
-        case GO_CHEMISTRY_SET:
+            case GO_APOTHECARE_VIALS:
+            case GO_CHEMISTRY_SET:
 #endif
                 break;
 
@@ -122,6 +122,18 @@ struct is_shadowfang_keep : public InstanceScript
                 return;
             }
             m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+        }
+
+        void DoSpeech()
+        {
+            Creature* pAda = GetSingleCreatureFromStorage(NPC_ADA);
+            Creature* pAsh = GetSingleCreatureFromStorage(NPC_ASH);
+
+            if (pAda && pAda->IsAlive() && pAsh && pAsh->IsAlive())
+            {
+                DoScriptText(SAY_BOSS_DIE_AD, pAda);
+                DoScriptText(SAY_BOSS_DIE_AS, pAsh);
+            }
         }
 
 #if defined (WOTLK)
@@ -300,23 +312,12 @@ struct is_shadowfang_keep : public InstanceScript
             OUT_LOAD_INST_DATA_COMPLETE;
         }
 
-        private:
-            void DoSpeech()
-            {
-                Creature* pAda = GetSingleCreatureFromStorage(NPC_ADA);
-                Creature* pAsh = GetSingleCreatureFromStorage(NPC_ASH);
 
-                if (pAda && pAda->IsAlive() && pAsh && pAsh->IsAlive())
-                {
-                    DoScriptText(SAY_BOSS_DIE_AD, pAda);
-                    DoScriptText(SAY_BOSS_DIE_AS, pAsh);
-                }
-            }
+    private:
+        uint32 m_auiEncounter[MAX_ENCOUNTER];
+        std::string m_strInstData;
 
-            uint32 m_auiEncounter[MAX_ENCOUNTER];
-            std::string m_strInstData;
-        
-            uint8 m_uiApothecaryDead;
+        uint8 m_uiApothecaryDead;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

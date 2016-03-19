@@ -148,7 +148,7 @@ struct boss_faerlina : public CreatureScript
             // Check if we hit with Widow's Embrave
             if (pSpellEntry->Id == SPELL_WIDOWS_EMBRACE)
             {
-                bool bIsFrenzyRemove = false;
+                //bool bIsFrenzyRemove = false;
 
                 // If we remove the Frenzy, the Enrage Timer is reseted to 60s
                 if (m_creature->HasAura(SPELL_ENRAGE))
@@ -156,7 +156,7 @@ struct boss_faerlina : public CreatureScript
                     m_uiEnrageTimer = 60000;
                     m_creature->RemoveAurasDueToSpell(SPELL_ENRAGE);
 
-                    bIsFrenzyRemove = true;
+                    //bIsFrenzyRemove = true;
                 }
 
                 // In any case we prevent Frenzy and Poison Bolt Volley for Widow's Embrace Duration (30s)

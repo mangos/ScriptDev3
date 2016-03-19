@@ -72,14 +72,15 @@ struct is_naxxramas : public InstanceScript
     {
     public:
         instance_naxxramas(Map* pMap) : ScriptedInstance(pMap),
+            m_tempCreatureGuid(0),
+            m_playerNearGothik(0),
             m_fChamberCenterX(0.0f),
             m_fChamberCenterY(0.0f),
             m_fChamberCenterZ(0.0f),
             m_uiSapphSpawnTimer(0),
             m_uiTauntTimer(0),
-            m_uiHorseMenKilled(0),
-            m_tempCreatureGuid(0),
             m_uiChanberCenterAT(0),
+            m_uiHorseMenKilled(0),
             m_dialogueHelper(aNaxxDialogue)
         {
             Initialize();
@@ -621,7 +622,7 @@ struct is_naxxramas : public InstanceScript
                                 uiTriggered = SPELL_C_TO_ANCHOR_2;
                             }
 
-                            pCreatureTarget->CastSpell(pAnchor2, uiTriggered, true);
+                            pCreatureTarget->ToCreature()->CastSpell(pAnchor2, uiTriggered, true);
                         }
                         break;
                     case SPELL_A_TO_ANCHOR_2:                           // trigger mobs at high left side
@@ -683,59 +684,7 @@ struct is_naxxramas : public InstanceScript
                 }
                 return;
             case TYPE_SIGNAL_3:
-                {
-                Creature* pGoth = GetSingleCreatureFromStorage(NPC_GOTHIK);
-
-                if (!pGoth)
-                    return;
-
-                m_mGothTriggerMap.clear();
-                m_lGothRiderPosGuids.clear();
-                m_lGothTraineePosGuids.clear();
-                m_lGothDeathKnightPosGuids.clear();
-
-                std::list<Creature*> lTriggerList;
-                for (GuidList::const_iterator itr = m_lGothTriggerList.begin(); itr != m_lGothTriggerList.end(); ++itr)
-                {
-                    if (Creature* pTrigger = instance->GetCreature(*itr))
-                    {
-                        GothTrigger pGt;
-                        pGt.bIsAnchorHigh = (pTrigger->GetPositionZ() >= (pGoth->GetPositionZ() - 5.0f));
-                        pGt.bIsRightSide = IsInRightSideGothArea(pTrigger);
-
-                        m_mGothTriggerMap[pTrigger->GetObjectGuid()] = pGt;
-                        lTriggerList.push_back(pTrigger);
-                    }
-                }
-
-                // Summon positions: Trainees and Rider
-                lTriggerList.sort(ObjectDistanceOrder(pGoth));
-                std::list<Creature*>::iterator it = lTriggerList.begin();
-                for (uint8 uiTrainee = 0; uiTrainee < 3; ++uiTrainee)
-                {
-                    if (it == lTriggerList.end())
-                        break;
-
-                    if (uiTrainee == 1)
-                        m_lGothRiderPosGuids.push_back((*it)->GetObjectGuid());
-                    else
-                        m_lGothTraineePosGuids.push_back((*it)->GetObjectGuid());
-
-                    ++it;
-                }
-
-                // Summon positions: Death Knights
-                std::list<Creature*>::reverse_iterator itr = lTriggerList.rbegin();
-                for (uint8 uiDeathKnight = 0; uiDeathKnight < 2; ++uiDeathKnight)
-                {
-                    if (itr == lTriggerList.rend())
-                        break;
-
-                    m_lGothDeathKnightPosGuids.push_back((*itr)->GetObjectGuid());
-
-                    ++itr;
-                }
-                }
+                 SetGothTriggers();
                 return;
             case TYPE_SIGNAL_8:
                 DoTriggerHeiganTraps(instance->GetCreature(ObjectGuid(m_tempCreatureGuid)), uint8(uiData));
@@ -751,42 +700,6 @@ struct is_naxxramas : public InstanceScript
                             pTeslaAI->ReceiveAIEvent(uiType == TYPE_SIGNAL_9 ? AI_EVENT_CUSTOM_A : AI_EVENT_CUSTOM_B, pTesla, pTesla, uiData);
                         }
                     }
-                }
-                return;
-            case TYPE_SIGNAL_11:    // summon add with uiData entry
-                {
-                Creature* pGoth = GetSingleCreatureFromStorage(NPC_GOTHIK);
-
-                if (!pGoth)
-                    return;
-
-                GuidList* plSummonPosGuids;
-                switch (uiData)
-                {
-                case NPC_UNREL_TRAINEE:
-                    plSummonPosGuids = &m_lGothTraineePosGuids;
-                    break;
-                case NPC_UNREL_DEATH_KNIGHT:
-                    plSummonPosGuids = &m_lGothDeathKnightPosGuids;
-                    break;
-                case NPC_UNREL_RIDER:
-                    plSummonPosGuids = &m_lGothRiderPosGuids;
-                    break;
-                default:
-                    return;
-                }
-                if (plSummonPosGuids->empty())
-                {
-                    return;
-                }
-
-                for (GuidList::iterator itr = plSummonPosGuids->begin(); itr != plSummonPosGuids->end(); ++itr)
-                {
-                    if (Creature* pPos = instance->GetCreature(*itr))
-                    {
-                        pGoth->SummonCreature(uiData, pPos->GetPositionX(), pPos->GetPositionY(), pPos->GetPositionZ(), pPos->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 0);
-                    }
-                }
                 }
                 return;
             }
@@ -822,23 +735,13 @@ struct is_naxxramas : public InstanceScript
                 case TYPE_SIGNAL_1:
                     return m_uiChanberCenterAT;
                 case TYPE_SIGNAL_4:
-                    {
-                    Map::PlayerList const& lPlayers = instance->GetPlayers();
-
-                    for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
-                    {
-                        if (Player* pPlayer = itr->getSource())
-                        {
-                            if (pPlayer->IsAlive() && IsInRightSideGothArea(pPlayer))
-                                return uint32(true);
-                        }
-                    }
-
-                    return uint32(false);
-                    }
+                    if (Player *pPlayer = instance->GetPlayer(m_playerNearGothik))
+                        return uint32(const_cast<instance_naxxramas*>(this)->IsInRightSideGothArea(pPlayer));
+                    else
+                        return uint32(false);
                     break;
                 case TYPE_SIGNAL_7:
-                    return uint32(IsInRightSideGothArea(instance->GetCreature(m_tempCreatureGuid)));
+                    return uint32(const_cast<instance_naxxramas*>(this)->IsInRightSideGothArea(instance->GetCreature(m_tempCreatureGuid)));
                 default:
                     break;
                 }
@@ -857,6 +760,9 @@ struct is_naxxramas : public InstanceScript
             case TYPE_SIGNAL_8:
                 m_tempCreatureGuid = data;
                 break;
+            case TYPE_SIGNAL_4:
+                m_playerNearGothik = data;
+                break;
             default:
                 break;
             }
@@ -866,8 +772,23 @@ struct is_naxxramas : public InstanceScript
         {
             switch(type)
             {
-            case TYPE_SIGNAL_6:
-                if (Creature *anchor = GetClosestAnchorForGoth(instance->GetCreature(ObjectGuid(m_tempCreatureGuid)), true))
+            case TYPE_SIGNAL_5: //sequential retrieving of required trigger GUIDs; TODO fix the whole Gothik encounter code design
+                if (gtit == m_mGothTriggerMap.end())
+                {
+                    (const_cast<instance_naxxramas*>(this))->gtit = m_mGothTriggerMap.begin();
+                    return 0;
+                }
+                else
+                {
+                    while (gtit != m_mGothTriggerMap.end() && (gtit->second.bIsAnchorHigh || !gtit->second.bIsRightSide))
+                        ++(const_cast<instance_naxxramas*>(this))->gtit;
+                    if (gtit == m_mGothTriggerMap.end())
+                        return 0;
+                    return gtit->first.GetRawValue();
+                }
+                break;
+            case TYPE_SIGNAL_6: //the same design flaw...
+                if (Creature *anchor = (const_cast<instance_naxxramas*>(this))->GetClosestAnchorForGoth(instance->GetCreature(ObjectGuid(m_tempCreatureGuid)), true))
                     return anchor->GetObjectGuid().GetRawValue();
             }
             return 0;
@@ -936,7 +857,6 @@ struct is_naxxramas : public InstanceScript
             m_dialogueHelper.DialogueUpdate(uiDiff);
         }
 
-    private:
         // Heigan
         void DoTriggerHeiganTraps(Creature* pHeigan, uint32 uiAreaIndex)
         {
@@ -956,7 +876,7 @@ struct is_naxxramas : public InstanceScript
 
         // goth
         // Right is right side from gothik (eastern)
-        bool IsInRightSideGothArea(Unit* pUnit) const
+        bool IsInRightSideGothArea(Unit* pUnit)
         {
             if (GameObject* pCombatGate = GetSingleGameObjectFromStorage(GO_MILI_GOTH_COMBAT_GATE))
             {
@@ -1021,12 +941,13 @@ struct is_naxxramas : public InstanceScript
             }
         }
 
+    private:
         //Gothik
-        Creature* GetClosestAnchorForGoth(Creature* pSource, bool bRightSide) const
+        Creature* GetClosestAnchorForGoth(Creature* pSource, bool bRightSide)
         {
             std::list<Creature* > lList;
 
-            for (UNORDERED_MAP<ObjectGuid, GothTrigger>::const_iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
+            for (UNORDERED_MAP<ObjectGuid, GothTrigger>::iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
             {
                 if (!itr->second.bIsAnchorHigh)
                 {
@@ -1074,16 +995,40 @@ struct is_naxxramas : public InstanceScript
             }
         }
 
+        void SetGothTriggers()
+        {
+            Creature* pGoth = GetSingleCreatureFromStorage(NPC_GOTHIK);
+
+            if (!pGoth)
+            {
+                return;
+            }
+
+            for (GuidList::const_iterator itr = m_lGothTriggerList.begin(); itr != m_lGothTriggerList.end(); ++itr)
+            {
+                if (Creature* pTrigger = instance->GetCreature(*itr))
+                {
+                    GothTrigger pGt;
+                    pGt.bIsAnchorHigh = (pTrigger->GetPositionZ() >= (pGoth->GetPositionZ() - 5.0f));
+                    pGt.bIsRightSide = IsInRightSideGothArea(pTrigger);
+
+                    m_mGothTriggerMap[pTrigger->GetObjectGuid()] = pGt;
+                }
+            }
+            gtit = m_mGothTriggerMap.begin();
+        }
+
         // data
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
         GuidList m_lThadTeslaCoilList;
         GuidList m_lGothTriggerList;
-        GuidList m_lGothRiderPosGuids, m_lGothTraineePosGuids, m_lGothDeathKnightPosGuids;
         uint64 m_tempCreatureGuid;
+        uint64 m_playerNearGothik;
 
         UNORDERED_MAP<ObjectGuid, GothTrigger> m_mGothTriggerMap;
+        UNORDERED_MAP<ObjectGuid, GothTrigger>::const_iterator gtit;
 
         GuidList m_alHeiganTrapGuids[MAX_HEIGAN_TRAP_AREAS];
 

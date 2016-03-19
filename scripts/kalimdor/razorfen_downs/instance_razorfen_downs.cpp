@@ -43,7 +43,7 @@ struct is_razorfen_downs : public InstanceScript
     class instance_razorfen_downs : public ScriptedInstance
     {
     public:
-        instance_razorfen_downs(Map *pMap) : ScriptedInstance(pMap), iWaveNumber(1), iTombFiendsAlive(0), iTombReaversAlive(0), bWaveInMotion(false)
+        instance_razorfen_downs(Map *pMap) : ScriptedInstance(pMap), iWaveNumber(1), bWaveInMotion(false), iTombFiendsAlive(0), iTombReaversAlive(0)
         {
             Initialize();
         }
