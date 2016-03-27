@@ -76,6 +76,7 @@ struct boss_skeram : public CreatureScript
         uint32 m_uiArcaneExplosionTimer;
         uint32 m_uiFullFillmentTimer;
         uint32 m_uiBlinkTimer;
+        uint32 m_uiEarthShockTimer;
 
         float m_fHpCheck;
 
@@ -86,6 +87,7 @@ struct boss_skeram : public CreatureScript
             m_uiArcaneExplosionTimer = urand(6000, 12000);
             m_uiFullFillmentTimer = 15000;
             m_uiBlinkTimer = urand(30000, 45000);
+            m_uiEarthShockTimer = 1200;
 
             m_fHpCheck = 75.0f;
 
@@ -287,6 +289,18 @@ struct boss_skeram : public CreatureScript
                 m_uiBlinkTimer -= uiDiff;
             }
 
+            // Earth Shock is cast every 1.2s on the victim if Skeram can't reach them or they are not auto attacking him
+            if (m_uiEarthShockTimer < uiDiff)
+            {
+                if (!m_creature->CanReachWithMeleeAttack(m_creature->getVictim()) || !m_creature->getVictim()->hasUnitState(UNIT_STAT_MELEE_ATTACKING))
+                {
+                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_EARTH_SHOCK) == CAST_OK)
+                        m_uiEarthShockTimer = 1200;
+                }
+            }
+            else
+                m_uiEarthShockTimer -= uiDiff;
+
             // Summon images at 75%, 50% and 25%
             if (!m_bIsImage && m_creature->GetHealthPercent() < m_fHpCheck)
             {
@@ -300,21 +314,7 @@ struct boss_skeram : public CreatureScript
                 }
             }
 
-            // If we are within range melee the target
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
-            {
-                DoMeleeAttackIfReady();
-            }
-            else
-            {
-                if (!m_creature->IsNonMeleeSpellCasted(false))
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        DoCastSpellIfCan(pTarget, SPELL_EARTH_SHOCK);
-                    }
-                }
-            }
+            DoMeleeAttackIfReady();
         }
     };
 
