@@ -47,7 +47,7 @@
 #include "../scripts/world/world_map_scripts.h"
 #include "escort_ai.h"
 
-#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK) || defined (CATA)
 /*######
 ## npc_tyrion
 ######*/
@@ -1177,7 +1177,7 @@ struct npc_reginald_windsor : public CreatureScript
     }
 };
 
-#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA)
 /*######
 ## npc_tyrion_spybot
 ######*/

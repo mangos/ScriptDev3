@@ -92,7 +92,7 @@ struct npc_draenei_survivor : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 #endif
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IN_COMBAT);
@@ -124,14 +124,14 @@ struct npc_draenei_survivor : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
             if (pSpell->Id == 28880)
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (pSpell->IsFitToFamilyMask(UI64LIT(0x0000000000000000), 0x080000000))
 #endif
             {
 #if defined (CLASSIC) || defined (TBC)
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 #endif
                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);

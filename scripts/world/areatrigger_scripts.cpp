@@ -90,7 +90,7 @@ struct at_childrens_week_spot : public AreaTriggerScript
     }
 };
 
-#if defined (WOTLK)    
+#if defined (WOTLK) || defined(CATA)
 /*######
 ## Quest 13315/13351
 ######*/
@@ -216,7 +216,7 @@ struct at_ravenholdt : public AreaTriggerScript
     }
 };
 
-#if defined (WOTLK)    
+#if defined (WOTLK) || defined (CATA)
 /*######
 ## at_spearborn_encampment
 ######*/
@@ -424,7 +424,7 @@ struct at_murkdeep : public AreaTriggerScript
     }
 };
 
-#if defined (WOTLK)    
+#if defined (WOTLK) || defined (CATA)
 /*######
 ## at_hot_on_the_trail
 ######*/

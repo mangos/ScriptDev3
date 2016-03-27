@@ -77,7 +77,7 @@ public:
     static bool ItemEquip(Player*, Item*, bool);    //new TODO
     static bool ItemDelete(Player*, Item*);         //new TODO
     static bool AreaTrigger(Player*, AreaTriggerEntry const*);
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     static bool NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId);
 #endif
     static bool ProcessEvent(uint32, Object*, Object*, bool);
@@ -174,7 +174,7 @@ struct CreatureScript : public Script
     virtual uint32 OnDialogEnd(Player*, Creature*) { return 0; }
     virtual bool OnQuestAccept(Player*, Creature*, Quest const*) { return false; }
     virtual bool OnQuestRewarded(Player*, Creature*, Quest const*) { return false; }
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     virtual bool OnSpellClick(Player*, Creature*, uint32) { return false; }
 #endif
 
@@ -260,7 +260,7 @@ struct AuraScript : public Script
     //bool IsValid() override { return bool(sSpellStore.LookupEntry(spellID)); }
 
     virtual bool OnDummyApply(const Aura*, bool) { return false; }
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
     virtual bool OnDummyTick(const Aura*) { return false; }
 #endif
 };

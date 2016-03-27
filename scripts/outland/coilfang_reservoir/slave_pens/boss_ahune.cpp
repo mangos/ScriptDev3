@@ -141,7 +141,7 @@ struct boss_ahune : public CreatureScript
             m_creature->ForcedDespawn();
         }
 
-#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA)
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
 #else
     void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
@@ -344,7 +344,7 @@ struct npc_frozen_core : public CreatureScript
             DoCastSpellIfCan(m_creature, SPELL_ICE_SPEAR_AURA, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
         }
 
-#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA)
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
 #else
     void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override

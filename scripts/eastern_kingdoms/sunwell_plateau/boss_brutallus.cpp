@@ -323,7 +323,7 @@ struct boss_brutallus : public CreatureScript
                     pMadrigosa->CastSpell(pMadrigosa, SPELL_FREEZE, true);
                 }
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
                 {
                     pMadrigosa->CastSpell(pMadrigosa, SPELL_FREEZE, false);
                 }
@@ -345,7 +345,7 @@ struct boss_brutallus : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                     pMadrigosa->CastSpell(m_creature, SPELL_FROST_BREATH, true);
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
                     pMadrigosa->CastSpell(m_creature, SPELL_FROST_BREATH, false);
 #endif
                     pMadrigosa->GetMotionMaster()->MoveIdle();

@@ -80,7 +80,7 @@ class ScriptedInstance : public InstanceData
             DoOrSimulateScriptTextForMap(iTextEntry, uiCreatureEntry, instance, GetSingleCreatureFromStorage(uiCreatureEntry, true));
         }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         // Starts a timed achievement criteria for all players in instance
         void DoStartTimedAchievement(AchievementCriteriaTypes criteriaType, uint32 uiTimedCriteriaMiscId);
 #endif

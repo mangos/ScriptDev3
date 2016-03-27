@@ -33,14 +33,14 @@ enum
 
     // Special data fields for Onyxia
     DATA_LIFTOFF                = 4,
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     DATA_PLAYER_TOASTED         = 5,
 #endif
 
     NPC_ONYXIA_WHELP            = 11262,
     NPC_ONYXIA_TRIGGER          = 12758,
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     // Achievement Related
     TIME_LIMIT_MANY_WHELPS      = 10,                       // 10s timeframe to kill 50 whelps after liftoff
     ACHIEV_CRIT_REQ_MANY_WHELPS = 50,

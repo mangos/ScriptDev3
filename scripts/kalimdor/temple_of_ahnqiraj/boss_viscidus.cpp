@@ -38,7 +38,7 @@
 
 enum
 {
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     // Emotes
     EMOTE_SLOW                  = -1531041,
     EMOTE_FREEZE                = -1531042,
@@ -62,7 +62,7 @@ enum
     SPELL_REJOIN_VISCIDUS       = 25896,
     SPELL_VISCIDUS_EXPLODE      = 25938,
     SPELL_VISCIDUS_SUICIDE      = 26003,                    // cast when boss explodes and is below 5% Hp - should trigger 26002
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     SPELL_DESPAWN_GLOBS         = 26608,
 #endif
 
@@ -80,7 +80,7 @@ enum
 #if defined (CLASSIC) || defined (TBC)
     NPC_GLOB_OF_VISCIDUS        = 15667
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     NPC_GLOB_OF_VISCIDUS        = 15667,
     NPC_VISCIDUS_TRIGGER      = 15922,                      // handles aura 26575
 
@@ -101,7 +101,7 @@ enum
 #endif
 };
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 static const uint32 auiGlobSummonSpells[MAX_VISCIDUS_GLOBS] = { 25865, 25866, 25867, 25868, 25869, 25870, 25871, 25872, 25873, 25874, 25875, 25876, 25877, 25878, 25879, 25880, 25881, 25882, 25883, 25884 };
 #endif
 
@@ -120,7 +120,7 @@ struct boss_viscidus : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         uint8 m_uiPhase;
 
         uint32 m_uiHitCount;
@@ -130,13 +130,13 @@ struct boss_viscidus : public CreatureScript
         uint32 m_uiPoisonShockTimer;
         uint32 m_uiPoisonBoltVolleyTimer;
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         GuidList m_lGlobesGuidList;
 #endif
 
         void Reset() override
         {
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             m_uiPhase                 = PHASE_NORMAL;
             m_uiHitCount              = 0;
         
@@ -146,7 +146,7 @@ struct boss_viscidus : public CreatureScript
             m_uiPoisonShockTimer = urand(7000, 12000);
             m_uiPoisonBoltVolleyTimer = urand(10000, 15000);
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             SetCombatMovement(true);
             m_creature->SetVisibility(VISIBILITY_ON);
             m_creature->SetStandState(UNIT_STAND_STATE_STAND);
@@ -173,7 +173,7 @@ struct boss_viscidus : public CreatureScript
             {
                 m_pInstance->SetData(TYPE_VISCIDUS, FAIL);
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
                 DoCastSpellIfCan(m_creature, SPELL_DESPAWN_GLOBS, CAST_TRIGGERED);
 #endif
             }
@@ -187,7 +187,7 @@ struct boss_viscidus : public CreatureScript
             }
         }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_GLOB_OF_VISCIDUS)
@@ -348,7 +348,7 @@ struct boss_viscidus : public CreatureScript
                 return;
             }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (m_uiExplodeDelayTimer)
             {
                 if (m_uiExplodeDelayTimer <= uiDiff)
@@ -394,7 +394,7 @@ struct boss_viscidus : public CreatureScript
                 m_uiPoisonBoltVolleyTimer -= uiDiff;
             }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (m_uiToxinTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
@@ -414,7 +414,7 @@ struct boss_viscidus : public CreatureScript
     }
 };
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 struct aura_viscidus_freeze : public AuraScript
 {
     aura_viscidus_freeze() : AuraScript("aura_viscidus_freeze") {}
@@ -461,7 +461,7 @@ void AddSC_boss_viscidus()
     s = new boss_viscidus();
     s->RegisterSelf();
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     s = new npc_glob_of_viscidus();
     s->RegisterSelf();
 

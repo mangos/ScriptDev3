@@ -146,9 +146,11 @@ struct npc_kyle_the_frenzied : public CreatureScript
                             if (!pGo)
                             {
                                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_LUNCH);
-
+#if defined (CATA)
+                                uint32 uiGameobjectEntry = pSpell->GetEffectMiscValue(EFFECT_INDEX_1);
+#else
                                 uint32 uiGameobjectEntry = pSpell->EffectMiscValue[EFFECT_INDEX_1];
-
+#endif
                                 pGo = GetClosestGameObjectWithEntry(pPlayer, uiGameobjectEntry, 2 * INTERACTION_DISTANCE);
                             }
 

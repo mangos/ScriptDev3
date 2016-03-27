@@ -413,8 +413,11 @@ struct npc_dragonmaw_peon : public CreatureScript
                         {
                             const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_SERVING_MUTTON);
 
+#if defined (CATA)
+                            uint32 uiGameobjectEntry = pSpell->GetEffectMiscValue(EFFECT_INDEX_0);
+#else
                             uint32 uiGameobjectEntry = pSpell->EffectMiscValue[EFFECT_INDEX_0];
-
+#endif
                             // this can fail, but very low chance
                             pMutton = GetClosestGameObjectWithEntry(pPlayer, uiGameobjectEntry, 2 * INTERACTION_DISTANCE);
                         }
@@ -508,23 +511,23 @@ struct spell_serving_mutton : public SpellScript
 enum
 {
     SAY_WIL_START               = -1000381,
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
     SAY_WIL_AGGRO1              = -1000382,
     SAY_WIL_AGGRO2              = -1000383,
     SAY_WIL_PROGRESS1           = -1000384,
     SAY_WIL_PROGRESS2           = -1000385,
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     SAY_WIL_AGGRO_1             = -1000382,
     SAY_WIL_AGGRO_2             = -1000383,
     SAY_WIL_FREE_SPIRITS        = -1000384,
 #endif
     SAY_WIL_FIND_EXIT           = -1000386,
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
     SAY_WIL_PROGRESS4           = -1000387,
     SAY_WIL_PROGRESS5           = -1000388,
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     SAY_WIL_PROGRESS_1          = -1000385,
     SAY_WIL_PROGRESS_2          = -1000387,
     SAY_WIL_PROGRESS_3          = -1000388,
@@ -538,16 +541,16 @@ enum
     SPELL_EARTHBING_TOTEM       = 15786,
     SPELL_FROST_SHOCK           = 12548,
     SPELL_HEALING_WAVE          = 12491,
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     SPELL_WATER_BUBBLE          = 35929,
 #endif
 
     QUEST_ESCAPE_COILSCAR       = 10451,
     NPC_COILSKAR_ASSASSIN       = 21044,
-#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA)
     FACTION_EARTHEN             = 1726,                      // guessed
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     NPC_CAPTURED_WATER_SPIRIT   = 21029,
 #endif
 };
@@ -560,7 +563,7 @@ struct npc_wilda : public CreatureScript
     struct npc_wildaAI : public npc_escortAI
     {
         npc_wildaAI(Creature* pCreature) : npc_escortAI(pCreature) { 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         // the creature is floating in a prison; no quest available first;
         // the floating prison setup and quest flag restore is handled by DB
         m_creature->SetLevitate(true);
@@ -568,7 +571,7 @@ struct npc_wilda : public CreatureScript
 #endif
     }
         uint32 m_uiHealingTimer;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         uint32 m_uiShockTimer;
         uint32 m_uiLightningTimer;
 #endif
@@ -576,13 +579,13 @@ struct npc_wilda : public CreatureScript
         void Reset() override
         {
             m_uiHealingTimer = 0;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             m_uiShockTimer = 1000;
             m_uiLightningTimer = 2000;
 #endif
         }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     void Aggro(Unit* pWho) override
     {
         if (roll_chance_i(30))
@@ -601,7 +604,7 @@ struct npc_wilda : public CreatureScript
     }
 #endif
 
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
         void WaypointReached(uint32 uiPointId) override
         {
             Player* pPlayer = GetPlayerForEscort();
@@ -662,7 +665,7 @@ struct npc_wilda : public CreatureScript
                 break;
             }
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             switch (uiPointId)
             {
                 case 8:
@@ -711,7 +714,7 @@ struct npc_wilda : public CreatureScript
             }
         }
 #endif
-#if defined (TBC)  || defined (WOTLK)
+#if defined (TBC)  || defined (WOTLK) || defined (CATA)
 
         // this is very unclear, random say without no real relevance to script/event
         void DoRandomSay()
@@ -724,7 +727,7 @@ struct npc_wilda : public CreatureScript
             }
         }
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
@@ -744,7 +747,7 @@ struct npc_wilda : public CreatureScript
             m_creature->SummonCreature(NPC_COILSKAR_ASSASSIN, fX, fY, fZ, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000);
         }
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     // wrapper to spawn assassin and do text
     void DoSpawnAssassin(uint8 uiCount = 1)
     {
@@ -796,7 +799,7 @@ struct npc_wilda : public CreatureScript
         }
 #endif
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     // free the water spirits
     void DoFreeSpirits()
     {
@@ -837,7 +840,7 @@ struct npc_wilda : public CreatureScript
             }
 
             // TODO: add more abilities
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (m_uiLightningTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHAIN_LIGHTNING) == CAST_OK)
@@ -882,10 +885,10 @@ struct npc_wilda : public CreatureScript
         if (pQuest->GetQuestId() == QUEST_ESCAPE_COILSCAR)
         {
             DoScriptText(SAY_WIL_START, pCreature, pPlayer);
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
             pCreature->SetFactionTemporary(FACTION_EARTHEN, TEMPFACTION_RESTORE_RESPAWN);
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             pCreature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
             pCreature->SetLevitate(false);
 #endif
@@ -1793,7 +1796,7 @@ const static EventLocations aDamnationLocations[] =
     { -3635.90f, 1860.94f, 52.93f},            // 5 elementals move loc
     { -3599.71f, 1897.94f, 47.24f}             // 6 epilogue move loc
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     { -3595.36f, 1869.78f, 47.24f, 0},            // 4 fight ready move loc
     { -3635.90f, 1860.94f, 52.93f, 0},            // 5 elementals move loc
     { -3599.71f, 1897.94f, 47.24f, 0}             // 6 epilogue move loc
@@ -2282,10 +2285,10 @@ struct npc_veneratus_spawn_node : public CreatureScript
             }
         }
 
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
         void UpdateAI(const uint32 uiDiff) override { }
 #endif
-//#if defined (WOTLK)
+//#if defined (WOTLK) || defined (CATA)
 //    void UpdateAI(const uint32 /* uiDiff */) override { }
 //
     };

@@ -97,16 +97,16 @@ struct go_fathom_stone : public GameObjectScript
         pInstance->SetData(TYPE_STONE, DONE);
         return true;
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         if (!pInstance)
         { return true; }
-        
+
         if (pInstance->GetData(TYPE_AQUANIS) == NOT_STARTED)
         {
             pPlayer->SummonCreature(NPC_BARON_AQUANIS, afAquanisPos[0], afAquanisPos[1], afAquanisPos[2], afAquanisPos[3], TEMPSUMMON_DEAD_DESPAWN, 0);
             pInstance->SetData(TYPE_AQUANIS, IN_PROGRESS);
         }
-    
+
         return false;
 #endif
     }

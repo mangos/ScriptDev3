@@ -216,42 +216,42 @@ struct is_molten_core : public InstanceScript
                 break;
             case TYPE_MAGMADAR:
                 m_auiEncounter[uiType] = uiData;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
                 { DoUseDoorOrButton(GO_RUNE_KRESS); }
 #endif
                 break;
             case TYPE_GEHENNAS:
                 m_auiEncounter[uiType] = uiData;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
                 { DoUseDoorOrButton(GO_RUNE_MOHN); }
 #endif
                 break;
             case TYPE_GARR:
                 m_auiEncounter[uiType] = uiData;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
                 { DoUseDoorOrButton(GO_RUNE_BLAZ); }
 #endif
                 break;
             case TYPE_SHAZZRAH:
                 m_auiEncounter[uiType] = uiData;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
                 { DoUseDoorOrButton(GO_RUNE_MAZJ); }
 #endif
                 break;
             case TYPE_GEDDON:
                 m_auiEncounter[uiType] = uiData;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
                 { DoUseDoorOrButton(GO_RUNE_ZETH); }
 #endif
                 break;
             case TYPE_GOLEMAGG:
                 m_auiEncounter[uiType] = uiData;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
                 { DoUseDoorOrButton(GO_RUNE_THERI); }
 #endif
@@ -259,7 +259,7 @@ struct is_molten_core : public InstanceScript
             case TYPE_SULFURON:
             case TYPE_RAGNAROS:
                 m_auiEncounter[uiType] = uiData;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
                 { DoUseDoorOrButton(GO_RUNE_KORO); }
 #endif
@@ -303,7 +303,7 @@ struct is_molten_core : public InstanceScript
                 }
             }
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
             {
                 DoSpawnMajordomoIfCan(false);
@@ -313,7 +313,7 @@ struct is_molten_core : public InstanceScript
 #if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
             if (save)
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == DONE)
 #endif
             {
@@ -419,7 +419,7 @@ struct is_molten_core : public InstanceScript
 #if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
                 if (m_auiEncounter[i] != SPECIAL)
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         if (m_auiEncounter[i] != DONE)
 #endif
                 {

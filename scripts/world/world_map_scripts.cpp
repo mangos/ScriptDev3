@@ -218,7 +218,7 @@ struct map_outland : public ZoneScript
     }
 };
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 /* *********************************************************
  *                     NORTHREND
  */
@@ -272,7 +272,7 @@ void AddSC_world_map_scripts()
     //pNewScript->GetInstanceData = &GetInstanceData_world_map_outland;
     //pNewScript->RegisterSelf();
 //#endif
-//#if defined (WOTLK)
+//#if defined (WOTLK) || defined (CATA)
     //pNewScript = new Script;
     //pNewScript->Name = "world_map_northrend";
     //pNewScript->GetInstanceData = &GetInstanceData_world_map_northrend;

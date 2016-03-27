@@ -273,7 +273,11 @@ struct boss_attumen : public CreatureScript
 
         void SpellHit(Unit* /*pSource*/, const SpellEntry* pSpell) override
         {
+#if defined (CATA)
+            if (pSpell->GetMechanic() == MECHANIC_DISARM)
+#else
             if (pSpell->Mechanic == MECHANIC_DISARM)
+#endif
             {
                 DoScriptText(SAY_DISARMED, m_creature);
             }

@@ -459,7 +459,7 @@ bool SD3::AreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
     return pTempScript->ToAreaTriggerScript()->OnTrigger(pPlayer, atEntry);
 }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 bool SD3::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId)
 {
     Script* pTempScript = m_scripts[pClickedCreature->GetScriptId()];

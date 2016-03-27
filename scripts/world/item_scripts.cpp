@@ -177,7 +177,7 @@ struct item_gor_dreks_ointment : public ItemScript
     }
 };
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 /*#####
 # item_petrov_cluster_bombs
 #####*/
@@ -242,7 +242,7 @@ void AddSC_item_scripts()
     //pNewScript->pItemUse = &ItemUse_item_gor_dreks_ointment;
     //pNewScript->RegisterSelf();
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     s = new item_petrov_cluster_bombs();
     s->RegisterSelf();
 

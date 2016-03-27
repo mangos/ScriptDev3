@@ -257,7 +257,7 @@ struct is_sunken_temple : public InstanceScript
 #if defined (CLASSIC) || defined (TBC)
                     if (Creature* pShade = pPlayer->SummonCreature(NPC_SHADE_OF_HAKKAR, aSunkenTempleLocation[1].m_fX, aSunkenTempleLocation[1].m_fY, aSunkenTempleLocation[1].m_fZ, aSunkenTempleLocation[1].m_fO, TEMPSUMMON_MANUAL_DESPAWN, 0))
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
                 if (Creature* pShade = pPlayer->SummonCreature(NPC_SHADE_OF_HAKKAR, aSunkenTempleLocation[1].m_fX, aSunkenTempleLocation[1].m_fY, aSunkenTempleLocation[1].m_fZ, aSunkenTempleLocation[1].m_Orientation, TEMPSUMMON_MANUAL_DESPAWN, 0))
 #endif
                     {
@@ -427,7 +427,7 @@ struct is_sunken_temple : public InstanceScript
 #if defined (CLASSIC) || defined (TBC)
                     pShade->SummonCreature(NPC_SUPPRESSOR, aHakkariDoorLocations[uiSummonLoc].m_fX, aHakkariDoorLocations[uiSummonLoc].m_fY, aHakkariDoorLocations[uiSummonLoc].m_fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             pShade->SummonCreature(NPC_SUPPRESSOR, aHakkariDoorLocations[uiSummonLoc].m_fX, aHakkariDoorLocations[uiSummonLoc].m_fY, aHakkariDoorLocations[uiSummonLoc].m_fZ, aHakkariDoorLocations[uiSummonLoc].m_Orientation, TEMPSUMMON_DEAD_DESPAWN, 0);
 #endif
 

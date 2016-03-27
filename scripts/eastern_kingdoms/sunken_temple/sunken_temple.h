@@ -111,7 +111,7 @@ struct SummonLocations
 #if defined (CLASSIC) || defined (TBC)
     float m_fX, m_fY, m_fZ, m_fO;
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     float m_fX, m_fY, m_fZ, m_Orientation;
 #endif
 };

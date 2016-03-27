@@ -45,7 +45,7 @@ struct is_onyxias_lair : public InstanceScript
 #if defined (CLASSIC) || defined (TBC)
         instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap)
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap),
         m_uiAchievWhelpsCount(0)
 #endif
@@ -71,7 +71,7 @@ struct is_onyxias_lair : public InstanceScript
             case NPC_ONYXIA_TRIGGER:
                 m_mNpcEntryGuidStore[NPC_ONYXIA_TRIGGER] = pCreature->GetObjectGuid();
                 break;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             case NPC_ONYXIA_WHELP:
                 if (m_uiEncounter >= DATA_LIFTOFF && time_t(m_tPhaseTwoStart + TIME_LIMIT_MANY_WHELPS) >= time(NULL))
                     ++m_uiAchievWhelpsCount;
@@ -88,7 +88,7 @@ struct is_onyxias_lair : public InstanceScript
             }
 
             m_uiEncounter = uiData;
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (uiData == IN_PROGRESS)
             {
                 DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_ONYXIA_ID);
@@ -103,7 +103,7 @@ struct is_onyxias_lair : public InstanceScript
             // Currently no reason to save anything
         }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* /*pSource*/, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const override
         {
             switch (uiCriteriaId)

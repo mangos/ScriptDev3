@@ -1593,7 +1593,7 @@ struct npc_drijya : public CreatureScript
     }
 };
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 /*######
 ## npc_dimensius
 ######*/

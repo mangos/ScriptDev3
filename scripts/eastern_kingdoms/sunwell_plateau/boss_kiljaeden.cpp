@@ -211,7 +211,7 @@ static const EventLocations aOutroLocations[] =
     {1712.110f, 641.044f, 27.80f},              // velen move forward
     {1711.537f, 637.600f, 27.34f},              // liadrin move forward
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     {1712.110f, 641.044f, 27.80f,  0},          // velen move forward
     {1711.537f, 637.600f, 27.34f,  0},          // liadrin move forward
 #endif

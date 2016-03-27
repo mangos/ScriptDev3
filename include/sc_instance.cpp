@@ -45,7 +45,7 @@ void ScriptedInstance::DoUseDoorOrButton(ObjectGuid guid, uint32 uiWithRestoreTi
 #if defined (CLASSIC) || defined (TBC)
         if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON || pGo->GetGoType() == GAMEOBJECT_TYPE_TRAPDOOR)
 #endif
         {
@@ -100,7 +100,7 @@ void ScriptedInstance::DoRespawnGameObject(ObjectGuid guid, uint32 uiTimeToDespa
 #if defined (CLASSIC) || defined (TBC)
             pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON || pGo->GetGoType() == GAMEOBJECT_TYPE_TRAP)
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
 #endif
 
@@ -251,7 +251,7 @@ Creature* ScriptedInstance::GetSingleCreatureFromStorage(uint32 uiEntry, bool bS
     return NULL;
 }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 /**
    Helper function to start a timed achievement criteria for players in the map
 

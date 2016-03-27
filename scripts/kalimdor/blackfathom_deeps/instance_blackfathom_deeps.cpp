@@ -136,7 +136,7 @@ struct is_blackfathom_deeps : public InstanceScript
 
         void OnCreatureDeath(Creature* pCreature) override
         {
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     if (pCreature->GetEntry() == NPC_BARON_AQUANIS)
         { SetData(TYPE_AQUANIS, DONE); }
 #endif
@@ -224,7 +224,7 @@ struct is_blackfathom_deeps : public InstanceScript
                 }
                 break;
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         case TYPE_AQUANIS:
             m_auiEncounter[2] = uiData;;
             break;

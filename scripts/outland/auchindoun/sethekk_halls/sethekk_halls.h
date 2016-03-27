@@ -50,7 +50,7 @@ enum
     SPELL_SUMMONING_BEAMS       = 39978,
     SPELL_RED_LIGHTNING         = 39990,
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     ACHIEV_CRITA_TURKEY_TIME    = 11142,
     ITEM_PILGRIMS_HAT           = 46723,
     ITEM_PILGRIMS_DRESS         = 44785,

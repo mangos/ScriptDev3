@@ -231,7 +231,7 @@ struct npc_piznik : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
             if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(m_uiPlayerGUID)))
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(ObjectGuid(m_uiPlayerGUID))))
 #endif
             {
@@ -264,7 +264,7 @@ struct npc_piznik : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                 if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(m_uiPlayerGUID)))
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
                 if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(ObjectGuid(m_uiPlayerGUID))))
 #endif
                 {

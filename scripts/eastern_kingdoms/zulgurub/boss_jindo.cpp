@@ -47,7 +47,7 @@ enum
     SPELL_SHADE_OF_JINDO            = 24308,                // Spell was removed  from DBC around TBC; will summon npcs manually!
 
     SPELL_HEALING_WARD_HEAL         = 24311,
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     SPELL_SHADE_OF_JINDO_PASSIVE    = 24307,
 #endif
 
@@ -173,7 +173,7 @@ struct boss_jindo : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                         pSummoned->AI()->AttackStart(pTarget);
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
                     pSummoned->CastSpell(pSummoned, SPELL_SHADE_OF_JINDO_PASSIVE, true);
 #endif
                     }

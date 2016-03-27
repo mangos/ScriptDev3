@@ -58,7 +58,7 @@ struct boss_golemagg : public CreatureScript
         boss_golemaggAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         DoCastSpellIfCan(m_creature, SPELL_MAGMA_SPLASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
 #endif
         }
@@ -102,7 +102,7 @@ struct boss_golemagg : public CreatureScript
             {
                 m_pInstance->SetData(TYPE_GOLEMAGG, FAIL);
             }
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
         DoCastSpellIfCan(m_creature, SPELL_MAGMA_SPLASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
 #endif
         }

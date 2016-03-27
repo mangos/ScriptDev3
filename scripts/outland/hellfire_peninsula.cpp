@@ -586,7 +586,7 @@ struct npc_fel_guard_hound : public CreatureScript
     }
 };
 
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
 struct spell_inform_dog : public SpellScript
 {
     spell_inform_dog() : SpellScript("spell_inform_dog") {}
@@ -1089,7 +1089,7 @@ struct npc_caretaker_dilandrus : public CreatureScript
         return new npc_caretaker_dilandrusAI(pCreature);
     }
 };
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
 /*######
 ## npc_magister_aledis
 ######*/
@@ -1241,7 +1241,7 @@ void AddSC_hellfire_peninsula()
     s = new npc_caretaker_dilandrus();
     s->RegisterSelf();
 
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
     s = new spell_inform_dog();
     s->RegisterSelf();
 #endif
@@ -1288,7 +1288,7 @@ void AddSC_hellfire_peninsula()
     //pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_colonel_jules;
     //pNewScript->RegisterSelf();
     
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     s = new npc_magister_aledis();
     s->RegisterSelf();
     

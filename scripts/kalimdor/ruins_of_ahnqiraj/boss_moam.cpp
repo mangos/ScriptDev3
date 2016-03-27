@@ -82,11 +82,11 @@ struct boss_moam : public CreatureScript
         void Aggro(Unit* /*pWho*/) override
         {
             DoScriptText(EMOTE_AGGRO, m_creature);
-#if defined (CLASSIC) || defined (TBC)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK)
             m_creature->SetMaxPower(POWER_MANA, m_creature->GetCreatureInfo()->MaxLevelMana);
 #endif
-#if defined (WOTLK)
-        m_creature->SetMaxPower(POWER_MANA, m_creature->GetCreatureInfo()->MaxLevelHealth);
+#if defined (CATA)
+            m_creature->SetMaxPower(POWER_MANA, m_creature->GetCreatureInfo()->maxmana);// TODO MaxLevelHealth);
 #endif
         }
 

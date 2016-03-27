@@ -82,7 +82,7 @@ struct npc_corporal_keeshan_escort : public CreatureScript
             if (eventType == AI_EVENT_START_ESCORT && pInvoker->GetTypeId() == TYPEID_PLAYER)
             {
                 DoScriptText(SAY_CORPORAL_KEESHAN_1, m_creature);
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             m_creature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
 #endif
                 Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue));

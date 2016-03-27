@@ -32,7 +32,7 @@ enum
 #if defined (CLASSIC) || defined (TBC)
     MAX_ENCOUNTER           = 6,
 #endif
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     MAX_ENCOUNTER           = 7,
 #endif
 
@@ -42,7 +42,7 @@ enum
     TYPE_NANDOS             = 4,
     TYPE_INTRO              = 5,
     TYPE_VOIDWALKER         = 6,
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     TYPE_APOTHECARY         = 7,
 #endif
 
@@ -56,7 +56,7 @@ enum
     NPC_FENRUS              = 4274,                         // used to summon Arugal in Fenrus event
     NPC_VINCENT             = 4444,                         // Vincent should be "dead" is Arugal is done the intro already
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     NPC_HUMMEL              = 36296,                        // Love is in the Air event
     NPC_FRYE                = 36272,
     NPC_BAXTER              = 36565,
@@ -67,7 +67,7 @@ enum
     GO_SORCERER_DOOR        = 18972,                        // door to open when Fenrus the Devourer
     GO_ARUGAL_DOOR          = 18971,                        // door to open when Wolf Master Nandos
     GO_ARUGAL_FOCUS         = 18973,                        // this generates the lightning visual in the Fenrus event
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     GO_APOTHECARE_VIALS     = 190678,                       // move position for Baxter
     GO_CHEMISTRY_SET        = 200335,                       // move position for Frye
 

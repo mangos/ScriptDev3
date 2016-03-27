@@ -939,7 +939,7 @@ struct at_stomach_cthun : public AreaTriggerScript
 
             // Note: because of the missing spell id 26224, we will use basic jump movement
             // Disabled because of the missing jump effect
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             pPlayer->GetMotionMaster()->MoveJump(afCthunLocations[3][0], afCthunLocations[3][1], afCthunLocations[3][2], pPlayer->GetSpeed(MOVE_RUN) * 5, 0);
         }
         else if (pAt->id == AREATRIGGER_STOMACH_2)

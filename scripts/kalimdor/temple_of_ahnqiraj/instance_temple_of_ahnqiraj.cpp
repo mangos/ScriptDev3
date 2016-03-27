@@ -224,7 +224,7 @@ struct is_temple_of_ahnqiraj : public InstanceScript
 #if defined (CLASSIC)
                     << m_auiEncounter[8] << " " << m_auiEncounter[9];
 #endif
-#if defined (TBC) || defined (WOTLK)
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
                    << m_auiEncounter[8];
 #endif
 

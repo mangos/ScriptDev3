@@ -218,7 +218,7 @@ struct mob_firesworn : public CreatureScript
             }
         }
     
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
     void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
@@ -238,7 +238,7 @@ struct mob_firesworn : public CreatureScript
 
             if (m_uiSeparationCheckTimer < uiDiff)
             {
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             if (!m_pInstance)
                 return;
 #endif            
@@ -256,7 +256,7 @@ struct mob_firesworn : public CreatureScript
                 m_uiSeparationCheckTimer -= uiDiff;
             }
 
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CATA)
             // Cast Erruption and let them die
             if (m_creature->GetHealthPercent() <= 10.0f)
             {
