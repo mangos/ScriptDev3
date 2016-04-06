@@ -657,7 +657,7 @@ struct spell_melodious_rapture : public SpellScript
         if (uiSpellId == SPELL_MELODIOUS_RAPTURE && uiEffIndex == EFFECT_INDEX_0)
         {
             Creature *pCreatureTarget = pTarget->ToCreature();
-            if (pCaster->GetTypeId() != TYPEID_PLAYER || pCreatureTarget->GetEntry() != NPC_DEEPRUN_RAT)
+            if (pCaster->GetTypeId() != TYPEID_PLAYER || (pCreatureTarget && pCreatureTarget->GetEntry() != NPC_DEEPRUN_RAT)) 
             {
                 return true;
             }
