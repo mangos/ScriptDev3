@@ -460,7 +460,7 @@ struct event_npc_kroshius : public MapEventScript
 {
     event_npc_kroshius() : MapEventScript("event_npc_kroshius") {}
 
-    bool ProcessEventId_npc_kroshius(uint32 uiEventId, Object* pSource, Object* /*pTarget*/, bool /*bIsStart*/)
+    bool OnReceived(uint32 uiEventId, Object* pSource, Object* /*pTarget*/, bool /*bIsStart*/) override
     {
         if (uiEventId == EVENT_KROSHIUS_REVIVE)
         {
