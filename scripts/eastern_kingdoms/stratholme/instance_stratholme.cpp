@@ -568,13 +568,13 @@ struct is_stratholme : public InstanceScript
     if (m_auiEncounter[TYPE_BARON_RUN] == DONE)
     {
         if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
-            pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[10].m_fX, aStratholmeLocation[10].m_fY, aStratholmeLocation[10].m_fZ, aStratholmeLocation[10].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+            pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ, aStratholmeLocation[9].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
     }
     // Baron ultimatum failed: summon Ysida outside the cage dead
     if (m_auiEncounter[TYPE_BARON_RUN] == FAIL)
     {
         if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
-            if (Creature* pYsida = pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[10].m_fX, aStratholmeLocation[10].m_fY, aStratholmeLocation[10].m_fZ, aStratholmeLocation[10].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0))
+            if (Creature* pYsida = pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ, aStratholmeLocation[9].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0))
                 pYsida->DealDamage(pYsida, pYsida->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
     }
 
