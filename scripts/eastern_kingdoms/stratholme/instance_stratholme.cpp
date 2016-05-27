@@ -50,8 +50,8 @@ static const EventLocation aStratholmeLocation[] =
     { 3969.357f, -3391.871f, 119.116f, 5.91f },               // Skeletons summon loc
     { 4033.044f, -3431.031f, 119.055f, 0.0f },                // Skeletons move loc
     { 4032.602f, -3378.506f, 119.752f, 4.74f },               // Guards summon loc
-    {4044.78f,  -3333.68f,  117.26f,  4.15f},                 // Ysida summon loc
-    {4041.9f,   -3337.6f,   115.06f,  3.82f},                  // Ysida move/death loc
+    { 4044.78f,  -3333.68f,  117.26f,  4.15f},                 // Ysida summon loc
+    { 4041.9f,   -3337.6f,   115.06f,  3.82f},                  // Ysida move/death loc
     { 3713.681f, -3427.814f, 131.198f, 6.2f }                 // The Unforgiven spawn area
 };
 
@@ -568,13 +568,13 @@ struct is_stratholme : public InstanceScript
     if (m_auiEncounter[TYPE_BARON_RUN] == DONE)
     {
         if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
-            pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, aStratholmeLocation[8].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+            pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[10].m_fX, aStratholmeLocation[10].m_fY, aStratholmeLocation[10].m_fZ, aStratholmeLocation[10].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
     }
     // Baron ultimatum failed: summon Ysida outside the cage dead
     if (m_auiEncounter[TYPE_BARON_RUN] == FAIL)
     {
         if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
-            if (Creature* pYsida = pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, aStratholmeLocation[8].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0))
+            if (Creature* pYsida = pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[10].m_fX, aStratholmeLocation[10].m_fY, aStratholmeLocation[10].m_fZ, aStratholmeLocation[10].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0))
                 pYsida->DealDamage(pYsida, pYsida->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
     }
 
