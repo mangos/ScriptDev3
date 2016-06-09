@@ -44,9 +44,6 @@
 #include "precompiled.h"
 #if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
 #include "molten_core.h"
-#endif
-
-#if defined (CLASSIC) || defined (TBC) || defined(WOTLK)
 
 /*######
 ## go_molten_core_rune
@@ -67,7 +64,7 @@ struct go_molten_core_rune : public GameObjectScript
 
         if (pInstance->GetData(pGo->GetGOInfo()->button.linkedTrapId) == SPECIAL)
         {
-            pInstance->SetData(TYPE_FLAME_DOSED, pGo->GetGOInfo()->button.linkedTrapId);
+            pInstance->SetData(TYPE_FLAME_DOUSED, pGo->GetGOInfo()->button.linkedTrapId);
             return false;   // this path allows the spell to have effect
         }
 
