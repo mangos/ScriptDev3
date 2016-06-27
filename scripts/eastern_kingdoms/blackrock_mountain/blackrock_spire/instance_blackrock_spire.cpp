@@ -109,11 +109,14 @@ struct is_blackrock_spire : public InstanceScript
             m_uiFlamewreathWaveCount(0),
             m_uiStadiumEventTimer(0),
             m_uiStadiumWaves(0),
-            m_uiStadiumMobsAlive(0),
 #if defined (CLASSIC)
+            m_uiStadiumMobsAlive(0),
+
             m_uiDragonspineDoorTimer(0),
             m_uiDragonspineGoCount(0),
             m_bUpperDoorOpened(false)
+#else
+            m_uiStadiumMobsAlive(0)
 #endif
         {
             Initialize();
