@@ -95,6 +95,11 @@ enum
     SPELL_STONED            = 10255,                        // Aura of Warbringer Constructs in Relict Vault
 
     FACTION_DWARF_HOSTILE   = 754,                          // Hostile faction for the Tomb of the Seven dwarfs
+#if defined (CLASSIC)
+	QUEST_HURLEY_BLACKBREATH = 4126,
+	GO_THUNDERBREW_LAGER_KEG = 164911,
+	NPC_HURLEY_BLACKBREATH = 9537,
+#endif	
 };
 
 enum ArenaNPCs
