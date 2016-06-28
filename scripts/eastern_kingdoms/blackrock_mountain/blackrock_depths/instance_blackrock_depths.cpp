@@ -47,6 +47,10 @@ struct is_blackrock_depths : public InstanceScript
             m_uiBarAleCount(0),
             m_uiCofferDoorsOpened(0),
             m_uiDwarfFightTimer(0),
+			#if defined (CLASSIC)
+			m_uiCheckLagerKegTimer(0),
+			m_boSummon(false),
+			#endif
             m_uiArenaCenterAT(0),
             m_uiDwarfRound(0)
         {
@@ -218,7 +222,11 @@ struct is_blackrock_depths : public InstanceScript
             case GO_JAIL_DOOR_SUPPLY:
             case GO_JAIL_SUPPLY_CRATE:
                 break;
-
+			#if defined (CLASSIC)	
+			case GO_THUNDERBREW_LAGER_KEG:
+				m_mGOGuidStore.insert(pGo->GetObjectGuid());
+				return;
+			#endif
             default:
                 return;
             }
@@ -450,6 +458,17 @@ struct is_blackrock_depths : public InstanceScript
                     m_uiDwarfFightTimer -= uiDiff;
                 }
             }
+			#if defined (CLASSIC)
+			if (m_uiCheckLagerKegTimer <= uiDiff)
+			{
+				DoCheckLagerKeg();
+				m_uiCheckLagerKegTimer = 2000;
+			}
+			else
+			{
+				m_uiCheckLagerKegTimer -= uiDiff;
+			}
+			#endif
         }
 
     private:
@@ -466,7 +485,34 @@ struct is_blackrock_depths : public InstanceScript
             m_uiDwarfFightTimer = 30000;
             ++m_uiDwarfRound;
         }
-
+		#if defined (CLASSIC)
+		void DoCheckLagerKeg()
+		{
+			if (Player* pPlayer = GetPlayerInMap())
+			{
+				if (pPlayer->GetQuestStatus(QUEST_HURLEY_BLACKBREATH) == QUEST_STATUS_INCOMPLETE)
+				{
+					bool boLagerKeg = true;
+					for (GuidSet::const_iterator itr = m_mGOGuidStore.begin(); itr != m_mGOGuidStore.end(); ++itr)
+					{
+						GameObject* pGo = instance->GetGameObject(*itr);
+						if (pGo && pGo->isVisibleFor(pPlayer, pGo))
+						{
+							boLagerKeg = false;
+							m_boSummon = false;
+							break;
+						}
+					}
+					if (boLagerKeg && !m_boSummon)
+					{
+						m_boSummon = true;
+						Creature* pCreature = pPlayer->SummonCreature(NPC_HURLEY_BLACKBREATH, 910.37f, -151.66f, -49.76f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 600000);
+						pCreature->AI()->AttackStart(pPlayer);
+					}
+				}
+			}
+		}
+		#endif
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
@@ -480,6 +526,11 @@ struct is_blackrock_depths : public InstanceScript
         float m_fArenaCenterX, m_fArenaCenterY, m_fArenaCenterZ;
 
         GuidSet m_sVaultNpcGuids;
+		#if defined (CLASSIC)
+		GuidSet m_mGOGuidStore;
+		uint32 m_uiCheckLagerKegTimer;
+		bool m_boSummon;
+		#endif
     };
 
     InstanceData* GetInstanceData(Map* pMap) override
