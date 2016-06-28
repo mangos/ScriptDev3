@@ -28,139 +28,19 @@
  * ScriptData
  * SDName:      Burning_Steppes
  * SD%Complete: 100
- * SDComment:   Quest support: 4121, 4122, 4224, 4866.
+ * SDComment:   Quest support: 4121, 4122, 4866.
  * SDCategory:  Burning Steppes
  * EndScriptData
  */
 
 /**
  * ContentData
- * npc_ragged_john
  * npc_grark_lorkrub
  * EndContentData
  */
 
 #include "precompiled.h"
 #include "escort_ai.h"
-
-/*######
-## npc_ragged_john
-######*/
-
-struct npc_ragged_john : public CreatureScript
-{
-    npc_ragged_john() : CreatureScript("npc_ragged_john") {}
-
-    struct npc_ragged_johnAI : public ScriptedAI
-    {
-        npc_ragged_johnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
-
-        void MoveInLineOfSight(Unit* who) override
-        {
-            if (who->HasAura(16468, EFFECT_INDEX_0))
-            {
-                if (who->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(who, 15) && who->isInAccessablePlaceFor(m_creature))
-                {
-                    DoCastSpellIfCan(who, 16472);
-                    ((Player*)who)->AreaExploredOrEventHappens(4866);
-                }
-            }
-
-            if (!m_creature->getVictim() && who->IsTargetableForAttack() && (m_creature->IsHostileTo(who)) && who->isInAccessablePlaceFor(m_creature))
-            {
-                if (!m_creature->CanFly() && m_creature->GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE)
-                {
-                    return;
-                }
-
-                float attackRadius = m_creature->GetAttackDistance(who);
-                if (m_creature->IsWithinDistInMap(who, attackRadius) && m_creature->IsWithinLOSInMap(who))
-                {
-                    who->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
-                    AttackStart(who);
-                }
-            }
-        }
-    };
-
-    CreatureAI* GetAI(Creature* pCreature) override
-    {
-        return new npc_ragged_johnAI(pCreature);
-    }
-
-    bool OnGossipHello(Player* pPlayer, Creature* pCreature) override   //TODO localisation setup
-    {
-        if (pCreature->IsQuestGiver())
-        {
-            pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
-        }
-
-        if (pPlayer->GetQuestStatus(4224) == QUEST_STATUS_INCOMPLETE)
-        {
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Official business, John. I need some information about Marshal Windsor. Tell me about he last time you saw him.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-        }
-
-        pPlayer->SEND_GOSSIP_MENU(2713, pCreature->GetObjectGuid());
-        return true;
-    }
-
-    bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction) override
-    {
-        pPlayer->PlayerTalkClass->ClearMenus();
-        switch (uiAction)
-        {
-        case GOSSIP_ACTION_INFO_DEF:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So what did you do?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            pPlayer->SEND_GOSSIP_MENU(2714, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Start making sense, dwarf. I don't want to have anything to do with your cracker, your pappy, or any sort of 'discreditin'.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(2715, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ironfoe?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            pPlayer->SEND_GOSSIP_MENU(2716, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Interesting... continue, John.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
-            pPlayer->SEND_GOSSIP_MENU(2717, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 4:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So that's how Windsor died...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
-            pPlayer->SEND_GOSSIP_MENU(2718, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 5:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So how did he die?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
-            pPlayer->SEND_GOSSIP_MENU(2719, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 6:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ok, so where the hell is he? Wait a minute! Are you drunk?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
-            pPlayer->SEND_GOSSIP_MENU(2720, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 7:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "WHY is he in Blackrock Depths?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
-            pPlayer->SEND_GOSSIP_MENU(2721, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 8:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "300? So the Dark Irons killed him and dragged him into the Depths?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
-            pPlayer->SEND_GOSSIP_MENU(2722, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 9:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ahh... Ironfoe.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10);
-            pPlayer->SEND_GOSSIP_MENU(2723, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 10:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks, Ragged John. Your story was very uplifting and informative.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
-            pPlayer->SEND_GOSSIP_MENU(2725, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 11:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->AreaExploredOrEventHappens(4224);
-            break;
-        }
-        return true;
-    }
-};
 
 /*######
 ## npc_grark_lorkrub
@@ -514,8 +394,6 @@ struct spell_capture_grark : public SpellScript
 void AddSC_burning_steppes()
 {
     Script* s;
-    s = new npc_ragged_john();
-    s->RegisterSelf();
     s = new npc_grark_lorkrub();
     s->RegisterSelf();
     s = new spell_capture_grark();
