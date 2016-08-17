@@ -472,6 +472,8 @@ struct npc_dragonmaw_peon : public CreatureScript
                     m_uiPoisonTimer -= uiDiff;
                 }
             }
+            
+            DoMeleeAttackIfReady();
         }
     };
 
