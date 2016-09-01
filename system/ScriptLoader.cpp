@@ -230,6 +230,8 @@ void AddSC_wetlands();
 #if defined (CATA)
 void AddSC_gilneas();
 void AddSC_gilneas_city();
+void AddSC_twilight_highlands();
+void AddSC_vashjir();
 #endif  
 
 void AddEasternKingdomsScripts()
@@ -523,6 +525,12 @@ void AddSC_thunder_bluff();
 void AddSC_ungoro_crater();
 void AddSC_winterspring();
 
+// Cata zones
+#if defined (CATA)
+void AddSC_uldum();
+void AddSC_mount_hyjal();
+#endif  
+
 void AddKalimdorScripts()
 {
     AddSC_instance_blackfathom_deeps();                     // blackfathom deeps
@@ -605,6 +613,12 @@ void AddKalimdorScripts()
     AddSC_thunder_bluff();
     AddSC_ungoro_crater();
     AddSC_winterspring();
+
+// Cata zones
+#if defined (CATA)
+    AddSC_uldum();
+    AddSC_mount_hyjal();
+#endif  
 }
 
 #if defined (WOTLK) || defined (CATA)
