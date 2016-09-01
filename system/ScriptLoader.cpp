@@ -127,8 +127,6 @@ void AddSC_instance_scarlet_monastery();
 void AddSC_boss_darkmaster_gandling();               // scholomance
 void AddSC_boss_jandicebarov();
 void AddSC_instance_scholomance();
-void AddSC_scholomance();
-
 #if defined (WOTLK) || defined (CATA)
 void AddSC_boss_hummel();                            // shadowfang_keep
 #endif
@@ -227,6 +225,12 @@ void AddSC_undercity();
 void AddSC_western_plaguelands();
 void AddSC_westfall();
 void AddSC_wetlands();
+
+// Cata zones
+#if defined (CATA)
+void AddSC_gilneas();
+void AddSC_gilneas_city();
+#endif  
 
 void AddEasternKingdomsScripts()
 {
@@ -329,7 +333,6 @@ void AddEasternKingdomsScripts()
     AddSC_boss_darkmaster_gandling();                       // scholomance
     AddSC_boss_jandicebarov();
     AddSC_instance_scholomance();
-    AddSC_scholomance();
 #if defined (WOTLK) || defined (CATA)
     AddSC_boss_hummel();                                    // shadowfang_keep
 #endif
@@ -429,6 +432,13 @@ void AddEasternKingdomsScripts()
     AddSC_western_plaguelands();
     AddSC_westfall();
     AddSC_wetlands();
+
+// Cata zones
+#if defined (CATA)  
+    AddSC_gilneas();
+    AddSC_gilneas_city();
+#endif
+
 }
 
 // kalimdor
@@ -751,7 +761,6 @@ void AddSC_boss_exarch_maladaar();                   // auchindoun, auchenai_cry
 void AddSC_boss_shirrak();
 void AddSC_boss_nexusprince_shaffar();               // auchindoun, mana_tombs
 void AddSC_boss_pandemonius();
-void AddSC_mana_tombs();
 void AddSC_boss_anzu();                              // auchindoun, sethekk_halls
 void AddSC_boss_darkweaver_syth();
 void AddSC_boss_talon_king_ikiss();
