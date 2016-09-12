@@ -37,10 +37,14 @@
 #include "blackrock_depths.h"
 
 
-struct is_blackrock_spire : public InstanceScript
+struct is_blackrock_depths : public InstanceScript
 {
-    is_blackrock_spire() : InstanceScript("instance_blackrock_spire") {}
+    is_blackrock_depths() : InstanceScript("instance_blackrock_depths") {}
 
+    InstanceData GetInstanceData(Map pMap) override
+    {
+        return new instance_blackrock_depths(pMap);
+    }
 };
 
 instance_blackrock_depths::instance_blackrock_depths(Map* pMap) : ScriptedInstance(pMap),
@@ -814,16 +818,10 @@ void instance_blackrock_depths::DoCallNextDwarf()
     ++m_uiDwarfRound;
 }
 
-
-InstanceData* GetInstanceData_instance_blackrock_depths(Map* pMap)
-{
-    return new instance_blackrock_depths(pMap);
-}
-
 void AddSC_instance_blackrock_depths()
 {
     Script* s;
-    s = new is_blackrock_spire();
+    s = new is_blackrock_depths();
     s->RegisterSelf();
 
     //pNewScript = new Script;
