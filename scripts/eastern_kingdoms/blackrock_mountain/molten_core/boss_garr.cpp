@@ -45,9 +45,11 @@ enum
     SPELL_ENRAGE_TRIGGER        = 19515,    // target script, effect dummy anywhere on map
 
     // Add spells
+    SPELL_THRASH                = 8876,
     SPELL_ERUPTION              = 19497,
     SPELL_MASSIVE_ERUPTION      = 20483,                    // TODO possible on death
-    SPELL_IMMOLATE              = 20294,
+    SPELL_IMMOLATE              = 15733,
+    SPELL_SEPARATION_ANXIETY    = 23492,                    // Used if separated too far from Garr
 };
 
 struct boss_garr : public CreatureScript
@@ -184,6 +186,10 @@ struct mob_firesworn : public CreatureScript
         mob_fireswornAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+            Reset();
+
+            DoCastSpellIfCan(m_creature, SPELL_THRASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
+            DoCastSpellIfCan(m_creature, SPELL_IMMOLATE, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
         }
 
         ScriptedInstance* m_pInstance;
@@ -229,6 +235,12 @@ struct mob_firesworn : public CreatureScript
     }
 #endif
 
+        void JustReachedHome() override
+        {
+            DoCastSpellIfCan(m_creature, SPELL_THRASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
+            DoCastSpellIfCan(m_creature, SPELL_IMMOLATE, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
+        }
+
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim() || m_bExploding)
@@ -264,23 +276,7 @@ struct mob_firesworn : public CreatureScript
                 m_creature->SetDeathState(JUST_DIED);
                 m_creature->RemoveCorpse();
             }
-#endif            
-
-            // Immolate_Timer
-            if (m_uiImmolateTimer < uiDiff)
-            {
-                if (Unit* pTarget = SelectAttackTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_IMMOLATE))
-                {
-                    if (DoCastSpellIfCan(pTarget, SPELL_IMMOLATE, CAST_TRIGGERED) == CAST_OK)
-                    {
-                        m_uiImmolateTimer = urand(5 * IN_MILLISECONDS, 10 * IN_MILLISECONDS);
-                    }
-                }
-            }
-            else
-            {
-                m_uiImmolateTimer -= uiDiff;
-            }
+#endif    
 
             DoMeleeAttackIfReady();
         }
