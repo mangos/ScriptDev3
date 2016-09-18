@@ -314,21 +314,6 @@ struct is_naxxramas : public InstanceScript
                 DoOrSimulateScriptTextForThisInstance(SAY_KELTHUZAD_CAT_DIED, NPC_KELTHUZAD);
         }
 
-        bool IsEncounterInProgress() const
-        {
-            for (uint8 i = 0; i <= TYPE_KELTHUZAD; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                    return true;
-            }
-
-            // Some Encounters use SPECIAL while in progress
-            if (m_auiEncounter[TYPE_GOTHIK] == SPECIAL)
-                return true;
-
-            return false;
-        }
-
         void SetData(uint32 uiType, uint32 uiData) override
         {
             switch (uiType)
