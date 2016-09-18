@@ -124,7 +124,7 @@ struct boss_silver_hand_bosses : public CreatureScript
                     {
                         if (Creature* pCredit = m_pInstance->GetSingleCreatureFromStorage(NPC_PALADIN_QUEST_CREDIT))
                         {
-                            ((Player*)pKiller)->KilledMonsterCredit(NPC_PALADIN_QUEST_CREDIT, pCredit->GetObjectGuid());
+                            ((Player*)pKiller)->RewardPlayerAndGroupAtEvent(pCredit->GetEntry(), pCredit);
                         }
                     }
                 }

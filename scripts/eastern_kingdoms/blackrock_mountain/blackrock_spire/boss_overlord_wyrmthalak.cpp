@@ -43,14 +43,19 @@ enum
     SPELL_KNOCKAWAY            = 20686,
 
     NPC_SPIRESTONE_WARLORD     = 9216,
-    NPC_SMOLDERTHORN_BERSERKER = 9268
+    NPC_SMOLDERTHORN_BERSERKER = 9268,    
+    NPC_BLOODAXE_VETERAN       = 9583
 };
 
-const float afLocations[2][4] =
-{
-    { -39.355381f, -513.456482f, 88.472046f, 4.679872f},
+const float afLocations[4][4] =
+{    
+    { -51.6805f, -439.831f, 78.2874f, 4.657f},              // spawn points
+    { -54.4554f, -439.679f, 78.2884f, 4.657f},
+    { -39.355381f, -513.456482f, 88.472046f, 4.679872f},    // destination
     { -49.875881f, -511.896942f, 88.195160f, 4.613114f}
 };
+
+const uint32 uSummons[3] = {NPC_BLOODAXE_VETERAN, NPC_SMOLDERTHORN_BERSERKER, NPC_SPIRESTONE_WARLORD};
 
 struct boss_overlordwyrmthalak : public CreatureScript
 {
@@ -144,8 +149,18 @@ struct boss_overlordwyrmthalak : public CreatureScript
             // Summon two Beserks
             if (!m_bSummoned && m_creature->GetHealthPercent() < 51.0f)
             {
-                m_creature->SummonCreature(NPC_SPIRESTONE_WARLORD, afLocations[0][0], afLocations[0][1], afLocations[0][2], afLocations[0][3], TEMPSUMMON_TIMED_DESPAWN, 300000);
-                m_creature->SummonCreature(NPC_SMOLDERTHORN_BERSERKER, afLocations[1][0], afLocations[1][1], afLocations[1][2], afLocations[1][3], TEMPSUMMON_TIMED_DESPAWN, 300000);
+                Creature* pGuard1 = m_creature->SummonCreature(uSummons[urand(0,2)], afLocations[0][0], afLocations[0][1], afLocations[0][2], afLocations[0][3], TEMPSUMMON_TIMED_DESPAWN, 300000);
+                Creature* pGuard2 = m_creature->SummonCreature(uSummons[urand(0,2)], afLocations[1][0], afLocations[1][1], afLocations[1][2], afLocations[1][3], TEMPSUMMON_TIMED_DESPAWN, 300000);
+                if (pGuard1)
+                {
+                    pGuard1->SetWalk(false);
+                    pGuard1->GetMotionMaster()->MovePoint(0, afLocations[2][0], afLocations[2][1], afLocations[2][2]);
+                }
+                if (pGuard2)
+                {
+                    pGuard1->SetWalk(false);
+                    pGuard1->GetMotionMaster()->MovePoint(0, afLocations[3][0], afLocations[3][1], afLocations[3][2]);
+                }
 
                 m_bSummoned = true;
             }
