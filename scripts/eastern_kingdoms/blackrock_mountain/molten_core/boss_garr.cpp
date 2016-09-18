@@ -49,7 +49,6 @@ enum
     SPELL_ERUPTION              = 19497,
     SPELL_MASSIVE_ERUPTION      = 20483,                    // TODO possible on death
     SPELL_IMMOLATE              = 15733,
-    SPELL_SEPARATION_ANXIETY    = 23492,                    // Used if separated too far from Garr
 };
 
 struct boss_garr : public CreatureScript
