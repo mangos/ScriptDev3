@@ -575,7 +575,7 @@ struct is_stratholme : public InstanceScript
     {
         if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
             if (Creature* pYsida = pBaron->SummonCreature(NPC_YSIDA, aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ, aStratholmeLocation[9].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0))
-                pYsida->DealDamage(pYsida, pYsida->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                pYsida->DealDamage(pYsida, pYsida->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
     }
 
             OUT_LOAD_INST_DATA_COMPLETE;
