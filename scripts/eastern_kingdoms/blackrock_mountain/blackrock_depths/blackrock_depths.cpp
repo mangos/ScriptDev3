@@ -221,7 +221,7 @@ struct at_ring_of_law : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
+        if (instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pPlayer->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_RING_OF_LAW) == IN_PROGRESS || pInstance->GetData(TYPE_RING_OF_LAW) == DONE || pInstance->GetData(TYPE_RING_OF_LAW) == SPECIAL)
             {
@@ -237,7 +237,7 @@ struct at_ring_of_law : public AreaTriggerScript
 
             pPlayer->SummonCreature(NPC_GRIMSTONE, aSpawnPositions[POS_GRIMSTONE][0], aSpawnPositions[POS_GRIMSTONE][1], aSpawnPositions[POS_GRIMSTONE][2], aSpawnPositions[POS_GRIMSTONE][3], TEMPSUMMON_DEAD_DESPAWN, 0);
             pInstance->SetData(TYPE_SIGNAL, pAt->id);
-            //pInstance->SetArenaCenterCoords(pAt->x, pAt->y, pAt->z);
+            pInstance->SetArenaCenterCoords(pAt->x, pAt->y, pAt->z);
 
             return false;
         }
