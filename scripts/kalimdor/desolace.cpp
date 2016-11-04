@@ -759,10 +759,10 @@ void AddSC_desolace()
     s->RegisterSelf();
     s = new spell_npc_aged_dying_ancient_kodo();
     s->RegisterSelf();
-	s = new npc_cork_gizelton();
-	s->RegisterSelf();
-	s = new npc_rigger_gizelton();
-	s->RegisterSelf();
+    s = new npc_cork_gizelton();
+    s->RegisterSelf();
+    s = new npc_rigger_gizelton();
+    s->RegisterSelf();
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_aged_dying_ancient_kodo";
