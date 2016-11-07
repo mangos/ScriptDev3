@@ -884,16 +884,16 @@ struct is_stratholme : public InstanceScript
                         // If a player is near, then we do not need to check other player locations, therefore stop checking - break out of this
 // TODO: IsNearWaypoint is missing from TWO
 
-                        if (pPlayer->IsNearWaypoint(fPlayerXposition, fPlayerYposition, fPlayerZposition, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, 4, 4, 4))
+                        if (pPlayer->IsNearWaypoint(fPlayerXposition, fPlayerYposition, fPlayerZposition, aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ, 4, 4, 4))
                         {
-                            Creature* pTheUnforgiven = pPlayer->SummonCreature(NPC_THE_UNFORGIVEN, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, aStratholmeLocation[8].m_fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 7200000);
+                            Creature* pTheUnforgiven = pPlayer->SummonCreature(NPC_THE_UNFORGIVEN, aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ, aStratholmeLocation[9].m_fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 7200000);
                             pTheUnforgiven->SetRespawnTime(1800); // 30 minutes
                             // Now spawn 3 or 4 adds (NPC_VENGEFUL_PHANTOM)
                             Creature* pVengfulPhantom[4];
                             uint8 iTotalAddsToSpawn = 3 + rand() % 2;
                             for (uint8 i = 0; i < iTotalAddsToSpawn; i++)
                             {
-                                pVengfulPhantom[i] = pPlayer->SummonCreature(NPC_VENGEFUL_PHANTOM, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, aStratholmeLocation[8].m_fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 7200000);
+                                pVengfulPhantom[i] = pPlayer->SummonCreature(NPC_VENGEFUL_PHANTOM, aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ, aStratholmeLocation[9].m_fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 7200000);
                                 pVengfulPhantom[i]->SetRespawnTime(900); // 15 minutes
                             }
                             m_bTheUnforgivenSpawnHasTriggered = true;
