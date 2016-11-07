@@ -2050,6 +2050,10 @@ void AddSC_blackrock_depths()
     s->RegisterSelf();
     s = new npc_ironhand_guardian();
     s->RegisterSelf();
+    s = new go_bar_beer_keg();
+    s->RegisterSelf();
+    s = new boss_plugger_spazzring();
+    s->RegisterSelf();
 
     //pNewScript = new Script;
     //pNewScript->Name = "go_shadowforge_brazier";
