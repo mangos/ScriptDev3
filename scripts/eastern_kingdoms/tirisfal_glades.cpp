@@ -131,10 +131,10 @@ struct npc_calvin_montague : public CreatureScript
             m_uiPhase = 0;
             m_uiPhaseTimer = 5000;
             m_playerGuid.Clear();
-				if (!m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE))
-				{
+			if (!m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE))
+			{
 				m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
-				}
+			}
         }
 
         void AttackedBy(Unit* pAttacker) override
@@ -144,18 +144,8 @@ struct npc_calvin_montague : public CreatureScript
                 return;
             }
 
-			void AttackStart(Unit* pWho) override
-			{
-				if (pWho && m_creature->Attack(pWho, true))             // The Attack function also uses basic checks if pWho can be attacked
-				{
-					m_creature->AddThreat(pWho);
-					m_creature->SetInCombatWith(pWho);
-					pWho->SetInCombatWith(m_creature);
-
-					HandleMovementOnAttackStart(pWho);
-				}
-			}
-
+            AttackStart(pAttacker);
+        }
 
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
         {
