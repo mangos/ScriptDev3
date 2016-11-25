@@ -77,7 +77,7 @@ void npc_escortAI::GetAIInformation(ChatHandler& reader)
         }
     }
 
-    reader.PSendSysMessage(oss.str().c_str());
+    reader.PSendSysMessage("%s", oss.str().c_str());
 }
 
 bool npc_escortAI::IsVisible(Unit* pWho) const
