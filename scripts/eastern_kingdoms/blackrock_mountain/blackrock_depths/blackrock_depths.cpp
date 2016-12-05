@@ -48,7 +48,7 @@
  * npc_dughal_stormwing
  * npc_tobias_seecher
  * npc_hurley_blackbreath
- * boss_doomrel 
+ * boss_doomrel
  * boss_plugger_spazzring
  * go_bar_ale_mug
  * npc_ironhand_guardian
@@ -1942,6 +1942,37 @@ struct npc_kharan_mighthammer : public CreatureScript
     }
 };
 
+/*######
+## go_bar_ale_mug
+######*/
+struct go_bar_ale_mug : public GameObjectScript
+{
+	go_bar_ale_mug() : GameObjectScript("go_bar_ale_mug") {}
+
+	bool GOUse_go_bar_ale_mug(Player* pPlayer, GameObject* pGo)
+	{
+		if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
+		{
+			if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS || pInstance->GetData(TYPE_PLUGGER) == DONE)
+				return false;
+			else
+			{
+				if (Creature* pPlugger = pInstance->GetSingleCreatureFromStorage(NPC_PLUGGER_SPAZZRING))
+				{
+					if (boss_plugger_spazzringAI* pPluggerAI = dynamic_cast<boss_plugger_spazzringAI*>(pPlugger->AI()))
+					{
+						pInstance->SetData(TYPE_PLUGGER, SPECIAL);
+						if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS)
+							pPluggerAI->AttackThief(pPlayer);
+						else
+							pPluggerAI->WarnThief(pPlayer);
+					}
+				}
+			}
+		}
+		return false;
+	}
+};
 
 /*######
 ## npc_ironhand_guardian
@@ -2021,13 +2052,10 @@ void AddSC_blackrock_depths()
     s->RegisterSelf();
     s = new go_relic_coffer_door();
     s->RegisterSelf();
-
     s = new at_ring_of_law();
     s->RegisterSelf();
-
     s = new spell_banner_of_provocation();
     s->RegisterSelf();
-
     s = new npc_grimstone();
     s->RegisterSelf();
     s = new npc_rocknot();
@@ -2054,7 +2082,8 @@ void AddSC_blackrock_depths()
     s->RegisterSelf();
     s = new boss_plugger_spazzring();
     s->RegisterSelf();
-
+    s = new go_bar_ale_mug();
+    s->RegisterSelf();
     //pNewScript = new Script;
     //pNewScript->Name = "go_shadowforge_brazier";
     //pNewScript->pGOUse = &GOUse_go_shadowforge_brazier;
