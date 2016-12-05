@@ -38,9 +38,9 @@
  * go_bar_beer_keg
  * go_shadowforge_brazier
  * go_relic_coffer_door
+ * at_shadowforge_brige
  * at_ring_of_law
  * npc_grimstone
- * npc_kharan_mighthammer
  * npc_phalanx
  * npc_mistress_nagmara
  * npc_rocknot
@@ -50,6 +50,7 @@
  * npc_hurley_blackbreath
  * boss_doomrel
  * boss_plugger_spazzring
+ * npc_kharan_mighthammer
  * go_bar_ale_mug
  * npc_ironhand_guardian
  * EndContentData
@@ -144,11 +145,49 @@ enum
     SAY_GUARD_AGGRO                    = -1230043
 };
 
-// this needs adding - see cmangos commit
+struct at_shadowforge_bridge : public AreaTriggerScript
+{
+    at_shadowforge_bridge() : AreaTriggerScript("at_shadowforge_bridge") {}
+
+    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
+    {
+        if (instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pPlayer->GetInstanceData())
+        {
+            if (pPlayer->isGameMaster() || pInstance->GetData(TYPE_BRIDGE) == DONE)
+            {
+                return false;
+            }
+ 
+            Creature* pPyromancer = pInstance->GetSingleCreatureFromStorage(NPC_LOREGRAIN);
+
+            if (!pPyromancer)
+            {
+                return false;
+            }
+
+            if (Creature* pMasterGuard = pPyromancer->SummonCreature(NPC_ANVILRAGE_GUARDMAN, aGuardSpawnPositions[0][0], aGuardSpawnPositions[0][1], aGuardSpawnPositions[0][2], aGuardSpawnPositions[0][3], TEMPSUMMON_DEAD_DESPAWN, 0))
+            {
+                pMasterGuard->SetWalk(false);
+                pMasterGuard->GetMotionMaster()->MoveWaypoint();
+                DoDisplayText(pMasterGuard, SAY_GUARD_AGGRO, pPlayer);
+                float fX, fY, fZ;
+                pPlayer->GetContactPoint(pMasterGuard, fX, fY, fZ);
+                pMasterGuard->GetMotionMaster()->MovePoint(1,fX, fY, fZ);
+
+                if (Creature* pSlaveGuard = pPyromancer->SummonCreature(NPC_ANVILRAGE_GUARDMAN, aGuardSpawnPositions[1][0], aGuardSpawnPositions[1][1], aGuardSpawnPositions[1][2], aGuardSpawnPositions[1][3], TEMPSUMMON_DEAD_DESPAWN, 0))
+                {
+                    pSlaveGuard->GetMotionMaster()->MoveFollow(pMasterGuard, 2.0f, 0);
+                }
+            }
+            pInstance->SetData(TYPE_BRIDGE, DONE);
+        }
+        return false;
+    }
+};
 
 
 /*######
-## npc_grimstone
+## at_ring_of_law
 ######*/
 
 /* Notes about this event:
@@ -1739,6 +1778,15 @@ struct boss_plugger_spazzringAI : public ScriptedAI
         }
     }
 
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    {
+        if (pCaster->GetTypeId() == TYPEID_PLAYER)
+        {
+            if (pSpell->Id == SPELL_PICKPOCKET)
+                m_uiPickpocketTimer = 5000;
+        }
+    }
+
     // Players stole one of the ale mug/roasted boar: warn them
     void WarnThief(Player* pPlayer)
     {
@@ -1949,7 +1997,7 @@ struct go_bar_ale_mug : public GameObjectScript
 {
 	go_bar_ale_mug() : GameObjectScript("go_bar_ale_mug") {}
 
-	bool GOUse_go_bar_ale_mug(Player* pPlayer, GameObject* pGo)
+	bool OnUse(Player* pPlayer, GameObject* pGo) override
 	{
 		if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
 		{
@@ -2046,44 +2094,45 @@ struct npc_ironhand_guardian : public CreatureScript
 void AddSC_blackrock_depths()
 {
     Script *s;
-    s = new go_shadowforge_brazier();
+    s = new go_bar_beer_keg();
     s->RegisterSelf();
     s = new go_shadowforge_brazier();
     s->RegisterSelf();
     s = new go_relic_coffer_door();
     s->RegisterSelf();
+    s = new at_shadowforge_bridge();
+    s->RegisterSelf();
     s = new at_ring_of_law();
     s->RegisterSelf();
-    s = new spell_banner_of_provocation();
-    s->RegisterSelf();
     s = new npc_grimstone();
-    s->RegisterSelf();
-    s = new npc_rocknot();
     s->RegisterSelf();
     s = new npc_phalanx();
     s->RegisterSelf();
     s = new npc_mistress_nagmara();
     s->RegisterSelf();
+    s = new npc_rocknot();
+    s->RegisterSelf();
     s = new npc_marshal_windsor();
     s->RegisterSelf();
-    s = new npc_tobias_seecher();
-    s->RegisterSelf();
     s = new npc_dughal_stormwing();
+    s->RegisterSelf();
+    s = new npc_tobias_seecher();
     s->RegisterSelf();
     s = new npc_hurley_blackbreath();
     s->RegisterSelf();
     s = new boss_doomrel();
     s->RegisterSelf();
-    s = new npc_kharan_mighthammer();
-    s->RegisterSelf();
-    s = new npc_ironhand_guardian();
-    s->RegisterSelf();
-    s = new go_bar_beer_keg();
-    s->RegisterSelf();
     s = new boss_plugger_spazzring();
+    s->RegisterSelf();
+    s = new npc_kharan_mighthammer();
     s->RegisterSelf();
     s = new go_bar_ale_mug();
     s->RegisterSelf();
+    s = new npc_ironhand_guardian();
+    s->RegisterSelf();
+    s = new spell_banner_of_provocation();
+    s->RegisterSelf();
+    
     //pNewScript = new Script;
     //pNewScript->Name = "go_shadowforge_brazier";
     //pNewScript->pGOUse = &GOUse_go_shadowforge_brazier;
