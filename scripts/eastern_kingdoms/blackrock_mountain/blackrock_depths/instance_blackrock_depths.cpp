@@ -227,8 +227,7 @@ void instance_blackrock_depths::OnCreatureDeath(Creature* pCreature)
                 DoScriptText(uiTextId, pDagran);
                 m_uiDagranTimer = 30000;    // set a timer of 30 sec to avoid Emperor Thaurissan to spam yells in case many senators are killed in a short amount of time
             }
-            break;   
-                
+            break;
     }
 }
 
@@ -373,7 +372,11 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
         break;
     case TYPE_ROCKNOT:
         if (uiData == SPECIAL)
+        {
             ++m_uiBarAleCount;
+            if (m_uiBarAleCount == 3)
+              { uiData = IN_PROGRESS; }
+        }
         else
         {
             if (uiData == DONE)
@@ -381,8 +384,8 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
                 HandleBarPatrons(PATRON_PISSED);
                 SetBarDoorIsOpen();
             }
-            m_auiEncounter[2] = uiData;
         }
+        m_auiEncounter[2] = uiData;
         break;
     case TYPE_TOMB_OF_SEVEN:
         // Don't set the same data twice
@@ -547,9 +550,6 @@ uint32 instance_blackrock_depths::GetData(uint32 uiType) const
     case TYPE_VAULT:
         return m_auiEncounter[1];
     case TYPE_ROCKNOT:
-        if (m_auiEncounter[2] == IN_PROGRESS && m_uiBarAleCount == 3)
-            return SPECIAL;
-    else
         return m_auiEncounter[2];
     case TYPE_TOMB_OF_SEVEN:
         return m_auiEncounter[3];
@@ -560,9 +560,9 @@ uint32 instance_blackrock_depths::GetData(uint32 uiType) const
     case TYPE_QUEST_JAIL_BREAK:
         return m_auiEncounter[6];
     case TYPE_SIGNAL:
-        return m_uiArenaCenterAT;  
+        return m_uiArenaCenterAT;
     case TYPE_FLAMELASH:
-        return m_auiEncounter[7];      
+        return m_auiEncounter[7];
     case TYPE_HURLEY:
         return m_auiEncounter[8];
     case TYPE_BRIDGE:
@@ -600,7 +600,7 @@ void instance_blackrock_depths::Load(const char* chrIn)
 
     OUT_LOAD_INST_DATA_COMPLETE;
 }
-                
+
 void instance_blackrock_depths::HandleBarPatrons(uint8 uiEventType)
 {
     switch (uiEventType)
@@ -609,7 +609,7 @@ void instance_blackrock_depths::HandleBarPatrons(uint8 uiEventType)
         case PATRON_EMOTE:
             for (GuidSet::const_iterator itr = m_sBarPatronNpcGuids.begin(); itr != m_sBarPatronNpcGuids.end(); ++itr)
             {
-                    // About 5% of patrons do emote at a given time
+                // About 5% of patrons do emote at a given time
                 // So avoid executing follow up code for the 95% others
                 if (urand(0, 100) < 4)
                 {
@@ -675,7 +675,7 @@ void instance_blackrock_depths::HandleBarPatrons(uint8 uiEventType)
             return;
     }
 } 
-           
+
 void instance_blackrock_depths::HandleBarPatrol(uint8 uiStep)
 {
     if (GetData(TYPE_BAR) == DONE)
@@ -744,7 +744,7 @@ void instance_blackrock_depths::HandleBarPatrol(uint8 uiStep)
             break;
     }
 }
-        
+
 void instance_blackrock_depths::Update(uint32 uiDiff)
 {
     if (m_uiDwarfFightTimer)
@@ -823,9 +823,4 @@ void AddSC_instance_blackrock_depths()
     Script* s;
     s = new is_blackrock_depths();
     s->RegisterSelf();
-
-    //pNewScript = new Script;
-    //pNewScript->Name = "instance_blackrock_depths";
-    //pNewScript->GetInstanceData = &GetInstanceData_instance_blackrock_depths;
-    //pNewScript->RegisterSelf();
 }

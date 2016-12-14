@@ -38,9 +38,9 @@
  * go_bar_beer_keg
  * go_shadowforge_brazier
  * go_relic_coffer_door
- * at_shadowforge_brige
  * at_ring_of_law
  * npc_grimstone
+ * npc_kharan_mighthammer
  * npc_phalanx
  * npc_mistress_nagmara
  * npc_rocknot
@@ -48,9 +48,8 @@
  * npc_dughal_stormwing
  * npc_tobias_seecher
  * npc_hurley_blackbreath
- * boss_doomrel
+ * boss_doomrel 
  * boss_plugger_spazzring
- * npc_kharan_mighthammer
  * go_bar_ale_mug
  * npc_ironhand_guardian
  * EndContentData
@@ -145,49 +144,11 @@ enum
     SAY_GUARD_AGGRO                    = -1230043
 };
 
-struct at_shadowforge_bridge : public AreaTriggerScript
-{
-    at_shadowforge_bridge() : AreaTriggerScript("at_shadowforge_bridge") {}
-
-    bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
-    {
-        if (instance_blackrock_depths* pInstance = (instance_blackrock_depths*)pPlayer->GetInstanceData())
-        {
-            if (pPlayer->isGameMaster() || pInstance->GetData(TYPE_BRIDGE) == DONE)
-            {
-                return false;
-            }
- 
-            Creature* pPyromancer = pInstance->GetSingleCreatureFromStorage(NPC_LOREGRAIN);
-
-            if (!pPyromancer)
-            {
-                return false;
-            }
-
-            if (Creature* pMasterGuard = pPyromancer->SummonCreature(NPC_ANVILRAGE_GUARDMAN, aGuardSpawnPositions[0][0], aGuardSpawnPositions[0][1], aGuardSpawnPositions[0][2], aGuardSpawnPositions[0][3], TEMPSUMMON_DEAD_DESPAWN, 0))
-            {
-                pMasterGuard->SetWalk(false);
-                pMasterGuard->GetMotionMaster()->MoveWaypoint();
-                DoDisplayText(pMasterGuard, SAY_GUARD_AGGRO, pPlayer);
-                float fX, fY, fZ;
-                pPlayer->GetContactPoint(pMasterGuard, fX, fY, fZ);
-                pMasterGuard->GetMotionMaster()->MovePoint(1,fX, fY, fZ);
-
-                if (Creature* pSlaveGuard = pPyromancer->SummonCreature(NPC_ANVILRAGE_GUARDMAN, aGuardSpawnPositions[1][0], aGuardSpawnPositions[1][1], aGuardSpawnPositions[1][2], aGuardSpawnPositions[1][3], TEMPSUMMON_DEAD_DESPAWN, 0))
-                {
-                    pSlaveGuard->GetMotionMaster()->MoveFollow(pMasterGuard, 2.0f, 0);
-                }
-            }
-            pInstance->SetData(TYPE_BRIDGE, DONE);
-        }
-        return false;
-    }
-};
+// this needs adding - see cmangos commit
 
 
 /*######
-## at_ring_of_law
+## npc_grimstone
 ######*/
 
 /* Notes about this event:
@@ -942,11 +903,17 @@ struct npc_mistress_nagmara : public CreatureScript
 enum
 {
     SAY_GOT_BEER       = -1230000,
+    SAY_MORE_BEER      = -1230036,
+    SAY_BARREL_1       = -1230044,
+    SAY_BARREL_2       = -1230045,
+    SAY_BARREL_3       = -1230046,
 
     SPELL_DRUNKEN_RAGE = 14872,
 
     QUEST_ALE          = 4295
 };
+
+static const float aPosNagmaraRocknot[3] = {878.1779f, -222.0662f, -49.96714f};
 
 struct npc_rocknot : public CreatureScript
 {
@@ -956,66 +923,129 @@ struct npc_rocknot : public CreatureScript
     {
         npc_rocknotAI(Creature* pCreature) : npc_escortAI(pCreature)
         {
-            m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+            m_pInstance = (instance_blackrock_depths*)pCreature->GetInstanceData();
             Reset();
         }
 
-        ScriptedInstance* m_pInstance;
+        instance_blackrock_depths* m_pInstance;
+        Creature* pNagmara;
 
         uint32 m_uiBreakKegTimer;
         uint32 m_uiBreakDoorTimer;
+        uint32 m_uiEmoteTimer;
+        uint32 m_uiBarReactTimer;
+
+        bool m_bIsDoorOpen;
+        float m_fInitialOrientation;
 
         void Reset() override
         {
-            if (HasEscortState(STATE_ESCORT_ESCORTING))
-            {
-                return;
-            }
+            pNagmara = m_pInstance->GetSingleCreatureFromStorage(NPC_MISTRESS_NAGMARA);
 
-            m_uiBreakKegTimer = 0;
-            m_uiBreakDoorTimer = 0;
+            if (HasEscortState(STATE_ESCORT_ESCORTING))
+                return;
+
+            m_fInitialOrientation   = 3.21141f;
+            m_uiBreakKegTimer       = 0;
+            m_uiBreakDoorTimer      = 0;
+            m_uiEmoteTimer          = 0;
+            m_uiBarReactTimer       = 0;
+            m_bIsDoorOpen           = false;
         }
 
-        void DoGo(uint32 id, uint32 state)
+        void DoGo(uint32 id, GOState state)
         {
             if (GameObject* pGo = m_pInstance->GetSingleGameObjectFromStorage(id))
-            {
-                pGo->SetGoState(GOState(state));
-            }
+                pGo->SetGoState(state);
         }
 
         void WaypointReached(uint32 uiPointId) override
         {
             if (!m_pInstance)
-            {
                 return;
-            }
 
             switch (uiPointId)
             {
-            case 1:
-                m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
-                break;
-            case 2:
-                m_creature->HandleEmote(EMOTE_ONESHOT_ATTACKUNARMED);
-                break;
-            case 3:
-                m_creature->HandleEmote(EMOTE_ONESHOT_ATTACKUNARMED);
-                break;
-            case 4:
-                m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
-                break;
-            case 5:
-                m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
-                m_uiBreakKegTimer = 2000;
-                break;
+                case 0:     // if Nagmara and Potion of Love event is in progress, switch to second part of the escort
+                    SetEscortPaused(true);
+                    if (m_pInstance->GetData(TYPE_NAGMARA) == IN_PROGRESS)
+                        SetCurrentWaypoint(9);
+                    //else
+                        SetEscortPaused(false);
+                    break;
+                case 2:
+                    DoScriptText(SAY_BARREL_1, m_creature);
+                    break;
+                case 3:
+                    DoScriptText(SAY_BARREL_2, m_creature);
+                    break;
+                case 4:
+                    DoScriptText(SAY_BARREL_2, m_creature);
+                    break;
+                case 5:
+                    DoScriptText(SAY_BARREL_1, m_creature);
+                    break;
+                case 6:
+                    DoCastSpellIfCan(m_creature, SPELL_DRUNKEN_RAGE, false);
+                    m_uiBreakKegTimer = 2000;
+                    break;
+                case 8:     // Back home stop here
+                    SetEscortPaused(true);
+                    m_creature->SetFacingTo(m_fInitialOrientation);
+                    if (m_pInstance->GetData(TYPE_NAGMARA) == IN_PROGRESS)
+                    {
+                        SetCurrentWaypoint(9);
+                        SetEscortPaused(false);
+                    }
+                    break;
+                case 9:     // This step is the start of the "alternate" waypoint path used with Nagmara
+                    // Make Nagmara follow Rocknot
+                    if (!pNagmara)
+                    {
+                        SetEscortPaused(true);
+                        SetCurrentWaypoint(8);
+                    }
+                    else
+                        pNagmara->GetMotionMaster()->MoveFollow(m_creature, 2.0f, 0);
+                    break;
+                case 16:
+                    // Open the bar back door if relevant
+                    m_pInstance->GetBarDoorIsOpen(m_bIsDoorOpen);
+                    if (!m_bIsDoorOpen)
+                    {
+                        m_pInstance->DoUseDoorOrButton(GO_BAR_DOOR);
+                        m_pInstance->SetBarDoorIsOpen();
+                    }
+                    if (pNagmara)
+                        pNagmara->GetMotionMaster()->MoveFollow(m_creature, 2.0f, 0);
+                    break;
+                case 33: // Reach under the stair, make Nagmara move to her position and give the handle back to Nagmara AI script
+                    if (!pNagmara)
+                        break;
+
+                    pNagmara->GetMotionMaster()->MoveIdle();
+                    pNagmara->GetMotionMaster()->MovePoint(0, aPosNagmaraRocknot[0], aPosNagmaraRocknot[1], aPosNagmaraRocknot[2]);
+                    if (npc_mistress_nagmaraAI* pNagmaraAI = dynamic_cast<npc_mistress_nagmaraAI*>(pNagmara->AI()))
+                    {
+                        pNagmaraAI->m_uiPhase = 4;
+                        pNagmaraAI->m_uiPhaseTimer = 5000;
+                    }
+                    SetEscortPaused(true);
+                    break;
             }
         }
 
-        void UpdateEscortAI(const uint32 uiDiff) override
+       void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_pInstance)
+                return;
+
+            // When Nagmara is in Potion of Love event and reach Rocknot, she set TYPE_NAGMARA to SPECIAL
+            // in order to make Rocknot start the second part of his escort quest
+            if (m_pInstance->GetData(TYPE_NAGMARA) == SPECIAL)
             {
+                m_pInstance->SetData(TYPE_NAGMARA, IN_PROGRESS);
+                Start(false, NULL, NULL, true);
                 return;
             }
 
@@ -1023,88 +1053,107 @@ struct npc_rocknot : public CreatureScript
             {
                 if (m_uiBreakKegTimer <= uiDiff)
                 {
-                    DoGo(GO_BAR_KEG_SHOT, 0);
+                    DoGo(GO_BAR_KEG_SHOT, GO_STATE_ACTIVE);
                     m_uiBreakKegTimer = 0;
                     m_uiBreakDoorTimer = 1000;
+                    m_uiBarReactTimer  = 5000;
                 }
                 else
-                {
                     m_uiBreakKegTimer -= uiDiff;
-                }
             }
 
             if (m_uiBreakDoorTimer)
             {
                 if (m_uiBreakDoorTimer <= uiDiff)
                 {
-                    DoGo(GO_BAR_DOOR, 2);
-                    DoGo(GO_BAR_KEG_TRAP, 0);                   // doesn't work very well, leaving code here for future
-                    // spell by trap has effect61, this indicate the bar go hostile
+                    // Open the bar back door if relevant
+                    m_pInstance->GetBarDoorIsOpen(m_bIsDoorOpen);
+                    if (!m_bIsDoorOpen)
+                        DoGo(GO_BAR_DOOR, GO_STATE_ACTIVE_ALTERNATIVE);
 
-                    if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_PHALANX))
-                    {
-                        pTmp->SetFactionTemporary(14, TEMPFACTION_NONE);
-                    }
-
-                    // for later, this event(s) has alot more to it.
-                    // optionally, DONE can trigger bar to go hostile.
-                    m_pInstance->SetData(TYPE_BAR, DONE);
+                    DoScriptText(SAY_BARREL_3, m_creature);
+                    DoGo(GO_BAR_KEG_TRAP, GO_STATE_ACTIVE);                   // doesn't work very well, leaving code here for future
+                    // spell by trap has effect61
 
                     m_uiBreakDoorTimer = 0;
                 }
-                else
+              else
+                m_uiBreakDoorTimer -= uiDiff;
+            }
+
+            if (m_uiBarReactTimer)
+            {
+                if (m_uiBarReactTimer <= uiDiff)
                 {
-                    m_uiBreakDoorTimer -= uiDiff;
+                    // Activate Phalanx and handle nearby patrons says
+                    if (Creature* pPhalanx = m_pInstance->GetSingleCreatureFromStorage(NPC_PHALANX))
+                    {
+                        if (npc_phalanxAI* pEscortAI = dynamic_cast<npc_phalanxAI*>(pPhalanx->AI()))
+                            pEscortAI->Start(false, nullptr, nullptr, true);
+                    }
+                    m_pInstance->SetData(TYPE_ROCKNOT, DONE);
+
+                    m_uiBarReactTimer = 0;
                 }
+                else
+                    m_uiBarReactTimer -= uiDiff;
+            }
+
+            // Several times Rocknot is supposed to perform an action (text, spell cast...) followed closely by an emote
+            // we handle it here
+            if (m_uiEmoteTimer)
+            {
+                if (m_uiEmoteTimer <= uiDiff)
+                {
+                    // If event is SPECIAL (Rocknot moving to barrel), then we want him to say a special text and start moving
+                    // if not, he is still accepting beers, so we want him to cheer player
+                    if (m_pInstance->GetData(TYPE_ROCKNOT) == IN_PROGRESS)
+                    {
+                        DoScriptText(SAY_MORE_BEER, m_creature);
+                        Start(false);
+                    }
+                    else
+                        m_creature->HandleEmote(EMOTE_ONESHOT_CHEER);
+
+                    m_uiEmoteTimer = 0;
+                }
+                else
+                    m_uiEmoteTimer -= uiDiff;
             }
         }
     };
 
-    CreatureAI* GetAI(Creature* pCreature) override
+    CreatureAI* GetAI(Creature* pCreature)
     {
         return new npc_rocknotAI(pCreature);
     }
 
-    bool OnQuestRewarded(Player* /*pPlayer*/, Creature* pCreature, Quest const* pQuest) override
+    bool OnQuestRewarded(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
     {
         ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
         if (!pInstance)
-        {
             return true;
-        }
 
-        if (pInstance->GetData(TYPE_BAR) == DONE || pInstance->GetData(TYPE_BAR) == SPECIAL)
-        {
+        if (pInstance->GetData(TYPE_ROCKNOT) == DONE || pInstance->GetData(TYPE_ROCKNOT) == IN_PROGRESS)
             return true;
-        }
 
         if (pQuest->GetQuestId() == QUEST_ALE)
         {
-            if (pInstance->GetData(TYPE_BAR) != IN_PROGRESS)
-            {
-                pInstance->SetData(TYPE_BAR, IN_PROGRESS);
-            }
+            pCreature->SetFacingToObject(pPlayer);
+            DoScriptText(SAY_GOT_BEER, pCreature);
+            if (npc_rocknotAI* pEscortAI = dynamic_cast<npc_rocknotAI*>(pCreature->AI()))
+                pEscortAI->m_uiEmoteTimer = 1500;
 
-            pInstance->SetData(TYPE_BAR, SPECIAL);
-
-            // keep track of amount in instance script, returns SPECIAL if amount ok and event in progress
-            if (pInstance->GetData(TYPE_BAR) == SPECIAL)
-            {
-                DoScriptText(SAY_GOT_BEER, pCreature);
-                pCreature->CastSpell(pCreature, SPELL_DRUNKEN_RAGE, false);
-
-                if (npc_rocknotAI* pEscortAI = dynamic_cast<npc_rocknotAI*>(pCreature->AI()))
-                {
-                    pEscortAI->Start(false, NULL, NULL, true);
-                }
-            }
+            // We keep track of amount of beers given in the instance script by setting data to SPECIAL
+            // Once the correct amount is reached, the script will also returns SPECIAL, if not, it returns IN_PROGRESS/DONE
+            // the return state and the following of the script are handled in the Update->emote part of the Rocknot NPC escort AI script
+            pInstance->SetData(TYPE_ROCKNOT, SPECIAL);
         }
 
         return true;
     }
 };
-
 
 /*######
 ## npc_marshal_windsor
@@ -1778,15 +1827,6 @@ struct boss_plugger_spazzringAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
-    {
-        if (pCaster->GetTypeId() == TYPEID_PLAYER)
-        {
-            if (pSpell->Id == SPELL_PICKPOCKET)
-                m_uiPickpocketTimer = 5000;
-        }
-    }
-
     // Players stole one of the ale mug/roasted boar: warn them
     void WarnThief(Player* pPlayer)
     {
@@ -1990,37 +2030,6 @@ struct npc_kharan_mighthammer : public CreatureScript
     }
 };
 
-/*######
-## go_bar_ale_mug
-######*/
-struct go_bar_ale_mug : public GameObjectScript
-{
-	go_bar_ale_mug() : GameObjectScript("go_bar_ale_mug") {}
-
-	bool OnUse(Player* pPlayer, GameObject* pGo) override
-	{
-		if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
-		{
-			if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS || pInstance->GetData(TYPE_PLUGGER) == DONE)
-				return false;
-			else
-			{
-				if (Creature* pPlugger = pInstance->GetSingleCreatureFromStorage(NPC_PLUGGER_SPAZZRING))
-				{
-					if (boss_plugger_spazzringAI* pPluggerAI = dynamic_cast<boss_plugger_spazzringAI*>(pPlugger->AI()))
-					{
-						pInstance->SetData(TYPE_PLUGGER, SPECIAL);
-						if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS)
-							pPluggerAI->AttackThief(pPlayer);
-						else
-							pPluggerAI->WarnThief(pPlayer);
-					}
-				}
-			}
-		}
-		return false;
-	}
-};
 
 /*######
 ## npc_ironhand_guardian
@@ -2094,45 +2103,46 @@ struct npc_ironhand_guardian : public CreatureScript
 void AddSC_blackrock_depths()
 {
     Script *s;
-    s = new go_bar_beer_keg();
+    s = new go_shadowforge_brazier();
     s->RegisterSelf();
     s = new go_shadowforge_brazier();
     s->RegisterSelf();
     s = new go_relic_coffer_door();
     s->RegisterSelf();
-    s = new at_shadowforge_bridge();
-    s->RegisterSelf();
+
     s = new at_ring_of_law();
     s->RegisterSelf();
+
+    s = new spell_banner_of_provocation();
+    s->RegisterSelf();
+
     s = new npc_grimstone();
+    s->RegisterSelf();
+    s = new npc_rocknot();
     s->RegisterSelf();
     s = new npc_phalanx();
     s->RegisterSelf();
     s = new npc_mistress_nagmara();
     s->RegisterSelf();
-    s = new npc_rocknot();
-    s->RegisterSelf();
     s = new npc_marshal_windsor();
     s->RegisterSelf();
-    s = new npc_dughal_stormwing();
-    s->RegisterSelf();
     s = new npc_tobias_seecher();
+    s->RegisterSelf();
+    s = new npc_dughal_stormwing();
     s->RegisterSelf();
     s = new npc_hurley_blackbreath();
     s->RegisterSelf();
     s = new boss_doomrel();
     s->RegisterSelf();
-    s = new boss_plugger_spazzring();
-    s->RegisterSelf();
     s = new npc_kharan_mighthammer();
-    s->RegisterSelf();
-    s = new go_bar_ale_mug();
     s->RegisterSelf();
     s = new npc_ironhand_guardian();
     s->RegisterSelf();
-    s = new spell_banner_of_provocation();
+    s = new go_bar_beer_keg();
     s->RegisterSelf();
-    
+    s = new boss_plugger_spazzring();
+    s->RegisterSelf();
+
     //pNewScript = new Script;
     //pNewScript->Name = "go_shadowforge_brazier";
     //pNewScript->pGOUse = &GOUse_go_shadowforge_brazier;
