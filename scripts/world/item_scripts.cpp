@@ -193,7 +193,7 @@ struct item_petrov_cluster_bombs : public ItemScript
         ZONE_ID_HOWLING = 495
     };
 
-    bool ItemUse_item_petrov_cluster_bombs(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
+    bool OnUse(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
     {
         if (pPlayer->GetZoneId() != ZONE_ID_HOWLING)
             return false;
