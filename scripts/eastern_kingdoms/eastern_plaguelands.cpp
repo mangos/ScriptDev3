@@ -97,7 +97,7 @@ struct npc_eris_havenfire : public CreatureScript
 
     struct npc_eris_havenfireAI : public ScriptedAI
     {
-        npc_eris_havenfireAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_eris_havenfireAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
         uint32 m_uiEventTimer;
         uint32 m_uiSadEndTimer;
