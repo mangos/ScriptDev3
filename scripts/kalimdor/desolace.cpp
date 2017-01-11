@@ -64,7 +64,7 @@ enum
 
     SPELL_KODO_KOMBO_ITEM           = 18153,
     SPELL_KODO_KOMBO_PLAYER_BUFF    = 18172,                // spells here have unclear function, but using them at least for visual parts and checks
-    SPELL_KODO_KOMBO_DESPAWN_BUFF   = 18269,
+    SPELL_KODO_KOMBO_DESPAWN_BUFF   = 18377,
     SPELL_KODO_KOMBO_GOSSIP         = 18362
 };
 
