@@ -106,7 +106,7 @@ struct is_stratholme : public InstanceScript
             switch (pCreature->GetEntry())
             {
             case NPC_BARON:
-	    case NPC_YSIDA:
+        case NPC_YSIDA:
             case NPC_YSIDA_TRIGGER:
             case NPC_BARTHILAS:
             case NPC_PALADIN_QUEST_CREDIT:
@@ -225,7 +225,7 @@ struct is_stratholme : public InstanceScript
                     }
 
                     // Baron ultimatum starts: summon Ysida in the case
-		    // Baron ultimatum starts: summon Ysida in the cage
+            // Baron ultimatum starts: summon Ysida in the cage
                     if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
                     {
                         DoOrSimulateScriptTextForThisInstance(SAY_ANNOUNCE_RUN_START, NPC_BARON);
@@ -378,7 +378,7 @@ struct is_stratholme : public InstanceScript
                 //     Baron is already engaged (in progress) when the ultimatum timer expires
                 if (m_auiEncounter[TYPE_BARON_RUN] == IN_PROGRESS)
                     {
-			SetData(TYPE_BARON_RUN, DONE);
+            SetData(TYPE_BARON_RUN, DONE);
                         Map::PlayerList const& players = instance->GetPlayers();
 
                         for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
@@ -394,8 +394,8 @@ struct is_stratholme : public InstanceScript
                                 {
                                     pPlayer->AreaExploredOrEventHappens(QUEST_DEAD_MAN_PLEA);
 
-				    // Argent Dawn reputation reward
-                            	    pPlayer->CastSpell(pPlayer, SPELL_YSIDA_FREED, true);
+                    // Argent Dawn reputation reward
+                                    pPlayer->CastSpell(pPlayer, SPELL_YSIDA_FREED, true);
                                 }
                             }
                         }
@@ -598,8 +598,8 @@ struct is_stratholme : public InstanceScript
                 SetData(TYPE_RAMSTEIN, IN_PROGRESS);
                 break;
             case NPC_BARON:             
-		SetData(TYPE_BARON, IN_PROGRESS);    
-		break;
+        SetData(TYPE_BARON, IN_PROGRESS);    
+        break;
             case NPC_ABOM_BILE:
             case NPC_ABOM_VENOM:
                 // Start Slaughterhouse Event
@@ -631,8 +631,8 @@ struct is_stratholme : public InstanceScript
                 SetData(TYPE_RAMSTEIN, FAIL);
                 break;
             case NPC_BARON:             
-		SetData(TYPE_BARON, FAIL);    
-		break;
+        SetData(TYPE_BARON, FAIL);    
+        break;
             case NPC_ABOM_BILE:
             case NPC_ABOM_VENOM:
                 // Fail in Slaughterhouse Event before Ramstein
@@ -743,7 +743,7 @@ struct is_stratholme : public InstanceScript
             }
 
             // Check changes for Baron ultimatum timer only if Baron is not already in combat
-    	    if (m_uiBaronRunTimer && GetData(TYPE_BARON) != IN_PROGRESS)
+            if (m_uiBaronRunTimer && GetData(TYPE_BARON) != IN_PROGRESS)
             {
                 if (m_uiYellCounter == 0 && m_uiBaronRunTimer <= 10 * MINUTE * IN_MILLISECONDS)
                 {
@@ -756,41 +756,41 @@ struct is_stratholme : public InstanceScript
                     ++m_uiYellCounter;
                 }
 
-		// Used to create a delay of 10s between Baron speech and Ysida's answer
-        	else if (m_uiYellCounter == 2 && m_uiBaronRunTimer <= (5 * MINUTE - 10) * IN_MILLISECONDS)
-        	{
-            	    DoOrSimulateScriptTextForThisInstance(YSIDA_SAY_RUN_5_MIN, NPC_YSIDA);
-            	    ++m_uiYellCounter;
-        	}
+        // Used to create a delay of 10s between Baron speech and Ysida's answer
+            else if (m_uiYellCounter == 2 && m_uiBaronRunTimer <= (5 * MINUTE - 10) * IN_MILLISECONDS)
+            {
+                    DoOrSimulateScriptTextForThisInstance(YSIDA_SAY_RUN_5_MIN, NPC_YSIDA);
+                    ++m_uiYellCounter;
+            }
 
                 if (m_uiBaronRunTimer <= uiDiff)
                 {
                     if (GetData(TYPE_BARON_RUN) != FAIL)
-            	    {
-                	SetData(TYPE_BARON_RUN, FAIL);
+                    {
+                    SetData(TYPE_BARON_RUN, FAIL);
 
-                	// Open the cage and let Ysida face her doom
-                	if (Creature* pYsida = GetSingleCreatureFromStorage(NPC_YSIDA))
-                	{
-                    		pYsida->GetMotionMaster()->MovePoint(0, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, aStratholmeLocation[8].m_fO);
-                    		DoUseDoorOrButton(GO_YSIDA_CAGE);
-                	}
-			DoOrSimulateScriptTextForThisInstance(SAY_ANNOUNCE_RUN_FAIL, NPC_BARON);
+                    // Open the cage and let Ysida face her doom
+                    if (Creature* pYsida = GetSingleCreatureFromStorage(NPC_YSIDA))
+                    {
+                            pYsida->GetMotionMaster()->MovePoint(0, aStratholmeLocation[8].m_fX, aStratholmeLocation[8].m_fY, aStratholmeLocation[8].m_fZ, aStratholmeLocation[8].m_fO);
+                            DoUseDoorOrButton(GO_YSIDA_CAGE);
+                    }
+            DoOrSimulateScriptTextForThisInstance(SAY_ANNOUNCE_RUN_FAIL, NPC_BARON);
 
                         m_uiBaronRunTimer = 8000;  // We reset the timer so the speech of Ysida is not said at the same time than the Baron's one
-            		}
-            		else
-            		{
-                		// Baron ultimatum failed: let the Baron kill her
-                		if (Creature* pYsida = GetSingleCreatureFromStorage(NPC_YSIDA))
-                    		if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
-                        	pBaron->CastSpell(pYsida, SPELL_BARON_SOUL_DRAIN, true);
+                    }
+                    else
+                    {
+                        // Baron ultimatum failed: let the Baron kill her
+                        if (Creature* pYsida = GetSingleCreatureFromStorage(NPC_YSIDA))
+                            if (Creature* pBaron = GetSingleCreatureFromStorage(NPC_BARON))
+                            pBaron->CastSpell(pYsida, SPELL_BARON_SOUL_DRAIN, true);
 
-                		DoOrSimulateScriptTextForThisInstance(YSIDA_SAY_RUN_FAIL, NPC_YSIDA);
+                        DoOrSimulateScriptTextForThisInstance(YSIDA_SAY_RUN_FAIL, NPC_YSIDA);
 
-                		m_uiBaronRunTimer = 0;  // event done for good, no more speech
-                		debug_log("SD2: Instance Stratholme: Baron run event reached end. Event has state %u.", GetData(TYPE_BARON_RUN));
-            		}
+                        m_uiBaronRunTimer = 0;  // event done for good, no more speech
+                        debug_log("SD2: Instance Stratholme: Baron run event reached end. Event has state %u.", GetData(TYPE_BARON_RUN));
+                    }
                 }
                 else
                 {

@@ -90,7 +90,7 @@ enum
 
     // Spawned on Shadowforge bridge
     NPC_ANVILRAGE_GUARDMAN  = 8891,
-	
+    
     // Grim Guzzler bar events
     NPC_PHALANX             = 9502,
     NPC_GRIM_PATRON         = 9545,

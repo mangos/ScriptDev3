@@ -625,42 +625,42 @@ struct npc_phalanxAI : public npc_escortAI
 {
     npc_phalanxAI(Creature* pCreature) : npc_escortAI(pCreature)
     {
-		m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
-		Reset();
+        Reset();
     }
 
-	ScriptedInstance* m_pInstance;
+    ScriptedInstance* m_pInstance;
 
-	float m_fKeepDoorOrientation;
-	uint32 uiThunderclapTimer;
-	uint32 uiMightyBlowTimer;
-	uint32 uiFireballVolleyTimer;
+    float m_fKeepDoorOrientation;
+    uint32 uiThunderclapTimer;
+    uint32 uiMightyBlowTimer;
+    uint32 uiFireballVolleyTimer;
     uint32 uiCallPatrolTimer;
 
     void Reset() override
     {
-		// If reset after an fight, it means Phalanx has already started moving (if not already reached door)
-		// so we made him restart right before reaching the door to guard it (again)
-		if (HasEscortState(STATE_ESCORT_ESCORTING) || HasEscortState(STATE_ESCORT_PAUSED))
-		{
-			SetCurrentWaypoint(1);
-			SetEscortPaused(false);
-		}
+        // If reset after an fight, it means Phalanx has already started moving (if not already reached door)
+        // so we made him restart right before reaching the door to guard it (again)
+        if (HasEscortState(STATE_ESCORT_ESCORTING) || HasEscortState(STATE_ESCORT_PAUSED))
+        {
+            SetCurrentWaypoint(1);
+            SetEscortPaused(false);
+        }
 
-		m_fKeepDoorOrientation = 2.06059f;
-		uiThunderclapTimer     = 0;
-		uiMightyBlowTimer      = 0;
-		uiFireballVolleyTimer  = 0;
+        m_fKeepDoorOrientation = 2.06059f;
+        uiThunderclapTimer     = 0;
+        uiMightyBlowTimer      = 0;
+        uiFireballVolleyTimer  = 0;
         uiCallPatrolTimer      = 0;
     }
 
-	void Aggro(Unit* /*pWho*/) override
-	{
-		uiThunderclapTimer     = 12000;
-		uiMightyBlowTimer      = 15000;
-		uiFireballVolleyTimer  = 1;
-	}
+    void Aggro(Unit* /*pWho*/) override
+    {
+        uiThunderclapTimer     = 12000;
+        uiMightyBlowTimer      = 15000;
+        uiFireballVolleyTimer  = 1;
+    }
 
     void WaypointReached(uint32 uiPointId) override
     {
@@ -1525,110 +1525,110 @@ struct npc_hurley_blackbreath : public CreatureScript
     struct npc_hurley_blackbreathAI : public npc_escortAI
     {
         npc_hurley_blackbreathAI(Creature* pCreature) : npc_escortAI(pCreature)
-		{
-			m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        {
+            m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
-			Reset();
-		}
+            Reset();
+        }
 
-		ScriptedInstance* m_pInstance;
+        ScriptedInstance* m_pInstance;
 
-		uint32 uiFlameBreathTimer;
-		uint32 m_uiEventTimer;
-		bool   bIsEnraged;
+        uint32 uiFlameBreathTimer;
+        uint32 m_uiEventTimer;
+        bool   bIsEnraged;
 
-		void Reset() override
-		{
-			// If reset after an fight, we made him move to the keg room (end of the path)
-			if (HasEscortState(STATE_ESCORT_ESCORTING) || HasEscortState(STATE_ESCORT_PAUSED))
-			{
-				SetCurrentWaypoint(5);
-				SetEscortPaused(false);
-			}
-			else
-				m_uiEventTimer  = 1000;
+        void Reset() override
+        {
+            // If reset after an fight, we made him move to the keg room (end of the path)
+            if (HasEscortState(STATE_ESCORT_ESCORTING) || HasEscortState(STATE_ESCORT_PAUSED))
+            {
+                SetCurrentWaypoint(5);
+                SetEscortPaused(false);
+            }
+            else
+                m_uiEventTimer  = 1000;
 
-			bIsEnraged          = false;
-		}
+            bIsEnraged          = false;
+        }
 
-		// We want to prevent Hurley to go rampage on Ribbly and his friends.
-		// Everybody loves Ribbly. Except his family. They want him dead.
-		void AttackStart(Unit* pWho) override
-		{
-			if (pWho)
-			{
-				if (pWho->GetEntry() == NPC_RIBBLY_SCREWSPIGOT || pWho->GetEntry() == NPC_RIBBLY_CRONY)
-					return;
-				else
-					ScriptedAI::AttackStart(pWho);
-			}
-		}
+        // We want to prevent Hurley to go rampage on Ribbly and his friends.
+        // Everybody loves Ribbly. Except his family. They want him dead.
+        void AttackStart(Unit* pWho) override
+        {
+            if (pWho)
+            {
+                if (pWho->GetEntry() == NPC_RIBBLY_SCREWSPIGOT || pWho->GetEntry() == NPC_RIBBLY_CRONY)
+                    return;
+                else
+                    ScriptedAI::AttackStart(pWho);
+            }
+        }
 
-		void Aggro(Unit* /*pWho*/) override
-		{
-			uiFlameBreathTimer  = 7000;
-			bIsEnraged  = false;
-			DoScriptText(SAY_HURLEY_AGGRO, m_creature);
-		}
+        void Aggro(Unit* /*pWho*/) override
+        {
+            uiFlameBreathTimer  = 7000;
+            bIsEnraged  = false;
+            DoScriptText(SAY_HURLEY_AGGRO, m_creature);
+        }
 
-		void WaypointReached(uint32 uiPointId) override
-		{
-			if (!m_pInstance)
-				return;
+        void WaypointReached(uint32 uiPointId) override
+        {
+            if (!m_pInstance)
+                return;
 
-			switch (uiPointId)
-			{
-				case 1:
-					DoScriptText(YELL_HURLEY_SPAWN, m_creature);
-					SetRun(true);
-					break;
-				case 5:
-					SetEscortPaused(true);
-					break;
-				default:
-					break;
-			}
-		}
+            switch (uiPointId)
+            {
+                case 1:
+                    DoScriptText(YELL_HURLEY_SPAWN, m_creature);
+                    SetRun(true);
+                    break;
+                case 5:
+                    SetEscortPaused(true);
+                    break;
+                default:
+                    break;
+            }
+        }
 
-		void UpdateEscortAI(const uint32 uiDiff) override
-		{
-			if (!m_pInstance)
-				return;
+        void UpdateEscortAI(const uint32 uiDiff) override
+        {
+            if (!m_pInstance)
+                return;
 
-			// Combat check
-			if (m_creature->SelectHostileTarget() && m_creature->getVictim())
-			{
-				if (uiFlameBreathTimer < uiDiff)
-				{
-					if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAME_BREATH) == CAST_OK)
-						uiFlameBreathTimer = 10000;
-				}
-				else
-					uiFlameBreathTimer -= uiDiff;
+            // Combat check
+            if (m_creature->SelectHostileTarget() && m_creature->getVictim())
+            {
+                if (uiFlameBreathTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAME_BREATH) == CAST_OK)
+                        uiFlameBreathTimer = 10000;
+                }
+                else
+                    uiFlameBreathTimer -= uiDiff;
 
-				if (m_creature->GetHealthPercent() < 31.0f && !bIsEnraged)
-				{
-					if (DoCastSpellIfCan(m_creature, SPELL_DRUNKEN_RAGE) == CAST_OK)
-							bIsEnraged = true;
-				}
+                if (m_creature->GetHealthPercent() < 31.0f && !bIsEnraged)
+                {
+                    if (DoCastSpellIfCan(m_creature, SPELL_DRUNKEN_RAGE) == CAST_OK)
+                            bIsEnraged = true;
+                }
 
-				DoMeleeAttackIfReady();
-			}
-			else
-			{
-				if (m_uiEventTimer)
-				{
-					if (m_uiEventTimer < uiDiff)
-					{
-						Start(false);
-						SetEscortPaused(false);
-						m_uiEventTimer = 0;
-					}
-					else
-						m_uiEventTimer -= uiDiff;
-				}
-			}
-		}
+                DoMeleeAttackIfReady();
+            }
+            else
+            {
+                if (m_uiEventTimer)
+                {
+                    if (m_uiEventTimer < uiDiff)
+                    {
+                        Start(false);
+                        SetEscortPaused(false);
+                        m_uiEventTimer = 0;
+                    }
+                    else
+                        m_uiEventTimer -= uiDiff;
+                }
+            }
+        }
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -1924,69 +1924,69 @@ struct npc_kharan_mighthammer : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-		if (pCreature->IsQuestGiver())
-			pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+        if (pCreature->IsQuestGiver())
+            pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
-		if (pPlayer->GetQuestStatus(QUEST_WHAT_IS_GOING_ON) == QUEST_STATUS_INCOMPLETE)
-			pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        if (pPlayer->GetQuestStatus(QUEST_WHAT_IS_GOING_ON) == QUEST_STATUS_INCOMPLETE)
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
-		if (pPlayer->GetQuestStatus(QUEST_KHARANS_TALE) == QUEST_STATUS_INCOMPLETE)
-			pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+        if (pPlayer->GetQuestStatus(QUEST_KHARANS_TALE) == QUEST_STATUS_INCOMPLETE)
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
 
-		if (pPlayer->GetTeam() == HORDE)
-			pPlayer->SEND_GOSSIP_MENU(2473, pCreature->GetObjectGuid());
-		else
-			pPlayer->SEND_GOSSIP_MENU(2474, pCreature->GetObjectGuid());
+        if (pPlayer->GetTeam() == HORDE)
+            pPlayer->SEND_GOSSIP_MENU(2473, pCreature->GetObjectGuid());
+        else
+            pPlayer->SEND_GOSSIP_MENU(2474, pCreature->GetObjectGuid());
 
-		return true;
+        return true;
     }
 
     bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction) override
     {
-		switch (uiAction)
-		{
-			case GOSSIP_ACTION_INFO_DEF+1:
-				pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-				pPlayer->SEND_GOSSIP_MENU(2475, pCreature->GetObjectGuid());
-				break;
-			case GOSSIP_ACTION_INFO_DEF+2:
-				pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-				pPlayer->SEND_GOSSIP_MENU(2476, pCreature->GetObjectGuid());
-				break;
+        switch (uiAction)
+        {
+            case GOSSIP_ACTION_INFO_DEF+1:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(2475, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+2:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+                pPlayer->SEND_GOSSIP_MENU(2476, pCreature->GetObjectGuid());
+                break;
 
-			case GOSSIP_ACTION_INFO_DEF+3:
-				pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
-				pPlayer->SEND_GOSSIP_MENU(2477, pCreature->GetObjectGuid());
-				break;
-			case GOSSIP_ACTION_INFO_DEF+4:
-				pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
-				pPlayer->SEND_GOSSIP_MENU(2478, pCreature->GetObjectGuid());
-				break;
-			case GOSSIP_ACTION_INFO_DEF+5:
-				pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_7, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
-				pPlayer->SEND_GOSSIP_MENU(2479, pCreature->GetObjectGuid());
-				break;
-			case GOSSIP_ACTION_INFO_DEF+6:
-				pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_8, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
-				pPlayer->SEND_GOSSIP_MENU(2480, pCreature->GetObjectGuid());
-				break;
-			case GOSSIP_ACTION_INFO_DEF+7:
-				pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_9, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
-				pPlayer->SEND_GOSSIP_MENU(2481, pCreature->GetObjectGuid());
-				break;
-			case GOSSIP_ACTION_INFO_DEF+8:
-				pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_10, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
-				pPlayer->SEND_GOSSIP_MENU(2482, pCreature->GetObjectGuid());
-				break;
-			case GOSSIP_ACTION_INFO_DEF+9:
-				pPlayer->CLOSE_GOSSIP_MENU();
-				if (pPlayer->GetTeam() == HORDE)
-					pPlayer->AreaExploredOrEventHappens(QUEST_WHAT_IS_GOING_ON);
-				else
-					pPlayer->AreaExploredOrEventHappens(QUEST_KHARANS_TALE);
-				break;
-		}
-		return true;
+            case GOSSIP_ACTION_INFO_DEF+3:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+                pPlayer->SEND_GOSSIP_MENU(2477, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+4:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+                pPlayer->SEND_GOSSIP_MENU(2478, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+5:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_7, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
+                pPlayer->SEND_GOSSIP_MENU(2479, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+6:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_8, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
+                pPlayer->SEND_GOSSIP_MENU(2480, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+7:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_9, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
+                pPlayer->SEND_GOSSIP_MENU(2481, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+8:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_10, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
+                pPlayer->SEND_GOSSIP_MENU(2482, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+9:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                if (pPlayer->GetTeam() == HORDE)
+                    pPlayer->AreaExploredOrEventHappens(QUEST_WHAT_IS_GOING_ON);
+                else
+                    pPlayer->AreaExploredOrEventHappens(QUEST_KHARANS_TALE);
+                break;
+        }
+        return true;
     }
 };
 
@@ -1995,31 +1995,31 @@ struct npc_kharan_mighthammer : public CreatureScript
 ######*/
 struct go_bar_ale_mug : public GameObjectScript
 {
-	go_bar_ale_mug() : GameObjectScript("go_bar_ale_mug") {}
+    go_bar_ale_mug() : GameObjectScript("go_bar_ale_mug") {}
 
-	bool OnUse(Player* pPlayer, GameObject* pGo) override
-	{
-		if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
-		{
-			if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS || pInstance->GetData(TYPE_PLUGGER) == DONE)
-				return false;
-			else
-			{
-				if (Creature* pPlugger = pInstance->GetSingleCreatureFromStorage(NPC_PLUGGER_SPAZZRING))
-				{
-					if (boss_plugger_spazzringAI* pPluggerAI = dynamic_cast<boss_plugger_spazzringAI*>(pPlugger->AI()))
-					{
-						pInstance->SetData(TYPE_PLUGGER, SPECIAL);
-						if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS)
-							pPluggerAI->AttackThief(pPlayer);
-						else
-							pPluggerAI->WarnThief(pPlayer);
-					}
-				}
-			}
-		}
-		return false;
-	}
+    bool OnUse(Player* pPlayer, GameObject* pGo) override
+    {
+        if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
+        {
+            if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS || pInstance->GetData(TYPE_PLUGGER) == DONE)
+                return false;
+            else
+            {
+                if (Creature* pPlugger = pInstance->GetSingleCreatureFromStorage(NPC_PLUGGER_SPAZZRING))
+                {
+                    if (boss_plugger_spazzringAI* pPluggerAI = dynamic_cast<boss_plugger_spazzringAI*>(pPlugger->AI()))
+                    {
+                        pInstance->SetData(TYPE_PLUGGER, SPECIAL);
+                        if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS)
+                            pPluggerAI->AttackThief(pPlayer);
+                        else
+                            pPluggerAI->WarnThief(pPlayer);
+                    }
+                }
+            }
+        }
+        return false;
+    }
 };
 
 /*######
@@ -2039,20 +2039,20 @@ struct npc_ironhand_guardian : public CreatureScript
     struct npc_ironhand_guardianAI : public ScriptedAI
     {
         npc_ironhand_guardianAI(Creature* pCreature) : ScriptedAI(pCreature)
-		{
+        {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             Reset();
-		}
+        }
 
-		ScriptedInstance* m_pInstance;
+        ScriptedInstance* m_pInstance;
 
         uint32 m_uiGoutOfFlameTimer;
         uint8 m_uiPhase;
 
-		void Reset() override
-		{
+        void Reset() override
+        {
             m_uiGoutOfFlameTimer    = urand(4, 8) * 1000;
-		}
+        }
 
         void UpdateAI(const uint32 uiDiff) override
         {
