@@ -84,22 +84,16 @@ struct npc_deathstalker_erland : public CreatureScript
     {
         npc_deathstalker_erlandAI(Creature* pCreature) : npc_escortAI(pCreature)
         {
-#if defined (CLASSIC) || defined (TBC)
-            lCreatureList.clear();
-            m_uiPhase = 0;
-            m_uiPhaseCounter = 0;
-#endif
+            Reset();
         }
 #if defined (CLASSIC) || defined (TBC)
-        std::list<Creature*> lCreatureList;
-#endif
-
-#if defined (CLASSIC) || defined (TBC)
+        std::vector<Creature*> lCreatureList;
         uint32 m_uiPhase;
         uint32 m_uiPhaseCounter;
         uint32 m_uiGlobalTimer;
+#endif
 
-
+#if defined (CLASSIC) || defined (TBC)
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (HasEscortState(STATE_ESCORT_ESCORTING) && (pWho->GetEntry() == NPC_QUINN || NPC_RANE))
@@ -114,7 +108,7 @@ struct npc_deathstalker_erland : public CreatureScript
         {
             if (!lCreatureList.empty())
             {
-                for (std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
+                for (std::vector<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
                 {
                     if ((*itr)->GetEntry() == uiCreatureEntry && (*itr)->IsAlive())
                     {
@@ -271,7 +265,15 @@ struct npc_deathstalker_erland : public CreatureScript
         }
 #endif
 
-        void Reset() override {}
+        void Reset() override
+        {
+#if defined (CLASSIC) || defined (TBC)
+            lCreatureList.clear();
+            m_uiPhase = 0;
+            m_uiPhaseCounter = 0;
+            m_uiGlobalTimer = 5000;
+#endif
+        }
 
         void Aggro(Unit* pWho) override
         {
