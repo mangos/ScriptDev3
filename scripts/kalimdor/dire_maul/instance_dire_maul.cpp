@@ -298,15 +298,36 @@ struct is_dire_maul : public InstanceScript
                 m_auiEncounter[uiType] = uiData;
                 if (uiData == DONE)
                 {
-                    // Apply Aura to players in the map
-                    Map::PlayerList const& players = instance->GetPlayers();
-                    for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
-                    {
-                        if (Player* pPlayer = itr->getSource())
-                        {
-                            pPlayer->CastSpell(pPlayer, SPELL_KING_OF_GORDOK, true);
-                        }
-                    }
+					// change faction to certian ogres
+					if (Creature* pOgre = GetSingleCreatureFromStorage(NPC_CAPTAIN_KROMCRUSH))
+					{
+						if (pOgre->IsAlive())
+						{
+							pOgre->SetFactionTemporary(FACTION_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
+
+							// only evade if required
+							if (pOgre->getVictim())
+								pOgre->AI()->EnterEvadeMode();
+						}
+					}
+
+					if (Creature* pOgre = GetSingleCreatureFromStorage(NPC_CHORUSH))
+					{
+						// Chorush evades and yells on king death (if alive)
+						if (pOgre->IsAlive())
+						{
+							DoScriptText(SAY_CHORUSH_KING_DEAD, pOgre);
+							pOgre->SetFactionTemporary(FACTION_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
+							pOgre->AI()->EnterEvadeMode();
+						}
+
+						// start WP movement for Mizzle; event handled by movement and gossip dbscripts
+						if (Creature* pMizzle = pOgre->SummonCreature(NPC_MIZZLE_THE_CRAFTY, afMizzleSpawnLoc[0], afMizzleSpawnLoc[1], afMizzleSpawnLoc[2], afMizzleSpawnLoc[3], TEMPSUMMON_DEAD_DESPAWN, 0, true))
+						{
+							pMizzle->SetWalk(false);
+							pMizzle->GetMotionMaster()->MoveWaypoint();
+						}
+					}
                 }
                 break;
             case TYPE_MOLDAR:
@@ -450,17 +471,17 @@ struct is_dire_maul : public InstanceScript
         {
             switch (uiInstanceConditionId)
             {
-            case INSTANCE_CONDITION_ID_NORMAL_MODE:             // No guards alive
-            case INSTANCE_CONDITION_ID_HARD_MODE:               // One guard alive
-            case INSTANCE_CONDITION_ID_HARD_MODE_2:             // Two guards alive
-            case INSTANCE_CONDITION_ID_HARD_MODE_3:             // Three guards alive
-            case INSTANCE_CONDITION_ID_HARD_MODE_4:             // All guards alive
-            {
-                                                                    uint8 uiTributeRunAliveBosses = (GetData(TYPE_MOLDAR) != DONE ? 1 : 0) + (GetData(TYPE_FENGUS) != DONE ? 1 : 0) + (GetData(TYPE_SLIPKIK) != DONE ? 1 : 0)
-                                                                        + (GetData(TYPE_KROMCRUSH) != DONE ? 1 : 0);
+				case INSTANCE_CONDITION_ID_NORMAL_MODE:             // No guards alive
+				case INSTANCE_CONDITION_ID_HARD_MODE:               // One guard alive
+				case INSTANCE_CONDITION_ID_HARD_MODE_2:             // Two guards alive
+				case INSTANCE_CONDITION_ID_HARD_MODE_3:             // Three guards alive
+				case INSTANCE_CONDITION_ID_HARD_MODE_4:             // All guards alive
+				{
+					uint8 uiTributeRunAliveBosses = (GetData(TYPE_MOLDAR) != DONE ? 1 : 0) + (GetData(TYPE_FENGUS) != DONE ? 1 : 0) + (GetData(TYPE_SLIPKIK) != DONE ? 1 : 0)
+						+ (GetData(TYPE_KROMCRUSH) != DONE ? 1 : 0);
 
-                                                                    return uiInstanceConditionId == uiTributeRunAliveBosses;
-            }
+					return uiInstanceConditionId == uiTributeRunAliveBosses;
+				}
             }
 
             script_error_log("instance_dire_maul::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
@@ -602,9 +623,4 @@ void AddSC_instance_dire_maul()
     Script* s;
     s = new is_dire_maul();
     s->RegisterSelf();
-
-    //pNewScript = new Script;
-    //pNewScript->Name = "instance_dire_maul";
-    //pNewScript->GetInstanceData = &GetInstanceData_instance_dire_maul;
-    //pNewScript->RegisterSelf();
 }
