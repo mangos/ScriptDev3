@@ -711,7 +711,7 @@ struct is_karazhan : public InstanceScript
                     if (pTemp && pTemp->IsAlive())
                     {
                         // check for specified range targets and angle; Note: to be checked if the angle is right
-                        if (m_uiChessRange && !searcher->isInFrontInMap(pTemp, float(m_uiChessRange), M_PI_F/m_uiChessArcPart))
+                        if (m_uiChessRange && !searcher->IsInFrontInMap(pTemp, float(m_uiChessRange), M_PI_F/m_uiChessArcPart))
                             continue;
 
                         // skip friendly targets which are at full HP
