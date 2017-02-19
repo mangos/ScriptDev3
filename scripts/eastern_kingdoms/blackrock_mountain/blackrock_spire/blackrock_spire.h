@@ -56,6 +56,7 @@ enum
     NPC_CHROMATIC_WHELP         = 10442,                    // related to Gyth arena event
     NPC_CHROMATIC_DRAGON        = 10447,
     NPC_BLACKHAND_HANDLER       = 10742,
+    NPC_THE_BEAST               = 10430,
 
     // Doors
     GO_EMBERSEER_IN             = 175244,
@@ -108,6 +109,7 @@ enum
     FACTION_BLACK_DRAGON        = 103,
 
     SPELL_ENCAGE_EMBERSEER      = 15281,    // cast by Blackhand Incarcerator
+    SPELL_FINKLE_IS_EINHORN     = 16710     // cast by The Beast when skinned. Summons Finkle Einhorn.
 };
 
 struct SpawnLocation
