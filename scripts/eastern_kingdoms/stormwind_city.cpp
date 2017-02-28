@@ -68,8 +68,6 @@ struct npc_tyrion : public CreatureScript
         if (pQuest->GetQuestId() == QUEST_THE_ATTACK)
         {
             pCreature->GetMap()->MonsterYellToMap(pCreature->GetObjectGuid(), -1000824, LANG_UNIVERSAL, pPlayer);
-            pCreature->SetFactionTemporary(FACTION_ENEMY, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
-            pCreature->AI()->AttackStart(pPlayer);
             return true;
         }
 
