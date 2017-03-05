@@ -639,7 +639,7 @@ enum
     NPC_COLONEL_JULES               = 22432,
     NPC_DARKNESS_RELEASED           = 22507,                // summoned by missing spell 39305
 
-    GOSSIP_ITEM_EXORCISM            = -3000111,
+    GOSSIP_ITEM_EXORCISM            = -3006669,
     QUEST_ID_EXORCISM               = 10935,
 
     TEXT_ID_CLEANSED                = 10706,
