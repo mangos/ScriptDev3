@@ -101,10 +101,10 @@ enum
     SAY_FREE_IMMOLTHAR          = -1429000,
     SAY_KILL_IMMOLTHAR          = -1429001,
     SAY_IRONBARK_REDEEM         = -1429002,
-    SAY_CHORUSH_KING_DEAD	= -1429003,
+    SAY_CHORUSH_KING_DEAD    = -1429003,
 
     FACTION_HOSTILE             = 14,
-    FACTION_FRIENDLY		= 35,
+    FACTION_FRIENDLY        = 35,
     SPELL_KING_OF_GORDOK        = 22799,
 };
 
@@ -113,50 +113,50 @@ static const float afMizzleSpawnLoc[4] = { 683.296f, 484.384f, 29.544f, 0.0174f 
 class instance_dire_maul : public ScriptedInstance
 {
 public:
-	instance_dire_maul(Map* pMap);
-	~instance_dire_maul() {}
+    instance_dire_maul(Map* pMap);
+    ~instance_dire_maul() {}
 
-	void Initialize() override;
+    void Initialize() override;
 
-	void OnPlayerEnter(Player* pPlayer) override;
+    void OnPlayerEnter(Player* pPlayer) override;
 
-	void OnCreatureCreate(Creature* pCreature) override;
-	void OnObjectCreate(GameObject* pGo) override;
+    void OnCreatureCreate(Creature* pCreature) override;
+    void OnObjectCreate(GameObject* pGo) override;
 
-	void SetData(uint32 uiType, uint32 uiData) override;
-	uint32 GetData(uint32 uiType) const override;
+    void SetData(uint32 uiType, uint32 uiData) override;
+    uint32 GetData(uint32 uiType) const override;
 
-	void OnCreatureEnterCombat(Creature* pCreature) override;
-	void OnCreatureDeath(Creature* pCreature) override;
+    void OnCreatureEnterCombat(Creature* pCreature) override;
+    void OnCreatureDeath(Creature* pCreature) override;
 
-	const char* Save() const override { return m_strInstData.c_str(); }
-	void Load(const char* chrIn) override;
+    const char* Save() const override { return m_strInstData.c_str(); }
+    void Load(const char* chrIn) override;
 
-	bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const override;
+    bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const override;
 
-	void Update(uint32 uiDiff) override;
+    void Update(uint32 uiDiff) override;
 
 protected:
-	bool CheckAllGeneratorsDestroyed();
-	void ProcessForceFieldOpening();
-	void SortPylonGuards();
-	void PylonGuardJustDied(Creature* pCreature);
+    bool CheckAllGeneratorsDestroyed();
+    void ProcessForceFieldOpening();
+    void SortPylonGuards();
+    void PylonGuardJustDied(Creature* pCreature);
 
-	uint32 m_auiEncounter[MAX_ENCOUNTER];
-	std::string m_strInstData;
+    uint32 m_auiEncounter[MAX_ENCOUNTER];
+    std::string m_strInstData;
 
-	// East
-	bool m_bWallDestroyed;
-	GuidList m_lFelvineShardGUIDs;
+    // East
+    bool m_bWallDestroyed;
+    GuidList m_lFelvineShardGUIDs;
 
-	// West
-	ObjectGuid m_aCrystalGeneratorGuid[MAX_GENERATORS];
+    // West
+    ObjectGuid m_aCrystalGeneratorGuid[MAX_GENERATORS];
 
-	GuidList m_luiHighborneSummonerGUIDs;
-	GuidList m_lGeneratorGuardGUIDs;
-	std::set<uint32> m_sSortedGeneratorGuards[MAX_GENERATORS];
+    GuidList m_luiHighborneSummonerGUIDs;
+    GuidList m_lGeneratorGuardGUIDs;
+    std::set<uint32> m_sSortedGeneratorGuards[MAX_GENERATORS];
 
-	// North
-	bool m_bDoNorthBeforeWest;
+    // North
+    bool m_bDoNorthBeforeWest;
 };
 #endif
