@@ -287,19 +287,6 @@ struct npc_engineer_spark_overgrind : public CreatureScript
         }
     };
 
-    CreatureAI* GetAI(Creature* pCreature) override
-    {
-        if (pCreature->GetAreaId() == AREA_COVE)    //temp spawn related to quest 9531, controlled by db script
-        {
-            pCreature->SetDefaultMovementType(IDLE_MOTION_TYPE);
-            pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-            pCreature->StopMoving(true);
-            return NULL;
-        }
-        else
-            return new npc_engineer_spark_overgrindAI(pCreature);
-    }
-
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
         if (pPlayer->GetQuestStatus(QUEST_GNOMERCY) == QUEST_STATUS_INCOMPLETE)
