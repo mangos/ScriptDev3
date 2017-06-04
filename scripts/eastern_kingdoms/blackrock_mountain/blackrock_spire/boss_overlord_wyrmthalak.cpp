@@ -44,7 +44,10 @@ enum
 
     NPC_SPIRESTONE_WARLORD     = 9216,
     NPC_SMOLDERTHORN_BERSERKER = 9268,    
-    NPC_BLOODAXE_VETERAN       = 9583
+    NPC_BLOODAXE_VETERAN       = 9583,
+
+    // Overlord emote calls for help
+    SAY_EMOTE                  = -1999926
 };
 
 const float afLocations[4][4] =
@@ -149,6 +152,7 @@ struct boss_overlordwyrmthalak : public CreatureScript
             // Summon two Beserks
             if (!m_bSummoned && m_creature->GetHealthPercent() < 51.0f)
             {
+                DoScriptText(SAY_EMOTE, m_creature); // Calls for help
                 Creature* pGuard1 = m_creature->SummonCreature(uSummons[urand(0,2)], afLocations[0][0], afLocations[0][1], afLocations[0][2], afLocations[0][3], TEMPSUMMON_TIMED_DESPAWN, 300000);
                 Creature* pGuard2 = m_creature->SummonCreature(uSummons[urand(0,2)], afLocations[1][0], afLocations[1][1], afLocations[1][2], afLocations[1][3], TEMPSUMMON_TIMED_DESPAWN, 300000);
                 if (pGuard1)
