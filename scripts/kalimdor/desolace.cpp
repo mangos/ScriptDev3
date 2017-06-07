@@ -96,7 +96,7 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
                 
                 // spell have no implemented effect (dummy), so useful to notify spellHit
                 m_creature->GetMotionMaster()->MoveIdle();
-                m_creature->CastSpell(m_creature, SPELL_KODO_KOMBO_GOSSIP, TRIGGERED_OLD_TRIGGERED);
+                m_creature->CastSpell(m_creature, SPELL_KODO_KOMBO_GOSSIP, true);
             }
         }
 
