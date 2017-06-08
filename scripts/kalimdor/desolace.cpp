@@ -53,6 +53,8 @@ enum
     SAY_SMEED_HOME_1                = -1000348,
     SAY_SMEED_HOME_2                = -1000349,
     SAY_SMEED_HOME_3                = -1000350,
+    
+    GOSSIP_TAMED_KODO               = 60003,
 
     QUEST_KODO                      = 5561,
 
@@ -149,7 +151,7 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
             pCreature->GetMotionMaster()->MoveIdle();
         }
 
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
+        pPlayer->SEND_GOSSIP_MENU(GOSSIP_TAMED_KODO, pCreature->GetObjectGuid());
         return true;
     }
 };
