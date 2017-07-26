@@ -53,6 +53,8 @@ enum
     SAY_SMEED_HOME_1                = -1000348,
     SAY_SMEED_HOME_2                = -1000349,
     SAY_SMEED_HOME_3                = -1000350,
+    
+    GOSSIP_TAMED_KODO               = 60003,
 
     QUEST_KODO                      = 5561,
 
@@ -85,31 +87,18 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (pWho->GetEntry() == NPC_SMEED)
+            if (pWho->GetEntry() == NPC_SMEED && m_creature->IsWithinDistInMap(pWho, 10.0f) && !m_creature->HasAura(SPELL_KODO_KOMBO_GOSSIP))
             {
-                if (m_creature->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP))
+                switch (urand(0, 2))
                 {
-                    return;
+                    case 0: DoScriptText(SAY_SMEED_HOME_1, pWho); break;
+                    case 1: DoScriptText(SAY_SMEED_HOME_2, pWho); break;
+                    case 2: DoScriptText(SAY_SMEED_HOME_3, pWho); break;
                 }
-
-                if (m_creature->IsWithinDistInMap(pWho, 10.0f))
-                {
-                    switch (urand(0, 2))
-                    {
-                    case 0:
-                        DoScriptText(SAY_SMEED_HOME_1, pWho);
-                        break;
-                    case 1:
-                        DoScriptText(SAY_SMEED_HOME_2, pWho);
-                        break;
-                    case 2:
-                        DoScriptText(SAY_SMEED_HOME_3, pWho);
-                        break;
-                    }
-
-                    // spell have no implemented effect (dummy), so useful to notify spellHit
-                    m_creature->CastSpell(m_creature, SPELL_KODO_KOMBO_GOSSIP, true);
-                }
+                
+                // spell have no implemented effect (dummy), so useful to notify spellHit
+                m_creature->GetMotionMaster()->MoveIdle();
+                m_creature->CastSpell(m_creature, SPELL_KODO_KOMBO_GOSSIP, true);
             }
         }
 
@@ -153,7 +142,7 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
-        if (pPlayer->HasAura(SPELL_KODO_KOMBO_PLAYER_BUFF) && pCreature->HasAura(SPELL_KODO_KOMBO_DESPAWN_BUFF))
+        if (pPlayer->HasAura(SPELL_KODO_KOMBO_PLAYER_BUFF) && pCreature->HasAura(SPELL_KODO_KOMBO_DESPAWN_BUFF) && pCreature->HasAura(SPELL_KODO_KOMBO_GOSSIP))
         {
             // the expected quest objective
             pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
@@ -162,7 +151,7 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
             pCreature->GetMotionMaster()->MoveIdle();
         }
 
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
+        pPlayer->SEND_GOSSIP_MENU(GOSSIP_TAMED_KODO, pCreature->GetObjectGuid());
         return true;
     }
 };
