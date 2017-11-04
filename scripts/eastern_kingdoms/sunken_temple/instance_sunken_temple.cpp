@@ -123,12 +123,16 @@ struct is_sunken_temple : public InstanceScript
             switch (pCreature->GetEntry())
             {
                 // Hakkar Event Mobs: On Wipe set as failed!
-            case NPC_BLOODKEEPER:
-            case NPC_HAKKARI_MINION:
-            case NPC_SUPPRESSOR:
-            case NPC_AVATAR_OF_HAKKAR:
-                SetData(TYPE_AVATAR, FAIL);
-                break;
+                case NPC_BLOODKEEPER:
+                case NPC_HAKKARI_MINION:
+                case NPC_SUPPRESSOR:
+                case NPC_AVATAR_OF_HAKKAR:
+                    SetData(TYPE_AVATAR, FAIL);
+                    break;
+                // Shade of Eranikus: prevent it to become unattackable after a wipe
+		        case NPC_SHADE_OF_ERANIKUS:
+                    pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                    break;
             }
         }
 
@@ -187,6 +191,11 @@ struct is_sunken_temple : public InstanceScript
                 }
                 break;
             case TYPE_JAMMALAN:
+			    if (uiData == DONE)
+                {
+                    if (Creature* pEranikus = GetSingleCreatureFromStorage(NPC_SHADE_OF_ERANIKUS))
+                        pEranikus->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                }
                 m_auiEncounter[uiType] = uiData;
                 break;
             case TYPE_AVATAR:
