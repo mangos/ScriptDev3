@@ -26,6 +26,7 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "naxxramas.h"
+#include <unordered_map>
 
 static const DialogueEntry aNaxxDialogue[] =
 {
@@ -80,7 +81,7 @@ struct is_naxxramas : public InstanceScript
         {
             if (!m_mGothTriggerMap.empty()) //see SetGothTriggers
             {
-                for (UNORDERED_MAP<ObjectGuid, GothTrigger>::iterator it = m_mGothTriggerMap.begin(); it != m_mGothTriggerMap.end(); ++it)
+                for (std::unordered_map<ObjectGuid, GothTrigger>::iterator it = m_mGothTriggerMap.begin(); it != m_mGothTriggerMap.end(); ++it)
                     delete &it->second;
             }
         }
@@ -776,7 +777,7 @@ struct is_naxxramas : public InstanceScript
         {
             std::list<Creature* > lList;
 
-            for (UNORDERED_MAP<ObjectGuid, GothTrigger>::const_iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
+            for (std::unordered_map<ObjectGuid, GothTrigger>::const_iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
             {
                 if (!itr->second.bIsAnchorHigh)
                     continue;
@@ -815,7 +816,7 @@ struct is_naxxramas : public InstanceScript
 
         void GetGothSummonPointCreatures(bool bRightSide, std::list<Creature*> &lList) const
         {
-            for (UNORDERED_MAP<ObjectGuid, GothTrigger>::const_iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
+            for (std::unordered_map<ObjectGuid, GothTrigger>::const_iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
             {
                 if (itr->second.bIsAnchorHigh)
                     continue;
@@ -935,7 +936,7 @@ struct is_naxxramas : public InstanceScript
         GuidList m_lDeathKnightSummonPosGuids;
         GuidList m_lRiderSummonPosGuids;
 
-        UNORDERED_MAP<ObjectGuid, GothTrigger> m_mGothTriggerMap;
+        std::unordered_map<ObjectGuid, GothTrigger> m_mGothTriggerMap;
         GuidList m_alHeiganTrapGuids[MAX_HEIGAN_TRAP_AREAS];
         ObjectGuid m_creatureGUID;
 

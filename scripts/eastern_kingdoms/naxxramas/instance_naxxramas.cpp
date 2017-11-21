@@ -35,6 +35,7 @@
 
 #include "precompiled.h"
 #include "naxxramas.h"
+#include <unordered_map>
 
 static const DialogueEntry aNaxxDialogue[] =
 {
@@ -947,7 +948,7 @@ struct is_naxxramas : public InstanceScript
         {
             std::list<Creature* > lList;
 
-            for (UNORDERED_MAP<ObjectGuid, GothTrigger>::iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
+            for (std::unordered_map<ObjectGuid, GothTrigger>::iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
             {
                 if (!itr->second.bIsAnchorHigh)
                 {
@@ -976,7 +977,7 @@ struct is_naxxramas : public InstanceScript
 
         void GetGothSummonPointCreatures(std::list<Creature*>& lList, bool bRightSide)
         {
-            for (UNORDERED_MAP<ObjectGuid, GothTrigger>::iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
+            for (std::unordered_map<ObjectGuid, GothTrigger>::iterator itr = m_mGothTriggerMap.begin(); itr != m_mGothTriggerMap.end(); ++itr)
             {
                 if (itr->second.bIsAnchorHigh)
                 {
@@ -1027,8 +1028,8 @@ struct is_naxxramas : public InstanceScript
         uint64 m_tempCreatureGuid;
         uint64 m_playerNearGothik;
 
-        UNORDERED_MAP<ObjectGuid, GothTrigger> m_mGothTriggerMap;
-        UNORDERED_MAP<ObjectGuid, GothTrigger>::const_iterator gtit;
+        std::unordered_map<ObjectGuid, GothTrigger> m_mGothTriggerMap;
+        std::unordered_map<ObjectGuid, GothTrigger>::const_iterator gtit;
 
         GuidList m_alHeiganTrapGuids[MAX_HEIGAN_TRAP_AREAS];
 

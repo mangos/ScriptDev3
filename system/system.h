@@ -27,6 +27,8 @@
 #ifndef SC_SYSTEM_H
 #define SC_SYSTEM_H
 
+#include <unordered_map>
+
 #define TEXT_SOURCE_RANGE -1000000                          // the amount of entries each text source has available
 
 #define TEXT_SOURCE_TEXT_START      TEXT_SOURCE_RANGE
@@ -56,7 +58,7 @@ class SystemMgr
 
         static SystemMgr& Instance();
 
-        typedef UNORDERED_MAP<uint32, std::vector<ScriptPointMove> > PointMoveMap;
+        typedef std::unordered_map<uint32, std::vector<ScriptPointMove> > PointMoveMap;
 
         // SD3 Database Bindings
         void LoadScriptTexts();

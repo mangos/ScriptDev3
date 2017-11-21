@@ -33,6 +33,7 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "stratholme.h"
+#include <unordered_map>
 
 /*#####
 # Additional:
@@ -100,11 +101,11 @@ struct boss_silver_hand_bosses : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        UNORDERED_MAP<uint8, uint32> m_mSpellTimers;
+        std::unordered_map<uint8, uint32> m_mSpellTimers;
 
         void Reset() override
         {
-            for (UNORDERED_MAP<uint8, uint32>::iterator itr = m_mSpellTimers.begin(); itr != m_mSpellTimers.end(); ++itr)
+            for (std::unordered_map<uint8, uint32>::iterator itr = m_mSpellTimers.begin(); itr != m_mSpellTimers.end(); ++itr)
             {
                 itr->second = m_aSilverHandAbility[itr->first].m_uiInitialTimer;
             }
@@ -170,7 +171,7 @@ struct boss_silver_hand_bosses : public CreatureScript
                 return;
             }
 
-            for (UNORDERED_MAP<uint8, uint32>::iterator itr = m_mSpellTimers.begin(); itr != m_mSpellTimers.end(); ++itr)
+            for (std::unordered_map<uint8, uint32>::iterator itr = m_mSpellTimers.begin(); itr != m_mSpellTimers.end(); ++itr)
             {
                 if (itr->second < uiDiff)
                 {
