@@ -444,13 +444,13 @@ struct npc_blood_orb_control : public CreatureScript
 
                 // Kill the 3 princes
                 if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_VALANAR))
-                    m_creature->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    m_creature->DealDamage(pTmp, pTmp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
 
                 if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_KELESETH))
-                    m_creature->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    m_creature->DealDamage(pTmp, pTmp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
 
                 if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM))
-                    m_creature->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    m_creature->DealDamage(pTmp, pTmp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
             }
         }
 
@@ -559,7 +559,7 @@ struct blood_prince_council_baseAI : public ScriptedAI
             return;
 
         if (Creature* pOrb = m_pInstance->GetSingleCreatureFromStorage(NPC_BLOOD_ORB_CONTROL))
-            pOrb->DealDamage(pOrb, uiDamage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+            pOrb->DealDamage(pOrb, uiDamage, nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
         // ##### End of workaround #####
     }
 
@@ -668,7 +668,7 @@ struct boss_valanar_icc : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_KINETIC_BOMB_TARGET)
-                pSummoned->CastSpell(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() + 20.0f, SPELL_KINETIC_BOMB, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() + 20.0f, SPELL_KINETIC_BOMB, true, nullptr, nullptr, m_creature->GetObjectGuid());
             else if (pSummoned->GetEntry() == NPC_KINETIC_BOMB)
             {
                 // Handle Kinetic bomb movement
@@ -860,7 +860,7 @@ struct boss_taldaram_icc : public CreatureScript
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_NOT_IN_MELEE_RANGE | SELECT_FLAG_PLAYER))
             {
                 if (CreatureAI* pBallAI = pSummoned->AI())
-                    pBallAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)NULL, (Unit*)NULL, pTarget->GetGUIDLow());
+                    pBallAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)nullptr, (Unit*)nullptr, pTarget->GetGUIDLow());
 
                 DoScriptText(EMOTE_FLAMES, pSummoned, pTarget);
                 pSummoned->GetMotionMaster()->MoveFollow(pTarget, 0, 0);

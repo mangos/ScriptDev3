@@ -63,7 +63,7 @@ struct npc_the_scourge_cauldron : public CreatureScript
         void DoDie()
         {
             // summoner dies here
-            m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+            m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
             // override any database `spawntimesecs` to prevent duplicated summons
             uint32 rTime = m_creature->GetRespawnDelay();
             if (rTime < 600)
@@ -433,7 +433,7 @@ struct npc_taelan_fordring : public CreatureScript
                 m_creature->RemoveAllAurasOnEvade();
                 m_creature->DeleteThreatList();
                 m_creature->CombatStop(true);
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
 
                 m_creature->InterruptNonMeleeSpells(true);
                 m_creature->SetHealth(0);
@@ -701,7 +701,7 @@ struct npc_taelan_fordring : public CreatureScript
             case NPC_TIRION_FORDRING:   return m_creature->GetMap()->GetCreature(m_tirionGuid);
 
             default:
-                return NULL;
+                return nullptr;
             }
         }
 
@@ -866,7 +866,7 @@ struct npc_isillien : public CreatureScript
                 m_creature->RemoveAllAurasOnEvade();
                 m_creature->DeleteThreatList();
                 m_creature->CombatStop(true);
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
 
                 m_creature->GetMotionMaster()->MoveIdle();
 
@@ -1024,7 +1024,7 @@ struct npc_tirion_fordring : public CreatureScript
             m_creature->RemoveAllAurasOnEvade();
             m_creature->DeleteThreatList();
             m_creature->CombatStop(true);
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             // on evade go to Taelan
             if (Creature* pTaelan = m_creature->GetMap()->GetCreature(m_taelanGuid))

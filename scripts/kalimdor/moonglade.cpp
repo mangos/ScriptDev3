@@ -191,7 +191,7 @@ struct spell_emerald_dream : public SpellScript
             {
                 pCreatureTarget->SetVisibility(VISIBILITY_ON);
                 pCreatureTarget->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                pSpiritAI->Start(false, pCaster && pCaster->GetTypeId() == TYPEID_PLAYER ? (Player*)pCaster : NULL);
+                pSpiritAI->Start(false, pCaster && pCaster->GetTypeId() == TYPEID_PLAYER ? (Player*)pCaster : nullptr);
             }
 
             // always return true when we are handling this spell and effect
@@ -469,7 +469,7 @@ struct npc_keeper_remulos : public CreatureScript
                 return m_creature->GetMap()->GetCreature(m_eranikusGuid);
 
             default:
-                return NULL;
+                return nullptr;
             }
         }
 
@@ -777,7 +777,7 @@ struct boss_eranikus : public CreatureScript
                 m_creature->CombatStop(true);
                 m_creature->LoadCreatureAddon(true);
 
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
 
                 // Get Remulos guid and make him stop summoning shades
                 if (Creature* pRemulos = GetClosestCreatureWithEntry(m_creature, NPC_REMULOS, 50.0f))

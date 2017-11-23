@@ -276,7 +276,7 @@ struct npc_shaheen : public CreatureScript
                 case NPC_ENGINEER_SHAEEN:        return m_creature;
                 case NPC_SHADOW_LORD_XIRAXIS:    return m_creature->GetMap()->GetCreature(m_xiraxisGuid);
                 default:
-                    return NULL;
+                    return nullptr;
             }
         }
 

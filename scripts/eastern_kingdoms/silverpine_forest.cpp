@@ -117,7 +117,7 @@ struct npc_deathstalker_erland : public CreatureScript
                 }
             }
 
-            return NULL;
+            return nullptr;
         }
 #endif
 

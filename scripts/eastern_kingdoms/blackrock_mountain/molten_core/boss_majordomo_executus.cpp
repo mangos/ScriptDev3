@@ -155,7 +155,7 @@ struct boss_majordomo : public CreatureScript
                 m_creature->RemoveAllAurasOnEvade();
                 m_creature->DeleteThreatList();
                 m_creature->CombatStop(true);
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
 
                 // Set friendly
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);

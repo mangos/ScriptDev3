@@ -160,7 +160,7 @@ struct boss_nalorakk : public CreatureScript
                 m_creature->GetMotionMaster()->MovePoint(1, aBearEventInfo[m_uiCurrentWave].fX, aBearEventInfo[m_uiCurrentWave].fY, aBearEventInfo[m_uiCurrentWave].fZ);
             }
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }

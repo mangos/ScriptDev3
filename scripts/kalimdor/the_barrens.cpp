@@ -243,7 +243,7 @@ struct npc_taskmaster_fizzule : public CreatureScript
                 m_creature->CombatStop(true);
                 m_creature->LoadCreatureAddon(true);
 
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
 
                 m_creature->SetFactionTemporary(FACTION_FRIENDLY_F, TEMPFACTION_RESTORE_REACH_HOME);
                 m_creature->HandleEmote(EMOTE_ONESHOT_SALUTE);
@@ -955,7 +955,7 @@ struct npc_regthar_deathgate : public CreatureScript
                     if ((*itrh) == pKilled)
                     {
                         lSpawnListHorde.push_back(m_uiSpawnPosition);  //put spawnpoint in list
-                        (*itrh) = NULL;
+                        (*itrh) = nullptr;
                     }
                 }
                 if (m_uiWaitSummonTimerHorde < 1000)
@@ -974,7 +974,7 @@ struct npc_regthar_deathgate : public CreatureScript
                     if ((*itrh) == pKilled)
                     {
                         lSpawnListHorde.push_back(m_uiSpawnPosition);  //put spawnpoint in list
-                        (*itrh) = NULL;
+                        (*itrh) = nullptr;
                     }
                 }
                 if (m_uiWaitSummonTimerHorde < 1000)
@@ -1002,7 +1002,7 @@ struct npc_regthar_deathgate : public CreatureScript
                     if ((*itr) == pKilled)
                     {
                         lSpawnList.push_back(m_uiSpawnPosition);  //put spawnpoint in list
-                        (*itr) = NULL;
+                        (*itr) = nullptr;
                     }
                 }
             }
@@ -1019,7 +1019,7 @@ struct npc_regthar_deathgate : public CreatureScript
                     if ((*itr) == pKilled)
                     {
                         lSpawnList.push_back(m_uiSpawnPosition);  //put spawnpoint in list
-                        (*itr) = NULL;
+                        (*itr) = nullptr;
                     }
                 }
             }
@@ -1034,7 +1034,7 @@ struct npc_regthar_deathgate : public CreatureScript
             {
                 for (std::list<Creature*>::iterator itrh = lCreatureListHorde.begin(); itrh != lCreatureListHorde.end(); ++itrh)
                 {
-                    if ((*itrh) != NULL)
+                    if ((*itrh) != nullptr)
                     {
                         (*itrh)->ForcedDespawn();
                     }
@@ -1046,7 +1046,7 @@ struct npc_regthar_deathgate : public CreatureScript
             {
                 for (std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
                 {
-                    if ((*itr) != NULL)
+                    if ((*itr) != nullptr)
                     {
                         (*itr)->ForcedDespawn();
                     }
@@ -1216,7 +1216,7 @@ struct horde_defender : public CreatureScript
         {
             m_creature->RemoveAllAurasOnEvade();
 //            m_creature->DeleteThreatList();
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
         }
 
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*miscValue*/)
@@ -1324,7 +1324,7 @@ struct kolkar_invader : public CreatureScript
         {
             m_creature->RemoveAllAurasOnEvade();
             //m_creature->DeleteThreatList();
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
         }
 
         void MoveInLineOfSight(Unit* u) override
@@ -1402,7 +1402,7 @@ struct warlord_kromzar : public CreatureScript
             DoScriptText(YELL_STRONGEST, m_creature);
             m_creature->SummonCreature(NPC_KOLKAR_INVADER, SpawnPointsKromzar[0].fX, SpawnPointsKromzar[0].fY, SpawnPointsKromzar[0].fZ, SpawnPointsKromzar[0].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 40000);
             m_creature->SummonCreature(NPC_KOLKAR_STORMSEER, SpawnPointsKromzar[2].fX, SpawnPointsKromzar[2].fY, SpawnPointsKromzar[2].fZ, SpawnPointsKromzar[2].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 40000);
-            Start(false, NULL, NULL, false, true);
+            Start(false, nullptr, nullptr, false, true);
         }
 
         void UpdateEscortAI(const uint32 uiDiff) override

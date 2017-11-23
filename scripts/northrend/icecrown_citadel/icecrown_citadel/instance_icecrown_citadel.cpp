@@ -470,7 +470,7 @@ struct is_icecrown_citadel : public InstanceScript
             OUT_LOAD_INST_DATA_COMPLETE;
         }
 
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget = NULL, uint32 uiMiscvalue1 = 0) const override
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget = nullptr, uint32 uiMiscvalue1 = 0) const override
         {
             // @ToDo:
             return false;

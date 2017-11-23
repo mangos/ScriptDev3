@@ -331,7 +331,7 @@ struct npc_melizza_brimbuzzle : public CreatureScript
                 return m_creature;
             }
 
-            return NULL;
+            return nullptr;
         }
 
         void WaypointReached(uint32 uiPointId) override

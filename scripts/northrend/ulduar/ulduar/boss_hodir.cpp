@@ -169,7 +169,7 @@ struct boss_hodir : public CreatureScript
             if (m_creature->IsAlive() && !m_bEventFinished)
                 m_creature->GetMotionMaster()->MoveTargetedHome();
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }

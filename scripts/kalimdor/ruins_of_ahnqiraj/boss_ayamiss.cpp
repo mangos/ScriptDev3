@@ -148,7 +148,7 @@ struct boss_ayamiss : public CreatureScript
             // Cast feed on target
             if (Unit* pTarget = m_creature->GetMap()->GetUnit(m_paralyzeTarget))
             {
-                pSummoned->CastSpell(pTarget, SPELL_FEED, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pTarget, SPELL_FEED, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }
         }
 

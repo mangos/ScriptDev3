@@ -279,7 +279,7 @@ struct boss_selin_fireheart : public CreatureScript
                         Creature* pCrystalChosen = m_creature->GetMap()->GetCreature(m_crystalGuid);
                         if (pCrystalChosen && pCrystalChosen->IsAlive())
                         {
-                            pCrystalChosen->DealDamage(pCrystalChosen, pCrystalChosen->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                            pCrystalChosen->DealDamage(pCrystalChosen, pCrystalChosen->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                         }
 
                         m_uiManaRageTimer = 0;

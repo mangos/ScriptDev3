@@ -203,7 +203,7 @@ struct boss_lady_deathwhisper : public CreatureScript
             }
 
             if (vCultists.empty())
-                return NULL;
+                return nullptr;
 
             return vCultists[urand(0, vCultists.size() - 1)];
         }
@@ -407,7 +407,7 @@ struct spell_mana_barrier : public SpellScript
                 pCreatureTarget->RemoveAurasDueToSpell(SPELL_MANA_BARRIER);
 
                 if (CreatureAI* pBossAI = pCreatureTarget->AI())
-                    pBossAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)NULL, (Unit*)NULL, 0);
+                    pBossAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)nullptr, (Unit*)nullptr, 0);
             }
 
             pCreatureTarget->DealHeal(pCreatureTarget, uiDamage, GetSpellStore()->LookupEntry(SPELL_MANA_BARRIER));

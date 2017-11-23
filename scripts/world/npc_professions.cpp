@@ -531,7 +531,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
                 pPlayer->CLOSE_GOSSIP_MENU();
             }
             break;
@@ -552,7 +552,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -586,7 +586,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -606,7 +606,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -626,7 +626,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -818,7 +818,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -838,7 +838,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -858,7 +858,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -1043,7 +1043,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -1063,7 +1063,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;
@@ -1083,7 +1083,7 @@ private:
             }
             else
             {
-                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, NULL, NULL);
+                pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, nullptr, nullptr);
             }
             pPlayer->CLOSE_GOSSIP_MENU();
             break;

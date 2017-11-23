@@ -222,7 +222,7 @@ struct boss_thorim : public CreatureScript
             if (m_creature->IsAlive() && !m_bEventFinished)
                 m_creature->GetMotionMaster()->MoveTargetedHome();
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }
@@ -430,7 +430,7 @@ struct boss_thorim : public CreatureScript
             if (m_pInstance)
                 return m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_RANDOM_UPPER_BUNNY)));
 
-            return NULL;
+            return nullptr;
         }
 
         // function to return the closest ground Bunny
@@ -439,18 +439,18 @@ struct boss_thorim : public CreatureScript
             if (m_pInstance)
                 return m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_THORIM_BUNNY)));
 
-            return NULL;
+            return nullptr;
         }
 
         // function to return a random player from the arena
         Unit* GetRandomArenaPlayer()
         {
             if (!m_pInstance)
-                return NULL;
+                return nullptr;
 
             Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_THORIM_COMBAT_TRIGGER);
             if (!pTrigger)
-                return NULL;
+                return nullptr;
 
             std::vector<Unit*> suitableTargets;
             ThreatList const& threatList = m_creature->GetThreatManager().getThreatList();
@@ -469,7 +469,7 @@ struct boss_thorim : public CreatureScript
             {
                 m_uiBerserkTimer = 1000;
                 m_uiStormHammerTimer = 60000;
-                return NULL;
+                return nullptr;
             }
             else
                 return suitableTargets[urand(0, suitableTargets.size() - 1)];
@@ -707,7 +707,7 @@ struct boss_sif : public CreatureScript
             m_creature->RemoveAllAurasOnEvade();
             m_creature->DeleteThreatList();
             m_creature->CombatStop(true);
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }

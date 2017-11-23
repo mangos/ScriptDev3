@@ -185,7 +185,7 @@ struct boss_mandokir : public CreatureScript
                 m_creature->GetMotionMaster()->MovePoint(0, aMandokirDownstairsPos[0], aMandokirDownstairsPos[1], aMandokirDownstairsPos[2]);
             }
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }

@@ -105,7 +105,7 @@ struct item_arcane_charges : public ItemScript
             return false;
         }
 
-        pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
+        pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, nullptr);
 
         if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_ARCANE_CHARGES))
         {
@@ -140,7 +140,7 @@ struct item_flying_machine : public ItemScript
         }
 
         debug_log("SD3: Player attempt to use item %u, but did not meet riding requirement", itemId);
-        pPlayer->SendEquipError(EQUIP_ERR_CANT_EQUIP_SKILL, pItem, NULL);
+        pPlayer->SendEquipError(EQUIP_ERR_CANT_EQUIP_SKILL, pItem, nullptr);
         return true;
     }
 };
@@ -163,7 +163,7 @@ struct item_gor_dreks_ointment : public ItemScript
     {
         if (pTargets.getUnitTarget() && pTargets.getUnitTarget()->GetTypeId() == TYPEID_UNIT && pTargets.getUnitTarget()->HasAura(SPELL_GORDREKS_OINTMENT))
         {
-            pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
+            pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, nullptr);
 
             if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_GORDREKS_OINTMENT))
             {
@@ -200,7 +200,7 @@ struct item_petrov_cluster_bombs : public ItemScript
 
         if (!pPlayer->GetTransport() || pPlayer->GetAreaId() != AREA_ID_SHATTERED_STRAITS)
         {
-            pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, NULL);
+            pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, nullptr);
 
             if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_PETROV_BOMB))
                 Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_HERE);

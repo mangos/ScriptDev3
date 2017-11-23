@@ -124,7 +124,7 @@ struct npc_air_force_bots : public CreatureScript
     {
         npc_air_force_botsAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            m_pSpawnAssoc = NULL;
+            m_pSpawnAssoc = nullptr;
 
             // find the correct spawnhandling
             for (uint8 i = 0; i < countof(m_aSpawnAssociations); ++i)
@@ -147,7 +147,7 @@ struct npc_air_force_bots : public CreatureScript
                 if (!spawnedTemplate)
                 {
                     error_db_log("SD3: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
-                    m_pSpawnAssoc = NULL;
+                    m_pSpawnAssoc = nullptr;
                     return;
                 }
             }
@@ -167,7 +167,7 @@ struct npc_air_force_bots : public CreatureScript
             else
             {
                 error_db_log("SD3: npc_air_force_bots: wasn't able to spawn creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
-                m_pSpawnAssoc = NULL;
+                m_pSpawnAssoc = nullptr;
             }
 
             return pSummoned;
@@ -184,7 +184,7 @@ struct npc_air_force_bots : public CreatureScript
                 return pCreature;
             }
 
-            return NULL;
+            return nullptr;
         }
 
         void MoveInLineOfSight(Unit* pWho) override
@@ -196,7 +196,7 @@ struct npc_air_force_bots : public CreatureScript
 
             if (pWho->IsTargetableForAttack() && m_creature->IsHostileTo(pWho))
             {
-                Player* pPlayerTarget = pWho->GetTypeId() == TYPEID_PLAYER ? (Player*)pWho : NULL;
+                Player* pPlayerTarget = pWho->GetTypeId() == TYPEID_PLAYER ? (Player*)pWho : nullptr;
 
                 // airforce guards only spawn for players
                 if (!pPlayerTarget)
@@ -204,7 +204,7 @@ struct npc_air_force_bots : public CreatureScript
                     return;
                 }
 
-                Creature* pLastSpawnedGuard = m_spawnedGuid ? GetSummonedGuard() : NULL;
+                Creature* pLastSpawnedGuard = m_spawnedGuid ? GetSummonedGuard() : nullptr;
 
                 // prevent calling GetCreature at next MoveInLineOfSight call - speedup
                 if (!pLastSpawnedGuard)
@@ -798,7 +798,7 @@ struct npc_injured_patient : public CreatureScript
         void Reset() override
         {
             m_doctorGuid.Clear();
-            m_pCoord = NULL;
+            m_pCoord = nullptr;
 
             // no select
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -1341,13 +1341,13 @@ struct npc_spring_rabbit : public CreatureScript
         }
 
         // Helper to get the Other Bunnies AI
-        npc_spring_rabbitAI* GetPartnerAI(Creature* pBunny = NULL)
+        npc_spring_rabbitAI* GetPartnerAI(Creature* pBunny = nullptr)
         {
             if (!pBunny)
                 pBunny = m_creature->GetMap()->GetAnyTypeCreature(m_partnerGuid);
 
             if (!pBunny)
-                return NULL;
+                return nullptr;
 
             return dynamic_cast<npc_spring_rabbitAI*>(pBunny->AI());
         }
@@ -1725,7 +1725,7 @@ struct npc_burster_worm : public CreatureScript
             m_creature->DeleteThreatList();
             m_creature->CombatStop(true);
             m_creature->LoadCreatureAddon(true);
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             // add submerge aura
             if (DoCastSpellIfCan(m_creature, SPELL_SANDWORM_SUBMERGE_VISUAL, CAST_FORCE_CAST | CAST_AURA_NOT_PRESENT) == CAST_OK)

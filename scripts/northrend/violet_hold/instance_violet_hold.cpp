@@ -397,7 +397,7 @@ struct is_violet_hold : public InstanceScript
                     break;
                 case FAIL:
                     if (Creature* pSinclari = GetSingleCreatureFromStorage(NPC_SINCLARI))
-                        pSinclari->DealDamage(pSinclari, pSinclari->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        pSinclari->DealDamage(pSinclari, pSinclari->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                     if (Creature* pController = GetSingleCreatureFromStorage(NPC_EVENT_CONTROLLER))
                         pController->AI()->EnterEvadeMode();
                     // Reset the event (creature cleanup is handled in creature_linking)
@@ -660,7 +660,7 @@ struct is_violet_hold : public InstanceScript
             }
 
             if (!mEntry)
-                return NULL;
+                return nullptr;
 
             for (uint8 i = 0; i < MAX_MINIBOSSES; ++i)
             {
@@ -668,7 +668,7 @@ struct is_violet_hold : public InstanceScript
                     return &aBossInformation[i];
             }
 
-            return NULL;
+            return nullptr;
         }
 
         void SetIntroPortals(bool bDeactivate)

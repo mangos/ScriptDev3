@@ -452,7 +452,7 @@ struct aura_sacrifice_beam : public AuraScript
                 if (ScriptedInstance* pInstance = (ScriptedInstance*)pTarget->GetInstanceData())
                 {
                     if (Creature* pJedoga = pInstance->GetSingleCreatureFromStorage(NPC_JEDOGA_SHADOWSEEKER))
-                        pJedoga->DealDamage(pTarget, pTarget->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        pJedoga->DealDamage(pTarget, pTarget->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                 }
             }
         }

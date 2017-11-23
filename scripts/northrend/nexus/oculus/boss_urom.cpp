@@ -216,7 +216,7 @@ struct boss_urom : public CreatureScript
                 m_creature->DeleteThreatList();
                 m_creature->CombatStop(true);
 
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
 
                 ResetPlatformVariables();
             }

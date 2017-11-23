@@ -294,7 +294,7 @@ struct is_shattered_halls : public InstanceScript
             }
 
             script_error_log("instance_shattered_halls::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
-                uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "NULL", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "NULL", conditionSourceType);
+                uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "nullptr", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "nullptr", conditionSourceType);
             return false;
         }
 
@@ -313,7 +313,7 @@ struct is_shattered_halls : public InstanceScript
                     // Kill the officer
                     if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeam == ALLIANCE ? NPC_OFFICER_ALLIANCE : NPC_OFFICER_HORDE))
                     {
-                        pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                     }
 
                     // Make Kargath yell
@@ -326,7 +326,7 @@ struct is_shattered_halls : public InstanceScript
                 case 1:
                     if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeam == ALLIANCE ? NPC_SOLDIER_ALLIANCE_2 : NPC_SOLDIER_HORDE_2))
                     {
-                        pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                     }
 
                     DoCastGroupDebuff(SPELL_KARGATH_EXECUTIONER_3);
@@ -335,7 +335,7 @@ struct is_shattered_halls : public InstanceScript
                 case 2:
                     if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeam == ALLIANCE ? NPC_SOLDIER_ALLIANCE_3 : NPC_SOLDIER_HORDE_3))
                     {
-                        pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                     }
 
                     SetData(TYPE_EXECUTION, FAIL);

@@ -116,7 +116,7 @@ struct generic_creature : public CreatureScript
                 if (m_creature->isAttackReady())
                 {
                     bool Healing = false;
-                    SpellEntry const* info = NULL;
+                    SpellEntry const* info = nullptr;
 
                     // Select a healing spell if less than 30% hp
                     if (m_creature->GetHealthPercent() < 30.0f)
@@ -146,7 +146,7 @@ struct generic_creature : public CreatureScript
             else
             {
                 bool Healing = false;
-                SpellEntry const* info = NULL;
+                SpellEntry const* info = nullptr;
 
                 // Select a healing spell if less than 30% hp ONLY 33% of the time
                 if (m_creature->GetHealthPercent() < 30.0f && !urand(0, 2))

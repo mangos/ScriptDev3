@@ -670,7 +670,7 @@ struct is_karazhan : public InstanceScript
             {
                 if (Creature* nightbane = instance->GetCreature(m_mNpcEntryGuidStore.find(NPC_NIGHTBANE)->second))
                 {
-                    Unit* pChosenTrigger = NULL;
+                    Unit* pChosenTrigger = nullptr;
                     for (GuidList::const_iterator itr = lList.begin(); itr != lList.end(); ++itr)
                     {
                         if (Creature* pTrigger = instance->GetCreature(*itr))

@@ -82,7 +82,7 @@ struct boss_azuregos : public CreatureScript
             // Mark killed players with Mark of Frost
             if (pVictim->GetTypeId() == TYPEID_PLAYER)
             {
-                pVictim->CastSpell(pVictim, SPELL_MARK_OF_FROST_PLAYER, true, NULL, NULL, m_creature->GetObjectGuid());
+                pVictim->CastSpell(pVictim, SPELL_MARK_OF_FROST_PLAYER, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }
         }
 

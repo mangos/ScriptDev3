@@ -371,7 +371,7 @@ struct mob_molten_golem : public CreatureScript
             m_creature->CombatStop(true);
             m_creature->LoadCreatureAddon(true);
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             // Update creature to Brittle Golem
             // Note: the npc has the proper flags in DB and won't engate in combat anymore
@@ -398,7 +398,7 @@ struct mob_molten_golem : public CreatureScript
             if (pSpell->Id == SPELL_SHATTER || pSpell->Id == SPELL_SHATTER_H)
             {
                 if (m_creature->GetEntry() == NPC_BRITTLE_GOLEM)
-                    m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
             }
         }
 

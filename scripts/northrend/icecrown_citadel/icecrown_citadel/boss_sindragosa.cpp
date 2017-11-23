@@ -558,7 +558,7 @@ struct npc_rimefang_icc : public CreatureScript
             if (m_creature->IsAlive())
                 m_creature->GetMotionMaster()->MovePoint(RIMEFANG_POINT_INITIAL_LAND, SindragosaPosition[3][0], SindragosaPosition[3][1], SindragosaPosition[3][2], false);
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }
@@ -737,7 +737,7 @@ struct npc_spinestalker_icc : public CreatureScript
             if (m_creature->IsAlive())
                 m_creature->GetMotionMaster()->MovePoint(SPINESTALKER_POINT_INITIAL_LAND, SindragosaPosition[5][0], SindragosaPosition[5][1], SindragosaPosition[5][2]);
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }

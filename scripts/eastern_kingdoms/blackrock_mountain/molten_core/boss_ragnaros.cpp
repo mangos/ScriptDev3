@@ -196,7 +196,7 @@ struct boss_ragnaros : public CreatureScript
             }
             else if (pSummoned->GetEntry() == NPC_FLAME_OF_RAGNAROS)
             {
-                pSummoned->CastSpell(pSummoned, SPELL_INTENSE_HEAT, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_INTENSE_HEAT, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }
         }
 

@@ -406,7 +406,7 @@ struct npc_blastmaster_emi_shortfuse : public CreatureScript
                         m_uiPhaseTimer = 3500;              // 6s delay, but 2500ms for escortstarting
                         break;
                     case 3:
-                        Start(false, m_creature->GetMap()->GetPlayer(m_playerGuid), NULL, false, false);
+                        Start(false, m_creature->GetMap()->GetPlayer(m_playerGuid), nullptr, false, false);
                         m_uiPhaseTimer = 0;
                         break;
 

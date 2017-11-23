@@ -1346,7 +1346,7 @@ struct npc_lord_illidan_stormrage : public CreatureScript
                 uint8 uiDeadMemberCount = 0;
                 uint8 uiFailedMemberCount = 0;
 
-                for (GroupReference* pRef = pEventGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
+                for (GroupReference* pRef = pEventGroup->GetFirstMember(); pRef != nullptr; pRef = pRef->next())
                 {
                     if (Player* pMember = pRef->getSource())
                     {
@@ -1379,7 +1379,7 @@ struct npc_lord_illidan_stormrage : public CreatureScript
 
                 if (pEventGroup->GetMembersCount() == uiDeadMemberCount)
                 {
-                    for (GroupReference* pRef = pEventGroup->GetFirstMember(); pRef != NULL; pRef = pRef->next())
+                    for (GroupReference* pRef = pEventGroup->GetFirstMember(); pRef != nullptr; pRef = pRef->next())
                     {
                         if (Player* pMember = pRef->getSource())
                         {
@@ -1909,7 +1909,7 @@ struct npc_spawned_oronok_tornheart : public CreatureScript
             case NPC_REDEEMED_SPIRIT_OF_FIRE:   return m_creature->GetMap()->GetCreature(m_fireSpiritGuid);
 
             default:
-                return NULL;
+                return nullptr;
             }
         }
 
@@ -1948,7 +1948,7 @@ struct npc_spawned_oronok_tornheart : public CreatureScript
             m_creature->CombatStop(true);
             m_creature->LoadCreatureAddon(true);
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
 

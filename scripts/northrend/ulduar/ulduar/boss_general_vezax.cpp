@@ -256,7 +256,7 @@ struct boss_general_vezax : public CreatureScript
                                   if (Creature* pBunny = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_VEZAX_ANIMUS))))
                                   {
                                       pBunny->RemoveAurasDueToSpell(SPELL_ANIMUS_FORMATION);
-                                      pBunny->CastSpell(pBunny, SPELL_SUMMON_ANIMUS, true, NULL, NULL, m_creature->GetObjectGuid());
+                                      pBunny->CastSpell(pBunny, SPELL_SUMMON_ANIMUS, true, nullptr, nullptr, m_creature->GetObjectGuid());
                                   }
                               }
                               m_uiHardModeTimer = 0;
@@ -279,7 +279,7 @@ struct boss_general_vezax : public CreatureScript
                     {
                         if (Creature* pBunny = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_VEZAX_VAPOR))))
                         {
-                            pBunny->CastSpell(pBunny, SPELL_SUMMON_VAPORS, true, NULL, NULL, m_creature->GetObjectGuid());
+                            pBunny->CastSpell(pBunny, SPELL_SUMMON_VAPORS, true, nullptr, nullptr, m_creature->GetObjectGuid());
                             DoScriptText(EMOTE_VAPOR, m_creature);
 
                             m_uiSaroniteVaporTimer = 30000;

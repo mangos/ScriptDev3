@@ -206,7 +206,7 @@ struct boss_novos : public CreatureScript
             {
                 m_pInstance->SetData64(DATA64_NOVOS_CRYSTAL_HANDLER, pSummoned->GetObjectGuid().GetRawValue());
                 if (Creature* pTarget = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_NOVOS_CRYSTAL_HANDLER))))
-                    pSummoned->CastSpell(pTarget, aCrystalHandlerDeathSpells[m_pInstance->GetData(TYPE_DATA_NOVOS_CRYSTAL_INDEX)], true, NULL, NULL, m_creature->GetObjectGuid());
+                    pSummoned->CastSpell(pTarget, aCrystalHandlerDeathSpells[m_pInstance->GetData(TYPE_DATA_NOVOS_CRYSTAL_INDEX)], true, nullptr, nullptr, m_creature->GetObjectGuid());
             }
         }
 
@@ -244,7 +244,7 @@ struct boss_novos : public CreatureScript
                 if (m_uiSummonShadowcasterTimer < uiDiff)
                 {
                     if (Creature* pSummoner = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_NOVOS_SUMMON_DUMMY))))
-                        pSummoner->CastSpell(pSummoner, SPELL_SUMMON_RISON_SHADOWCASTER, false, NULL, NULL, m_creature->GetObjectGuid());
+                        pSummoner->CastSpell(pSummoner, SPELL_SUMMON_RISON_SHADOWCASTER, false, nullptr, nullptr, m_creature->GetObjectGuid());
                     m_uiSummonShadowcasterTimer = 25000;
                 }
                 else
@@ -253,7 +253,7 @@ struct boss_novos : public CreatureScript
                 if (m_uiSummonFetidTrollTimer < uiDiff)
                 {
                     if (Creature* pSummoner = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_NOVOS_SUMMON_DUMMY))))
-                        pSummoner->CastSpell(pSummoner, SPELL_SUMMON_FETID_TROLL_CORPSE, false, NULL, NULL, m_creature->GetObjectGuid());
+                        pSummoner->CastSpell(pSummoner, SPELL_SUMMON_FETID_TROLL_CORPSE, false, nullptr, nullptr, m_creature->GetObjectGuid());
                     m_uiSummonFetidTrollTimer = 5000;
                 }
                 else
@@ -262,7 +262,7 @@ struct boss_novos : public CreatureScript
                 if (m_uiSummonHulkingCorpseTimer < uiDiff)
                 {
                     if (Creature* pSummoner = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_NOVOS_SUMMON_DUMMY))))
-                        pSummoner->CastSpell(pSummoner, SPELL_SUMMON_HULKING_CORPSE, false, NULL, NULL, m_creature->GetObjectGuid());
+                        pSummoner->CastSpell(pSummoner, SPELL_SUMMON_HULKING_CORPSE, false, nullptr, nullptr, m_creature->GetObjectGuid());
                     m_uiSummonHulkingCorpseTimer = 30000;
                 }
                 else

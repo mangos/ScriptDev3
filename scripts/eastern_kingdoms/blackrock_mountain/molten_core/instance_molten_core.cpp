@@ -234,7 +234,7 @@ struct is_molten_core : public InstanceScript
                     int32 bp0 = 0;
                     if (Creature* firesworn = instance->GetCreature(guid))
                         if (firesworn->IsAlive())
-                            firesworn->CastCustomSpell(firesworn, SPELL_SEPARATION_ANXIETY, &bp0, NULL, NULL, true);
+                            firesworn->CastCustomSpell(firesworn, SPELL_SEPARATION_ANXIETY, &bp0, nullptr, nullptr, true);
                 }
                 return;
             }
@@ -401,7 +401,7 @@ struct is_molten_core : public InstanceScript
                 if (m_aMoltenCoreRunes[i].m_bossType == uiType)
                     return &m_aMoltenCoreRunes[i];
 
-            return NULL;
+            return nullptr;
         }
 
         sRuneEncounters const *GetRuneStructForTrapEntry(uint32 entry) const
@@ -410,7 +410,7 @@ struct is_molten_core : public InstanceScript
             if (m_aMoltenCoreRunes[i].m_uiTrapEntry == entry)
                 return &m_aMoltenCoreRunes[i];
 
-            return NULL;
+            return nullptr;
         }
 
         void SetRuneDoused(sRuneEncounters const* rstr)

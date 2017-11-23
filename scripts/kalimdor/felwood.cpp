@@ -854,7 +854,7 @@ struct npc_arei : public CreatureScript
             if (uiEntry == NPC_AREI)
                 return m_creature;
 
-            return NULL;
+            return nullptr;
         }
 
         void JustDidDialogueStep(int32 iEntry) override

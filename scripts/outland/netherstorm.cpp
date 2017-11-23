@@ -174,7 +174,7 @@ struct npc_manaforge_control_console : public CreatureScript
 
         void DoWaveSpawnForCreature(Creature* pCreature)
         {
-            Creature* pAdd = NULL;
+            Creature* pAdd = nullptr;
 
             switch (pCreature->GetEntry())
             {
@@ -255,7 +255,7 @@ struct npc_manaforge_control_console : public CreatureScript
 
         void DoFinalSpawnForCreature(Creature* pCreature)
         {
-            Creature* pAdd = NULL;
+            Creature* pAdd = nullptr;
 
             switch (pCreature->GetEntry())
             {
@@ -405,7 +405,7 @@ struct go_manaforge_control_console : public GameObjectScript
             pPlayer->SendPreparedQuest(pGo->GetObjectGuid());
         }
 
-        Creature* pManaforge = NULL;
+        Creature* pManaforge = nullptr;
 
         switch (pGo->GetAreaId())
         {

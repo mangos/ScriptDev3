@@ -575,7 +575,7 @@ struct spell_vh_portal_periodic : public SpellScript
         if (uiSpellId == SPELL_PORTAL_PERIODIC && uiEffIndex == EFFECT_INDEX_0)
         {
             if (CreatureAI* pPortalAI = pTarget->ToCreature()->AI())
-                pPortalAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)NULL, (Unit*)NULL, 0);
+                pPortalAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)nullptr, (Unit*)nullptr, 0);
 
             // always return true when we are handling this spell and effect
             return true;

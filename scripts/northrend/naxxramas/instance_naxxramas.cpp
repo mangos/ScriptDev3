@@ -530,7 +530,7 @@ struct is_naxxramas : public InstanceScript
                     if (Creature* pTesla = instance->GetCreature(*itr))
                     {
                         if (CreatureAI* pTeslaAI = pTesla->AI())
-                            pTeslaAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)NULL, (Unit*)NULL, 0);
+                            pTeslaAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)nullptr, (Unit*)nullptr, 0);
                     }
                 }
                 return;
@@ -540,7 +540,7 @@ struct is_naxxramas : public InstanceScript
                     if (Creature* pTesla = instance->GetCreature(*itr))
                     {
                         if (CreatureAI* pTeslaAI = pTesla->AI())
-                            pTeslaAI->ReceiveAIEvent(AI_EVENT_CUSTOM_B, (Creature*)NULL, (Unit*)NULL, uiData);
+                            pTeslaAI->ReceiveAIEvent(AI_EVENT_CUSTOM_B, (Creature*)nullptr, (Unit*)nullptr, uiData);
                     }
                 }
                 return;

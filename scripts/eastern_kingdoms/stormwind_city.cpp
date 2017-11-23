@@ -426,7 +426,7 @@ struct npc_squire_rowe : public CreatureScript
                 return m_creature->GetMap()->GetCreature(m_windsorGuid);
             }
 
-            return NULL;
+            return nullptr;
         }
 
         // Check if the event is already running
@@ -1216,8 +1216,8 @@ struct npc_tyrion_spybot : public CreatureScript
 
         void Reset()
         {
-            pLescovar = NULL;
-            pTyrion = NULL;
+            pLescovar = nullptr;
+            pTyrion = nullptr;
             uiTimer = 0;
             uiPhase = 0;
         }

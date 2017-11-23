@@ -251,7 +251,7 @@ struct boss_felblood_kaelthas : public CreatureScript
                 break;
             case NPC_PHOENIX_EGG:
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                 break;
             }
         }
@@ -271,7 +271,7 @@ struct boss_felblood_kaelthas : public CreatureScript
         {
             if (pSummoned->GetEntry() == NPC_FLAME_STRIKE_TRIGGER)
             {
-                pSummoned->CastSpell(pSummoned, SPELL_FLAME_STRIKE_DUMMY, false, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_FLAME_STRIKE_DUMMY, false, nullptr, nullptr, m_creature->GetObjectGuid());
             }
             else
             {
@@ -594,7 +594,7 @@ struct mob_felkael_phoenix : public CreatureScript
             // Self kill if the egg is killed
             if (m_bFakeDeath)
             {
-                m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
             }
         }
 
@@ -621,7 +621,7 @@ struct mob_felkael_phoenix : public CreatureScript
                 }
                 else
                 {
-                    m_creature->DealDamage(m_creature, uiDmg, 0, DOT, SPELL_SCHOOL_MASK_FIRE, NULL, false);
+                    m_creature->DealDamage(m_creature, uiDmg, 0, DOT, SPELL_SCHOOL_MASK_FIRE, nullptr, false);
                 }
 
                 m_uiBurnTimer = 2000;
@@ -702,7 +702,7 @@ struct mob_arcane_sphere : public CreatureScript
             // Should despawn when aura 44251 expires
             if (m_uiDespawnTimer < uiDiff)
             {
-                m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                 m_uiDespawnTimer = 0;
             }
             else

@@ -1051,7 +1051,7 @@ struct spell_throw_gordawg_boulder : public SpellScript
 
             if (pCreatureTarget->getVictim())
             {
-                pCaster->DealDamage(pCreatureTarget, pCreatureTarget->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                pCaster->DealDamage(pCreatureTarget, pCreatureTarget->GetMaxHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                 return true;
             }
 
@@ -1102,7 +1102,7 @@ struct spell_throw_gordawg_boulder : public SpellScript
  //               if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 5 * INTERACTION_DISTANCE))
  //                   DoScriptText(urand(0, 1) ? SAY_DROSTAN_HIT_BIRD_1 : SAY_DROSTAN_HIT_BIRD_2, pDrostan);
 
- //               pCreatureTarget->DealDamage(pCreatureTarget, pCreatureTarget->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+ //               pCreatureTarget->DealDamage(pCreatureTarget, pCreatureTarget->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
  //           }
  //           return true;
  //       }

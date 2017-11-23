@@ -270,7 +270,7 @@ struct boss_priestess_delrissa : public CreatureScript
 
             if (m_uiDispelTimer < uiDiff)
             {
-                Unit* pTarget = NULL;
+                Unit* pTarget = nullptr;
                 std::list<Creature*> lTempList = DoFindFriendlyCC(50.0f);
 
                 if (!lTempList.empty())
@@ -1511,7 +1511,7 @@ struct npc_zelfan : public CreatureScript
             if (m_uiRecombobulateTimer < uiDiff)
             {
                 // Note: this should be casted only on Polyformed targets
-                Unit* pTarget = NULL;
+                Unit* pTarget = nullptr;
                 std::list<Creature*> lTempList = DoFindFriendlyCC(50.0f);
 
                 if (!lTempList.empty())

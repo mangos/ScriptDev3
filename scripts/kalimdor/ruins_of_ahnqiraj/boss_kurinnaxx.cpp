@@ -122,7 +122,7 @@ struct boss_kurinnaxx : public CreatureScript
                     pTarget = m_creature->getVictim();
                 }
 
-                pTarget->CastSpell(pTarget, SPELL_SANDTRAP, true, NULL, NULL, m_creature->GetObjectGuid());
+                pTarget->CastSpell(pTarget, SPELL_SANDTRAP, true, nullptr, nullptr, m_creature->GetObjectGuid());
                 m_uiSandTrapTimer = urand(10000, 15000);
             }
             else

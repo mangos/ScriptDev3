@@ -172,7 +172,7 @@ struct boss_gluth : public CreatureScript
                     // Devour a Zombie
                     if (pZombie->IsWithinDistInMap(m_creature, 15.0f))
                     {
-                        m_creature->DealDamage(pZombie, pZombie->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        m_creature->DealDamage(pZombie, pZombie->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                     }
                 }
             }

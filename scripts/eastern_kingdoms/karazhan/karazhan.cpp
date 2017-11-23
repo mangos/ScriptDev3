@@ -242,7 +242,7 @@ struct npc_barnes : public CreatureScript
                 DoScriptText(SAY_BARNES_EVENT_START, pCreature);
                 // start the stage escort
                 if (npc_barnesAI* pBarnesAI = dynamic_cast<npc_barnesAI*>(pCreature->AI()))
-                { pBarnesAI->Start(false, NULL, NULL, true); }
+                { pBarnesAI->Start(false, nullptr, nullptr, true); }
                 break;
                 // GM gossip options
             case GOSSIP_ACTION_INFO_DEF+3:

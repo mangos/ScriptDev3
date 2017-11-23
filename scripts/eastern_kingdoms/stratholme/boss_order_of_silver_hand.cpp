@@ -134,7 +134,7 @@ struct boss_silver_hand_bosses : public CreatureScript
 
         bool CanUseSpecialAbility(uint32 uiIndex)
         {
-            Unit* pTarget = NULL;
+            Unit* pTarget = nullptr;
 
             switch (m_aSilverHandAbility[uiIndex].m_uiTargetType)
             {

@@ -150,19 +150,19 @@ struct Script
     Script() : Name(""), Type(SCRIPTED_MAX_TYPE) {}
     Script(ScriptedObjectType type, const char* name) : Name(name), Type(type) {}
 
-    CreatureScript* ToCreatureScript() { return Type == SCRIPTED_UNIT && IsValid() ? (CreatureScript*)this : NULL; }
-    GameObjectScript* ToGameObjectScript() { return Type == SCRIPTED_GAMEOBJECT && IsValid() ? (GameObjectScript*)this : NULL; }
-    ItemScript* ToItemScript() { return Type == SCRIPTED_ITEM && IsValid() ? (ItemScript*)this : NULL; }
-    AreaTriggerScript* ToAreaTriggerScript() { return Type == SCRIPTED_AREATRIGGER && IsValid() ? (AreaTriggerScript*)this : NULL; }
-    MapEventScript* ToMapEventScript() { return Type == SCRIPTED_MAPEVENT && IsValid() ? (MapEventScript*)this : NULL; }
-    ZoneScript* ToZoneScript() { return Type == SCRIPTED_MAP && IsValid() ? (ZoneScript*)this : NULL; }
-    OutdoorPvPScript* ToOutdoorPvPScript() { return Type == SCRIPTED_PVP_ZONE && IsValid() ? (OutdoorPvPScript*)this : NULL; }
-    BattleGroundScript* ToBattleGroundScript() { return Type == SCRIPTED_BATTLEGROUND && IsValid() ? (BattleGroundScript*)this : NULL; }
-    InstanceScript* ToInstanceScript() { return Type == SCRIPTED_INSTANCE && IsValid() ? (InstanceScript*)this : NULL; }
-    SpellScript* ToSpellScript() { return Type == SCRIPTED_SPELL && IsValid() ? (SpellScript*)this : NULL; }
-    AuraScript* ToAuraScript() { return Type == SCRIPTED_AURASPELL && IsValid() ? (AuraScript*)this : NULL; }
-    ConditionScript* ToConditionScript() { return Type == SCRIPTED_CONDITION && IsValid() ? (ConditionScript*)this : NULL; }
-    AchievementScript* ToAchievementScript() { return Type == SCRIPTED_ACHIEVEMENT && IsValid() ? (AchievementScript*)this : NULL; }
+    CreatureScript* ToCreatureScript() { return Type == SCRIPTED_UNIT && IsValid() ? (CreatureScript*)this : nullptr; }
+    GameObjectScript* ToGameObjectScript() { return Type == SCRIPTED_GAMEOBJECT && IsValid() ? (GameObjectScript*)this : nullptr; }
+    ItemScript* ToItemScript() { return Type == SCRIPTED_ITEM && IsValid() ? (ItemScript*)this : nullptr; }
+    AreaTriggerScript* ToAreaTriggerScript() { return Type == SCRIPTED_AREATRIGGER && IsValid() ? (AreaTriggerScript*)this : nullptr; }
+    MapEventScript* ToMapEventScript() { return Type == SCRIPTED_MAPEVENT && IsValid() ? (MapEventScript*)this : nullptr; }
+    ZoneScript* ToZoneScript() { return Type == SCRIPTED_MAP && IsValid() ? (ZoneScript*)this : nullptr; }
+    OutdoorPvPScript* ToOutdoorPvPScript() { return Type == SCRIPTED_PVP_ZONE && IsValid() ? (OutdoorPvPScript*)this : nullptr; }
+    BattleGroundScript* ToBattleGroundScript() { return Type == SCRIPTED_BATTLEGROUND && IsValid() ? (BattleGroundScript*)this : nullptr; }
+    InstanceScript* ToInstanceScript() { return Type == SCRIPTED_INSTANCE && IsValid() ? (InstanceScript*)this : nullptr; }
+    SpellScript* ToSpellScript() { return Type == SCRIPTED_SPELL && IsValid() ? (SpellScript*)this : nullptr; }
+    AuraScript* ToAuraScript() { return Type == SCRIPTED_AURASPELL && IsValid() ? (AuraScript*)this : nullptr; }
+    ConditionScript* ToConditionScript() { return Type == SCRIPTED_CONDITION && IsValid() ? (ConditionScript*)this : nullptr; }
+    AchievementScript* ToAchievementScript() { return Type == SCRIPTED_ACHIEVEMENT && IsValid() ? (AchievementScript*)this : nullptr; }
 };
 
 struct CreatureScript : public Script
@@ -179,7 +179,7 @@ struct CreatureScript : public Script
     virtual bool OnSpellClick(Player*, Creature*, uint32) { return false; }
 #endif
 
-    virtual CreatureAI* GetAI(Creature*) { return NULL; }
+    virtual CreatureAI* GetAI(Creature*) { return nullptr; }
 };
 
 struct GameObjectScript : public Script
@@ -226,7 +226,7 @@ struct ZoneScript : public Script
 
     virtual bool OnMapEvent(uint32, Object*, Object*, bool) { return false; }
 
-    virtual InstanceData* GetInstanceData(Map*) { return NULL; }
+    virtual InstanceData* GetInstanceData(Map*) { return nullptr; }
 };
 
 struct OutdoorPvPScript : public ZoneScript
@@ -280,7 +280,7 @@ struct AchievementScript : public Script
 // ************* Some functions used globally **************
 
 // Generic scripting text function
-void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget = NULL);
-void DoOrSimulateScriptTextForMap(int32 iTextEntry, uint32 uiCreatureEntry, Map* pMap, Creature* pCreatureSource = NULL, Unit* pTarget = NULL);
+void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget = nullptr);
+void DoOrSimulateScriptTextForMap(int32 iTextEntry, uint32 uiCreatureEntry, Map* pMap, Creature* pCreatureSource = nullptr, Unit* pTarget = nullptr);
 
 #endif

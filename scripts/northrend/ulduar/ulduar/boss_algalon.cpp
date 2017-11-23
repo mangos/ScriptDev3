@@ -352,12 +352,12 @@ struct boss_algalon : public CreatureScript
                 pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_SPAWN_VISUAL, true);
                 pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_STATE, true);
                 pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_TRIGG, true);
-                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_VOID_ZONE_VISUAL, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_VOID_ZONE_VISUAL, true, nullptr, nullptr, m_creature->GetObjectGuid());
                 m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
                 break;
             case NPC_WORM_HOLE:
                 pSummoned->CastSpell(pSummoned, SPELL_WORM_HOLE_TRIGGER, true);
-                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_VOID_ZONE_VISUAL, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_VOID_ZONE_VISUAL, true, nullptr, nullptr, m_creature->GetObjectGuid());
                 m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
                 break;
             case NPC_VOID_ZONE_VISUAL:
@@ -372,7 +372,7 @@ struct boss_algalon : public CreatureScript
             if (pSummoned->GetEntry() == NPC_COLLAPSING_STAR)
             {
                 pSummoned->CastSpell(pSummoned, m_bIsRegularMode ? SPELL_BLACK_HOLE_EXPLOSION : SPELL_BLACK_HOLE_EXPLOSION_H, true);
-                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_BLACK_HOLE, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_BLACK_HOLE, true, nullptr, nullptr, m_creature->GetObjectGuid());
                 --m_uiActiveStars;
                 // Note: there should be some emote here informing the players how many Black Holes are spawned
             }
@@ -698,7 +698,7 @@ struct npc_worm_hole : public CreatureScript
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_WORM_HOLE_PHASE)
-                pTarget->CastSpell(pTarget, SPELL_BLACK_HOLE_DMG, true, NULL, NULL, m_creature->GetObjectGuid());
+                pTarget->CastSpell(pTarget, SPELL_BLACK_HOLE_DMG, true, nullptr, nullptr, m_creature->GetObjectGuid());
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -758,7 +758,7 @@ struct npc_black_hole : public CreatureScript
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_BLACK_HOLE_PHASE)
-                pTarget->CastSpell(pTarget, SPELL_BLACK_HOLE_DMG, true, NULL, NULL, m_creature->GetObjectGuid());
+                pTarget->CastSpell(pTarget, SPELL_BLACK_HOLE_DMG, true, nullptr, nullptr, m_creature->GetObjectGuid());
         }
 
         void AttackStart(Unit* /*pWho*/) override { }

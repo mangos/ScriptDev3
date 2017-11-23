@@ -175,7 +175,7 @@ struct boss_devourer_of_souls : public CreatureScript
             if (pSummoned->GetEntry() == NPC_WELL_OF_SOULS)
             {
                 m_lWellGuids.push_back(pSummoned->GetObjectGuid());
-                pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_TRIGGER, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_TRIGGER, true, nullptr, nullptr, m_creature->GetObjectGuid());
                 // Commented as of not stacking auras
                 // pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_VISUAL1, true);
                 // pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_VISUAL2, true);

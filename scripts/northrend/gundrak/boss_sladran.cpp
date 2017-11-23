@@ -169,7 +169,7 @@ struct boss_sladran : public CreatureScript
                         if (!urand(0, 4))
                             DoScriptText(SAY_SUMMON_CONSTRICTOR, m_creature);
 
-                        pSummonTarget->CastSpell(pSummonTarget, SPELL_SUMMON_CONSTRICTOR, false, NULL, NULL, m_creature->GetObjectGuid());
+                        pSummonTarget->CastSpell(pSummonTarget, SPELL_SUMMON_CONSTRICTOR, false, nullptr, nullptr, m_creature->GetObjectGuid());
                     }
                     else
                     {
@@ -177,7 +177,7 @@ struct boss_sladran : public CreatureScript
                         if (!urand(0, 4))
                             DoScriptText(SAY_SUMMON_SNAKE, m_creature);
 
-                        pSummonTarget->CastSpell(pSummonTarget, SPELL_SUMMON_VIPER, false, NULL, NULL, m_creature->GetObjectGuid());
+                        pSummonTarget->CastSpell(pSummonTarget, SPELL_SUMMON_VIPER, false, nullptr, nullptr, m_creature->GetObjectGuid());
                     }
                 }
 

@@ -350,7 +350,7 @@ struct is_uldaman : public InstanceScript
 
             if (lTemp.empty())
             {
-                return NULL;
+                return nullptr;
             }
 
             lTemp.sort(ObjectDistanceOrder(pSearcher));

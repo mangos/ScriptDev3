@@ -137,7 +137,7 @@ struct boss_ossirian : public CreatureScript
                 return;
             }
 
-            Creature* pOssirianTrigger = NULL;
+            Creature* pOssirianTrigger = nullptr;
             if (m_uiCrystalPosition == 0)
             {
                 // Respawn static spawned crystal trigger

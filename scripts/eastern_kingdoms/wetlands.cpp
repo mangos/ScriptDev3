@@ -221,7 +221,7 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             if (uiEntry == NPC_TAPOKE_SLIM_JAHN)
                 return m_creature;
 
-            return NULL;
+            return nullptr;
         }
 
 

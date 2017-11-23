@@ -413,7 +413,7 @@ struct boss_victor_nefarius : public CreatureScript
     CreatureAI* GetAI(Creature* pCreature) override
     {
         // Check the map id because the same creature entry is involved in other scripted event in other instance
-        return pCreature->GetMapId() == MAP_ID_BWL ? new boss_victor_nefariusAI(pCreature) : NULL;
+        return pCreature->GetMapId() == MAP_ID_BWL ? new boss_victor_nefariusAI(pCreature) : nullptr;
     }
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override

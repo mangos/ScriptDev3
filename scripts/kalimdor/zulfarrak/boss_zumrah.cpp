@@ -145,7 +145,7 @@ struct boss_zumrah : public CreatureScript
                     m_pInstance->SetData64(TYPE_SIGNAL, m_creature->GetObjectGuid().GetRawValue());
                     if (GameObject* pGrave = m_pInstance->instance->GetGameObject(ObjectGuid(m_pInstance->GetData64(TYPE_SIGNAL))))
                     {
-                        m_creature->CastSpell(pGrave->GetPositionX(), pGrave->GetPositionY(), pGrave->GetPositionZ(), SPELL_SUMMON_ZOMBIES, true, NULL, NULL, pGrave->GetObjectGuid());
+                        m_creature->CastSpell(pGrave->GetPositionX(), pGrave->GetPositionY(), pGrave->GetPositionZ(), SPELL_SUMMON_ZOMBIES, true, nullptr, nullptr, pGrave->GetObjectGuid());
                         pGrave->SetLootState(GO_JUST_DEACTIVATED);
 
                         if (roll_chance_i(30))

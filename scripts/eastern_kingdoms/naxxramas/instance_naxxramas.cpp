@@ -972,7 +972,7 @@ struct is_naxxramas : public InstanceScript
                 return lList.front();
             }
 
-            return NULL;
+            return nullptr;
         }
 
         void GetGothSummonPointCreatures(std::list<Creature*>& lList, bool bRightSide)

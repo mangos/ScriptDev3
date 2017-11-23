@@ -243,7 +243,7 @@ struct spell_crystal_spike_aura : public SpellScript
                 else
                     uiSpellId = urand(0, 1) ? SPELL_CRYSTAL_SPIKE_LEFT : SPELL_CRYSTAL_SPIKE_RIGHT;
 
-                pCreatureTarget->CastSpell(pCreatureTarget, uiSpellId, true, NULL, NULL, pOrmorok->GetObjectGuid());
+                pCreatureTarget->CastSpell(pCreatureTarget, uiSpellId, true, nullptr, nullptr, pOrmorok->GetObjectGuid());
                 // always return true when we are handling this spell and effect
                 return true;
             }

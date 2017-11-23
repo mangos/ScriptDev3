@@ -232,7 +232,7 @@ struct npc_valentine_boss_manager : public CreatureScript
             if (m_uiCrazedApothecaryTimer < uiDiff)
             {
                 if (Creature* pGenerator = m_pInstance->GetSingleCreatureFromStorage(NPC_APOTHECARY_GENERATOR))
-                    pGenerator->CastSpell(pGenerator, SPELL_SUMMON_VALENTINE_ADD, true, NULL, NULL, m_creature->GetObjectGuid());
+                    pGenerator->CastSpell(pGenerator, SPELL_SUMMON_VALENTINE_ADD, true, nullptr, nullptr, m_creature->GetObjectGuid());
 
                 m_uiCrazedApothecaryTimer = 30000;
             }

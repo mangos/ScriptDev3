@@ -342,7 +342,7 @@ struct npc_harrison_jones : public CreatureScript
                             if (Creature* pBunny = m_creature->GetMap()->GetCreature(m_lImmolationBunnyGuids.front()))
                             {
                                 pTecahuna->CastSpell(pBunny, SPELL_TECAHUNA_SPIRIT_BEAM, true);
-                                pBunny->CastSpell(pBunny, SPELL_SUMMON_DRAKKARI_KING, true, NULL, NULL, m_creature->GetObjectGuid());
+                                pBunny->CastSpell(pBunny, SPELL_SUMMON_DRAKKARI_KING, true, nullptr, nullptr, m_creature->GetObjectGuid());
                                 pBunny->RemoveAurasDueToSpell(SPELL_BUNNY_IMMOLATION);
                                 m_lImmolationBunnyGuids.remove(m_lImmolationBunnyGuids.front());
                             }

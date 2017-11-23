@@ -557,7 +557,7 @@ struct go_manticron_cube : public GameObjectScript
                 }
 
                 // the real spell is cast by player
-                pPlayer->CastSpell(pPlayer, SPELL_SHADOW_GRASP, false, NULL, NULL, pGo->GetObjectGuid());
+                pPlayer->CastSpell(pPlayer, SPELL_SHADOW_GRASP, false, nullptr, nullptr, pGo->GetObjectGuid());
             }
         }
 

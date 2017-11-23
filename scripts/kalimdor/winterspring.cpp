@@ -444,7 +444,7 @@ struct npc_ranshalla : public CreatureScript
                 return m_creature->GetMap()->GetCreature(m_secondPriestessGuid);
 
             default:
-                return NULL;
+                return nullptr;
             }
         }
 
@@ -523,7 +523,7 @@ struct go_elune_fire : public GameObjectScript
         {
             if (CreatureAI* pEscortAI = pRanshalla->AI())
             {
-                pEscortAI->SendAIEvent(AI_EVENT_CUSTOM_A, NULL, pRanshalla, uint32(bIsAltar)); //->DoContinueEscort(bIsAltar);
+                pEscortAI->SendAIEvent(AI_EVENT_CUSTOM_A, nullptr, pRanshalla, uint32(bIsAltar)); //->DoContinueEscort(bIsAltar);
             }
         }
 

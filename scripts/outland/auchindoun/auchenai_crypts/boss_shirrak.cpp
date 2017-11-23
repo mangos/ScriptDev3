@@ -120,7 +120,7 @@ struct boss_shirrak : public CreatureScript
             if (m_uiFocusFireTimer < uiDiff)
             {
                 ++m_uiFocusFireCount;
-                Unit* pTarget = NULL;
+                Unit* pTarget = nullptr;
 
                 switch (m_uiFocusFireCount)
                 {

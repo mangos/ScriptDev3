@@ -379,7 +379,7 @@ struct npc_akama : public CreatureScript
             // Summon mobs by spell
             if (uiSpellId)
             {
-                pGenerator->CastSpell(pGenerator, uiSpellId, true, NULL, NULL, m_creature->GetObjectGuid());
+                pGenerator->CastSpell(pGenerator, uiSpellId, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }
             // Summon ashtongue pack
             else

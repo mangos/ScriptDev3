@@ -627,7 +627,7 @@ struct boss_the_lich_king_icc : public CreatureScript
                 // Harvest Soul
                 if (m_uiHarvestSoulTimer < uiDiff)
                 {
-                    Unit* pTarget = NULL;
+                    Unit* pTarget = nullptr;
                     bool m_bIsHeroic = m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC);
                     if (m_bIsHeroic)
                         pTarget = m_creature;

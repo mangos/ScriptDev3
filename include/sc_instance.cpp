@@ -201,7 +201,7 @@ void ScriptedInstance::DoUpdateWorldState(uint32 uiStateId, uint32 uiStateData)
     }
 }
 
-/// Get the first found Player* (with requested properties) in the map. Can return NULL.
+/// Get the first found Player* (with requested properties) in the map. Can return nullptr.
 Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBeGamemaster /*=true*/)
 {
     Map::PlayerList const& lPlayers = instance->GetPlayers();
@@ -215,10 +215,10 @@ Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBe
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
-/// Returns a pointer to a loaded GameObject that was stored in m_mGoEntryGuidStore. Can return NULL
+/// Returns a pointer to a loaded GameObject that was stored in m_mGoEntryGuidStore. Can return nullptr
 GameObject* ScriptedInstance::GetSingleGameObjectFromStorage(uint32 uiEntry) const
 {
     EntryGuidMap::const_iterator find = m_mGoEntryGuidStore.find(uiEntry);
@@ -230,10 +230,10 @@ GameObject* ScriptedInstance::GetSingleGameObjectFromStorage(uint32 uiEntry) con
     // Output log, possible reason is not added GO to map, or not yet loaded;
     script_error_log("Script requested gameobject with entry %u, but no gameobject of this entry was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
 
-    return NULL;
+    return nullptr;
 }
 
-/// Returns a pointer to a loaded Creature that was stored in m_mGoEntryGuidStore. Can return NULL
+/// Returns a pointer to a loaded Creature that was stored in m_mGoEntryGuidStore. Can return nullptr
 Creature* ScriptedInstance::GetSingleCreatureFromStorage(uint32 uiEntry, bool bSkipDebugLog /*=false*/) const
 {
     EntryGuidMap::const_iterator find = m_mNpcEntryGuidStore.find(uiEntry);
@@ -248,7 +248,7 @@ Creature* ScriptedInstance::GetSingleCreatureFromStorage(uint32 uiEntry, bool bS
         script_error_log("Script requested creature with entry %u, but no npc of this entry was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
     }
 
-    return NULL;
+    return nullptr;
 }
 
 #if defined (WOTLK) || defined (CATA)
@@ -281,11 +281,11 @@ void ScriptedInstance::DoStartTimedAchievement(AchievementCriteriaTypes criteria
    @param   pDialogueArray The static const array of DialogueEntry holding the information about the dialogue. This array MUST be terminated by {0,0,0}
  */
 DialogueHelper::DialogueHelper(DialogueEntry const* pDialogueArray) :
-    m_pInstance(NULL),
+    m_pInstance(nullptr),
     m_pDialogueArray(pDialogueArray),
-    m_pCurrentEntry(NULL),
-    m_pDialogueTwoSideArray(NULL),
-    m_pCurrentEntryTwoSide(NULL),
+    m_pCurrentEntry(nullptr),
+    m_pDialogueTwoSideArray(nullptr),
+    m_pCurrentEntryTwoSide(nullptr),
     m_uiTimer(0),
     m_bIsFirstSide(true),
     m_bCanSimulate(false)
@@ -297,11 +297,11 @@ DialogueHelper::DialogueHelper(DialogueEntry const* pDialogueArray) :
    @param   pDialogueTwoSideArray The static const array of DialogueEntryTwoSide holding the information about the dialogue. This array MUST be terminated by {0,0,0,0,0}
  */
 DialogueHelper::DialogueHelper(DialogueEntryTwoSide const* pDialogueTwoSideArray) :
-    m_pInstance(NULL),
-    m_pDialogueArray(NULL),
-    m_pCurrentEntry(NULL),
+    m_pInstance(nullptr),
+    m_pDialogueArray(nullptr),
+    m_pCurrentEntry(nullptr),
     m_pDialogueTwoSideArray(pDialogueTwoSideArray),
-    m_pCurrentEntryTwoSide(NULL),
+    m_pCurrentEntryTwoSide(nullptr),
     m_uiTimer(0),
     m_bIsFirstSide(true),
     m_bCanSimulate(false)

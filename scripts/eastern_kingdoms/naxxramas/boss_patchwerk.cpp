@@ -121,7 +121,7 @@ struct boss_patchwerk : public CreatureScript
         void DoHatefulStrike()
         {
             // The ability is used on highest HP target choosen of the top 2 (3 heroic) targets on threat list being in melee range
-            Unit* pTarget = NULL;
+            Unit* pTarget = nullptr;
             uint32 uiHighestHP = 0;
             uint32 uiTargets = 2;
 

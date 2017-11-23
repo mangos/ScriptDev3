@@ -228,7 +228,7 @@ struct is_ruby_sanctum : public InstanceScript
                 for (GuidList::const_iterator itr = m_lSpawnStalkersGuidList.begin(); itr != m_lSpawnStalkersGuidList.end(); ++itr)
                 {
                     if (Creature* pStalker = instance->GetCreature(*itr))
-                        pStalker->CastSpell(pStalker, SPELL_SUMMON_FLAMECALLER, true, NULL, NULL, ObjectGuid(uiData));
+                        pStalker->CastSpell(pStalker, SPELL_SUMMON_FLAMECALLER, true, nullptr, nullptr, ObjectGuid(uiData));
                 }
             }
         }

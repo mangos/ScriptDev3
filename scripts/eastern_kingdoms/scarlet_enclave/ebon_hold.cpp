@@ -637,7 +637,7 @@ struct npc_death_knight_initiate : public CreatureScript
                     m_creature->RemoveAllAurasOnEvade();
                     m_creature->DeleteThreatList();
                     m_creature->CombatStop(true);
-                    m_creature->SetLootRecipient(NULL);
+                    m_creature->SetLootRecipient(nullptr);
 
                     // remove duel flag
                     if (GameObject* pFlag = GetClosestGameObjectWithEntry(m_creature, GO_DUEL_FLAG, 30.0f))
@@ -1241,7 +1241,7 @@ struct go_acherus_soul_prison : public GameObjectScript
         {
             if (CreatureAI* ai = pAnchor->AI())
             {
-                ai->ReceiveAIEvent(AI_EVENT_CUSTOM_C, (Creature*)NULL, pPlayer, pGo->GetGUIDLow());
+                ai->ReceiveAIEvent(AI_EVENT_CUSTOM_C, (Creature*)nullptr, pPlayer, pGo->GetGUIDLow());
             }
         }
 
@@ -1434,7 +1434,7 @@ struct npc_scarlet_ghoul : public CreatureScript
             {
                 if (m_uiUnsummonTimer <= uiDiff)
                 {
-                    m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                     if (m_creature->IsPet())
                         ((Pet*)m_creature)->Unsummon(PET_SAVE_AS_DELETED);
                     return;
@@ -1813,7 +1813,7 @@ struct npc_highlord_darion_mograine : public CreatureScript
                     for (GuidList::const_iterator itr = m_lAttackersGUIDs.begin(); itr != m_lAttackersGUIDs.end(); ++itr)
                     {
                         if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
-                            pTemp->DealDamage(pTemp, pTemp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                            pTemp->DealDamage(pTemp, pTemp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                     }
 
                     // light fighters despawn
@@ -2408,7 +2408,7 @@ struct npc_highlord_darion_mograine : public CreatureScript
                                     for (GuidList::const_iterator itr = m_lDefendersGUIDs.begin(); itr != m_lDefendersGUIDs.end(); ++itr)
                                     {
                                         if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
-                                            pTemp->DealDamage(pTemp, pTemp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                                            pTemp->DealDamage(pTemp, pTemp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                                     }
                                     // workaround for the light champions - spell doesn't work right
                                     for (uint8 i = 0; i < MAX_LIGHT_CHAMPIONS; i++)
@@ -2871,7 +2871,7 @@ struct npc_fellow_death_knight : public CreatureScript
                 m_creature->DeleteThreatList();
                 m_creature->CombatStop(true);
                 m_creature->LoadCreatureAddon(true);
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
 
                 Reset();
 
@@ -3014,7 +3014,7 @@ struct npc_acherus_deathcharger : public CreatureScript
                 m_creature->DeleteThreatList();
                 m_creature->CombatStop(true);
                 m_creature->LoadCreatureAddon(true);
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
 
                 // Stop movemnet
                 m_creature->GetMotionMaster()->Clear();

@@ -162,7 +162,7 @@ struct boss_soccothrates : public CreatureScript
                 m_pInstance->SetData(TYPE_SOCCOTHRATES, FAIL);
             }
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }

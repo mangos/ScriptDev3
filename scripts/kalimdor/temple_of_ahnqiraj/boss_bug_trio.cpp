@@ -96,7 +96,7 @@ struct boss_kri : public CreatureScript
             // If the other 2 bugs are still alive, make unlootable
             if (m_pInstance->GetData(TYPE_BUG_TRIO) != DONE)
             {
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
                 m_pInstance->SetData(TYPE_BUG_TRIO, SPECIAL);
 
                 if (Creature* pVem = m_pInstance->GetSingleCreatureFromStorage(NPC_VEM))
@@ -210,7 +210,7 @@ struct boss_vem : public CreatureScript
             // If the other 2 bugs are still alive, make unlootable
             if (m_pInstance->GetData(TYPE_BUG_TRIO) != DONE)
             {
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
                 m_pInstance->SetData(TYPE_BUG_TRIO, SPECIAL);
 
                 if (Creature* pKri = m_pInstance->GetSingleCreatureFromStorage(NPC_KRI))
@@ -348,7 +348,7 @@ struct boss_yauj : public CreatureScript
             // If the other 2 bugs are still alive, make unlootable
             if (m_pInstance->GetData(TYPE_BUG_TRIO) != DONE)
             {
-                m_creature->SetLootRecipient(NULL);
+                m_creature->SetLootRecipient(nullptr);
                 m_pInstance->SetData(TYPE_BUG_TRIO, SPECIAL);
 
                 if (Creature* pKri = m_pInstance->GetSingleCreatureFromStorage(NPC_KRI))

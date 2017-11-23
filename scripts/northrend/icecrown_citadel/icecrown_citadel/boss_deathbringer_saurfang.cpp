@@ -216,7 +216,7 @@ struct boss_deathbringer_saurfang : public CreatureScript
             if (m_creature->IsAlive())
                 m_creature->GetMotionMaster()->MovePoint(POINT_ID_EVADE, fIntroPosition[0], fIntroPosition[1], fIntroPosition[2]);
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }

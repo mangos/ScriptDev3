@@ -449,7 +449,7 @@ struct npc_chess_piece_genericAI : public ScriptedAI
             if (Creature *target = m_pInstance->instance->GetCreature(ObjectGuid(guid)))
                 return target;
         }
-        return NULL;
+        return nullptr;
     }
 
     // Function to get a square as close as possible to the enemy
@@ -463,7 +463,7 @@ struct npc_chess_piece_genericAI : public ScriptedAI
             if (Creature *square = m_pInstance->instance->GetCreature(ObjectGuid(guid)))
                 return square;
         }
-        return NULL;
+        return nullptr;
     }
 
     virtual uint32 DoCastPrimarySpell() { return 5000; }

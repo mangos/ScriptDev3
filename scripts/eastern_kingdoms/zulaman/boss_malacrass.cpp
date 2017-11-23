@@ -377,7 +377,7 @@ struct boss_malacrass : public CreatureScript
 
         bool CanUseSpecialAbility(uint32 uiSpellIndex)
         {
-            Unit* pTarget = NULL;
+            Unit* pTarget = nullptr;
 
             switch (m_aMalacrassStolenAbility[m_uiPlayerClass][uiSpellIndex].m_uiTargetType)
             {

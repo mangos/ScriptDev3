@@ -312,11 +312,11 @@ struct boss_kaelthas : public CreatureScript
         {
             if (pSummoned->GetEntry() == NPC_FLAME_STRIKE_TRIGGER)
             {
-                pSummoned->CastSpell(pSummoned, SPELL_FLAME_STRIKE_DUMMY, false, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_FLAME_STRIKE_DUMMY, false, nullptr, nullptr, m_creature->GetObjectGuid());
             }
             else if (pSummoned->GetEntry() == NPC_NETHER_VAPOR)
             {
-                pSummoned->CastSpell(pSummoned, SPELL_NETHER_VAPOR, false, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_NETHER_VAPOR, false, nullptr, nullptr, m_creature->GetObjectGuid());
             }
             // Start combat for Weapons of Phoenix
             else
@@ -346,8 +346,8 @@ struct boss_kaelthas : public CreatureScript
             if (pSpell->Id == SPELL_GRAVITY_LAPSE && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 DoCastSpellIfCan(pTarget, m_auiSpellGravityLapseTeleport[m_uiGravityIndex], CAST_TRIGGERED);
-                pTarget->CastSpell(pTarget, SPELL_GRAVITY_LAPSE_KNOCKBACK, true, NULL, NULL, m_creature->GetObjectGuid());
-                pTarget->CastSpell(pTarget, SPELL_GRAVITY_LAPSE_AURA, true, NULL, NULL, m_creature->GetObjectGuid());
+                pTarget->CastSpell(pTarget, SPELL_GRAVITY_LAPSE_KNOCKBACK, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                pTarget->CastSpell(pTarget, SPELL_GRAVITY_LAPSE_AURA, true, nullptr, nullptr, m_creature->GetObjectGuid());
                 ++m_uiGravityIndex;
             }
         }
@@ -1388,7 +1388,7 @@ struct mob_phoenix_tk : public CreatureScript
             // Self kill if the egg is killed
             if (m_bFakeDeath)
             {
-                m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
             }
         }
 
@@ -1415,7 +1415,7 @@ struct mob_phoenix_tk : public CreatureScript
                 }
                 else
                 {
-                    m_creature->DealDamage(m_creature, uiDmg, 0, DOT, SPELL_SCHOOL_MASK_FIRE, NULL, false);
+                    m_creature->DealDamage(m_creature, uiDmg, 0, DOT, SPELL_SCHOOL_MASK_FIRE, nullptr, false);
                 }
 
                 m_uiCycleTimer = 2000;

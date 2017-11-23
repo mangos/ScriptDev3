@@ -168,7 +168,7 @@ struct boss_omor_the_unscarred : public CreatureScript
             }
             else if (m_uiOrbitalStrikeTimer < uiDiff)
             {
-                Unit* pTemp = NULL;
+                Unit* pTemp = nullptr;
                 if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
                 {
                     pTemp = m_creature->getVictim();

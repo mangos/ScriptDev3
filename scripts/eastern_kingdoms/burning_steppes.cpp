@@ -374,7 +374,7 @@ struct npc_grark_lorkrub : public CreatureScript
                     pPlayer->GroupEventHappens(QUEST_ID_PRECARIOUS_PREDICAMENT, m_creature);
                 }
                 // Kill self
-                m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
                 break;
             }
         }
@@ -444,7 +444,7 @@ struct npc_grark_lorkrub : public CreatureScript
                 return m_creature->GetMap()->GetCreature(m_lexlortGuid);
 
             default:
-                return NULL;
+                return nullptr;
             }
         }
 

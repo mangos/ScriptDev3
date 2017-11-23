@@ -85,7 +85,7 @@ struct boss_doomwalker : public CreatureScript
                 return;
             }
 
-            pVictim->CastSpell(pVictim, SPELL_MARK_OF_DEATH_PLAYER, true, NULL, NULL, m_creature->GetObjectGuid());
+            pVictim->CastSpell(pVictim, SPELL_MARK_OF_DEATH_PLAYER, true, nullptr, nullptr, m_creature->GetObjectGuid());
 
             if (urand(0, 4))
             {

@@ -508,7 +508,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                 return m_creature->GetMap()->GetCreature(m_fandralGuid);
 
             default:
-                return NULL;
+                return nullptr;
             }
         }
 

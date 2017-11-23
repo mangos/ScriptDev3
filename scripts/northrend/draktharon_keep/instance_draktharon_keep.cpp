@@ -259,7 +259,7 @@ struct is_draktharon_keep : public InstanceScript
             case DATA64_NOVOS_CRYSTAL_HANDLER:
             {
                 Creature* pCrystalHandler = instance->GetCreature(ObjectGuid(uiData));
-                Creature* pTarget = NULL;
+                Creature* pTarget = nullptr;
                 m_uiNovosCrystalIndex = MAX_CRYSTALS;
 
                 for (uint8 i = 0; i < MAX_CRYSTALS; ++i)
@@ -403,7 +403,7 @@ struct is_draktharon_keep : public InstanceScript
             {
                 // Summon a troll in the corner and 2 trolls in the air
                 if (Creature* pTrigger = instance->GetCreature(GetTrollgoreCornerTrigger()))
-                    pTrigger->CastSpell(pTrigger, roll_chance_i(20) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
+                    pTrigger->CastSpell(pTrigger, roll_chance_i(20) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
 
                 // get two random outside triggers
                 uint8 uiMaxTriggers = m_vTriggerGuids.size();
@@ -411,9 +411,9 @@ struct is_draktharon_keep : public InstanceScript
                 uint8 uiPos2 = (uiPos1 + urand(1, uiMaxTriggers - 1)) % uiMaxTriggers;
 
                 if (Creature* pTrigger = instance->GetCreature(m_vTriggerGuids[uiPos1]))
-                    pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
+                    pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
                 if (Creature* pTrigger = instance->GetCreature(m_vTriggerGuids[uiPos2]))
-                    pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
+                    pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
             }
             else
             {
@@ -421,7 +421,7 @@ struct is_draktharon_keep : public InstanceScript
                 for (uint8 i = 0; i < m_vTriggerGuids.size(); ++i)
                 {
                     if (Creature* pTrigger = instance->GetCreature(m_vTriggerGuids[i]))
-                        pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
+                        pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
                 }
             }
         }

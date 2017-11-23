@@ -162,7 +162,7 @@ struct boss_the_lurker_below : public CreatureScript
         // Custom threat management
         bool SelectHostileTarget()
         {
-            Unit* pTarget = NULL;
+            Unit* pTarget = nullptr;
             Unit* pOldTarget = m_creature->getVictim();
 
             if (!m_creature->GetThreatManager().isThreatListEmpty())

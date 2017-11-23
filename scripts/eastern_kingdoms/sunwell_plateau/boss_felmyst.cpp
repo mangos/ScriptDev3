@@ -186,7 +186,7 @@ struct boss_felmyst : public CreatureScript
                 m_creature->GetMotionMaster()->MovePoint(PHASE_GROUND, fX, fY, 50.083f, false);
             }
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }
@@ -332,7 +332,7 @@ struct boss_felmyst : public CreatureScript
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpell->Id == SPELL_ENCAPSULATE_CHANNEL)
             {
-                pTarget->CastSpell(pTarget, SPELL_ENCAPSULATE, true, NULL, NULL, m_creature->GetObjectGuid());
+                pTarget->CastSpell(pTarget, SPELL_ENCAPSULATE, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }
         }
 

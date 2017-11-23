@@ -298,7 +298,7 @@ struct map_ebon_hold : public ZoneScript
                 if (Creature* pTemp = instance->GetCreature(*itr))
                 {
                     if (pTemp->IsAlive())
-                        pTemp->DealDamage(pTemp, pTemp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        pTemp->DealDamage(pTemp, pTemp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                 }
             }
         }

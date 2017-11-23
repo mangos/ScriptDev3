@@ -145,10 +145,10 @@ struct boss_jaraxxus : public CreatureScript
             switch (pSummoned->GetEntry())
             {
             case NPC_INFERNAL_VOLCANO:
-                pSummoned->CastSpell(pSummoned, SPELL_ERUPTION, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_ERUPTION, true, nullptr, nullptr, m_creature->GetObjectGuid());
                 break;
             case NPC_NETHER_PORTAL:
-                pSummoned->CastSpell(pSummoned, SPELL_NETHER_PORTAL, true, NULL, NULL, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned, SPELL_NETHER_PORTAL, true, nullptr, nullptr, m_creature->GetObjectGuid());
                 break;
             }
         }

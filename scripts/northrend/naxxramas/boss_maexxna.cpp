@@ -140,7 +140,7 @@ struct npc_web_wrap : public CreatureScript
                 if (m_uiWebWrapTimer <= uiDiff)
                 {
                     if (Player* pVictim = m_creature->GetMap()->GetPlayer(m_victimGuid))
-                        pVictim->CastSpell(pVictim, SPELL_WEBWRAP, true, NULL, NULL, m_creature->GetObjectGuid());
+                        pVictim->CastSpell(pVictim, SPELL_WEBWRAP, true, nullptr, nullptr, m_creature->GetObjectGuid());
 
                     m_uiWebWrapTimer = 0;
                 }

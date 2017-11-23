@@ -774,7 +774,7 @@ struct npc_thrall_old_hillsbrad : public CreatureScript
                 // also kill the armorer
                 if (Creature* pArmorer = m_pInstance->GetSingleCreatureFromStorage(NPC_ARMORER))
                 {
-                    pArmorer->DealDamage(pArmorer, pArmorer->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    pArmorer->DealDamage(pArmorer, pArmorer->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
                 }
                 break;
             case 10:

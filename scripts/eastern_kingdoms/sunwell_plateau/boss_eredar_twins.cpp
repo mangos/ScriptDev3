@@ -653,7 +653,7 @@ struct npc_shadow_image : public CreatureScript
             {
                 if (m_uiSuicideTimer <= uiDiff)
                 {
-                    m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                     return;
                 }
                 else

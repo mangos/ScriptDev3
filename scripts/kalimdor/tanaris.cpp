@@ -493,7 +493,7 @@ struct npc_tooga : public CreatureScript
             m_uiPostEventTimer = 1000;
             m_uiPhasePostEvent = 0;
 
-            pTorta = NULL;
+            pTorta = nullptr;
         }
 
         void MoveInLineOfSight(Unit* pWho) override

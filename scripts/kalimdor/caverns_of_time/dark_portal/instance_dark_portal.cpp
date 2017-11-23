@@ -258,7 +258,7 @@ struct is_dark_portal : public InstanceScript
                         {
                             if (pMedivh->IsAlive())
                             {
-                                pMedivh->DealDamage(pMedivh, pMedivh->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                                pMedivh->DealDamage(pMedivh, pMedivh->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                             }
                         }
                     }

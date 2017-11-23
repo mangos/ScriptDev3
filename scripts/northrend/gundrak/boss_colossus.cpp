@@ -117,7 +117,7 @@ struct boss_drakkari_elemental : public CreatureScript
             {
                 // kill colossus on death - this will finish the encounter
                 if (Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
-                    pColossus->DealDamage(pColossus, pColossus->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    pColossus->DealDamage(pColossus, pColossus->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
             }
         }
 

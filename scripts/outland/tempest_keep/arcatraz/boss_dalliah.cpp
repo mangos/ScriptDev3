@@ -131,7 +131,7 @@ struct boss_dalliah : public CreatureScript
                 m_pInstance->SetData(TYPE_DALLIAH, FAIL);
             }
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
         }

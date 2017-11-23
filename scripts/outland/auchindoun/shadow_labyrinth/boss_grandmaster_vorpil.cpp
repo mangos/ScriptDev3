@@ -351,7 +351,7 @@ struct npc_void_traveler : public CreatureScript
                 {
                     if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_EMPOWERING_SHADOWS : SPELL_EMPOWERING_SHADOWS_H, CAST_TRIGGERED) == CAST_OK)
                     {
-                        m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
                         m_uiDeathTimer = 0;
                     }
                 }

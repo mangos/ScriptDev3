@@ -227,20 +227,20 @@ struct is_halls_of_stone : public InstanceScript
                     {
                         uint32 uiSpawnNumber = (instance->IsRegularDifficulty() ? 2 : 3);
                         for (uint8 i = 0; i < uiSpawnNumber; ++i)
-                            pStalker->CastSpell(pStalker, SPELL_SUMMON_PROTECTOR, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
-                        pStalker->CastSpell(pStalker, SPELL_SUMMON_STORMCALLER, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
+                            pStalker->CastSpell(pStalker, SPELL_SUMMON_PROTECTOR, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
+                        pStalker->CastSpell(pStalker, SPELL_SUMMON_STORMCALLER, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
                     }
                     break;
                 case NPC_DARK_RUNE_STORMCALLER:
                     if (Creature* pStalker = instance->GetCreature(m_stormcallerStalkerGuid))
                     {
                         for (uint8 i = 0; i < 2; ++i)
-                            pStalker->CastSpell(pStalker, SPELL_SUMMON_STORMCALLER, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
+                            pStalker->CastSpell(pStalker, SPELL_SUMMON_STORMCALLER, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
                     }
                     break;
                 case NPC_IRON_GOLEM_CUSTODIAN:
                     if (Creature* pStalker = instance->GetCreature(m_custodianStalkerGuid))
-                        pStalker->CastSpell(pStalker, SPELL_SUMMON_CUSTODIAN, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
+                        pStalker->CastSpell(pStalker, SPELL_SUMMON_CUSTODIAN, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
                     break;
                 }
                 return;
@@ -444,7 +444,7 @@ struct is_halls_of_stone : public InstanceScript
                 if (Creature* pEye = instance->GetCreature(m_aFaces[uiFace].m_leftEyeGuid))
                     pEye->CastSpell(pEye, instance->IsRegularDifficulty() ? SPELL_GLARE_OF_THE_TRIBUNAL : SPELL_GLARE_OF_THE_TRIBUNAL_H, true);
                 if (Creature* pEye = instance->GetCreature(m_aFaces[uiFace].m_rightEyeGuid))
-                    pEye->CastSpell(pEye, instance->IsRegularDifficulty() ? SPELL_GLARE_OF_THE_TRIBUNAL : SPELL_GLARE_OF_THE_TRIBUNAL_H, true, NULL, NULL, m_aFaces[uiFace].m_leftEyeGuid);
+                    pEye->CastSpell(pEye, instance->IsRegularDifficulty() ? SPELL_GLARE_OF_THE_TRIBUNAL : SPELL_GLARE_OF_THE_TRIBUNAL_H, true, nullptr, nullptr, m_aFaces[uiFace].m_leftEyeGuid);
                 m_aFaces[uiFace].m_uiTimer = urand(1000, 2000);
                 break;
             case FACE_MARNAK:

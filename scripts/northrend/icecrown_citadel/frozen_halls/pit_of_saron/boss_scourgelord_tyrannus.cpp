@@ -247,7 +247,7 @@ struct boss_rimefang_pos : public CreatureScript
             m_creature->CombatStop(true);
             m_creature->LoadCreatureAddon(true);
 
-            m_creature->SetLootRecipient(NULL);
+            m_creature->SetLootRecipient(nullptr);
 
             Reset();
 

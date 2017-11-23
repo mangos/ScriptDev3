@@ -273,13 +273,13 @@ struct boss_anubarak : public CreatureScript
                     for (uint8 i = 0; i < 2; ++i)
                     {
                         if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_ASSASIN))))
-                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_ASSASSIN, true, NULL, NULL, m_creature->GetObjectGuid());
+                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_ASSASSIN, true, nullptr, nullptr, m_creature->GetObjectGuid());
                     }
 
                     // on the first wave summon a guardian; on the second wave summon a venonmancer
                     if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_GUARDIAN))))
                     {
-                        pTrigger->CastSpell(pTrigger, m_bIsFirstWave ? SPELL_SUMMON_GUARDIAN : SPELL_SUMMON_VENOMANCER, true, NULL, NULL, m_creature->GetObjectGuid());
+                        pTrigger->CastSpell(pTrigger, m_bIsFirstWave ? SPELL_SUMMON_GUARDIAN : SPELL_SUMMON_VENOMANCER, true, nullptr, nullptr, m_creature->GetObjectGuid());
                         m_bIsFirstWave = false;
                     }
 
@@ -298,7 +298,7 @@ struct boss_anubarak : public CreatureScript
 
                         if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_DARTER))))
                         {
-                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_DARTER, true, NULL, NULL, m_creature->GetObjectGuid());
+                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_DARTER, true, nullptr, nullptr, m_creature->GetObjectGuid());
                             m_uiDarterTimer = urand(10000, 15000);
                         }
                     }

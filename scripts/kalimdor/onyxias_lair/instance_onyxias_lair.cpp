@@ -56,7 +56,7 @@ struct is_onyxias_lair : public InstanceScript
         void Initialize() override
         {
             m_uiEncounter = NOT_STARTED;
-            m_tPhaseTwoStart = time(NULL);
+            m_tPhaseTwoStart = time(nullptr);
         }
 
         bool IsEncounterInProgress() const override
@@ -73,7 +73,7 @@ struct is_onyxias_lair : public InstanceScript
                 break;
 #if defined (WOTLK) || defined (CATA)
             case NPC_ONYXIA_WHELP:
-                if (m_uiEncounter >= DATA_LIFTOFF && time_t(m_tPhaseTwoStart + TIME_LIMIT_MANY_WHELPS) >= time(NULL))
+                if (m_uiEncounter >= DATA_LIFTOFF && time_t(m_tPhaseTwoStart + TIME_LIMIT_MANY_WHELPS) >= time(nullptr))
                     ++m_uiAchievWhelpsCount;
                 break;
 #endif
@@ -97,7 +97,7 @@ struct is_onyxias_lair : public InstanceScript
 #endif
             if (uiData == DATA_LIFTOFF)
             {
-                m_tPhaseTwoStart = time(NULL);
+                m_tPhaseTwoStart = time(nullptr);
             }
 
             // Currently no reason to save anything

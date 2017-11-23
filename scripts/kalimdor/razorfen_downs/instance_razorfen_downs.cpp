@@ -139,7 +139,7 @@ struct is_razorfen_downs : public InstanceScript
             float fXdifference = 0;
             float fYdifference = 0;
 
-            Creature* pTombCreature = NULL;
+            Creature* pTombCreature = nullptr;
 
             for (int i = 0; i < iTotalToSpawn; i++)
             {

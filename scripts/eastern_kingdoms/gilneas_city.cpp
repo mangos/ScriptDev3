@@ -172,7 +172,7 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
         {
             m_uiSayStoryTimer = SAY_STORY_DELAY;
             m_uiSayStoryLast = 0;
-            lastVictim = NULL;
+            lastVictim = nullptr;
 
             m_bCanSayStory = true;
             IsSelfRooted = false;

@@ -281,7 +281,7 @@ struct is_zulgurub : public InstanceScript
 
             if (vTriggers.empty())
             {
-                return NULL;
+                return nullptr;
             }
 
             return vTriggers[urand(0, vTriggers.size() - 1)];

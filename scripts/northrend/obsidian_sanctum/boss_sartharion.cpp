@@ -1197,7 +1197,7 @@ struct mob_twilight_eggs : public CreatureScript
                 m_creature->SetPhaseMask(PHASEMASK_NORMAL, true);
                 DoCastSpellIfCan(m_creature, uiSpellEntry, CAST_TRIGGERED);
 
-                m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
                 m_uiHatchTimer = 0;
             }
             else

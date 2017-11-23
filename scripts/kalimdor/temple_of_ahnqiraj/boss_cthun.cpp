@@ -235,7 +235,7 @@ struct boss_eye_of_cthun : public CreatureScript
             {
                 if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
                 {
-                    pTemp->DealDamage(pTemp, pTemp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    pTemp->DealDamage(pTemp, pTemp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
                 }
             }
 
@@ -245,7 +245,7 @@ struct boss_eye_of_cthun : public CreatureScript
         // Custom threat management
         bool SelectHostileTarget()
         {
-            Unit* pTarget = NULL;
+            Unit* pTarget = nullptr;
             Unit* pOldTarget = m_creature->getVictim();
 
             if (!m_creature->GetThreatManager().isThreatListEmpty())
@@ -482,7 +482,7 @@ struct boss_cthun : public CreatureScript
 #if defined (CLASSIC)
                     pPlayer->CastSpell(pPlayer, SPELL_PORT_OUT_STOMACH_EFFECT, true);
 #else
-                    m_creature->DealDamage(pPlayer, pPlayer->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    m_creature->DealDamage(pPlayer, pPlayer->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
 #endif
                 }
             }
@@ -594,7 +594,7 @@ struct boss_cthun : public CreatureScript
             {
                 if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
                 {
-                    pTemp->DealDamage(pTemp, pTemp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    pTemp->DealDamage(pTemp, pTemp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
                 }
             }
 
@@ -613,7 +613,7 @@ struct boss_cthun : public CreatureScript
         // Custom threat management
         bool SelectHostileTarget()
         {
-            Unit* pTarget = NULL;
+            Unit* pTarget = nullptr;
             Unit* pOldTarget = m_creature->getVictim();
 
             if (!m_creature->GetThreatManager().isThreatListEmpty())
@@ -682,7 +682,7 @@ struct boss_cthun : public CreatureScript
                     {
                         // Cast the spell using the target as source
                         pTarget->InterruptNonMeleeSpells(false);
-                        pTarget->CastSpell(pTarget, SPELL_MOUTH_TENTACLE, true, NULL, NULL, m_creature->GetObjectGuid());
+                        pTarget->CastSpell(pTarget, SPELL_MOUTH_TENTACLE, true, nullptr, nullptr, m_creature->GetObjectGuid());
                         m_stomachEnterTargetGuid = pTarget->GetObjectGuid();
 
                         m_uiStomachEnterTimer = 3800;
@@ -799,7 +799,7 @@ struct boss_cthun : public CreatureScript
                 {
                     if (Player* pPlayer = m_creature->GetMap()->GetPlayer(*itr))
                     {
-                        pPlayer->CastSpell(pPlayer, SPELL_DIGESTIVE_ACID, true, NULL, NULL, m_creature->GetObjectGuid());
+                        pPlayer->CastSpell(pPlayer, SPELL_DIGESTIVE_ACID, true, nullptr, nullptr, m_creature->GetObjectGuid());
                     }
                 }
                 m_uiDigestiveAcidTimer = 4000;
@@ -867,7 +867,7 @@ struct npc_giant_claw_tentacle : public CreatureScript
                             pCthun->SummonCreature(NPC_GIANT_CLAW_TENTACLE, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_DEAD_DESPAWN, 0);
 
                             // Self kill when a new tentacle is spawned
-                            m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                            m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
                             return;
                         }
                     }
@@ -960,7 +960,7 @@ struct at_stomach_cthun : public AreaTriggerScript
                     pPlayer->NearTeleportTo(pCthun->GetPositionX(), pCthun->GetPositionY(), pCthun->GetPositionZ() + 15.0f, frand(0, 2 * M_PI_F));
 
                     // Note: the real knockback spell id should be 26230
-                    pPlayer->CastSpell(pPlayer, SPELL_EXIT_STOMACH_KNOCKBACK, true, NULL, NULL, pCthun->GetObjectGuid());
+                    pPlayer->CastSpell(pPlayer, SPELL_EXIT_STOMACH_KNOCKBACK, true, nullptr, nullptr, pCthun->GetObjectGuid());
                 }
             }
         }

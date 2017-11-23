@@ -464,7 +464,7 @@ struct npc_letoll : public CreatureScript
                 }
             }
 
-            return NULL;
+            return nullptr;
         }
 
         void JustStartedEscort() override
@@ -688,7 +688,7 @@ struct npc_mana_bomb_exp_trigger : public CreatureScript
 
         void Reset() override
         {
-            pManaBomb = NULL;
+            pManaBomb = nullptr;
             m_bIsActivated = false;
             m_uiEventTimer = 1000;
             m_uiEventCounter = 0;

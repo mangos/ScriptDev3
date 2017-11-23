@@ -197,9 +197,9 @@ struct is_azjol_nerub : public InstanceScript
                     {
                         if (Creature* pTrigger = instance->GetCreature(*itr))
                         {
-                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_CHAMPION, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_HADRONOX]);
-                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_NECROMANCER, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_HADRONOX]);
-                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_CRYPT_FIEND, true, NULL, NULL, m_mNpcEntryGuidStore[NPC_HADRONOX]);
+                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_CHAMPION, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_HADRONOX]);
+                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_NECROMANCER, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_HADRONOX]);
+                            pTrigger->CastSpell(pTrigger, SPELL_SUMMON_CRYPT_FIEND, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_HADRONOX]);
                         }
                     }
                     break;
@@ -338,7 +338,7 @@ struct is_azjol_nerub : public InstanceScript
 
         void DoSendWatcherOrKrikthir()
         {
-            Creature* pAttacker = NULL;
+            Creature* pAttacker = nullptr;
             Creature* pKrikthir = GetSingleCreatureFromStorage(NPC_KRIKTHIR);
 
             if (!pKrikthir)

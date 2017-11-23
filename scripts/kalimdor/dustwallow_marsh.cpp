@@ -83,7 +83,7 @@ struct mobs_risen_husk_spirit : public CreatureScript
             m_uiConsumeFlesh_Timer = 10000;
             m_uiIntangiblePresence_Timer = 5000;
 
-            m_pCreditPlayer = NULL;
+            m_pCreditPlayer = nullptr;
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -463,7 +463,7 @@ struct npc_ogron : public CreatureScript
                 }
             }
 
-            return NULL;
+            return nullptr;
         }
 
         void WaypointReached(uint32 uiPointId) override
