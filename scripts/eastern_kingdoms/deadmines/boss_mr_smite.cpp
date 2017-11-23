@@ -54,7 +54,7 @@ enum
     PHASE_1                         = 1,
     PHASE_2                         = 2,
     PHASE_3                         = 3,
-    PHASE_EQUIP_nullptr                = 4,
+    PHASE_EQUIP_NULL                = 4,
     PHASE_EQUIP_START               = 5,
     PHASE_EQUIP_PROCESS             = 6,
     PHASE_EQUIP_END                 = 7,
@@ -146,7 +146,7 @@ struct boss_mr_smite : public CreatureScript
                 return;
             }
 
-            m_uiPhase = PHASE_EQUIP_nullptr;
+            m_uiPhase = PHASE_EQUIP_NULL;
 
             float fX, fY, fZ;
             pChest->GetContactPoint(m_creature, fX, fY, fZ, CONTACT_DISTANCE);
