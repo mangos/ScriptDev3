@@ -29,6 +29,7 @@
 
 #include "InstanceData.h"
 #include "Map.h"
+#include "system/ScriptDevMgr.h"
 
 enum EncounterState
 {
