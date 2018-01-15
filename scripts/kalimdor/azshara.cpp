@@ -46,11 +46,11 @@
  */
 
 #include "precompiled.h"
+#include <unordered_map>
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA)    
 #include "escort_ai.h"
 
-#include <unordered_map>
 
 /*#####
 ## npc_rizzle_sprysprocket
