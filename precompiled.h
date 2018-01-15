@@ -29,6 +29,7 @@
 
 #include "system/ScriptDevMgr.h"
 #include "Object.h"
+#include "ObjectGuid.h"
 #include "Unit.h"
 #include "Creature.h"
 #include "CreatureAI.h"
