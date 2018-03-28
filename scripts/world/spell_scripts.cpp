@@ -51,14 +51,14 @@
  * spell 34665
  * spell 37136
  * spell 39246
- #if defined (WOTLK) || defined (CATA)
+ #if defined (WOTLK) || defined (CATA) || defined(MISTS)
  * spell 43340
  #endif
  * spell 44935
  * spell 45109
  * spell 45111
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  * spell 46023
  * spell 46770
  * spell 47575
@@ -89,7 +89,7 @@ enum
     NPC_ANGRY_MURLOC            = 17102,
     ITEM_RED_SNAPPER            = 23614,
     // SPELL_SUMMON_TEST           = 49214                  // ! Just wrong spell name? It summon correct creature (17102)but does not appear to be used.
- #if defined (WOTLK) || defined (CATA)
+ #if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 11472
     SPELL_ANUNIAQS_NET          = 21014,
     GO_TASTY_REEF_FISH          = 186949,
@@ -104,7 +104,7 @@ struct spell_cast_fishing_net : public SpellScript
 
     bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
- #if defined (WOTLK) || defined (CATA)
+ #if defined (WOTLK) || defined (CATA) || defined(MISTS)
         if (uiSpellId == SPELL_ANUNIAQS_NET)
         {
             GameObject* pGOTarget = pTarget->ToGameObject();
@@ -200,7 +200,7 @@ enum
     NPC_CURED_DEER                      = 12299,
     NPC_CURED_GAZELLE                   = 12297,
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 12906/13422
     SPELL_DISCIPLINING_ROD              = 56033,
     SAY_RAND_WORK1                      = -1000555,
@@ -227,7 +227,7 @@ enum
     NPC_OWLKIN                          = 16518,
     NPC_OWLKIN_INOC                     = 16534,
 
- #if defined (WOTLK) || defined (CATA)
+ #if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // target for quest 12166)
     SPELL_LIQUID_FIRE                   = 46770,
     SPELL_LIQUID_FIRE_AURA              = 47972,
@@ -303,7 +303,7 @@ enum
     NPC_DARKSPINE_MYRMIDON              = 25060,
     NPC_DARKSPINE_SIREN                 = 25073,
 
- #if defined (WOTLK) || defined (CATA)
+ #if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 14107
     SPELL_BLESSING_OF_PEACE             = 66719,
     NPC_FALLEN_HERO_SPIRIT              = 32149,
@@ -321,7 +321,7 @@ enum
     NPC_SAND_GNOME                      = 22483,
     NPC_MATURE_BONE_SIFTER              = 22482,
 
- #if defined (WOTLK) || defined (CATA)
+ #if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 12813, by item 40587
     SPELL_DARKMENDER_TINCTURE           = 52741,
     SPELL_SUMMON_CORRUPTED_SCARLET      = 54415,
@@ -348,7 +348,7 @@ enum
     SPELL_THROW_GORDAWG_BOULDER         = 32001,
     NPC_MINION_OF_GUROK                 = 18181,
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 12589
     SPELL_HIT_APPLE                     = 51331,
     SPELL_MISS_APPLE                    = 51332,
@@ -380,7 +380,7 @@ enum
     SPELL_SPIRIT_PARTICLES              = 17327,
     NPC_FRANCLORN_FORGEWRIGHT           = 8888,
     NPC_GAERIYAN                        = 9299,
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     NPC_GANJO                           = 26924,
 #endif
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
@@ -400,7 +400,7 @@ enum
     SPELL_MELODIOUS_RAPTURE_VISUAL      = 21051,
     NPC_DEEPRUN_RAT                     = 13016,
     NPC_ENTHRALLED_DEEPRUN_RAT          = 13017,
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 12981
     SPELL_THROW_ICE                     = 56099,
     SPELL_FROZEN_IRON_SCRAP             = 56101,
@@ -721,7 +721,7 @@ struct spell_inoculate_owlkin : public SpellScript
     }
 };
 
- //#if defined (WOTLK) || defined (CATA)
+ //#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  //       case SPELL_LIQUID_FIRE:
  //       {
  //           if (uiEffIndex == EFFECT_INDEX_0)
@@ -785,7 +785,7 @@ struct spell_fel_siphon_dummy : public SpellScript
     }
 };
 #endif
-//#if defined (WOTLK) || defined (CATA)
+//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 //        case SPELL_SEEDS_OF_NATURES_WRATH:
 //        {
 //            if (uiEffIndex == EFFECT_INDEX_0)
@@ -849,7 +849,7 @@ struct spell_tag_murloc_proc : public SpellScript
     }
 };
 #endif
- //#if defined (WOTLK) || defined (CATA)
+ //#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  //       case SPELL_THROW_BOULDER:
  //       {
  //           if (uiEffIndex == EFFECT_INDEX_0)
@@ -967,7 +967,7 @@ struct spell_fumping : public SpellScript
 };
 #endif
 
- //#if defined (WOTLK) || defined (CATA)
+ //#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  //       case SPELL_AHUNAES_KNIFE:
  //       {
  //           if (uiEffIndex == EFFECT_INDEX_0)
@@ -1064,7 +1064,7 @@ struct spell_throw_gordawg_boulder : public SpellScript
     }
 };
 #endif
-//#if defined (WOTLK) || defined (CATA)
+//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  //       case SPELL_HIT_APPLE:
  //       {
  //           if (uiEffIndex == EFFECT_INDEX_0)
@@ -1160,7 +1160,7 @@ struct spell_expose_rathorthorn_root : public SpellScript
     }
 };
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 struct spell_throw_ice : public SpellScript
 {
     spell_throw_ice() : SpellScript("spell_throw_ice") {}
@@ -1231,7 +1231,7 @@ void AddSC_spell_scripts()
     s = new spell_expose_rathorthorn_root();
     s->RegisterSelf();
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new spell_throw_ice();
     s->RegisterSelf();
 #endif

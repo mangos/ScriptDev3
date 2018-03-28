@@ -51,7 +51,7 @@
  * npc_injured_patient         80%    patients for triage-quests (6622 and 6624)
  * npc_doctor                 100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
  * npc_innkeeper               25%    ScriptName not assigned. Innkeepers in general.
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  * npc_spring_rabbit            1%    Used for pet "Spring Rabbit" of Noblegarden
 #endif
  * npc_redemption_target      100%    Used for the paladin quests: 1779,1781,9600,9685
@@ -734,7 +734,7 @@ struct npc_doctor : public CreatureScript
                         // 2.4.3, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
                         Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                 // 303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
                 Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 #endif
@@ -1283,7 +1283,7 @@ struct npc_innkeeper : public CreatureScript
     }
 };
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## npc_spring_rabbit
 ## ATTENTION: This is actually a "fun" script, entirely done without proper source!
@@ -1941,7 +1941,7 @@ void AddSC_npcs_special()
     //pNewScript->pGossipSelect = &GossipSelect_npc_innkeeper;
     //pNewScript->RegisterSelf(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
 
-//#if defined (WOTLK) || defined (CATA)
+//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "npc_spring_rabbit";
     //pNewScript->GetAI = &GetAI_npc_spring_rabbit;

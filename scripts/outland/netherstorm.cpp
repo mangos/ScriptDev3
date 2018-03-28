@@ -1593,7 +1593,7 @@ struct npc_drijya : public CreatureScript
     }
 };
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## npc_dimensius
 ######*/
@@ -1773,7 +1773,7 @@ void AddSC_netherstorm()
     s->RegisterSelf();
     s = new npc_drijya();
     s->RegisterSelf();
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new npc_dimensius();
     s->RegisterSelf();
 #endif
@@ -1832,7 +1832,7 @@ void AddSC_netherstorm()
     //pNewScript->pQuestAcceptNPC = &QuestAccept_npc_drijya;
     //pNewScript->RegisterSelf();
 
-//#if defined (WOTLK) || defined (CATA)
+//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     /*pNewScript = new Script;
     pNewScript->Name = "npc_dimensius";
     pNewScript->GetAI = &GetAI_npc_dimensius;

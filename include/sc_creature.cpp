@@ -103,7 +103,7 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
  */
 void ScriptedAI::AttackStart(Unit* pWho)
 {
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     if (!m_creature->CanInitiateAttack())
         return;
 #endif
@@ -143,10 +143,10 @@ void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
     }
 
     DoMeleeAttackIfReady();
-    
-#if defined (WOTLK) || defined (CATA)
+
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     Unit* victim = m_creature->getVictim();
-        
+
     const SpellEntry* potentialSpell = m_creature->ReachWithSpellAttack(victim);
     if (potentialSpell)
         m_creature->CastSpell(victim, potentialSpell->Id, true);
@@ -301,13 +301,13 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Check for school if specified
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined (MISTS)
         if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
         { continue; }
 #endif
 
         // Check for spell mechanic if specified
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
         if (iMechanic >= 0 && pTempSpell->GetMechanic() != (uint32)iMechanic)
 #else
         if (iMechanic >= 0 && pTempSpell->Mechanic != (uint32)iMechanic)
@@ -317,7 +317,7 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Make sure that the spell uses the requested amount of power
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
         if (uiPowerCostMin &&  pTempSpell->GetManaCost() < uiPowerCostMin)
 #else
         if (uiPowerCostMin &&  pTempSpell->manaCost < uiPowerCostMin)
@@ -326,7 +326,7 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
             continue;
         }
 
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
         if (uiPowerCostMax && pTempSpell->GetManaCost() > uiPowerCostMax)
 #else
         if (uiPowerCostMax && pTempSpell->manaCost > uiPowerCostMax)
@@ -336,7 +336,7 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Continue if we don't have the mana to actually cast this spell
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
         if (pTempSpell->GetManaCost() > m_creature->GetPower((Powers)pTempSpell->powerType))
 #else
         if (pTempSpell->manaCost > m_creature->GetPower((Powers)pTempSpell->powerType))
@@ -401,7 +401,7 @@ bool ScriptedAI::CanCast(Unit* pTarget, SpellEntry const* pSpellEntry, bool bTri
     }
 
     // Check for power
-#if defined (CATA)
+#if defined (CATA)  || defined (MISTS)
     if (!bTriggered && m_creature->GetPower((Powers)pSpellEntry->powerType) < pSpellEntry->GetManaCost())
 #else
     if (!bTriggered && m_creature->GetPower((Powers)pSpellEntry->powerType) < pSpellEntry->manaCost)
@@ -448,13 +448,13 @@ void FillSpellSummary()
 
         for (uint8 j = 0; j < 3; ++j)
         {
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             SpellEffectEntry const* pSpellEffect = pTempSpell->GetSpellEffect(SpellEffectIndex(j));
             if (!pSpellEffect)
                 continue;
 #endif
             // Spell targets self
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SELF)
 #else
             if (pTempSpell->EffectImplicitTargetA[j] == TARGET_SELF)
@@ -464,7 +464,7 @@ void FillSpellSummary()
             }
 
             // Spell targets a single enemy
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CHAIN_DAMAGE ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CURRENT_ENEMY_COORDINATES)
 #else
@@ -476,7 +476,7 @@ void FillSpellSummary()
             }
 
             // Spell targets AoE at enemy
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES ||
@@ -492,7 +492,7 @@ void FillSpellSummary()
             }
 
             // Spell targets an enemy
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CHAIN_DAMAGE ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CURRENT_ENEMY_COORDINATES ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA ||
@@ -512,7 +512,7 @@ void FillSpellSummary()
             }
 
             // Spell targets a single friend(or self)
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SELF ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_FRIEND ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_PARTY)
@@ -526,7 +526,7 @@ void FillSpellSummary()
             }
 
             // Spell targets aoe friends
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_PARTY_AROUND_CASTER ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_AREAEFFECT_PARTY ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES)
@@ -540,7 +540,7 @@ void FillSpellSummary()
             }
 
             // Spell targets any friend(or self)
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SELF ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_FRIEND ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_PARTY ||
@@ -560,7 +560,7 @@ void FillSpellSummary()
             }
 
             // Make sure that this spell includes a damage effect
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pSpellEffect->Effect == SPELL_EFFECT_SCHOOL_DAMAGE ||
                 pSpellEffect->Effect == SPELL_EFFECT_INSTAKILL ||
                 pSpellEffect->Effect == SPELL_EFFECT_ENVIRONMENTAL_DAMAGE ||
@@ -576,7 +576,7 @@ void FillSpellSummary()
             }
 
             // Make sure that this spell includes a healing effect (or an apply aura with a periodic heal)
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pSpellEffect->Effect == SPELL_EFFECT_HEAL ||
                     pSpellEffect->Effect == SPELL_EFFECT_HEAL_MAX_HEALTH ||
                     pSpellEffect->Effect == SPELL_EFFECT_HEAL_MECHANICAL ||
@@ -592,7 +592,7 @@ void FillSpellSummary()
             }
 
             // Make sure that this spell applies an aura
-#if defined (CATA)
+#if defined (CATA) || defined (MISTS)
             if (pSpellEffect->Effect == SPELL_EFFECT_APPLY_AURA)
 #else
             if (pTempSpell->Effect[j] == SPELL_EFFECT_APPLY_AURA)
@@ -717,18 +717,18 @@ void ScriptedAI::SetEquipmentSlots(bool bLoadDefault, int32 iMainHand, int32 iOf
 enum
 {
 
-#if defined (CLASSIC)  
+#if defined (CLASSIC)
     NPC_BROODLORD               = 12017
-#endif  
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#endif
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     NPC_BROODLORD               = 12017,
     NPC_VOID_REAVER             = 19516,
     NPC_JAN_ALAI                = 23578,
     NPC_SARTHARION              = 28860,
     NPC_TALON_KING_IKISS        = 18473,
     NPC_KARGATH_BLADEFIST       = 16808,
-#endif  
-#if defined (WOTLK) || defined (CATA)
+#endif
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     NPC_ANUBARAK                = 29120,
     NPC_SINDRAGOSA              = 36853,
     NPC_ZARITHRIAN              = 39746,
@@ -764,7 +764,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
                 return false;
             }
             break;
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         case NPC_VOID_REAVER:                               // void reaver (calculate from center of room)
             if (m_creature->GetDistance2d(432.59f, 371.93f) < 105.0f)
             { return false; }
@@ -790,8 +790,8 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             { return false; }
             break;
 
-#endif  
-#if defined (WOTLK) || defined (CATA)
+#endif
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
         case NPC_ANUBARAK:
             if (fY < 281.0f && fY > 228.0f)
                 return false;
@@ -821,7 +821,7 @@ void Scripted_NoMovementAI::GetAIInformation(ChatHandler& reader)
 
 void Scripted_NoMovementAI::AttackStart(Unit* pWho)
 {
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     if (!m_creature->CanInitiateAttack())
         return;
 #endif

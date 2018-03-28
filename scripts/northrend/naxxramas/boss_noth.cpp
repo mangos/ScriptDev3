@@ -160,7 +160,7 @@ struct boss_noth : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-#if defined (CATA)
+#if defined (CATA) || defined(MISTS)
             if (SpellEffectEntry const* pSpellEffect = pSpell->GetSpellEffect(EFFECT_INDEX_0))
             {
                 if (pSpellEffect->Effect == SPELL_EFFECT_LEAP)

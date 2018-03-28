@@ -203,7 +203,7 @@ struct boss_felmyst : public CreatureScript
 #if defined (TBC)
             float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
             float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
 #endif
             m_creature->GetMotionMaster()->MovePoint(PHASE_TRANSITION, pWho->GetPositionX(), pWho->GetPositionY(), fGroundZ, false);
@@ -268,7 +268,7 @@ struct boss_felmyst : public CreatureScript
 #if defined (TBC)
                     float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                     float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
 #endif
                     m_creature->GetMotionMaster()->MovePoint(PHASE_TRANSITION, m_creature->getVictim()->GetPositionX(), m_creature->getVictim()->GetPositionY(), fGroundZ, false);

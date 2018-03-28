@@ -112,7 +112,7 @@ void AddSC_boss_thaddius();
 void AddSC_instance_naxxramas();
 #endif
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 void AddSC_ebon_hold();                              // scarlet_enclave
 #endif
 void AddSC_boss_arcanist_doan();                     // scarlet_monastery
@@ -129,7 +129,7 @@ void AddSC_boss_jandicebarov();
 void AddSC_instance_scholomance();
 void AddSC_scholomance();
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 void AddSC_boss_hummel();                            // shadowfang_keep
 #endif
 void AddSC_shadowfang_keep();                        // shadowfang_keep
@@ -229,7 +229,7 @@ void AddSC_westfall();
 void AddSC_wetlands();
 
 // Cata zones
-#if defined (CATA)
+#if defined (CATA) || defined(MISTS)
 void AddSC_gilneas();
 void AddSC_gilneas_city();
 void AddSC_twilight_highlands();
@@ -304,7 +304,7 @@ void AddEasternKingdomsScripts()
     AddSC_boss_ragnaros();
     AddSC_instance_molten_core();
     AddSC_molten_core();
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     AddSC_ebon_hold();                                      // scarlet_enclave
 #endif
 #if defined (CLASSIC) || defined (TBC)
@@ -338,7 +338,7 @@ void AddEasternKingdomsScripts()
     AddSC_boss_jandicebarov();
     AddSC_instance_scholomance();
     AddSC_scholomance();
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     AddSC_boss_hummel();                                    // shadowfang_keep
 #endif
     AddSC_shadowfang_keep();                                // shadowfang_keep
@@ -462,7 +462,7 @@ void AddSC_instance_mount_hyjal();
 void AddSC_instance_old_hillsbrad();                 // COT, old_hillsbrad
 void AddSC_old_hillsbrad();
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 void AddSC_culling_of_stratholme();                  // COT, culling_of_stratholme
 void AddSC_instance_culling_of_stratholme();
 #endif
@@ -529,7 +529,7 @@ void AddSC_ungoro_crater();
 void AddSC_winterspring();
 
 // Cata zones
-#if defined (CATA)
+#if defined (CATA) || defined(MISTS)
 void AddSC_uldum();
 void AddSC_mount_hyjal();
 #endif  
@@ -551,7 +551,7 @@ void AddKalimdorScripts()
     AddSC_instance_old_hillsbrad();                         // CoT, old_hillsbrand
     AddSC_old_hillsbrad();
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     AddSC_culling_of_stratholme();                          // CoT, culling_of_stratholme
     AddSC_instance_culling_of_stratholme();
 #endif
@@ -618,13 +618,13 @@ void AddKalimdorScripts()
     AddSC_winterspring();
 
 // Cata zones
-#if defined (CATA)
+#if defined (CATA) || defined(MISTS)
     AddSC_uldum();
     AddSC_mount_hyjal();
 #endif  
 }
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 // northrend
 void AddSC_boss_amanitar();                          // azjol-nerub, ahnkahet
 void AddSC_boss_jedoga();
@@ -945,7 +945,7 @@ void AddOutlandsScripts()
     AddSC_zangarmarsh();
 }
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 // Northrend
 void AddNorthrendScripts()
 {
@@ -1109,7 +1109,7 @@ void AddSC_npc_professions();
 void AddSC_npcs_special();
 void AddSC_spell_scripts();
 void AddSC_world_map_scripts();
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 void AddSC_world_map_ebon_hold();
 #endif
 
@@ -1125,7 +1125,7 @@ void AddWorldScripts()
     AddSC_npcs_special();
     AddSC_spell_scripts();
     AddSC_world_map_scripts();
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     AddSC_world_map_ebon_hold();
 #endif
 }
@@ -1148,7 +1148,7 @@ void AddScripts()
     AddOutlandsScripts();
 #endif
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     AddNorthrendScripts();
 #endif    
 

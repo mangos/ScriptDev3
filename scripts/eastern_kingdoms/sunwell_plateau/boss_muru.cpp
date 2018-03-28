@@ -74,7 +74,7 @@ enum
     // Muru npcs
     NPC_VOID_SENTINEL_SUMMONER      = 25782,
     NPC_VOID_SENTINEL               = 25772,    // scripted in Acid
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     NPC_DARK_FIEND                  = 25744,
     
     // darkness spells
@@ -336,7 +336,7 @@ struct boss_entropius : public CreatureScript
                     pMuru->Respawn();
                 }
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
             m_creature->SummonCreature(NPC_MURU, afMuruSpawnLoc[0], afMuruSpawnLoc[1], afMuruSpawnLoc[2], afMuruSpawnLoc[3], TEMPSUMMON_DEAD_DESPAWN, 0, true);
 #endif
             }

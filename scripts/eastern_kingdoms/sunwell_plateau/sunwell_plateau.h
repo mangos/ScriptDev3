@@ -70,13 +70,13 @@ enum
     GO_BOSS_COLLISION_2         = 188524,
     GO_ICE_BARRIER              = 188119,           // used to block the players path during the Brutallus intro event
     GO_FIRE_BARRIER             = 188075,           // door after felmyst
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     GO_FIRST_GATE               = 187766,           // door between felmyst and eredar twins
     GO_SECOND_GATE              = 187764,           // door after eredar twins
 #endif
     GO_MURU_ENTER_GATE          = 187990,           // muru gates
     GO_MURU_EXIT_GATE           = 188118,
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     GO_THIRD_GATE               = 187765,           // door after muru; why another?
 #endif
 
@@ -122,11 +122,11 @@ static const EventLocations aMadrigosaLoc[] =
 #if defined (CLASSIC) || defined (TBC)
     {1463.82f, 661.212f, 39.234f},                  // fly loc during the cinematig
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     {1463.82f, 661.212f, 39.234f, 0}                // fly loc during the cinematig
 #endif
 };
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 static const float afMuruSpawnLoc[4] = { 1816.25f, 625.484f, 69.603f, 5.624f };
 #endif
 #endif

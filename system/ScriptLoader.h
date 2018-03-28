@@ -33,7 +33,7 @@ void AddKalimdorScripts();
 #if defined (TBC) || defined (WOTLK) || defined (CATA)  
 void AddOutlandsScripts();
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 void AddNorthrendScripts();
 #endif
 void AddWorldScripts();

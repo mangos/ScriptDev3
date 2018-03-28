@@ -138,7 +138,7 @@ struct mob_stolen_soul : public CreatureScript
                     DoCastSpellIfCan(m_creature->getVictim(), SPELL_MOONFIRE);
                     m_uiSpellTimer = 10000;
                     break;
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                 case CLASS_DEATH_KNIGHT:
                     DoCastSpellIfCan(m_creature->getVictim(), SPELL_PLAGUE_STRIKE);
                     m_uiSpellTimer = 10000;

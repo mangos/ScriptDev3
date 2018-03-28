@@ -46,7 +46,7 @@ struct is_shadowfang_keep : public InstanceScript
 #if defined (CLASSIC) || defined (TBC)
         instance_shadowfang_keep(Map* pMap) : ScriptedInstance(pMap)
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
         instance_shadowfang_keep(Map* pMap) : ScriptedInstance(pMap), m_uiApothecaryDead(0)
 #endif
         {
@@ -65,7 +65,7 @@ struct is_shadowfang_keep : public InstanceScript
             case NPC_ASH:
             case NPC_ADA:
             case NPC_FENRUS:
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
         case NPC_HUMMEL:
         case NPC_FRYE:
         case NPC_BAXTER:
@@ -112,7 +112,7 @@ struct is_shadowfang_keep : public InstanceScript
                 }
                 break;
             case GO_ARUGAL_FOCUS:
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
             case GO_APOTHECARE_VIALS:
             case GO_CHEMISTRY_SET:
 #endif
@@ -136,7 +136,7 @@ struct is_shadowfang_keep : public InstanceScript
             }
         }
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
         void OnCreatureDeath(Creature* pCreature) override
         {
             switch (pCreature->GetEntry())
@@ -215,7 +215,7 @@ struct is_shadowfang_keep : public InstanceScript
                     }
                 }
                 break;
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
         case TYPE_APOTHECARY:
             // Reset apothecary counter on fail
             if (uiData == IN_PROGRESS)
@@ -249,7 +249,7 @@ struct is_shadowfang_keep : public InstanceScript
 #if defined (CLASSIC) || defined (TBC)
                     << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                    << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6];
 #endif
                 m_strInstData = saveStream.str();
@@ -273,7 +273,7 @@ struct is_shadowfang_keep : public InstanceScript
                 return m_auiEncounter[3];
             case TYPE_INTRO:
                 return m_auiEncounter[4];
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
             case TYPE_APOTHECARY:
                 return m_auiEncounter[6];
 #endif
@@ -298,7 +298,7 @@ struct is_shadowfang_keep : public InstanceScript
 #if defined (CLASSIC) || defined (TBC)
                 >> m_auiEncounter[4] >> m_auiEncounter[5];
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6];
 #endif
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)

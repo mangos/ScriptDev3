@@ -101,7 +101,7 @@
 
 #define BOX_UNLEARN_LEATHER_SPEC    "Do you really want to unlearn your leatherworking specialty and lose all associated recipes? \n Cost: "
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 #define GOSSIP_LEARN_SPELLFIRE      "Please teach me how to become a Spellcloth tailor"
 #define GOSSIP_UNLEARN_SPELLFIRE    "I wish to unlearn Spellfire Tailoring"
 #define GOSSIP_LEARN_MOONCLOTH      "Please teach me how to become a Mooncloth tailor"
@@ -163,7 +163,7 @@
 #define S_LEARN_GOBLIN          20221
 #define S_LEARN_GNOMISH         20220
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 #define S_SPELLFIRE             26797
 #define S_MOONCLOTH             26798
 #define S_SHADOWEAVE            26801
@@ -180,7 +180,7 @@
 # formulas to calculate unlearning cost
 ###*/
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 int32 GetLearningCost(Player* /*pPlayer*/)                      // tailor, alchemy
 {
     return 200000;
@@ -237,7 +237,7 @@ bool EquippedOk(Player* pPlayer, uint32 spellId)
 
     for (int i = 0; i < 3; ++i)
     {
-#if defined(CATA)
+#if defined(CATA) || defined (MISTS)
         SpellEffectEntry const* pSpellEffect = spell->GetSpellEffect(SpellEffectIndex(i));
         if (!pSpellEffect)
             continue;
@@ -895,7 +895,7 @@ private:
     }
 };
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*###
 # start menues tailoring
 ###*/
@@ -1171,7 +1171,7 @@ private:
 
 void AddSC_npc_professions()
 {
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     Script* s;
 
     s = new npc_prof_blacksmith();
@@ -1179,7 +1179,7 @@ void AddSC_npc_professions()
     s = new npc_prof_leather();
     s->RegisterSelf();
 #endif
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new npc_prof_tailor();
     s->RegisterSelf();
 

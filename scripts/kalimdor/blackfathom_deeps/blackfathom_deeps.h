@@ -38,7 +38,7 @@ enum
 #if defined (CLASSIC) || defined (TBC)
     TYPE_STONE                  = 3,
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     TYPE_AQUANIS                = 3,
 #endif
 
@@ -56,7 +56,7 @@ enum
     GO_SHRINE_2                 = 21119,
     GO_SHRINE_3                 = 21120,
     GO_SHRINE_4                 = 21121,
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     GO_FATHOM_STONE             = 177964,
 #endif
 };
@@ -80,6 +80,6 @@ enum
 */
 
 #endif
-#if defined(WOTLK) || defined(CATA)
+#if defined(WOTLK) || defined(CATA) || defined(MISTS)
 static const float afAquanisPos[4] = { -782.21f, -63.26f, -42.43f, 2.36f };
 #endif

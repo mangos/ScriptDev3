@@ -36,7 +36,7 @@
 /**
  * ContentData
  * npc_the_scourge_cauldron
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * npc_anchorite_truuen
 #endif
  * npc_taelan_fordring

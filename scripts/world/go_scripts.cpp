@@ -40,13 +40,13 @@
  * go_ethereum_prison
  * go_ethereum_stasis
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  * go_mysterious_snow_mound
  * go_tele_to_dalaran_crystal
  * go_tele_to_violet_stand
 #endif
  * go_andorhal_tower
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  * go_scourge_enclosure
  * go_lab_work_reagents
 #endif
@@ -79,7 +79,7 @@ struct go_barov_journal : public GameObjectScript
     }
 };
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## go_ethereum_prison
 ######*/
@@ -201,7 +201,7 @@ struct go_jump_a_tron : public GameObjectScript
     }
 };
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## go_mysterious_snow_mound
 ######*/
@@ -354,7 +354,7 @@ struct go_table_theka : public GameObjectScript
 };
 #endif
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## go_scourge_enclosure
 ######*/
@@ -492,7 +492,7 @@ void AddSC_go_scripts()
     //pNewScript->pGOUse =          &GOUse_go_jump_a_tron;
     //pNewScript->RegisterSelf();
 //#endif
-//#if defined (WOTLK) || defined (CATA)
+//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "go_mysterious_snow_mound";
     //pNewScript->pGOUse =          &GOUse_go_mysterious_snow_mound;
@@ -521,7 +521,7 @@ void AddSC_go_scripts()
     //pNewScript->RegisterSelf();
 //#endif
 
-//#if defined (WOTLK) || defined (CATA)
+//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "go_scourge_enclosure";
     //pNewScript->pGOUse =          &GOUse_go_scourge_enclosure;

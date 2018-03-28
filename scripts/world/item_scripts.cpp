@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA)
  * item_arcane_charges                 Prevent use if player is not flying (cannot cast while on ground)
  * item_flying_machine(i34060,i34061)  Engineering crafted flying machines
  * item_gor_dreks_ointment(i30175)     Protecting Our Own(q10488)
@@ -45,7 +45,7 @@
  */
 
 #include "precompiled.h"
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined (MISTS)
 #include "Spell.h"
 
 /*#####
@@ -177,7 +177,7 @@ struct item_gor_dreks_ointment : public ItemScript
     }
 };
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*#####
 # item_petrov_cluster_bombs
 #####*/
@@ -215,9 +215,9 @@ struct item_petrov_cluster_bombs : public ItemScript
 
 void AddSC_item_scripts()
 {
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined (MISTS)
     Script* s;
-    
+
     s = new item_ogre_brew();
     s->RegisterSelf();
     s = new item_arcane_charges();
@@ -242,7 +242,7 @@ void AddSC_item_scripts()
     //pNewScript->pItemUse = &ItemUse_item_gor_dreks_ointment;
     //pNewScript->RegisterSelf();
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new item_petrov_cluster_bombs();
     s->RegisterSelf();
 

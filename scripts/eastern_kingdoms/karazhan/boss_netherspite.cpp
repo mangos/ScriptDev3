@@ -515,7 +515,7 @@ struct boss_netherspite : public CreatureScript
 //            void MoveInLineOfSight(Unit* pWho) { }
 //            void AttackStart(Unit* pWho) { }
 //#endif
-//#if defined (WOTLK) || defined (CATA)
+//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 //            void MoveInLineOfSight(Unit* /*pWho*/) { }
 //            void AttackStart(Unit* /*pWho*/) { }
 //#endif

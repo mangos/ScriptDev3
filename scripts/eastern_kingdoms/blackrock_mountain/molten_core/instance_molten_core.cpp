@@ -250,7 +250,7 @@ struct is_molten_core : public InstanceScript
                         trap->SetGoState(GO_STATE_READY);
                 }
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                 SetRuneDoused(GetRuneStructForBoss(uiType));
                 DoSpawnMajordomoIfCan(false);
 #endif

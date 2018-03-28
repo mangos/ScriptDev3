@@ -97,7 +97,7 @@ struct go_fathom_stone : public GameObjectScript
         pInstance->SetData(TYPE_STONE, DONE);
         return true;
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
         if (!pInstance)
         { return true; }
 

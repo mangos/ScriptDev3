@@ -45,27 +45,27 @@ enum
     EMOTE_BREATH                = -1249004,
 
     SPELL_WINGBUFFET            = 18500,
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     SPELL_WINGBUFFET_H          = 69293,
 #endif
     SPELL_FLAMEBREATH           = 18435,
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     SPELL_FLAMEBREATH_H         = 68970,
 #endif
 #if defined (CLASSIC) || defined (TBC)
     SPELL_CLEAVE                = 19983,
     SPELL_TAILSWEEP             = 15847,
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     SPELL_CLEAVE                = 68868,
     SPELL_TAILSWEEP             = 68867,
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     SPELL_TAILSWEEP_H           = 69286,
 #endif
     SPELL_KNOCK_AWAY            = 19633,
     SPELL_FIREBALL              = 18392,
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     SPELL_FIREBALL_H            = 68926,
 #endif
 
@@ -90,7 +90,7 @@ enum
     SPELL_HEATED_GROUND         = 22191,                    // Prevent players from hiding in the tunnels when it is time for Onyxia's breath
 
     SPELL_SUMMONWHELP           = 17646,                    // TODO this spell is only a summon spell, but would need a spell to activate the eggs
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     SPELL_SUMMON_LAIR_GUARD     = 68968,
 #endif
 
@@ -135,7 +135,7 @@ static const float afSpawnLocations[3][3] =
 {
     { -30.127f, -254.463f, -89.440f},                       // whelps
     { -30.817f, -177.106f, -89.258f},                       // whelps
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     { -126.57f, -214.609f, -71.446f}                        // guardians
 #endif
 };
@@ -149,14 +149,14 @@ struct boss_onyxia : public CreatureScript
         boss_onyxiaAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
 #endif
             Reset();
         }
 
         ScriptedInstance* m_pInstance;
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
         bool m_bIsRegularMode;
         uint32 m_uiSummonGuardTimer;
 #endif
@@ -206,7 +206,7 @@ struct boss_onyxia : public CreatureScript
             m_uiSummonWhelpsTimer = 60000;
             m_uiBellowingRoarTimer = 30000;
             m_uiWhelpTimer = 1000;
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
             m_uiSummonGuardTimer = 15000;
 #endif
 
@@ -318,7 +318,7 @@ struct boss_onyxia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                     m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
                     m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
 #endif
                     m_creature->SetLevitate(true);
@@ -402,7 +402,7 @@ struct boss_onyxia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                         if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAMEBREATH) == CAST_OK)
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
                         if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FLAMEBREATH : SPELL_FLAMEBREATH_H) == CAST_OK)
 #endif
                         {
@@ -419,7 +419,7 @@ struct boss_onyxia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                         if (DoCastSpellIfCan(m_creature, SPELL_TAILSWEEP) == CAST_OK)
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
                         if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_TAILSWEEP : SPELL_TAILSWEEP_H) == CAST_OK)
 #endif
                         {
@@ -460,7 +460,7 @@ struct boss_onyxia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                         if (DoCastSpellIfCan(m_creature, SPELL_WINGBUFFET) == CAST_OK)
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
                         if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_WINGBUFFET : SPELL_WINGBUFFET_H) == CAST_OK)
 #endif
                         {
@@ -500,7 +500,7 @@ struct boss_onyxia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                         float fGroundZ = m_creature->GetMap()->GetHeight(aMoveData[POINT_ID_SOUTH].fX, aMoveData[POINT_ID_SOUTH].fY, aMoveData[POINT_ID_SOUTH].fZ);
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
                         float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), aMoveData[POINT_ID_SOUTH].fX, aMoveData[POINT_ID_SOUTH].fY, aMoveData[POINT_ID_SOUTH].fZ);
 #endif
                         m_creature->GetMotionMaster()->MovePoint(POINT_ID_LIFTOFF, aMoveData[POINT_ID_SOUTH].fX, aMoveData[POINT_ID_SOUTH].fY, fGroundZ);
@@ -520,7 +520,7 @@ struct boss_onyxia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                         float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
                         float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
 #endif
                         m_creature->GetMotionMaster()->MoveFlyOrLand(POINT_ID_LAND, m_creature->GetPositionX(), m_creature->GetPositionY(), fGroundZ, false);
@@ -566,7 +566,7 @@ struct boss_onyxia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                               if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
                               if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_FIREBALL : SPELL_FIREBALL_H) == CAST_OK)
 #endif
                               {
@@ -600,7 +600,7 @@ struct boss_onyxia : public CreatureScript
                           }
                       }
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
                       if (m_uiSummonGuardTimer < uiDiff)
                       {
                           if (!m_creature->IsNonMeleeSpellCasted(false))
@@ -655,7 +655,7 @@ struct boss_onyxia : public CreatureScript
             }
         }
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined (MISTS)
     void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
     {
         // Check if players are hit by Onyxia's Deep Breath

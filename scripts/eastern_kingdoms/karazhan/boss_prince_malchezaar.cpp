@@ -75,7 +75,7 @@ enum
     ATTACK_TIMER_DEFAULT        = 2400,                     // note: for WotLK it is 2000
     ATTACK_TIMER_AXES           = 1600,                     // note: for WotLK it is 1333
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     ATTACK_TIMER_DEFAULT        = 2000,                     // note: for TBC it was 2400
     ATTACK_TIMER_AXES           = 1333,                     // note: for TBC it was 1600
 #endif

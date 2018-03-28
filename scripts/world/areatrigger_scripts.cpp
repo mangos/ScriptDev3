@@ -216,7 +216,7 @@ struct at_ravenholdt : public AreaTriggerScript
     }
 };
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## at_spearborn_encampment
 ######*/
@@ -424,7 +424,7 @@ struct at_murkdeep : public AreaTriggerScript
     }
 };
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## at_hot_on_the_trail
 ######*/

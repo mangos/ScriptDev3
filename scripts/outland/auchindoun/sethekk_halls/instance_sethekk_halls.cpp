@@ -166,7 +166,7 @@ struct is_sethekk_halls : public InstanceScript
             OUT_LOAD_INST_DATA_COMPLETE;
         }
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const override
         {
             if (uiCriteriaId != ACHIEV_CRITA_TURKEY_TIME)

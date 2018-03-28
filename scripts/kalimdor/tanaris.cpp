@@ -164,8 +164,7 @@ struct mob_aquementas : public CreatureScript
 };
 
 
-#if defined(TBC) || defined (WOTLK) || defined (CATA)
-
+#if defined(TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## npc_custodian_of_time
 ######*/
@@ -720,7 +719,7 @@ void AddSC_tanaris()
     s = new npc_tooga();
     s->RegisterSelf();
 
-#if defined(TBC) || defined (WOTLK) || defined (CATA)
+#if defined(TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new npc_custodian_of_time();
     s->RegisterSelf();
 #endif

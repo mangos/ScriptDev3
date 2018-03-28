@@ -47,7 +47,7 @@
 #include "../scripts/world/world_map_scripts.h"
 #include "escort_ai.h"
 
-#if defined (CLASSIC) || defined (TBC) || defined(WOTLK) || defined (CATA)
+#if defined (CLASSIC) || defined (TBC) || defined(WOTLK) || defined (CATA) || defined (MISTS)
 /*######
 ## npc_tyrion
 ######*/
@@ -994,7 +994,7 @@ struct npc_reginald_windsor : public CreatureScript
                 m_creature->RemoveAllAurasOnDeath();
                 m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
                 m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
 #endif
 
@@ -1181,7 +1181,7 @@ struct npc_reginald_windsor : public CreatureScript
     }
 };
 
-#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## npc_tyrion_spybot
 ######*/

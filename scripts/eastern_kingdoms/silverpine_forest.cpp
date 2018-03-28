@@ -65,7 +65,7 @@ enum
 
     QUEST_ERLAND        = 435,
     NPC_RANE            = 1950,
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     NPC_QUINN           = 1951
 #endif
 #if defined (CLASSIC) || defined (TBC)
@@ -136,7 +136,7 @@ struct npc_deathstalker_erland : public CreatureScript
                 DoScriptText(SAY_START_2, m_creature, pPlayer);
                 break;
             case 13:
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                 DoScriptText(SAY_END, m_creature, pPlayer);
 #endif
 #if defined (CLASSIC) || defined (TBC)
@@ -155,7 +155,7 @@ struct npc_deathstalker_erland : public CreatureScript
                 m_creature->SetWalk(false);
 #endif
                 break;
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
             case 14:
                 if (Creature* pRane = GetClosestCreatureWithEntry(m_creature, NPC_RANE, 45.0f))
                     DoScriptText(SAY_RANE, pRane, m_creature);
@@ -165,7 +165,7 @@ struct npc_deathstalker_erland : public CreatureScript
                 break;
 #endif
             case 16:
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                 DoScriptText(SAY_CHECK_NEXT, m_creature);
 #endif
 #if defined (CLASSIC) || defined (TBC)
@@ -173,7 +173,7 @@ struct npc_deathstalker_erland : public CreatureScript
                 SetEscortPaused(true);
 #endif
                 break;
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
             case 24:
                 DoScriptText(SAY_QUINN, m_creature);
                 break;
@@ -182,12 +182,12 @@ struct npc_deathstalker_erland : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                 SetEscortPaused(true);
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                 if (Creature* pQuinn = GetClosestCreatureWithEntry(m_creature, NPC_QUINN, 45.0f))
                     DoScriptText(SAY_QUINN_REPLY, pQuinn, m_creature);
 #endif
                 break;
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
             case 26:
                 DoScriptText(SAY_BYE, m_creature);
                 break;
@@ -356,14 +356,14 @@ SpawnPoint SpawnPoints[] =
     { -396.30f, 1511.68f, 18.87f, 4.76f},
     { -398.26f, 1511.56f, 18.87f, 4.74f}
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     { -397.45f, 1509.56f, 18.87f, 4.73f},
     { -398.35f, 1510.75f, 18.87f, 4.76f},
     { -396.41f, 1511.06f, 18.87f, 4.74f}
 #endif
 };
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
 static float m_afMoveCoords[] = { -410.69f, 1498.04f, 19.77f};
 #endif
 
@@ -394,7 +394,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
         {
         }
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     ObjectGuid m_playerGuid;
 #endif
 #if defined (CLASSIC) || defined (TBC)
@@ -402,15 +402,15 @@ struct npc_deathstalker_faerleia : public CreatureScript
 #endif
         uint32 m_uiWaveTimer;
         uint32 m_uiSummonCount;
-#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         uint32 m_uiRunbackTimer;
 #endif
         uint8  m_uiWaveCount;
-#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         uint8  m_uiMoveCount;
 #endif
         bool   m_bEventStarted;
-#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         bool   m_bWaveDied;
 #endif
 
@@ -436,7 +436,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
         }
 #endif
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     void StartEvent(Player* pPlayer)
     {
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
@@ -456,7 +456,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
             m_bEventStarted = false;
             m_bWaveDied = false;
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
         m_playerGuid.Clear();
         m_bEventStarted = false;
         m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
@@ -468,7 +468,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
             if (Player* pPlayer = (m_creature->GetMap()->GetPlayer(m_uiPlayerGUID)))
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
         if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
 #endif
             {
@@ -481,7 +481,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
         void JustSummoned(Creature* pSummoned)
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     void JustSummoned(Creature* pSummoned) override
 #endif
         {
@@ -493,7 +493,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
 
             ++m_uiMoveCount;
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
         // put them on correct waypoints later on
         float fX, fY, fZ;
         pSummoned->GetRandomPoint(m_afMoveCoords[0], m_afMoveCoords[1], m_afMoveCoords[2], 10.0f, fX, fY, fZ);
@@ -514,7 +514,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
         }
 #endif
 
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     void SummonedCreatureJustDied(Creature* /*pKilled*/) override
     {
         --m_uiSummonCount;
@@ -541,7 +541,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
         void UpdateAI(const uint32 uiDiff)
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     void UpdateAI(const uint32 uiDiff) override
 #endif
         {
@@ -576,7 +576,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                         m_creature->SummonCreature(NPC_COUNCILMAN_SMITHERS, SpawnPoints[0].fX, SpawnPoints[0].fY, SpawnPoints[0].fZ, SpawnPoints[0].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
                         m_creature->SummonCreature(NPC_COUNCILMAN_SMITHERS,  SpawnPoints[1].fX, SpawnPoints[1].fY, SpawnPoints[1].fZ, SpawnPoints[1].fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
 #endif
                         m_uiWaveTimer = 10000;
@@ -648,7 +648,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
                 pFaerleiaAI->StartEvent(pPlayer->GetObjectGuid().GetRawValue());
                 return true;
 #endif
-#if defined (WOTLK) || defined (CATA)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
             pFaerleiaAI->StartEvent(pPlayer);
 #endif
             }

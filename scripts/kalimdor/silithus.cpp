@@ -110,7 +110,7 @@ enum
     SPELL_GREEN_DRAGON_TRANSFORM        = 25105,
     SPELL_RED_DRAGON_TRANSFORM          = 25106,
     SPELL_BLUE_DRAGON_TRANSFORM         = 25107,
-#if defined (CLASSIC)  
+#if defined (CLASSIC)
     SPELL_BRONZE_DRAGON_TRANSFORM       = 25108,
 #endif
 
@@ -330,7 +330,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                 // Move Merithra to the exit point
                 if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
                 {
-#if defined (CLASSIC)  
+#if defined (CLASSIC)
                     pMerithra->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
                     pMerithra->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
@@ -356,7 +356,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                 // Move Arygos to the exit point
                 if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
                 {
-#if defined (CLASSIC)  
+#if defined (CLASSIC)
                     pArygos->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
                     pArygos->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
@@ -393,7 +393,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                 // Send Caelestrasz on flight
                 if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
                 {
-#if defined (CLASSIC)  
+#if defined (CLASSIC)
                     pCaelestrasz->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
                     pCaelestrasz->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
@@ -620,7 +620,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                 m_uiEventTimer = 4000;
                 break;
             case POINT_ID_EXIT:
-#if defined (CLASSIC)  
+#if defined (CLASSIC)
                 DoCastSpellIfCan(m_creature, SPELL_BRONZE_DRAGON_TRANSFORM);
 #else
                 // Spell was removed, manually change the display
@@ -714,7 +714,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                         break;
                     case 4:
                         // Take off and fly
-#if defined (CLASSIC)  
+#if defined (CLASSIC)
                         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
                         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
