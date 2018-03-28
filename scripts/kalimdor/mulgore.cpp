@@ -41,7 +41,7 @@
 
 #include "precompiled.h"
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 # npc_kyle_the_frenzied
 ######*/
@@ -205,7 +205,7 @@ struct npc_kyle_the_frenzied : public CreatureScript
 #endif
 void AddSC_mulgore()
 {
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     Script* s;
 
     s = new npc_kyle_the_frenzied();

@@ -41,11 +41,11 @@
  * Spell 17327: Spirit Particles
 #endif
  * Spell 19512: Apply Salve
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * spell 21014
 #endif
  * Spell 21050: Melodious Rapture
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * spell 29528
  * spell 29866
  * spell 34665
@@ -80,7 +80,7 @@
  * - always return true when the spell is handled by script
  */
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 enum
 {
     // quest 9452
@@ -168,7 +168,7 @@ struct spell_cast_fishing_net : public SpellScript
 
 enum
 {
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 9629
     SPELL_TAG_MURLOC                    = 30877,
     SPELL_TAG_MURLOC_PROC               = 30875,
@@ -216,7 +216,7 @@ enum
     NPC_MORBENT                         = 1200,
     NPC_WEAKENED_MORBENT                = 24782,
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 11515
     SPELL_FEL_SIPHON_DUMMY              = 44936,
     NPC_FELBLOOD_INITIATE               = 24918,
@@ -383,7 +383,7 @@ enum
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
     NPC_GANJO                           = 26924,
 #endif
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 11521
     SPELL_EXPOSE_RAZORTHORN_ROOT        = 44935,
     SPELL_SUMMON_RAZORTHORN_ROOT        = 44941,
@@ -443,7 +443,7 @@ struct aura_spirit_particles : public AuraScript
     }
 };
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 struct aura_healing_salve : public AuraScript
 {
     aura_healing_salve() : AuraScript("aura_healing_salve") {}
@@ -672,7 +672,7 @@ struct spell_melodious_rapture : public SpellScript
     }
 };
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 struct spell_administer_antidote : public SpellScript
 {
     spell_administer_antidote() : SpellScript("spell_administer_antidote") {}
@@ -831,7 +831,7 @@ struct spell_fel_siphon_dummy : public SpellScript
 //        }
 //
 //#endif
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 struct spell_tag_murloc_proc : public SpellScript
 {
     spell_tag_murloc_proc() : SpellScript("spell_tag_murloc_proc") {}
@@ -902,7 +902,7 @@ struct spell_tag_murloc_proc : public SpellScript
 
  //#endif
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 struct spell_orb_of_murloc_control : public SpellScript
 {
     spell_orb_of_murloc_control() : SpellScript("spell_orb_of_murloc_control") {}
@@ -1028,7 +1028,7 @@ struct spell_fumping : public SpellScript
  //       }
  //#endif
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 struct spell_throw_gordawg_boulder : public SpellScript
 {
     spell_throw_gordawg_boulder() : SpellScript("spell_throw_gordawg_boulder") {}
@@ -1131,7 +1131,7 @@ struct spell_throw_gordawg_boulder : public SpellScript
  //       }
  //#endif
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 struct spell_expose_rathorthorn_root : public SpellScript
 {
     spell_expose_rathorthorn_root() : SpellScript("spell_expose_rathorthorn_root") {}
@@ -1199,7 +1199,7 @@ void AddSC_spell_scripts()
     s->RegisterSelf();
     s = new spell_melodious_rapture();
     s->RegisterSelf();
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new spell_cast_fishing_net();
     s->RegisterSelf();
     s = new aura_healing_salve();

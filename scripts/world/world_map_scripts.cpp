@@ -163,7 +163,7 @@ struct map_kalimdor : public ZoneScript
     }
 };
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /* *********************************************************
  *                     OUTLAND
  */
@@ -247,7 +247,7 @@ void AddSC_world_map_scripts()
     s->RegisterSelf();
     s = new map_kalimdor();
     s->RegisterSelf();
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new map_outland();
     s->RegisterSelf();
 #endif
@@ -266,7 +266,7 @@ void AddSC_world_map_scripts()
     //pNewScript->GetInstanceData = &GetInstanceData_world_map_kalimdor;
     //pNewScript->RegisterSelf();
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "world_map_outland";
     //pNewScript->GetInstanceData = &GetInstanceData_world_map_outland;

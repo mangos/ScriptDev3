@@ -38,7 +38,7 @@
 #if defined (WOTLK)    
  * at_aldurthar_gate                5284, 5285, 5286, 5287
 #endif
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * at_coilfang_waterfall            4591
  * at_legion_teleporter             4560 Teleporter TO Invasion Point: Cataclysm
 #endif
@@ -90,7 +90,7 @@ struct at_childrens_week_spot : public AreaTriggerScript
     }
 };
 
-#if defined (WOTLK) || defined(CATA)
+#if defined (WOTLK) || defined(CATA) || defined(MISTS)
 /*######
 ## Quest 13315/13351
 ######*/
@@ -125,7 +125,7 @@ struct at_aldurthar_gate : public AreaTriggerScript
     }
 };
 #endif
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## at_coilfang_waterfall
 ######*/
@@ -529,14 +529,14 @@ void AddSC_areatrigger_scripts()
     s = new at_childrens_week_spot();
     s->RegisterSelf();
 
-#if defined (WOTLK) || defined (CATA)    
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new at_aldurthar_gate();
     s->RegisterSelf();
 #endif    
     s = new at_ravenholdt();
     s->RegisterSelf();
 
-#if defined (WOTLK) || defined (CATA)    
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new at_spearborn_encampment();
     s->RegisterSelf();
 
@@ -555,14 +555,14 @@ void AddSC_areatrigger_scripts()
     s = new at_murkdeep();
     s->RegisterSelf();
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new at_coilfang_waterfall();
     s->RegisterSelf();
 
     s = new at_legion_teleporter();
     s->RegisterSelf();
 #endif
-#if defined (WOTLK) || defined (CATA)    
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new at_ancient_leaf();
     s->RegisterSelf();
     s = new at_hot_on_the_trail();

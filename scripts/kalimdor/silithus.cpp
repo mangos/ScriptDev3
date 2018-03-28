@@ -102,7 +102,7 @@ enum
     EMOTE_ANACHRONOS_PICKUP             = -1000769,
     SAY_ANACHRONOS_EPILOGUE_8           = -1000770,
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     // The transform spell for Anachronos was removed from DBC
     DISPLAY_ID_BRONZE_DRAGON            = 15500,
 #endif

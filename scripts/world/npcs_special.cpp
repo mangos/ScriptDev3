@@ -42,7 +42,7 @@
 /**
  * ContentData
  * npc_chicken_cluck          100%    support for quest 3861 (Cluck!)
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * npc_air_force_bots          80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
  * npc_dancing_flames         100%    midsummer event NPC
  * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD3
@@ -58,7 +58,7 @@
  * EndContentData
  */
  
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*########
 # npc_air_force_bots
 #########*/
@@ -418,7 +418,7 @@ struct npc_chicken_cluck : public CreatureScript
         return true;
     }
 };
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## npc_dancing_flames
 ######*/
@@ -1244,7 +1244,7 @@ struct npc_innkeeper : public CreatureScript
         // Should only apply to innkeeper close to start areas.
         if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetAreaId()))
         {
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
         if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
 #endif
@@ -1563,7 +1563,7 @@ struct npc_redemption_target : public CreatureScript
                 if (m_uiEvadeTimer <= uiDiff)
                 {
                     EnterEvadeMode();
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
                 m_uiEvadeTimer = 0;
 #endif
                 }
@@ -1628,7 +1628,7 @@ struct spell_symbol_of_life : public SpellScript
 };
 #endif
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA) 
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## npc_burster_worm
 ######*/
@@ -1865,7 +1865,7 @@ void AddSC_npcs_special()
     s = new npc_chicken_cluck();
     s->RegisterSelf();
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new npc_air_force_bots();
     s->RegisterSelf();
     s = new npc_dancing_flames();
@@ -1894,7 +1894,7 @@ void AddSC_npcs_special()
     s = new spell_symbol_of_life();
     s->RegisterSelf();
 #endif
-#if defined (WOTLK) || defined (CATA) 
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new npc_spring_rabbit();
     s->RegisterSelf();
 #endif
@@ -1907,7 +1907,7 @@ void AddSC_npcs_special()
     //pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_chicken_cluck;
     //pNewScript->RegisterSelf();
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "npc_dancing_flames";
     //pNewScript->GetAI = &GetAI_npc_dancing_flames;

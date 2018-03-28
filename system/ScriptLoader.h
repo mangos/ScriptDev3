@@ -30,7 +30,7 @@
 void AddScripts();
 void AddEasternKingdomsScripts();
 void AddKalimdorScripts();
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 void AddOutlandsScripts();
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)

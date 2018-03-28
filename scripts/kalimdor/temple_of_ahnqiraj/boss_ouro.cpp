@@ -60,7 +60,7 @@ enum
     SPELL_SUMMON_TRIGGER    = 26284,
 
     SPELL_SUMMON_OURO       = 26642,
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     SPELL_QUAKE             = 26093,
 #endif
 
@@ -330,7 +330,7 @@ struct npc_ouro_spawner : public CreatureScript
         npc_ouro_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
 
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     uint32 m_uiQuakeTimer;
 #endif
         bool m_bHasSummoned;
@@ -338,7 +338,7 @@ struct npc_ouro_spawner : public CreatureScript
         void Reset() override
         {
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         m_uiQuakeTimer = 1000;
 #endif
             m_bHasSummoned = false;
@@ -379,7 +379,7 @@ struct npc_ouro_spawner : public CreatureScript
 
     void UpdateAI(const uint32 uiDiff) override
     {
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         if (m_bHasSummoned)
         {
             if (m_uiQuakeTimer < uiDiff)

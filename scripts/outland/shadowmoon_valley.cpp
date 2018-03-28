@@ -1627,7 +1627,7 @@ struct spell_totem_of_spirits : public SpellScript
     }
 };
 
-#if defined (TBC) || defined (WOTLK) || defined(CATA)
+#if defined (TBC) || defined (WOTLK) || defined(CATA) || defined(MISTS)
 struct aura_elemental_sieve : public AuraScript
 {
     aura_elemental_sieve() : AuraScript("aura_elemental_sieve") {}
@@ -2332,7 +2332,7 @@ void AddSC_shadowmoon_valley()
     s->RegisterSelf();
     s = new spell_totem_of_spirits();
     s->RegisterSelf();
-#if defined (TBC) || defined (WOTLK) || defined(CATA)
+#if defined (TBC) || defined (WOTLK) || defined(CATA) || defined(MISTS)
     s = new aura_elemental_sieve();
     s->RegisterSelf();
 #endif

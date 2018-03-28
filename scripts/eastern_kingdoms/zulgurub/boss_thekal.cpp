@@ -112,7 +112,7 @@ struct boss_thekalBaseAI : public ScriptedAI
         m_creature->RemoveAllAurasOnDeath();
         m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
 #endif
 

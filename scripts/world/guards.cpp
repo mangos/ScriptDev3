@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * guard_azuremyst
 #endif
  * guard_bluffwatcher
@@ -44,14 +44,14 @@
  * guard_dunmorogh
  * guard_durotar
  * guard_elwynnforest
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * guard_eversong
  * guard_exodar
 #endif
  * guard_ironforge
  * guard_mulgore
  * guard_orgrimmar
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * guard_shattrath
  * guard_shattrath_aldor
  * guard_shattrath_scryer
@@ -163,7 +163,7 @@ struct guard_shattrath_asAI : public guardAI
     }
 };
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 
 struct guard_shattrath_aldor : public CreatureScript
 {
@@ -206,7 +206,7 @@ void AddSC_guards()
     s = new guard_stormwind();
     s->RegisterSelf();
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)  
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new guard_shattrath_aldor();
     s->RegisterSelf();
     s = new guard_shattrath_scryer();

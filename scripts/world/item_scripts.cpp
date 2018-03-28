@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * item_arcane_charges                 Prevent use if player is not flying (cannot cast while on ground)
  * item_flying_machine(i34060,i34061)  Engineering crafted flying machines
  * item_gor_dreks_ointment(i30175)     Protecting Our Own(q10488)

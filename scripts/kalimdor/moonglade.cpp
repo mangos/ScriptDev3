@@ -45,7 +45,7 @@
 #include "escort_ai.h"
 #include "ObjectMgr.h"
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 # npc_clintar_dw_spirit
 ####*/
@@ -1111,7 +1111,7 @@ struct boss_eranikus : public CreatureScript
 void AddSC_moonglade()
 {
     Script* s;
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new npc_clintar_dw_spirit();
     s->RegisterSelf();
     s = new spell_emerald_dream();
@@ -1125,7 +1125,7 @@ void AddSC_moonglade()
     s->RegisterSelf();
 
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "npc_clintar_dw_spirit";
     //pNewScript->GetAI = &GetAI_npc_clintar_dw_spirit;

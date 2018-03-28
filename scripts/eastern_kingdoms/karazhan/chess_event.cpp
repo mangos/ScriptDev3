@@ -715,7 +715,7 @@ struct npc_king_llane : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_HEROISM);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -733,7 +733,7 @@ struct npc_king_llane : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_SWEEP);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -838,7 +838,7 @@ struct npc_warchief_blackhand : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_BLOODLUST);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -856,7 +856,7 @@ struct npc_warchief_blackhand : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_CLEAVE);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -927,7 +927,7 @@ struct npc_human_conjurer : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_ELEMENTAL_BLAST);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -945,7 +945,7 @@ struct npc_human_conjurer : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_RAIN_OF_FIRE);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1016,7 +1016,7 @@ struct npc_orc_warlock : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_FIREBALL);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1034,7 +1034,7 @@ struct npc_orc_warlock : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_POISON_CLOUD_ACTION);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1119,7 +1119,7 @@ struct npc_human_footman : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_HEROIC_BLOW);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1137,7 +1137,7 @@ struct npc_human_footman : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_SHIELD_BLOCK);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1222,7 +1222,7 @@ struct npc_orc_grunt : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_VICIOUS_STRIKE);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1240,7 +1240,7 @@ struct npc_orc_grunt : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_WEAPON_DEFLECTION);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1311,7 +1311,7 @@ struct npc_water_elemental : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_GEYSER);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1329,7 +1329,7 @@ struct npc_water_elemental : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_WATER_SHIELD);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1400,7 +1400,7 @@ struct npc_summoned_daemon : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_HELLFIRE);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1418,7 +1418,7 @@ struct npc_summoned_daemon : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_FIRE_SHIELD);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1489,7 +1489,7 @@ struct npc_human_charger : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_SMASH);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1507,7 +1507,7 @@ struct npc_human_charger : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_STOMP);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1578,7 +1578,7 @@ struct npc_orc_wolf : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_BITE);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1596,7 +1596,7 @@ struct npc_orc_wolf : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_HOWL);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1667,7 +1667,7 @@ struct npc_human_cleric : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_HEALING);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1685,7 +1685,7 @@ struct npc_human_cleric : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_HOLY_LANCE);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1756,7 +1756,7 @@ struct npc_orc_necrolyte : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_SHADOW_MEND_ACTION);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;
@@ -1775,7 +1775,7 @@ struct npc_orc_necrolyte : public ChessPieceScript
 
                 // reset timer based on spell values
                 const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_SHADOW_SPEAR);
-#if defined(CATA)
+#if defined(CATA) || defined(MISTS)
                 return pSpell->GetRecoveryTime() ? pSpell->GetRecoveryTime() : pSpell->GetCategoryRecoveryTime();
 #else
                 return pSpell->RecoveryTime ? pSpell->RecoveryTime : pSpell->CategoryRecoveryTime;

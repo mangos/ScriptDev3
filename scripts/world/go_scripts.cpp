@@ -36,7 +36,7 @@
 /**
  * ContentData
  * go_barov_journal
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * go_ethereum_prison
  * go_ethereum_stasis
 #endif
@@ -443,7 +443,7 @@ void AddSC_go_scripts()
     s->RegisterSelf();
 #endif
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new go_ethereum_prison();
     s->RegisterSelf();
 
@@ -454,7 +454,7 @@ void AddSC_go_scripts()
     s->RegisterSelf();
 #endif
 
-#if defined (WOTLK) || defined (CATA)    
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new go_mysterious_snow_mound();
     s->RegisterSelf();
 
@@ -476,7 +476,7 @@ void AddSC_go_scripts()
     //pNewScript->pGOUse =          &GOUse_go_barov_journal;
     //pNewScript->RegisterSelf();
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "go_ethereum_prison";
     //pNewScript->pGOUse =          &GOUse_go_ethereum_prison;

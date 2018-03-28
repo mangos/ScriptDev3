@@ -35,7 +35,7 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
  * npc_rizzle_sprysprocket
  * npc_depth_charge
  * go_southfury_moonstone
@@ -48,7 +48,7 @@
 #include "precompiled.h"
 #include <unordered_map>
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 #include "escort_ai.h"
 
 
@@ -541,7 +541,7 @@ struct npc_loramus_thalipedes : public CreatureScript
 void AddSC_azshara()
 {
     Script* s;
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new npc_rizzle_sprysprocket();
     s->RegisterSelf();
     s = new npc_depth_charge();
@@ -555,7 +555,7 @@ void AddSC_azshara()
     s->RegisterSelf();
 
     //pNewScript = new Script;
-//#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript->Name = "npc_rizzle_sprysprocket";
     //pNewScript->GetAI = &GetAI_npc_rizzle_sprysprocket;
     //pNewScript->pGossipHello = &GossipHello_npc_rizzle_sprysprocket;

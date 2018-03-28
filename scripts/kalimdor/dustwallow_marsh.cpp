@@ -48,7 +48,7 @@
 
 #include "precompiled.h"
 #include "escort_ai.h"
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 #include "TemporarySummon.h"
 
 /*######
@@ -927,7 +927,7 @@ struct npc_stinky_ignatz : public CreatureScript
     }
 };
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
 ## at_nats_landing
 ######*/
@@ -1222,7 +1222,7 @@ void AddSC_dustwallow_marsh()
     s = new npc_stinky_ignatz();
     s->RegisterSelf();
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new mobs_risen_husk_spirit();
     s->RegisterSelf();
     s = new npc_restless_apparition();
@@ -1230,7 +1230,7 @@ void AddSC_dustwallow_marsh()
 
 #endif
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA)    
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     s = new boss_tethyr();
     s->RegisterSelf();
     s = new at_nats_landing();
