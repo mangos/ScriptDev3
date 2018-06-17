@@ -317,7 +317,7 @@ enum
 
     // quest "The Big Bone Worm" 10930
     SPELL_FUMPING                       = 39246,
-    SPELL_SUMMON_HAISHULUD              = 39248,
+    SPELL_SUMMON_HAISHULUD              = 22038,
     NPC_SAND_GNOME                      = 22483,
     NPC_MATURE_BONE_SIFTER              = 22482,
 
@@ -939,7 +939,13 @@ struct spell_fumping : public SpellScript
             switch (urand(0, 2))
             {
             case 0:
-                pCaster->CastSpell(pCreatureTarget, SPELL_SUMMON_HAISHULUD, true);
+            {
+                if (Creature* pHaishulud = pCaster->SummonCreature(SPELL_SUMMON_HAISHULUD, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 30000))
+                {
+                    pHaishulud->AI()->AttackStart(pCaster);
+                }
+            }
+//              pCaster->CastSpell(pCreatureTarget, SPELL_SUMMON_HAISHULUD, true); // TODO: Verify above code: Remove this line if everything checks out.
                 break;
             case 1:
                 for (int i = 0; i < 2; ++i)
