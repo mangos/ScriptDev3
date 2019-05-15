@@ -19,9 +19,9 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #Add PCH Files
-set(mangosscript_PCH "${CMAKE_CURRENT_SOURCE_DIR}/precompiled.h")
+set(mangosscript_PCH "${CMAKE_CURRENT_SOURCE_DIR}/pch.h")
 if(PCH)
-    LIST(APPEND mangosscript_PCH "${CMAKE_CURRENT_SOURCE_DIR}/precompiled.cpp")
+    LIST(APPEND mangosscript_PCH "${CMAKE_CURRENT_SOURCE_DIR}/pch.cpp")
 endif()
 
 # Define the scriptdev3 library
