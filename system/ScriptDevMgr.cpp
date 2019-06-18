@@ -200,25 +200,9 @@ void SD3::InitScriptLibrary()
     outstring_log("                |_|                          ");
     outstring_log("                     https://getmangos.eu/\n");
 
-    // Get configuration file
-    bool configFailure = false;
-    if (!SD3Config.SetSource(MANGOSD_CONFIG_LOCATION))
-    {
-        configFailure = true;
-    }
-    else
-    {
-        outstring_log("[SD3]: Using configuration file %s", MANGOSD_CONFIG_LOCATION);
-    }
-
     // Set SD3 Error Log File
     std::string SD3LogFile = sConfig.GetStringDefault("SD3ErrorLogFile", "scriptdev3-errors.log");
     setScriptLibraryErrorFile(SD3LogFile.c_str(), "SD3");
-
-    if (configFailure)
-    {
-        script_error_log("[SD3]: Unable to open configuration file. Configuration values will use default.");
-    }
 
     outstring_log("\n");
 
