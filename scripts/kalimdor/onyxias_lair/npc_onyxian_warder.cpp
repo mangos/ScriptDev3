@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright (C) 2010-2012 Anathema Script Engine project <http://valkyrie-wow.com/>
- * Copyright (C) 2013-2019 MaNGOS <https://getmangos.eu/>
+ * Copyright (C) 2013-2020 MaNGOS <https://getmangos.eu/>
  */
 
 /* ScriptData
