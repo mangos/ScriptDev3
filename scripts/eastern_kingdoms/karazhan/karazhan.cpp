@@ -204,7 +204,9 @@ struct npc_barnes : public CreatureScript
         {
             // Check if opera event is not yet in progress
             if (pInstance->GetData(TYPE_OPERA) == IN_PROGRESS || pInstance->GetData(TYPE_OPERA) == DONE)
-            { return true; }
+            {
+                return true;
+            }
 
             // Check for death of Moroes
             if (pInstance->GetData(TYPE_MOROES) == DONE)
@@ -242,7 +244,9 @@ struct npc_barnes : public CreatureScript
                 DoScriptText(SAY_BARNES_EVENT_START, pCreature);
                 // start the stage escort
                 if (npc_barnesAI* pBarnesAI = dynamic_cast<npc_barnesAI*>(pCreature->AI()))
-                { pBarnesAI->Start(false, nullptr, nullptr, true); }
+                {
+                    pBarnesAI->Start(false, nullptr, nullptr, true);
+                }
                 break;
                 // GM gossip options
             case GOSSIP_ACTION_INFO_DEF+3:

@@ -99,7 +99,9 @@ struct go_fathom_stone : public GameObjectScript
 #endif
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
         if (!pInstance)
-        { return true; }
+        {
+            return true;
+        }
 
         if (pInstance->GetData(TYPE_AQUANIS) == NOT_STARTED)
         {
