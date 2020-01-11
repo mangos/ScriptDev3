@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2010-2012 Anathema Script Engine project <http://valkyrie-wow.com/>
  * Copyright (C) 2013-2020 MaNGOS <https://getmangos.eu/>
  */
@@ -6,7 +6,7 @@
 /* ScriptData
 SDName: Npc_Onyxian_Warder
 SD%Complete:
-SDComment: 
+SDComment:
 SDCategory: Onyxia's Lair
 EndScriptData */
 

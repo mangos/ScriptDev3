@@ -85,7 +85,10 @@ struct npc_cooshcoosh : public CreatureScript
                 DoCastSpellIfCan(m_creature->getVictim(), SPELL_LIGHTNING_BOLT);
                 m_uiLightningBolt_Timer = 5000;
             }
-            else { m_uiLightningBolt_Timer -= uiDiff; }
+            else
+            {
+                m_uiLightningBolt_Timer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
