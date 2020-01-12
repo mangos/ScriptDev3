@@ -115,7 +115,9 @@ struct boss_jaraxxus : public CreatureScript
         void Aggro(Unit* pWho) override
         {
             if (pWho->GetEntry() == NPC_FIZZLEBANG)
+            {
                 return;
+            }
 
             if (m_pInstance)
                 m_pInstance->SetData(TYPE_JARAXXUS, IN_PROGRESS);
@@ -127,7 +129,9 @@ struct boss_jaraxxus : public CreatureScript
         void EnterEvadeMode() override
         {
             if (m_pInstance && m_pInstance->GetData(TYPE_JARAXXUS) != IN_PROGRESS)
+            {
                 return;
+            }
 
             ScriptedAI::EnterEvadeMode();
         }
@@ -135,7 +139,9 @@ struct boss_jaraxxus : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetEntry() == NPC_FIZZLEBANG)
+            {
                 return;
+            }
 
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
         }
@@ -156,7 +162,9 @@ struct boss_jaraxxus : public CreatureScript
         void MovementInform(uint32 uiMovementType, uint32 uiPointId) override
         {
             if (uiMovementType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (m_pInstance && uiPointId == POINT_COMBAT_POSITION)
             if (Creature* pFizzlebang = m_pInstance->GetSingleCreatureFromStorage(NPC_FIZZLEBANG))
@@ -166,7 +174,9 @@ struct boss_jaraxxus : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Spells
             if (m_uiIncinerateFleshTimer < uiDiff)

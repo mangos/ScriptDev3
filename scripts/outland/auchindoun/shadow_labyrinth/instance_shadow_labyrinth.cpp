@@ -168,7 +168,9 @@ struct is_shadow_labyrinth : public InstanceScript
         {
             // If Hellmaw already completed, just ignore
             if (GetData(TYPE_HELLMAW) == DONE)
+            {
                 return;
+            }
 
             // Note: this is handled in Acid. The purpose is check which Cabal Ritualists is alive, in case of server reset
             // The function is triggered by eventAI on generic timer

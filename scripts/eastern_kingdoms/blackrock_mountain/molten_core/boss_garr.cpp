@@ -251,7 +251,9 @@ struct mob_firesworn : public CreatureScript
             {
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
             if (!m_pInstance)
+            {
                 return;
+            }
 #endif
                 // Distance guesswork, but should be ok
                 Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR);

@@ -150,7 +150,9 @@ struct is_gundrak : public InstanceScript
             {
                 // If not found in the set, or the event is already started, return
                 if (m_sColossusMojosGuids.find(pCreature->GetObjectGuid()) == m_sColossusMojosGuids.end())
+                {
                     return;
+                }
 
                 // Move all 4 Mojos to evade and move to the Colossus position
                 for (GuidSet::const_iterator itr = m_sColossusMojosGuids.begin(); itr != m_sColossusMojosGuids.end(); ++itr)
@@ -259,7 +261,9 @@ struct is_gundrak : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             return 0;
         }
@@ -451,7 +455,9 @@ struct is_gundrak : public InstanceScript
 
             // Verify that the DB has enough trigger spawned
             if (m_vStalkerTargetGuids.size() < 3 || m_vStalkerCasterGuids.size() < 3)
+            {
                 return;
+            }
 
             // Get the Index from the bosses
             uint8 uiIndex = 0;
@@ -468,7 +474,9 @@ struct is_gundrak : public InstanceScript
             Creature* pCaster = instance->GetCreature(m_vStalkerCasterGuids[uiIndex]);
 
             if (!pTarget || !pCaster)
+            {
                 return;
+            }
 
             uint32 auiFireBeamSpells[3] = { SPELL_BEAM_SNAKE, SPELL_BEAM_ELEMENTAL, SPELL_BEAM_MAMMOTH };
 
@@ -510,7 +518,9 @@ struct go_gundrak_altar : public GameObjectScript
         ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 
         if (!pInstance)
+        {
             return false;
+        }
 
         switch (pGo->GetEntry())
         {

@@ -319,7 +319,9 @@ struct is_pit_of_saron : public InstanceScript
                 {
                     Creature* pTyrannus = GetSingleCreatureFromStorage(NPC_TYRANNUS_INTRO);
                     if (!pTyrannus)
+                    {
                         return;
+                    }
 
                     DoScriptText(SAY_TYRANNUS_AMBUSH_2, pTyrannus);
                     pTyrannus->SetWalk(false);
@@ -358,7 +360,9 @@ struct is_pit_of_saron : public InstanceScript
                     {
                         Creature* pTyrannus = GetSingleCreatureFromStorage(NPC_TYRANNUS_INTRO);
                         if (!pTyrannus)
+                        {
                             return;
+                        }
 
                         DoScriptText(SAY_GAUNTLET, pTyrannus);
                         pTyrannus->SetWalk(false);
@@ -447,10 +451,14 @@ struct is_pit_of_saron : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             if (uiType == TYPE_DATA_PLAYER_TEAM)
+            {
                 return m_uiTeam;
+            }
 
             return 0;
         }
@@ -521,7 +529,9 @@ struct is_pit_of_saron : public InstanceScript
         {
             Creature* pTyrannus = GetSingleCreatureFromStorage(NPC_TYRANNUS_INTRO);
             if (!pTyrannus)
+            {
                 return;
+            }
 
             DoScriptText(SAY_TYRANNUS_AMBUSH_1, pTyrannus);
 
@@ -587,7 +597,9 @@ struct is_pit_of_saron : public InstanceScript
             {
                                  Creature* pTyrannus = GetSingleCreatureFromStorage(NPC_TYRANNUS);
                                  if (!pTyrannus)
+                                 {
                                      return;
+                                 }
 
                                  // Spawn tunnel end event mobs
                                  for (uint8 i = 0; i < countof(aEventTunnelEndLocations); ++i)
@@ -616,7 +628,9 @@ struct is_pit_of_saron : public InstanceScript
             {
                                        Player* pPlayer = GetPlayerInMap();
                                        if (!pPlayer)
+                                       {
                                            return;
+                                       }
 
                                        // Spawn Sindragosa
                                        if (Creature* pSummon = pPlayer->SummonCreature(aEventOutroLocations[0].uiEntryHorde, aEventOutroLocations[0].fX, aEventOutroLocations[0].fY,
@@ -689,11 +703,15 @@ struct is_pit_of_saron : public InstanceScript
         void ProcessIntroEventNpcs(Player* pPlayer)
         {
             if (!pPlayer)
+            {
                 return;
+            }
 
             // Not if the bosses are already killed
             if (GetData(TYPE_GARFROST) == DONE || GetData(TYPE_KRICK) == DONE)
+            {
                 return;
+            }
 
             StartNextDialogueText(NPC_TYRANNUS_INTRO);
 

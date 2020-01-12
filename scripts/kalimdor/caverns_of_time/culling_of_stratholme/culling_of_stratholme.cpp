@@ -217,7 +217,9 @@ struct aura_cos_arcane_disruption : public AuraScript
             if (Creature* pTarget = (Creature*)pAura->GetTarget())
             {
                 if (pTarget->GetEntry() != NPC_GRAIN_CRATE_HELPER)
+                {
                     return true;
+                }
 
                 if (InstanceData* pInstance = pTarget->GetInstanceData())
                     pInstance->SetData64(TYPE_DATA64_AD_TARGET, pTarget->GetObjectGuid().GetRawValue());
@@ -417,7 +419,9 @@ struct npc_arthas : public CreatureScript
         }
 
         if (pInvoker->GetTypeId() != TYPEID_PLAYER)
+        {
             return;
+        }
 
         if (eventType == AI_EVENT_START_ESCORT)
         {
@@ -714,7 +718,9 @@ struct npc_arthas : public CreatureScript
                 break;
             case NPC_LORD_EPOCH:
                 if (!m_pInstance)
+                {
                     return;
+                }
 
                 if (Creature* pEpoch = m_pInstance->GetSingleCreatureFromStorage(NPC_LORD_EPOCH))
                 {
@@ -737,7 +743,9 @@ struct npc_arthas : public CreatureScript
                 // malganis attack
             case NPC_MALGANIS:
                 if (!m_pInstance)
+                {
                     return;
+                }
 
                 if (Creature* pMalganis = m_pInstance->GetSingleCreatureFromStorage(NPC_MALGANIS))
                 {
@@ -751,7 +759,9 @@ struct npc_arthas : public CreatureScript
                 m_creature->PlayMusic(MUSIC_ID_EVENT_COMPLETE);
 
                 if (!m_pInstance)
+                {
                     return;
+                }
 
                 if (Creature* pMalganis = m_pInstance->GetSingleCreatureFromStorage(NPC_MALGANIS))
                 {
@@ -778,7 +788,9 @@ struct npc_arthas : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiExorcismTimer < uiDiff)
             {

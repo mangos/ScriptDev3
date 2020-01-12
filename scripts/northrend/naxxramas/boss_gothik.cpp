@@ -133,7 +133,9 @@ struct boss_gothik : public CreatureScript
         void Aggro(Unit* /*pWho*/) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             m_pInstance->SetData(TYPE_GOTHIK, IN_PROGRESS); //here the triggers also are setted up
 
@@ -160,14 +162,18 @@ struct boss_gothik : public CreatureScript
             Map::PlayerList const& lPlayers = m_pInstance->instance->GetPlayers();
 
             if (lPlayers.isEmpty())
+            {
                 return false;
+            }
 
             for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
             {
                 if (Player* pPlayer = itr->getSource())
                 {
                     if (!IsInRightSideGothArea(pPlayer) && pPlayer->IsAlive())
+                    {
                         return true;
+                    }
                 }
             }
 
@@ -206,7 +212,9 @@ struct boss_gothik : public CreatureScript
             m_lSummonedAddGuids.remove(pSummoned->GetObjectGuid());
 
             if (!m_pInstance)
+            {
                 return;
+            }
 
             m_pInstance->SetData64(DATA64_GOTH_RIGHT_ANCHOR, pSummoned->GetObjectGuid().GetRawValue());
             if (Creature* pAnchor = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_GOTH_RIGHT_ANCHOR))))
@@ -226,7 +234,9 @@ struct boss_gothik : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             switch (m_uiPhase)
             {
@@ -384,7 +394,9 @@ struct boss_gothik : public CreatureScript
         {
             if (m_pInstance)
                 if (GameObject* pCombatGate = m_pInstance->GetSingleGameObjectFromStorage(GO_MILI_GOTH_COMBAT_GATE))
+                {
                     return (pCombatGate->GetPositionY() >= pUnit->GetPositionY());
+                }
 
             script_error_log("left/right side check, Gothik combat area failed.");
             return true;
@@ -409,12 +421,16 @@ struct spell_x_to_anchor1 : public SpellScript
     {
         Creature* pCreatureTarget = pTarget->ToCreature();
         if (uiEffIndex != EFFECT_INDEX_0 || pCreatureTarget->GetEntry() != NPC_SUB_BOSS_TRIGGER)
+        {
             return true;
+        }
 
         ScriptedInstance* pInstance = (ScriptedInstance*)pCreatureTarget->GetInstanceData();
 
         if (!pInstance)
+        {
             return true;
+        }
 
         pInstance->SetData64(DATA64_GOTH_LEFT_ANCHOR, pCreatureTarget->GetObjectGuid().GetRawValue());
         if (Creature* pAnchor2 = pCreatureTarget->GetMap()->GetCreature(ObjectGuid(pInstance->GetData64(DATA64_GOTH_LEFT_ANCHOR))))
@@ -445,12 +461,16 @@ struct spell_x_to_anchor2 : public SpellScript
     {
         Creature* pCreatureTarget = pTarget->ToCreature();
         if (uiEffIndex != EFFECT_INDEX_0 || pCreatureTarget->GetEntry() != NPC_SUB_BOSS_TRIGGER)
+        {
             return true;
+        }
 
         ScriptedInstance* pInstance = (ScriptedInstance*)pCreatureTarget->GetInstanceData();
 
         if (!pInstance)
+        {
             return true;
+        }
 
         if (Creature* ptarget = pCreatureTarget->GetMap()->GetCreature(ObjectGuid(pInstance->GetData64(DATA64_GOTH_RANDOM_LEFT))))
         {
@@ -479,12 +499,16 @@ struct spell_x_to_skull : public SpellScript
     {
         Creature* pCreatureTarget = pTarget->ToCreature();
         if (uiEffIndex != EFFECT_INDEX_0 || pCreatureTarget->GetEntry() != NPC_SUB_BOSS_TRIGGER)
+        {
             return true;
+        }
 
         ScriptedInstance* pInstance = (ScriptedInstance*)pCreatureTarget->GetInstanceData();
 
         if (!pInstance)
+        {
             return true;
+        }
 
         if (Creature* pGoth = pInstance->GetSingleCreatureFromStorage(NPC_GOTHIK))
         {

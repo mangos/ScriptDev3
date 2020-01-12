@@ -203,7 +203,9 @@ struct npc_queen_lanathel_intro : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // Emote here, and force them to stand up - this needs to be done as a workaround for some core issues
             if (m_pInstance)
@@ -320,7 +322,9 @@ struct npc_kinetic_bomb : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             DoCastSpellIfCan(m_creature, SPELL_KINETIC_BOMB_DMG);
             m_creature->ForcedDespawn(1000);
@@ -385,7 +389,9 @@ struct npc_dark_nucleus : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiDistanceCheck < uiDiff)
             {
@@ -463,7 +469,9 @@ struct npc_blood_orb_control : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // every 30 seconds cast Invocation of Blood on random prince
             if (m_uiInvocationTimer < uiDiff)
@@ -556,7 +564,9 @@ struct blood_prince_council_baseAI : public ScriptedAI
 
         // ##### Workaround for missing aura 300 - Remove when this is implemented in core #####
         if (!m_pInstance || !uiDamage)
+        {
             return;
+        }
 
         if (Creature* pOrb = m_pInstance->GetSingleCreatureFromStorage(NPC_BLOOD_ORB_CONTROL))
             pOrb->DealDamage(pOrb, uiDamage, nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
@@ -595,7 +605,9 @@ struct blood_prince_council_baseAI : public ScriptedAI
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        {
             return;
+        }
 
         // Invocation of Blood
         if (m_uiEmpowermentTimer)
@@ -682,7 +694,9 @@ struct boss_valanar_icc : public CreatureScript
             blood_prince_council_baseAI::UpdateAI(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiSphereTimer < uiDiff)
             {
@@ -783,7 +797,9 @@ struct boss_keleseth_icc : public CreatureScript
             blood_prince_council_baseAI::UpdateAI(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiSphereTimer < uiDiff)
             {
@@ -872,7 +888,9 @@ struct boss_taldaram_icc : public CreatureScript
             blood_prince_council_baseAI::UpdateAI(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiSphereTimer < uiDiff)
             {

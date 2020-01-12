@@ -165,7 +165,9 @@ struct boss_thaddius : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(SAY_SLAY, m_creature);
         }
@@ -192,10 +194,14 @@ struct boss_thaddius : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Berserk
             if (m_uiBerserkTimer < uiDiff)
@@ -264,7 +270,9 @@ struct spell_shock_overload : public SpellScript
         {
             // Only do something to Thaddius, and on the first hit.
             if (pCreatureTarget->GetEntry() != NPC_THADDIUS || !pCreatureTarget->HasAura(SPELL_THADIUS_SPAWN))
+            {
                 return true;
+            }
             // remove Stun and then Cast
             pCreatureTarget->RemoveAurasDueToSpell(SPELL_THADIUS_SPAWN);
             pCreatureTarget->CastSpell(pCreatureTarget, SPELL_THADIUS_LIGHTNING_VISUAL, false);
@@ -341,19 +349,25 @@ struct npc_tesla_coil : public CreatureScript
         {
             // Check, if instance_ script failed or encounter finished
             if (!m_pInstance || m_pInstance->GetData(TYPE_THADDIUS) == DONE)
+            {
                 return true;
+            }
 
             GameObject* pNoxTeslaFeugen = m_pInstance->GetSingleGameObjectFromStorage(GO_CONS_NOX_TESLA_FEUGEN);
             GameObject* pNoxTeslaStalagg = m_pInstance->GetSingleGameObjectFromStorage(GO_CONS_NOX_TESLA_STALAGG);
 
             // Try again, till Tesla GOs are spawned
             if (!pNoxTeslaFeugen || !pNoxTeslaStalagg)
+            {
                 return false;
+            }
 
             m_bToFeugen = m_creature->GetDistanceOrder(pNoxTeslaFeugen, pNoxTeslaStalagg);
 
             if (DoCastSpellIfCan(m_creature, m_bToFeugen ? SPELL_FEUGEN_CHAIN : SPELL_STALAGG_CHAIN) == CAST_OK)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -379,7 +393,9 @@ struct npc_tesla_coil : public CreatureScript
             {
                 // Only apply chain to own add
                 if ((uiEntry == NPC_FEUGEN && !m_bToFeugen) || (uiEntry == NPC_STALAGG && m_bToFeugen))
+                {
                     return;
+                }
 
                 m_bReapply = true;                              // Reapply Chains on next tick
             }
@@ -406,7 +422,9 @@ struct npc_tesla_coil : public CreatureScript
             m_creature->SelectHostileTarget();
 
             if (!m_uiOverloadTimer && !m_uiSetupTimer && !m_bReapply)
+            {
                 return;                                         // Nothing to do this tick
+            }
 
             if (m_uiSetupTimer)
             {
@@ -497,7 +515,9 @@ struct boss_thaddiusAddsAI : public ScriptedAI
     void Aggro(Unit* pWho) override
     {
         if (!m_pInstance)
+        {
             return;
+        }
 
         m_pInstance->SetData(TYPE_THADDIUS, IN_PROGRESS);
 
@@ -513,7 +533,9 @@ struct boss_thaddiusAddsAI : public ScriptedAI
         Reset();                                            // Needed to reset the flags properly
 
         if (!m_pInstance)
+        {
             return;
+        }
 
         m_pInstance->SetData(TYPE_DO_THAD_CHAIN, m_creature->GetEntry());
     }
@@ -521,7 +543,9 @@ struct boss_thaddiusAddsAI : public ScriptedAI
     void JustReachedHome() override
     {
         if (!m_pInstance)
+        {
             return;
+        }
 
         if (Creature* pOther = GetOtherAdd())
         {
@@ -565,7 +589,9 @@ struct boss_thaddiusAddsAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bBothDead)                                    // This is the case while fighting Thaddius
+        {
             return;
+        }
 
         if (m_bFakeDeath)
         {
@@ -593,7 +619,9 @@ struct boss_thaddiusAddsAI : public ScriptedAI
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        {
             return;
+        }
 
         if (m_uiHoldTimer)                                  // A short timer preventing combat movement after revive
         {
@@ -624,7 +652,9 @@ struct boss_thaddiusAddsAI : public ScriptedAI
     void DamageTaken(Unit* pKiller, uint32& uiDamage) override
     {
         if (uiDamage < m_creature->GetHealth())
+        {
             return;
+        }
 
         // Prevent glitch if in fake death
         if (m_bFakeDeath)

@@ -908,7 +908,9 @@ struct advisor_base_ai : public ScriptedAI
                 DoStartMovement(m_creature->getVictim(), 20.0f);
             }
             else
-            { DoStartMovement(m_creature->getVictim()); }
+            {
+                DoStartMovement(m_creature->getVictim());
+            }
             m_bCanFakeDeath = false;
             m_bFakeDeath = false;
         }

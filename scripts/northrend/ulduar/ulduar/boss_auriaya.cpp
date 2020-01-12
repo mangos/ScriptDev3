@@ -141,7 +141,9 @@ struct boss_auriaya : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiTerrifyingScreechTimer < uiDiff)
             {
@@ -267,7 +269,9 @@ struct boss_feral_defender : public CreatureScript
         {
             // If we don't have the feral essence anymore then ignore this
             if (m_uiKilledCount >= 8)                           // 9-1 == 8
+            {
                 return;
+            }
 
             if (m_uiReviveDelayTimer)                           // Already faking
             {
@@ -310,7 +314,9 @@ struct boss_feral_defender : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiReviveDelayTimer)
             {

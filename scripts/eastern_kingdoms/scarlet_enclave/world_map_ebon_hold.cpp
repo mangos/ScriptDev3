@@ -77,7 +77,9 @@ struct map_ebon_hold : public ZoneScript
         void OnCreatureDeath(Creature* pCreature) override
         {
             if (GetData(TYPE_BATTLE) != IN_PROGRESS)
+            {
                 return;
+            }
 
             switch (pCreature->GetEntry())
             {
@@ -100,7 +102,9 @@ struct map_ebon_hold : public ZoneScript
         void OnCreatureEvade(Creature* pCreature) override
         {
             if (GetData(TYPE_BATTLE) != IN_PROGRESS)
+            {
                 return;
+            }
 
             switch (pCreature->GetEntry())
             {
@@ -112,7 +116,9 @@ struct map_ebon_hold : public ZoneScript
                 if (Creature* pDarion = GetSingleCreatureFromStorage(NPC_HIGHLORD_DARION_MOGRAINE))
                 {
                     if (!pDarion->IsInCombat())
+                    {
                         return;
+                    }
 
                     if (Unit* pTarget = pDarion->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         pCreature->AI()->AttackStart(pTarget);
@@ -312,7 +318,9 @@ struct map_ebon_hold : public ZoneScript
         bool CanAndToggleGothikYell()
         {
             if (m_uiGothikYellTimer)
+            {
                 return false;
+            }
 
             m_uiGothikYellTimer = 2000;
             return true;

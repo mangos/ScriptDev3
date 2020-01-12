@@ -324,7 +324,9 @@ struct boss_the_lich_king_icc : public CreatureScript
         void MovementInform(uint32 uiMovementType, uint32 uiData) override
         {
             if (uiMovementType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             switch (uiData)
             {
@@ -369,7 +371,9 @@ struct boss_the_lich_king_icc : public CreatureScript
             {
                 // check evade
                 if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                {
                     return;
+                }
 
                 // Berserk
                 if (m_uiBerserkTimer)

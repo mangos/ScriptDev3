@@ -166,7 +166,9 @@ struct boss_kelthuzad : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             if (urand(0, 1))
                 DoScriptText(urand(0, 1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
@@ -193,7 +195,9 @@ struct boss_kelthuzad : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_pInstance && m_pInstance->GetData(TYPE_KELTHUZAD) != IN_PROGRESS)
+            {
                 return;
+            }
 
             ScriptedAI::MoveInLineOfSight(pWho);
         }
@@ -251,7 +255,9 @@ struct boss_kelthuzad : public CreatureScript
         void SummonIntroCreatures(uint32 packId)
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             float fAngle = GetLocationAngle(packId + 1);
 
@@ -287,7 +293,9 @@ struct boss_kelthuzad : public CreatureScript
         void SummonMob(uint32 uiType)
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             float fAngle = GetLocationAngle(urand(1, 7));
 
@@ -366,10 +374,14 @@ struct boss_kelthuzad : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (!m_pInstance || m_pInstance->GetData(TYPE_KELTHUZAD) != IN_PROGRESS)
+            {
                 return;
+            }
 
             if (m_uiPhase == PHASE_INTRO)
             {

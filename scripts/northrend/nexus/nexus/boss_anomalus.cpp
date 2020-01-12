@@ -145,7 +145,9 @@ struct boss_anomalus : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim() || m_creature->HasAura(SPELL_RIFT_SHIELD))
+            {
                 return;
+            }
 
             // Create additional Chaotic Rift at 50% HP
             if (!m_bChaoticRift && m_creature->GetHealthPercent() < 50.0f)
@@ -242,7 +244,9 @@ struct mob_chaotic_rift : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiChargedRemoveTimer)
             {

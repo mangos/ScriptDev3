@@ -347,7 +347,9 @@ struct boss_sartharion : public CreatureScript
                         pTemp->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
                     if (pTemp->getVictim())
+                    {
                         return;
+                    }
 
                     pTemp->SetWalk(false);
 
@@ -394,7 +396,9 @@ struct boss_sartharion : public CreatureScript
         {
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // spell will target dragons, if they are still alive at 35%
             if (!m_bIsBerserk && m_creature->GetHealthPercent() < 35.0f)
@@ -635,7 +639,9 @@ struct dummy_dragonAI : public ScriptedAI
     void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (!m_pInstance || uiType != POINT_MOTION_TYPE)
+        {
             return;
+        }
 
         debug_log("dummy_dragonAI: %s reached point %u", m_creature->GetName(), uiPointId);
 
@@ -706,7 +712,9 @@ struct dummy_dragonAI : public ScriptedAI
             Map::PlayerList const& PlayerList = pMap->GetPlayers();
 
             if (PlayerList.isEmpty())
+            {
                 return;
+            }
 
             for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
             {
@@ -720,7 +728,9 @@ struct dummy_dragonAI : public ScriptedAI
     void DoEjectTwilightPlayersIfCan(Creature* pCreature)
     {
         if (!m_pInstance || !pCreature)
+        {
             return;
+        }
 
         if (m_pInstance->GetData(TYPE_SARTHARION_EVENT) != IN_PROGRESS || !m_pInstance->GetData(TYPE_DATA_PORTAL_STATUS))
         {
@@ -755,7 +765,9 @@ struct dummy_dragonAI : public ScriptedAI
 
         // if no target return
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        {
             return;
+        }
 
         // Call dragon specific virtual function
         UpdateDragonAI(uiDiff);
@@ -1293,7 +1305,9 @@ struct npc_flame_tsunami : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             m_creature->RemoveAllAurasOnEvade();
         }

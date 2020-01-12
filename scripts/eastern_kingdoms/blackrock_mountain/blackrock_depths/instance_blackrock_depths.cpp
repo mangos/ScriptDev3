@@ -182,7 +182,9 @@ void instance_blackrock_depths::OnCreatureDeath(Creature* pCreature)
         case NPC_DOPEREL:
             // Only handle the event when event is in progress
             if (GetData(TYPE_TOMB_OF_SEVEN) != IN_PROGRESS)
+            {
                 return;
+            }
             // Call the next dwarf only if it's the last one which joined the fight
             if (pCreature->GetEntry() == aTombDwarfes[m_uiDwarfRound - 1])
                 DoCallNextDwarf();
@@ -200,7 +202,9 @@ void instance_blackrock_depths::OnCreatureDeath(Creature* pCreature)
             // Do nothing if the patrol was already spawned or is about to:
             // Plugger has made the bar hostile
             if (GetData(TYPE_BAR) == IN_PROGRESS || GetData(TYPE_PLUGGER) == IN_PROGRESS || GetData(TYPE_BAR) == DONE || GetData(TYPE_PLUGGER) == DONE)
+            {
                 return;
+            }
             else
                 SetData(TYPE_BAR, IN_PROGRESS);
             break;
@@ -212,10 +216,14 @@ void instance_blackrock_depths::OnCreatureDeath(Creature* pCreature)
                 uint32 uiTextId;
 
                 if (!pDagran->IsAlive())
+                {
                     return;
+                }
 
                 if (m_uiDagranTimer > 0)
+                {
                     return;
+                }
 
                 switch (urand(0, 3))
                 {
@@ -472,7 +480,9 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
                     Creature* pHurley = pPlugger->SummonCreature(NPC_HURLEY_BLACKBREATH, aHurleyPositions[0], aHurleyPositions[1], aHurleyPositions[2], aHurleyPositions[3], TEMPSUMMON_DEAD_DESPAWN, 0);
 
                     if (!pHurley)
+                    {
                         return;
+                    }
 
                     // Summon cronies around Hurley
                     for (uint8 i = 0; i < MAX_CRONIES; ++i)
@@ -548,9 +558,13 @@ uint32 instance_blackrock_depths::GetData(uint32 uiType) const
         return m_auiEncounter[1];
     case TYPE_ROCKNOT:
         if (m_auiEncounter[2] == IN_PROGRESS && m_uiBarAleCount == 3)
+        {
             return SPECIAL;
+        }
     else
+    {
         return m_auiEncounter[2];
+    }
     case TYPE_TOMB_OF_SEVEN:
         return m_auiEncounter[3];
     case TYPE_LYCEUM:
@@ -679,7 +693,9 @@ void instance_blackrock_depths::HandleBarPatrons(uint8 uiEventType)
 void instance_blackrock_depths::HandleBarPatrol(uint8 uiStep)
 {
     if (GetData(TYPE_BAR) == DONE)
+    {
         return;
+    }
 
     switch (uiStep)
     {

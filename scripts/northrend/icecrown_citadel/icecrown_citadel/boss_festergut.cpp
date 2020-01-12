@@ -144,7 +144,9 @@ struct boss_festergut : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Berserk
             if (m_uiBerserkTimer <= uiDiff)

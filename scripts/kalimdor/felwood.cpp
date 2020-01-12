@@ -686,7 +686,9 @@ struct npc_captured_arkonarin : public CreatureScript
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_bCanAttack)
             {
@@ -852,7 +854,9 @@ struct npc_arei : public CreatureScript
         Creature* GetSpeakerByEntry(uint32 uiEntry) override
         {
             if (uiEntry == NPC_AREI)
+            {
                 return m_creature;
+            }
 
             return nullptr;
         }
@@ -886,7 +890,9 @@ struct npc_arei : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiWitherStrikeTimer < uiDiff)
             {
@@ -958,7 +964,9 @@ struct go_corrupted_plant : public GameObjectScript
             for (index = 0; index < 9; index++)
             {
                 if (uQuestId == aCorruptedSongflowerQuestId[index])
+                {
                     return QUEST_CORRUPTED_SONGFLOWER;
+                }
             }
         }
         else if (uQuestToSearchFor == QUEST_CORRUPTED_NIGHT_DRAGON)
@@ -967,7 +975,9 @@ struct go_corrupted_plant : public GameObjectScript
             for (int index = 0; index < 4; index++)
             {
                 if (uQuestId == aCorruptedNightDragonQuestId[index])
+                {
                     return QUEST_CORRUPTED_NIGHT_DRAGON;
+                }
             }
         }
         else if (uQuestToSearchFor == QUEST_CORRUPTED_WINDBLOSSOM)
@@ -976,7 +986,9 @@ struct go_corrupted_plant : public GameObjectScript
             for (int index = 0; index < 10; index++)
             {
                 if (uQuestId == aCorruptedWindblossomQuestId[index])
+                {
                     return QUEST_CORRUPTED_WINDBLOSSOM;
+                }
             }
         }
         else if (uQuestToSearchFor == QUEST_CORRUPTED_WHIPPER_ROOT)
@@ -985,7 +997,9 @@ struct go_corrupted_plant : public GameObjectScript
             for (int index = 0; index < 6; index++)
             {
                 if (uQuestId == aCorruptedWhipperRootQuestId[index])
+                {
                     return QUEST_CORRUPTED_WHIPPER_ROOT;
+                }
             }
         }
 
@@ -1035,7 +1049,9 @@ struct go_corrupted_plant : public GameObjectScript
             pPlayer->SummonGameObject(GO_CLEANSED_WHIPPER_ROOT, fX, fY, fZ, 0.0f, PLANT_SPAWN_DURATION);
         }
         else
+        {
             return false;
+        }
 
         return true;
     }

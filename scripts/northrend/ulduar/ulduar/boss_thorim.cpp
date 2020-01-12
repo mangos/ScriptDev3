@@ -208,7 +208,9 @@ struct boss_thorim : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
         }
@@ -287,7 +289,9 @@ struct boss_thorim : public CreatureScript
         {
             // don't attack again after being defeated
             if (m_bEventFinished)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -315,7 +319,9 @@ struct boss_thorim : public CreatureScript
         void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != EFFECT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             m_uiPhase = PHASE_SOLO;
             m_uiAttackTimer = 1000;
@@ -373,7 +379,9 @@ struct boss_thorim : public CreatureScript
         void JustDidDialogueStep(int32 iEntry) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             switch (iEntry)
             {
@@ -419,7 +427,9 @@ struct boss_thorim : public CreatureScript
         ObjectGuid SelectRandomOrbGuid()
         {
             if (m_pInstance)
+            {
                 return ObjectGuid(m_pInstance->GetData64(DATA64_THORIM_RANDOM_ORB));
+            }
 
             return ObjectGuid();
         }
@@ -428,7 +438,9 @@ struct boss_thorim : public CreatureScript
         Creature* SelectRandomUpperBunny()
         {
             if (m_pInstance)
+            {
                 return m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_RANDOM_UPPER_BUNNY)));
+            }
 
             return nullptr;
         }
@@ -437,7 +449,9 @@ struct boss_thorim : public CreatureScript
         Creature* GetClosestLowerBunny(Creature* pSource)
         {
             if (m_pInstance)
+            {
                 return m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_THORIM_BUNNY)));
+            }
 
             return nullptr;
         }
@@ -446,11 +460,15 @@ struct boss_thorim : public CreatureScript
         Unit* GetRandomArenaPlayer()
         {
             if (!m_pInstance)
+            {
                 return nullptr;
+            }
 
             Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_THORIM_COMBAT_TRIGGER);
             if (!pTrigger)
+            {
                 return nullptr;
+            }
 
             std::vector<Unit*> suitableTargets;
             ThreatList const& threatList = m_creature->GetThreatManager().getThreatList();
@@ -472,7 +490,9 @@ struct boss_thorim : public CreatureScript
                 return nullptr;
             }
             else
+            {
                 return suitableTargets[urand(0, suitableTargets.size() - 1)];
+            }
         }
 
         // function to spawn a random pack of dwarfes
@@ -510,7 +530,9 @@ struct boss_thorim : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             switch (m_uiPhase)
             {
@@ -691,7 +713,9 @@ struct boss_sif : public CreatureScript
         {
             // custom attack; only in hard mode
             if (!m_bAttackReady)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -702,7 +726,9 @@ struct boss_sif : public CreatureScript
         {
             // custom evade; Sif doesn't need to move to home position
             if (!m_bAttackReady)
+            {
                 return;
+            }
 
             m_creature->RemoveAllAurasOnEvade();
             m_creature->DeleteThreatList();
@@ -725,7 +751,9 @@ struct boss_sif : public CreatureScript
         ObjectGuid SelectRandomBunnyGuid()
         {
             if (m_lBunniesGuids.empty())
+            {
                 return ObjectGuid();
+            }
 
             GuidList::iterator iter = m_lBunniesGuids.begin();
             advance(iter, urand(0, m_lBunniesGuids.size() - 1));
@@ -736,7 +764,9 @@ struct boss_sif : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiFrostBoltTimer < uiDiff)
             {
@@ -883,7 +913,9 @@ struct npc_runic_colossus : public CreatureScript
         void UpdateRunicSmash(const uint32 uiDiff)
         {
             if (!m_bSmashActive)
+            {
                 return;
+            }
 
             if (m_uiSmashUpdateTimer < uiDiff)
             {
@@ -924,7 +956,9 @@ struct npc_runic_colossus : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiChargeTimer < uiDiff)
             {

@@ -183,7 +183,9 @@ struct npc_brann_hos : public CreatureScript
         void AttackStart(Unit* pWho) override
         {
             if (!pWho || !m_bIsBattle)
+            {
                 return;
+            }
 
             npc_escortAI::AttackStart(pWho);
         }
@@ -198,7 +200,9 @@ struct npc_brann_hos : public CreatureScript
         void ContinueEvent()
         {
             if (!m_pInstance || m_pInstance->GetData(TYPE_TRIBUNAL) != IN_PROGRESS)
+            {
                 return;
+            }
 
             // Set the achiev in progress
             m_pInstance->SetData(TYPE_ACHIEV_BRANN_SPANKIN, uint32(true));
@@ -246,7 +250,9 @@ struct npc_brann_hos : public CreatureScript
         void SpawnDwarf(uint32 uEntry)
         {
             if (!m_pInstance)
+            {
                 return;
+            }
             m_pInstance->SetData(TYPE_DO_SPAWN_DWARF, uEntry);
         }
 
@@ -549,14 +555,18 @@ struct npc_brann_hos : public CreatureScript
 
             // No Combat abilities needed here
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
         }
 
         // Respawn Handling: Relocate and Set Escort to WP 13
         void JustRespawned() override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             Reset();
 
@@ -677,7 +687,9 @@ struct npc_dark_matter : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // Cast the Dark Matter spell and despawn for reset
             if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_DARK_MATTER : SPELL_DARK_MATTER_H) == CAST_OK)

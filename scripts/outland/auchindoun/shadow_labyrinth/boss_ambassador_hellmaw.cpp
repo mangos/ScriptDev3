@@ -118,7 +118,9 @@ struct boss_ambassador_hellmaw : public CreatureScript
                 if (m_uiBanishTimer <= uiDiff)
                 {
                     if (!m_pInstance)
+                    {
                         return;
+                    }
 
                     // Check for banish
                     if (m_pInstance->GetData(TYPE_IS_UNBANISHED))
@@ -133,7 +135,9 @@ struct boss_ambassador_hellmaw : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiCorrosiveAcidTimer < uiDiff)
             {

@@ -239,7 +239,9 @@ struct boss_sindragosa : public CreatureScript
         void MovementInform(uint32 uiMovementType, uint32 uiPointId) override
         {
             if (uiMovementType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId == SINDRAGOSA_POINT_AIR_EAST)
             {
@@ -313,7 +315,9 @@ struct boss_sindragosa : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Berserk
             if (m_uiBerserkTimer)
@@ -538,7 +542,9 @@ struct npc_rimefang_icc : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             Creature* pSpinestalker = m_pInstance->GetSingleCreatureFromStorage(NPC_SPINESTALKER);
             if (!pSpinestalker || !pSpinestalker->IsAlive())
@@ -566,7 +572,9 @@ struct npc_rimefang_icc : public CreatureScript
         void MovementInform(uint32 uiMovementType, uint32 uiPointId) override
         {
             if (uiMovementType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId == RIMEFANG_POINT_INITIAL_LAND_AIR)
             {
@@ -597,7 +605,9 @@ struct npc_rimefang_icc : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiPhase == RIMEFANG_PHASE_GROUND)
             {
@@ -702,7 +712,9 @@ struct npc_spinestalker_icc : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             Creature* pRimefang = m_pInstance->GetSingleCreatureFromStorage(NPC_RIMEFANG);
             if (!pRimefang || !pRimefang->IsAlive())
@@ -745,7 +757,9 @@ struct npc_spinestalker_icc : public CreatureScript
         void MovementInform(uint32 uiMovementType, uint32 uiPointId) override
         {
             if (uiMovementType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId == SPINESTALKER_POINT_INITIAL_LAND_AIR)
             {
@@ -763,7 +777,9 @@ struct npc_spinestalker_icc : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Cleave
             if (m_uiCleaveTimer <= uiDiff)

@@ -1408,7 +1408,9 @@ struct warlord_kromzar : public CreatureScript
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }

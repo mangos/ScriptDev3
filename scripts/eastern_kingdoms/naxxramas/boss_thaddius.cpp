@@ -690,7 +690,9 @@ struct boss_thaddiusAddsAI : public ScriptedAI
             }
         }
         else
-            { m_uiWarStompTimer -= uiDiff; }
+        {
+            m_uiWarStompTimer -= uiDiff;
+        }
 
         UpdateAddAI(uiDiff);                    // For Add Specific Abilities
 

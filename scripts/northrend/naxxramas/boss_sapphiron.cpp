@@ -172,7 +172,9 @@ struct boss_sapphiron : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             switch (m_Phase)
             {
@@ -338,14 +340,20 @@ struct go_sapphiron_birth : public GameObjectScript
         ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 
         if (!pInstance)
+        {
             return true;
+        }
 
         if (pInstance->GetData(TYPE_SAPPHIRON) != NOT_STARTED)
+        {
             return true;
+        }
 
         // If already summoned return (safety check)
         if (pInstance->GetSingleCreatureFromStorage(NPC_SAPPHIRON, true))
+        {
             return true;
+        }
 
         // Set data to special and allow the Go animation to proceed
         pInstance->SetData(TYPE_SAPPHIRON, SPECIAL);

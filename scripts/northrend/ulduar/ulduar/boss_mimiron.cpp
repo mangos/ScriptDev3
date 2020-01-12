@@ -341,7 +341,9 @@ struct boss_mimiron : public CreatureScript
         void JustDidDialogueStep(int32 iEntry) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             switch (iEntry)
             {
@@ -484,7 +486,9 @@ struct boss_mimiron : public CreatureScript
                 Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK);
                 Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001);
                 if (!pLeviathan || !pVx001)
+                {
                     return;
+                }
 
                 pVx001->RemoveAurasDueToSpell(SPELL_TORSO_DISABLED);
                 pVx001->CastSpell(pLeviathan, SPELL_RIDE_VEHICLE_ROBOT_1, true);
@@ -500,7 +504,9 @@ struct boss_mimiron : public CreatureScript
                 Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT);
                 Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001);
                 if (!pAerial || !pVx001)
+                {
                     return;
+                }
 
                 pAerial->CastSpell(pVx001, SPELL_RIDE_VEHICLE_ROBOT_2, true);
                 break;
@@ -602,11 +608,15 @@ struct boss_mimiron : public CreatureScript
         void DoFlyToNextRandomSeat()
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK);
             if (!pLeviathan)
+            {
                 return;
+            }
 
             m_creature->RemoveAurasDueToSpell(SPELL_WELD);
             pLeviathan->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
@@ -624,12 +634,16 @@ struct boss_mimiron : public CreatureScript
         void DoSpawnFlamesInitial()
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK);
             Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_WORLD_TRIGGER_FLAMES);
             if (!pLeviathan || !pTrigger)
+            {
                 return;
+            }
 
             for (uint8 i = 0; i < 3; ++i)
             {
@@ -691,7 +705,9 @@ struct boss_mimiron : public CreatureScript
                     Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001);
                     Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT);
                     if (!pAerial || !pVx001 || !pLeviathan)
+                    {
                         return;
+                    }
 
                     // if all robot pieces are damaged finish the encounter
                     if (pLeviathan->HasAura(SPELL_FREEZE_ANIM) && pVx001->getStandState() == UNIT_STAND_STATE_DEAD && pAerial->getStandState() == UNIT_STAND_STATE_DEAD)
@@ -747,7 +763,9 @@ struct boss_mimiron : public CreatureScript
                 {
                     Creature* pComputer = m_pInstance->GetSingleCreatureFromStorage(NPC_COMPUTER);
                     if (!pComputer)
+                    {
                         return;
+                    }
 
                     ++m_uiDestructStage;
                     m_uiDestructTimer = MINUTE * IN_MILLISECONDS;
@@ -843,7 +861,9 @@ struct boss_leviathan_mk2 : public CreatureScript
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
         {
             if (pDoneBy->GetEntry() == NPC_MIMIRON && m_uiPhase == PHASE_DAMAGED)
+            {
                 return;
+            }
 
             if (uiDamage >= m_creature->GetHealth())
             {
@@ -923,7 +943,9 @@ struct boss_leviathan_mk2 : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+            {
                 return;
+            }
 
             if (Creature* pMimiron = m_pInstance->GetSingleCreatureFromStorage(NPC_MIMIRON))
             {
@@ -937,7 +959,9 @@ struct boss_leviathan_mk2 : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !m_pInstance)
+            {
                 return;
+            }
 
             if (uiPointId == POINT_ID_PARK)
             {
@@ -1002,11 +1026,15 @@ struct boss_leviathan_mk2 : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // no combat during transition or when damaged
             if (m_uiPhase == PHASE_TRANSITION || m_uiPhase == PHASE_DAMAGED)
+            {
                 return;
+            }
 
             // Leviathan phase spells
             if (m_uiPhase == PHASE_LEVIATHAN)
@@ -1137,7 +1165,9 @@ struct boss_vx001 : public CreatureScript
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
         {
             if (pDoneBy->GetEntry() == NPC_MIMIRON && m_uiPhase == PHASE_DAMAGED)
+            {
                 return;
+            }
 
             if (uiDamage >= m_creature->GetHealth())
             {
@@ -1198,7 +1228,9 @@ struct boss_vx001 : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+            {
                 return;
+            }
 
             if (Creature* pMimiron = m_pInstance->GetSingleCreatureFromStorage(NPC_MIMIRON))
             {
@@ -1270,11 +1302,15 @@ struct boss_vx001 : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!SelectCustomHostileTarget())
+            {
                 return;
+            }
 
             // no combat during transition or when damaged
             if (m_uiPhase == PHASE_TRANSITION || m_uiPhase == PHASE_DAMAGED)
+            {
                 return;
+            }
 
             // count the burst or laser expire timer for target reset
             if (m_uiBurstEndTimer)
@@ -1435,7 +1471,9 @@ struct boss_aerial_unit : public CreatureScript
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
         {
             if (pDoneBy->GetEntry() == NPC_MIMIRON && m_uiPhase == PHASE_DAMAGED)
+            {
                 return;
+            }
 
             if (uiDamage >= m_creature->GetHealth())
             {
@@ -1499,7 +1537,9 @@ struct boss_aerial_unit : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+            {
                 return;
+            }
 
             if (Creature* pMimiron = m_pInstance->GetSingleCreatureFromStorage(NPC_MIMIRON))
             {
@@ -1528,7 +1568,9 @@ struct boss_aerial_unit : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiMagneticTimer)
             {
@@ -1549,7 +1591,9 @@ struct boss_aerial_unit : public CreatureScript
 
             // no combat during transition or when damaged
             if (m_uiPhase == PHASE_TRANSITION || m_uiPhase == PHASE_DAMAGED)
+            {
                 return;
+            }
 
             // aerial phase spells
             if (m_uiPhase == PHASE_AERIAL_UNIT)
@@ -1843,11 +1887,15 @@ struct npc_mimiron_flames : public CreatureScript
         Unit* SelectClosestSpreadTarget()
         {
             if (!m_pInstance)
+            {
                 return nullptr;
+            }
 
             Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK);
             if (!pLeviathan)
+            {
                 return nullptr;
+            }
 
             std::list<Unit*> lTargets;
             ThreatList const& threatList = pLeviathan->GetThreatManager().getThreatList();
@@ -2052,10 +2100,14 @@ struct go_big_red_button : public GameObjectScript
     {
         ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
         if (!pInstance)
+        {
             return true;
+        }
 
         if (pInstance->GetData(TYPE_MIMIRON) == IN_PROGRESS || pInstance->GetData(TYPE_MIMIRON) == DONE)
+        {
             return true;
+        }
 
         // Inform Mimiron about the button being pressed
         if (Creature* pMimiron = pInstance->GetSingleCreatureFromStorage(NPC_MIMIRON))

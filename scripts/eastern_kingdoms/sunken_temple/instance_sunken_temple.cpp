@@ -336,7 +336,9 @@ struct is_sunken_temple : public InstanceScript
                 return m_auiEncounter[uiType];
             }
             else if (uiType == TYPE_SIGNAL)
+            {
                 return uint32(m_bStatueEventStatus);
+            }
 
             return 0;
         }

@@ -99,7 +99,9 @@ struct is_eye_of_eternity : public InstanceScript
         void SetData(uint32 uiType, uint32 uiData) override
         {
             if (uiType != TYPE_MALYGOS)
+            {
                 return;
+            }
 
             m_uiEncounter = uiData;
             if (uiData == IN_PROGRESS)

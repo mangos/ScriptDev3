@@ -321,7 +321,9 @@ struct is_trial_of_the_champion : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             return 0;
         }
@@ -359,10 +361,14 @@ struct is_trial_of_the_champion : public InstanceScript
         void DoSummonHeraldIfNeeded(Unit* pSummoner)
         {
             if (!pSummoner)
+            {
                 return;
+            }
 
             if (GetSingleCreatureFromStorage(m_uiHeraldEntry, true))
+            {
                 return;
+            }
 
             pSummoner->SummonCreature(m_uiHeraldEntry, aHeraldPositions[0][0], aHeraldPositions[0][1], aHeraldPositions[0][2], aHeraldPositions[0][3], TEMPSUMMON_DEAD_DESPAWN, 0);
 

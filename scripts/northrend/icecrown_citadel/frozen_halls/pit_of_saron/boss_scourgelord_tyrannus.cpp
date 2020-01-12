@@ -144,7 +144,9 @@ struct boss_tyrannus : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiForcefulSmashTimer < uiDiff)
             {
@@ -258,7 +260,9 @@ struct boss_rimefang_pos : public CreatureScript
         {
             // Don't attack unless Tyrannus is in combat or Ambush is completed
             if (m_pInstance && (m_pInstance->GetData(TYPE_AMBUSH) != DONE || m_pInstance->GetData(TYPE_TYRANNUS) != IN_PROGRESS))
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -266,11 +270,15 @@ struct boss_rimefang_pos : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Check if ambush is done
             if (m_pInstance->GetData(TYPE_AMBUSH) != DONE)
+            {
                 return;
+            }
 
             // Start the intro when possible
             if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 85.0f) && m_creature->IsWithinLOSInMap(pWho))
@@ -288,7 +296,9 @@ struct boss_rimefang_pos : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // He needs to be mounted manually, not by vehicle_accessories
             if (m_uiMountTimer)
@@ -305,7 +315,9 @@ struct boss_rimefang_pos : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiIcyBlastTimer < uiDiff)
             {

@@ -107,7 +107,9 @@ struct boss_anubrekhan : public CreatureScript
                 pVictim->CastSpell(pVictim, SPELL_SELF_SPAWN_5, true, nullptr, nullptr, m_creature->GetObjectGuid());
 
             if (urand(0, 4))
+            {
                 return;
+            }
 
             DoScriptText(SAY_SLAY, m_creature);
         }
@@ -161,7 +163,9 @@ struct boss_anubrekhan : public CreatureScript
         {
             // If creature despawns on out of combat, skip this
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (pSummoned->GetEntry() == NPC_CRYPT_GUARD)
             {
@@ -175,7 +179,9 @@ struct boss_anubrekhan : public CreatureScript
             m_introDialogue.DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Impale
             if (m_uiImpaleTimer < uiDiff)

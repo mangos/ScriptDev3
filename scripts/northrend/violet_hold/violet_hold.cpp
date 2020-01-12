@@ -119,7 +119,9 @@ struct npc_sinclari : public CreatureScript
         void WaypointReached(uint32 uiPointId) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             switch (uiPointId)
             {
@@ -296,7 +298,9 @@ struct npc_prison_event_controller : public CreatureScript
                 break;
             case NPC_AZURE_SABOTEUR:
                 if (!m_pInstance)
+                {
                     return;
+                }
                 m_currentSaboteurGuid = pSummoned->GetObjectGuid();
                 m_pInstance->SetData64(DATA64_SABOTEUR, pSummoned->GetObjectGuid().GetRawValue());
                 break;
@@ -306,7 +310,9 @@ struct npc_prison_event_controller : public CreatureScript
         void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE && !uiPointId)
+            {
                 return;
+            }
 
             if (pSummoned->GetEntry() == NPC_AZURE_SABOTEUR)
             {
@@ -349,7 +355,9 @@ struct npc_prison_event_controller : public CreatureScript
                 {
                     Creature* pSaboteur = m_creature->GetMap()->GetCreature(m_currentSaboteurGuid);
                     if (!pSaboteur)
+                    {
                         return;
+                    }
 
                     switch (m_uiSaboteurPhase)
                     {
@@ -423,7 +431,9 @@ struct npc_teleportation_portal : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*sender*/, Unit* /*invoker*/, uint32 /**/)
         {
             if (!m_pInstance || eventType != AI_EVENT_CUSTOM_A)
+            {
                 return;
+            }
 
             // Portal event used for intro
             if (m_creature->GetEntry() == NPC_PORTAL_INTRO)
@@ -449,7 +459,9 @@ struct npc_teleportation_portal : public CreatureScript
                     // Allow the event controller to summon the mobs, for better movement handling
                     Creature* pController = m_pInstance->GetSingleCreatureFromStorage(NPC_EVENT_CONTROLLER);
                     if (!pController)
+                    {
                         return;
+                    }
 
                     // Summon a squad or a saboteur
                     if (bool(m_pInstance->GetData(TYPE_DATA_IS_TRASH_PORTAL)))

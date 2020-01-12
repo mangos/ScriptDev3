@@ -82,12 +82,16 @@ struct aura_charge_golem : public AuraScript
     bool OnDummyApply(const Aura* pAura, bool bApply) override
     {
         if (pAura->GetId() != SPELL_CHARGE_GOLEM)
+        {
             return true;
+        }
 
         Creature* pCreature = (Creature*)pAura->GetTarget();
 
         if (!pCreature)
+        {
             return true;
+        }
 
         if (pAura->GetEffIndex() == EFFECT_INDEX_0)
         {
@@ -327,7 +331,9 @@ struct npc_harrison_jones : public CreatureScript
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // special script for snake fight
             if (m_uiActivateMummiesTimer)
@@ -477,7 +483,9 @@ struct npc_emily : public CreatureScript
         void SummonedMovementInform(Creature* pSummoned, uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             switch (pSummoned->GetEntry())
             {

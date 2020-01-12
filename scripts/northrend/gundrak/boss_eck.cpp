@@ -97,7 +97,9 @@ struct boss_eck : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiSpitTimer < uiDiff)
             {

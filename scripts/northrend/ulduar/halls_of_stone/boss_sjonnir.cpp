@@ -175,7 +175,9 @@ struct boss_sjonnir : public CreatureScript
         void SummonedMovementInform(Creature* pSummoned, uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE || pSummoned->GetEntry() != NPC_MALFORMED_OOZE || !uiPointId)
+            {
                 return;
+            }
 
             pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 10.0f);
         }
@@ -193,7 +195,9 @@ struct boss_sjonnir : public CreatureScript
         bool DoFrenzyIfCan()
         {
             if (!m_uiFrenzyTimer)
+            {
                 return true;
+            }
 
             if (DoCastSpellIfCan(m_creature, SPELL_FRENZY) == CAST_OK)
             {
@@ -209,7 +213,9 @@ struct boss_sjonnir : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_creature->GetHealthPercent() <= (float)m_uiHpCheck)
             {

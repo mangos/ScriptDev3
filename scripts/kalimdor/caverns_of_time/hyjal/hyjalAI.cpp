@@ -328,7 +328,9 @@ void hyjalAI::JustSummoned(Creature* pSummoned)
         m_aBossGuid[!m_bIsFirstBossDead ? 0 : 1] = pSummoned->GetObjectGuid();
     }
     else
-    { lWaveMobGUIDList.push_back(pSummoned->GetObjectGuid()); }
+    {
+        lWaveMobGUIDList.push_back(pSummoned->GetObjectGuid());
+    }
 }
 
 void hyjalAI::SummonedCreatureJustDied(Creature* pSummoned)
@@ -553,14 +555,18 @@ void hyjalAI::UpdateAI(const uint32 uiDiff)
             m_uiWaveMoveTimer = 10000;
         }
         else
-        { m_uiWaveMoveTimer -= uiDiff; }
+        {
+            m_uiWaveMoveTimer -= uiDiff;
+        }
 
         if (m_uiNextWaveTimer < uiDiff)
         {
             SummonNextWave();
         }
         else
-        { m_uiNextWaveTimer -= uiDiff; }
+        {
+            m_uiNextWaveTimer -= uiDiff;
+        }
     }
 
     if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -595,7 +601,9 @@ void hyjalAI::UpdateAI(const uint32 uiDiff)
                 }
             }
             else
-            { m_uiSpellTimer[i] -= uiDiff; }
+            {
+                m_uiSpellTimer[i] -= uiDiff;
+            }
         }
     }
 

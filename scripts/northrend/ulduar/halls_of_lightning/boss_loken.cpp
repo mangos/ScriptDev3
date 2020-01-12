@@ -126,7 +126,9 @@ struct boss_loken : public CreatureScript
         {
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiArcLightningTimer < uiDiff)
             {

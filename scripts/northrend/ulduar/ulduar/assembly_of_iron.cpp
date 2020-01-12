@@ -160,7 +160,9 @@ struct boss_brundir : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // If we are not on the last phase then cast Supercharge and set as unlootable
             if (m_uiPhase != PHASE_CHARGE_TWO)
@@ -235,10 +237,14 @@ struct boss_brundir : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             if (pTarget->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Check achiev criterias
             switch (pSpell->Id)
@@ -255,7 +261,9 @@ struct boss_brundir : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             switch (uiPointId)
             {
@@ -309,7 +317,9 @@ struct boss_brundir : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             switch (m_uiPhase)
             {
@@ -464,7 +474,9 @@ struct boss_molgeim : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // If we are not on the last phase then cast Supercharge and set as unlootable
             if (m_uiPhase != PHASE_CHARGE_TWO)
@@ -552,7 +564,9 @@ struct boss_molgeim : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             switch (m_uiPhase)
             {
@@ -649,7 +663,9 @@ struct boss_steelbreaker : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // If we are not on the last phase then cast Supercharge and set as unlootable
             if (m_uiPhase != PHASE_CHARGE_TWO)
@@ -713,7 +729,9 @@ struct boss_steelbreaker : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             switch (m_uiPhase)
             {

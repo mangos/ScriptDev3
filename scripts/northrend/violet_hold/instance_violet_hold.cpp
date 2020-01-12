@@ -191,7 +191,9 @@ struct is_violet_hold : public InstanceScript
             BossToCellMap::const_iterator itrCellUpper = m_mBossToCellMap.upper_bound(uiBossEntry);
 
             if (itrCellLower == itrCellUpper)
+            {
                 return;
+            }
 
             for (BossToCellMap::const_iterator itr = itrCellLower; itr != itrCellUpper; ++itr)
             {
@@ -381,9 +383,13 @@ struct is_violet_hold : public InstanceScript
             {
             case TYPE_MAIN:
                 if (uiData == m_auiEncounter[uiType])
+                {
                     return;
+                }
                 if (m_auiEncounter[uiType] == DONE)
+                {
                     return;
+                }
 
                 switch (uiData)
                 {
@@ -516,7 +522,9 @@ struct is_violet_hold : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             switch (uiType)
             {
@@ -617,7 +625,9 @@ struct is_violet_hold : public InstanceScript
             }
 
             if (m_auiEncounter[TYPE_MAIN] != IN_PROGRESS)
+            {
                 return;
+            }
 
             if (m_uiPortalTimer)
             {
@@ -643,7 +653,9 @@ struct is_violet_hold : public InstanceScript
         bool IsCurrentPortalForTrash() const
         {
             if (m_uiWorldStatePortalCount % MAX_MINIBOSSES)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -660,12 +672,16 @@ struct is_violet_hold : public InstanceScript
             }
 
             if (!mEntry)
+            {
                 return nullptr;
+            }
 
             for (uint8 i = 0; i < MAX_MINIBOSSES; ++i)
             {
                 if (aBossInformation[i].uiEntry == mEntry)
+                {
                     return &aBossInformation[i];
+                }
             }
 
             return nullptr;
@@ -884,7 +900,9 @@ struct is_violet_hold : public InstanceScript
         bool IsNextPortalForTrash()
         {
             if ((m_uiWorldStatePortalCount + 1) % MAX_MINIBOSSES)
+            {
                 return true;
+            }
 
             return false;
         }

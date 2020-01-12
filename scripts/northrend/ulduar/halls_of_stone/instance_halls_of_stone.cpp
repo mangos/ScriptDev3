@@ -273,7 +273,9 @@ struct is_halls_of_stone : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             return 0;
         }
@@ -336,7 +338,9 @@ struct is_halls_of_stone : public InstanceScript
         void ActivateFace(uint8 uiFace, bool bAfterEvent)   //@TODO get rid of the method
         {
             if (uiFace >= MAX_FACES)
+            {
                 return;
+            }
 
             if (bAfterEvent)
                 DoUseDoorOrButton(m_aFaces[uiFace].m_goFaceGuid);
@@ -351,7 +355,9 @@ struct is_halls_of_stone : public InstanceScript
         void DoFaceSpeak(uint8 uiFace, int32 iTextId)   //@TODO get rid of the method
         {
             if (uiFace >= MAX_FACES)
+            {
                 return;
+            }
 
             if (Creature* pSpeaker = instance->GetCreature(m_aFaces[uiFace].m_speakerGuid))
                 DoScriptText(iTextId, pSpeaker);

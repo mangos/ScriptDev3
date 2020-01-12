@@ -285,7 +285,9 @@ struct boss_flame_leviathan : public CreatureScript
         void SummonedMovementInform(Creature* pSummoned, uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             if (pSummoned->GetEntry() == NPC_BRANN_FLYING_MACHINE)
             {
@@ -312,7 +314,9 @@ struct boss_flame_leviathan : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // set boss in combat (if not already)
             m_creature->SetInCombatWithZone();
@@ -333,12 +337,16 @@ struct boss_flame_leviathan : public CreatureScript
         void FetchTowers()
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // the orbital support applies the tower auras
             Creature* pOrbital = m_pInstance->GetSingleCreatureFromStorage(NPC_ORBITAL_SUPPORT);
             if (!pOrbital)
+            {
                 return;
+            }
 
             uint8 uiActiveTowers = 0;
 
@@ -402,7 +410,9 @@ struct boss_flame_leviathan : public CreatureScript
         void DoSpawnThorimHammer()
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // get a random point compared to the center and spawn the npcs
             if (Creature* pOrbital = m_pInstance->GetSingleCreatureFromStorage(NPC_ORBITAL_SUPPORT))
@@ -423,7 +433,9 @@ struct boss_flame_leviathan : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiPursueTimer < uiDiff)
             {
@@ -605,7 +617,9 @@ struct npc_hodir_fury_reticle : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // cast Hodir Fury on point reached and search for another target
             if (Creature* pHodirFury = m_creature->GetMap()->GetCreature(m_hodirFuryGuid))

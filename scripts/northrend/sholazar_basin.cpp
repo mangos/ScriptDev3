@@ -116,7 +116,9 @@ struct npc_helice : public CreatureScript
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             {
                 if (!HasEscortState(STATE_ESCORT_ESCORTING))
+                {
                     return;
+                }
 
                 if (HasEscortState(STATE_ESCORT_PAUSED))
                 {
@@ -280,7 +282,9 @@ struct npc_injured_rainspeaker : public CreatureScript
         void UpdateEscortAI(const uint32 /*uiDiff*/) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -392,7 +396,9 @@ struct npc_mosswalker_victim : public CreatureScript
 
             // just to prevent double credit
             if (pCreature->GetLootRecipient())
+            {
                 return true;
+            }
             else
                 pCreature->SetLootRecipient(pPlayer);
 
@@ -512,7 +518,9 @@ struct npc_tipsy_mcmanus : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
         {
             if (pInvoker->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             // start event
             if (eventType == AI_EVENT_START_EVENT)
@@ -638,7 +646,9 @@ struct npc_tipsy_mcmanus : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -661,7 +671,9 @@ struct npc_tipsy_mcmanus : public CreatureScript
     bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction) override
     {
         if (uiAction != GOSSIP_ACTION_INFO_DEF + 1)
+        {
             return false;
+        }
 
         pPlayer->CLOSE_GOSSIP_MENU();
         pCreature->AI()->SendAIEvent(AI_EVENT_START_EVENT, pPlayer, pCreature);
@@ -706,7 +718,9 @@ struct go_quest_still_at_it_credit : public GameObjectScript
     bool OnUse(Player* pPlayer, GameObject* pGo) override
     {
         if (pPlayer->GetQuestStatus(QUEST_ID_STILL_AT_IT) != QUEST_STATUS_INCOMPLETE)
+        {
             return true;
+        }
 
         if (Creature* pTipsyMcmanus = GetClosestCreatureWithEntry(pPlayer, NPC_TIPSY_MCMANUS, 2 * INTERACTION_DISTANCE))
             pTipsyMcmanus->AI()->SendAIEvent(AI_EVENT_CUSTOM_B, pPlayer, pTipsyMcmanus, pGo->GetEntry());

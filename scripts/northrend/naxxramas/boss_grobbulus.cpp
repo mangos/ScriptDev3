@@ -102,7 +102,9 @@ struct boss_grobbulus : public CreatureScript
         bool DoCastMutagenInjection()
         {
             if (m_creature->IsNonMeleeSpellCasted(true))
+            {
                 return false;
+            }
 
             std::vector<Unit*> suitableTargets;
             ThreatList const& threatList = m_creature->GetThreatManager().getThreatList();
@@ -117,7 +119,9 @@ struct boss_grobbulus : public CreatureScript
             }
 
             if (suitableTargets.empty())
+            {
                 return false;
+            }
 
             Unit* pTarget = suitableTargets[urand(0, suitableTargets.size() - 1)];
             if (DoCastSpellIfCan(pTarget, SPELL_MUTATING_INJECTION) == CAST_OK)
@@ -126,7 +130,9 @@ struct boss_grobbulus : public CreatureScript
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
@@ -138,7 +144,9 @@ struct boss_grobbulus : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Slime Stream
             if (!m_uiSlimeStreamTimer)

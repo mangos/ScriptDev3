@@ -109,7 +109,9 @@ struct npc_oculus_drake : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
             if (pCaster->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             if (pSpell->Id == 49464 || pSpell->Id == 49346 || pSpell->Id == 49460)
                 DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
@@ -120,7 +122,9 @@ struct npc_oculus_drake : public CreatureScript
         void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
         {
         if (pPassenger->GetTypeId() != TYPEID_PLAYER)
-        return;
+        {
+            return;
+        }
 
         // Set vehicle auras
         DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);

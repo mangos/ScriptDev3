@@ -105,7 +105,9 @@ struct boss_gortok : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiRoarTimer < uiDiff)
             {
@@ -207,7 +209,9 @@ struct event_spell_gorthok : public MapEventScript
         if (InstanceData* pInstance = ((Creature*)pSource)->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_GORTOK) == IN_PROGRESS || pInstance->GetData(TYPE_GORTOK) == DONE)
+            {
                 return false;
+            }
 
             pInstance->SetData(TYPE_GORTOK, IN_PROGRESS);
             pInstance->SetData64(DATA64_GORTHOK_EVENT_STARTER, pSource->GetObjectGuid().GetRawValue());

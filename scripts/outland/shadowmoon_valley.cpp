@@ -362,7 +362,9 @@ struct npc_dragonmaw_peon : public CreatureScript
             if (eventType == AI_EVENT_CUSTOM_A && pSender == m_creature && pInvoker->GetTypeId() == TYPEID_PLAYER)
             {
                 if (m_playerGuid)
+                {
                     return;
+                }
 
                 m_playerGuid = pInvoker->GetObjectGuid();
                 m_uiMoveTimer = 500;
@@ -762,7 +764,9 @@ struct npc_wilda : public CreatureScript
 
         // random chance to yell
         if (roll_chance_i(20))
+        {
             return;
+        }
 
         // random text when assassin is summoned
         switch (urand(0, 6))
@@ -808,7 +812,9 @@ struct npc_wilda : public CreatureScript
         GetCreatureListWithEntryInGrid(lSpiritsInRange, m_creature, NPC_CAPTURED_WATER_SPIRIT, 50.0f);
 
         if (lSpiritsInRange.empty())
+        {
             return;
+        }
 
         // all spirits follow
         for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
@@ -825,7 +831,9 @@ struct npc_wilda : public CreatureScript
         GetCreatureListWithEntryInGrid(lSpiritsInRange, m_creature, NPC_CAPTURED_WATER_SPIRIT, 50.0f);
 
         if (lSpiritsInRange.empty())
+        {
             return;
+        }
 
         // all spirits follow
         for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)

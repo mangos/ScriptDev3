@@ -130,7 +130,9 @@ struct boss_heigan : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiPhase == PHASE_GROUND)
             {
@@ -215,7 +217,9 @@ struct boss_heigan : public CreatureScript
 
             // Handling of the erruptions, this is not related to melee attack or spell-casting
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Eruption
             if (m_uiEruptionTimer < uiDiff)

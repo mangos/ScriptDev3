@@ -56,7 +56,9 @@ struct npc_dalaran_guardian_mage : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+            {
                 return;
+            }
 
             if (pWho->IsTargetableForAttack() && m_creature->IsHostileTo(pWho))
             {

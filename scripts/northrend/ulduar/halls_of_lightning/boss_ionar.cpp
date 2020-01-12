@@ -107,10 +107,14 @@ struct boss_ionar : public CreatureScript
         void AttackedBy(Unit* pAttacker) override
         {
             if (m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_creature->GetVisibility() == VISIBILITY_OFF)
+            {
                 return;
+            }
 
             AttackStart(pAttacker);
         }
@@ -225,7 +229,9 @@ struct boss_ionar : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Splitted
             if (m_creature->GetVisibility() == VISIBILITY_OFF)
@@ -318,7 +324,9 @@ struct spell_ionar_disperse : public SpellScript
         {
             Creature* pCreatureTarget = pTarget->ToCreature();
             if (pCreatureTarget->GetEntry() != NPC_IONAR)
+            {
                 return true;
+            }
 
             for (uint8 i = 0; i < MAX_SPARKS; ++i)
                 pCreatureTarget->CastSpell(pCreatureTarget, SPELL_SUMMON_SPARK, true);
@@ -345,7 +353,9 @@ struct spell_ionar_spark_despawn : public SpellScript
         {
             Creature* pCreatureTarget = pTarget->ToCreature();
             if (pCreatureTarget->GetEntry() != NPC_IONAR)
+            {
                 return true;
+            }
 
             if (CreatureAI* pIonarAI = pCreatureTarget->AI())
                 pIonarAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, pCreatureTarget, pCreatureTarget, 0);
@@ -378,7 +388,9 @@ struct mob_spark_of_ionar : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE || !m_pInstance)
+            {
                 return;
+            }
 
             if (uiPointId == POINT_CALLBACK)
             {

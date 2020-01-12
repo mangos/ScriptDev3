@@ -172,7 +172,9 @@ struct is_trial_of_the_crusader : public InstanceScript
             for (uint8 i = TYPE_NORTHREND_BEASTS; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -241,7 +243,9 @@ struct is_trial_of_the_crusader : public InstanceScript
         void OnPlayerEnter(Player* pPlayer) override
         {
             if (m_uiTeam)
+            {
                 return;
+            }
 
             m_uiTeam = pPlayer->GetTeam();
             SetDialogueSide(m_uiTeam == ALLIANCE);
@@ -361,10 +365,14 @@ struct is_trial_of_the_crusader : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             if (uiType == TYPE_DATA_IS_HEROIC)
+            {
                 return uint32(IsHeroicDifficulty());
+            }
 
             return 0;
         }
@@ -402,7 +410,9 @@ struct is_trial_of_the_crusader : public InstanceScript
         {
             Player* pPlayer = GetPlayerInMap();
             if (!pPlayer)
+            {
                 return;
+            }
 
             if (uiEntry)
                 ;
@@ -520,7 +530,9 @@ struct is_trial_of_the_crusader : public InstanceScript
         {
             Player* pPlayer = GetPlayerInMap();
             if (!pPlayer)
+            {
                 return;
+            }
 
             // Spawn Tirion and the mage
             if (Creature* pTirion = pPlayer->SummonCreature(NPC_TIRION_B, aSpawnPositions[12][0], aSpawnPositions[12][1], aSpawnPositions[12][2], aSpawnPositions[12][3], TEMPSUMMON_CORPSE_DESPAWN, 0))

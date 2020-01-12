@@ -93,7 +93,9 @@ struct boss_s_and_d_dummyAI : public ScriptedAI
     Creature* GetBuddy()
     {
         if (!m_pInstance)
+        {
             return nullptr;
+        }
 
         return m_pInstance->GetSingleCreatureFromStorage(m_creature->GetEntry() == NPC_DALRONN ? NPC_SKARVALD : NPC_DALRONN);
     }
@@ -118,7 +120,9 @@ struct boss_s_and_d_dummyAI : public ScriptedAI
     void EnterCombat(Unit* pWho) override
     {
         if (!pWho)
+        {
             return;
+        }
 
         if (Creature* pBuddy = GetBuddy())
         {
@@ -204,7 +208,9 @@ struct boss_skarvald : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiYellDelayTimer)
             {
@@ -286,7 +292,9 @@ struct boss_dalronn : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiDebilitateTimer < uiDiff)
             {

@@ -191,10 +191,14 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
         {
             // Check if Liam is attacking who attack he and don't jump on multiple attackers
             if (m_creature->getVictim() && (m_creature->getVictim() == pAttacker || lastVictim == pAttacker))
+            {
                 return;
+            }
 
             if (m_creature->IsFriendlyTo(pAttacker))
+            {
                 return;
+            }
 
             lastVictim = pAttacker;
             AttackStart(pAttacker);
@@ -231,7 +235,9 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
 
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Equipped ranged weapon usable and not close to victim
             if (m_creature->GetCombatDistance(m_creature->getVictim(), false) > 0 && m_creature->CanUseEquippedWeapon(RANGED_ATTACK) )
@@ -331,11 +337,15 @@ struct rampaging_worgen : public CreatureScript
 
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Return if we already cast a spell
             if (m_creature->IsNonMeleeSpellCasted(false))
+            {
                 return;
+            }
 
             // If we are within range melee the target
             if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))

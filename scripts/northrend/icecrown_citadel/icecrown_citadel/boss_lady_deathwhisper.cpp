@@ -144,7 +144,9 @@ struct boss_lady_deathwhisper : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             if (urand(0, 1))
                 DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
@@ -203,7 +205,9 @@ struct boss_lady_deathwhisper : public CreatureScript
             }
 
             if (vCultists.empty())
+            {
                 return nullptr;
+            }
 
             return vCultists[urand(0, vCultists.size() - 1)];
         }
@@ -223,7 +227,9 @@ struct boss_lady_deathwhisper : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiBerserkTimer)
             {
@@ -399,7 +405,9 @@ struct spell_mana_barrier : public SpellScript
             Creature* pCreatureTarget = pTarget->ToCreature();
             uint32 uiDamage = pCreatureTarget->GetMaxHealth() - pCreatureTarget->GetHealth();
             if (!uiDamage)
+            {
                 return true;
+            }
 
             if (pCreatureTarget->GetPower(POWER_MANA) < uiDamage)
             {

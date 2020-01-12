@@ -708,7 +708,9 @@ struct npc_anchorite_barada : public CreatureScript
         {
             // no attack during the exorcism
             if (m_bEventInProgress)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -717,7 +719,9 @@ struct npc_anchorite_barada : public CreatureScript
         {
             // no evade during the exorcism
             if (m_bEventInProgress)
+            {
                 return;
+            }
 
             ScriptedAI::EnterEvadeMode();
         }
@@ -762,7 +766,9 @@ struct npc_anchorite_barada : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != WAYPOINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             switch (uiPointId)
             {
@@ -880,7 +886,9 @@ struct npc_anchorite_barada : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -935,7 +943,9 @@ struct npc_colonel_jules : public CreatureScript
         {
             Creature* pAnchorite = GetClosestCreatureWithEntry(pCreature, NPC_ANCHORITE_BARADA, 15.0f);
             if (!pAnchorite)
+            {
                 return true;
+            }
 
             pCreature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pPlayer, pAnchorite);
             return true;
@@ -958,7 +968,9 @@ struct spell_just_release_darkness : public SpellScript
             Creature *pCreatureTarget = pTarget->ToCreature();
             Creature* pAnchorite = GetClosestCreatureWithEntry(pCreatureTarget, NPC_ANCHORITE_BARADA, 15.0f);
             if (!pAnchorite)
+            {
                 return false;
+            }
 
             // get random point around the Anchorite
             float fX, fY, fZ;
@@ -1169,7 +1181,9 @@ struct  npc_magister_aledisAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        {
             return;
+        }
 
         if (!m_bIsDefeated && m_creature->GetHealthPercent() < 25.0f)
         {

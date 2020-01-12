@@ -236,7 +236,9 @@ struct boss_svala : public CreatureScript
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             {
                 if (m_bIsIntroDone)
+                {
                     return;
+                }
 
                 if (pArthas && pArthas->IsAlive())
                 {
@@ -355,7 +357,9 @@ struct at_svala_intro : public AreaTriggerScript
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
     {
         if (pPlayer->isGameMaster())
+        {
             return false;
+        }
 
         if (InstanceData* pInstance = pPlayer->GetInstanceData())
         {

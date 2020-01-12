@@ -201,7 +201,9 @@ struct boss_general_vezax : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             if (pTarget->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+            {
                 return;
+            }
 
             // Check achiev criterias
             if (pSpell->Id == SPELL_SHADOW_CRASH_DAMAGE)
@@ -212,11 +214,15 @@ struct boss_general_vezax : public CreatureScript
         void DoPrepareAnimusIfCan()
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             Creature* pBunny = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_VEZAX_ANIMUS)));
             if (!pBunny)
+            {
                 return;
+            }
 
             // Gather the vapors to the spawn point
             for (GuidList::const_iterator itr = m_lVaporsGuids.begin(); itr != m_lVaporsGuids.end(); ++itr)
@@ -232,7 +238,9 @@ struct boss_general_vezax : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiHardModeTimer)
             {
@@ -391,7 +399,9 @@ struct npc_saronite_vapor : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE || !uiPointId || !m_pInstance)
+            {
                 return;
+            }
 
             // inform vezax of point reached
             if (Creature* pVezax = m_pInstance->GetSingleCreatureFromStorage(NPC_VEZAX))

@@ -1347,7 +1347,9 @@ struct npc_spring_rabbit : public CreatureScript
                 pBunny = m_creature->GetMap()->GetAnyTypeCreature(m_partnerGuid);
 
             if (!pBunny)
+            {
                 return nullptr;
+            }
 
             return dynamic_cast<npc_spring_rabbitAI*>(pBunny->AI());
         }
@@ -1356,7 +1358,9 @@ struct npc_spring_rabbit : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_creature->getVictim())
+            {
                 return;
+            }
 
             if (pWho->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_SPRING_RABBIT && CanStartWhatRabbitsDo() && m_creature->IsFriendlyTo(pWho) && m_creature->IsWithinDistInMap(pWho, DIST_START_EVENT, true))
             {
@@ -1383,16 +1387,22 @@ struct npc_spring_rabbit : public CreatureScript
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         void MovementInform(uint32 uiMovementType, uint32 uiData) override
         {
             if (uiMovementType != POINT_MOTION_TYPE || uiData != 1)
+            {
                 return;
+            }
 
             if (!m_partnerGuid)
+            {
                 return;
+            }
 
             m_uiStep = 3;
             if (npc_spring_rabbitAI* pOtherBunnyAI = GetPartnerAI())
@@ -1750,7 +1760,9 @@ struct npc_burster_worm : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // animation delay
             if (m_uiBirthDelayTimer)

@@ -155,7 +155,9 @@ struct boss_blood_queen_lanathel : public CreatureScript
         void MovementInform(uint32 uiMovementType, uint32 uiPointId) override
         {
             if (uiMovementType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId == POINT_CENTER_GROUND)
             {
@@ -200,7 +202,9 @@ struct boss_blood_queen_lanathel : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiEnrageTimer)
             {

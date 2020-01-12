@@ -191,7 +191,9 @@ struct is_ulduar : public InstanceScript
             for (uint8 i = 0; i <= TYPE_ALGALON; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -738,11 +740,15 @@ struct is_ulduar : public InstanceScript
             case TYPE_ASSEMBLY:
                 // Don't set the same encounter data twice
                 if (uiData == m_auiEncounter[uiType])
+                {
                     return;
+                }
                 m_auiEncounter[uiType] = uiData;
                 // don't continue for encounter = special
                 if (uiData == SPECIAL)
+                {
                     return;
+                }
                 DoUseDoorOrButton(GO_IRON_ENTRANCE_DOOR);
                 if (uiData == DONE)
                 {
@@ -790,7 +796,9 @@ struct is_ulduar : public InstanceScript
             case TYPE_MIMIRON:
                 // Don't set the same encounter data twice
                 if (uiData == m_auiEncounter[uiType])
+                {
                     return;
+                }
                 m_auiEncounter[uiType] = uiData;
                 DoUseDoorOrButton(GO_MIMIRON_DOOR_1);
                 DoUseDoorOrButton(GO_MIMIRON_DOOR_2);
@@ -950,7 +958,9 @@ struct is_ulduar : public InstanceScript
             case TYPE_YOGGSARON:
                 // Don't set the same encounter data twice
                 if (uiData == m_auiEncounter[uiType])
+                {
                     return;
+                }
                 m_auiEncounter[uiType] = uiData;
                 DoUseDoorOrButton(GO_YOGG_GATE);
                 if (uiData == FAIL || uiData == DONE)
@@ -1070,25 +1080,33 @@ struct is_ulduar : public InstanceScript
                 // Ulduar keepers
             case TYPE_KEEPER_HODIR:
                 if (uiData == m_auiUlduarKeepers[0] || uiData != DONE)
+                {
                     return;
+                }
                 SpawnKeeperHelper(NPC_HODIR_HELPER);
                 m_auiUlduarKeepers[0] = uiData;
                 break;
             case TYPE_KEEPER_THORIM:
                 if (uiData == m_auiUlduarKeepers[1] || uiData != DONE)
+                {
                     return;
+                }
                 SpawnKeeperHelper(NPC_THORIM_HELPER);
                 m_auiUlduarKeepers[1] = uiData;
                 break;
             case TYPE_KEEPER_FREYA:
                 if (uiData == m_auiUlduarKeepers[2] || uiData != DONE)
+                {
                     return;
+                }
                 SpawnKeeperHelper(NPC_FREYA_HELPER);
                 m_auiUlduarKeepers[2] = uiData;
                 break;
             case TYPE_KEEPER_MIMIRON:
                 if (uiData == m_auiUlduarKeepers[3] || uiData != DONE)
+                {
                     return;
+                }
                 SpawnKeeperHelper(NPC_MIMIRON_HELPER);
                 m_auiUlduarKeepers[3] = uiData;
                 break;
@@ -1096,28 +1114,36 @@ struct is_ulduar : public InstanceScript
                 // Ulduar towers
             case TYPE_TOWER_HODIR:
                 if (m_auiUlduarTowers[0] == uiData)
+                {
                     return;
+                }
                 if (uiData == FAIL)
                     DoUseDoorOrButton(GO_HODIR_CRYSTAL);
                 m_auiUlduarTowers[0] = uiData;
                 break;
             case TYPE_TOWER_THORIM:
                 if (m_auiUlduarTowers[1] == uiData)
+                {
                     return;
+                }
                 if (uiData == FAIL)
                     DoUseDoorOrButton(GO_THORIM_CRYSTAL);
                 m_auiUlduarTowers[1] = uiData;
                 break;
             case TYPE_TOWER_FREYA:
                 if (m_auiUlduarTowers[2] == uiData)
+                {
                     return;
+                }
                 if (uiData == FAIL)
                     DoUseDoorOrButton(GO_FREYA_CRYSTAL);
                 m_auiUlduarTowers[2] = uiData;
                 break;
             case TYPE_TOWER_MIMIRON:
                 if (m_auiUlduarTowers[3] == uiData)
+                {
                     return;
+                }
                 if (uiData == FAIL)
                     DoUseDoorOrButton(GO_MIMIRON_CRYSTAL);
                 m_auiUlduarTowers[3] = uiData;
@@ -1389,7 +1415,9 @@ struct is_ulduar : public InstanceScript
                 return m_leftKoloStalkerGuid.GetRawValue();
             case DATA64_BROKEN_HARPOON:
                 if (m_uiRazorCurrentHarpoon > 0)
+                {
                     return m_vBrokenHarpoonsGuids[m_uiRazorCurrentHarpoon - 1].GetRawValue();
+                }
             case DATA64_THORIM_RANDOM_ORB:
                 if (!m_lUpperThunderOrbsGuids.empty())
                 {
@@ -1511,15 +1539,21 @@ struct is_ulduar : public InstanceScript
             case ACHIEV_CRIT_BRUNDIR_N:
             case ACHIEV_CRIT_BRUNDIR_H:
                 if (GetData(TYPE_ASSEMBLY) == SPECIAL)
+                {
                     return m_abAchievCriteria[TYPE_ACHIEV_BRUNDIR - TYPE_ACHIEV_CAT_LADY];
+                }
             case ACHIEV_CRIT_MOLGEIM_N:
             case ACHIEV_CRIT_MOLGEIM_H:
                 if (GetData(TYPE_ASSEMBLY) == SPECIAL)
+                {
                     return m_abAchievCriteria[TYPE_ACHIEV_MOLGEIM - TYPE_ACHIEV_CAT_LADY];
+                }
             case ACHIEV_CRIT_STEELBREAKER_N:
             case ACHIEV_CRIT_STEELBREAKER_H:
                 if (GetData(TYPE_ASSEMBLY) == SPECIAL)
+                {
                     return m_abAchievCriteria[TYPE_ACHIEV_STEELBREAKER - TYPE_ACHIEV_CAT_LADY];
+                }
             case ACHIEV_CRIT_STUNNED_BRUND_N:
             case ACHIEV_CRIT_STUNNED_STEEL_N:
             case ACHIEV_CRIT_STUNNED_MOLG_N:
@@ -1527,7 +1561,9 @@ struct is_ulduar : public InstanceScript
             case ACHIEV_CRIT_STUNNED_STEEL_H:
             case ACHIEV_CRIT_STUNNED_MOLG_H:
                 if (GetData(TYPE_ASSEMBLY) == SPECIAL)
+                {
                     return m_abAchievCriteria[TYPE_ACHIEV_STUNNED - TYPE_ACHIEV_CAT_LADY];
+                }
             case ACHIEV_CRIT_SHATTERED_N:
             case ACHIEV_CRIT_SHATTERED_H:
                 return m_abAchievCriteria[TYPE_ACHIEV_SHATTERED - TYPE_ACHIEV_CAT_LADY];
@@ -1837,7 +1873,9 @@ struct is_ulduar : public InstanceScript
         {
             Player* pPlayer = GetPlayerInMap();
             if (!pPlayer)
+            {
                 return;
+            }
 
             switch (uiWho)
             {
@@ -1853,7 +1891,9 @@ struct is_ulduar : public InstanceScript
         {
             Player* pPlayer = GetPlayerInMap();
             if (!pPlayer)
+            {
                 return;
+            }
 
             switch (uiWho)
             {
@@ -1915,7 +1955,9 @@ struct is_ulduar : public InstanceScript
         {
             Creature* pLeviathan = GetSingleCreatureFromStorage(NPC_LEVIATHAN);
             if (!pLeviathan)
+            {
                 return;
+            }
 
             for (uint8 i = 0; i < countof(afReinforcementsNormal); ++i)
                 pLeviathan->SummonCreature(afReinforcementsNormal[i].uiEntry, afReinforcementsNormal[i].fX, afReinforcementsNormal[i].fY, afReinforcementsNormal[i].fZ, afReinforcementsNormal[i].fO, TEMPSUMMON_DEAD_DESPAWN, 0, true);

@@ -105,7 +105,9 @@ void ScriptedAI::AttackStart(Unit* pWho)
 {
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
     if (!m_creature->CanInitiateAttack())
+    {
         return;
+    }
 #endif
     if (pWho && m_creature->Attack(pWho, true))             // The Attack function also uses basic checks if pWho can be attacked
     {
@@ -806,15 +808,21 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
         case NPC_ANUBARAK:
             if (fY < 281.0f && fY > 228.0f)
+            {
                 return false;
+            }
             break;
         case NPC_SINDRAGOSA:
             if (fX > 4314.0f)
+            {
                 return false;
+            }
             break;
         case NPC_ZARITHRIAN:
             if (fZ > 87.0f)
+            {
                 return false;
+            }
             break;
 #endif
         default:
@@ -835,7 +843,9 @@ void Scripted_NoMovementAI::AttackStart(Unit* pWho)
 {
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
     if (!m_creature->CanInitiateAttack())
+    {
         return;
+    }
 #endif
     if (pWho && m_creature->Attack(pWho, true))
     {

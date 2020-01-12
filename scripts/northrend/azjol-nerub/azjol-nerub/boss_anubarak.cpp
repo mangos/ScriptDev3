@@ -165,7 +165,9 @@ struct boss_anubarak : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             switch (pSummoned->GetEntry())
             {
@@ -197,7 +199,9 @@ struct boss_anubarak : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiPhase == PHASE_GROUND)
             {
@@ -267,7 +271,9 @@ struct boss_anubarak : public CreatureScript
                 if (m_uiSummonTimer < uiDiff)
                 {
                     if (!m_pInstance)
+                    {
                         return;
+                    }
 
                     // Summon 2 Assassins
                     for (uint8 i = 0; i < 2; ++i)
@@ -294,7 +300,9 @@ struct boss_anubarak : public CreatureScript
                     if (m_uiDarterTimer < uiDiff)
                     {
                         if (!m_pInstance)
+                        {
                             return;
+                        }
 
                         if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_DARTER))))
                         {
@@ -364,7 +372,9 @@ struct npc_impale_target : public CreatureScript
                 if (m_uiImpaleTimer <= uiDiff)
                 {
                     if (!m_pInstance)
+                    {
                         return;
+                    }
 
                     m_creature->RemoveAurasDueToSpell(SPELL_IMPALE_VISUAL);
 

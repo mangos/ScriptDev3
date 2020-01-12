@@ -136,7 +136,9 @@ struct boss_skadi : public CreatureScript
         void AttackStart(Unit* pWho) override
         {
             if (m_uiPhase == PHASE_GAUNTLET)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -144,7 +146,9 @@ struct boss_skadi : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_uiPhase == PHASE_GAUNTLET)
+            {
                 return;
+            }
 
             ScriptedAI::MoveInLineOfSight(pWho);
         }
@@ -193,7 +197,9 @@ struct boss_skadi : public CreatureScript
         {
             // the intro mobs have predefined positions
             if (m_IntroMobs)
+            {
                 return;
+            }
 
             // Move all the way to the entrance - the exact location is unk so use waypoint movement
             switch (pSummon->GetEntry())
@@ -210,7 +216,9 @@ struct boss_skadi : public CreatureScript
         void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // called only for the intro mobs which are summoned directly
             pSummoned->SetFacingTo(3.15f);
@@ -223,13 +231,17 @@ struct boss_skadi : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* sender, Unit* invoker, uint32 /**/) override
         {
             if (eventType != AI_EVENT_CUSTOM_A && sender != m_creature)
+            {
                 return;
+            }
 
             DoScriptText(SAY_AGGRO, m_creature);
             m_uiMountTimer = 3000;
 
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Prepare to periodic summon the mobs
             if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_SKADI_MOBS_TRIGGER))))
@@ -258,7 +270,9 @@ struct boss_skadi : public CreatureScript
                 if (m_uiMountTimer <= uiDiff)
                 {
                     if (!m_pInstance)
+                    {
                         return;
+                    }
 
                     if (Creature* pGrauf = m_pInstance->GetSingleCreatureFromStorage(NPC_GRAUF))
                     {
@@ -275,7 +289,9 @@ struct boss_skadi : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiCrush < uiDiff)
             {
@@ -345,7 +361,9 @@ struct npc_grauf : public CreatureScript
         void JustReachedHome() override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Handle the auras only when reached home in order to avoid vehicle complications
             m_creature->RemoveAllAuras();
@@ -361,7 +379,9 @@ struct npc_grauf : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             if (pSpell->Id == SPELL_LAUNCH_HARPOON)
             {
@@ -393,7 +413,9 @@ struct npc_grauf : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != WAYPOINT_MOTION_TYPE || !m_pInstance)
+            {
                 return;
+            }
 
             // Note: On blizz the left and right sides are randomly choosen.
             // However because of the lack of waypoint movement scripting we'll use them alternatively
@@ -438,7 +460,9 @@ struct npc_grauf : public CreatureScript
         void DoHandleBreathYell()
         {
             if (!m_pInstance || !roll_chance_i(25))
+            {
                 return;
+            }
 
             // Yell on drake breath
             if (Creature* pSkadi = m_pInstance->GetSingleCreatureFromStorage(NPC_SKADI))
@@ -497,11 +521,15 @@ struct aura_skadi_cloud : public AuraScript
     bool OnDummyApply(const Aura* pAura, bool bApply) override
     {
         if (pAura->GetEffIndex() != EFFECT_INDEX_0 || !bApply)
+        {
             return true;
+        }
 
         Creature* pTarget = (Creature*)pAura->GetTarget();
         if (!pTarget)
+        {
             return true;
+        }
 
         // apply auras based on creature position
         if (pAura->GetId() == SPELL_CLOUD_AURA_LEFT)
@@ -529,7 +557,9 @@ struct at_skadi : public AreaTriggerScript
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* /*pAt*/) override
     {
         if (pPlayer->isGameMaster())
+        {
             return false;
+        }
 
         if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
         {

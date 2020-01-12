@@ -91,7 +91,9 @@ struct boss_drakkari_elemental : public CreatureScript
         void DamageTaken(Unit* /*pDoneBy*/, uint32& /*uiDamage*/) override
         {
             if (!m_bIsFirstEmerge)
+            {
                 return;
+            }
 
             if (m_creature->GetHealthPercent() < 50.0f)
             {
@@ -134,7 +136,9 @@ struct boss_drakkari_elemental : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiSurgeTimer < uiDiff)
             {
@@ -273,7 +277,9 @@ struct boss_drakkari_colossus : public CreatureScript
         {
             // Avoid casting the merge spell twice
             if (m_creature->HasAura(SPELL_FREEZE_ANIM))
+            {
                 return;
+            }
 
             if (DoCastSpellIfCan(m_creature, SPELL_EMERGE, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
             {
@@ -299,7 +305,9 @@ struct boss_drakkari_colossus : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiMightyBlowTimer < uiDiff)
             {
@@ -351,7 +359,9 @@ struct npc_living_mojo : public CreatureScript
         {
             // Don't attack if is part of the Colossus event
             if (m_bIsPartOfColossus)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -359,7 +369,9 @@ struct npc_living_mojo : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId)
             {
@@ -406,7 +418,9 @@ struct npc_living_mojo : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiMojoWaveTimer < uiDiff)
             {

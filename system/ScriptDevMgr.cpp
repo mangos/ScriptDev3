@@ -449,7 +449,9 @@ bool SD3::NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSp
     Script* pTempScript = m_scripts[pClickedCreature->GetScriptId()];
 
     if (!pTempScript || !pTempScript->ToCreatureScript())
+    {
         return false;
+    }
 
     return pTempScript->ToCreatureScript()->OnSpellClick(pPlayer, pClickedCreature, uiSpellId);
 }
@@ -586,13 +588,19 @@ InstanceData* SD3::CreateInstanceData(Map* pMap)
 {
     Script* pTempScript = m_scripts[pMap->GetScriptId()];
     if (!pTempScript)
+    {
         return nullptr;
+    }
 
     if (pTempScript->ToInstanceScript())
+    {
         return pTempScript->ToInstanceScript()->GetInstanceData(pMap);
+    }
 
     if (pTempScript->ToZoneScript())
+    {
         return pTempScript->ToZoneScript()->GetInstanceData(pMap);
+    }
 
     return nullptr;
 }

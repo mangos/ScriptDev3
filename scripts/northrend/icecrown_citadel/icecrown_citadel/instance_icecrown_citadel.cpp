@@ -107,7 +107,9 @@ struct is_icecrown_citadel : public InstanceScript
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -418,7 +420,9 @@ struct is_icecrown_citadel : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             // Difficulty wrappers
             switch (uiType)
@@ -504,7 +508,9 @@ struct is_icecrown_citadel : public InstanceScript
         {
             Creature* lady = instance->GetCreature(ObjectGuid(m_mNpcEntryGuidStore[NPC_LADY_DEATHWHISPER]));
             if (!lady || lady->IsDead())
+            {
                 return;
+            }
 
             // On 25 man mode we need to summon on all points
             if (GetData(TYPE_DATA_IS_25MAN))
@@ -628,7 +634,9 @@ struct at_icecrown_citadel : public AreaTriggerScript
             pAt->id == AREATRIGGER_SINDRAGOSA_PLATFORM)
         {
             if (pPlayer->isGameMaster() || pPlayer->IsDead())
+            {
                 return false;
+            }
 
             if (InstanceData* pInstance = pPlayer->GetInstanceData())
             {

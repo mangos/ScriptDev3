@@ -550,7 +550,9 @@ struct is_blackrock_spire : public InstanceScript
         void DoOpenUpperDoorIfCan(Player* pPlayer)
         {
             if (m_bUpperDoorOpened)
+            {
                 return;
+            }
 
             if (pPlayer->HasItemCount(ITEM_SEAL_OF_ASCENSION, 1))
             {

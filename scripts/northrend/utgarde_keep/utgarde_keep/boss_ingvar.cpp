@@ -123,7 +123,9 @@ struct boss_ingvar : public CreatureScript
         {
             // don't yell for her
             if (pWho->GetEntry() == NPC_ANNHYLDE)
+            {
                 return;
+            }
 
             // ToDo: it shouldn't yell this aggro text after removing the feign death aura
             DoScriptText(SAY_AGGRO_FIRST, m_creature);
@@ -135,7 +137,9 @@ struct boss_ingvar : public CreatureScript
         void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
         {
             if (m_bIsResurrected)
+            {
                 return;
+            }
 
             if (m_bIsFakingDeath)
             {
@@ -223,7 +227,9 @@ struct boss_ingvar : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim() || m_bIsFakingDeath)
+            {
                 return;
+            }
 
             if (!m_bIsResurrected)                              // First phase
             {
@@ -343,7 +349,9 @@ struct npc_annhylde : public CreatureScript
         void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE || uiPointId != POINT_ID_ANNHYLDE)
+            {
                 return;
+            }
 
             DoScriptText(SAY_ANNHYLDE_REZ, m_creature);
             m_uiResurrectTimer = 3000;
@@ -356,7 +364,9 @@ struct npc_annhylde : public CreatureScript
                 if (m_uiResurrectTimer <= uiDiff)
                 {
                     if (!m_pInstance)
+                    {
                         return;
+                    }
 
                     switch (m_uiResurrectPhase)
                     {

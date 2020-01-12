@@ -190,7 +190,9 @@ struct is_pinnacle : public InstanceScript
             case TYPE_SKADI:
                 // Don't process the event twice
                 if (m_auiEncounter[uiType] == uiData)
+                {
                     return;
+                }
                 switch (uiData)
                 {
                 case DONE:
@@ -268,7 +270,9 @@ struct is_pinnacle : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             return 0;
         }

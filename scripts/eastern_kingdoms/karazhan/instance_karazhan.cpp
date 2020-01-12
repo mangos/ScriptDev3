@@ -101,7 +101,9 @@ struct is_karazhan : public InstanceScript
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -114,7 +116,9 @@ struct is_karazhan : public InstanceScript
 
             // If the opera event is already set, return
             if (GetData(TYPE_OPERA_PERFORMANCE) != 0)
+            {
                 return;
+            }
 
             // Set the Opera Performance type on the first player enter
             SetData(TYPE_OPERA_PERFORMANCE, urand(OPERA_EVENT_WIZARD_OZ, OPERA_EVENT_ROMULO_AND_JUL));
@@ -406,7 +410,9 @@ struct is_karazhan : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             switch (uiType)
             {
@@ -601,7 +607,9 @@ struct is_karazhan : public InstanceScript
             // get the proper statusBar npc
             Creature* pStatusBar = instance->GetCreature(m_HordeStatusGuid);
             if (!pStatusBar)
+            {
                 return;
+            }
 
             lStalkers.sort(ObjectDistanceOrder(pStatusBar));
             for (std::list<Creature*>::const_iterator itr = lStalkers.begin(); itr != lStalkers.end(); ++itr)
@@ -623,7 +631,9 @@ struct is_karazhan : public InstanceScript
             // get the proper statusBar npc
             pStatusBar = instance->GetCreature(m_AllianceStatusGuid);
             if (!pStatusBar)
+            {
                 return;
+            }
 
             lStalkers.sort(ObjectDistanceOrder(pStatusBar));
             for (std::list<Creature*>::const_iterator itr = lStalkers.begin(); itr != lStalkers.end(); ++itr)
@@ -682,7 +692,9 @@ struct is_karazhan : public InstanceScript
                         }
                     }
                     if (pChosenTrigger)
+                    {
                         return pChosenTrigger->GetObjectGuid().GetRawValue();
+                    }
                 }
             }
             return 0;
@@ -723,7 +735,9 @@ struct is_karazhan : public InstanceScript
                 }
 
                 if (!vTargets.empty())
+                {
                     return vTargets[urand(0, vTargets.size() - 1)]->GetObjectGuid().GetRawValue();
+                }
             }
             return 0;
         }
@@ -753,7 +767,9 @@ struct is_karazhan : public InstanceScript
                 GetCreatureListWithEntryInGrid(lSquaresList, searcher, NPC_SQUARE_WHITE, fRadius);
 
                 if (lSquaresList.empty())
+                {
                     return 0;
+                }
 
                 // Get the list of enemies
                 GuidList lTempList;
@@ -768,7 +784,9 @@ struct is_karazhan : public InstanceScript
                 }
 
                 if (lEnemies.empty())
+                {
                     return 0;
+                }
 
                 // Sort the enemies by distance and the squares compared to the distance to the closest enemy
                 lEnemies.sort(ObjectDistanceOrder(searcher));
@@ -791,10 +809,14 @@ struct is_karazhan : public InstanceScript
             // get the proper statusBar npc
             Creature* pStatusBar = instance->GetCreature(uiFaction == FACTION_ID_CHESS_ALLIANCE ? m_AllianceStatusGuid : m_HordeStatusGuid);
             if (!pStatusBar)
+            {
                 return;
+            }
 
             if (vStalkers.size() < uiCount + 1)
+            {
                 return;
+            }
 
             // handle stalker transformation
             if (Creature* pStalker = instance->GetCreature(vStalkers[uiCount]))

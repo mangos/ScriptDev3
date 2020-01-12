@@ -358,7 +358,9 @@ struct is_ahnkahet : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             return 0;
         }
@@ -425,7 +427,9 @@ struct is_ahnkahet : public InstanceScript
             // Get the phase aura id
             std::list<Aura*> lAuraList = pPlayer->GetAurasByType(SPELL_AURA_PHASE);
             if (lAuraList.empty())
+            {
                 return;
+            }
 
             uint32 uiPhaseAura = (*lAuraList.begin())->GetId();
 
@@ -447,7 +451,9 @@ struct is_ahnkahet : public InstanceScript
 
             // This shouldn't happen
             if (vOtherPhasePlayers.empty())
+            {
                 return;
+            }
 
             // Get the phase aura of the new selected player
             Player* pNewPlayer = vOtherPhasePlayers[urand(0, vOtherPhasePlayers.size() - 1)];
@@ -455,7 +461,9 @@ struct is_ahnkahet : public InstanceScript
             // Get the phase aura id
             std::list<Aura*> lNewAuraList = pNewPlayer->GetAurasByType(SPELL_AURA_PHASE);
             if (lNewAuraList.empty())
+            {
                 return;
+            }
 
             uint32 uiNewPhaseAura = (*lNewAuraList.begin())->GetId();
 
@@ -467,7 +475,9 @@ struct is_ahnkahet : public InstanceScript
         ObjectGuid SelectRandomGuardianEggGuid()
         {
             if (m_GuardianEggList.empty())
+            {
                 return ObjectGuid();
+            }
 
             GuidList::iterator iter = m_GuardianEggList.begin();
             advance(iter, urand(0, m_GuardianEggList.size() - 1));
@@ -478,7 +488,9 @@ struct is_ahnkahet : public InstanceScript
         ObjectGuid SelectRandomSwarmerEggGuid()
         {
             if (m_SwarmerEggList.empty())
+            {
                 return ObjectGuid();
+            }
 
             GuidList::iterator iter = m_SwarmerEggList.begin();
             advance(iter, urand(0, m_SwarmerEggList.size() - 1));

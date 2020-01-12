@@ -520,7 +520,9 @@ struct npc_rethhedron : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId == POINT_ID_PORTAL_FRONT)
             {
@@ -558,10 +560,14 @@ struct npc_rethhedron : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_bEventFinished)
+            {
                 return;
+            }
 
             if (m_uiCrippleTimer < uiDiff)
             {

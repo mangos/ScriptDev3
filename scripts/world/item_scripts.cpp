@@ -196,7 +196,9 @@ struct item_petrov_cluster_bombs : public ItemScript
     bool OnUse(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
     {
         if (pPlayer->GetZoneId() != ZONE_ID_HOWLING)
+        {
             return false;
+        }
 
         if (!pPlayer->GetTransport() || pPlayer->GetAreaId() != AREA_ID_SHATTERED_STRAITS)
         {

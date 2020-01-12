@@ -146,7 +146,9 @@ struct boss_emerald_dragonAI : public ScriptedAI
             m_uiSeepingFogTimer = urand(120000, 150000);    // Rather Guesswork, but one Fog has 2min duration, hence a bit longer
         }
         else
-            { m_uiSeepingFogTimer -= uiDiff; }
+        {
+            m_uiSeepingFogTimer -= uiDiff;
+        }
 
         if (m_uiNoxiousBreathTimer < uiDiff)
         {
@@ -156,7 +158,9 @@ struct boss_emerald_dragonAI : public ScriptedAI
             }
         }
         else
-            { m_uiNoxiousBreathTimer -= uiDiff; }
+        {
+            m_uiNoxiousBreathTimer -= uiDiff;
+        }
 
         if (m_uiTailsweepTimer < uiDiff)
         {
@@ -166,7 +170,9 @@ struct boss_emerald_dragonAI : public ScriptedAI
             }
         }
         else
-            { m_uiTailsweepTimer -= uiDiff; }
+        {
+            m_uiTailsweepTimer -= uiDiff;
+        }
 
         DoMeleeAttackIfReady();
     }

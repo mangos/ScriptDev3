@@ -89,7 +89,9 @@ struct npc_web_wrap : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*sender*/, Unit* pVictim, uint32 /**/) override
         {
             if (eventType != AI_EVENT_CUSTOM_A)
+            {
                 return;
+            }
 
             if (pVictim)
             {
@@ -226,7 +228,9 @@ struct boss_maexxna : public CreatureScript
         {
             // If we can't select a player for web wrap then skip the summoning
             if (!m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_PLAYER))
+            {
                 return false;
+            }
 
             uint8 uiPos1 = urand(0, MAX_WEB_WRAP_POSITIONS - 1);
             m_creature->SummonCreature(NPC_WEB_WRAP, aWebWrapLoc[uiPos1][0], aWebWrapLoc[uiPos1][1], aWebWrapLoc[uiPos1][2], 0, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
@@ -251,7 +255,9 @@ struct boss_maexxna : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Web Wrap
             if (m_uiWebWrapTimer < uiDiff)

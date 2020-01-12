@@ -134,7 +134,9 @@ struct boss_sladran : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() != NPC_SLADRAN_CONSTRICTOR && pSummoned->GetEntry() != NPC_SLADRAN_VIPER)
+            {
                 return;
+            }
 
             pSummoned->SetWalk(false);
             pSummoned->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), false);
@@ -143,7 +145,9 @@ struct boss_sladran : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiPoisonNovaTimer < uiDiff)
             {
@@ -159,7 +163,9 @@ struct boss_sladran : public CreatureScript
             if (m_uiSummonTimer < uiDiff)
             {
                 if (!m_pInstance)
+                {
                     return;
+                }
 
                 if (Creature* pSummonTarget = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(TYPE_SLADRAN))))
                 {

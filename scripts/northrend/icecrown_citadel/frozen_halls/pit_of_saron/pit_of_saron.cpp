@@ -64,7 +64,9 @@ struct npc_ymirjar_deathbringer : public CreatureScript
         void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             DoCastSpellIfCan(m_creature, SPELL_SUMMON_UNDEAD);
         }
@@ -72,7 +74,9 @@ struct npc_ymirjar_deathbringer : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiShadowBoltTimer < uiDiff)
             {
@@ -107,7 +111,9 @@ struct spell_pos_summon_undead : public SpellScript
             Creature* pCreatureTarget = pTarget->ToCreature();
 
             if (pCreatureTarget->GetEntry() != NPC_YMIRJAR_DEATHBRINGER)
+            {
                 return true;
+            }
 
             float fX, fY, fZ;
             for (uint8 i = 0; i < 4; ++i)
@@ -177,11 +183,15 @@ struct at_pit_of_saron : public AreaTriggerScript
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
         if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
+        {
             return false;
+        }
 
         InstanceData* pInstance = pPlayer->GetInstanceData();
         if (!pInstance)
+        {
             return false;
+        }
 
         if (pAt->id == AREATRIGGER_ID_TUNNEL_START)
         {
@@ -195,7 +205,9 @@ struct at_pit_of_saron : public AreaTriggerScript
         else if (pAt->id == AREATRIGGER_ID_TUNNEL_END)
         {
             if (pInstance->GetData(TYPE_AMBUSH) != IN_PROGRESS)
+            {
                 return false;
+            }
 
             pInstance->SetData(TYPE_AMBUSH, DONE);
             return true;

@@ -660,7 +660,9 @@ struct boss_onyxia : public CreatureScript
     {
         // Check if players are hit by Onyxia's Deep Breath
         if (pTarget->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+        {
             return;
+        }
 
         // All and only the Onyxia Deep Breath Spells have these visuals
         if (pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_A || pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_B)

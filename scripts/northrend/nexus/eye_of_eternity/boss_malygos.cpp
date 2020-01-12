@@ -289,7 +289,9 @@ struct boss_malygos : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId == POINT_ID_COMBAT)
             {
@@ -417,7 +419,9 @@ struct boss_malygos : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiBerserkTimer)
             {
@@ -641,7 +645,9 @@ struct npc_wyrmrest_skytalon : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
             if (pCaster->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             if (pSpell->Id == 56071)
                 DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
@@ -652,7 +658,9 @@ struct npc_wyrmrest_skytalon : public CreatureScript
         void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
         {
         if (pPassenger->GetTypeId() != TYPEID_PLAYER)
-        return;
+        {
+            return;
+        }
 
         // Set vehicle auras
         DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
@@ -696,15 +704,21 @@ struct event_go_focusing_iris : public MapEventScript
         if (ScriptedInstance* pInstance = (ScriptedInstance*)((Creature*)pSource)->GetInstanceData())
         {
             if (pSource->GetTypeId() != TYPEID_PLAYER)
+            {
                 return false;
+            }
 
             if (pInstance->GetData(TYPE_MALYGOS) == IN_PROGRESS || pInstance->GetData(TYPE_MALYGOS) == DONE)
+            {
                 return false;
+            }
 
             Creature* pMalygos = pInstance->GetSingleCreatureFromStorage(NPC_MALYGOS);
             Creature* pTrigger = pInstance->GetSingleCreatureFromStorage(NPC_LARGE_TRIGGER);
             if (!pMalygos || !pTrigger)
+            {
                 return false;
+            }
 
             // Enter combat area - Move to ground point first, then start chasing target
             float fX, fY, fZ;

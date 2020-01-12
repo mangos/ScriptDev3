@@ -272,7 +272,9 @@ struct is_gnomeregan : public InstanceScript
         {
             EntryGuidMap::const_iterator find = m_mGoEntryGuidStore.find(type);
             if (find != m_mGoEntryGuidStore.end())
+            {
                 return find->second.GetRawValue();
+            }
 
             return 0;
         }

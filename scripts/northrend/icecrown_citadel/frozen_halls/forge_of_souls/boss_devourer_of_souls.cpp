@@ -132,7 +132,9 @@ struct boss_devourer_of_souls : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             if (urand(0, 1))
                 DoScriptText(aTexts[urand(1, 2)][m_uiFace], m_creature);
@@ -212,7 +214,9 @@ struct boss_devourer_of_souls : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->IsInCombat())
+            {
                 return;
+            }
 
             // Ending a phase
             if (m_uiEndPhaseTimer)
@@ -247,11 +251,15 @@ struct boss_devourer_of_souls : public CreatureScript
 
             // Update Target and do Combat Spells
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // No additional abilities while unleashing
             if (m_uiFace == FACE_UNLEASHING)
+            {
                 return;
+            }
 
             // Phantom Blast
             if (m_uiPhantomBlastTimer < uiDiff)

@@ -161,7 +161,9 @@ struct boss_ick : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // He needs to be mounted manually, not by vehicle_accessories
             if (m_uiMountTimer)
@@ -178,7 +180,9 @@ struct boss_ick : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Cooldown timer - we need to block all Krick spell during some events
             if (m_uiCooldownTimer)
@@ -348,7 +352,9 @@ struct boss_krick : public CreatureScript
         void SummonedMovementInform(Creature* /*pSummoned*/, uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             if (m_pInstance)
                 m_pInstance->SetData(TYPE_KRICK, SPECIAL);
@@ -357,7 +363,9 @@ struct boss_krick : public CreatureScript
         void UpdateAI(const uint32 /*uiDiff*/) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
         }
     };
 

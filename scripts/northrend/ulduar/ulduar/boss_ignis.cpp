@@ -126,7 +126,9 @@ struct boss_ignis : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
         }
@@ -155,7 +157,9 @@ struct boss_ignis : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
             if (pCaster->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             // Handle the case when passenger is loaded to the second seat
             if (pSpell->Id == SPELL_GRAB_POT)
@@ -165,7 +169,9 @@ struct boss_ignis : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiBerserkTimer)
             {
@@ -307,11 +313,15 @@ struct npc_iron_construct : public CreatureScript
         void UpdateAI(const uint32 /*uiDiff*/) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // stop attacking after shattered
             if (m_bHasShattered)
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }

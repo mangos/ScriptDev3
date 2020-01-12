@@ -214,7 +214,9 @@ struct npc_decaying_ghoul : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // handle the animation and despawn
             m_creature->GetMotionMaster()->MoveIdle();
@@ -232,7 +234,9 @@ struct npc_decaying_ghoul : public CreatureScript
             {
                 // check if the ghoul has already a feeding bunny set
                 if (m_feedingBunnyGuid)
+                {
                     return;
+                }
 
                 // move the ghoul to the feeding target
                 float fX, fY, fZ;
@@ -255,7 +259,9 @@ struct npc_decaying_ghoul : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiFleshRotTimer < uiDiff)
             {
@@ -285,7 +291,9 @@ struct spell_attract_ghoul : public SpellScript
         if (uiSpellId == SPELL_ATTRACT_GHOUL && uiEffIndex == EFFECT_INDEX_0 && pCreatureTarget->GetEntry() == NPC_DECAYING_GHOUL)
         {
             if (pCaster->GetEntry() != NPC_GHOUL_FEEDING_BUNNY)
+            {
                 return true;
+            }
 
             pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget);
             return true;

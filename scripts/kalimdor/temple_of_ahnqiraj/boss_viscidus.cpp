@@ -234,7 +234,9 @@ struct boss_viscidus : public CreatureScript
         void SummonedMovementInform(Creature* pSummoned, uint32 uiType, uint32 uiPointId) override
         {
             if (pSummoned->GetEntry() != NPC_GLOB_OF_VISCIDUS || uiType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             m_lGlobesGuidList.remove(pSummoned->GetObjectGuid());
             pSummoned->CastSpell(m_creature, SPELL_REJOIN_VISCIDUS, true);
@@ -257,7 +259,9 @@ struct boss_viscidus : public CreatureScript
             uiDamage = uiDamage * 0.5f;
 
             if (m_uiPhase != PHASE_FROZEN)
+            {
                 return;
+            }
 
             ++m_uiHitCount;
 
@@ -297,7 +301,9 @@ struct boss_viscidus : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             if (m_uiPhase != PHASE_NORMAL)
+            {
                 return;
+            }
 
             // only count frost damage
             if (pSpell->SchoolMask == SPELL_SCHOOL_MASK_FROST)
@@ -332,7 +338,9 @@ struct boss_viscidus : public CreatureScript
             if (eventType == AI_EVENT_CUSTOM_A)
             {
                 if (m_uiPhase == PHASE_EXPLODED)
+                {
                     return;
+                }
 
                 // reset phase if not already exploded
                 m_uiPhase = PHASE_NORMAL;
@@ -367,7 +375,9 @@ struct boss_viscidus : public CreatureScript
             }
 
             if (m_uiPhase != PHASE_NORMAL)
+            {
                 return;
+            }
 #endif
 
             if (m_uiPoisonShockTimer < uiDiff)

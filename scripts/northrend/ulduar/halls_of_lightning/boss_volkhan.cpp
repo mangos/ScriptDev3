@@ -141,7 +141,9 @@ struct boss_volkhan : public CreatureScript
         void DespawnGolems()
         {
             if (m_lGolemGUIDList.empty())
+            {
                 return;
+            }
 
             for (GuidList::const_iterator itr = m_lGolemGUIDList.begin(); itr != m_lGolemGUIDList.end(); ++itr)
             {
@@ -156,7 +158,9 @@ struct boss_volkhan : public CreatureScript
         void ShatterGolems()
         {
             if (m_lGolemGUIDList.empty())
+            {
                 return;
+            }
 
             uint8 m_uiBrittleGolemsCount = 0;
 
@@ -195,7 +199,9 @@ struct boss_volkhan : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             DoCastSpellIfCan(m_creature, SPELL_TEMPER);
             SetCombatMovement(true);
@@ -205,7 +211,9 @@ struct boss_volkhan : public CreatureScript
         {
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // he shatters only one time, at 25%
             if (m_creature->GetHealthPercent() <= 25.0f && !m_bHasShattered)
@@ -287,7 +295,9 @@ struct spell_volkhan_temper_dummy : public SpellScript
         {
             Creature* pCreatureTarget = pTarget->ToCreature();
             if (pCaster->GetEntry() != NPC_VOLKHAN_ANVIL || pCreatureTarget->GetEntry() != NPC_VOLKHAN)
+            {
                 return true;
+            }
 
             for (uint8 i = 0; i < MAX_GOLEM; ++i)
                 pCreatureTarget->CastSpell(pCaster, SPELL_SUMMON_MOLTEN_GOLEM, true);
@@ -315,7 +325,9 @@ struct spell_volkhan_temper : public SpellScript
         {
             Creature* pCreatureTarget = pTarget->ToCreature();
             if (pCaster->GetEntry() != NPC_VOLKHAN || pCreatureTarget->GetEntry() != NPC_VOLKHAN_ANVIL)
+            {
                 return true;
+            }
 
             pCreatureTarget->CastSpell(pCaster, SPELL_TEMPER_DUMMY, false);
             // ToDo: research how the visual spell is used
@@ -406,7 +418,9 @@ struct mob_molten_golem : public CreatureScript
         {
             // Return since we have no target or if we are frozen
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiBlastTimer < uiDiff)
             {

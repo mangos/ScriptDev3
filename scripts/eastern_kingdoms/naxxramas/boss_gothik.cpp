@@ -201,7 +201,9 @@ struct boss_gothik : public CreatureScript
         void SummonedCreatureJustDied(Creature* pSummoned) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             m_lSummonedAddGuids.remove(pSummoned->GetObjectGuid());
 

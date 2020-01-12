@@ -150,10 +150,14 @@ struct boss_forgemaster_garfrost : public CreatureScript
         void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != EFFECT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId != PHASE_BLADE_ENCHANTMENT && uiPointId != PHASE_MACE_ENCHANTMENT)
+            {
                 return;
+            }
 
             // Cast and say expected spell
             DoCastSpellIfCan(m_creature, uiPointId == PHASE_BLADE_ENCHANTMENT ? SPELL_FORGE_FROZEN_BLADE : SPELL_FORGE_FROSTBORN_MACE);
@@ -173,7 +177,9 @@ struct boss_forgemaster_garfrost : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // This needs to be checked only on heroic
             if (!m_bIsRegularMode && m_uiCheckPermafrostTimer)
@@ -208,7 +214,9 @@ struct boss_forgemaster_garfrost : public CreatureScript
 
             // Do nothing more while moving
             if (m_uiPhase == PHASE_MOVEMENT)
+            {
                 return;
+            }
 
             // Casted in every phase
             if (m_uiThrowSaroniteTimer < uiDiff)

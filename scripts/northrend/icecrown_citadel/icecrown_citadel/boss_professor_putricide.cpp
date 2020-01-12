@@ -191,7 +191,9 @@ struct boss_professor_putricide : public CreatureScript
         void MovementInform(uint32 uiMovementType, uint32 uiData) override
         {
             if (uiMovementType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiData == POINT_PUTRICIDE_SPAWN)
             {
@@ -233,7 +235,9 @@ struct boss_professor_putricide : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Enrage
             if (m_uiEnrageTimer)

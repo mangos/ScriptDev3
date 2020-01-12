@@ -129,7 +129,9 @@ struct boss_jedoga : public CreatureScript
         ObjectGuid SelectRandomVolunteer()
         {
             if (m_lVolunteerGuidList.empty())
+            {
                 return ObjectGuid();
+            }
 
             GuidList::iterator iter = m_lVolunteerGuidList.begin();
             advance(iter, urand(0, m_lVolunteerGuidList.size() - 1));
@@ -254,7 +256,9 @@ struct boss_jedoga : public CreatureScript
         void SummonedMovementInform(Creature* pSummoned, uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE || pSummoned->GetEntry() != NPC_TWILIGHT_VOLUNTEER)
+            {
                 return;
+            }
 
             if (uiPointId == POINT_ID_PREPARE)
             {
@@ -272,7 +276,9 @@ struct boss_jedoga : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             switch (uiPointId)
             {
@@ -345,11 +351,15 @@ struct boss_jedoga : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Don't use abilities while sacrificing
             if (m_bIsSacrificing)
+            {
                 return;
+            }
 
             // Note: this was changed in 3.3.2 and now it does this only once
             if (m_creature->GetHealthPercent() < 50.0f && !m_bSacrifice)
@@ -422,7 +432,9 @@ struct npc_twilight_volunteer : public CreatureScript
         {
             // If it's not killed by Jedoga then set the achiev to fail
             if (pKiller->GetEntry() == NPC_JEDOGA_SHADOWSEEKER)
+            {
                 return;
+            }
 
             if (m_pInstance)
                 m_pInstance->SetData(TYPE_JEDOGA, SPECIAL);

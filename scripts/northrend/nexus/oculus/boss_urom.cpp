@@ -143,7 +143,9 @@ struct boss_urom : public CreatureScript
             if (m_uiPlatformPhase < MAX_PLATFORMS)
             {
                 if (m_bIsTeleporting)
+                {
                     return;
+                }
 
                 // Summon the trash mobs pack
                 m_bIsTeleporting = true;
@@ -208,7 +210,9 @@ struct boss_urom : public CreatureScript
         {
             // Don't evade while casting explosion
             if (m_uiExplosionExpireTimer)
+            {
                 return;
+            }
 
             if (m_bIsPlatformPhase)
             {
@@ -280,11 +284,15 @@ struct boss_urom : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Don't use any combat abilities during the platform transition
             if (m_bIsPlatformPhase)
+            {
                 return;
+            }
 
             if (m_uiExplosionTimer)
             {

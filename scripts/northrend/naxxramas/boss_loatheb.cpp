@@ -97,7 +97,9 @@ struct boss_loatheb : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() != NPC_SPORE)
+            {
                 return;
+            }
 
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 pSummoned->AddThreat(pTarget);
@@ -112,7 +114,9 @@ struct boss_loatheb : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Berserk (only heroic)
             if (!m_bIsRegularMode)

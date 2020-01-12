@@ -253,7 +253,9 @@ struct boss_freya : public CreatureScript
         {
             // don't attack again after being defeated
             if (m_bEventFinished)
+            {
                 return;
+            }
 
             if (m_pInstance)
                 m_pInstance->SetData(TYPE_FREYA, IN_PROGRESS);
@@ -268,7 +270,9 @@ struct boss_freya : public CreatureScript
         {
             // don't attack again after being defeated
             if (m_bEventFinished)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -277,7 +281,9 @@ struct boss_freya : public CreatureScript
         {
             // don't attack again after being defeated
             if (m_bEventFinished)
+            {
                 return;
+            }
 
             ScriptedAI::MoveInLineOfSight(pWho);
         }
@@ -363,7 +369,9 @@ struct boss_freya : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
         }
@@ -460,7 +468,9 @@ struct boss_freya : public CreatureScript
         void FetchElders()
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             uint8 uiEldersAlive = 0;
 
@@ -524,7 +534,9 @@ struct boss_freya : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiBerserkTimer)
             {
@@ -548,7 +560,9 @@ struct boss_freya : public CreatureScript
                     Creature* pStormLasher = m_creature->GetMap()->GetCreature(m_stormLasherGuid);
                     Creature* pSnapLasher = m_creature->GetMap()->GetCreature(m_snaplasherGuid);
                     if (!pSpirit || !pStormLasher || !pSnapLasher)
+                    {
                         return;
+                    }
 
                     if (pSpirit->HasAura(SPELL_FEIGN_DEATH) && pStormLasher->HasAura(SPELL_FEIGN_DEATH) && pSnapLasher->HasAura(SPELL_FEIGN_DEATH))
                     {
@@ -701,14 +715,18 @@ struct three_nature_alliesAI : public ScriptedAI
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (pDoneBy->GetEntry() == NPC_FREYA)
+        {
             return;
+        }
 
         if (uiDamage >= m_creature->GetHealth())
         {
             uiDamage = 0;
 
             if (m_bIsFakeDeath)
+            {
                 return;
+            }
 
             if (m_pInstance)
             {
@@ -770,7 +788,9 @@ struct npc_water_spirit : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiTidalWaveTimer < uiDiff)
             {
@@ -846,7 +866,9 @@ struct npc_storm_lasher : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiLightningLashTimer < uiDiff)
             {
@@ -1002,7 +1024,9 @@ struct npc_iron_roots : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (!m_creature->IsTemporarySummon())
+            {
                 return;
+            }
 
             if (m_creature->GetEntry() == NPC_IRON_ROOTS)
                 DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_IRON_ROOTS_REMOVE : SPELL_IRON_ROOTS_REMOVE_H, CAST_TRIGGERED);

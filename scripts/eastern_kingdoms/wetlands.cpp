@@ -155,7 +155,9 @@ struct npc_tapoke_slim_jahn : public CreatureScript
         void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
         {
             if (!HasEscortState(STATE_ESCORT_ESCORTING))
+            {
                 return;
+            }
 
             if (m_creature->HealthBelowPctDamaged(20, uiDamage))
             {
@@ -181,7 +183,9 @@ struct npc_tapoke_slim_jahn : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !HasEscortState(STATE_ESCORT_ESCORTING))
+            {
                 return;
+            }
 
             npc_escortAI::MovementInform(uiMoveType, uiPointId);
 
@@ -219,7 +223,9 @@ struct npc_tapoke_slim_jahn : public CreatureScript
         Creature* GetSpeakerByEntry(uint32 uiEntry) override
         {
             if (uiEntry == NPC_TAPOKE_SLIM_JAHN)
+            {
                 return m_creature;
+            }
 
             return nullptr;
         }
@@ -230,7 +236,9 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }

@@ -390,7 +390,9 @@ struct npc_ouro_spawner : public CreatureScript
                 }
             }
             else
-            { m_uiQuakeTimer -= uiDiff; }
+            {
+                m_uiQuakeTimer -= uiDiff;
+            }
         }
 #endif
     }

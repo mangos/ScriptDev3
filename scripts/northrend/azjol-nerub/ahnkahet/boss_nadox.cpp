@@ -177,7 +177,9 @@ struct boss_nadox : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (!m_bGuardianSummoned && m_creature->GetHealthPercent() < 50.0f)
             {

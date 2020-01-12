@@ -145,7 +145,9 @@ struct boss_eregos : public CreatureScript
 
                 // If this happens then something is really wrong
                 if (m_vAnomalyTargets.empty())
+                {
                     return;
+                }
 
                 if (Unit* pTarget = m_creature->GetMap()->GetUnit(m_vAnomalyTargets[m_uiAnomalyTargetIndex]))
                     pSummoned->GetMotionMaster()->MoveFollow(pTarget, 0, 0);
@@ -163,10 +165,14 @@ struct boss_eregos : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_creature->HasAura(SPELL_PLANAR_SHIFT))
+            {
                 return;
+            }
 
             if (m_creature->GetHealthPercent() < m_fHpPercent)
             {
@@ -278,7 +284,9 @@ struct npc_planar_anomaly : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_bHasBlastCasted)
+            {
                 return;
+            }
 
             // Check for the players mounted on the vehicles
             if (pWho->GetTypeId() == TYPEID_PLAYER)
@@ -297,7 +305,9 @@ struct npc_planar_anomaly : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (m_bHasBlastCasted)
+            {
                 return;
+            }
 
             if (m_uiPlanarBlastTimer < uiDiff)
             {

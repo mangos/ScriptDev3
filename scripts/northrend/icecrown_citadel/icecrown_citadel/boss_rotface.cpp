@@ -146,7 +146,9 @@ struct boss_rotface : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Slime Spray
             if (m_uiSlimeSprayTimer <= uiDiff)
@@ -233,7 +235,9 @@ struct mob_little_ooze : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiStickyOozeTimer <= uiDiff)
             {
@@ -290,7 +294,9 @@ struct mob_big_ooze : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Unstable Ooze
             if (m_uiUnstableExplosionCheckTimer)

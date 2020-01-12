@@ -148,7 +148,9 @@ struct npc_barrett_ramsey : public CreatureScript
         }
 
         if (!uiType || !pInstance)
+        {
             return true;
+        }
 
         if (pInstance->GetData(uiType) == FAIL)
         {
@@ -168,7 +170,9 @@ struct npc_barrett_ramsey : public CreatureScript
     {
         ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         if (!pInstance)
+        {
             return true;
+        }
 
         if (uiAction > GOSSIP_ACTION_INFO_DEF)
         {

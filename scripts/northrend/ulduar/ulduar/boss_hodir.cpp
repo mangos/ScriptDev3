@@ -149,7 +149,9 @@ struct boss_hodir : public CreatureScript
         {
             // don't attack again after being defeated
             if (m_bEventFinished)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -205,7 +207,9 @@ struct boss_hodir : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
         }
@@ -251,7 +255,9 @@ struct boss_hodir : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiBerserkTimer)
             {
@@ -357,7 +363,9 @@ struct npc_flash_freeze : public CreatureScript
         {
             // Flash Freeze npcs should be always be summoned
             if (!m_creature->IsTemporarySummon())
+            {
                 return;
+            }
 
             // do the freezing on the first update tick
             if (!m_bFreezeInit)
@@ -408,7 +416,9 @@ struct event_boss_hodir : public MapEventScript
         {
             ScriptedInstance* pInstance = (ScriptedInstance*)((Creature*)pSource)->GetInstanceData();
             if (!pInstance)
+            {
                 return true;
+            }
 
             if (uiEventId == EVENT_ID_SHATTER_CHEST)
             {

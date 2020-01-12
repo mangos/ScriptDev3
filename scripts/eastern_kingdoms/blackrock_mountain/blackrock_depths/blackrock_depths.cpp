@@ -73,7 +73,9 @@ struct go_bar_beer_keg : public GameObjectScript
         if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_HURLEY) == IN_PROGRESS || pInstance->GetData(TYPE_HURLEY) == DONE) // GOs despawning on use, this check should never be true but this is proper to have it there
+            {
                 return false;
+            }
             else
                 // Every time we set the event to SPECIAL, the instance script increments the number of broken kegs, capping at 3
                 pInstance->SetData(TYPE_HURLEY, SPECIAL);
@@ -341,7 +343,9 @@ struct npc_grimstone : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Ring mob or boss summoned
             float fX, fY, fZ;
@@ -437,7 +441,9 @@ struct npc_grimstone : public CreatureScript
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             if (m_pInstance->GetData(TYPE_RING_OF_LAW) == FAIL)
             {
@@ -665,7 +671,9 @@ struct npc_phalanxAI : public npc_escortAI
     void WaypointReached(uint32 uiPointId) override
     {
         if (!m_pInstance)
+        {
             return;
+        }
 
         switch (uiPointId)
         {
@@ -699,7 +707,9 @@ struct npc_phalanxAI : public npc_escortAI
     void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
+        {
             return;
+        }
 
         if (uiCallPatrolTimer)
         {
@@ -802,11 +812,15 @@ struct npc_mistress_nagmaraAI : public ScriptedAI
     void DoPotionOfLoveIfCan()
     {
         if (!m_pInstance)
+        {
             return;
+        }
 
         pRocknot = m_pInstance->GetSingleCreatureFromStorage(NPC_PRIVATE_ROCKNOT);
         if (!pRocknot)
+        {
             return;
+        }
 
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
@@ -831,7 +845,9 @@ struct npc_mistress_nagmaraAI : public ScriptedAI
         }
 
         if (!pRocknot)
+        {
             return;
+        }
 
         switch (m_uiPhase)
         {
@@ -923,7 +939,9 @@ struct npc_mistress_nagmara : public CreatureScript
         ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
         if (!pInstance)
+        {
             return true;
+        }
 
         if (pQuest->GetQuestId() == QUEST_POTION_LOVE)
         {
@@ -1558,7 +1576,9 @@ struct npc_hurley_blackbreath : public CreatureScript
             if (pWho)
             {
                 if (pWho->GetEntry() == NPC_RIBBLY_SCREWSPIGOT || pWho->GetEntry() == NPC_RIBBLY_CRONY)
+                {
                     return;
+                }
                 else
                     ScriptedAI::AttackStart(pWho);
             }
@@ -1574,7 +1594,9 @@ struct npc_hurley_blackbreath : public CreatureScript
         void WaypointReached(uint32 uiPointId) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             switch (uiPointId)
             {
@@ -1593,7 +1615,9 @@ struct npc_hurley_blackbreath : public CreatureScript
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Combat check
             if (m_creature->SelectHostileTarget() && m_creature->getVictim())
@@ -1759,13 +1783,17 @@ struct boss_plugger_spazzringAI : public ScriptedAI
     void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
+        {
             return;
+        }
 
         // Activate Phalanx and handle patrons faction
         if (Creature* pPhalanx = m_pInstance->GetSingleCreatureFromStorage(NPC_PHALANX))
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Activate Phalanx and handle patrons faction
             if (Creature* pPhalanx = m_pInstance->GetSingleCreatureFromStorage(NPC_PHALANX))
@@ -2002,7 +2030,9 @@ struct go_bar_ale_mug : public GameObjectScript
         if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS || pInstance->GetData(TYPE_PLUGGER) == DONE)
+            {
                 return false;
+            }
             else
             {
                 if (Creature* pPlugger = pInstance->GetSingleCreatureFromStorage(NPC_PLUGGER_SPAZZRING))
@@ -2057,7 +2087,9 @@ struct npc_ironhand_guardian : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             if (m_pInstance->GetData(TYPE_IRON_HALL) == NOT_STARTED)
             {

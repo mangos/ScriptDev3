@@ -219,7 +219,9 @@ struct is_forge_of_souls : public InstanceScript
         void ProcessEventNpcs(Player* pPlayer, bool bChanged)
         {
             if (!pPlayer)
+            {
                 return;
+            }
 
             if (m_auiEncounter[0] != DONE || m_auiEncounter[1] != DONE)
             {

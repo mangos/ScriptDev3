@@ -561,12 +561,16 @@ struct npc_cork_gizelton : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != WAYPOINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             // No player assigned as quest taker: abort to avoid summoning adds
             Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid);
             if (!pPlayer)
+            {
                 return;
+            }
 
             if (pPlayer->GetQuestStatus(QUEST_BODYGUARD_TO_HIRE) == QUEST_STATUS_INCOMPLETE)
             {
@@ -651,7 +655,9 @@ struct npc_cork_gizelton : public CreatureScript
         {
             Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid);
             if (!pPlayer)
+            {
                 return;
+            }
 
             // Handle all players in group (if they took quest)
             if (Group* pGroup = pPlayer->GetGroup())

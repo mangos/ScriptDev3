@@ -103,7 +103,9 @@ struct boss_ichoron : public CreatureScript
         void KilledUnit(Unit* pWho) override
         {
             if (pWho->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             switch (urand(0, 2))
             {
@@ -116,7 +118,9 @@ struct boss_ichoron : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiWaterBlastTimer < uiDiff)
             {

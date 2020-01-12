@@ -285,7 +285,9 @@ struct npc_shaheen : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // ToDo: add combat spells
 

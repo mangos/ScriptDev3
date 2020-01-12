@@ -436,7 +436,9 @@ struct boss_sathrovarr : public CreatureScript
                 uiDamage = 0;
 
                 if (m_bIsBanished)
+                {
                     return;
+                }
 
                 // banish Sathrovarr and eject the players
                 if (DoCastSpellIfCan(m_creature, SPELL_BANISH, CAST_TRIGGERED) == CAST_OK)

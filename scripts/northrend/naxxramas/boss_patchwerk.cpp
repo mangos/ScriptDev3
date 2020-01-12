@@ -78,7 +78,9 @@ struct boss_patchwerk : public CreatureScript
         void KilledUnit(Unit* /*pVictim*/) override
         {
             if (urand(0, 4))
+            {
                 return;
+            }
 
             DoScriptText(SAY_SLAY, m_creature);
         }
@@ -146,7 +148,9 @@ struct boss_patchwerk : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Hateful Strike
             if (m_uiHatefulStrikeTimer < uiDiff)

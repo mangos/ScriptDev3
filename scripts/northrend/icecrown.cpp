@@ -271,7 +271,9 @@ struct npc_squad_leader : public CreatureScript
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiFrostShotTimer < uiDiff)
             {
@@ -356,7 +358,9 @@ struct npc_infantry : public CreatureScript
             Reset();
 
             if (!m_creature->IsAlive())
+            {
                 return;
+            }
 
             if (m_bEscortActive)
             {
@@ -387,7 +391,9 @@ struct npc_infantry : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiShootTimer < uiDiff)
             {
@@ -533,7 +539,9 @@ struct npc_father_kamaros : public CreatureScript
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiSmiteTimer < uiDiff)
             {
@@ -620,7 +628,9 @@ struct npc_saronite_mine_slave : public CreatureScript
     bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction) override
     {
         if (uiAction != GOSSIP_ACTION_INFO_DEF + 1)
+        {
             return false;
+        }
 
         pPlayer->CLOSE_GOSSIP_MENU();
 

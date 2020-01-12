@@ -85,7 +85,9 @@ struct npc_valentine_boss_manager : public CreatureScript
         void JustDidDialogueStep(int32 iEntry) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             Creature* pHummel = m_pInstance->GetSingleCreatureFromStorage(NPC_HUMMEL);
             switch (iEntry)
@@ -105,7 +107,9 @@ struct npc_valentine_boss_manager : public CreatureScript
                 break;
             case NPC_BAXTER:
                 if (!pHummel)
+                {
                     return;
+                }
 
                 if (Creature* pBaxter = m_pInstance->GetSingleCreatureFromStorage(NPC_BAXTER))
                 {
@@ -120,7 +124,9 @@ struct npc_valentine_boss_manager : public CreatureScript
             }
             case NPC_FRYE:
                 if (!pHummel)
+                {
                     return;
+                }
 
                 if (Creature* pFrye = m_pInstance->GetSingleCreatureFromStorage(NPC_FRYE))
                 {
@@ -141,7 +147,9 @@ struct npc_valentine_boss_manager : public CreatureScript
             if (pSummoned->GetEntry() == NCP_CRAZED_APOTHECARY)
             {
                 if (!m_pInstance)
+                {
                     return;
+                }
 
                 // Make it attack a random Target
                 Creature* pBoss = m_pInstance->GetSingleCreatureFromStorage(NPC_HUMMEL);
@@ -150,7 +158,9 @@ struct npc_valentine_boss_manager : public CreatureScript
                 if (!pBoss || !pBoss->IsAlive())
                     pBoss = m_pInstance->GetSingleCreatureFromStorage(NPC_FRYE);
                 if (!pBoss || !pBoss->IsAlive())
+                {
                     return;
+                }
 
                 // Attack a random target
                 if (Unit* pTarget = pBoss->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
@@ -168,7 +178,9 @@ struct npc_valentine_boss_manager : public CreatureScript
         void DoStartValentineEvent(ObjectGuid starterGuid)
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             m_EventStarterGuid = starterGuid;
 
@@ -224,10 +236,14 @@ struct npc_valentine_boss_manager : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_pInstance)
+            {
                 return;
+            }
 
             if (m_pInstance->GetData(TYPE_APOTHECARY) != IN_PROGRESS)
+            {
                 return;
+            }
 
             if (m_uiCrazedApothecaryTimer < uiDiff)
             {

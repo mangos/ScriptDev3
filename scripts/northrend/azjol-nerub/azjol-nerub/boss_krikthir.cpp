@@ -135,7 +135,9 @@ struct boss_krikthir : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (!m_bFrenzy && m_creature->GetHealthPercent() <= 10.0f)
             {

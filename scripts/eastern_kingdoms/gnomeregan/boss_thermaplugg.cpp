@@ -198,7 +198,9 @@ struct boss_thermaplugg : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* /*pInvoker*/, uint32 data) override
         {
             if (pSender != m_creature)  //handling only events from himself (casts of activate bomb), to be refactored
+            {
                 return;
+            }
 
             switch (eventType)
             {

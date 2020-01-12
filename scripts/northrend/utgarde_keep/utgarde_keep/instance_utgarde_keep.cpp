@@ -122,7 +122,9 @@ struct is_utgarde_keep : public InstanceScript
                 break;
             case TYPE_INGVAR:
                 if (m_auiEncounter[uiType] == uiData)
+                {
                     return;
+                }
                 DoUseDoorOrButton(GO_PORTCULLIS_COMBAT);
                 if (uiData == DONE)
                 {
@@ -160,7 +162,9 @@ struct is_utgarde_keep : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             return 0;
         }
@@ -191,7 +195,9 @@ struct is_utgarde_keep : public InstanceScript
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override
         {
             if (uiCriteriaId == ACHIEV_CRIT_ON_THE_ROCKS)
+            {
                 return !m_bKelesethAchievFailed;
+            }
 
             return false;
         }

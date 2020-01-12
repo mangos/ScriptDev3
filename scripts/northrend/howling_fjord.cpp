@@ -78,10 +78,14 @@ struct npc_ancient_male_vrykul : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* /*pInvoker*/, uint32 /**/) override
         {
             if (eventType != AI_EVENT_CUSTOM_A)
+            {
                 return;
+            }
 
             if (m_bEventInProgress)
+            {
                 return;
+            }
 
             m_bEventInProgress = true;
         }
@@ -89,7 +93,9 @@ struct npc_ancient_male_vrykul : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_bEventInProgress)
+            {
                 return;
+            }
 
             if (m_uiPhaseTimer < uiDiff)
                 m_uiPhaseTimer = 5000;
@@ -203,7 +209,9 @@ struct npc_daegarn : public CreatureScript
         void StartEvent(Player* pPlayer)
         {
             if (m_bEventInProgress)
+            {
                 return;
+            }
 
             m_playerGuid = pPlayer->GetObjectGuid();
 
@@ -327,7 +335,9 @@ struct npc_silvermoon_harry : public CreatureScript
         void AttackedBy(Unit* pAttacker) override
         {
             if (m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_creature->IsHostileTo(pAttacker))
                 AttackStart(pAttacker);
@@ -370,7 +380,9 @@ struct npc_silvermoon_harry : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiScorchTimer < uiDiff)
             {
@@ -573,7 +585,9 @@ struct npc_lich_king_village : public CreatureScript
         Creature* GetSpeakerByEntry(uint32 uiEntry) override
         {
             if (uiEntry == NPC_LICH_KING_WYRMSKULL)
+            {
                 return m_creature;
+            }
 
             return nullptr;
         }
@@ -704,7 +718,9 @@ struct  npc_king_ymiron : public CreatureScript
         Creature* GetSpeakerByEntry(uint32 uiEntry) override
         {
             if (uiEntry == NPC_KING_YMIRON)
+            {
                 return m_creature;
+            }
 
             return nullptr;
         }
@@ -714,7 +730,9 @@ struct  npc_king_ymiron : public CreatureScript
             if (eventType == AI_EVENT_CUSTOM_A && pInvoker->GetTypeId() == TYPEID_PLAYER)
             {
                 if (m_bEventInProgress)
+                {
                     return;
+                }
 
                 StartNextDialogueText(EMOTE_KING_SILENCE);
                 m_uiCrowdSpeechTimer = 0;
@@ -725,7 +743,9 @@ struct  npc_king_ymiron : public CreatureScript
         ObjectGuid SelectRandomCrowdNpc()
         {
             if (m_lCrowdGuidList.empty())
+            {
                 return ObjectGuid();
+            }
 
             GuidList::iterator iter = m_lCrowdGuidList.begin();
             advance(iter, urand(0, m_lCrowdGuidList.size() - 1));
@@ -988,7 +1008,9 @@ struct npc_apothecary_hanes : public CreatureScript
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_creature->GetHealthPercent() < 75.0f)
             {

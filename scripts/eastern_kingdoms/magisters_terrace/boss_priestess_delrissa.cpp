@@ -431,7 +431,9 @@ struct priestess_companion_commonAI : public ScriptedAI
             }
         }
         else
-        { m_uiResetThreatTimer -= uiDiff; }
+        {
+            m_uiResetThreatTimer -= uiDiff;
+        }
 
         // Use the Medallion if CC - only on heroic. Not sure how many times they are allowed to use it.
         if (!m_bIsRegularMode && m_uiMedallionTimer)
@@ -446,7 +448,9 @@ struct priestess_companion_commonAI : public ScriptedAI
                     }
                 }
                 else
-                { m_uiMedallionTimer -= uiDiff; }
+                {
+                    m_uiMedallionTimer -= uiDiff;
+                }
             }
         }
 

@@ -115,7 +115,9 @@ struct is_azjol_nerub : public InstanceScript
             {
                 // Only for the first try
                 if (m_bGauntletStarted)
+                {
                     return;
+                }
 
                 DoScriptText(SAY_CRUSHER_AGGRO, pCreature);
 
@@ -226,7 +228,9 @@ struct is_azjol_nerub : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             return 0;
         }
@@ -240,7 +244,9 @@ struct is_azjol_nerub : public InstanceScript
             case DATA64_ANUB_ASSASIN:
                 // Get a random summon target
                 if (m_vAssassinSummonTargetsVect.size() > 0)
+                {
                     return m_vAssassinSummonTargetsVect[urand(0, m_vAssassinSummonTargetsVect.size() - 1)].GetRawValue();
+                }
                 break;
             case DATA64_ANUB_GUARDIAN:
                 return m_guardianSummonTarget.GetRawValue();
@@ -342,7 +348,9 @@ struct is_azjol_nerub : public InstanceScript
             Creature* pKrikthir = GetSingleCreatureFromStorage(NPC_KRIKTHIR);
 
             if (!pKrikthir)
+            {
                 return;
+            }
 
             for (uint8 i = 0; i < countof(aWatchers); ++i)
             {

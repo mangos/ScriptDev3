@@ -221,7 +221,9 @@ struct boss_novos : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             switch (m_uiPhase)
             {
@@ -369,7 +371,9 @@ struct npc_crystal_channel_target : public CreatureScript
         void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiPointId != 1 || uiMotionType != POINT_MOTION_TYPE || (pSummoned->GetEntry() != NPC_HULKING_CORPSE && pSummoned->GetEntry() != NPC_FETID_TROLL_CORPSE && pSummoned->GetEntry() != NPC_RISON_SHADOWCASTER))
+            {
                 return;
+            }
 
             if (!pSummoned->IsInCombat() && m_pInstance)
             {
@@ -406,7 +410,9 @@ struct aura_npc_crystal_channel_target : public AuraScript
                         if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
                         {
                             if (pInstance->GetData(TYPE_NOVOS) == NOT_STARTED || pInstance->GetData(TYPE_NOVOS) == FAIL)
+                            {
                                 return true;
+                            }
 
                             pInstance->SetData(TYPE_DATA_NOVOS_CRYSTAL_INDEX, uint32(i));
 

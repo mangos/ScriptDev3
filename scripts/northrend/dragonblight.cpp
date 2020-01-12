@@ -134,7 +134,9 @@ struct npc_destructive_ward : public CreatureScript
             }
 
             if (!m_uiPowerTimer)
+            {
                 return;
+            }
 
             if (m_uiPowerTimer <= uiDiff)
             {

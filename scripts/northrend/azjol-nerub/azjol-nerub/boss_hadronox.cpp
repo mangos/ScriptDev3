@@ -102,7 +102,9 @@ struct boss_hadronox : public CreatureScript
         {
             // No more attacks during the movement upstairs
             if ((m_pInstance && m_pInstance->GetData(TYPE_HADRONOX) == SPECIAL) && pWho->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -121,7 +123,9 @@ struct boss_hadronox : public CreatureScript
 
             // No more attacks during the movement upstairs
             if ((m_pInstance && m_pInstance->GetData(TYPE_HADRONOX) == SPECIAL) && pWho->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             ScriptedAI::MoveInLineOfSight(pWho);
         }
@@ -149,7 +153,9 @@ struct boss_hadronox : public CreatureScript
             Reset();
 
             if (!m_creature->IsAlive() || !m_pInstance)
+            {
                 return;
+            }
 
             // Moving upstairs, don't disturb
             if (m_pInstance->GetData(TYPE_HADRONOX) == SPECIAL)
@@ -218,7 +224,9 @@ struct boss_hadronox : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiPierceTimer < uiDiff)
             {

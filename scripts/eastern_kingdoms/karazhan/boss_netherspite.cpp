@@ -411,7 +411,9 @@ struct boss_netherspite : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             //PHASE SWITCH
             if (m_uiPhaseSwitchTimer <= uiDiff)

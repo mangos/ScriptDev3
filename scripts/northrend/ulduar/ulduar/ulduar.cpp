@@ -85,7 +85,9 @@ struct go_ulduar_teleporter : public GameObjectScript
     {
         ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData();
         if (!pInstance)
+        {
             return true;
+        }
 
         // Base camp
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_BASE_CAMP, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
@@ -131,7 +133,9 @@ struct go_ulduar_teleporter : public GameObjectScript
     {
         ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData();
         if (!pInstance)
+        {
             return true;
+        }
 
         // Additional checks for the teleporters to prevent exploiting
         // -- TODO -- HACK HERE, use spells when possible!
@@ -139,7 +143,9 @@ struct go_ulduar_teleporter : public GameObjectScript
         // There needs to be displayed a msg when in Combat, it is likely that this is to be handled by core and spell can-cast check
         // -- TODO -- Remove the combat check when spells are correctly working
         if (pPlayer->IsInCombat())
+        {
             return true;
+        }
 
         switch (uiAction)
         {
@@ -327,7 +333,9 @@ struct event_go_ulduar_tower : public MapEventScript
         {
             InstanceData* pInstance = ((GameObject*)pSource)->GetInstanceData();
             if (!pInstance)
+            {
                 return true;
+            }
 
             // Towers can be deactivated by destroying them. Notify instance data in case they get destroyed.
             switch (uiEventId)
@@ -429,7 +437,9 @@ struct npc_storm_tempered_keeper : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiCheckBuddyTimer)
             {

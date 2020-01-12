@@ -109,7 +109,9 @@ struct boss_erekem : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*sender*/, Unit* invoker, uint32 /**/) override
         {
             if (eventType != AI_EVENT_CUSTOM_A || invoker->GetEntry() != NPC_EREKEM_GUARD)
+            {
                 return;
+            }
 
             DoScriptText(!m_uiGuardiansDead ? SAY_ADD_DIE_1 : SAY_ADD_DIE_2, m_creature);
             ++m_uiGuardiansDead;
@@ -122,7 +124,9 @@ struct boss_erekem : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiEarthShieldTimer < uiDiff)
             {
@@ -209,12 +213,16 @@ struct npc_erekem_guard : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             if (Creature* pBoss = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(TYPE_EREKEM) != DONE ? NPC_EREKEM : NPC_ARAKKOA))
             {
                 if (!pBoss->IsAlive())
+                {
                     return;
+                }
 
                 pBoss->AI()->ReceiveAIEvent(AI_EVENT_CUSTOM_A, m_creature, m_creature, 0);
             }
@@ -223,7 +231,9 @@ struct npc_erekem_guard : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiGushingWoundTimer < uiDiff)
             {

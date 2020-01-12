@@ -47,7 +47,9 @@ struct is_oculus : public InstanceScript
         void OnPlayerEnter(Player* pPlayer) override
         {
             if (GetData(TYPE_EREGOS) == DONE)
+            {
                 return;
+            }
 
             DoSpawnNextBossIfCan();
 
@@ -185,10 +187,14 @@ struct is_oculus : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             if (uiType == TYPE_DATA_SHIELD_BROKEN)
+            {
                 return uint32(m_sConstructsAliveGUIDSet.empty());
+            }
 
             return 0;
         }
@@ -197,7 +203,9 @@ struct is_oculus : public InstanceScript
         {
             // If Varos already completed, just ignore
             if (GetData(TYPE_VAROS) == DONE)
+            {
                 return;
+            }
 
             // Note: this is handled in Acid. The purpose is check which Centrifuge Construct is alive, in case of server reset
             // The function is triggered by eventAI on generic timer
@@ -242,13 +250,17 @@ struct is_oculus : public InstanceScript
         {
             Player* pPlayer = GetPlayerInMap();
             if (!pPlayer)
+            {
                 return;
+            }
 
             if (GetData(TYPE_UROM) == DONE)
             {
                 // return if already summoned
                 if (GetSingleCreatureFromStorage(NPC_EREGOS, true))
+                {
                     return;
+                }
 
                 pPlayer->SummonCreature(NPC_EREGOS, aOculusBossSpawnLocs[1][0], aOculusBossSpawnLocs[1][1], aOculusBossSpawnLocs[1][2], aOculusBossSpawnLocs[1][3], TEMPSUMMON_DEAD_DESPAWN, 0);
             }
@@ -256,7 +268,9 @@ struct is_oculus : public InstanceScript
             {
                 // return if already summoned
                 if (GetSingleCreatureFromStorage(NPC_UROM, true))
+                {
                     return;
+                }
 
                 pPlayer->SummonCreature(NPC_UROM, aOculusBossSpawnLocs[0][0], aOculusBossSpawnLocs[0][1], aOculusBossSpawnLocs[0][2], aOculusBossSpawnLocs[0][3], TEMPSUMMON_DEAD_DESPAWN, 0);
             }

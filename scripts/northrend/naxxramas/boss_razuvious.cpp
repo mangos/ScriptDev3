@@ -78,7 +78,9 @@ struct boss_razuvious : public CreatureScript
         void KilledUnit(Unit* /*Victim*/) override
         {
             if (urand(0, 3))
+            {
                 return;
+            }
 
             switch (urand(0, 1))
             {
@@ -119,7 +121,9 @@ struct boss_razuvious : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Unbalancing Strike
             if (m_uiUnbalancingStrikeTimer < uiDiff)

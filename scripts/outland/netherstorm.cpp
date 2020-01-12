@@ -1570,7 +1570,9 @@ struct npc_drijya : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -1682,7 +1684,9 @@ struct  npc_dimensiusAI : public Scripted_NoMovementAI
     void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        {
             return;
+        }
 
         if (!m_bSpawnsFeeding && m_creature->GetHealthPercent() < 75.0f)
         {

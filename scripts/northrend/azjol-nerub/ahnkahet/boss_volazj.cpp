@@ -167,7 +167,9 @@ struct boss_volazj : public CreatureScript
         void EnterEvadeMode() override
         {
             if (m_pInstance && m_pInstance->GetData(TYPE_VOLAZJ) == SPECIAL)
+            {
                 return;
+            }
 
             ScriptedAI::EnterEvadeMode();
         }
@@ -231,7 +233,9 @@ struct boss_volazj : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Check for Insanity
             if (m_bIsInsanityInProgress)

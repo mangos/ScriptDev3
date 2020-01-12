@@ -150,7 +150,9 @@ struct boss_ormorok : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (!m_bIsEnraged && m_creature->GetHealthPercent() < 25.0f)
             {
@@ -228,11 +230,15 @@ struct spell_crystal_spike_aura : public SpellScript
             {
                 ScriptedInstance* pInstance = (ScriptedInstance*)pCreatureTarget->GetInstanceData();
                 if (!pInstance)
+                {
                     return true;
+                }
 
                 Creature* pOrmorok = pInstance->GetSingleCreatureFromStorage(NPC_ORMOROK);
                 if (!pOrmorok)
+                {
                     return true;
+                }
 
                 // The following spells define the direction of the spike line
                 // All of the spells are targeting the back of the caster, but some take a small turn to left or right
@@ -264,7 +270,9 @@ struct aura_crystal_spike_pre : public AuraScript
             if (Creature* pTarget = (Creature*)pAura->GetTarget())
             {
                 if (pTarget->GetEntry() != NPC_CRYSTAL_SPIKE_TRIGGER)
+                {
                     return true;
+                }
 
                 // Use the Spike gameobject so we can summon the npc which actual does the damage
                 if (GameObject* pSpike = GetClosestGameObjectWithEntry(pTarget, GO_CRYSTAL_SPIKE, 10.0f))

@@ -230,7 +230,9 @@ struct boss_halion_real : public CreatureScript
         void DoPrepareTwilightPhase()
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             // Spawn the orbs and the carriers. Use the twilight Halion version to preserve the phase
             if (Creature* pHalion = m_pInstance->GetSingleCreatureFromStorage(NPC_HALION_TWILIGHT))
@@ -254,7 +256,9 @@ struct boss_halion_real : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiBerserkTimer)
             {
@@ -459,7 +463,9 @@ struct boss_halion_twilight : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             switch (m_uiPhase)
             {

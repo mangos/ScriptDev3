@@ -161,7 +161,9 @@ struct boss_gluth : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiZombieSearchTimer < uiDiff)
             {

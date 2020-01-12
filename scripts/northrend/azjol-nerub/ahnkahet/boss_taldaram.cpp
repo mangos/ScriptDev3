@@ -100,7 +100,9 @@ struct boss_taldaram : public CreatureScript
         {
             // Aggro is called after the boss vanish expires. There is no need to call this multiple times
             if (m_bIsFirstAggro)
+            {
                 return;
+            }
 
             DoScriptText(SAY_AGGRO, m_creature);
             m_bIsFirstAggro = true;
@@ -137,7 +139,9 @@ struct boss_taldaram : public CreatureScript
         {
             // Don't allow him to evade during vanish
             if (m_uiEmbraceTimer)
+            {
                 return;
+            }
 
             m_creature->RemoveAllAurasOnEvade();
             m_creature->DeleteThreatList();
@@ -156,7 +160,9 @@ struct boss_taldaram : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             // Adjust orientation
             if (uiPointId)
@@ -183,7 +189,9 @@ struct boss_taldaram : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*sender*/, Unit* invoker, uint32 /**/) override
         {
             if (eventType != AI_EVENT_CUSTOM_A || invoker != m_creature)
+            {
                 return;
+            }
 
             float fX, fY;
             uint8 uiIndex = m_bIsRegularMode ? urand(0, 2) : 0;
@@ -215,7 +223,9 @@ struct boss_taldaram : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Cast Embrace of the Vampyr after Vanish expires - note: because of the invisibility effect, the timers won't decrease during vanish
             if (m_uiEmbraceTimer)
@@ -327,11 +337,15 @@ struct go_nerubian_device : public GameObjectScript
         ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 
         if (!pInstance)
+        {
             return false;
+        }
 
         // Don't allow players to use the devices if encounter is already finished or in progress (reload case)
         if (pInstance->GetData(TYPE_TALDARAM) == SPECIAL || pInstance->GetData(TYPE_TALDARAM) == DONE)
+        {
             return false;
+        }
 
         pInstance->SetData(TYPE_TALDARAM, SPECIAL);
         return false;

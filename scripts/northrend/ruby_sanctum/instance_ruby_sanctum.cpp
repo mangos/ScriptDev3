@@ -52,7 +52,9 @@ struct is_ruby_sanctum : public InstanceScript
             for (uint8 i = 1; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -62,11 +64,15 @@ struct is_ruby_sanctum : public InstanceScript
         {
             // Return if Halion already dead, or Zarithrian alive
             if (m_auiEncounter[TYPE_ZARITHRIAN] != DONE || m_auiEncounter[TYPE_HALION] == DONE)
+            {
                 return;
+            }
 
             // Return if already summoned
             if (GetSingleCreatureFromStorage(NPC_HALION_REAL, true))
+            {
                 return;
+            }
 
             if (Creature* pSummoner = GetSingleCreatureFromStorage(NPC_HALION_CONTROLLER))
                 pSummoner->SummonCreature(NPC_HALION_REAL, pSummoner->GetPositionX(), pSummoner->GetPositionY(), pSummoner->GetPositionZ(), 3.159f, TEMPSUMMON_DEAD_DESPAWN, 0);
@@ -166,7 +172,9 @@ struct is_ruby_sanctum : public InstanceScript
             case TYPE_HALION:
                 // Don't set the same data twice
                 if (m_auiEncounter[uiType] == uiData)
+                {
                     return;
+                }
                 m_auiEncounter[uiType] = uiData;
                 DoUseDoorOrButton(GO_FLAME_RING);
                 switch (uiData)
@@ -213,10 +221,14 @@ struct is_ruby_sanctum : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             if (uiType == TYPE_DATA_IS_25MAN)
+            {
                 return uint32(instance->GetDifficulty() == RAID_DIFFICULTY_25MAN_NORMAL || instance->GetDifficulty() == RAID_DIFFICULTY_25MAN_HEROIC);
+            }
 
             return 0;
         }

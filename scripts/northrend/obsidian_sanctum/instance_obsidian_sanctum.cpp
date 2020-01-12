@@ -102,17 +102,23 @@ struct is_obsidian_sanctum : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType == TYPE_SARTHARION_EVENT)
+            {
                 return m_auiEncounter[0];
+            }
 
             if (uiType == TYPE_DATA_PORTAL_STATUS)
+            {
                 return uint32(IsActivePortal());
+            }
             return 0;
         }
 
         uint64 GetData64(uint32 uiType) const override
         {
             if (uiType == DATA64_FIRE_CYCLONE)
+            {
                 return SelectRandomFireCycloneGuid().GetRawValue();
+            }
 
             return 0;
         }
@@ -162,7 +168,9 @@ struct is_obsidian_sanctum : public InstanceScript
             for (uint8 i = 0; i < MAX_TWILIGHT_DRAGONS; ++i)
             {
                 if (m_bPortalActive[i])
+                {
                     return true;
+                }
             }
 
             return false;
@@ -171,7 +179,9 @@ struct is_obsidian_sanctum : public InstanceScript
         ObjectGuid SelectRandomFireCycloneGuid() const
         {
             if (m_lFireCycloneGuidList.empty())
+            {
                 return ObjectGuid();
+            }
 
             GuidList::const_iterator iter = m_lFireCycloneGuidList.begin();
             advance(iter, urand(0, m_lFireCycloneGuidList.size() - 1));

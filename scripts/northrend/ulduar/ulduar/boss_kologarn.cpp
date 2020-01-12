@@ -170,7 +170,9 @@ struct boss_kologarn : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
         }
@@ -242,7 +244,9 @@ struct boss_kologarn : public CreatureScript
         void SummonedCreatureJustDied(Creature* pSummoned) override
         {
             if (!m_creature->IsAlive() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (pSummoned->GetEntry() == NPC_LEFT_ARM)
             {
@@ -330,7 +334,9 @@ struct boss_kologarn : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiRespawnLeftTimer && m_uiRespawnRightTimer)
             {

@@ -150,7 +150,9 @@ struct npc_beast_combat_stalker : public CreatureScript
         void SummonedCreatureJustDied(Creature* pSummoned) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             switch (pSummoned->GetEntry())
             {
@@ -262,7 +264,9 @@ struct boss_gormok : public CreatureScript
         void UpdateAI(const uint32 /*uiDiff*/) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -304,7 +308,9 @@ struct boss_acidmaw : public CreatureScript
         void UpdateAI(const uint32 /*uiDiff*/) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -346,7 +352,9 @@ struct boss_dreadscale : public CreatureScript
         void UpdateAI(const uint32 /*uiDiff*/) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -393,7 +401,9 @@ struct boss_icehowl : public CreatureScript
         void UpdateAI(const uint32 /*uiDiff*/) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             DoMeleeAttackIfReady();
         }

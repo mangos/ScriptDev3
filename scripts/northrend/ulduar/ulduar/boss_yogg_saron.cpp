@@ -343,7 +343,9 @@ struct boss_sara : public CreatureScript
         void AttackStart(Unit* pWho) override
         {
             if (m_uiPhase == PHASE_SARA)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -351,7 +353,9 @@ struct boss_sara : public CreatureScript
         void EnterEvadeMode() override
         {
             if (!m_bIsHostile)
+            {
                 return;
+            }
 
             ScriptedAI::EnterEvadeMode();
         }
@@ -384,7 +388,9 @@ struct boss_sara : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(urand(0, 1) ? SAY_SARA_SLAY_1 : SAY_SARA_SLAY_2, m_creature);
         }
@@ -467,7 +473,9 @@ struct boss_sara : public CreatureScript
         void DoInitialiseKeepers()
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             uint8 uiKeeperCount = 0;
 
@@ -544,7 +552,9 @@ struct boss_sara : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiPhase == PHASE_VISIONS)
             {
@@ -672,7 +682,9 @@ struct boss_yogg_saron : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(SAY_SLAY, m_creature);
         }
@@ -688,7 +700,9 @@ struct boss_yogg_saron : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // last phase spells
             if (m_uiPhase == PHASE_OLD_GOD)
@@ -937,7 +951,9 @@ struct npc_voice_yogg_saron : public CreatureScript
                     }
 
                     if (!m_pInstance)
+                    {
                         return;
+                    }
 
                     // inform the brain about the current illusion
                     if (Creature* pBrain = m_pInstance->GetSingleCreatureFromStorage(NPC_YOGG_BRAIN))
@@ -1072,7 +1088,9 @@ struct npc_brain_yogg_saron : public CreatureScript
                 m_uiIllusionTimer = 30000;
 
                 if (!m_pInstance)
+                {
                     return;
+                }
 
                 m_pInstance->DoUseDoorOrButton(aMadnessChamberDoors[m_uiIllusionIndex]);
 
@@ -1088,7 +1106,9 @@ struct npc_brain_yogg_saron : public CreatureScript
         void JustDidDialogueStep(int32 iEntry) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             switch (iEntry)
             {
@@ -1251,7 +1271,9 @@ struct npc_guardian_of_yogg : public CreatureScript
         void AttackStart(Unit* pWho) override
         {
             if (pWho->GetEntry() == NPC_SARA)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -1272,7 +1294,9 @@ struct npc_guardian_of_yogg : public CreatureScript
                         Map::PlayerList const& lPlayers = m_pInstance->instance->GetPlayers();
 
                         if (lPlayers.isEmpty())
+                        {
                             return;
+                        }
 
                         // whisper to all players
                         for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
@@ -1292,7 +1316,9 @@ struct npc_guardian_of_yogg : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiDarkVolleyTimer < uiDiff)
             {
@@ -1349,7 +1375,9 @@ struct npc_immortal_guardian : public CreatureScript
         void DamageTaken(Unit* pDealer, uint32& uiDamage) override
         {
             if (pDealer->GetEntry() == NPC_THORIM_HELPER)
+            {
                 return;
+            }
 
             if (uiDamage >= m_creature->GetHealth())
             {
@@ -1367,7 +1395,9 @@ struct npc_immortal_guardian : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiDrainLifeTimer < uiDiff)
             {
@@ -1408,7 +1438,9 @@ struct spell_yogg_empowered : public SpellScript
 
             // if creature already has the required stacks, ignore
             if (uiProjectedStacks == uiCurrentStacks)
+            {
                 return true;
+            }
 
             if (uiCurrentStacks > uiProjectedStacks)
                 pCreatureTarget->RemoveAuraHolderFromStack(SPELL_EMPOWERED_MOD, uiCurrentStacks - uiProjectedStacks);
@@ -1612,7 +1644,9 @@ struct npc_descent_madness : public CreatureScript
                 uiClickSpell = pDescentAI->GetCurrentSpell();
 
             if (!uiClickSpell)
+            {
                 return true;
+            }
 
             pPlayer->CastSpell(pPlayer, uiClickSpell, true);
             pClickedCreature->ForcedDespawn();

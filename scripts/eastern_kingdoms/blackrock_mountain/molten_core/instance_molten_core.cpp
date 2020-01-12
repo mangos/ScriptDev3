@@ -282,7 +282,9 @@ struct is_molten_core : public InstanceScript
                 return m_auiEncounter[uiType];
             }
             else if (sRuneEncounters const *rstr = GetRuneStructForTrapEntry(uiType))
+            {
                 return m_auiRuneState[rstr->getRuneType()];
+            }
 
             return 0;
         }
@@ -299,7 +301,9 @@ struct is_molten_core : public InstanceScript
                     ObjectGuid guid = *it;
                     if (Creature* firesworn = instance->GetCreature(guid))
                         if (firesworn->IsAlive() && firesworn->IsWithinDistInMap(garr, 20.0f, false))
+                        {
                             return guid.GetRawValue();
+                        }
                 }
                 break;
             }
@@ -399,7 +403,9 @@ struct is_molten_core : public InstanceScript
         {
             for (int i = 0; i < MAX_MOLTEN_RUNES; ++i)
                 if (m_aMoltenCoreRunes[i].m_bossType == uiType)
+                {
                     return &m_aMoltenCoreRunes[i];
+                }
 
             return nullptr;
         }
@@ -408,7 +414,9 @@ struct is_molten_core : public InstanceScript
         {
             for (int i = 0; i < MAX_MOLTEN_RUNES; ++i)
             if (m_aMoltenCoreRunes[i].m_uiTrapEntry == entry)
+            {
                 return &m_aMoltenCoreRunes[i];
+            }
 
             return nullptr;
         }

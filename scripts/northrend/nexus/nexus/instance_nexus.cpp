@@ -84,7 +84,9 @@ struct is_nexus : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
 
             return 0;
         }
@@ -229,7 +231,9 @@ struct go_containment_sphere : public GameObjectScript
         ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 
         if (!pInstance)
+        {
             return false;
+        }
 
         switch (pGo->GetEntry())
         {

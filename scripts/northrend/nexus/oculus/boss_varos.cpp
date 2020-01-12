@@ -148,7 +148,9 @@ struct boss_varos : public CreatureScript
                 if (m_uiShieldTimer <= uiDiff)
                 {
                     if (!m_pInstance)
+                    {
                         return;
+                    }
 
                     // Check for shield first
                     if (bool(m_pInstance->GetData(TYPE_DATA_SHIELD_BROKEN)))
@@ -168,7 +170,9 @@ struct boss_varos : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiAmplifyMagicTimer < uiDiff)
             {
@@ -241,7 +245,9 @@ struct event_spell_call_captain : public MapEventScript
         {
             Creature* pVaros = (Creature*)pSource;
             if (!pVaros)
+            {
                 return false;
+            }
 
             // each guardian has it's own spawn position
             for (uint8 i = 0; i < MAX_CAPTAIN_EVENTS; ++i)
@@ -304,7 +310,9 @@ struct npc_azure_ring_captain : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // Spawn arcane beam when the position is reached. Also prepare to despawn after the beam event is finished
             if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_ARCANE_BEAM) == CAST_OK)

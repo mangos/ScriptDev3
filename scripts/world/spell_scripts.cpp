@@ -111,7 +111,9 @@ struct spell_cast_fishing_net : public SpellScript
             if (uiEffIndex == EFFECT_INDEX_0)
             {
                 if (pGOTarget->GetRespawnTime() != 0 || pGOTarget->GetEntry() != GO_TASTY_REEF_FISH || pCaster->GetTypeId() != TYPEID_PLAYER)
+                {
                     return true;
+                }
 
                 if (urand(0, 3))
                 {
@@ -501,7 +503,9 @@ struct aura_recharging_battery : public AuraScript
     bool OnDummyApply(const Aura* pAura, bool bApply) override
     {
         if (pAura->GetId() != SPELL_RECHARGING_BATTERY || pAura->GetEffIndex() != EFFECT_INDEX_0)
+        {
             return true;
+        }
 
         if (!bApply)
         {
@@ -911,7 +915,9 @@ struct spell_orb_of_murloc_control : public SpellScript
     {
         Creature* pCreatureTarget = pTarget->ToCreature();
         if (!pCreatureTarget)
+        {
             return true;
+        }
 
         pCreatureTarget->CastSpell(pCaster, SPELL_GREENGILL_SLAVE_FREED, true);
 
@@ -932,7 +938,9 @@ struct spell_fumping : public SpellScript
     {
         Creature *pCreatureTarget = pTarget->ToCreature();
         if (!pCreatureTarget)
+        {
             return true;
+        }
 
         if (uiSpellId == SPELL_FUMPING && uiEffIndex == EFFECT_INDEX_2)
         {
@@ -1043,7 +1051,9 @@ struct spell_throw_gordawg_boulder : public SpellScript
     {
         Creature *pCreatureTarget = pTarget->ToCreature();
         if (!pCreatureTarget)
+        {
             return true;
+        }
 
         if (uiSpellId == SPELL_THROW_GORDAWG_BOULDER && uiEffIndex == EFFECT_INDEX_0)
         {
@@ -1177,12 +1187,16 @@ struct spell_throw_ice : public SpellScript
         {
             Creature *pCreatureTarget = pTarget->ToCreature();
             if (!pCreatureTarget || pCreatureTarget->GetEntry() != NPC_SMOLDERING_SCRAP_BUNNY)
+            {
                 return true;
+            }
 
             if (GameObject* pScrap = GetClosestGameObjectWithEntry(pCreatureTarget, GO_SMOLDERING_SCRAP, 5.0f))
             {
                 if (pScrap->GetRespawnTime() != 0)
+                {
                     return true;
+                }
 
                 pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FROZEN_IRON_SCRAP, true);
                 pScrap->SetLootState(GO_JUST_DEACTIVATED);

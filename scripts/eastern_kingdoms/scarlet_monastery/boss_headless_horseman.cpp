@@ -420,7 +420,9 @@ struct boss_head_of_horseman : public CreatureScript
         {
             // allow him to die the last phase
             if (m_uiHeadPhase >= 3)
+            {
                 return;
+            }
 
             // rejoin and switch to next phase
             if (m_creature->GetHealthPercent() < float(100 - m_uiHeadPhase * 33.3f))
@@ -433,7 +435,9 @@ struct boss_head_of_horseman : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {
             if (pInvoker->GetEntry() != NPC_HEADLESS_HORSEMAN)
+            {
                 return;
+            }
 
             // toss head
             if (eventType == AI_EVENT_CUSTOM_A)

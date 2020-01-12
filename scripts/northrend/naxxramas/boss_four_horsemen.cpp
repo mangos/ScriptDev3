@@ -175,7 +175,9 @@ struct boss_lady_blaumeux : CreatureScript
         void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // Stop moving when it reaches the corner
             m_bIsCornerMovement = false;
@@ -186,11 +188,15 @@ struct boss_lady_blaumeux : CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Don't attack while moving
             if (m_bIsCornerMovement)
+            {
                 return;
+            }
 
             if (m_uiMarkTimer < uiDiff)
             {
@@ -304,7 +310,9 @@ struct boss_rivendare_naxx : public CreatureScript
         void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // Start moving when it reaches the corner
             SetCombatMovement(true);
@@ -317,11 +325,15 @@ struct boss_rivendare_naxx : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Don't attack while moving
             if (m_bIsCornerMovement)
+            {
                 return;
+            }
 
             if (m_uiMarkTimer < uiDiff)
             {
@@ -415,7 +427,9 @@ struct boss_thane_korthazz : public CreatureScript
         void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // Start moving when it reaches the corner
             SetCombatMovement(true);
@@ -428,11 +442,15 @@ struct boss_thane_korthazz : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Don't attack while moving
             if (m_bIsCornerMovement)
+            {
                 return;
+            }
 
             if (m_uiMarkTimer < uiDiff)
             {
@@ -528,7 +546,9 @@ struct boss_sir_zeliek :CreatureScript
         void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
         {
             if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // Stop moving when it reaches the corner
             m_bIsCornerMovement = false;
@@ -539,11 +559,15 @@ struct boss_sir_zeliek :CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Don't attack while moving
             if (m_bIsCornerMovement)
+            {
                 return;
+            }
 
             if (m_uiMarkTimer < uiDiff)
             {

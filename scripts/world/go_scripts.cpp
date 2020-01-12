@@ -254,7 +254,9 @@ struct go_tele_to_dalaran_crystal : public GameObjectScript
     bool OnUse(Player* pPlayer, GameObject* pGo) override
     {
         if (pPlayer->GetQuestRewardStatus(QUEST_TELE_CRYSTAL_FLAG))
+        {
             return false;
+        }
 
         // TODO: must send error message (what kind of message? On-screen?)
         return true;
@@ -272,7 +274,9 @@ struct go_tele_to_violet_stand : public GameObjectScript
     bool OnUse(Player* pPlayer, GameObject* pGo) override
     {
         if (pPlayer->GetQuestRewardStatus(QUEST_LEARN_LEAVE_RETURN) || pPlayer->GetQuestStatus(QUEST_LEARN_LEAVE_RETURN) == QUEST_STATUS_INCOMPLETE)
+        {
             return false;
+        }
 
         // TODO: must send error message (what kind of message? On-screen?)
         return true;

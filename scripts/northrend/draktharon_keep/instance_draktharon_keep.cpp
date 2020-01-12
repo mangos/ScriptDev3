@@ -152,7 +152,9 @@ struct is_draktharon_keep : public InstanceScript
         uint32 GetData(uint32 uiType) const override
         {
             if (uiType < MAX_ENCOUNTER)
+            {
                 return m_auiEncounter[uiType];
+            }
             switch (uiType)
             {
             case TYPE_DATA_NOVOS_CRYSTAL_INDEX:
@@ -301,11 +303,15 @@ struct is_draktharon_keep : public InstanceScript
         {
             // Sorting once is good enough
             if (m_lNovosDummyGuids.empty())
+            {
                 return;
+            }
 
             Creature* pNovos = GetSingleCreatureFromStorage(NPC_NOVOS);
             if (!pNovos)
+            {
                 return;
+            }
 
             // First sort the Dummies to the Crystals
             for (uint8 i = 0; i < MAX_CRYSTALS; ++i)
@@ -397,7 +403,9 @@ struct is_draktharon_keep : public InstanceScript
         {
             // check if there are there are at least 2 triggers in the vector
             if (m_vTriggerGuids.size() < 2)
+            {
                 return;
+            }
 
             if (roll_chance_i(30))
             {

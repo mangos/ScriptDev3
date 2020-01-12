@@ -181,14 +181,18 @@ struct boss_bjarngrim : public CreatureScript
         {
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // Change stance
             if (m_uiChangeStanceTimer < uiDiff)
             {
                 // wait for current spell to finish before change stance
                 if (m_creature->IsNonMeleeSpellCasted(false))
+                {
                     return;
+                }
 
                 int uiTempStance = rand() % (3 - 1);
 
@@ -347,7 +351,9 @@ struct mob_stormforged_lieutenant : public CreatureScript
         {
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiArcWeldTimer < uiDiff)
             {

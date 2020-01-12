@@ -110,7 +110,9 @@ struct npc_nesingwary_trapper : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
             {
@@ -222,7 +224,9 @@ struct npc_oil_stained_wolf : public CreatureScript
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE)
+            {
                 return;
+            }
 
             if (uiPointId == POINT_DEST)
             {
@@ -305,7 +309,9 @@ struct aura_wolf_has_eaten : public AuraScript
         if (pAura->GetId() == SPELL_HAS_EATEN)
         {
             if (pAura->GetEffIndex() != EFFECT_INDEX_0)
+            {
                 return false;
+            }
 
             if (bApply)
             {
@@ -366,7 +372,9 @@ struct npc_sinkhole_kill_credit : public CreatureScript
         {
             // Go is not really needed, but ok to use as a check point so only one "event" can be processed at a time
             if (m_cartGuid)
+            {
                 return;
+            }
 
             // Expecting summoned from mangos dummy effect 46797
             m_cartGuid = pGo->GetObjectGuid();
@@ -593,16 +601,22 @@ struct aura_arcane_chains : public AuraScript
         if (pAura->GetId() == SPELL_ARCANE_CHAINS)
         {
             if (pAura->GetEffIndex() != EFFECT_INDEX_0 || !bApply)
+            {
                 return false;
+            }
 
             Creature* pCreature = (Creature*)pAura->GetTarget();
             Unit* pCaster = pAura->GetCaster();
             if (!pCreature || !pCaster || pCaster->GetTypeId() != TYPEID_PLAYER || pCreature->GetEntry() != NPC_BERYL_SORCERER)
+            {
                 return false;
+            }
 
             // only for wounded creatures
             if (pCreature->GetHealthPercent() > 30.0f)
+            {
                 return false;
+            }
 
             // spawn the captured sorcerer, apply dummy aura on the summoned and despawn
             pCaster->CastSpell(pCreature, SPELL_SUMMON_CHAINS_CHARACTER, true);
@@ -627,12 +641,16 @@ struct aura_arcane_chains_cancel : public AuraScript
         if (pAura->GetId() == SPELL_ARCANE_CHAINS_CHANNEL)
         {
             if (pAura->GetEffIndex() != EFFECT_INDEX_0 || !bApply)
+            {
                 return false;
+            }
 
             Creature* pCreature = (Creature*)pAura->GetTarget();
             Unit* pCaster = pAura->GetCaster();
             if (!pCreature || !pCaster || pCaster->GetTypeId() != TYPEID_PLAYER || pCreature->GetEntry() != NPC_CAPTURED_BERYL_SORCERER)
+            {
                 return false;
+            }
 
             // follow the caster
             ((Player*)pCaster)->KilledMonsterCredit(NPC_CAPTURED_BERYL_SORCERER);
@@ -702,7 +720,9 @@ struct npc_nexus_drake_hatchling : public CreatureScript
         {
             // force check for evading when the faction is changed
             if (m_uiSubduedTimer)
+            {
                 return;
+            }
 
             FollowerAI::EnterEvadeMode();
         }
@@ -712,13 +732,17 @@ struct npc_nexus_drake_hatchling : public CreatureScript
             FollowerAI::MoveInLineOfSight(pWho);
 
             if (!m_creature->HasAura(SPELL_SUBDUED) || m_creature->getVictim())
+            {
                 return;
+            }
 
             if (pWho->GetEntry() == NPC_COLDARRA_DRAKE_HUNT_INVISMAN && m_creature->IsWithinDistInMap(pWho, 20.0f))
             {
                 Player* pPlayer = GetLeaderForFollower();
                 if (!pPlayer || !pPlayer->HasAura(SPELL_DRAKE_HATCHLING_SUBDUED))
+                {
                     return;
+                }
 
                 pWho->CastSpell(pPlayer, SPELL_STRIP_AURAS, true);
                 // give kill credit, mark the follow as completed and start the final event
@@ -767,7 +791,9 @@ struct npc_nexus_drake_hatchling : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiNetherbreathTimer < uiDiff)
             {
@@ -802,16 +828,22 @@ struct aura_drake_harpoon : public AuraScript
     bool OnDummyApply(const Aura* pAura, bool bApply) override
     {
         if (pAura->GetEffIndex() != EFFECT_INDEX_0 || !bApply)
+        {
             return false;
+        }
 
         Creature* pCreature = (Creature*)pAura->GetTarget();
         Unit* pCaster = pAura->GetCaster();
         if (!pCreature || !pCaster || pCaster->GetTypeId() != TYPEID_PLAYER || pCreature->GetEntry() != NPC_NEXUS_DRAKE_HATCHLING)
+        {
             return false;
+        }
 
         // check if drake is already doing the quest
         if (pCreature->HasAura(SPELL_RED_DRAGONBLOOD) || pCreature->HasAura(SPELL_SUBDUED))
+        {
             return false;
+        }
 
         pCaster->CastSpell(pCreature, SPELL_RED_DRAGONBLOOD, true);
         return true;
@@ -827,7 +859,9 @@ struct aura_red_dragonblood : public AuraScript
         Creature* pCreature = (Creature*)pAura->GetTarget();
         Unit* pCaster = pAura->GetCaster();
         if (!pCreature || !pCaster || pCaster->GetTypeId() != TYPEID_PLAYER || pCreature->GetEntry() != NPC_NEXUS_DRAKE_HATCHLING)
+        {
             return false;
+        }
 
         // start attacking on apply and capture on aura expire
         if (bApply)
@@ -847,7 +881,9 @@ struct aura_spell_drake_subdued : public AuraScript
     {
         Creature* pCreature = (Creature*)pAura->GetTarget();
         if (!pCreature || pCreature->GetEntry() != NPC_NEXUS_DRAKE_HATCHLING)
+        {
             return false;
+        }
 
         // aura expired - evade
         pCreature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCreature, pCreature);
@@ -862,19 +898,27 @@ struct spell_capture_trigger : public SpellScript
     bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
         if (pCaster->GetTypeId() != TYPEID_PLAYER)
+        {
             return true;
+        }
 
         Creature* pCreatureTarget = pTarget->ToCreature();
         if (pCaster->HasAura(SPELL_DRAKE_HATCHLING_SUBDUED) || pCreatureTarget->HasAura(SPELL_SUBDUED))
+        {
             return true;
+        }
 
         Player* pPlayer = (Player*)pCaster;
         if (!pPlayer)
+        {
             return true;
+        }
 
         // check the quest
         if (pPlayer->GetQuestStatus(QUEST_DRAKE_HUNT) != QUEST_STATUS_INCOMPLETE && pPlayer->GetQuestStatus(QUEST_DRAKE_HUNT_DAILY) != QUEST_STATUS_INCOMPLETE)
+        {
             return true;
+        }
 
         // evade and set friendly and start following @TODO move to creature script
         pCreatureTarget->SetFactionTemporary(FACTION_FRIENDLY, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
@@ -971,7 +1015,9 @@ struct npc_scourged_flamespitter : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             if (DoCastSpellIfCan(m_creature, SPELL_NET) == CAST_OK)
                 m_uiNetExpireTimer = 20000;
@@ -1039,7 +1085,9 @@ struct aura_reinforced_net : public AuraScript
             Creature* pCreature = (Creature*)pAura->GetTarget();
             Unit* pCaster = pAura->GetCaster();
             if (!pCreature || !pCaster || pCaster->GetTypeId() != TYPEID_PLAYER || pCreature->GetEntry() != NPC_FLAMESPITTER)
+            {
                 return false;
+            }
 
             // move the flamespitter to the ground level
             pCreature->GetMotionMaster()->Clear();
@@ -1202,7 +1250,9 @@ struct npc_jenny : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_bEventComplete)
+            {
                 return;
+            }
 
             if (pWho->GetEntry() == NPC_FEZZIX && m_creature->IsWithinDistInMap(pWho, 10.0f))
             {
@@ -1242,7 +1292,9 @@ struct npc_jenny : public CreatureScript
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
         }
 
     };

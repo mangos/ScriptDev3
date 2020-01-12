@@ -90,7 +90,9 @@ struct boss_keristrasza : public CreatureScript
             m_bIsEnraged = false;
 
             if (!m_pInstance)
+            {
                 return;
+            }
 
             if (m_creature->IsAlive())
             {
@@ -126,7 +128,9 @@ struct boss_keristrasza : public CreatureScript
         void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             // This needs to be checked only on heroic
             if (!m_bIsRegularMode)
@@ -189,7 +193,9 @@ struct boss_keristrasza : public CreatureScript
                             Player* pPlayer = pSource->GetCharmerOrOwnerPlayerOrPlayerItself();
 
                             if (!pPlayer)
+                            {
                                 return;
+                            }
 
                             if (Group* pGroup = pPlayer->GetGroup())
                             {

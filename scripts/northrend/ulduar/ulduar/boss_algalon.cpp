@@ -241,7 +241,9 @@ struct boss_algalon : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            {
                 return;
+            }
 
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
         }
@@ -269,7 +271,9 @@ struct boss_algalon : public CreatureScript
         {
             // don't attack again after being defeated
             if (m_bEventFinished)
+            {
                 return;
+            }
 
             ScriptedAI::AttackStart(pWho);
         }
@@ -295,7 +299,9 @@ struct boss_algalon : public CreatureScript
         void JustReachedHome() override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             if (m_bEventFinished)
             {
@@ -381,7 +387,9 @@ struct boss_algalon : public CreatureScript
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
         {
             if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            {
                 return;
+            }
 
             // start intro and reset home position
             StartNextDialogueText(SAY_INTRO_1);
@@ -393,7 +401,9 @@ struct boss_algalon : public CreatureScript
         void JustDidDialogueStep(int32 iEntry) override
         {
             if (!m_pInstance)
+            {
                 return;
+            }
 
             switch (iEntry)
             {
@@ -494,7 +504,9 @@ struct boss_algalon : public CreatureScript
             DialogueUpdate(uiDiff);
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
                 return;
+            }
 
             if (m_uiBerserkTimer)
             {
@@ -807,10 +819,14 @@ struct go_celestial_access : public GameObjectScript
     {
         ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
         if (!pInstance)
+        {
             return true;
+        }
 
         if (pInstance->GetData(TYPE_ALGALON) != NOT_STARTED)
+        {
             return true;
+        }
 
         // Set instance data and allow DB scripts to continue the event
         pInstance->SetData(TYPE_ALGALON, SPECIAL);
