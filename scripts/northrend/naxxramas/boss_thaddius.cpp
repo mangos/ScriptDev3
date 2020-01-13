@@ -422,7 +422,9 @@ struct npc_tesla_coil : public CreatureScript
             m_creature->SelectHostileTarget();
 
             if (!m_uiOverloadTimer && !m_uiSetupTimer && !m_bReapply)
+            {
                 return;                                         // Nothing to do this tick
+            }
 
             if (m_uiSetupTimer)
             {
