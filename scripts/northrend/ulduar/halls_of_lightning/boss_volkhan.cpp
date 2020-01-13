@@ -300,7 +300,9 @@ struct spell_volkhan_temper_dummy : public SpellScript
             }
 
             for (uint8 i = 0; i < MAX_GOLEM; ++i)
+            {
                 pCreatureTarget->CastSpell(pCaster, SPELL_SUMMON_MOLTEN_GOLEM, true);
+            }
 
             // always return true when we are handling this spell and effect
             return true;

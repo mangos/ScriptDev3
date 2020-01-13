@@ -329,7 +329,9 @@ struct spell_ionar_disperse : public SpellScript
             }
 
             for (uint8 i = 0; i < MAX_SPARKS; ++i)
+            {
                 pCreatureTarget->CastSpell(pCreatureTarget, SPELL_SUMMON_SPARK, true);
+            }
 
             pCreatureTarget->AttackStop();
             pCreatureTarget->SetVisibility(VISIBILITY_OFF);

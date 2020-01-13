@@ -282,7 +282,9 @@ struct boss_viscidus : public CreatureScript
                     uint32 uiGlobeCount = m_creature->GetHealthPercent() / 5.0f;
 
                     for (uint8 i = 0; i < uiGlobeCount; ++i)
+                    {
                         DoCastSpellIfCan(m_creature, auiGlobSummonSpells[i], CAST_TRIGGERED);
+                    }
 
                     m_creature->RemoveAurasDueToSpell(SPELL_VISCIDUS_FREEZE);
                     m_uiExplodeDelayTimer = 2000;

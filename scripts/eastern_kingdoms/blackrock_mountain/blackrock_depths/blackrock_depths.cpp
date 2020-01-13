@@ -560,7 +560,9 @@ struct npc_grimstone : public CreatureScript
                                 m_uiPhase = PHASE_GLADIATORS;
                                 SummonRingMob(NPC_THELDREN, 1, POS_NORTH);
                                 for (uint8 i = 0; i < MAX_THELDREN_ADDS; ++i)
+                                {
                                     SummonRingMob(m_uiGladiatorId[i], 1, POS_NORTH);
+                                }
                             }
                             else
                             {

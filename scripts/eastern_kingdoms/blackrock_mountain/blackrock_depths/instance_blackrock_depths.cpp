@@ -465,7 +465,9 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
         return;
     case TYPE_FLAMELASH:
         for (int i = 0; i < MAX_DWARF_RUNES; ++i)
+        {
             DoUseDoorOrButton(GO_DWARFRUNE_A01 + i);
+        }
         return;
     case TYPE_HURLEY:
         if (uiData == SPECIAL)

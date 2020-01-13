@@ -577,7 +577,9 @@ struct npc_doctor : public CreatureScript
             if (!m_vPatientSummonCoordinates.empty())
             {
                 for (std::vector<Location*>::iterator itr = m_vPatientSummonCoordinates.begin(); itr != m_vPatientSummonCoordinates.end(); ++itr)
+                {
                     delete (*itr);
+                }
                 m_vPatientSummonCoordinates.clear();
             }
 

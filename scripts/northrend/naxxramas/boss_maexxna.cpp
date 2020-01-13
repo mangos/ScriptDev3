@@ -249,7 +249,9 @@ struct boss_maexxna : public CreatureScript
         void SummonSpiderlings()
         {
             for (uint8 i = 0; i < MAX_SPIDERLINGS; ++i)
+            {
                 m_creature->SummonCreature(NPC_SPIDERLING, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override

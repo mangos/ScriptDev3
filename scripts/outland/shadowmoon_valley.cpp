@@ -837,7 +837,9 @@ struct npc_wilda : public CreatureScript
 
         // all spirits follow
         for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
+        {
             (*itr)->ForcedDespawn(6000);
+        }
     }
 #endif
 

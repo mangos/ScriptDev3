@@ -206,7 +206,9 @@ struct npc_harrison_jones : public CreatureScript
                 lBunniesInRange.sort(ObjectDistanceOrder(pSummoned));
 
                 for (std::list<Creature*>::const_iterator itr = lBunniesInRange.begin(); itr != lBunniesInRange.end(); ++itr)
+                {
                     m_lImmolationBunnyGuids.push_back((*itr)->GetObjectGuid());
+                }
             }
             else if (pSummoned->GetEntry() == NPC_ANCIENT_DRAKKARI_KING)
                 pSummoned->AI()->AttackStart(m_creature);
@@ -232,7 +234,9 @@ struct npc_harrison_jones : public CreatureScript
             GetCreatureListWithEntryInGrid(lBunniesInRange, m_creature, NPC_MUMMY_EFFECT_BUNNY, 50.0f);
 
             for (std::list<Creature*>::const_iterator itr = lBunniesInRange.begin(); itr != lBunniesInRange.end(); ++itr)
+            {
                 (*itr)->RemoveAurasDueToSpell(SPELL_BUNNY_IMMOLATION);
+            }
 
             m_uiActivateMummiesTimer = 0;
         }
@@ -281,7 +285,9 @@ struct npc_harrison_jones : public CreatureScript
                        GetCreatureListWithEntryInGrid(lBunniesInRange, m_creature, NPC_MUMMY_EFFECT_BUNNY, 50.0f);
 
                        for (std::list<Creature*>::const_iterator itr = lBunniesInRange.begin(); itr != lBunniesInRange.end(); ++itr)
+                       {
                            (*itr)->CastSpell((*itr), SPELL_BUNNY_IMMOLATION, true);
+                       }
 
                        m_creature->SetFacingTo(5.0f);
                        DoCastSpellIfCan(m_creature, SPELL_GONG_EFFECT);

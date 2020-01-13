@@ -1052,7 +1052,9 @@ struct boss_tethyr : public CreatureScript
                     GetGameObjectListWithEntryInGrid(lCannonsInRange, m_creature, GO_COVE_CANNON, 100.0f);
 
                     for (std::list<GameObject*>::const_iterator itr = lCannonsInRange.begin(); itr != lCannonsInRange.end(); ++itr)
+                    {
                         (*itr)->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                    }
 
                     // attack all marksmen
                     std::list<Creature*> lMarksmenInRange;
@@ -1137,14 +1139,18 @@ struct boss_tethyr : public CreatureScript
             GetGameObjectListWithEntryInGrid(lCannonsInRange, m_creature, GO_COVE_CANNON, 100.0f);
 
             for (std::list<GameObject*>::const_iterator itr = lCannonsInRange.begin(); itr != lCannonsInRange.end(); ++itr)
+            {
                 (*itr)->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+            }
 
             // despawn all marksmen
             std::list<Creature*> lMarksmenInRange;
             GetCreatureListWithEntryInGrid(lMarksmenInRange, m_creature, NPC_THERAMORE_MARKSMAN, 100.0f);
 
             for (std::list<Creature*>::const_iterator itr = lMarksmenInRange.begin(); itr != lMarksmenInRange.end(); ++itr)
+            {
                 (*itr)->ForcedDespawn(30000);
+            }
         }
 
         // Custom threat management

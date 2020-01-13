@@ -887,7 +887,9 @@ struct npc_koltira_deathweaver : public CreatureScript
         void SummonAcolyte(uint32 uiAmount)
         {
             for (uint32 i = 0; i < uiAmount; ++i)
+            {
                 m_creature->SummonCreature(NPC_CRIMSON_ACOLYTE, 1642.329f, -6045.818f, 127.583f, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000);
+            }
         }
 
         void UpdateEscortAI(const uint32 uiDiff) override
@@ -1982,7 +1984,9 @@ struct npc_highlord_darion_mograine : public CreatureScript
                 case 0:
                     // summon light champions
                     for (uint8 i = 0; i < MAX_LIGHT_CHAMPIONS; i++)
+                    {
                         m_creature->SummonCreature(aLightArmySpawnLoc[i].m_uiEntry, aLightArmySpawnLoc[i].m_fX, aLightArmySpawnLoc[i].m_fY, aLightArmySpawnLoc[i].m_fZ, aLightArmySpawnLoc[i].m_fO, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 5 * MINUTE * IN_MILLISECONDS);
+                    }
 
                     // summon light soldiers
                     float fX, fY, fZ;

@@ -460,7 +460,9 @@ struct boss_algalon : public CreatureScript
         void DoSpawnConstellations()
         {
             for (uint8 i = 0; i < MAX_CONSTELATIONS; ++i)
+            {
                 m_creature->SummonCreature(NPC_LIVING_CONSTELLATION, afConstellations[i][0], afConstellations[i][1], afConstellations[i][2], afConstellations[i][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+            }
         }
 
         // Activate a random Constellation
@@ -568,7 +570,9 @@ struct boss_algalon : public CreatureScript
                     if (uiMaxStars)
                     {
                         for (uint8 i = 0; i < uiMaxStars; ++i)
+                        {
                             DoSpawnCollapsingStar();
+                        }
 
                         DoScriptText(SAY_SUMMON_STAR, m_creature);
                         m_uiCollapsingStarTimer = 60000;
@@ -588,7 +592,9 @@ struct boss_algalon : public CreatureScript
                         m_uiConstellationTimer = 50000;
 
                         for (uint8 i = 0; i < uiMaxConstellations; ++i)
+                        {
                             ActivateRandomConstellation();
+                        }
                     }
                     else
                         m_uiConstellationTimer = 10000;
@@ -612,7 +618,9 @@ struct boss_algalon : public CreatureScript
 
                 // spawn new worm holes
                 for (uint8 i = 0; i < MAX_WORM_HOLES; ++i)
+                {
                     m_creature->SummonCreature(NPC_WORM_HOLE, afWormHoles[i][0], afWormHoles[i][1], afWormHoles[i][2], 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+                }
             }
 
             DoMeleeAttackIfReady();

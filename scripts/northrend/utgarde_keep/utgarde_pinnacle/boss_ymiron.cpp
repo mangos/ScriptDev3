@@ -117,7 +117,9 @@ struct boss_ymiron : public CreatureScript
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
 
             for (uint8 i = 0; i < MAX_BOATS; ++i)
+            {
                 m_vuiBoatPhases.push_back(i);
+            }
         }
 
         ScriptedInstance* m_pInstance;

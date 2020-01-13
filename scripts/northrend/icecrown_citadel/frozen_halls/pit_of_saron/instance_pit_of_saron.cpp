@@ -233,7 +233,9 @@ struct is_pit_of_saron : public InstanceScript
             InitializeDialogueHelper(this);
 
             for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
+            {
                 m_abAchievCriteria[i] = false;
+            }
         }
 
         void OnCreatureCreate(Creature* pCreature) override

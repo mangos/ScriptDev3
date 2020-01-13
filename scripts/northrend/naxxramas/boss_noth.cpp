@@ -247,7 +247,9 @@ struct boss_noth : public CreatureScript
                         };
 
                         for (uint8 i = 0; i < 2; ++i)
+                        {
                             DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedWarrior[urand(0, 2)], CAST_TRIGGERED);
+                        }
                     }
                     else
                     {
@@ -306,7 +308,9 @@ struct boss_noth : public CreatureScript
                     {
                     case PHASE_SKELETON_1:
                         for (uint8 i = 0; i < (m_bIsRegularMode ? 2 : 4); ++i)
+                        {
                             DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedChampion[urand(0, 9)], CAST_TRIGGERED);
+                        }
 
                         break;
                     case PHASE_SKELETON_2:
@@ -318,7 +322,9 @@ struct boss_noth : public CreatureScript
                         break;
                     case PHASE_SKELETON_3:
                         for (uint8 i = 0; i < (m_bIsRegularMode ? 2 : 4); ++i)
+                        {
                             DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedGuardian[urand(0, 3)], CAST_TRIGGERED);
+                        }
 
                         break;
                     }

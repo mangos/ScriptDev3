@@ -82,7 +82,9 @@ struct is_naxxramas : public InstanceScript
             if (!m_mGothTriggerMap.empty()) //see SetGothTriggers
             {
                 for (std::unordered_map<ObjectGuid, GothTrigger>::iterator it = m_mGothTriggerMap.begin(); it != m_mGothTriggerMap.end(); ++it)
+                {
                     delete &it->second;
+                }
             }
         }
 
@@ -91,7 +93,9 @@ struct is_naxxramas : public InstanceScript
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
             for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
+            {
                 m_abAchievCriteria[i] = false;
+            }
 
             m_dialogueHelper.InitializeDialogueHelper(this, true);
         }

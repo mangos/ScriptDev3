@@ -212,7 +212,9 @@ struct boss_thermaplugg : public CreatureScript
                 break;
             case AI_EVENT_CUSTOM_C:
                 for (uint8 i = 0; i < MAX_GNOME_FACES; ++i)
+                {
                     DoDeactivateBombFace(i);
+                }
                 break;
             default:
                 break;

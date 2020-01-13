@@ -389,7 +389,9 @@ struct boss_sartharion : public CreatureScript
             }
 
             for (uint8 i = uiTsunamiStartLoc; i < uiTsunamiEndLoc; ++i)
+            {
                 m_creature->SummonCreature(NPC_FLAME_TSUNAMI, m_aTsunamiLoc[i].m_fX, m_aTsunamiLoc[i].m_fY, m_aTsunamiLoc[i].m_fZ, m_aTsunamiLoc[i].m_fO, TEMPSUMMON_TIMED_DESPAWN, 15000);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override

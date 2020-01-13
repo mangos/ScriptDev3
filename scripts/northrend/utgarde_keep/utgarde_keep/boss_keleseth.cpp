@@ -243,7 +243,9 @@ struct boss_keleseth : public CreatureScript
         void SummonAdds()
         {
             for (uint8 i = 0; i < 4; ++i)
+            {
                 m_creature->SummonCreature(NPC_VRYKUL_SKELETON, fAddPosition[0] + rand() % 7, fAddPosition[1] + rand() % 7, fAddPosition[2], fAddPosition[3], TEMPSUMMON_DEAD_DESPAWN, 0);
+            }
         }
 
         void DespawnOrKillAdds(bool bDespawn)

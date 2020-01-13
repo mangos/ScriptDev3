@@ -49,7 +49,9 @@ struct is_obsidian_sanctum : public InstanceScript
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
             for (uint8 i = 0; i < MAX_TWILIGHT_DRAGONS; ++i)
+            {
                 m_bPortalActive[i] = false;
+            }
         }
 
         void OnCreatureCreate(Creature* pCreature) override

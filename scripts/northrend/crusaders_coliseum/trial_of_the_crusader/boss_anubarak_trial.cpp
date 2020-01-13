@@ -207,7 +207,9 @@ struct boss_anubarak_trial : public CreatureScript
 
             // It's not clear if these should be spawned by DB or summoned
             for (uint8 i = 0; i < MAX_BURROWS; ++i)
+            {
                 m_creature->SummonCreature(NPC_BURROW, aBurrowSpawnPositions[i][0], aBurrowSpawnPositions[i][1], aBurrowSpawnPositions[i][2], aBurrowSpawnPositions[i][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+            }
 
             if (m_pInstance)
                 m_pInstance->SetData(TYPE_ANUBARAK, IN_PROGRESS);

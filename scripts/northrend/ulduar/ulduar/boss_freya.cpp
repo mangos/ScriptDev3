@@ -199,7 +199,9 @@ struct boss_freya : public CreatureScript
             // init the Allies of Nature spells
             spawnSpellsVector.reserve(MAX_ALLIES_SPELLS);
             for (uint8 i = 0; i < MAX_ALLIES_SPELLS; ++i)
+            {
                 spawnSpellsVector.push_back(aAlliesSpawnSpells[i]);
+            }
 
             m_bEventFinished = false;
             m_uiEpilogueTimer = 0;

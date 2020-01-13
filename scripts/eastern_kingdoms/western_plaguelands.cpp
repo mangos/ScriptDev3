@@ -636,7 +636,9 @@ struct npc_taelan_fordring : public CreatureScript
                                           GetCreatureListWithEntryInGrid(lElitesInRange, m_creature, NPC_CRIMSON_ELITE, 70.0f);
 
                                           for (std::list<Creature*>::const_iterator itr = lElitesInRange.begin(); itr != lElitesInRange.end(); ++itr)
+                                          {
                                               (*itr)->AI()->AttackStart(pPlayer);
+                                          }
 
                                           // Isillien only attacks Taelan
                                           if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))

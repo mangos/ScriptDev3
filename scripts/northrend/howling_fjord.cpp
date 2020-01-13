@@ -694,7 +694,9 @@ struct  npc_king_ymiron : public CreatureScript
                     GetCreatureListWithEntryInGrid(lCrowdList, m_creature, NPC_CITIZEN_OF_NIFFLEVAR_FEMALE, 60.0f);
 
                     for (std::list<Creature*>::const_iterator itr = lCrowdList.begin(); itr != lCrowdList.end(); ++itr)
+                    {
                         m_lCrowdGuidList.push_back((*itr)->GetObjectGuid());
+                    }
 
                     m_uiCrowdSpeechTimer = 1000;
                     m_bEventInit = true;

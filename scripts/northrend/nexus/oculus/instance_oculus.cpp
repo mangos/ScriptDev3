@@ -131,7 +131,9 @@ struct is_oculus : public InstanceScript
                 {
                     // Open all cages
                     for (GuidList::const_iterator itr = m_lCageDoorGUIDs.begin(); itr != m_lCageDoorGUIDs.end(); ++itr)
+                    {
                         DoUseDoorOrButton(*itr);
+                    }
 
                     // Notes: The dialogue is handled by DB script
                     // Also the Centrifuge Constructs and the related npcs should be summoned - requires additional research

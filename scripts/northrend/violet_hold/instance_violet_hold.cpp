@@ -792,7 +792,9 @@ struct is_violet_hold : public InstanceScript
             }
 
             for (uint8 i = 0; i < m_vRandomBosses.size(); ++i)
+            {
                 debug_log("SD3: instance_violet_hold random boss %u is entry %u", i, m_vRandomBosses[i]->uiEntry);
+            }
         }
 
         void SpawnPortal()

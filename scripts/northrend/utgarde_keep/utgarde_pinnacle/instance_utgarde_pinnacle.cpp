@@ -54,7 +54,9 @@ struct is_pinnacle : public InstanceScript
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
             for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
+            {
                 m_abAchievCriteria[i] = false;
+            }
         }
 
         void OnCreatureCreate(Creature* pCreature) override

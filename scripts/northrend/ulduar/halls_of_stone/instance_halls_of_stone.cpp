@@ -227,7 +227,9 @@ struct is_halls_of_stone : public InstanceScript
                     {
                         uint32 uiSpawnNumber = (instance->IsRegularDifficulty() ? 2 : 3);
                         for (uint8 i = 0; i < uiSpawnNumber; ++i)
+                        {
                             pStalker->CastSpell(pStalker, SPELL_SUMMON_PROTECTOR, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
+                        }
                         pStalker->CastSpell(pStalker, SPELL_SUMMON_STORMCALLER, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
                     }
                     break;
@@ -235,7 +237,9 @@ struct is_halls_of_stone : public InstanceScript
                     if (Creature* pStalker = instance->GetCreature(m_stormcallerStalkerGuid))
                     {
                         for (uint8 i = 0; i < 2; ++i)
+                        {
                             pStalker->CastSpell(pStalker, SPELL_SUMMON_STORMCALLER, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_BRANN_HOS]);
+                        }
                     }
                     break;
                 case NPC_IRON_GOLEM_CUSTODIAN:

@@ -183,7 +183,9 @@ struct is_ulduar : public InstanceScript
             InitializeDialogueHelper(this);
 
             for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
+            {
                 m_abAchievCriteria[i] = false;
+            }
         }
 
         bool IsEncounterInProgress() const override
@@ -1277,7 +1279,9 @@ struct is_ulduar : public InstanceScript
                         uiMaxCommoners = vBunnies.size();
 
                     for (uint8 i = 0; i < uiMaxCommoners; ++i)
+                    {
                         thorim->SummonCreature(NPC_DARK_RUNE_COMMONER, vBunnies[i]->GetPositionX(), vBunnies[i]->GetPositionY(), vBunnies[i]->GetPositionZ(), 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+                    }
                 }
                 return;
             case TYPE_DATA_THORIM_SMASH_SIDE:
@@ -1834,7 +1838,9 @@ struct is_ulduar : public InstanceScript
             {
                 if (Player* pSummoner = instance->GetPlayer(plGuid))
                 for (uint8 i = 0; i < countof(afThorimSpawns); ++i)
+                {
                     pSummoner->SummonCreature(pSummoner->GetTeam() == ALLIANCE ? afThorimSpawns[i].uiAllyEntry : afThorimSpawns[i].uiHordeEntry, afThorimSpawns[i].fX, afThorimSpawns[i].fY, afThorimSpawns[i].fZ, afThorimSpawns[i].fO, TEMPSUMMON_DEAD_DESPAWN, 0, true);
+                }
             }
         }
 
@@ -1933,12 +1939,16 @@ struct is_ulduar : public InstanceScript
             if (GetData(TYPE_HODIR) != DONE)
             {
                 for (uint8 i = 0; i < countof(afHodirHelpersNormal); ++i)
+                {
                     pSummoner->SummonCreature(pSummoner->GetTeam() == ALLIANCE ? afHodirHelpersNormal[i].uiAllyEntry : afHodirHelpersNormal[i].uiHordeEntry, afHodirHelpersNormal[i].fX, afHodirHelpersNormal[i].fY, afHodirHelpersNormal[i].fZ, afHodirHelpersNormal[i].fO, TEMPSUMMON_DEAD_DESPAWN, 0, true);
+                }
 
                 if (!instance->IsRegularDifficulty())
                 {
                     for (uint8 i = 0; i < countof(afHodirHelpersHeroic); ++i)
+                    {
                         pSummoner->SummonCreature(pSummoner->GetTeam() == ALLIANCE ? afHodirHelpersHeroic[i].uiAllyEntry : afHodirHelpersHeroic[i].uiHordeEntry, afHodirHelpersHeroic[i].fX, afHodirHelpersHeroic[i].fY, afHodirHelpersHeroic[i].fZ, afHodirHelpersHeroic[i].fO, TEMPSUMMON_DEAD_DESPAWN, 0, true);
+                    }
                 }
             }
         }
@@ -1960,12 +1970,16 @@ struct is_ulduar : public InstanceScript
             }
 
             for (uint8 i = 0; i < countof(afReinforcementsNormal); ++i)
+            {
                 pLeviathan->SummonCreature(afReinforcementsNormal[i].uiEntry, afReinforcementsNormal[i].fX, afReinforcementsNormal[i].fY, afReinforcementsNormal[i].fZ, afReinforcementsNormal[i].fO, TEMPSUMMON_DEAD_DESPAWN, 0, true);
+            }
 
             if (!instance->IsRegularDifficulty())
             {
                 for (uint8 i = 0; i < countof(afReinforcementsHeroic); ++i)
+                {
                     pLeviathan->SummonCreature(afReinforcementsHeroic[i].uiEntry, afReinforcementsHeroic[i].fX, afReinforcementsHeroic[i].fY, afReinforcementsHeroic[i].fZ, afReinforcementsHeroic[i].fO, TEMPSUMMON_DEAD_DESPAWN, 0, true);
+                }
             }
         }
 

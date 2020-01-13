@@ -319,7 +319,9 @@ struct is_ahnkahet : public InstanceScript
                     if (Creature* pSwarmerEgg = instance->GetCreature(SelectRandomSwarmerEggGuid()))
                     {
                         for (uint8 i = 0; i < 2; ++i)
+                        {
                             pSwarmerEgg->CastSpell(pSwarmerEgg, SPELL_SUMMON_SWARMERS, false);
+                        }
                     }
                     break;
                 default:
@@ -469,7 +471,9 @@ struct is_ahnkahet : public InstanceScript
 
             // Move the same phase players to the new phase
             for (std::list<Player*>::const_iterator itr = lSamePhasePlayers.begin(); itr != lSamePhasePlayers.end(); ++itr)
+            {
                 (*itr)->CastSpell((*itr), uiNewPhaseAura, true);
+            }
         }
 
         ObjectGuid SelectRandomGuardianEggGuid()

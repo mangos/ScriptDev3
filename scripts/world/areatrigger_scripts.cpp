@@ -523,7 +523,9 @@ struct at_ancient_leaf : public AreaTriggerScript
             }
 
             for (uint8 i = 0; i < MAX_ANCIENTS; ++i)
+            {
                 pPlayer->SummonCreature(afSpawnLocations[i].uiEntry, afSpawnLocations[i].fX, afSpawnLocations[i].fY, afSpawnLocations[i].fZ, afSpawnLocations[i].fO, TEMPSUMMON_TIMED_DESPAWN, 5 * MINUTE * IN_MILLISECONDS);
+            }
         }
 
         return false;

@@ -360,7 +360,9 @@ struct event_go_ulduar_tower : public MapEventScript
             std::list<Creature*> lGenerators;
             GetCreatureListWithEntryInGrid(lGenerators, (GameObject*)pSource, NPC_GENERATOR_SMALL, 100.0f);
             for (std::list<Creature*>::iterator itr = lGenerators.begin(); itr != lGenerators.end(); ++itr)
+            {
                 (*itr)->ForcedDespawn();
+            }
 
             // allow further DB processing
             return false;

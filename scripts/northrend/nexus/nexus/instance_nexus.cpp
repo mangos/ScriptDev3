@@ -39,7 +39,9 @@ struct is_nexus : public InstanceScript
             Initialize();
 
             for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
+            {
                 m_abAchievCriteria[i] = false;
+            }
         }
 
         void Initialize() override

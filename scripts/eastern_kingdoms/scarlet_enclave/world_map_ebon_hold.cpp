@@ -312,7 +312,9 @@ struct map_ebon_hold : public ZoneScript
         void DoEnableHolyTraps()
         {
             for (GuidList::const_iterator itr = m_lLightTrapsGuids.begin(); itr != m_lLightTrapsGuids.end(); ++itr)
+            {
                 DoRespawnGameObject(*itr, 25);
+            }
         }
 
         bool CanAndToggleGothikYell()

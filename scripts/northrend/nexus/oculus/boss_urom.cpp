@@ -89,7 +89,9 @@ struct boss_urom : public CreatureScript
 
             // Randomize the trash mobs packs
             for (uint8 i = 0; i < MAX_PLATFORMS; ++i)
+            {
                 m_vuiTrashPacksIds.push_back(i);
+            }
         }
 
         ScriptedInstance* m_pInstance;

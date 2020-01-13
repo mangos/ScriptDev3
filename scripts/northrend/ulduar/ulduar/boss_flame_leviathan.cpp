@@ -202,7 +202,9 @@ struct boss_flame_leviathan : public CreatureScript
             DoCastSpellIfCan(m_creature, SPELL_INVISIBILITY_DETECTION, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
 
             for (uint8 i = 0; i < KEEPER_ENCOUNTER; ++i)
+            {
                 m_bUlduarTower[i] = false;
+            }
 
             m_uiBatteringRamTimer = 10000;
             m_uiFlameVentsTimer = 30000;
@@ -392,13 +394,17 @@ struct boss_flame_leviathan : public CreatureScript
         void DoSpawnHodirFury()
         {
             for (uint8 i = 0; i < MAX_HODIR_FURY; ++i)
+            {
                 m_creature->SummonCreature(NPC_HODIR_FURY_VEHICLE, afHodirFury[i][0], afHodirFury[i][1], afHodirFury[i][2], 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+            }
         }
 
         void DoSpawnFreyaWard()
         {
             for (uint8 i = 0; i < MAX_FREYA_WARD; ++i)
+            {
                 m_creature->SummonCreature(NPC_FREYA_WARD_VEHICLE, afFreyaWard[i][0], afFreyaWard[i][1], afFreyaWard[i][2], afFreyaWard[i][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+            }
         }
 
         void DoSpawnMimironInferno()

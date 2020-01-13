@@ -770,7 +770,9 @@ struct npc_voice_yogg_saron : public CreatureScript
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
 
             for (uint8 i = 0; i < MAX_ILLUSIONS; ++i)
+            {
                 m_vuiMadnessPhases.push_back(i);
+            }
         }
 
         ScriptedInstance* m_pInstance;
@@ -1099,7 +1101,9 @@ struct npc_brain_yogg_saron : public CreatureScript
                 GetGameObjectListWithEntryInGrid(lFleePortals, m_creature, GO_FLEE_TO_SURFACE, 40.0f);
 
                 for (std::list<GameObject*>::const_iterator itr = lFleePortals.begin(); itr != lFleePortals.end(); ++itr)
+                {
                     m_pInstance->DoRespawnGameObject((*itr)->GetObjectGuid(), 30);
+                }
             }
         }
 
@@ -1447,7 +1451,9 @@ struct spell_yogg_empowered : public SpellScript
             else
             {
                 for (uint8 i = 0; i < uiProjectedStacks - uiCurrentStacks; ++i)
+                {
                     pCreatureTarget->CastSpell(pCreatureTarget, SPELL_EMPOWERED_MOD, true);
+                }
             }
 
             if (uiCurrentStacks == 0 && uiCurrentStacks < uiProjectedStacks)
