@@ -1033,7 +1033,7 @@ struct npc_unworthy_initiate_anchor : public CreatureScript
             case AI_EVENT_CUSTOM_C: // notify me; @TODO inplement normal ObjectGuid transfer between scripts
                 if (const GameObjectData* godata = sObjectMgr.GetGOData(data))
                 {
-                ObjectGuid guid = ObjectGuid(HIGHGUID_GAMEOBJECT, id, data);
+                ObjectGuid guid = ObjectGuid(HIGHGUID_GAMEOBJECT, godata->id, data);
                 if (GameObject *pGo = m_creature->GetMap()->GetGameObject(guid))
                     NotifyMe(invoker, pGo);
                 break;
