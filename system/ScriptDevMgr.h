@@ -39,6 +39,7 @@ class InstanceData;
 class Quest;
 class Item;
 class GameObject;
+class GameObjectAI;
 class SpellCastTargets;
 class Map;
 class Unit;
@@ -58,6 +59,7 @@ public:
     static char const* GetScriptLibraryVersion();
 
     static CreatureAI* GetCreatureAI(Creature* pCreature);
+    static GameObjectAI* GetGameObjectAI(GameObject* pGo);
     static InstanceData* CreateInstanceData(Map* pMap);
 
     static bool GossipHello(Player*, Creature*);
@@ -74,6 +76,7 @@ public:
     static uint32 GetNPCDialogStatus(Player*, Creature*);
     static uint32 GetGODialogStatus(Player*, GameObject*);
     static bool GOUse(Player*, GameObject*);
+    static bool GOUse(Unit*, GameObject*);
     static bool ItemUse(Player*, Item*, SpellCastTargets const&);
     static bool ItemEquip(Player*, Item*, bool);    //new TODO
     static bool ItemDelete(Player*, Item*);         //new TODO
@@ -163,6 +166,8 @@ struct Script
     AuraScript* ToAuraScript() { return Type == SCRIPTED_AURASPELL && IsValid() ? (AuraScript*)this : nullptr; }
     ConditionScript* ToConditionScript() { return Type == SCRIPTED_CONDITION && IsValid() ? (ConditionScript*)this : nullptr; }
     AchievementScript* ToAchievementScript() { return Type == SCRIPTED_ACHIEVEMENT && IsValid() ? (AchievementScript*)this : nullptr; }
+    
+   
 };
 
 struct CreatureScript : public Script
@@ -193,6 +198,9 @@ struct GameObjectScript : public Script
     virtual bool OnQuestAccept(Player*, GameObject*, Quest const*) { return false; }
     virtual bool OnQuestRewarded(Player*, GameObject*, Quest const*) { return false; }
     virtual bool OnUse(Player*, GameObject*) { return false; }
+    virtual bool OnUse(Unit*, GameObject*) { return false; }
+
+    virtual GameObjectAI* GetAI(GameObject*) { return nullptr; }
 };
 
 struct ItemScript : public Script

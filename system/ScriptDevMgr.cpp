@@ -403,6 +403,18 @@ bool SD3::GOUse(Player* pPlayer, GameObject* pGo)
     return pTempScript->ToGameObjectScript()->OnUse(pPlayer, pGo);
 }
 
+bool SD3::GOUse(Unit* pUnit, GameObject* pGo)
+{
+    Script* pTempScript = m_scripts[pGo->GetScriptId()];
+
+    if (!pTempScript || !pTempScript->ToGameObjectScript())
+    {
+        return false;
+    }
+
+    return pTempScript->ToGameObjectScript()->OnUse(pUnit, pGo);
+}
+
 bool SD3::GOQuestAccept(Player* pPlayer, GameObject* pGo, const Quest* pQuest)
 {
     Script* pTempScript = m_scripts[pGo->GetScriptId()];
@@ -484,6 +496,20 @@ CreatureAI* SD3::GetCreatureAI(Creature* pCreature)
         ai->Reset();
 
     return ai;
+}
+
+GameObjectAI* SD3::GetGameObjectAI(GameObject* pGo)
+{
+    Script* pTempScript = m_scripts[pGo->GetScriptId()];
+
+    if (!pTempScript || !pTempScript->ToGameObjectScript())
+    { 
+        return nullptr;
+    }
+
+    GameObjectAI * goAI = pTempScript->ToGameObjectScript()->GetAI(pGo);
+    
+    return goAI;
 }
 
 bool SD3::ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets)
