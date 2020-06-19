@@ -54,6 +54,7 @@
  */
 
 #include "precompiled.h"
+#include "GameObjectAI.h"
 
 /*######
 ## go_barov_journal
@@ -356,7 +357,12 @@ struct go_table_theka : public GameObjectScript
         return true;
     }
 };
+
+
+// go_fixed_trap
+
 #endif
+
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
@@ -445,6 +451,7 @@ void AddSC_go_scripts()
 #if defined (CLASSIC) || defined (TBC)
     s = new go_table_theka();
     s->RegisterSelf();
+
 #endif
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
