@@ -600,7 +600,9 @@ struct is_naxxramas : public InstanceScript
                 break;
             case TYPE_SIGNAL_1:
                 if (AreaTriggerEntry const *at = sAreaTriggerStore.LookupEntry(uiData))
+                {
                     SetChamberCenterCoords(at);
+                }
                 return;
             case TYPE_SIGNAL_2:
                 if (Creature *pCreatureTarget = instance->GetCreature(ObjectGuid(m_tempCreatureGuid)))

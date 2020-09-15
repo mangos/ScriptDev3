@@ -87,7 +87,9 @@ struct boss_baltharus : public CreatureScript
 
             // Health check percent depends on difficulty
             if (m_pInstance)
+            {
                 m_fHealthPercentCheck = m_pInstance->GetData(TYPE_DATA_IS_25MAN) ? 33.3f : 50.0f;
+            }
             else
                 script_error_log("Instance Ruby Sanctum: ERROR Failed to load instance data for this instace.");
 
@@ -121,7 +123,9 @@ struct boss_baltharus : public CreatureScript
             DoScriptText(SAY_AGGRO, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_BALTHARUS, IN_PROGRESS);
+            }
         }
 
         void MoveInLineOfSight(Unit* pWho) override
@@ -143,7 +147,9 @@ struct boss_baltharus : public CreatureScript
             }
 
             if (urand(0, 1))
+            {
                 DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -151,13 +157,17 @@ struct boss_baltharus : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_BALTHARUS, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_BALTHARUS, FAIL);
+            }
         }
 
         void JustSummoned(Creature* pSummoned)
@@ -172,7 +182,9 @@ struct boss_baltharus : public CreatureScript
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_ENERVATING_BRAND_PL)
+            {
                 pTarget->CastSpell(m_creature, SPELL_SIPHONED_MIGHT, true);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -204,7 +216,9 @@ struct boss_baltharus : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiSummonCloneTimer -= uiDiff;
+                }
 
                 // no other actions
                 return;
@@ -213,29 +227,41 @@ struct boss_baltharus : public CreatureScript
             if (m_uiBladeTempestTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_BLADE_TEMPEST) == CAST_OK)
+                {
                     m_uiBladeTempestTimer = 22000;
+                }
             }
             else
+            {
                 m_uiBladeTempestTimer -= uiDiff;
+            }
 
             if (m_uiEnervatingBrandTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_ENERVATING_BRAND) == CAST_OK)
+                    {
                         m_uiEnervatingBrandTimer = 25000;
+                    }
                 }
             }
             else
+            {
                 m_uiEnervatingBrandTimer -= uiDiff;
+            }
 
             if (m_uiCleaveTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_CLEAVE) == CAST_OK)
+                {
                     m_uiCleaveTimer = urand(17000, 20000);
+                }
             }
             else
+            {
                 m_uiCleaveTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -273,7 +299,9 @@ struct npc_baltharus_clone : public CreatureScript
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_ENERVATING_BRAND_PL)
+            {
                 pTarget->CastSpell(m_creature, SPELL_SIPHONED_MIGHT, true);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -286,29 +314,41 @@ struct npc_baltharus_clone : public CreatureScript
             if (m_uiBladeTempestTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_BLADE_TEMPEST) == CAST_OK)
+                {
                     m_uiBladeTempestTimer = 22000;
+                }
             }
             else
+            {
                 m_uiBladeTempestTimer -= uiDiff;
+            }
 
             if (m_uiEnervatingBrandTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_ENERVATING_BRAND) == CAST_OK)
+                    {
                         m_uiEnervatingBrandTimer = 25000;
+                    }
                 }
             }
             else
+            {
                 m_uiEnervatingBrandTimer -= uiDiff;
+            }
 
             if (m_uiCleaveTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_CLEAVE) == CAST_OK)
+                {
                     m_uiCleaveTimer = urand(17000, 20000);
+                }
             }
             else
+            {
                 m_uiCleaveTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

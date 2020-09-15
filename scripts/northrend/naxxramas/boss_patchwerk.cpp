@@ -90,7 +90,9 @@ struct boss_patchwerk : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_PATCHWERK, DONE);
+            }
         }
 
         void Aggro(Unit* /*pWho*/) override
@@ -98,13 +100,17 @@ struct boss_patchwerk : public CreatureScript
             DoScriptText(urand(0, 1) ? SAY_AGGRO1 : SAY_AGGRO2, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_PATCHWERK, IN_PROGRESS);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_PATCHWERK, FAIL);
+            }
         }
 
         void DoHatefulStrike()
@@ -122,7 +128,9 @@ struct boss_patchwerk : public CreatureScript
                 for (; iter != tList.end(); ++iter)
                 {
                     if (!uiTargets)
+                    {
                         break;
+                    }
 
                     if (Unit* pTempTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid()))
                     {
@@ -140,7 +148,9 @@ struct boss_patchwerk : public CreatureScript
             }
 
             if (!pTarget)
+            {
                 pTarget = m_creature->getVictim();
+            }
 
             DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_HATEFULSTRIKE : SPELL_HATEFULSTRIKE_H);
         }
@@ -159,7 +169,9 @@ struct boss_patchwerk : public CreatureScript
                 m_uiHatefulStrikeTimer = 1000;
             }
             else
+            {
                 m_uiHatefulStrikeTimer -= uiDiff;
+            }
 
             // Soft Enrage at 5%
             if (!m_bEnraged)
@@ -186,7 +198,9 @@ struct boss_patchwerk : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiBerserkTimer -= uiDiff;
+                }
             }
             else
             {
@@ -197,7 +211,9 @@ struct boss_patchwerk : public CreatureScript
                     m_uiSlimeboltTimer = 5000;
                 }
                 else
+                {
                     m_uiSlimeboltTimer -= uiDiff;
+                }
             }
 
             DoMeleeAttackIfReady();

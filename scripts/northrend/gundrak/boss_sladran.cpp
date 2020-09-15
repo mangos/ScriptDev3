@@ -104,7 +104,9 @@ struct boss_sladran : public CreatureScript
             DoScriptText(SAY_AGGRO, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_SLADRAN, IN_PROGRESS);
+            }
         }
 
         void KilledUnit(Unit* /*pVictim*/) override
@@ -122,13 +124,17 @@ struct boss_sladran : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_SLADRAN, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_SLADRAN, FAIL);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -158,7 +164,9 @@ struct boss_sladran : public CreatureScript
                 }
             }
             else
+            {
                 m_uiPoisonNovaTimer -= uiDiff;
+            }
 
             if (m_uiSummonTimer < uiDiff)
             {
@@ -173,7 +181,9 @@ struct boss_sladran : public CreatureScript
                     {
                         // we don't want to get spammed
                         if (!urand(0, 4))
+                        {
                             DoScriptText(SAY_SUMMON_CONSTRICTOR, m_creature);
+                        }
 
                         pSummonTarget->CastSpell(pSummonTarget, SPELL_SUMMON_CONSTRICTOR, false, nullptr, nullptr, m_creature->GetObjectGuid());
                     }
@@ -181,7 +191,9 @@ struct boss_sladran : public CreatureScript
                     {
                         // we don't want to get spammed
                         if (!urand(0, 4))
+                        {
                             DoScriptText(SAY_SUMMON_SNAKE, m_creature);
+                        }
 
                         pSummonTarget->CastSpell(pSummonTarget, SPELL_SUMMON_VIPER, false, nullptr, nullptr, m_creature->GetObjectGuid());
                     }
@@ -190,26 +202,36 @@ struct boss_sladran : public CreatureScript
                 m_uiSummonTimer = m_bIsRegularMode ? 5000 : 3000;
             }
             else
+            {
                 m_uiSummonTimer -= uiDiff;
+            }
 
             if (m_uiPowerfulBiteTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_POWERFUL_BITE : SPELL_POWERFUL_BITE_H) == CAST_OK)
+                {
                     m_uiPowerfulBiteTimer = 10000;
+                }
             }
             else
+            {
                 m_uiPowerfulBiteTimer -= uiDiff;
+            }
 
             if (m_uiVenomBoltTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_VENOM_BOLT : SPELL_VENOM_BOLT_H) == CAST_OK)
+                    {
                         m_uiVenomBoltTimer = 15000;
+                    }
                 }
             }
             else
+            {
                 m_uiVenomBoltTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

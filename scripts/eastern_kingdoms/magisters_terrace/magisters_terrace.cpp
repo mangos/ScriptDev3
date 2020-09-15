@@ -69,7 +69,9 @@ struct npc_kalecgos : public CreatureScript
         {
             // Check the map id because the same creature entry is involved in other scripted event in other instance
             if (m_creature->GetMapId() != MAP_ID_MAGISTER)
+            {
                 return;
+            }
 
             m_uiTransformTimer = 0;
 

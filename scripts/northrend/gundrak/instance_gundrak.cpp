@@ -78,7 +78,9 @@ struct is_gundrak : public InstanceScript
             case NPC_LIVIN_MOJO:
                 // Store only the Mojos used to activate the Colossus
                 if (pCreature->GetPositionX() > 1650.0f)
+                {
                     m_sColossusMojosGuids.insert(pCreature->GetObjectGuid());
+                }
                 break;
             }
         }
@@ -101,34 +103,48 @@ struct is_gundrak : public InstanceScript
             {
             case GO_ECK_DOOR:
                 if (m_auiEncounter[TYPE_MOORABI] == DONE && !instance->IsRegularDifficulty())
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
             case GO_ECK_UNDERWATER_DOOR:
                 if (m_auiEncounter[TYPE_ECK] == DONE)
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
             case GO_GALDARAH_DOOR:
                 pGo->SetGoState(GO_STATE_ACTIVE);
                 break;
             case GO_EXIT_DOOR_L:
                 if (m_auiEncounter[TYPE_GALDARAH] == DONE)
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
             case GO_EXIT_DOOR_R:
                 if (m_auiEncounter[TYPE_GALDARAH] == DONE)
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
             case GO_ALTAR_OF_SLADRAN:
                 if (m_auiEncounter[TYPE_SLADRAN] == DONE)
+                {
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                }
                 break;
             case GO_ALTAR_OF_MOORABI:
                 if (m_auiEncounter[TYPE_MOORABI] == DONE)
+                {
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                }
                 break;
             case GO_ALTAR_OF_COLOSSUS:
                 if (m_auiEncounter[TYPE_COLOSSUS] == DONE)
+                {
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                }
                 break;
             case GO_SNAKE_KEY:
             case GO_TROLL_KEY:
@@ -158,7 +174,9 @@ struct is_gundrak : public InstanceScript
                 for (GuidSet::const_iterator itr = m_sColossusMojosGuids.begin(); itr != m_sColossusMojosGuids.end(); ++itr)
                 {
                     if (Creature* pMojo = instance->GetCreature(*itr))
+                    {
                         pMojo->AI()->EnterEvadeMode();
+                    }
                 }
             }
         }
@@ -173,41 +191,61 @@ struct is_gundrak : public InstanceScript
                 m_auiEncounter[TYPE_SLADRAN] = uiData;
                 if (uiData == DONE)
                 if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_ALTAR_OF_SLADRAN))
+                {
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                }
                 if (uiData == FAIL)
+                {
                     m_uisWhySnakesAchievPlayers.clear();
+                }
                 if (uiData == SPECIAL)
+                {
                     m_mAltarInProgress.insert(TypeTimerPair(TYPE_SLADRAN, TIMER_VISUAL_ALTAR));
+                }
                 break;
             case TYPE_MOORABI:
                 m_auiEncounter[TYPE_MOORABI] = uiData;
                 if (uiData == DONE)
                 {
                     if (!instance->IsRegularDifficulty())
+                    {
                         DoUseDoorOrButton(GO_ECK_DOOR);
+                    }
                     if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_ALTAR_OF_MOORABI))
+                    {
                         pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                    }
                 }
                 if (uiData == IN_PROGRESS)
+                {
                     SetLessRabiAchievementCriteria(true);
+                }
                 if (uiData == SPECIAL)
+                {
                     m_mAltarInProgress.insert(TypeTimerPair(TYPE_MOORABI, TIMER_VISUAL_ALTAR));
+                }
                 break;
             case TYPE_COLOSSUS:
                 m_auiEncounter[TYPE_COLOSSUS] = uiData;
                 if (uiData == DONE)
                 if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_ALTAR_OF_COLOSSUS))
+                {
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                }
                 if (uiData == FAIL)
                 {
                     for (GuidSet::const_iterator itr = m_sColossusMojosGuids.begin(); itr != m_sColossusMojosGuids.end(); ++itr)
                     {
                         if (Creature* pMojo = instance->GetCreature(*itr))
+                        {
                             pMojo->Respawn();
+                        }
                     }
                 }
                 if (uiData == SPECIAL)
+                {
                     m_mAltarInProgress.insert(TypeTimerPair(TYPE_COLOSSUS, TIMER_VISUAL_ALTAR));
+                }
                 break;
             case TYPE_GALDARAH:
                 m_auiEncounter[TYPE_GALDARAH] = uiData;
@@ -218,22 +256,30 @@ struct is_gundrak : public InstanceScript
                     DoUseDoorOrButton(GO_EXIT_DOOR_R);
                 }
                 if (uiData == FAIL)
+                {
                     m_uisShareLoveAchievPlayers.clear();
+                }
                 break;
             case TYPE_ECK:
                 m_auiEncounter[TYPE_ECK] = uiData;
                 if (uiData == DONE)
+                {
                     DoUseDoorOrButton(GO_ECK_UNDERWATER_DOOR);
+                }
                 break;
             case TYPE_ACHIEV_WHY_SNAKES:
                 // insert the players who failed the achiev and haven't been already inserted in the set
                 if (m_uisWhySnakesAchievPlayers.find(uiData) == m_uisWhySnakesAchievPlayers.end())
+                {
                     m_uisWhySnakesAchievPlayers.insert(uiData);
+                }
                 return;
             case TYPE_ACHIEV_SHARE_LOVE:
                 // insert players who got stampeled and haven't been already inserted in the set
                 if (m_uisShareLoveAchievPlayers.find(uiData) == m_uisShareLoveAchievPlayers.end())
+                {
                     m_uisShareLoveAchievPlayers.insert(uiData);
+                }
                 return;
             case TYPE_ACHIEV_LESS_RABI:
                 SetLessRabiAchievementCriteria(bool(uiData));
@@ -303,11 +349,15 @@ struct is_gundrak : public InstanceScript
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     m_auiEncounter[i] = NOT_STARTED;
+                }
 
                 // TODO: REMOVE when bridge/ collision reloading correctly working
                 if (m_auiEncounter[i] == SPECIAL)
+                {
                     m_auiEncounter[i] = DONE;
+                }
             }
 
             OUT_LOAD_INST_DATA_COMPLETE;
@@ -398,11 +448,17 @@ struct is_gundrak : public InstanceScript
 
                             // The already closed keys cannot be done with DoUseDoorOrButton
                             if (GameObject* pTrollKey = GetSingleGameObjectFromStorage(GO_TROLL_KEY))
+                            {
                                 pTrollKey->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
+                            }
                             if (GameObject* pMammothKey = GetSingleGameObjectFromStorage(GO_MAMMOTH_KEY))
+                            {
                                 pMammothKey->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
+                            }
                             if (GameObject* pSnakeKey = GetSingleGameObjectFromStorage(GO_SNAKE_KEY))
+                            {
                                 pSnakeKey->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
+                            }
 
                             // GO_BRIDGE is type 35 (TRAP_DOOR) and needs to be handled directly
                             // Real Use of this GO is unknown, but this change of state is expected
@@ -429,7 +485,9 @@ struct is_gundrak : public InstanceScript
             {
                 float fHeight = 10.0f;                              // A bit higher than the altar is needed
                 if (GameObject* pCollusAltar = GetSingleGameObjectFromStorage(GO_ALTAR_OF_COLOSSUS))
+                {
                     fHeight += pCollusAltar->GetPositionZ();
+                }
 
                 std::list<Creature*> lStalkerTargets, lStalkerCasters;
                 for (GuidList::const_iterator itr = m_luiStalkerGUIDs.begin(); itr != m_luiStalkerGUIDs.end(); ++itr)
@@ -437,9 +495,13 @@ struct is_gundrak : public InstanceScript
                     if (Creature* pStalker = instance->GetCreature(*itr))
                     {
                         if (pStalker->GetPositionZ() > fHeight)
+                        {
                             lStalkerTargets.push_back(pStalker);
+                        }
                         else
+                        {
                             lStalkerCasters.push_back(pStalker);
+                        }
                     }
                 }
                 m_luiStalkerGUIDs.clear();

@@ -673,7 +673,9 @@ struct npc_anachronos_the_ancient : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {
             if (eventType == AI_EVENT_CUSTOM_A && pSender == m_creature && pInvoker->GetTypeId() == TYPEID_PLAYER)
+            {
                 m_playerGuid = pInvoker->GetObjectGuid();
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override

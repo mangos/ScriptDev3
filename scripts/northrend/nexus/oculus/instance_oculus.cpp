@@ -83,7 +83,9 @@ struct is_oculus : public InstanceScript
             case GO_DRAGON_CAGE_DOOR:
                 m_lCageDoorGUIDs.push_back(pGo->GetObjectGuid());
                 if (m_auiEncounter[TYPE_DRAKOS] == DONE)
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
             }
         }
@@ -91,13 +93,17 @@ struct is_oculus : public InstanceScript
         void OnCreatureEnterCombat(Creature* pCreature) override
         {
             if (pCreature->GetEntry() == NPC_DRAKOS)
+            {
                 SetData(TYPE_DRAKOS, IN_PROGRESS);
+            }
         }
 
         void OnCreatureEvade(Creature* pCreature) override
         {
             if (pCreature->GetEntry() == NPC_DRAKOS)
+            {
                 SetData(TYPE_DRAKOS, FAIL);
+            }
         }
 
         void OnCreatureDeath(Creature* pCreature) override
@@ -158,7 +164,9 @@ struct is_oculus : public InstanceScript
                 m_auiEncounter[TYPE_UROM] = uiData;
                 // Note: Image of Belgaristrasz dialogue is handled by DB script
                 if (uiData == DONE)
+                {
                     DoSpawnNextBossIfCan();
+                }
                 break;
             case TYPE_EREGOS:
                 m_auiEncounter[TYPE_EREGOS] = uiData;
@@ -217,7 +225,9 @@ struct is_oculus : public InstanceScript
 
                 // Update world state in case of server reset
                 if (GetData(TYPE_DRAKOS) == DONE)
+                {
                     DoUpdateWorldState(WORLD_STATE_CONSTRUCTS_COUNT, m_sConstructsAliveGUIDSet.size());
+                }
             }
         }
 
@@ -238,7 +248,9 @@ struct is_oculus : public InstanceScript
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     m_auiEncounter[i] = NOT_STARTED;
+                }
             }
 
             OUT_LOAD_INST_DATA_COMPLETE;

@@ -212,13 +212,21 @@ struct npc_queen_lanathel_intro : public CreatureScript
             {
                 // This should be casted when they stand up - but because of the workaround, it will be casted here
                 if (Creature* pOrb = m_pInstance->GetSingleCreatureFromStorage(NPC_BLOOD_ORB_CONTROL))
+                {
                     pOrb->CastSpell(pOrb, SPELL_INVOCATION_VALANAR, false);
+                }
                 if (Creature* pTaldaram = m_pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM))
+                {
                     pTaldaram->HandleEmote(EMOTE_ONESHOT_ROAR);
+                }
                 if (Creature* pKeleseth = m_pInstance->GetSingleCreatureFromStorage(NPC_KELESETH))
+                {
                     pKeleseth->HandleEmote(EMOTE_ONESHOT_ROAR);
+                }
                 if (Creature* pValanar = m_pInstance->GetSingleCreatureFromStorage(NPC_VALANAR))
+                {
                     pValanar->HandleEmote(EMOTE_ONESHOT_ROAR);
+                }
             }
 
             // Despawn when reached point
@@ -267,7 +275,9 @@ struct npc_ball_of_flame : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature*, Unit*, uint32 uiGuid) override
         {
             if (eventType == AI_EVENT_CUSTOM_A)
+            {
                 m_uiTargetGuidLow = uiGuid;
+            }
         }
 
         void MoveInLineOfSight(Unit* pWho) override
@@ -396,12 +406,16 @@ struct npc_dark_nucleus : public CreatureScript
             if (m_uiDistanceCheck < uiDiff)
             {
                 if (m_creature->GetDistance(m_creature->getVictim()) < 15.0f)
+                {
                     DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOW_RESONANCE_BUFF);
+                }
 
                 m_uiDistanceCheck = 1000;
             }
             else
+            {
                 m_uiDistanceCheck -= uiDiff;
+            }
         }
     };
 
@@ -439,7 +453,9 @@ struct npc_blood_orb_control : public CreatureScript
         void Aggro(Unit* /*pWho*/) override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_BLOOD_PRINCE_COUNCIL, IN_PROGRESS);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -450,20 +466,28 @@ struct npc_blood_orb_control : public CreatureScript
 
                 // Kill the 3 princes
                 if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_VALANAR))
+                {
                     m_creature->DealDamage(pTmp, pTmp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                }
 
                 if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_KELESETH))
+                {
                     m_creature->DealDamage(pTmp, pTmp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                }
 
                 if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM))
+                {
                     m_creature->DealDamage(pTmp, pTmp->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                }
             }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_BLOOD_PRINCE_COUNCIL, FAIL);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -499,7 +523,9 @@ struct npc_blood_orb_control : public CreatureScript
                 m_uiInvocationTimer = 47000;
             }
             else
+            {
                 m_uiInvocationTimer -= uiDiff;
+            }
         }
     };
 
@@ -551,7 +577,9 @@ struct blood_prince_council_baseAI : public ScriptedAI
 
         // Reset blood orb
         if (m_creature->GetEntry() == NPC_VALANAR)
+        {
             m_uiResetTimer = 5000;
+        }
 
         ScriptedAI::EnterEvadeMode();
     }
@@ -560,7 +588,9 @@ struct blood_prince_council_baseAI : public ScriptedAI
     {
         // Damage is shared by the Blood Orb Control npc
         if (!m_uiEmpowermentTimer)
+        {
             uiDamage = 0;
+        }
 
         // ##### Workaround for missing aura 300 - Remove when this is implemented in core #####
         if (!m_pInstance || !uiDamage)
@@ -569,7 +599,9 @@ struct blood_prince_council_baseAI : public ScriptedAI
         }
 
         if (Creature* pOrb = m_pInstance->GetSingleCreatureFromStorage(NPC_BLOOD_ORB_CONTROL))
+        {
             pOrb->DealDamage(pOrb, uiDamage, nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
+        }
         // ##### End of workaround #####
     }
 
@@ -595,13 +627,17 @@ struct blood_prince_council_baseAI : public ScriptedAI
                 if (m_pInstance)
                 {
                     if (Creature* pOrb = m_pInstance->GetSingleCreatureFromStorage(NPC_BLOOD_ORB_CONTROL))
+                    {
                         pOrb->CastSpell(pOrb, SPELL_INVOCATION_VALANAR, false);
+                    }
 
                     m_uiResetTimer = 0;
                 }
             }
             else
+            {
                 m_uiResetTimer -= uiDiff;
+            }
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -620,7 +656,9 @@ struct blood_prince_council_baseAI : public ScriptedAI
                 m_uiEmpowermentTimer = 00;
             }
             else
+            {
                 m_uiEmpowermentTimer -= uiDiff;
+            }
         }
 
         // Berserk
@@ -635,7 +673,9 @@ struct blood_prince_council_baseAI : public ScriptedAI
                 }
             }
             else
+            {
                 m_uiBerserkTimer -= uiDiff;
+            }
         }
     }
 };
@@ -669,7 +709,9 @@ struct boss_valanar_icc : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() == TYPEID_PLAYER)
+            {
                 DoScriptText(urand(0, 1) ? SAY_VALANAR_SLAY_1 : SAY_VALANAR_SLAY_2, m_creature);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -680,7 +722,9 @@ struct boss_valanar_icc : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_KINETIC_BOMB_TARGET)
+            {
                 pSummoned->CastSpell(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() + 20.0f, SPELL_KINETIC_BOMB, true, nullptr, nullptr, m_creature->GetObjectGuid());
+            }
             else if (pSummoned->GetEntry() == NPC_KINETIC_BOMB)
             {
                 // Handle Kinetic bomb movement
@@ -701,10 +745,14 @@ struct boss_valanar_icc : public CreatureScript
             if (m_uiSphereTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_KINETIC_BOMB_TARGET) == CAST_OK)
+                {
                     m_uiSphereTimer = 27000;
+                }
             }
             else
+            {
                 m_uiSphereTimer -= uiDiff;
+            }
 
             if (m_uiVortexTimer < uiDiff)
             {
@@ -713,7 +761,9 @@ struct boss_valanar_icc : public CreatureScript
                     if (DoCastSpellIfCan(pTarget, m_uiEmpowermentTimer ? SPELL_EMP_SHOCK_VORTEX : SPELL_SHOCK_VORTEX) == CAST_OK)
                     {
                         if (m_uiEmpowermentTimer)
+                        {
                             DoScriptText(EMOTE_SHOCK_VORTEX, m_creature);
+                        }
 
                         if (m_uiEmpowermentTimer && !m_bIsSaidSpecial)
                         {
@@ -726,7 +776,9 @@ struct boss_valanar_icc : public CreatureScript
                 }
             }
             else
+            {
                 m_uiVortexTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -779,7 +831,9 @@ struct boss_keleseth_icc : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() == TYPEID_PLAYER)
+            {
                 DoScriptText(urand(0, 1) ? SAY_KELESETH_SLAY_1 : SAY_KELESETH_SLAY_2, m_creature);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -804,10 +858,14 @@ struct boss_keleseth_icc : public CreatureScript
             if (m_uiSphereTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_SHADOW_RESONANCE) == CAST_OK)
+                {
                     m_uiSphereTimer = 25000;
+                }
             }
             else
+            {
                 m_uiSphereTimer -= uiDiff;
+            }
 
             if (m_uiShadowLanceTimer < uiDiff)
             {
@@ -823,7 +881,9 @@ struct boss_keleseth_icc : public CreatureScript
                 }
             }
             else
+            {
                 m_uiShadowLanceTimer -= uiDiff;
+            }
         }
     };
 
@@ -862,7 +922,9 @@ struct boss_taldaram_icc : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetTypeId() == TYPEID_PLAYER)
+            {
                 DoScriptText(urand(0, 1) ? SAY_TALDARAM_SLAY_1 : SAY_TALDARAM_SLAY_2, m_creature);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -876,7 +938,9 @@ struct boss_taldaram_icc : public CreatureScript
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_NOT_IN_MELEE_RANGE | SELECT_FLAG_PLAYER))
             {
                 if (CreatureAI* pBallAI = pSummoned->AI())
+                {
                     pBallAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, (Creature*)nullptr, (Unit*)nullptr, pTarget->GetGUIDLow());
+                }
 
                 DoScriptText(EMOTE_FLAMES, pSummoned, pTarget);
                 pSummoned->GetMotionMaster()->MoveFollow(pTarget, 0, 0);
@@ -906,15 +970,21 @@ struct boss_taldaram_icc : public CreatureScript
                 }
             }
             else
+            {
                 m_uiSphereTimer -= uiDiff;
+            }
 
             if (m_uiSparksTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_GLITTERING_SPARKS) == CAST_OK)
+                {
                     m_uiSparksTimer = 30000;
+                }
             }
             else
+            {
                 m_uiSparksTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

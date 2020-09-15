@@ -321,7 +321,9 @@ struct rampaging_worgen : public CreatureScript
         {
             // Always decrease our spell cooldown first
             if (spellCooldown > diff)
+            {
                 spellCooldown -= diff;
+            }
             else spellCooldown = 0;
 
             // Enrage timer (only enrage when we are alive and  in combat)
@@ -329,7 +331,9 @@ struct rampaging_worgen : public CreatureScript
             {
                 // Cast enrage spell if less than 70% hp ONLY and not casted already
                 if (m_creature->GetHealthPercent() < 70.0f && !spellCooldown) {
+                {
                     DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
+                }
                     spellCooldown = SPELL_ENRAGE_DELAY;
                 }
 

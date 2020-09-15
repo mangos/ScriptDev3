@@ -169,13 +169,17 @@ struct npc_brann_hos : public CreatureScript
                 m_pInstance->SetData(TYPE_TRIBUNAL, FAIL);
                 // Continue at right state after respawn
                 if (m_bHasContinued)
+                {
                     m_pInstance->SetData(TYPE_TRIBUNAL, IN_PROGRESS);
+                }
             }
 
             for (GuidList::const_iterator itr = m_luiDwarfGUIDs.begin(); itr != m_luiDwarfGUIDs.end(); ++itr)
             {
                 if (Creature* pDwarf = m_creature->GetMap()->GetCreature(*itr))
+                {
                     pDwarf->ForcedDespawn();
+                }
             }
             m_luiDwarfGUIDs.clear();
         }
@@ -194,7 +198,9 @@ struct npc_brann_hos : public CreatureScript
         {
             // If Brann takes damage, mark the achiev as failed
             if (uiDamage && m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ACHIEV_BRANN_SPANKIN, uint32(false));
+            }
         }
 
         void ContinueEvent()
@@ -216,7 +222,9 @@ struct npc_brann_hos : public CreatureScript
         void JustStartedEscort() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_TRIBUNAL, IN_PROGRESS);
+            }
 
             DoScriptText(SAY_ESCORT_START, m_creature);
         }
@@ -239,7 +247,9 @@ struct npc_brann_hos : public CreatureScript
                 if (m_pInstance)
                 {
                     if (GameObject* pKonsole = m_pInstance->GetSingleGameObjectFromStorage(GO_TRIBUNAL_CONSOLE))
+                    {
                         m_creature->SetFacingToObject(pKonsole);
+                    }
                     m_pInstance->DoUseDoorOrButton(GO_TRIBUNAL_FLOOR);
                 }
                 m_uiPhaseTimer = 1000;
@@ -281,12 +291,16 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 2:
                     if (m_pInstance)
+                    {
                         m_pInstance->DoUseDoorOrButton(GO_TRIBUNAL_CONSOLE);
+                    }
                     m_uiPhaseTimer = 6500;
                     break;
                 case 3:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_INTRO_3_ABED);
+                    }
                     m_uiPhaseTimer = 8500;
                     break;
 
@@ -297,7 +311,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 5:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_A_2_KADD);
+                    }
                     m_uiPhaseTimer = 12500;
                     break;
                 case 6:
@@ -306,7 +322,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 7:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_KADDRAK_ACTIVATE, uint32(false));
+                    }
                     m_uiPhaseTimer = 5000;
                     break;
                 case 8:
@@ -321,7 +339,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 10:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_B_2_MARN);
+                    }
                     SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
                     m_uiPhaseTimer = 20000;
                     break;
@@ -331,7 +351,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 12:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_MARNAK_ACTIVATE, uint32(false));
+                    }
                     m_uiPhaseTimer = 10000;
                     break;
                 case 13:
@@ -355,7 +377,9 @@ struct npc_brann_hos : public CreatureScript
                     // Activate Abedneum
                 case 17:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_C_2_ABED);
+                    }
                     SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
                     m_uiPhaseTimer = 20000;
                     break;
@@ -365,7 +389,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 19:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_ACTIVATE, uint32(false));
+                    }
                     m_uiPhaseTimer = 5000;
                     break;
                 case 20:
@@ -384,7 +410,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 23:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_D_2_ABED);
+                    }
                     SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
                     m_uiPhaseTimer = 5000;
                     break;
@@ -407,7 +435,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 28:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_D_4_ABED);
+                    }
                     SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
                     m_uiPhaseTimer = 10000;
                     break;
@@ -417,7 +447,9 @@ struct npc_brann_hos : public CreatureScript
                     DoScriptText(SAY_EVENT_END_01, m_creature);
                     m_creature->SetStandState(UNIT_STAND_STATE_STAND);// TODO TODO
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_TRIBUNAL, SPECIAL); // Kill remaining npcs
+                    }
 
                     // ToDo: the loot and the achiev should be triggered at this point
                     // Brann should get the gossip option "There will be plenty of time for this later Brann, we need to get moving!"
@@ -429,7 +461,9 @@ struct npc_brann_hos : public CreatureScript
                     // break;
                     // case 30:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_ACTIVATE, uint32(true));
+                    }
                     m_uiPhaseTimer = 0;
                     break;
                 case 30:
@@ -438,7 +472,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 31:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_03_ABED);
+                    }
                     m_uiPhaseTimer = 8500;
                     break;
                 case 32:
@@ -447,7 +483,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 33:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_05_ABED);
+                    }
                     m_uiPhaseTimer = 11500;
                     break;
                 case 34:
@@ -456,7 +494,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 35:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_07_ABED);
+                    }
                     m_uiPhaseTimer = 22500;
                     break;
                 case 36:
@@ -465,7 +505,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 37:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_09_KADD);
+                    }
                     m_uiPhaseTimer = 18500;
                     break;
                 case 38:
@@ -474,7 +516,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 39:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_11_KADD);
+                    }
                     m_uiPhaseTimer = 20500;
                     break;
                 case 40:
@@ -483,7 +527,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 41:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_13_KADD);
+                    }
                     m_uiPhaseTimer = 19500;
                     break;
                 case 42:
@@ -492,7 +538,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 43:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_15_MARN);
+                    }
                     m_uiPhaseTimer = 6500;
                     break;
                 case 44:
@@ -501,7 +549,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 45:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_17_MARN);
+                    }
                     m_uiPhaseTimer = 25500;
                     break;
                 case 46:
@@ -510,7 +560,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 47:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_19_MARN);
+                    }
                     m_uiPhaseTimer = 3500;
                     break;
                 case 48:
@@ -519,7 +571,9 @@ struct npc_brann_hos : public CreatureScript
                     break;
                 case 49:
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_21_ABED);
+                    }
                     m_uiPhaseTimer = 5500;
                     break;
                 case 50:
@@ -530,7 +584,9 @@ struct npc_brann_hos : public CreatureScript
                     }
 
                     if (Player* pPlayer = GetPlayerForEscort())
+                    {
                         pPlayer->GroupEventHappens(QUEST_HALLS_OF_STONE, m_creature);
+                    }
 
                     m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
 
@@ -543,7 +599,9 @@ struct npc_brann_hos : public CreatureScript
                 ++m_uiStep;
             }
             else if (m_uiPhaseTimer)
+            {
                 m_uiPhaseTimer -= uiDiff;
+            }
 
             if (!m_bIsLowHP && m_creature->GetHealthPercent() < 30)
             {
@@ -551,7 +609,9 @@ struct npc_brann_hos : public CreatureScript
                 m_bIsLowHP = true;
             }
             else if (m_bIsLowHP && m_creature->GetHealthPercent() > 30)
+            {
                 m_bIsLowHP = false;
+            }
 
             // No Combat abilities needed here
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -590,7 +650,9 @@ struct npc_brann_hos : public CreatureScript
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
         if (pCreature->IsQuestGiver())
+        {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+        }
 
         if (InstanceData* pInstance = (pCreature->GetInstanceData()))
         {
@@ -615,11 +677,15 @@ struct npc_brann_hos : public CreatureScript
         {
         case GOSSIP_ACTION_INFO_DEF + 1:
             if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*>(pCreature->AI()))
+            {
                 pBrannAi->Start(false, pPlayer);
+            }
             break;
         case GOSSIP_ACTION_INFO_DEF + 2:
             if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*>(pCreature->AI()))
+            {
                 pBrannAi->ContinueEvent();
+            }
             break;
         }
         pPlayer->CLOSE_GOSSIP_MENU();
@@ -675,13 +741,17 @@ struct npc_dark_matter : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             if (pSpell->Id == SPELL_DARK_MATTER_START)
+            {
                 m_uiSummonTimer = 5000;
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_DARK_MATTER_TARGET)
+            {
                 m_creature->GetMotionMaster()->MovePoint(1, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ());
+            }
         }
 
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
@@ -706,10 +776,14 @@ struct npc_dark_matter : public CreatureScript
                 if (m_uiSummonTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_DARK_MATTER_TARGET) == CAST_OK)
+                    {
                         m_uiSummonTimer = 0;
+                    }
                 }
                 else
+                {
                     m_uiSummonTimer -= uiDiff;
+                }
             }
         }
     };

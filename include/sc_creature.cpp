@@ -151,7 +151,9 @@ void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
 
     const SpellEntry* potentialSpell = m_creature->ReachWithSpellAttack(victim);
     if (potentialSpell)
+    {
         m_creature->CastSpell(victim, potentialSpell->Id, true);
+    }
 #endif
 }
 
@@ -305,10 +307,14 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         // Check for school if specified
 #if defined (TBC) || defined (WOTLK) || defined (CATA)
         if (uiSchool >= 0 && pTempSpell->SchoolMask & uiSchool)
-        { continue; }
+        {
+            continue;
+        }
 #elif defined(MISTS)
         if (uiSchool >= 0 && pTempSpell->GetSchoolMask() & uiSchool)
-        { continue; }
+        {
+            continue;
+        }
 #endif
 
         // Check for spell mechanic if specified
@@ -467,7 +473,9 @@ void FillSpellSummary()
 #if defined (CATA) || defined (MISTS)
             SpellEffectEntry const* pSpellEffect = pTempSpell->GetSpellEffect(SpellEffectIndex(j));
             if (!pSpellEffect)
+            {
                 continue;
+            }
 #endif
             // Spell targets self
 #if defined (CATA) || defined (MISTS)

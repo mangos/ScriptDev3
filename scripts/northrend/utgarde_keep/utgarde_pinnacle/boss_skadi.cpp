@@ -156,13 +156,17 @@ struct boss_skadi : public CreatureScript
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_SKADI, NOT_STARTED);
+            }
         }
 
         void Aggro(Unit* /*pWho*/) override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_SKADI, IN_PROGRESS);
+            }
         }
 
         void KilledUnit(Unit* /*pVictim*/) override
@@ -180,7 +184,9 @@ struct boss_skadi : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_SKADI, DONE);
+            }
         }
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
@@ -223,9 +229,13 @@ struct boss_skadi : public CreatureScript
             // called only for the intro mobs which are summoned directly
             pSummoned->SetFacingTo(3.15f);
             if (pSummoned->GetEntry() == NPC_YMIRJAR_WARRIOR)
+            {
                 pSummoned->HandleEmote(EMOTE_STATE_READY1H);
+            }
             else
+            {
                 pSummoned->HandleEmote(EMOTE_STATE_READYTHROWN);
+            }
         }
 
         void ReceiveAIEvent(AIEventType eventType, Creature* sender, Unit* invoker, uint32 /**/) override
@@ -285,7 +295,9 @@ struct boss_skadi : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiMountTimer -= uiDiff;
+                }
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -296,29 +308,41 @@ struct boss_skadi : public CreatureScript
             if (m_uiCrush < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_CRUSH : SPELL_CRUSH_H) == CAST_OK)
+                {
                     m_uiCrush = urand(10000, 15000);
+                }
             }
             else
+            {
                 m_uiCrush -= uiDiff;
+            }
 
             if (m_uiWhirlwind < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_WHIRLWIND : SPELL_WHIRLWIND_H) == CAST_OK)
+                {
                     m_uiWhirlwind = 23000;
+                }
             }
             else
+            {
                 m_uiWhirlwind -= uiDiff;
+            }
 
             if (m_uiPoisonedSpear < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_POISONED_SPEAR : SPELL_POISONED_SPEAR_H) == CAST_OK)
+                    {
                         m_uiPoisonedSpear = urand(10000, 15000);
+                    }
                 }
             }
             else
+            {
                 m_uiPoisonedSpear -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -370,7 +394,9 @@ struct npc_grauf : public CreatureScript
 
             // Allow Skadi to evade
             if (Creature* pSkadi = m_pInstance->GetSingleCreatureFromStorage(NPC_SKADI))
+            {
                 pSkadi->AI()->EnterEvadeMode();
+            }
 
             m_creature->SetLevitate(false);
             m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0);
@@ -399,7 +425,9 @@ struct npc_grauf : public CreatureScript
                 else if (urand(0, 1))
                 {
                     if (Creature* pSkadi = m_pInstance->GetSingleCreatureFromStorage(NPC_SKADI))
+                    {
                         DoScriptText(urand(0, 1) ? SAY_DRAKE_HARPOON_1 : SAY_DRAKE_HARPOON_2, pSkadi);
+                    }
                 }
 
                 // Deal 35% damage on each harpoon hit
@@ -407,7 +435,9 @@ struct npc_grauf : public CreatureScript
             }
             // TODO: Temporary workaround - please remove when the boarding wrappers are implemented in core
             else if (pSpell->Id == SPELL_RIDE_VEHICLE && pCaster->GetEntry() == NPC_SKADI)
+            {
                 m_uiFlightDelayTimer = 2000;
+            }
         }
 
         void MovementInform(uint32 uiType, uint32 uiPointId) override
@@ -481,7 +511,9 @@ struct npc_grauf : public CreatureScript
         void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
         {
         if (pPassenger->GetEntry() == NPC_SKADI)
-        m_uiFlightDelayTimer = 2000;
+        {
+            m_uiFlightDelayTimer = 2000;
+        }
         }
         */
 
@@ -499,7 +531,9 @@ struct npc_grauf : public CreatureScript
                     m_uiFlightDelayTimer = 0;
                 }
                 else
+                {
                     m_uiFlightDelayTimer -= uiDiff;
+                }
             }
         }
     };
@@ -535,12 +569,16 @@ struct aura_skadi_cloud : public AuraScript
         if (pAura->GetId() == SPELL_CLOUD_AURA_LEFT)
         {
             if (pTarget->GetPositionY() > -511.0f)
+            {
                 pTarget->CastSpell(pTarget, SPELL_CLOUD_AURA_DAMAGE, true);
+            }
         }
         else if (pAura->GetId() == SPELL_CLOUD_AURA_RIGHT)
         {
             if (pTarget->GetPositionY() < -511.0f)
+            {
                 pTarget->CastSpell(pTarget, SPELL_CLOUD_AURA_DAMAGE, true);
+            }
         }
         return true;
     }
@@ -571,7 +609,9 @@ struct at_skadi : public AreaTriggerScript
                 if (Creature* pSkadi = pInstance->GetSingleCreatureFromStorage(NPC_SKADI))
                 {
                     if (CreatureAI* pBossAI = pSkadi->AI())
+                    {
                         pBossAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, pSkadi, pPlayer, 0);
+                    }
                 }
             }
         }

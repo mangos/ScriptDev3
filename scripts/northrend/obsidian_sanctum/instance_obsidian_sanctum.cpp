@@ -80,7 +80,9 @@ struct is_obsidian_sanctum : public InstanceScript
             case TYPE_SARTHARION_EVENT:
                 m_auiEncounter[0] = uiData;
                 if (uiData == IN_PROGRESS)
+                {
                     m_sVolcanoBlowFailPlayers.clear();
+                }
                 break;
             case TYPE_ALIVE_DRAGONS:
                 m_uiAliveDragons = uiData;
@@ -88,7 +90,9 @@ struct is_obsidian_sanctum : public InstanceScript
             case TYPE_VOLCANO_BLOW_FAILED:
                 // Insert the players who fail the achiev and haven't been already inserted in the set
                 if (m_sVolcanoBlowFailPlayers.find(uiData) == m_sVolcanoBlowFailPlayers.end())
+                {
                     m_sVolcanoBlowFailPlayers.insert(uiData);
+                }
                 break;
             case TYPE_DATA_PORTAL_OFF:
             case TYPE_DATA_PORTAL_ON:

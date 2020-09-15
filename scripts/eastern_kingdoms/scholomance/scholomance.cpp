@@ -82,10 +82,14 @@ struct npc_spectral_tutor : public CreatureScript
                 if (m_uiProjEndTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_IMAGE_PROJECTION_HEAL) == CAST_OK)
+                    {
                         m_uiProjEndTimer = 0;
+                    }
                 }
                 else
+                {
                     m_uiProjEndTimer -= uiDiff;
+                }
 
                 // no other actions during Image Projection
                 return;
@@ -94,18 +98,26 @@ struct npc_spectral_tutor : public CreatureScript
             if (m_uiManaBurnTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MANA_BURN) == CAST_OK)
+                {
                     m_uiManaBurnTimer = urand(9000, 26000);
+                }
             }
             else
+            {
                 m_uiManaBurnTimer -= uiDiff;
+            }
 
             if (m_uiSilenceTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_SILENCE) == CAST_OK)
+                {
                     m_uiSilenceTimer = urand(12000, 26000);
+                }
             }
             else
+            {
                 m_uiSilenceTimer -= uiDiff;
+            }
 
             if (m_uiProjectionTimer < uiDiff)
             {
@@ -117,7 +129,9 @@ struct npc_spectral_tutor : public CreatureScript
                 }
             }
             else
+            {
                 m_uiProjectionTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

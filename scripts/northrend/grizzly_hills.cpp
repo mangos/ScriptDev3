@@ -64,7 +64,9 @@ struct npc_depleted_war_golem : public CreatureScript
             {
                 // Is distance expected?
                 if (m_creature->IsWithinDistInMap(pVictim, 10.0f))
+                {
                     m_creature->CastSpell(m_creature, SPELL_CHARGE_GOLEM, true);
+                }
             }
         }
     };
@@ -189,7 +191,9 @@ struct npc_harrison_jones : public CreatureScript
                 Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue));
 
                 if (GameObject* pCage = GetClosestGameObjectWithEntry(m_creature, GO_HARRISON_CAGE, 5.0f))
+                {
                     pCage->Use(m_creature);
+                }
             }
         }
 
@@ -211,7 +215,9 @@ struct npc_harrison_jones : public CreatureScript
                 }
             }
             else if (pSummoned->GetEntry() == NPC_ANCIENT_DRAKKARI_KING)
+            {
                 pSummoned->AI()->AttackStart(m_creature);
+            }
         }
 
         void SummonedCreatureJustDied(Creature* pSummoned) override
@@ -227,7 +233,9 @@ struct npc_harrison_jones : public CreatureScript
         {
             // open door
             if (GameObject* pDoor = GetClosestGameObjectWithEntry(m_creature, GO_FIRE_DOOR, 50.0f))
+            {
                 pDoor->ResetDoorOrButton();
+            }
 
             // clear auras
             std::list<Creature*> lBunniesInRange;
@@ -257,7 +265,9 @@ struct npc_harrison_jones : public CreatureScript
             case 11:
                 DoScriptText(SAY_HARRISON_CHAMBER_RELEASE, m_creature);
                 if (GameObject* pCage = GetClosestGameObjectWithEntry(m_creature, GO_ADARRAH_CAGE, 5.0f))
+                {
                     pCage->Use(m_creature);
+                }
                 break;
             case 12:
                 if (Creature* pAdarrah = GetClosestCreatureWithEntry(m_creature, NPC_ADARRAH, 5.0f))
@@ -302,7 +312,9 @@ struct npc_harrison_jones : public CreatureScript
             case 21:
                 // close door
                 if (GameObject* pDoor = GetClosestGameObjectWithEntry(m_creature, GO_FIRE_DOOR, 10.0f))
+                {
                     pDoor->Use(m_creature);
+                }
                 break;
             case 22:
                 DoScriptText(SAY_HARRISON_CHAMBER_5, m_creature);
@@ -319,7 +331,9 @@ struct npc_harrison_jones : public CreatureScript
             case 25:
                 // attack snake
                 if (Creature* pTecahuna = m_creature->GetMap()->GetCreature(m_tecahunaGuid))
+                {
                     AttackStart(pTecahuna);
+                }
                 SetEscortPaused(true);
                 m_uiActivateMummiesTimer = 10000;
                 break;
@@ -363,12 +377,18 @@ struct npc_harrison_jones : public CreatureScript
 
                     // set timer based on the remaining mummies
                     if (m_lImmolationBunnyGuids.empty())
+                    {
                         m_uiActivateMummiesTimer = 0;
+                    }
                     else
+                    {
                         m_uiActivateMummiesTimer = urand(5000, 10000);
+                    }
                 }
                 else
+                {
                     m_uiActivateMummiesTimer -= uiDiff;
+                }
             }
 
             DoMeleeAttackIfReady();
@@ -438,7 +458,9 @@ struct npc_emily : public CreatureScript
                 Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue));
 
                 if (Creature* pFloppy = GetClosestCreatureWithEntry(m_creature, NPC_MR_FLOPPY, 10.0f))
+                {
                     m_floppyGuid = pFloppy->GetObjectGuid();
+                }
             }
             else if (eventType == AI_EVENT_JUST_DIED && pSender->GetEntry() == NPC_MR_FLOPPY)
             {
@@ -446,9 +468,13 @@ struct npc_emily : public CreatureScript
                 m_creature->ForcedDespawn();
             }
             else if (eventType == AI_EVENT_CRITICAL_HEALTH && pSender->GetEntry() == NPC_MR_FLOPPY)
+            {
                 DoScriptText(SAY_FLOPPY_ALMOST_DEAD, m_creature);
+            }
             else if (eventType == AI_EVENT_LOST_SOME_HEALTH && pSender->GetEntry() == NPC_MR_FLOPPY)
+            {
                 DoScriptText(urand(0, 1) ? SAY_HELP_FLOPPY_1 : SAY_HELP_FLOPPY_2, m_creature);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -477,7 +503,9 @@ struct npc_emily : public CreatureScript
                 SetEscortPaused(false);
                 // resume follow after vehicle unboard
                 if (Creature* pFloppy = m_creature->GetMap()->GetCreature(m_floppyGuid))
+                {
                     pFloppy->GetMotionMaster()->MoveFollow(m_creature, pFloppy->GetDistance(m_creature), M_PI_F - pFloppy->GetAngle(m_creature));
+                }
                 break;
             case NPC_HUNGRY_WORG:
                 DoScriptText(SAY_FIRST_WOLF_DEFEAT, m_creature);
@@ -498,11 +526,15 @@ struct npc_emily : public CreatureScript
             case NPC_RAVENOUS_WORG:
                 // board the ravenous worg vehicle
                 if (Creature* pFloppy = m_creature->GetMap()->GetCreature(m_floppyGuid))
+                {
                     pFloppy->CastSpell(pSummoned, SPELL_FLOPPY_BECOMES_LUNCH, true);
+                }
                 // no break;
             case NPC_HUNGRY_WORG:
                 if (Creature* pFloppy = m_creature->GetMap()->GetCreature(m_floppyGuid))
+                {
                     pSummoned->AI()->AttackStart(pFloppy);
+                }
                 break;
             }
         }
@@ -531,14 +563,18 @@ struct npc_emily : public CreatureScript
                 DoScriptText(SAY_RESUME_ESCORT, m_creature);
                 SetRun();
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     pPlayer->GroupEventHappens(QUEST_ID_MR_FLOPPY_ADVENTURE, m_creature);
+                }
                 break;
             case 25:
                 DoScriptText(SAY_ESCORT_COMPLETE, m_creature);
                 break;
             case 27:
                 if (Creature* pFloppy = m_creature->GetMap()->GetCreature(m_floppyGuid))
+                {
                     pFloppy->ForcedDespawn();
+                }
                 break;
             }
         }

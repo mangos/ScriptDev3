@@ -205,7 +205,9 @@ struct item_petrov_cluster_bombs : public ItemScript
             pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, nullptr);
 
             if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(SPELL_PETROV_BOMB))
+            {
                 Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_HERE);
+            }
 
             return true;
         }

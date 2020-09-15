@@ -118,7 +118,9 @@ struct npc_spirit_guide : public CreatureScript
         {
             if (pSpellEntry->Id == SPELL_SPIRIT_HEAL && pUnit->GetTypeId() == TYPEID_PLAYER
                 && pUnit->HasAura(SPELL_WAITING_TO_RESURRECT))
-            { pUnit->CastSpell(pUnit, SPELL_SPIRIT_HEAL_MANA, true); }
+            {
+                pUnit->CastSpell(pUnit, SPELL_SPIRIT_HEAL_MANA, true);
+            }
         }
 #endif
     };

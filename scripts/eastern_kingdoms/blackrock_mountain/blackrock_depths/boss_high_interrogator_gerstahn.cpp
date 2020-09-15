@@ -78,7 +78,9 @@ struct boss_high_interrogator_gerstahn : public CreatureScript
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_SHADOWWORDPAIN) == CAST_OK)
+                    {
                         m_uiShadowWordPainTimer = 7000;
+                    }
                 }
             }
             else
@@ -92,7 +94,9 @@ struct boss_high_interrogator_gerstahn : public CreatureScript
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_MANABURN, SELECT_FLAG_POWER_MANA))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_MANABURN) == CAST_OK)
+                    {
                         m_uiManaBurnTimer = 10000;
+                    }
                 }
             }
             else

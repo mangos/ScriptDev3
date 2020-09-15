@@ -219,7 +219,9 @@ struct is_shadowfang_keep : public InstanceScript
         case TYPE_APOTHECARY:
             // Reset apothecary counter on fail
             if (uiData == IN_PROGRESS)
+            {
                 m_uiApothecaryDead = 0;
+            }
             if (uiData == SPECIAL)
             {
                 ++m_uiApothecaryDead;
@@ -228,14 +230,18 @@ struct is_shadowfang_keep : public InstanceScript
                 if (m_uiApothecaryDead == MAX_APOTHECARY)
                 {
                     if (Creature* pHummel = GetSingleCreatureFromStorage(NPC_HUMMEL))
+                    {
                         pHummel->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+                    }
 
                     SetData(TYPE_APOTHECARY, DONE);
                 }
             }
             // We don't want to store the SPECIAL data
             else
+            {
                 m_auiEncounter[6] = uiData;
+            }
             break;
 #endif
     }

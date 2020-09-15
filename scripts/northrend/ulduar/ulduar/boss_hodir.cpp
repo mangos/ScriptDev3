@@ -159,7 +159,9 @@ struct boss_hodir : public CreatureScript
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_HODIR, FAIL);
+            }
         }
 
         void EnterEvadeMode() override
@@ -169,7 +171,9 @@ struct boss_hodir : public CreatureScript
             m_creature->CombatStop(true);
 
             if (m_creature->IsAlive() && !m_bEventFinished)
+            {
                 m_creature->GetMotionMaster()->MoveTargetedHome();
+            }
 
             m_creature->SetLootRecipient(nullptr);
 
@@ -190,10 +194,14 @@ struct boss_hodir : public CreatureScript
                     {
                         // only check creatures
                         if (!(*itr)->getUnitGuid().IsCreature())
+                        {
                             continue;
+                        }
 
                         if (Creature* pTarget = m_creature->GetMap()->GetCreature((*itr)->getUnitGuid()))
+                        {
                             pTarget->AI()->EnterEvadeMode();
+                        }
                     }
 
                     m_uiEpilogueTimer = 10000;
@@ -234,7 +242,9 @@ struct boss_hodir : public CreatureScript
                     {
                     case 0:
                         if (m_pInstance)
+                        {
                             m_pInstance->SetData(TYPE_HODIR, DONE);
+                        }
 
                         DoScriptText(SAY_EPILOGUE, m_creature);
                         m_creature->CastSpell(m_creature, SPELL_HODIR_CREDIT, true);
@@ -251,7 +261,9 @@ struct boss_hodir : public CreatureScript
                     ++m_uiEpilogueStage;
                 }
                 else
+                {
                     m_uiEpilogueTimer -= uiDiff;
+                }
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -270,7 +282,9 @@ struct boss_hodir : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiBerserkTimer -= uiDiff;
+                }
             }
 
             if (m_uiFlashFreezeTimer < uiDiff)
@@ -284,7 +298,9 @@ struct boss_hodir : public CreatureScript
                 }
             }
             else
+            {
                 m_uiFlashFreezeTimer -= uiDiff;
+            }
 
             if (m_uiFrozenBlowsTimer < uiDiff)
             {
@@ -296,18 +312,24 @@ struct boss_hodir : public CreatureScript
                 }
             }
             else
+            {
                 m_uiFrozenBlowsTimer -= uiDiff;
+            }
 
             if (m_uiFreezeTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_FREEZE) == CAST_OK)
+                    {
                         m_uiFreezeTimer = 15000;
+                    }
                 }
             }
             else
+            {
                 m_uiFreezeTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -354,7 +376,9 @@ struct npc_flash_freeze : public CreatureScript
                 if (Creature* pHodir = m_pInstance->GetSingleCreatureFromStorage(NPC_HODIR))
                 {
                     if (Creature* pSummoner = m_creature->GetMap()->GetCreature(((TemporarySummon*)m_creature)->GetSummonerGuid()))
+                    {
                         pSummoner->AI()->AttackStart(pHodir);
+                    }
                 }
             }
         }
@@ -374,7 +398,9 @@ struct npc_flash_freeze : public CreatureScript
                 if (m_creature->GetEntry() == NPC_FLASH_FREEZE_NPC)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_FLASH_FREEZE_AURA_NPC) == CAST_OK)
+                    {
                         DoCastSpellIfCan(m_creature, SPELL_FLASH_FREEZE_INITIAL, CAST_TRIGGERED);
+                    }
                 }
                 else if (m_creature->GetEntry() == NPC_FLASH_FREEZE)
                 {
@@ -382,12 +408,18 @@ struct npc_flash_freeze : public CreatureScript
                     {
                         // kill frozen players
                         if (pSummoner->HasAura(SPELL_FREEZE))
+                        {
                             DoCastSpellIfCan(pSummoner, SPELL_FLASH_FREEZE_KILL);
+                        }
                         else
+                        {
                             DoCastSpellIfCan(m_creature, SPELL_FLASH_FREEZE_AURA);
+                        }
 
                         if (pSummoner->GetTypeId() == TYPEID_PLAYER && m_pInstance)
+                        {
                             m_pInstance->SetData(TYPE_ACHIEV_CHEESE_FREEZE, uint32(false));
+                        }
                     }
                 }
 
@@ -426,13 +458,17 @@ struct event_boss_hodir : public MapEventScript
                 pInstance->SetData(TYPE_HODIR_HARD, FAIL);
 
                 if (GameObject* pChest = pInstance->GetSingleGameObjectFromStorage(pInstance->instance->IsRegularDifficulty() ? GO_CACHE_OF_RARE_WINTER_10 : GO_CACHE_OF_RARE_WINTER_25))
+                {
                     pChest->SetLootState(GO_JUST_DEACTIVATED);
+                }
             }
             else if (uiEventId == EVENT_ID_ATTACK_START)
             {
                 // Start encounter
                 if (Creature* pHodir = pInstance->GetSingleCreatureFromStorage(NPC_HODIR))
+                {
                     pHodir->SetInCombatWithZone();
+                }
             }
 
             return true;

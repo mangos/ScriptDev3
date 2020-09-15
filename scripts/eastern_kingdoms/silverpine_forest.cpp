@@ -158,7 +158,9 @@ struct npc_deathstalker_erland : public CreatureScript
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
             case 14:
                 if (Creature* pRane = GetClosestCreatureWithEntry(m_creature, NPC_RANE, 45.0f))
+                {
                     DoScriptText(SAY_RANE, pRane, m_creature);
+                }
                 break;
             case 15:
                 DoScriptText(SAY_RANE_REPLY, m_creature);
@@ -184,7 +186,9 @@ struct npc_deathstalker_erland : public CreatureScript
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
                 if (Creature* pQuinn = GetClosestCreatureWithEntry(m_creature, NPC_QUINN, 45.0f))
+                {
                     DoScriptText(SAY_QUINN_REPLY, pQuinn, m_creature);
+                }
 #endif
                 break;
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
@@ -529,7 +533,9 @@ struct npc_deathstalker_faerleia : public CreatureScript
                 DoScriptText(SAY_COMPLETED, m_creature);
 
                 if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                {
                     pPlayer->GroupEventHappens(QUEST_PYREWOOD_AMBUSH, m_creature);
+                }
 
                 FinishEvent();
             }

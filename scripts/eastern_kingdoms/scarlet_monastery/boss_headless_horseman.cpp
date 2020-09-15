@@ -162,7 +162,9 @@ struct boss_headless_horseman : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_bHorsemanLanded)
+            {
                 ScriptedAI::MoveInLineOfSight(pWho);
+            }
         }
 
         void KilledUnit(Unit* pVictim) override
@@ -177,7 +179,9 @@ struct boss_headless_horseman : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_HEAD_OF_HORSEMAN)
+            {
                 m_headGuid = pSummoned->GetObjectGuid();
+            }
             else if (pSummoned->GetEntry() == NPC_PULSING_PUMPKIN)
             {
                 pSummoned->CastSpell(pSummoned, SPELL_SPROUTING, false);
@@ -199,7 +203,9 @@ struct boss_headless_horseman : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             if (pSpell->Id == SPELL_HORSEMAN_SUMMON)
+            {
                 DoScriptText(SAY_SPROUTING_PUMPKINS, m_creature);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -246,11 +252,15 @@ struct boss_headless_horseman : public CreatureScript
 
             // make head available
             if (Creature* pHead = m_creature->GetMap()->GetCreature(m_headGuid))
+            {
                 DoCastSpellIfCan(pHead, SPELL_SEND_HEAD, CAST_TRIGGERED);
+            }
 
             // only from second transition we start whirlwind
             if (m_creature->HasAura(SPELL_BODY_STAGE_2) || m_creature->HasAura(SPELL_BODY_STAGE_3))
+            {
                 DoCastSpellIfCan(m_creature, SPELL_WHIRLWIND, CAST_TRIGGERED);
+            }
 
             // remove head visual and set transition phase auras
             m_creature->RemoveAurasDueToSpell(SPELL_HEAD_VISUAL);
@@ -305,10 +315,14 @@ struct boss_headless_horseman : public CreatureScript
                 if (m_uiPumpkinTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_PUMPKIN) == CAST_OK)
+                    {
                         m_uiPumpkinTimer = urand(35000, 40000);
+                    }
                 }
                 else
+                {
                     m_uiPumpkinTimer -= uiDiff;
+                }
 
                 // no break;
             case PHASE_CONFLAGRATION:
@@ -328,7 +342,9 @@ struct boss_headless_horseman : public CreatureScript
                         }
                     }
                     else
+                    {
                         m_uiConflagrationTimer -= uiDiff;
+                    }
                 }
 
                 // no break;
@@ -338,10 +354,14 @@ struct boss_headless_horseman : public CreatureScript
                 if (m_uiCleaveTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_HORSEMAN_CLEAVE) == CAST_OK)
+                    {
                         m_uiCleaveTimer = 5000;
+                    }
                 }
                 else
+                {
                     m_uiCleaveTimer -= uiDiff;
+                }
 
                 DoMeleeAttackIfReady();
                 break;
@@ -350,7 +370,9 @@ struct boss_headless_horseman : public CreatureScript
                 if (!m_bHeadRequested && m_creature->GetHealthPercent() == 100.0f)
                 {
                     if (Creature* pHead = m_creature->GetMap()->GetCreature(m_headGuid))
+                    {
                         SendAIEvent(AI_EVENT_CUSTOM_B, m_creature, pHead);
+                    }
 
                     m_bHeadRequested = true;
                 }
@@ -374,7 +396,9 @@ struct spell_request_body : public SpellScript
         if (uiSpellId == SPELL_REQUEST_BODY && uiEffIndex == EFFECT_INDEX_0)
         {
             if (pCreatureTarget->GetEntry() == NPC_HEADLESS_HORSEMAN)
+            {
                 pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget);
+            }
 
             return true;
         }
@@ -454,7 +478,9 @@ struct boss_head_of_horseman : public CreatureScript
             }
             // rejoin head by force - body healed
             else if (eventType == AI_EVENT_CUSTOM_B)
+            {
                 DoRejoinHead(true);
+            }
         }
 
         // rejoin the head with the body
@@ -470,7 +496,9 @@ struct boss_head_of_horseman : public CreatureScript
 
             // heal body only if head is not requested by force (Horseman healed)
             if (!bForced)
+            {
                 DoCastSpellIfCan(m_creature, SPELL_HEAL_BODY, CAST_TRIGGERED);
+            }
         }
 
     };
@@ -490,7 +518,9 @@ struct spell_send_head : public SpellScript
         if (uiSpellId == SPELL_SEND_HEAD && uiEffIndex == EFFECT_INDEX_0)
         {
             if (pCreatureTarget->GetEntry() == NPC_HEAD_OF_HORSEMAN)
+            {
                 pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget);
+            }
 
             return true;
         }

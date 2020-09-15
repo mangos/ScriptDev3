@@ -376,7 +376,9 @@ struct boss_sara : public CreatureScript
 
                     // inform the voice controller over event start
                     if (Creature* pVoice = m_pInstance->GetSingleCreatureFromStorage(NPC_VOICE_OF_YOGG))
+                    {
                         SendAIEvent(AI_EVENT_START_EVENT, m_creature, pVoice);
+                    }
                 }
 
                 DoInitialiseKeepers();
@@ -409,7 +411,9 @@ struct boss_sara : public CreatureScript
 
                     // despawn all clouds for phase 2
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_YOGG_DESPAWN_CLOUDS, 0);
+                    }
                 }
             }
         }
@@ -437,7 +441,9 @@ struct boss_sara : public CreatureScript
                 pSummoned->CastSpell(pSummoned, SPELL_DEATH_RAY_VISUAL_ORIGIN, true);
             }
             else if (pSummoned->GetEntry() == NPC_DEATH_RAY)
+            {
                 pSummoned->CastSpell(pSummoned, SPELL_DEATH_RAY_VISUAL_WARN, false);
+            }
         }
 
         void JustDidDialogueStep(int32 iEntry) override
@@ -460,9 +466,13 @@ struct boss_sara : public CreatureScript
                 if (m_pInstance)
                 {
                     if (Creature* pYogg = m_pInstance->GetSingleCreatureFromStorage(NPC_YOGGSARON))
+                    {
                         DoCastSpellIfCan(pYogg, SPELL_RIDE_VEHICLE_YOGG, CAST_TRIGGERED);
+                    }
                     if (Creature* pVoice = m_pInstance->GetSingleCreatureFromStorage(NPC_VOICE_OF_YOGG))
+                    {
                         SendAIEvent(AI_EVENT_START_EVENT_A, m_creature, pVoice);
+                    }
                     m_uiPhase = PHASE_VISIONS;
                 }
                 break;
@@ -542,13 +552,17 @@ struct boss_sara : public CreatureScript
                     if (castResult == CAST_OK)
                     {
                         if (roll_chance_i(30))
+                        {
                             DoScriptText(urand(0, 1) ? SAY_SARA_HELP_1 : SAY_SARA_HELP_2, m_creature);
+                        }
 
                         m_uiSarasSpellTimer = 5000;
                     }
                 }
                 else
+                {
                     m_uiSarasSpellTimer -= uiDiff;
+                }
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -563,41 +577,57 @@ struct boss_sara : public CreatureScript
                     if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_PHYCHOSIS : SPELL_PHYCHOSIS_H) == CAST_OK)
                     {
                         if (roll_chance_i(10))
+                        {
                             DoScriptText(SAY_SARA_PHYCHOSIS, m_creature);
+                        }
 
                         m_uiPsychosisTimer = urand(3000, 4000);
                     }
                 }
                 else
+                {
                     m_uiPsychosisTimer -= uiDiff;
+                }
 
                 if (m_uiMaladyTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_MALADY_OF_THE_MIND) == CAST_OK)
+                    {
                         m_uiMaladyTimer = 15000;
+                    }
                 }
                 else
+                {
                     m_uiMaladyTimer -= uiDiff;
+                }
 
                 if (m_uiBrainLinkTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_BRAIN_LINK) == CAST_OK)
+                    {
                         m_uiBrainLinkTimer = 25000;
+                    }
                 }
                 else
+                {
                     m_uiBrainLinkTimer -= uiDiff;
+                }
 
                 if (m_uiDeathRayTimer < uiDiff)
                 {
                     if (urand(0, 1))
+                    {
                         DoScriptText(SAY_SARA_DEATH_RAY, m_creature);
+                    }
 
                     // spawn death orb at predefined location
                     m_creature->CastSpell(1980.43f, -25.7708f, 351.5418f, SPELL_DEATH_RAY_SUMMON, true);
                     m_uiDeathRayTimer = 20000;
                 }
                 else
+                {
                     m_uiDeathRayTimer -= uiDiff;
+                }
             }
         }
     };
@@ -641,7 +671,9 @@ struct boss_yogg_saron : public CreatureScript
 
             // deafening roar only available in 25man mode with 3 keepers or less active
             if (m_pInstance)
+            {
                 m_uiDeafeningRoarTimer = (!m_bIsRegularMode && m_pInstance->GetData(TYPE_YOGGSARON_HARD) <= 3) ? 20000 : 0;
+            }
         }
 
         void JustReachedHome() override
@@ -652,7 +684,9 @@ struct boss_yogg_saron : public CreatureScript
             if (m_pInstance)
             {
                 if (m_pInstance->GetData(TYPE_YOGGSARON) != FAIL)
+                {
                     m_pInstance->SetData(TYPE_YOGGSARON, FAIL);
+                }
             }
 
             m_creature->ForcedDespawn();
@@ -672,9 +706,13 @@ struct boss_yogg_saron : public CreatureScript
                 if (m_pInstance)
                 {
                     if (Creature* pSara = m_pInstance->GetSingleCreatureFromStorage(NPC_SARA))
+                    {
                         pSara->ForcedDespawn();
+                    }
                     if (Creature* pVoice = m_pInstance->GetSingleCreatureFromStorage(NPC_VOICE_OF_YOGG))
+                    {
                         SendAIEvent(AI_EVENT_START_EVENT_B, m_creature, pVoice);
+                    }
                 }
             }
         }
@@ -692,7 +730,9 @@ struct boss_yogg_saron : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_YOGGSARON, DONE);
+            }
 
             DoScriptText(SAY_DEATH, m_creature);
         }
@@ -712,13 +752,17 @@ struct boss_yogg_saron : public CreatureScript
                     if (DoCastSpellIfCan(m_creature, SPELL_LUNATIC_GAZE_YOGG) == CAST_OK)
                     {
                         if (urand(0, 1))
+                        {
                             DoPlaySoundToSet(m_creature, SOUND_ID_LUNATIC_GAZE);
+                        }
 
                         m_uiLunaticGazeTimer = 12000;
                     }
                 }
                 else
+                {
                     m_uiLunaticGazeTimer -= uiDiff;
+                }
 
                 if (m_uiShadowBeaconTimer < uiDiff)
                 {
@@ -729,7 +773,9 @@ struct boss_yogg_saron : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiShadowBeaconTimer -= uiDiff;
+                }
 
                 if (m_uiDeafeningRoarTimer)
                 {
@@ -742,7 +788,9 @@ struct boss_yogg_saron : public CreatureScript
                         }
                     }
                     else
+                    {
                         m_uiDeafeningRoarTimer -= uiDiff;
+                    }
                 }
             }
         }
@@ -877,7 +925,9 @@ struct npc_voice_yogg_saron : public CreatureScript
             if (pSpell->Id == SPELL_INSANE && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
             {
                 if (Creature* pYogg = m_pInstance->GetSingleCreatureFromStorage(NPC_YOGGSARON))
+                {
                     DoScriptText(urand(0, 1) ? SAY_TO_INSANE_1 : SAY_TO_INSANE_2, pYogg, pTarget);
+                }
 
                 m_pInstance->SetData(TYPE_ACHIEV_DRIVE_CRAZY, uint32(false));
             }
@@ -890,10 +940,14 @@ struct npc_voice_yogg_saron : public CreatureScript
                 if (m_uiBerserkTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_EXTINGUISH_LIFE) == CAST_OK)
+                    {
                         m_uiBerserkTimer = 0;
+                    }
                 }
                 else
+                {
                     m_uiBerserkTimer -= uiDiff;
+                }
             }
 
             if (m_uiSanityCheckTimer)
@@ -901,10 +955,14 @@ struct npc_voice_yogg_saron : public CreatureScript
                 if (m_uiSanityCheckTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_INSANE_PERIODIC) == CAST_OK)
+                    {
                         m_uiSanityCheckTimer = 0;
+                    }
                 }
                 else
+                {
                     m_uiSanityCheckTimer -= uiDiff;
+                }
             }
 
             if (m_uiPhase == PHASE_SARA)
@@ -912,36 +970,52 @@ struct npc_voice_yogg_saron : public CreatureScript
                 if (m_uiSummonGuardianTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_GUARDIAN_YOGG) == CAST_OK)
+                    {
                         m_uiSummonGuardianTimer = 20000;
+                    }
                 }
                 else
+                {
                     m_uiSummonGuardianTimer -= uiDiff;
+                }
             }
             else if (m_uiPhase == PHASE_VISIONS)
             {
                 if (m_uiCorruptorTentacleTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_CORRUPTOR_TENTACLE) == CAST_OK)
+                    {
                         m_uiCorruptorTentacleTimer = 30000;
+                    }
                 }
                 else
+                {
                     m_uiCorruptorTentacleTimer -= uiDiff;
+                }
 
                 if (m_uiCrusherTentacleTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_CRUSHER_TENTACLE) == CAST_OK)
+                    {
                         m_uiCrusherTentacleTimer = 60000;
+                    }
                 }
                 else
+                {
                     m_uiCrusherTentacleTimer -= uiDiff;
+                }
 
                 if (m_uiConstrictorTentacleTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_CONSTRICTOR_TENTACLE) == CAST_OK)
+                    {
                         m_uiConstrictorTentacleTimer = 25000;
+                    }
                 }
                 else
+                {
                     m_uiConstrictorTentacleTimer -= uiDiff;
+                }
 
                 if (m_uiMadnessTimer < uiDiff)
                 {
@@ -959,10 +1033,14 @@ struct npc_voice_yogg_saron : public CreatureScript
 
                     // inform the brain about the current illusion
                     if (Creature* pBrain = m_pInstance->GetSingleCreatureFromStorage(NPC_YOGG_BRAIN))
+                    {
                         SendAIEvent(AI_EVENT_START_EVENT, m_creature, pBrain, m_uiPortalsCount);
+                    }
 
                     if (Creature* pYogg = m_pInstance->GetSingleCreatureFromStorage(NPC_YOGGSARON))
+                    {
                         DoScriptText(SAY_MADNESS, pYogg);
+                    }
 
                     float fX, fY, fZ, fAng;
                     for (uint8 i = 0; i < m_uiMaxPortals; ++i)
@@ -977,17 +1055,23 @@ struct npc_voice_yogg_saron : public CreatureScript
                     m_uiMadnessTimer = 90000;
                 }
                 else
+                {
                     m_uiMadnessTimer -= uiDiff;
+                }
             }
             else if (m_uiPhase == PHASE_OLD_GOD)
             {
                 if (m_uiGuardianTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_IMMORTAL_GUARDIAN) == CAST_OK)
+                    {
                         m_uiGuardianTimer = 15000;
+                    }
                 }
                 else
+                {
                     m_uiGuardianTimer -= uiDiff;
+                }
             }
         }
     };
@@ -1080,7 +1164,9 @@ struct npc_brain_yogg_saron : public CreatureScript
         void SummonedCreatureJustDied(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_INFLUENCE_TENTACLE)
+            {
                 m_lTentaclesGuids.remove(pSummoned->GetObjectGuid());
+            }
 
             // open door and stun all tentacles
             if (m_lTentaclesGuids.empty())
@@ -1118,11 +1204,15 @@ struct npc_brain_yogg_saron : public CreatureScript
             {
             case SPELL_ASSASSINATE:
                 if (Creature* pGarona = m_pInstance->GetSingleCreatureFromStorage(NPC_GARONA))
+                {
                     pGarona->CastSpell(pGarona, SPELL_ASSASSINATE, true);
+                }
                 break;
             case SAY_LICH_KING_1:
                 if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(NPC_LICH_KING))
+                {
                     pLichKing->CastSpell(pLichKing, SPELL_DEATHGRASP, false);
+                }
                 break;
             }
         }
@@ -1213,10 +1303,14 @@ struct npc_brain_yogg_saron : public CreatureScript
                 if (m_uiIllusionTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_SHATTERED_ILLUSION_REMOVE) == CAST_OK)
+                    {
                         m_uiIllusionTimer = 0;
+                    }
                 }
                 else
+                {
                     m_uiIllusionTimer -= uiDiff;
+                }
             }
 
             // inform Yogg that health has dropped
@@ -1232,7 +1326,9 @@ struct npc_brain_yogg_saron : public CreatureScript
                 if (m_pInstance)
                 {
                     if (Creature* pYogg = m_pInstance->GetSingleCreatureFromStorage(NPC_YOGGSARON))
+                    {
                         SendAIEvent(AI_EVENT_START_EVENT, m_creature, pYogg);
+                    }
                 }
             }
         }
@@ -1306,7 +1402,9 @@ struct npc_guardian_of_yogg : public CreatureScript
                         for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
                         {
                             if (Player* pPlayer = itr->getSource())
+                            {
                                 DoScriptText(SAY_WIPE_PHASE_1, pVoice, pPlayer);
+                            }
                         }
                     }
 
@@ -1327,18 +1425,26 @@ struct npc_guardian_of_yogg : public CreatureScript
             if (m_uiDarkVolleyTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_DARK_VOLLEY) == CAST_OK)
+                {
                     m_uiDarkVolleyTimer = urand(10000, 25000);
+                }
             }
             else
+            {
                 m_uiDarkVolleyTimer -= uiDiff;
+            }
 
             if (m_uiDominateMindTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_DOMINATE_MIND) == CAST_OK)
+                {
                     m_uiDominateMindTimer = urand(30000, 40000);
+                }
             }
             else
+            {
                 m_uiDominateMindTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -1391,7 +1497,9 @@ struct npc_immortal_guardian : public CreatureScript
                 if (!m_bWeakened)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_WEAKENED) == CAST_OK)
+                    {
                         m_bWeakened = true;
+                    }
                 }
             }
         }
@@ -1408,11 +1516,15 @@ struct npc_immortal_guardian : public CreatureScript
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_DRAIN_LIFE : SPELL_DRAIN_LIFE_H) == CAST_OK)
+                    {
                         m_uiDrainLifeTimer = urand(10000, 15000);
+                    }
                 }
             }
             else
+            {
                 m_uiDrainLifeTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -1438,7 +1550,9 @@ struct spell_yogg_empowered : public SpellScript
             uint8 uiCurrentStacks = 0;
 
             if (SpellAuraHolder* pEmpowerAura = pCreatureTarget->GetSpellAuraHolder(SPELL_EMPOWERED_MOD))
+            {
                 uiCurrentStacks = pEmpowerAura->GetStackAmount();
+            }
 
             // if creature already has the required stacks, ignore
             if (uiProjectedStacks == uiCurrentStacks)
@@ -1447,7 +1561,9 @@ struct spell_yogg_empowered : public SpellScript
             }
 
             if (uiCurrentStacks > uiProjectedStacks)
+            {
                 pCreatureTarget->RemoveAuraHolderFromStack(SPELL_EMPOWERED_MOD, uiCurrentStacks - uiProjectedStacks);
+            }
             else
             {
                 for (uint8 i = 0; i < uiProjectedStacks - uiCurrentStacks; ++i)
@@ -1457,7 +1573,9 @@ struct spell_yogg_empowered : public SpellScript
             }
 
             if (uiCurrentStacks == 0 && uiCurrentStacks < uiProjectedStacks)
+            {
                 pCreatureTarget->RemoveAurasDueToSpell(SPELL_WEAKENED);
+            }
 
             return true;
         }
@@ -1488,7 +1606,9 @@ struct npc_constrictor_tentacle : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (Player* pSummoner = m_creature->GetMap()->GetPlayer(((TemporarySummon*)m_creature)->GetSummonerGuid()))
+            {
                 pSummoner->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_SQUEEZE : SPELL_SQUEEZE_H);
+            }
         }
     };
 
@@ -1534,13 +1654,17 @@ struct npc_ominous_cloud : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             if (pSpell->Id == SPELL_SUMMON_GUARDIAN_YOGG)
+            {
                 m_uiDelayTimer = 10000;
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_GUARDIAN_OF_YOGG)
+            {
                 pSummoned->SetInCombatWithZone();
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -1548,9 +1672,13 @@ struct npc_ominous_cloud : public CreatureScript
             if (m_uiDelayTimer)
             {
                 if (m_uiDelayTimer <= uiDiff)
+                {
                     m_uiDelayTimer = 0;
+                }
                 else
+                {
                     m_uiDelayTimer -= uiDiff;
+                }
             }
         }
     };
@@ -1597,7 +1725,9 @@ struct npc_death_ray : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiDeathRayTimer -= uiDiff;
+                }
             }
         }
     };
@@ -1630,7 +1760,9 @@ struct npc_descent_madness : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* /*pInvoker*/, uint32 uiMiscValue) override
         {
             if (eventType == AI_EVENT_START_EVENT)
+            {
                 m_uiCurentSpell = uiMiscValue;
+            }
         }
 
         uint32 GetCurrentSpell() { return m_uiCurentSpell; }
@@ -1647,7 +1779,9 @@ struct npc_descent_madness : public CreatureScript
         {
             uint32 uiClickSpell = 0;
             if (npc_descent_madnessAI* pDescentAI = dynamic_cast<npc_descent_madnessAI*>(pClickedCreature->AI()))
+            {
                 uiClickSpell = pDescentAI->GetCurrentSpell();
+            }
 
             if (!uiClickSpell)
             {
@@ -1713,7 +1847,9 @@ struct npc_keeper_mimiron : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {
             if (eventType == AI_EVENT_START_EVENT && pInvoker->GetEntry() == NPC_SARA)
+            {
                 m_uiMatrixTimer = 30000;
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -1723,10 +1859,14 @@ struct npc_keeper_mimiron : public CreatureScript
                 if (m_uiMatrixTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_DESTABILIZATION_MATRIX) == CAST_OK)
+                    {
                         m_uiMatrixTimer = 30000;
+                    }
                 }
                 else
+                {
                     m_uiMatrixTimer -= uiDiff;
+                }
             }
         }
     };

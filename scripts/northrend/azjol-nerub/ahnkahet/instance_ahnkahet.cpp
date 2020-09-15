@@ -103,17 +103,23 @@ struct is_ahnkahet : public InstanceScript
             {
             case GO_DOOR_TALDARAM:
                 if (m_auiEncounter[TYPE_TALDARAM] == DONE)
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
             case GO_VORTEX:
                 if (m_auiEncounter[TYPE_TALDARAM] == SPECIAL)
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
 
             case GO_ANCIENT_DEVICE_L:
             case GO_ANCIENT_DEVICE_R:
                 if (m_auiEncounter[TYPE_NADOX] == DONE)
+                {
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                }
                 break;
 
             default:
@@ -165,12 +171,16 @@ struct is_ahnkahet : public InstanceScript
                 if (m_uiInitiatesKilled == MAX_INITIATES)
                 {
                     if (Creature* pJedoga = GetSingleCreatureFromStorage(NPC_JEDOGA_SHADOWSEEKER))
+                    {
                         pJedoga->GetMotionMaster()->MovePoint(1, aJedogaLandingLoc[0], aJedogaLandingLoc[1], aJedogaLandingLoc[2]);
+                    }
 
                     for (GuidList::const_iterator itr = m_lJedogaEventControllersGuidList.begin(); itr != m_lJedogaEventControllersGuidList.end(); ++itr)
                     {
                         if (Creature* pTemp = instance->GetCreature(*itr))
+                        {
                             pTemp->InterruptNonMeleeSpells(false);
+                        }
                     }
                 }
 
@@ -203,7 +213,9 @@ struct is_ahnkahet : public InstanceScript
                 {
                     // Switch Insanity
                     if (Creature* pVolazj = GetSingleCreatureFromStorage(NPC_HERALD_VOLAZJ))
+                    {
                         pVolazj->CastSpell(pVolazj, SPELL_INSANITY_SWITCH, true);
+                    }
 
                     // Handle insanity switch manually, because the boss can't hit phased players
                     if (pCreature->IsTemporarySummon())
@@ -212,7 +224,9 @@ struct is_ahnkahet : public InstanceScript
 
                         // Switch insanity phase for the master player
                         if (Player* pPlayer = instance->GetPlayer(pTemporary->GetSummonerGuid()))
+                        {
                             HandleInsanitySwitch(pPlayer);
+                        }
                     }
                 }
                 break;
@@ -228,9 +242,13 @@ struct is_ahnkahet : public InstanceScript
             case TYPE_NADOX:
                 m_auiEncounter[uiType] = uiData;
                 if (uiData == IN_PROGRESS)
+                {
                     m_bRespectElders = true;
+                }
                 else if (uiData == SPECIAL)
+                {
                     m_bRespectElders = false;
+                }
                 else if (uiData == DONE)
                 {
                     DoToggleGameObjectFlags(GO_ANCIENT_DEVICE_L, GO_FLAG_NO_INTERACT, false);
@@ -249,13 +267,17 @@ struct is_ahnkahet : public InstanceScript
 
                         // Lower Taldaram
                         if (Creature* pTaldaram = GetSingleCreatureFromStorage(NPC_TALDARAM))
+                        {
                             pTaldaram->GetMotionMaster()->MovePoint(1, aTaldaramLandingLoc[0], aTaldaramLandingLoc[1], aTaldaramLandingLoc[2]);
+                        }
 
                         // Interrupt the channeling
                         for (GuidList::const_iterator itr = m_lJedogaControllersGuidList.begin(); itr != m_lJedogaControllersGuidList.end(); ++itr)
                         {
                             if (Creature* pTemp = instance->GetCreature(*itr))
+                            {
                                 pTemp->InterruptNonMeleeSpells(false);
+                            }
                         }
                     }
                 }
@@ -268,11 +290,17 @@ struct is_ahnkahet : public InstanceScript
             case TYPE_JEDOGA:
                 m_auiEncounter[uiType] = uiData;
                 if (uiData == IN_PROGRESS)
+                {
                     m_bVolunteerWork = true;
+                }
                 else if (uiData == SPECIAL)
+                {
                     m_bVolunteerWork = false;
+                }
                 else if (uiData == FAIL)
+                {
                     m_uiInitiatesKilled = 0;
+                }
                 break;
             case TYPE_AMANITAR:
                 m_auiEncounter[uiType] = uiData;
@@ -290,17 +318,23 @@ struct is_ahnkahet : public InstanceScript
                 {
                 case 0:
                     if (Creature* pTemp = instance->GetCreature(m_jedogaSacrificeController))
+                    {
                         pTemp->CastSpell(pTemp, SPELL_JE_SACRIFICE_VISUAL, false);
+                    }
                     break;
                 case 1:
                     if (Creature* pTemp = instance->GetCreature(m_jedogaSacrificeController))
+                    {
                         pTemp->RemoveAurasDueToSpell(SPELL_JE_SACRIFICE_VISUAL);
+                    }
                     break;
                 case 2:
                     for (GuidList::const_iterator itr = m_lJedogaEventControllersGuidList.begin(); itr != m_lJedogaEventControllersGuidList.end(); ++itr)
                     {
                         if (Creature* pTemp = instance->GetCreature(*itr))
+                        {
                             pTemp->CastSpell(GetSingleCreatureFromStorage(NPC_JEDOGA_SHADOWSEEKER), SPELL_JE_BEAM_VISUAL, false);
+                        }
                     }
                     break;
                 default:
@@ -312,7 +346,9 @@ struct is_ahnkahet : public InstanceScript
                 {
                 case 0:
                     if (Creature* pGuardianEgg = instance->GetCreature(SelectRandomGuardianEggGuid()))
+                    {
                         pGuardianEgg->CastSpell(pGuardianEgg, SPELL_SUMMON_SWARM_GUARDIAN, false);
+                    }
                     break;
                 case 1:
                     // There are 2 Swarmers summoned at a timer; @TODO check to do not use single mob twice
@@ -332,7 +368,9 @@ struct is_ahnkahet : public InstanceScript
                 for (GuidList::const_iterator itr = m_lJedogaControllersGuidList.begin(); itr != m_lJedogaControllersGuidList.end(); ++itr)
                 {
                     if (Creature* pTemp = instance->GetCreature(*itr))
+                    {
                         pTemp->CastSpell(GetSingleCreatureFromStorage(NPC_TALDARAM), SPELL_TA_BEAM_VISUAL, false);
+                    }
                 }
                 return;
 
@@ -373,7 +411,9 @@ struct is_ahnkahet : public InstanceScript
             if (uiType == DATA_INSANITY_PLAYER)
             {
                 if (Player* pPlayer = instance->GetPlayer(ObjectGuid(uiGuid)))
+                {
                     m_lInsanityPlayersGuidList.push_back(pPlayer->GetObjectGuid());
+                }
             }
         }
 
@@ -408,7 +448,9 @@ struct is_ahnkahet : public InstanceScript
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     m_auiEncounter[i] = NOT_STARTED;
+                }
             }
 
             OUT_LOAD_INST_DATA_COMPLETE;
@@ -420,7 +462,9 @@ struct is_ahnkahet : public InstanceScript
             for (GuidList::const_iterator itr = m_lInsanityPlayersGuidList.begin(); itr != m_lInsanityPlayersGuidList.end(); ++itr)
             {
                 if (Player* pPlayer = instance->GetPlayer(*itr))
+                {
                     pPlayer->RemoveSpellsCausingAura(SPELL_AURA_PHASE);
+                }
             }
         }
 
@@ -444,10 +488,14 @@ struct is_ahnkahet : public InstanceScript
                 if (Player* pTemp = instance->GetPlayer(*itr))
                 {
                     if (pTemp->HasAura(uiPhaseAura))
+                    {
                         lSamePhasePlayers.push_back(pTemp);
+                    }
                     // Check only for alive players
                     else if (pTemp->IsAlive())
+                    {
                         vOtherPhasePlayers.push_back(pTemp);
+                    }
                 }
             }
 

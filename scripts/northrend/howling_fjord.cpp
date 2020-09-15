@@ -98,7 +98,9 @@ struct npc_ancient_male_vrykul : public CreatureScript
             }
 
             if (m_uiPhaseTimer < uiDiff)
+            {
                 m_uiPhaseTimer = 5000;
+            }
             else
             {
                 m_uiPhaseTimer -= uiDiff;
@@ -115,19 +117,25 @@ struct npc_ancient_male_vrykul : public CreatureScript
                 break;
             case 1:
                 if (pFemale)
+                {
                     DoScriptText(EMOTE_VRYKUL_SOB, pFemale);
+                }
                 DoScriptText(SAY_VRYKUL_DISPOSE, m_creature);
                 break;
             case 2:
                 if (pFemale)
+                {
                     DoScriptText(SAY_VRYKUL_BEG, pFemale);
+                }
                 break;
             case 3:
                 DoScriptText(SAY_VRYKUL_WHAT, m_creature);
                 break;
             case 4:
                 if (pFemale)
+                {
                     DoScriptText(SAY_VRYKUL_HIDE, pFemale);
+                }
                 break;
             case 5:
                 DoCastSpellIfCan(m_creature, SPELL_SECRET_OF_WYRMSKULL);
@@ -159,7 +167,9 @@ struct at_ancient_male_vrykul : public AreaTriggerScript
             if (Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, NPC_MALE_VRYKUL, 20.0f))
             {
                 if (CreatureAI* pVrykulAI = pCreature->AI())
+                {
                     pVrykulAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, pCreature, pPlayer, 0);
+                }
             }
         }
 
@@ -250,7 +260,9 @@ struct npc_daegarn : public CreatureScript
             }
 
             if (pSummoned->IsWithinDistInMap(pPlayer, 75.0f))   // ~the radius of the ring
+            {
                 pSummoned->AI()->AttackStart(pPlayer);
+            }
         }
 
         void SummonedCreatureDespawn(Creature* pSummoned) override
@@ -275,7 +287,9 @@ struct npc_daegarn : public CreatureScript
         if (pQuest->GetQuestId() == QUEST_DEFEAT_AT_RING)
         {
             if (npc_daegarnAI* pDaegarnAI = dynamic_cast<npc_daegarnAI*>(pCreature->AI()))
+            {
                 pDaegarnAI->StartEvent(pPlayer);
+            }
         }
 
         return true;
@@ -340,7 +354,9 @@ struct npc_silvermoon_harry : public CreatureScript
             }
 
             if (m_creature->IsHostileTo(pAttacker))
+            {
                 AttackStart(pAttacker);
+            }
         }
 
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
@@ -374,9 +390,13 @@ struct npc_silvermoon_harry : public CreatureScript
             if (m_bHarryBeaten)
             {
                 if (m_uiResetBeatenTimer < uiDiff)
+                {
                     EnterEvadeMode();
+                }
                 else
+                {
                     m_uiResetBeatenTimer -= uiDiff;
+                }
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -390,7 +410,9 @@ struct npc_silvermoon_harry : public CreatureScript
                 m_uiScorchTimer = 10 * IN_MILLISECONDS;
             }
             else
+            {
                 m_uiScorchTimer -= uiDiff;
+            }
 
             if (m_uiBlastWaveTimer < uiDiff)
             {
@@ -398,7 +420,9 @@ struct npc_silvermoon_harry : public CreatureScript
                 m_uiBlastWaveTimer = 50 * IN_MILLISECONDS;
             }
             else
+            {
                 m_uiBlastWaveTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -412,19 +436,27 @@ struct npc_silvermoon_harry : public CreatureScript
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
         if (pCreature->IsQuestGiver())
+        {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+        }
 
         if (pCreature->IsVendor())
+        {
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
+        }
 
         if (pPlayer->GetQuestStatus(QUEST_GAMBLING_DEBT) == QUEST_STATUS_INCOMPLETE)
         {
             if (npc_silvermoon_harryAI* pHarryAI = dynamic_cast<npc_silvermoon_harryAI*>(pCreature->AI()))
             {
                 if (!pHarryAI->IsBeaten())
+                {
                     pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_GAMBLING_DEBT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                }
                 else
+                {
                     pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_PAYING, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                }
             }
         }
 
@@ -538,7 +570,9 @@ struct npc_lich_king_village : public CreatureScript
                 break;
             case NPC_VALKYR_SOULCLAIMER:
                 if (Creature* pCreature = GetClosestCreatureWithEntry(m_creature, NPC_VALKYR_SOULCLAIMER, 20.0f))
+                {
                     DoScriptText(SAY_PREPARE, pCreature);
+                }
                 break;
             case SPELL_WRATH_LICH_KING_FIRST:
                 if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_pHeldPlayer))
@@ -575,9 +609,13 @@ struct npc_lich_king_village : public CreatureScript
                     DoCastSpellIfCan(pWho, SPELL_GRASP_OF_THE_LICH_KING, CAST_TRIGGERED);
 
                     if (((Player*)pWho)->GetQuestStatus(QUEST_ID_LK_FLAG) == QUEST_STATUS_COMPLETE)
+                    {
                         StartNextDialogueText(SAY_PERSISTANCE);
+                    }
                     else
+                    {
                         StartNextDialogueText(EMOTE_LICH_KING_FACE);
+                    }
                 }
             }
         }
@@ -767,13 +805,17 @@ struct  npc_king_ymiron : public CreatureScript
                     if (roll_chance_i(15))
                     {
                         if (Creature* pCitizen = m_creature->GetMap()->GetCreature(SelectRandomCrowdNpc()))
+                        {
                             DoScriptText(aRandomTextEntries[urand(0, MAX_CROWD_TEXT_ENTRIES - 1)], pCitizen);
+                        }
                     }
 
                     m_uiCrowdSpeechTimer = 1000;
                 }
                 else
+                {
                     m_uiCrowdSpeechTimer -= uiDiff;
+                }
             }
         }
     };
@@ -793,7 +835,9 @@ struct at_nifflevar : public AreaTriggerScript
         if (pPlayer->IsAlive() && pPlayer->GetQuestStatus(QUEST_ID_ANGUISH_OF_NIFFLEVAR) == QUEST_STATUS_INCOMPLETE && pPlayer->HasAura(SPELL_ECHO_OF_YMIRON_NIFFLEVAR))
         {
             if (Creature* pCreature = GetClosestCreatureWithEntry(pPlayer, NPC_KING_YMIRON, 30.0f))
+            {
                 pCreature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pPlayer, pCreature);
+            }
 
             return true;
         }
@@ -872,7 +916,9 @@ struct npc_firecrackers_bunny : public CreatureScript
                     {
                         // check for alive and out of combat only
                         if ((*batItr)->IsAlive() && !(*batItr)->getVictim())
+                        {
                             pBat = *batItr;
+                        }
 
                         ++batItr;
                     } while (!pBat && batItr != lBatsList.end());
@@ -895,7 +941,9 @@ struct npc_firecrackers_bunny : public CreatureScript
                     m_bHasValidBat = true;
                 }
                 else
+                {
                     m_uiStartTimer -= uiDiff;
+                }
             }
         }
     };
@@ -1002,7 +1050,9 @@ struct npc_apothecary_hanes : public CreatureScript
                 break;
             case 44:
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     pPlayer->GroupEventHappens(QUEST_ID_TRIAL_OF_FIRE, m_creature);
+                }
                 break;
             }
         }
@@ -1019,10 +1069,14 @@ struct npc_apothecary_hanes : public CreatureScript
                 if (m_uiHealingTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_HEALING_POTION) == CAST_OK)
+                    {
                         m_uiHealingTimer = 10000;
+                    }
                 }
                 else
+                {
                     m_uiHealingTimer -= uiDiff;
+                }
             }
 
             DoMeleeAttackIfReady();

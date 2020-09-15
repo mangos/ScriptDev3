@@ -1236,7 +1236,9 @@ struct npc_cenarion_sparrowhawk : public CreatureScript
 
             // despawn the trigger and spawn the nearby stone
             if (Creature* pStoneTrigger = m_creature->GetMap()->GetCreature(m_currentStone))
+            {
                 pStoneTrigger->ForcedDespawn();
+            }
 
             if (GameObject* pStone = GetClosestGameObjectWithEntry(m_creature, GO_RAVEN_STONE, 5.0f))
             {
@@ -1261,7 +1263,9 @@ struct npc_cenarion_sparrowhawk : public CreatureScript
                 m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
             }
             else
+            {
                 m_creature->ForcedDespawn(10000);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -1280,7 +1284,9 @@ struct npc_cenarion_sparrowhawk : public CreatureScript
                     m_uiSurveyTimer = 0;
                 }
                 else
+                {
                     m_uiSurveyTimer -= uiDiff;
+                }
             }
         }
     };
@@ -1345,7 +1351,9 @@ struct npc_skyguard_prisoner : public CreatureScript
 
                 // open cage
                 if (GameObject* pCage = GetClosestGameObjectWithEntry(m_creature, GO_PRISONER_CAGE, 10.0f))
+                {
                     pCage->Use(m_creature);
+                }
             }
         }
 
@@ -1384,7 +1392,9 @@ struct npc_skyguard_prisoner : public CreatureScript
                 SetRun();
 
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     pPlayer->GroupEventHappens(QUEST_ID_ESCAPE_SKETTIS, m_creature);
+                }
                 break;
             }
         }

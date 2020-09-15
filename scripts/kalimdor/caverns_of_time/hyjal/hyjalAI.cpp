@@ -397,7 +397,9 @@ void hyjalAI::SummonNextWave()
         uint32 stateValue = m_uiWaveCount + 1;
 
         if (m_bIsFirstBossDead)
-        { stateValue -= MAX_WAVES; }                        // Subtract 9 from it to give the proper wave number if we are greater than 8
+        {
+            stateValue -= MAX_WAVES;                         // Subtract 9 from it to give the proper wave number if we are greater than 8
+        }
 
         // Set world state to our current wave number
         m_pInstance->DoUpdateWorldState(WORLD_STATE_WAVES, stateValue);

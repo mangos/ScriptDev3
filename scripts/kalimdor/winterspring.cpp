@@ -451,7 +451,9 @@ struct npc_ranshalla : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* /*pInvoker*/, uint32 uiMiscValue) override
         {
             if (eventType == AI_EVENT_CUSTOM_A && pSender == m_creature)
+            {
                 DoContinueEscort(bool(uiMiscValue));
+            }
         }
 
         void UpdateEscortAI(const uint32 uiDiff) override

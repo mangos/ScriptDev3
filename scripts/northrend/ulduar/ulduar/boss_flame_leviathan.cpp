@@ -226,7 +226,9 @@ struct boss_flame_leviathan : public CreatureScript
 
                 // clear hard mode auras
                 if (Creature* pOrbital = m_pInstance->GetSingleCreatureFromStorage(NPC_ORBITAL_SUPPORT))
+                {
                     pOrbital->RemoveAllAuras();
+                }
             }
 
             DoScriptText(SAY_DEATH, m_creature);
@@ -235,7 +237,9 @@ struct boss_flame_leviathan : public CreatureScript
             if (Creature* pFlyMachine = m_creature->SummonCreature(NPC_BRANN_FLYING_MACHINE, 175.2838f, -210.4325f, 501.2375f, 1.42f, TEMPSUMMON_CORPSE_DESPAWN, 0))
             {
                 if (Creature* pBrann = m_creature->SummonCreature(NPC_BRANN_BRONZEBEARD_LEVIATHAN, 175.2554f, -210.6305f, 500.7375f, 1.42f, TEMPSUMMON_CORPSE_DESPAWN, 0))
+                {
                     pBrann->CastSpell(pFlyMachine, SPELL_RIDE_VEHICLE, true);
+                }
 
                 pFlyMachine->SetWalk(false);
                 pFlyMachine->GetMotionMaster()->MovePoint(1, 229.9419f, -130.3764f, 409.5681f);
@@ -248,7 +252,9 @@ struct boss_flame_leviathan : public CreatureScript
             FetchTowers();
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_LEVIATHAN, IN_PROGRESS);
+            }
 
             DoScriptText(SAY_AGGRO, m_creature);
         }
@@ -256,13 +262,17 @@ struct boss_flame_leviathan : public CreatureScript
         void KilledUnit(Unit* /*pVictim*/) override
         {
             if (urand(0, 1))
+            {
                 DoScriptText(SAY_SLAY, m_creature);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_LEVIATHAN, FAIL);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -331,7 +341,9 @@ struct boss_flame_leviathan : public CreatureScript
                 m_creature->FixateTarget(pTarget);
 
                 if (Player* pPlayer = pTarget->GetCharmerOrOwnerPlayerOrPlayerItself())
+                {
                     DoScriptText(EMOTE_PURSUE, m_creature, pPlayer);
+                }
             }
         }
 
@@ -360,7 +372,9 @@ struct boss_flame_leviathan : public CreatureScript
                 m_bUlduarTower[TOWER_ID_HODIR] = true;
             }
             else
+            {
                 pOrbital->RemoveAurasDueToSpell(SPELL_TOWER_OF_FROST);
+            }
             if (m_pInstance->GetData(TYPE_TOWER_FREYA) == DONE)
             {
                 pOrbital->CastSpell(pOrbital, SPELL_TOWER_OF_LIFE, true);
@@ -368,7 +382,9 @@ struct boss_flame_leviathan : public CreatureScript
                 m_bUlduarTower[TOWER_ID_FREYA] = true;
             }
             else
+            {
                 pOrbital->RemoveAurasDueToSpell(SPELL_TOWER_OF_LIFE);
+            }
             if (m_pInstance->GetData(TYPE_TOWER_MIMIRON) == DONE)
             {
                 pOrbital->CastSpell(pOrbital, SPELL_TOWER_OF_FLAMES, true);
@@ -376,7 +392,9 @@ struct boss_flame_leviathan : public CreatureScript
                 m_bUlduarTower[TOWER_ID_MIMIRON] = true;
             }
             else
+            {
                 pOrbital->RemoveAurasDueToSpell(SPELL_TOWER_OF_FLAMES);
+            }
             if (m_pInstance->GetData(TYPE_TOWER_THORIM) == DONE)
             {
                 pOrbital->CastSpell(pOrbital, SPELL_TOWER_OF_STORMS, true);
@@ -384,7 +402,9 @@ struct boss_flame_leviathan : public CreatureScript
                 m_bUlduarTower[TOWER_ID_THORIM] = true;
             }
             else
+            {
                 pOrbital->RemoveAurasDueToSpell(SPELL_TOWER_OF_STORMS);
+            }
 
             // inform instance about all active towers for future use in achievements and hard mode loot
             m_pInstance->SetData(TYPE_LEVIATHAN_HARD, uiActiveTowers);
@@ -461,42 +481,60 @@ struct boss_flame_leviathan : public CreatureScript
                 }
             }
             else
+            {
                 m_uiPursueTimer -= uiDiff;
+            }
 
             if (m_uiFlameVentsTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_FLAME_VENTS) == CAST_OK)
+                {
                     m_uiFlameVentsTimer = urand(15000, 25000);
+                }
             }
             else
+            {
                 m_uiFlameVentsTimer -= uiDiff;
+            }
 
             if (m_uiBatteringRamTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_BATTERING_RAM) == CAST_OK)
+                {
                     m_uiBatteringRamTimer = urand(10000, 15000);
+                }
             }
             else
+            {
                 m_uiBatteringRamTimer -= uiDiff;
+            }
 
             if (m_uiMissileBarrageTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_MISSILE_BARRAGE_TARGET) == CAST_OK)
+                    {
                         m_uiMissileBarrageTimer = urand(1000, 2000);
+                    }
                 }
             }
             else
+            {
                 m_uiMissileBarrageTimer -= uiDiff;
+            }
 
             if (m_uiGatheringSpeedTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_GATHERING_SPEED) == CAST_OK)
+                {
                     m_uiGatheringSpeedTimer = 10000;
+                }
             }
             else
+            {
                 m_uiGatheringSpeedTimer -= uiDiff;
+            }
 
             // start hard mode
             if (m_uiHardModeTimer)
@@ -544,18 +582,24 @@ struct boss_flame_leviathan : public CreatureScript
                                     break;
                                 }
                                 else
+                                {
                                     ++m_uiHardModeStep;
+                                }
 
                                 // stop the timer after the final element
                                 if (i == KEEPER_ENCOUNTER - 1)
+                                {
                                     m_uiHardModeTimer = 0;
+                                }
                             }
                             break;
                         }
                     }
                 }
                 else
+                {
                     m_uiHardModeTimer -= uiDiff;
+                }
             }
 
             // Tower of Storm abilities
@@ -567,12 +611,18 @@ struct boss_flame_leviathan : public CreatureScript
                     ++m_uiThorimHammerCount;
 
                     if (m_uiThorimHammerCount == MAX_THORIM_HAMMER)
+                    {
                         m_uiThorimHammerTimer = 0;
+                    }
                     else
+                    {
                         m_uiThorimHammerTimer = 1000;
+                    }
                 }
                 else
+                {
                     m_uiThorimHammerTimer -= uiDiff;
+                }
             }
 
             DoMeleeAttackIfReady();
@@ -617,7 +667,9 @@ struct npc_hodir_fury_reticle : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_HODIR_FURY)
+            {
                 m_hodirFuryGuid = pSummoned->GetObjectGuid();
+            }
         }
 
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
@@ -629,7 +681,9 @@ struct npc_hodir_fury_reticle : public CreatureScript
 
             // cast Hodir Fury on point reached and search for another target
             if (Creature* pHodirFury = m_creature->GetMap()->GetCreature(m_hodirFuryGuid))
+            {
                 pHodirFury->CastSpell(m_creature, SPELL_HODIR_FURY, true);
+            }
 
             m_uiTargetChaseTimer = 5000;
         }
@@ -645,13 +699,17 @@ struct npc_hodir_fury_reticle : public CreatureScript
                         if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN))
                         {
                             if (Unit* pTarget = pLeviathan->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                            {
                                 m_creature->GetMotionMaster()->MovePoint(1, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+                            }
                         }
                     }
                     m_uiTargetChaseTimer = 0;
                 }
                 else
+                {
                     m_uiTargetChaseTimer -= uiDiff;
+                }
             }
         }
     };
@@ -713,7 +771,9 @@ struct npc_freya_ward : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_WRITHING_LASHER || pSummoned->GetEntry() == NPC_WARD_OF_LIFE)
+            {
                 pSummoned->SetInCombatWithZone();
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -721,10 +781,14 @@ struct npc_freya_ward : public CreatureScript
             if (m_uiFreyaWardTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_FREYA_WARD) == CAST_OK)
+                {
                     m_uiFreyaWardTimer = 30000;
+                }
             }
             else
+            {
                 m_uiFreyaWardTimer -= uiDiff;
+            }
         }
     };
 
@@ -762,10 +826,14 @@ struct npc_mimiron_inferno : public CreatureScript
             if (m_uiMimironInfernoTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_MIMIRON_INFERNO) == CAST_OK)
+                {
                     m_uiMimironInfernoTimer = 1000;
+                }
             }
             else
+            {
                 m_uiMimironInfernoTimer -= uiDiff;
+            }
         }
     };
 

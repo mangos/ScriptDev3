@@ -124,7 +124,9 @@ struct boss_anubarak : public CreatureScript
             DoScriptText(SAY_AGGRO, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ANUBARAK, IN_PROGRESS);
+            }
         }
 
         void KilledUnit(Unit* /*pVictim*/) override
@@ -142,13 +144,17 @@ struct boss_anubarak : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ANUBARAK, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ANUBARAK, NOT_STARTED);
+            }
         }
 
         void MoveInLineOfSight(Unit* pWho) override
@@ -175,7 +181,9 @@ struct boss_anubarak : public CreatureScript
             case NPC_ANUBAR_VENOMANCER:
                 pSummoned->SetWalk(false);
                 if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_TRIGGER))))
+                {
                     pSummoned->GetMotionMaster()->MovePoint(0, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                }
                 break;
             case NPC_ANUBAR_DARTER:
             case NPC_ANUBAR_ASSASSIN:
@@ -220,23 +228,33 @@ struct boss_anubarak : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiLeechingSwarmTimer -= uiDiff;
+                }
 
                 if (m_uiCarrionBeetlesTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_CARRION_BEETLES) == CAST_OK)
+                    {
                         m_uiCarrionBeetlesTimer = 25000;
+                    }
                 }
                 else
+                {
                     m_uiCarrionBeetlesTimer -= uiDiff;
+                }
 
                 if (m_uiPoundTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_POUND : SPELL_POUND_H) == CAST_OK)
+                    {
                         m_uiPoundTimer = 16000;
+                    }
                 }
                 else
+                {
                     m_uiPoundTimer -= uiDiff;
+                }
 
                 if (m_creature->GetHealthPercent() < 100 - 25 * m_uiSubmergePhase)
                 {
@@ -279,7 +297,9 @@ struct boss_anubarak : public CreatureScript
                     for (uint8 i = 0; i < 2; ++i)
                     {
                         if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_ASSASIN))))
+                        {
                             pTrigger->CastSpell(pTrigger, SPELL_SUMMON_ASSASSIN, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                        }
                     }
 
                     // on the first wave summon a guardian; on the second wave summon a venonmancer
@@ -292,7 +312,9 @@ struct boss_anubarak : public CreatureScript
                     m_uiSummonTimer = 26000;
                 }
                 else
+                {
                     m_uiSummonTimer -= uiDiff;
+                }
 
                 // only on the last submerge phase
                 if (m_uiSubmergePhase == 4)
@@ -311,7 +333,9 @@ struct boss_anubarak : public CreatureScript
                         }
                     }
                     else
+                    {
                         m_uiDarterTimer -= uiDiff;
+                    }
                 }
 
                 if (m_uiEmergeTimer < uiDiff)
@@ -323,7 +347,9 @@ struct boss_anubarak : public CreatureScript
                     m_uiPhase = PHASE_GROUND;
                 }
                 else
+                {
                     m_uiEmergeTimer -= uiDiff;
+                }
             }
 
             EnterEvadeIfOutOfCombatArea(uiDiff);
@@ -380,13 +406,17 @@ struct npc_impale_target : public CreatureScript
 
                     // The impale is cast by Anub on the impale target
                     if (Creature* pAnub = m_pInstance->GetSingleCreatureFromStorage(NPC_ANUBARAK))
+                    {
                         pAnub->CastSpell(m_creature, m_bIsRegularMode ? SPELL_IMPALE : SPELL_IMPALE_H, true);
+                    }
 
                     m_creature->ForcedDespawn(3000);
                     m_uiImpaleTimer = 0;
                 }
                 else
+                {
                     m_uiImpaleTimer -= uiDiff;
+                }
             }
         }
     };

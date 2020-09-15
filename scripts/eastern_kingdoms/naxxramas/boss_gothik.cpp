@@ -186,7 +186,9 @@ struct boss_gothik : public CreatureScript
         void SummonAdds(uint32 uiSummonEntry)
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_SIGNAL_11, uiSummonEntry);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override

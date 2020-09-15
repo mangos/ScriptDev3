@@ -237,9 +237,13 @@ struct boss_kalecgos : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {
             if (eventType == AI_EVENT_CUSTOM_A && m_pInstance)
+            {
                 m_pInstance->SetData64(TYPE_KALECGOS, pInvoker->GetObjectGuid().GetRawValue()); //AddToSpectralRealm(pInvoker->GetObjectGuid());
+            }
             else if (eventType == AI_EVENT_CUSTOM_B && pSender == m_creature)
+            {
                 m_bIsUncorrupted = true;
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -486,7 +490,9 @@ struct boss_sathrovarr : public CreatureScript
                     pWho->CastSpell(pWho, SPELL_SPECTRAL_EXHAUSTION, true);
 
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData64(TYPE_KALECGOS_EJECT_SPECTRAL, pWho->GetObjectGuid().GetRawValue());  //RemoveFromSpectralRealm(pWho->GetObjectGuid());
+                    }
                 }
             }
 
@@ -501,13 +507,17 @@ struct boss_sathrovarr : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_KALECGOS_HUMAN)
+            {
                 pSummoned->AI()->AttackStart(m_creature);
+            }
         }
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {
             if (eventType == AI_EVENT_CUSTOM_A && m_pInstance)
+            {
                 m_pInstance->SetData64(TYPE_KALECGOS, pInvoker->GetObjectGuid().GetRawValue());
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -710,7 +720,9 @@ struct spell_spectral_realm_notify : public SpellScript
         if (uiSpellId == SPELL_SPECTRAL_REALM_NOTIFY && uiEffIndex == EFFECT_INDEX_0)
         {
             if (pCaster->GetTypeId() == TYPEID_PLAYER)
+            {
                 pTarget->ToCreature()->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pTarget->ToCreature());
+            }
 
             return true;
         }

@@ -143,7 +143,9 @@ struct npc_web_wrap : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {
             if (eventType == AI_EVENT_CUSTOM_A && pSender->GetEntry() == NPC_WEB_WRAP)
+            {
                 SetVictim(pInvoker);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override

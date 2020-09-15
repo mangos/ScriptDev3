@@ -240,7 +240,9 @@ bool EquippedOk(Player* pPlayer, uint32 spellId)
 #if defined(CATA) || defined (MISTS)
         SpellEffectEntry const* pSpellEffect = spell->GetSpellEffect(SpellEffectIndex(i));
         if (!pSpellEffect)
+        {
             continue;
+        }
 
         uint32 reqSpell = pSpellEffect->EffectTriggerSpell;
 #else
@@ -707,10 +709,14 @@ private:
 /*bool QuestComplete_npc_prof_blacksmith(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
 {
     if ((pQuest->GetQuestId() == 5283) || (pQuest->GetQuestId() == 5301))             // armorsmith
+    {
         pCreature->CastSpell(pPlayer, 17451, true);
+    }
 
     if ((pQuest->GetQuestId() == 5284) || (pQuest->GetQuestId() == 5302))             // weaponsmith
+    {
         pCreature->CastSpell(pPlayer, 17452, true);
+    }
 
     return true;
 }*/

@@ -198,7 +198,9 @@ struct boss_viscidus : public CreatureScript
                 m_lGlobesGuidList.push_back(pSummoned->GetObjectGuid());
             }
             else if (pSummoned->GetEntry() == NPC_VISCIDUS_TRIGGER)
+            {
                 pSummoned->CastSpell(pSummoned, SPELL_TOXIN, true);
+            }
         }
 
         void SummonedCreatureJustDied(Creature* pSummoned) override
@@ -217,7 +219,9 @@ struct boss_viscidus : public CreatureScript
                     m_creature->SetVisibility(VISIBILITY_ON);
 
                     if (DoCastSpellIfCan(m_creature, SPELL_VISCIDUS_SUICIDE, CAST_TRIGGERED) == CAST_OK)
+                    {
                         m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                    }
                 }
                 else if (m_lGlobesGuidList.empty())
                 {
@@ -271,7 +275,9 @@ struct boss_viscidus : public CreatureScript
                 if (m_creature->GetHealthPercent() <= 5.0f)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_VISCIDUS_SUICIDE, CAST_TRIGGERED) == CAST_OK)
+                    {
                         m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                    }
                 }
                 else if (DoCastSpellIfCan(m_creature, SPELL_VISCIDUS_EXPLODE, CAST_TRIGGERED | CAST_INTERRUPT_PREVIOUS) == CAST_OK)
                 {
@@ -295,9 +301,13 @@ struct boss_viscidus : public CreatureScript
                 }
             }
             else if (m_uiHitCount == HITCOUNT_SHATTER)
+            {
                 DoScriptText(EMOTE_SHATTER, m_creature);
+            }
             else if (m_uiHitCount == HITCOUNT_CRACK)
+            {
                 DoScriptText(EMOTE_CRACK, m_creature);
+            }
         }
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
@@ -377,7 +387,9 @@ struct boss_viscidus : public CreatureScript
                     m_uiExplodeDelayTimer = 0;
                 }
                 else
+                {
                     m_uiExplodeDelayTimer -= uiDiff;
+                }
             }
 
             if (m_uiPhase != PHASE_NORMAL)
@@ -414,11 +426,15 @@ struct boss_viscidus : public CreatureScript
             if (m_uiToxinTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                {
                     m_creature->SummonCreature(NPC_VISCIDUS_TRIGGER, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+                }
                 m_uiToxinTimer = 30000;
             }
             else
+            {
                 m_uiToxinTimer -= uiDiff;
+            }
 #endif
             DoMeleeAttackIfReady();
         }
@@ -441,7 +457,9 @@ struct aura_viscidus_freeze : public AuraScript
         if (pAura->GetId() == SPELL_VISCIDUS_FREEZE && pAura->GetEffIndex() == EFFECT_INDEX_1 && !bApply)
         {
             if (Creature* pTarget = (Creature*)pAura->GetTarget())
+            {
                 pTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pTarget, pTarget);
+            }
         }
         return true;
     }

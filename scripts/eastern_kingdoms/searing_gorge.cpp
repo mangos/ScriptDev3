@@ -97,7 +97,9 @@ struct npc_dorius_stonetender : public CreatureScript
             case 33:
                 // ToDo: research if there is any event and text here!
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     pPlayer->GroupEventHappens(QUEST_ID_SUNTARA_STONES, m_creature);
+                }
                 m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
                 break;
             }
@@ -106,7 +108,9 @@ struct npc_dorius_stonetender : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_DARK_IRON_STEELSHIFTER)
+            {
                 pSummoned->AI()->AttackStart(m_creature);
+            }
         }
 
         void UpdateEscortAI(const uint32 /*uiDiff*/) override

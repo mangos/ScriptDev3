@@ -231,7 +231,9 @@ struct boss_malygos : public CreatureScript
             DoScriptText(SAY_AGGRO, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_MALYGOS, IN_PROGRESS);
+            }
         }
 
         void MoveInLineOfSight(Unit* pWho) override
@@ -277,13 +279,17 @@ struct boss_malygos : public CreatureScript
             m_creature->SummonCreature(NPC_ALEXSTRASZA, aAlextraszaSpawnPos[0], aAlextraszaSpawnPos[1], aAlextraszaSpawnPos[2], aAlextraszaSpawnPos[3], TEMPSUMMON_TIMED_DESPAWN, 5 * MINUTE * IN_MILLISECONDS);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_MALYGOS, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_MALYGOS, FAIL);
+            }
         }
 
         void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
@@ -322,7 +328,9 @@ struct boss_malygos : public CreatureScript
             case NPC_NEXUS_LORD:
             case NPC_SCION_OF_ETERNITY:
                 if (Creature* pDisk = GetClosestCreatureWithEntry(pSummoned, NPC_HOVER_DISK, 10.0f))
+                {
                     pSummoned->CastSpell(pDisk, SPELL_RIDE_VEHICLE_HARDCODED, true);
+                }
                 pSummoned->SetInCombatWithZone();
                 break;
             case NPC_HOVER_DISK:
@@ -348,7 +356,9 @@ struct boss_malygos : public CreatureScript
                     if (m_pInstance)
                     {
                         if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_LARGE_TRIGGER))
+                        {
                             pTrigger->CastSpell(pTrigger, SPELL_DESTROY_PLATFORM_PRE, false);
+                        }
                     }
                 }
             }
@@ -358,7 +368,9 @@ struct boss_malygos : public CreatureScript
         {
             // Handle yell on Power Spark hit
             if (pSpell->Id == SPELL_POWER_SPARK_MALYGOS && pCaster->GetEntry() == NPC_POWER_SPARK && m_uiPhase == PHASE_FLOOR)
+            {
                 DoScriptText(SAY_SPARK_BUFF, m_creature);
+            }
         }
 
         void JustDidDialogueStep(int32 iEntry) override
@@ -375,7 +387,9 @@ struct boss_malygos : public CreatureScript
                 if (m_pInstance)
                 {
                     if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_LARGE_TRIGGER))
+                    {
                         pTrigger->CastSpell(pTrigger, SPELL_DESTROY_PLATFORM_BOOM, false);
+                    }
                 }
                 break;
             case SPELL_SUMMON_RED_DRAGON:
@@ -383,7 +397,9 @@ struct boss_malygos : public CreatureScript
                 {
                     // Destroy the platform
                     if (GameObject* pPlatform = m_pInstance->GetSingleGameObjectFromStorage(GO_PLATFORM))
+                    {
                         pPlatform->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK_11);
+                    }
                 }
 
                 DoCastSpellIfCan(m_creature, SPELL_SUMMON_RED_DRAGON);
@@ -428,10 +444,14 @@ struct boss_malygos : public CreatureScript
                 if (m_uiBerserkTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_BERSERK) == CAST_OK)
+                    {
                         m_uiBerserkTimer = 0;
+                    }
                 }
                 else
+                {
                     m_uiBerserkTimer -= uiDiff;
+                }
             }
 
             switch (m_uiPhase)
@@ -448,16 +468,22 @@ struct boss_malygos : public CreatureScript
                 }
                 }
                 else
-                m_uiVortexTimer -= uiDiff;
+                {
+                    m_uiVortexTimer -= uiDiff;
+                }
                 */
 
                 if (m_uiArcaneBreathTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ARCANE_BREATH : SPELL_ARCANE_BREATH_H) == CAST_OK)
+                    {
                         m_uiArcaneBreathTimer = urand(13000, 16000);
+                    }
                 }
                 else
+                {
                     m_uiArcaneBreathTimer -= uiDiff;
+                }
 
                 if (m_uiPowerSparkTimer < uiDiff)
                 {
@@ -468,7 +494,9 @@ struct boss_malygos : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiPowerSparkTimer -= uiDiff;
+                }
 
                 if (m_creature->GetHealthPercent() < 50.0f)
                 {
@@ -493,13 +521,17 @@ struct boss_malygos : public CreatureScript
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_ARCANE_BOMB) == CAST_OK)
                     {
                         if (!urand(0, 3))
+                        {
                             DoScriptText(SAY_SHELL, m_creature);
+                        }
 
                         m_uiOverloadTimer = urand(16000, 19000);
                     }
                 }
                 else
+                {
                     m_uiOverloadTimer -= uiDiff;
+                }
 
                 // Note: the boss should move in certain points before he does the breath ability
                 if (m_uiArcanePulseTimer < uiDiff)
@@ -512,15 +544,21 @@ struct boss_malygos : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiArcanePulseTimer -= uiDiff;
+                }
 
                 if (m_uiArcaneStormTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ARCANE_STORM : SPELL_ARCANE_STORM_H) == CAST_OK)
+                    {
                         m_uiArcaneStormTimer = urand(15000, 17000);
+                    }
                 }
                 else
+                {
                     m_uiArcaneStormTimer -= uiDiff;
+                }
 
                 break;
             case PHASE_DRAGONS:
@@ -546,7 +584,9 @@ struct boss_malygos : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiStaticFieldTimer -= uiDiff;
+                }
 
                 if (m_uiSurgeOfPowerTimer < uiDiff)
                 {
@@ -555,14 +595,18 @@ struct boss_malygos : public CreatureScript
                         if (DoCastSpellIfCan(pTarget, SPELL_SURGE_OF_POWER) == CAST_OK)
                         {
                             if (!urand(0, 3))
+                            {
                                 DoScriptText(SAY_SURGE, m_creature);
+                            }
 
                             m_uiSurgeOfPowerTimer = urand(5000, 15000);
                         }
                     }
                 }
                 else
+                {
                     m_uiSurgeOfPowerTimer -= uiDiff;
+                }
 
                 break;
             case PHASE_TRANSITION_1:
@@ -650,7 +694,9 @@ struct npc_wyrmrest_skytalon : public CreatureScript
             }
 
             if (pSpell->Id == 56071)
+            {
                 DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
+            }
         }
 
         // TODO: Enable the wrappers below, when they will be properly supported by the core
@@ -677,7 +723,9 @@ struct npc_wyrmrest_skytalon : public CreatureScript
 
                     // Force player to mount
                     if (Player* pSummoner = m_creature->GetMap()->GetPlayer(pTemporary->GetSummonerGuid()))
+                    {
                         pSummoner->CastSpell(m_creature, SPELL_RIDE_RED_DRAGON, true);
+                    }
                 }
 
                 m_bHasMounted = true;

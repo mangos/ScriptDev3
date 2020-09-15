@@ -108,7 +108,9 @@ struct boss_taldaram : public CreatureScript
             m_bIsFirstAggro = true;
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_TALDARAM, IN_PROGRESS);
+            }
         }
 
         void KilledUnit(Unit* /*pVictim*/) override
@@ -126,13 +128,17 @@ struct boss_taldaram : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_TALDARAM, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_TALDARAM, FAIL);
+            }
         }
 
         void EnterEvadeMode() override
@@ -150,7 +156,9 @@ struct boss_taldaram : public CreatureScript
 
             // should evade on the ground
             if (m_creature->IsAlive())
+            {
                 m_creature->GetMotionMaster()->MovePoint(1, aTaldaramLandingLoc[0], aTaldaramLandingLoc[1], aTaldaramLandingLoc[2]);
+            }
 
             m_creature->SetLootRecipient(nullptr);
 
@@ -215,11 +223,15 @@ struct boss_taldaram : public CreatureScript
                 if (m_uiVisualTimer <= uiDiff)
                 {
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_DO_TALDARAM, 0);
+                    }
                     m_uiVisualTimer = 0;
                 }
                 else
+                {
                     m_uiVisualTimer -= uiDiff;
+                }
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -242,7 +254,9 @@ struct boss_taldaram : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiEmbraceTimer -= uiDiff;
+                }
 
                 // do not use other abilities during vanish
                 return;
@@ -260,16 +274,22 @@ struct boss_taldaram : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiVanishTimer -= uiDiff;
+                }
             }
 
             if (m_uiBloodthirstTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_BLOODTHIRST) == CAST_OK)
+                {
                     m_uiBloodthirstTimer = urand(20000, 25000);
+                }
             }
             else
+            {
                 m_uiBloodthirstTimer -= uiDiff;
+            }
 
             if (m_uiFlameOrbTimer < uiDiff)
             {
@@ -292,7 +312,9 @@ struct boss_taldaram : public CreatureScript
                 }
             }
             else
+            {
                 m_uiFlameOrbTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -314,7 +336,9 @@ struct spell_conjure_flame_sphere : public SpellScript
         if (uiSpellId == SPELL_CONJURE_FLAME_SPHERE && uiEffIndex == EFFECT_INDEX_0)
         {
             if (CreatureAI* pBossAI = pTarget->ToCreature()->AI())
+            {
                 pBossAI->SendAIEvent(AI_EVENT_CUSTOM_A, pTarget->ToCreature(), pTarget->ToCreature());
+            }
 
             // always return true when we are handling this spell and effect
             return true;

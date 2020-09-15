@@ -74,9 +74,13 @@ struct is_draktharon_keep : public InstanceScript
             {
             case TYPE_TROLLGORE:
                 if (uiData == IN_PROGRESS)
+                {
                     m_bTrollgoreConsume = true;
+                }
                 if (uiData == SPECIAL)
+                {
                     m_bTrollgoreConsume = false;
+                }
                 m_auiEncounter[uiType] = uiData;
                 break;
             case TYPE_NOVOS:
@@ -91,7 +95,9 @@ struct is_draktharon_keep : public InstanceScript
                     {
                         Creature* pCaster = instance->GetCreature(m_aNovosCrystalInfo[i].m_channelGuid);
                         if (pCaster && pTarget)
+                        {
                             pCaster->CastSpell(pTarget, SPELL_BEAM_CHANNEL, false);
+                        }
 
                         m_aNovosCrystalInfo[i].m_bWasUsed = false;
                     }
@@ -111,17 +117,23 @@ struct is_draktharon_keep : public InstanceScript
                     {
                         Creature* pDummy = instance->GetCreature(m_aNovosCrystalInfo[i].m_channelGuid);
                         if (pDummy)
+                        {
                             pDummy->InterruptNonMeleeSpells(false);
+                        }
                         // And reset used crystals
                         if (m_aNovosCrystalInfo[i].m_bWasUsed)
+                        {
                             DoUseDoorOrButton(m_aNovosCrystalInfo[i].m_crystalGuid);
+                        }
                     }
                 }
                 m_auiEncounter[uiType] = uiData;
                 break;
             case TYPE_KING_DRED:
                 if (uiData == IN_PROGRESS)
+                {
                     m_uiDreadAddsKilled = 0;
+                }
                 m_auiEncounter[uiType] = uiData;
                 break;
             case TYPE_THARONJA:
@@ -167,22 +179,30 @@ struct is_draktharon_keep : public InstanceScript
         void OnCreatureEnterCombat(Creature* pCreature) override
         {
             if (pCreature->GetEntry() == NPC_KING_DRED)
+            {
                 SetData(TYPE_KING_DRED, IN_PROGRESS);
+            }
         }
 
         void OnCreatureEvade(Creature* pCreature) override
         {
             if (pCreature->GetEntry() == NPC_KING_DRED)
+            {
                 SetData(TYPE_KING_DRED, FAIL);
+            }
         }
 
         void OnCreatureDeath(Creature* pCreature) override
         {
             if ((pCreature->GetEntry() == NPC_DRAKKARI_GUTRIPPER || pCreature->GetEntry() == NPC_DRAKKARI_SCYTHECLAW) && m_auiEncounter[TYPE_KING_DRED] == IN_PROGRESS)
+            {
                 ++m_uiDreadAddsKilled;
+            }
 
             if (pCreature->GetEntry() == NPC_KING_DRED)
+            {
                 SetData(TYPE_KING_DRED, DONE);
+            }
         }
 
         void OnCreatureCreate(Creature* pCreature) override
@@ -198,9 +218,13 @@ struct is_draktharon_keep : public InstanceScript
                 break;
             case NPC_WORLD_TRIGGER:
                 if (pCreature->GetPositionZ() > 30.0f)
+                {
                     m_vTriggerGuids.push_back(pCreature->GetObjectGuid());
+                }
                 else
+                {
                     m_trollgoreCornerTriggerGuid = pCreature->GetObjectGuid();
+                }
                 break;
             }
         }
@@ -248,7 +272,9 @@ struct is_draktharon_keep : public InstanceScript
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     m_auiEncounter[i] = NOT_STARTED;
+                }
             }
 
             OUT_LOAD_INST_DATA_COMPLETE;
@@ -288,7 +314,9 @@ struct is_draktharon_keep : public InstanceScript
             {
             case DATA64_NOVOS_SUMMON_DUMMY:
                 if (!m_vSummonDummyGuids.empty())
+                {
                     m_vSummonDummyGuids[urand(0, m_vSummonDummyGuids.size() - 1)].GetRawValue();
+                }
                 break;
             case DATA64_NOVOS_CRYSTAL_HANDLER:
                 return m_uiNovosCrystalIndex < MAX_CRYSTALS ? m_aNovosCrystalInfo[m_uiNovosCrystalIndex].m_channelGuid : 0;
@@ -318,7 +346,9 @@ struct is_draktharon_keep : public InstanceScript
             {
                 GameObject* pCrystal = instance->GetGameObject(m_aNovosCrystalInfo[i].m_crystalGuid);
                 if (!pCrystal)
+                {
                     continue;
+                }
 
                 for (GuidList::iterator itr = m_lNovosDummyGuids.begin(); itr != m_lNovosDummyGuids.end();)
                 {
@@ -381,7 +411,9 @@ struct is_draktharon_keep : public InstanceScript
                     m_lNovosDummyGuids.erase(itr++);
                 }
                 else
+                {
                     ++itr;
+                }
             }
 
             // Clear remaining (unused) dummies
@@ -395,7 +427,9 @@ struct is_draktharon_keep : public InstanceScript
             DoUseDoorOrButton(m_aNovosCrystalInfo[uiIndex].m_crystalGuid);
 
             if (Creature* pDummy = instance->GetCreature(m_aNovosCrystalInfo[uiIndex].m_channelGuid))
+            {
                 pDummy->InterruptNonMeleeSpells(false);
+            }
         }
 
         // Wrapper to handle the drakkari invaders summon
@@ -411,7 +445,9 @@ struct is_draktharon_keep : public InstanceScript
             {
                 // Summon a troll in the corner and 2 trolls in the air
                 if (Creature* pTrigger = instance->GetCreature(GetTrollgoreCornerTrigger()))
+                {
                     pTrigger->CastSpell(pTrigger, roll_chance_i(20) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
+                }
 
                 // get two random outside triggers
                 uint8 uiMaxTriggers = m_vTriggerGuids.size();
@@ -419,9 +455,13 @@ struct is_draktharon_keep : public InstanceScript
                 uint8 uiPos2 = (uiPos1 + urand(1, uiMaxTriggers - 1)) % uiMaxTriggers;
 
                 if (Creature* pTrigger = instance->GetCreature(m_vTriggerGuids[uiPos1]))
+                {
                     pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
+                }
                 if (Creature* pTrigger = instance->GetCreature(m_vTriggerGuids[uiPos2]))
+                {
                     pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
+                }
             }
             else
             {
@@ -429,7 +469,9 @@ struct is_draktharon_keep : public InstanceScript
                 for (uint8 i = 0; i < m_vTriggerGuids.size(); ++i)
                 {
                     if (Creature* pTrigger = instance->GetCreature(m_vTriggerGuids[i]))
+                    {
                         pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, nullptr, nullptr, m_mNpcEntryGuidStore[NPC_TROLLGORE]);
+                    }
                 }
             }
         }

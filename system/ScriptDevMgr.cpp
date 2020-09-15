@@ -493,7 +493,9 @@ CreatureAI* SD3::GetCreatureAI(Creature* pCreature)
 
     CreatureAI* ai = pTempScript->ToCreatureScript()->GetAI(pCreature);
     if (ai)
+    {
         ai->Reset();
+    }
 
     return ai;
 }

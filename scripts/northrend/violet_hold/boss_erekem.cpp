@@ -118,7 +118,9 @@ struct boss_erekem : public CreatureScript
 
             // cast bloodlust if both guards are dead
             if (m_uiGuardiansDead == 2)
+            {
                 DoCastSpellIfCan(m_creature, SPELL_BLOODLUST, CAST_INTERRUPT_PREVIOUS);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -131,38 +133,54 @@ struct boss_erekem : public CreatureScript
             if (m_uiEarthShieldTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_EARTH_SHIELD : SPELL_EARTH_SHIELD_H, CAST_AURA_NOT_PRESENT) == CAST_OK)
+                {
                     m_uiEarthShieldTimer = urand(25000, 30000);
+                }
             }
             else
+            {
                 m_uiEarthShieldTimer -= uiDiff;
+            }
 
             if (m_uiEarthShockTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_EARTH_SHOCK) == CAST_OK)
+                    {
                         m_uiEarthShockTimer = urand(8000, 13000);
+                    }
                 }
             }
             else
+            {
                 m_uiEarthShockTimer -= uiDiff;
+            }
 
             if (m_uiChainHealTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_CHAIN_HEAL : SPELL_CHAIN_HEAL_H) == CAST_OK)
+                {
                     m_uiChainHealTimer = urand(15000, 25000);
+                }
             }
             else
+            {
                 m_uiChainHealTimer -= uiDiff;
+            }
 
             // Cast Stormstrike only if both guards are down
             if (m_uiSpecialSpellTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), m_uiGuardiansDead == 2 ? SPELL_STORMSTRIKE : SPELL_LIGHTNING_BOLT) == CAST_OK)
+                {
                     m_uiSpecialSpellTimer = urand(2000, 3000);
+                }
             }
             else
+            {
                 m_uiSpecialSpellTimer -= uiDiff;
+            }
 
             // Break bonds only on heroic
             if (!m_bIsRegularMode)
@@ -170,10 +188,14 @@ struct boss_erekem : public CreatureScript
                 if (m_uiBreakBondsTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_BREAK_BONDS_H) == CAST_OK)
+                    {
                         m_uiBreakBondsTimer = urand(25000, 30000);
+                    }
                 }
                 else
+                {
                     m_uiBreakBondsTimer -= uiDiff;
+                }
             }
 
             DoMeleeAttackIfReady();
@@ -238,26 +260,38 @@ struct npc_erekem_guard : public CreatureScript
             if (m_uiGushingWoundTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_GUSHING_WOUND) == CAST_OK)
+                {
                     m_uiGushingWoundTimer = urand(25000, 30000);
+                }
             }
             else
+            {
                 m_uiGushingWoundTimer -= uiDiff;
+            }
 
             if (m_uiHowlingScreechTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_HOWLING_SCREECH) == CAST_OK)
+                {
                     m_uiHowlingScreechTimer = urand(10000, 16000);
+                }
             }
             else
+            {
                 m_uiHowlingScreechTimer -= uiDiff;
+            }
 
             if (m_uiStrikeTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_STRIKE) == CAST_OK)
+                {
                     m_uiStrikeTimer = urand(5000, 7000);
+                }
             }
             else
+            {
                 m_uiStrikeTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

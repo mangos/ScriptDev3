@@ -1261,7 +1261,9 @@ struct npc_tyrion_spybot : public CreatureScript
                         break;
                     case 2:
                         if (pTyrion)
+                        {
                             DoScriptText(SAY_TYRION_1, pTyrion);
+                        }
                         uiTimer = 3000;
                         uiPhase = 3;
                         break;
@@ -1293,7 +1295,9 @@ struct npc_tyrion_spybot : public CreatureScript
                         break;
                     case 8:
                         if (pLescovar)
+                        {
                             DoScriptText(SAY_LESCOVAR_1, pLescovar);
+                        }
                         uiTimer = 3000;
                         uiPhase = 9;
                         break;
@@ -1306,7 +1310,9 @@ struct npc_tyrion_spybot : public CreatureScript
                         if (pLescovar && pLescovar->IsAlive())
                         {
                             if (Player* pPlayer = GetPlayerForEscort())
+                            {
                                 static_cast<npc_escortAI*>(pLescovar->AI())->Start(false, pPlayer, 0, false, false);
+                            }
                             //CAST_AI(npc_lord_gregor_lescovarAI, pLescovar->AI())->Start(false, false, pPlayer->GetGUID());
                             //CAST_AI(npc_lord_gregor_lescovarAI, pLescovar->AI())->SetMaxPlayerDistance(200.0f);
                         }

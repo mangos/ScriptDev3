@@ -74,9 +74,13 @@ struct npc_dalaran_guardian_mage : public CreatureScript
                         // it's mentioned that pet may also be teleported, if so, we need to tune script to apply to those in addition.
 
                         if (pPlayer->GetAreaId() == AREA_ID_SILVER_ENCLAVE)
+                        {
                             DoCastSpellIfCan(pPlayer, SPELL_TRESPASSER_A);
+                        }
                         else if (pPlayer->GetAreaId() == AREA_ID_SUNREAVER)
+                        {
                             DoCastSpellIfCan(pPlayer, SPELL_TRESPASSER_H);
+                        }
                     }
                 }
             }

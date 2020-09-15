@@ -350,7 +350,9 @@ struct go_table_theka : public GameObjectScript
     bool OnGossipHello(Player* pPlayer, GameObject* pGo) override
     {
         if (pPlayer->GetQuestStatus(QUEST_SPIDER_GOD) == QUEST_STATUS_INCOMPLETE)
+        {
             pPlayer->AreaExploredOrEventHappens(QUEST_SPIDER_GOD);
+        }
 
         pPlayer->SEND_GOSSIP_MENU(GOSSIP_TABLE_THEKA, pGo->GetObjectGuid());
 
@@ -432,7 +434,9 @@ struct go_lab_work_reagents : public GameObjectScript
             }
 
             if (uiCreditSpellId)
+            {
                 pPlayer->CastSpell(pPlayer, uiCreditSpellId, true);
+            }
         }
 
         return false;

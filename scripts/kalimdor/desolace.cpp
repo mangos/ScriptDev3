@@ -525,7 +525,9 @@ struct npc_cork_gizelton : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
         {
             if (eventType == AI_EVENT_START_ESCORT && pInvoker->GetTypeId() == TYPEID_PLAYER)
+            {
                 m_playerGuid = pInvoker->GetObjectGuid();
+            }
         }
 
         // Custom function to handle event ambushes
@@ -597,7 +599,9 @@ struct npc_cork_gizelton : public CreatureScript
                         DoScriptText(SAY_CORK_END, m_creature);
                         // Award quest credit
                         if (pPlayer)
+                        {
                             pPlayer->GroupEventHappens(QUEST_BODYGUARD_TO_HIRE, m_creature);
+                        }
                         // Remove player to avoid adds being spawned again next turn
                         m_playerGuid.Clear();
                         uiQuestStatus = 0;
@@ -614,27 +618,37 @@ struct npc_cork_gizelton : public CreatureScript
                         // First Ambush
                     case 218:
                         if (Creature* pRigger = GetClosestCreatureWithEntry(m_creature, NPC_RIGGER_GIZELTON, 100.0f))
+                        {
                             DoScriptText(SAY_RIGGER_AMBUSH1, pRigger);
+                        }
                         DoAmbush(QUEST_GIZELTON_CARAVAN, 1);
                         break;
                         // Second Ambush
                     case 225:
                         if (Creature* pRigger = GetClosestCreatureWithEntry(m_creature, NPC_RIGGER_GIZELTON, 100.0f))
+                        {
                             DoScriptText(SAY_RIGGER_AMBUSH2, pRigger);
+                        }
                         DoAmbush(QUEST_GIZELTON_CARAVAN, 2);
                         break;
                         // Third Ambush
                     case 235:
                         if (Creature* pRigger = GetClosestCreatureWithEntry(m_creature, NPC_RIGGER_GIZELTON, 100.0f))
+                        {
                             DoScriptText(SAY_RIGGER_AMBUSH1, pRigger);
+                        }
                         DoAmbush(QUEST_GIZELTON_CARAVAN, 3);
                         break;
                     case 241:
                         if (Creature* pRigger = GetClosestCreatureWithEntry(m_creature, NPC_RIGGER_GIZELTON, 100.0f))
+                        {
                             DoScriptText(SAY_RIGGER_END, pRigger);
+                        }
                         // Award quest credit
                         if (pPlayer)
+                        {
                             pPlayer->GroupEventHappens(QUEST_GIZELTON_CARAVAN, m_creature);
+                        }
                         // Remove player to avoid adds being spawned again next turn
                         m_playerGuid.Clear();
                         uiQuestStatus = 0;
@@ -648,7 +662,9 @@ struct npc_cork_gizelton : public CreatureScript
             // By default: summoned for the two escort quests will attack
             // So we want to add a special case to avoid the two summoned NPC vendors to also attack
             if (pSummoned->GetEntry() != NPC_VENDOR_TRON && pSummoned->GetEntry() != NPC_SUPER_SELLER)
+            {
                 pSummoned->AI()->AttackStart(m_creature);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -667,18 +683,26 @@ struct npc_cork_gizelton : public CreatureScript
                     if (Player* pMember = pRef->getSource())
                     {
                         if (pMember->GetQuestStatus(QUEST_BODYGUARD_TO_HIRE) == QUEST_STATUS_INCOMPLETE)
+                        {
                             pMember->FailQuest(QUEST_BODYGUARD_TO_HIRE);
+                        }
                         if (pMember->GetQuestStatus(QUEST_GIZELTON_CARAVAN) == QUEST_STATUS_INCOMPLETE)
+                        {
                             pMember->FailQuest(QUEST_GIZELTON_CARAVAN);
+                        }
                     }
                 }
             }
             else
             {
                 if (pPlayer->GetQuestStatus(QUEST_BODYGUARD_TO_HIRE) == QUEST_STATUS_INCOMPLETE)
+                {
                     pPlayer->FailQuest(QUEST_BODYGUARD_TO_HIRE);
+                }
                 if (pPlayer->GetQuestStatus(QUEST_GIZELTON_CARAVAN) == QUEST_STATUS_INCOMPLETE)
+                {
                     pPlayer->FailQuest(QUEST_GIZELTON_CARAVAN);
+                }
             }
         }
     };
@@ -693,13 +717,19 @@ struct npc_cork_gizelton : public CreatureScript
         if (pQuest->GetQuestId() == QUEST_BODYGUARD_TO_HIRE)
         {
             if (pPlayer->GetTeam() == ALLIANCE)
+            {
                 pCreature->SetFactionTemporary(FACTION_ESCORT_A_PASSIVE, TEMPFACTION_RESTORE_RESPAWN);
+            }
 
             if (pPlayer->GetTeam() == HORDE)
+            {
                 pCreature->SetFactionTemporary(FACTION_ESCORT_H_PASSIVE, TEMPFACTION_RESTORE_RESPAWN);
+            }
 
             if (npc_cork_gizeltonAI* pCork = dynamic_cast<npc_cork_gizeltonAI*>(pCreature->AI()))
+            {
                 pCreature->AI()->SendAIEvent(AI_EVENT_START_ESCORT, pPlayer, pCreature, pQuest->GetQuestId());
+            }
         }
 
         return true;
@@ -731,15 +761,21 @@ struct npc_rigger_gizelton : public CreatureScript
         if (pQuest->GetQuestId() == QUEST_GIZELTON_CARAVAN)
         {
             if (pPlayer->GetTeam() == ALLIANCE)
+            {
                 pCreature->SetFactionTemporary(FACTION_ESCORT_A_PASSIVE, TEMPFACTION_RESTORE_RESPAWN);
+            }
 
             if (pPlayer->GetTeam() == HORDE)
+            {
                 pCreature->SetFactionTemporary(FACTION_ESCORT_H_PASSIVE, TEMPFACTION_RESTORE_RESPAWN);
+            }
 
             // Now the quest is accepted, tell NPC Cork what player took it so it can handle quest credit/failure
             // because NPC Cork will handle both escort quests
             if (Creature* pCork = GetClosestCreatureWithEntry(pCreature, NPC_CORK_GIZELTON, 100.0f))
+            {
                 pCreature->AI()->SendAIEvent(AI_EVENT_START_ESCORT, pPlayer, pCork, pQuest->GetQuestId());
+            }
         }
 
         return true;

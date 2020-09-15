@@ -97,7 +97,9 @@ struct boss_keristrasza : public CreatureScript
             if (m_creature->IsAlive())
             {
                 if (m_pInstance->GetData(TYPE_KERISTRASZA) != SPECIAL)
+                {
                     DoCastSpellIfCan(m_creature, SPELL_FROZEN_PRISON, CAST_TRIGGERED);
+                }
             }
         }
 
@@ -108,7 +110,9 @@ struct boss_keristrasza : public CreatureScript
             m_creature->CastSpell(m_creature, SPELL_INTENSE_COLD, true);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_KERISTRASZA, IN_PROGRESS);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -116,13 +120,17 @@ struct boss_keristrasza : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_KERISTRASZA, DONE);
+            }
         }
 
         void KilledUnit(Unit* /*pVictim*/) override
         {
             if (urand(0, 1))
+            {
                 DoScriptText(SAY_KILL, m_creature);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -149,7 +157,9 @@ struct boss_keristrasza : public CreatureScript
                                 if (pAuraIntenseCold->GetStackAmount() > MAX_INTENSE_COLD_STACK)
                                 {
                                     if (m_pInstance)
+                                    {
                                         m_pInstance->SetData(TYPE_INTENSE_COLD_FAILED, pTarget->GetGUIDLow());
+                                    }
                                 }
                             }
                         }
@@ -157,7 +167,9 @@ struct boss_keristrasza : public CreatureScript
                     uiCheckIntenseColdTimer = 1000;
                 }
                 else
+                {
                     uiCheckIntenseColdTimer -= uiDiff;
+                }
             }
 
             if (!m_bIsEnraged && m_creature->GetHealthPercent() < 25.0f)
@@ -179,7 +191,9 @@ struct boss_keristrasza : public CreatureScript
                         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
                         {
                             if (Player* pPlayer = pTarget->GetCharmerOrOwnerPlayerOrPlayerItself())
+                            {
                                 DoCastSpellIfCan(pPlayer, SPELL_CRYSTAL_CHAINS);
+                            }
 
                             uiCrystalChainTimer = 30000;
                         }
@@ -204,34 +218,48 @@ struct boss_keristrasza : public CreatureScript
                                     if (Player* pMember = pRef->getSource())
                                     {
                                         if (pMember->IsAlive() && pMember->IsWithinDistInMap(m_creature, 50.0f))
+                                        {
                                             m_creature->CastSpell(pMember, SPELL_CRYSTAL_CHAINS, true);
+                                        }
                                     }
                                 }
                             }
                             else
+                            {
                                 m_creature->CastSpell(pPlayer, SPELL_CRYSTAL_CHAINS, false);
+                            }
                         }
                     }
                 }
             }
             else
+            {
                 uiCrystalChainTimer -= uiDiff;
+            }
 
             if (uiTailSweepTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_TAIL_SWEEP) == CAST_OK)
+                {
                     uiTailSweepTimer = urand(2500, 7500);
+                }
             }
             else
+            {
                 uiCrystalChainTimer -= uiDiff;
+            }
 
             if (uiCrystalfireBreathTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_CRYSTALFIRE_BREATH : SPELL_CRYSTALFIRE_BREATH_H) == CAST_OK)
+                {
                     uiCrystalfireBreathTimer = urand(15000, 20000);
+                }
             }
             else
+            {
                 uiCrystalfireBreathTimer -= uiDiff;
+            }
 
             if (!m_bIsRegularMode)
             {
@@ -244,7 +272,9 @@ struct boss_keristrasza : public CreatureScript
                     }
                 }
                 else
+                {
                     uiCrystallizeTimer -= uiDiff;
+                }
             }
 
             DoMeleeAttackIfReady();

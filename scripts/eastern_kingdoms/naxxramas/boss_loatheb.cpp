@@ -135,7 +135,9 @@ struct boss_loatheb : public CreatureScript
             m_uiBerserkTimer = 300000;
             }
             else
-            m_uiBerserkTimer -= uiDiff;*/
+            {
+                m_uiBerserkTimer -= uiDiff;
+            }*/
 
             // Inevitable Doom
             if (m_uiInevitableDoomTimer < uiDiff)

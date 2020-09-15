@@ -70,7 +70,9 @@ struct boss_zarithrian : public CreatureScript
             DoScriptText(SAY_AGGRO, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ZARITHRIAN, IN_PROGRESS);
+            }
         }
 
         void KilledUnit(Unit* pVictim) override
@@ -81,7 +83,9 @@ struct boss_zarithrian : public CreatureScript
             }
 
             if (urand(0, 1))
+            {
                 DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -89,19 +93,25 @@ struct boss_zarithrian : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ZARITHRIAN, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ZARITHRIAN, FAIL);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_ONYX_FLAMECALLER)
+            {
                 pSummoned->SetInCombatWithZone();
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -114,18 +124,26 @@ struct boss_zarithrian : public CreatureScript
             if (m_uiCleaveArmorTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE_ARMOR) == CAST_OK)
+                {
                     m_uiCleaveArmorTimer = 15000;
+                }
             }
             else
+            {
                 m_uiCleaveArmorTimer -= uiDiff;
+            }
 
             if (m_uiIntimidatingRoarTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_INTIMIDATING_ROAR) == CAST_OK)
+                {
                     m_uiIntimidatingRoarTimer = 32000;
+                }
             }
             else
+            {
                 m_uiIntimidatingRoarTimer -= uiDiff;
+            }
 
             if (m_uiCallFlamecallerTimer < uiDiff)
             {
@@ -141,7 +159,9 @@ struct boss_zarithrian : public CreatureScript
                 m_uiCallFlamecallerTimer = 45000;
             }
             else
+            {
                 m_uiCallFlamecallerTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
 

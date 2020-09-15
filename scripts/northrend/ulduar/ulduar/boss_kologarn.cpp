@@ -160,7 +160,9 @@ struct boss_kologarn : public CreatureScript
         void JustDied(Unit* /*pKiller*/) override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_KOLOGARN, DONE);
+            }
 
             DoScriptText(SAY_DEATH, m_creature);
             DoCastSpellIfCan(m_creature, SPELL_INSTAKILL_KOLOGARN_ARM, CAST_TRIGGERED);
@@ -180,7 +182,9 @@ struct boss_kologarn : public CreatureScript
         void Aggro(Unit* /*pWho*/) override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_KOLOGARN, IN_PROGRESS);
+            }
 
             DoScriptText(SAY_AGGRO, m_creature);
         }
@@ -188,7 +192,9 @@ struct boss_kologarn : public CreatureScript
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_KOLOGARN, FAIL);
+            }
 
             // kill both hands - will be respawned
             m_creature->RemoveAllAuras();
@@ -207,7 +213,9 @@ struct boss_kologarn : public CreatureScript
                 pSummoned->CastSpell(pSummoned, SPELL_ARM_VISUAL, true);
 
                 if (m_creature->getVictim())
+                {
                     pSummoned->AI()->AttackStart(m_creature->getVictim());
+                }
                 break;
             }
             case NPC_LEFT_ARM:
@@ -217,7 +225,9 @@ struct boss_kologarn : public CreatureScript
                 pSummoned->CastSpell(pSummoned, SPELL_ARM_VISUAL, true);
 
                 if (m_creature->getVictim())
+                {
                     pSummoned->AI()->AttackStart(m_creature->getVictim());
+                }
                 break;
             }
             case NPC_FOCUSED_EYEBEAM_RIGHT:
@@ -235,7 +245,9 @@ struct boss_kologarn : public CreatureScript
                     TemporarySummon* pTemporary = (TemporarySummon*)pSummoned;
 
                     if (Unit* pPlayer = m_creature->GetMap()->GetUnit(pTemporary->GetSummonerGuid()))
+                    {
                         pSummoned->GetMotionMaster()->MoveChase(pPlayer);
+                    }
                 }
                 break;
             }
@@ -271,10 +283,14 @@ struct boss_kologarn : public CreatureScript
                 if (m_uiDisarmedTimer)
                 {
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_ACHIEV_DISARMED, uint32(true));
+                    }
                 }
                 else
+                {
                     m_uiDisarmedTimer = 12000;
+                }
             }
             else if (pSummoned->GetEntry() == NPC_RIGHT_ARM)
             {
@@ -300,10 +316,14 @@ struct boss_kologarn : public CreatureScript
                 if (m_uiDisarmedTimer)
                 {
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_ACHIEV_DISARMED, uint32(true));
+                    }
                 }
                 else
+                {
                     m_uiDisarmedTimer = 12000;
+                }
             }
         }
 
@@ -315,7 +335,9 @@ struct boss_kologarn : public CreatureScript
                 ++m_uiRubbleCount;
 
                 if (m_uiRubbleCount == MAX_ACHIEV_RUBBLE && m_pInstance)
+                {
                     m_pInstance->SetData(TYPE_ACHIEV_RUBBLE, uint32(true));
+                }
             }
         }
 
@@ -330,7 +352,9 @@ struct boss_kologarn : public CreatureScript
                     m_uiMountArmsTimer = 0;
                 }
                 else
+                {
                     m_uiMountArmsTimer -= uiDiff;
+                }
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -343,10 +367,14 @@ struct boss_kologarn : public CreatureScript
                 if (m_uiStoneShoutTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_STONE_SHOUT : SPELL_STONE_SHOUT_H) == CAST_OK)
+                    {
                         m_uiStoneShoutTimer = urand(3000, 4000);
+                    }
                 }
                 else
+                {
                     m_uiStoneShoutTimer -= uiDiff;
+                }
             }
             else
             {
@@ -354,24 +382,36 @@ struct boss_kologarn : public CreatureScript
                 {
                     CanCastResult castResult;
                     if (!m_uiRespawnLeftTimer && !m_uiRespawnRightTimer)
+                    {
                         castResult = DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_OVERHEAD_SMASH : SPELL_OVERHEAD_SMASH_H);
+                    }
                     else
+                    {
                         castResult = DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_ONE_ARMED_SMASH : SPELL_ONE_ARMED_SMASH_H);
+                    }
 
                     if (castResult == CAST_OK)
+                    {
                         m_uiOverheadSmashTimer = 15000;
+                    }
                 }
                 else
+                {
                     m_uiOverheadSmashTimer -= uiDiff;
+                }
             }
 
             if (m_uiEyebeamTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_FOCUSED_EYEBEAM_SUMMON) == CAST_OK)
+                {
                     m_uiEyebeamTimer = 20000;
+                }
             }
             else
+            {
                 m_uiEyebeamTimer -= uiDiff;
+            }
 
             // respawn left arm if killed
             if (m_uiRespawnLeftTimer)
@@ -383,7 +423,9 @@ struct boss_kologarn : public CreatureScript
                     m_uiRespawnLeftTimer = 0;
                 }
                 else
+                {
                     m_uiRespawnLeftTimer -= uiDiff;
+                }
             }
             // use left arm ability if available - spell always cast by Kologarn
             else
@@ -397,7 +439,9 @@ struct boss_kologarn : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiShockwaveTimer -= uiDiff;
+                }
             }
 
             // respawn right arm if killed
@@ -410,7 +454,9 @@ struct boss_kologarn : public CreatureScript
                     m_uiRespawnRightTimer = 0;
                 }
                 else
+                {
                     m_uiRespawnRightTimer -= uiDiff;
+                }
             }
             // use right arm ability if available - spell always cast by Kologarn
             else
@@ -425,7 +471,9 @@ struct boss_kologarn : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiStoneGripTimer -= uiDiff;
+                }
             }
 
             if (m_uiBerserkTimer)
@@ -437,9 +485,13 @@ struct boss_kologarn : public CreatureScript
                         if (m_pInstance)
                         {
                             if (Creature* pRightArm = m_pInstance->GetSingleCreatureFromStorage(NPC_RIGHT_ARM))
+                            {
                                 pRightArm->CastSpell(pRightArm, SPELL_BERSERK, true);
+                            }
                             if (Creature* pLeftArm = m_pInstance->GetSingleCreatureFromStorage(NPC_LEFT_ARM))
+                            {
                                 pLeftArm->CastSpell(pLeftArm, SPELL_BERSERK, true);
+                            }
                         }
 
                         DoScriptText(SAY_BERSERK, m_creature);
@@ -447,7 +499,9 @@ struct boss_kologarn : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiBerserkTimer -= uiDiff;
+                }
             }
 
             if (m_uiDisarmedTimer)
@@ -455,11 +509,15 @@ struct boss_kologarn : public CreatureScript
                 if (m_uiDisarmedTimer <= uiDiff)
                 {
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_ACHIEV_DISARMED, uint32(false));
+                    }
                     m_uiDisarmedTimer = 0;
                 }
                 else
+                {
                     m_uiDisarmedTimer -= uiDiff;
+                }
             }
 
             // melee range check
@@ -468,13 +526,19 @@ struct boss_kologarn : public CreatureScript
                 if (m_uiPetrifyingBreathTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_PETRIFYING_BREATH : SPELL_PETRIFYING_BREATH_H) == CAST_OK)
+                    {
                         m_uiPetrifyingBreathTimer = 4000;
+                    }
                 }
                 else
+                {
                     m_uiPetrifyingBreathTimer -= uiDiff;
+                }
             }
             else
+            {
                 DoMeleeAttackIfReady();
+            }
         }
     };
 
@@ -508,7 +572,9 @@ struct npc_focused_eyebeam : public CreatureScript
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER && (pSpellEntry->Id == SPELL_EYEBEAM_DAMAGE || pSpellEntry->Id == SPELL_EYEBEAM_DAMAGE_H) && m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ACHIEV_LOOKS_KILL, uint32(false));
+            }
         }
 
         void UpdateAI(const uint32 /*uiDiff*/) override { }
@@ -546,7 +612,9 @@ struct npc_rubble_stalker : public CreatureScript
             if (pSummoned->GetEntry() == NPC_RUBBLE && m_pInstance)
             {
                 if (Creature* pKologarn = m_pInstance->GetSingleCreatureFromStorage(NPC_KOLOGARN))
+                {
                     SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pKologarn);
+                }
 
                 pSummoned->SetInCombatWithZone();
             }

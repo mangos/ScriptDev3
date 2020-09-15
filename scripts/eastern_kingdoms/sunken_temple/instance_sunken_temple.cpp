@@ -194,7 +194,9 @@ struct is_sunken_temple : public InstanceScript
                 if (uiData == DONE)
                 {
                     if (Creature* pEranikus = GetSingleCreatureFromStorage(NPC_SHADE_OF_ERANIKUS))
+                    {
                         pEranikus->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                    }
                 }
                 m_auiEncounter[uiType] = uiData;
                 break;

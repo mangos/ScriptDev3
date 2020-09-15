@@ -366,7 +366,9 @@ struct spell_boss_thermaplugg : public SpellScript
 
         // This spell should select a random Bomb-Face and activate it if needed
         if (pCaster->GetEntry() == NPC_MEKGINEER_THERMAPLUGG && pCaster->ToCreature()->AI())
+        {
             pCaster->ToCreature()->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCaster->ToCreature(), urand(0, MAX_GNOME_FACES - 1));
+        }
 
         return true;
     }

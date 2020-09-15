@@ -275,7 +275,9 @@ struct npc_fhwoor : public CreatureScript
         {
             // resume escort
             if (pSummoned->GetEntry() == NPC_SSSLITH)
+            {
                 SetEscortPaused(false);
+            }
         }
 
         void WaypointReached(uint32 uiPointId) override
@@ -292,7 +294,9 @@ struct npc_fhwoor : public CreatureScript
             case 46:
                 // despawn the Ark
                 if (GameObject* pArk = GetClosestGameObjectWithEntry(m_creature, GO_ARK_OF_SSSLITH, 10.0f))
+                {
                     pArk->SetLootState(GO_JUST_DEACTIVATED);
+                }
                 // spawn npcs
                 m_creature->SummonCreature(NPC_ENCHANTRESS, 526.12f, 8136.96f, 21.64f, 0.57f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
                 m_creature->SummonCreature(NPC_SLAVEDRIVER, 524.09f, 8138.67f, 21.49f, 0.58f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
@@ -317,7 +321,9 @@ struct npc_fhwoor : public CreatureScript
             case 93:
                 DoScriptText(SAY_ESCORT_COMPLETE, m_creature);
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     pPlayer->GroupEventHappens(QUEST_ID_FHWOOR_SMASH, m_creature);
+                }
                 break;
             }
         }
@@ -332,18 +338,26 @@ struct npc_fhwoor : public CreatureScript
             if (m_uiStompTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_STOMP) == CAST_OK)
+                {
                     m_uiStompTimer = urand(9000, 15000);
+                }
             }
             else
+            {
                 m_uiStompTimer -= uiDiff;
+            }
 
             if (m_uiShockTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_THUNDERSHOCK) == CAST_OK)
+                {
                     m_uiShockTimer = urand(15000, 20000);
+                }
             }
             else
+            {
                 m_uiShockTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

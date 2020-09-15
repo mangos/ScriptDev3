@@ -593,7 +593,9 @@ struct npc_wilda : public CreatureScript
     void Aggro(Unit* pWho) override
     {
         if (roll_chance_i(30))
+        {
             DoCastSpellIfCan(m_creature, SPELL_EARTHBING_TOTEM);
+        }
     }
 
     void AttackStart(Unit* pWho) override
@@ -683,7 +685,9 @@ struct npc_wilda : public CreatureScript
                     break;
                 case 13:
                     if (Player* pPlayer = GetPlayerForEscort())
+                    {
                         DoScriptText(SAY_WIL_FREE_SPIRITS, m_creature, pPlayer);
+                    }
                     DoFreeSpirits();
                     break;
                 case 14:
@@ -694,7 +698,9 @@ struct npc_wilda : public CreatureScript
                     break;
                 case 40:
                     if (Player* pPlayer = GetPlayerForEscort())
+                    {
                         DoScriptText(SAY_WIL_JUST_AHEAD, m_creature, pPlayer);
+                    }
                     break;
                 case 52:
                     if (Player* pPlayer = GetPlayerForEscort())
@@ -736,7 +742,9 @@ struct npc_wilda : public CreatureScript
         if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
         {
             if (Player* pPlayer = GetPlayerForEscort())
+            {
                 pSummoned->AI()->AttackStart(pPlayer);
+            }
         }
     }
 #endif
@@ -855,18 +863,26 @@ struct npc_wilda : public CreatureScript
             if (m_uiLightningTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHAIN_LIGHTNING) == CAST_OK)
+                {
                     m_uiLightningTimer = 4000;
+                }
             }
             else
+            {
                 m_uiLightningTimer -= uiDiff;
+            }
 
             if (m_uiShockTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_SHOCK) == CAST_OK)
+                {
                     m_uiShockTimer = 10000;
+                }
             }
             else
+            {
                 m_uiShockTimer -= uiDiff;
+            }
 #endif
 
             if (m_creature->GetHealthPercent() <= 30.0f)
@@ -1249,7 +1265,9 @@ struct npc_lord_illidan_stormrage : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*data*/) override
         {
             if (!m_bEventStarted && eventType == AI_EVENT_CUSTOM_A && pSender == m_creature && pInvoker->GetTypeId() == TYPEID_PLAYER)
+            {
                 StartEvent((Player*)pInvoker);
+            }
         }
 
         void StartEvent(Player* pPlayer)
@@ -1473,7 +1491,9 @@ struct go_crystal_prison : public GameObjectScript
         if (pQuest->GetQuestId() == QUEST_BATTLE_OF_THE_CRIMSON_WATCH)
         if (Creature* pLordIllidan = GetClosestCreatureWithEntry(pPlayer, NPC_LORD_ILLIDAN, 50.0))
         if (CreatureAI* pIllidanAI = pLordIllidan->AI())
+        {
             pIllidanAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, pLordIllidan, pPlayer, 0);
+        }
 
         return true;
     }

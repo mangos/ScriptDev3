@@ -1,4 +1,4 @@
-﻿/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
@@ -44,6 +44,8 @@ enum
 };
 
 static const uint32 aCrystalHandlerDeathSpells[MAX_CRYSTALS] =
-{SPELL_CRYSTAL_HANDLER_DEATH_1, SPELL_CRYSTAL_HANDLER_DEATH_2, SPELL_CRYSTAL_HANDLER_DEATH_3, SPELL_CRYSTAL_HANDLER_DEATH_4};
+{
+    SPELL_CRYSTAL_HANDLER_DEATH_1, SPELL_CRYSTAL_HANDLER_DEATH_2, SPELL_CRYSTAL_HANDLER_DEATH_3, SPELL_CRYSTAL_HANDLER_DEATH_4;
+}
 
 #endif

@@ -200,7 +200,9 @@ struct boss_algalon : public CreatureScript
 
             // start intro event on first spawn
             if (pCreature->GetPositionZ() > 450.0f)
+            {
                 DoStartIntroEvent();
+            }
         }
 
         ScriptedInstance* m_pInstance;
@@ -287,7 +289,9 @@ struct boss_algalon : public CreatureScript
                 if (!m_bEventFinished)
                 {
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_ALGALON, DONE);
+                    }
 
                     m_creature->setFaction(FACTION_ID_FRIENDLY);
                     m_bEventFinished = true;
@@ -313,16 +317,22 @@ struct boss_algalon : public CreatureScript
                     StartNextDialogueText(NPC_ALGALON);
                 }
                 else
+                {
                     StartNextDialogueText(SAY_DESPAWN_1);
+                }
             }
             else
+            {
                 m_pInstance->SetData(TYPE_ALGALON, FAIL);
+            }
 
             // despawn everything
             for (GuidList::const_iterator itr = m_lSummonedGuids.begin(); itr != m_lSummonedGuids.end(); ++itr)
             {
                 if (Creature* pSummoned = m_creature->GetMap()->GetCreature(*itr))
+                {
                     pSummoned->ForcedDespawn();
+                }
             }
         }
 
@@ -522,16 +532,22 @@ struct boss_algalon : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiBerserkTimer -= uiDiff;
+                }
             }
 
             if (m_uiQuantumStrikeTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_QUANTUM_STRIKE : SPELL_QUANTUM_STRIKE_H) == CAST_OK)
+                {
                     m_uiQuantumStrikeTimer = 4000;
+                }
             }
             else
+            {
                 m_uiQuantumStrikeTimer -= uiDiff;
+            }
 
             if (m_uiBigBangTimer < uiDiff)
             {
@@ -542,23 +558,33 @@ struct boss_algalon : public CreatureScript
                 }
             }
             else
+            {
                 m_uiBigBangTimer -= uiDiff;
+            }
 
             if (m_uiCosmicSmashTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_COSMIC_SMASH_SUMMON : SPELL_COSMIC_SMASH_SUMMON_H) == CAST_OK)
+                {
                     m_uiCosmicSmashTimer = urand(40000, 50000);
+                }
             }
             else
+            {
                 m_uiCosmicSmashTimer -= uiDiff;
+            }
 
             if (m_uiPhasePunchTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PHASE_PUNCH) == CAST_OK)
+                {
                     m_uiPhasePunchTimer = 15000;
+                }
             }
             else
+            {
                 m_uiPhasePunchTimer -= uiDiff;
+            }
 
             // summons are happening only above 20% hp
             if (!m_bIsLowHealth)
@@ -578,10 +604,14 @@ struct boss_algalon : public CreatureScript
                         m_uiCollapsingStarTimer = 60000;
                     }
                     else
+                    {
                         m_uiCollapsingStarTimer = 10000;
+                    }
                 }
                 else
+                {
                     m_uiCollapsingStarTimer -= uiDiff;
+                }
 
                 if (m_uiConstellationTimer < uiDiff)
                 {
@@ -597,10 +627,14 @@ struct boss_algalon : public CreatureScript
                         }
                     }
                     else
+                    {
                         m_uiConstellationTimer = 10000;
+                    }
                 }
                 else
+                {
                     m_uiConstellationTimer -= uiDiff;
+                }
             }
 
             // switch to second phase
@@ -613,7 +647,9 @@ struct boss_algalon : public CreatureScript
                 for (GuidList::const_iterator itr = m_lSummonedGuids.begin(); itr != m_lSummonedGuids.end(); ++itr)
                 {
                     if (Creature* pBlackHole = m_creature->GetMap()->GetCreature(*itr))
+                    {
                         pBlackHole->ForcedDespawn();
+                    }
                 }
 
                 // spawn new worm holes
@@ -663,7 +699,9 @@ struct npc_living_constellation : public CreatureScript
         {
             // start casting Arcane Barrage
             if (eventType == AI_EVENT_CUSTOM_A)
+            {
                 m_uiArcaneBarrageTimer = urand(5000, 7000);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -673,10 +711,14 @@ struct npc_living_constellation : public CreatureScript
                 if (m_uiArcaneBarrageTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ARCANE_BARRAGE : SPELL_ARCANE_BARRAGE_H) == CAST_OK)
+                    {
                         m_uiArcaneBarrageTimer = urand(5000, 7000);
+                    }
                 }
                 else
+                {
                     m_uiArcaneBarrageTimer -= uiDiff;
+                }
             }
         }
     };
@@ -712,13 +754,17 @@ struct npc_worm_hole : public CreatureScript
         void JustSummoned(Creature* pSummoned) override
         {
             if (pSummoned->GetEntry() == NPC_UNLEASHED_DARK_MATTER)
+            {
                 pSummoned->SetInCombatWithZone();
+            }
         }
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_WORM_HOLE_PHASE)
+            {
                 pTarget->CastSpell(pTarget, SPELL_BLACK_HOLE_DMG, true, nullptr, nullptr, m_creature->GetObjectGuid());
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -726,10 +772,14 @@ struct npc_worm_hole : public CreatureScript
             if (m_uiDarkMatterTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_UNLEASHED_DARK_MATTER) == CAST_OK)
+                {
                     m_uiDarkMatterTimer = urand(10000, 15000);
+                }
             }
             else
+            {
                 m_uiDarkMatterTimer -= uiDiff;
+            }
         }
     };
 
@@ -771,14 +821,18 @@ struct npc_black_hole : public CreatureScript
                 ((Creature*)pWho)->ForcedDespawn(1000);
                 m_creature->ForcedDespawn(1000);
                 if (Creature* pVoidZone = GetClosestCreatureWithEntry(m_creature, NPC_VOID_ZONE_VISUAL, 5.0f))
+                {
                     pVoidZone->ForcedDespawn(1000);
+                }
             }
         }
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_BLACK_HOLE_PHASE)
+            {
                 pTarget->CastSpell(pTarget, SPELL_BLACK_HOLE_DMG, true, nullptr, nullptr, m_creature->GetObjectGuid());
+            }
         }
 
         void AttackStart(Unit* /*pWho*/) override { }

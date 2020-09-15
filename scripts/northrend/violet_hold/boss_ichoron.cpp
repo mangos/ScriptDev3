@@ -127,19 +127,27 @@ struct boss_ichoron : public CreatureScript
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_WATER_BLAST : SPELL_WATER_BLAST_H) == CAST_OK)
+                    {
                         m_uiWaterBlastTimer = urand(8000, 14000);
+                    }
                 }
             }
             else
+            {
                 m_uiWaterBlastTimer -= uiDiff;
+            }
 
             if (m_uiWaterBoltVolleyTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_WATER_BOLT_VOLLEY : SPELL_WATER_BOLT_VOLLEY_H) == CAST_OK)
+                {
                     m_uiWaterBoltVolleyTimer = urand(7000, 12000);
+                }
             }
             else
+            {
                 m_uiWaterBoltVolleyTimer -= uiDiff;
+            }
 
             if (!m_bIsFrenzy && m_creature->GetHealthPercent() < 25.0f)
             {

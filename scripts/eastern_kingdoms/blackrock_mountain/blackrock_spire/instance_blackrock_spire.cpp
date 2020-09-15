@@ -511,7 +511,9 @@ struct is_blackrock_spire : public InstanceScript
 #if defined (CLASSIC)
             case MAX_ENCOUNTER:
                 if (Player* pPlayer = instance->GetPlayer(ObjectGuid(guid)))
+                {
                     DoOpenUpperDoorIfCan(pPlayer);
+                }
                 break;
 #endif
             default:
@@ -618,12 +620,18 @@ struct is_blackrock_spire : public InstanceScript
                     ++m_uiDragonspineGoCount;
 
                     if (m_uiDragonspineGoCount >= 4)
+                    {
                         m_uiDragonspineDoorTimer = 0;
+                    }
                     else
+                    {
                         m_uiDragonspineDoorTimer = 1000;
+                    }
                 }
                 else
+                {
                     m_uiDragonspineDoorTimer -= uiDiff;
+                }
             }
 #endif
         }

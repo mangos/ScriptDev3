@@ -736,7 +736,9 @@ struct npc_anchorite_barada : public CreatureScript
                 {
                 case AI_EVENT_START_EVENT:  // start the actuall exorcism
                     if (Creature* pColonel = GetClosestCreatureWithEntry(m_creature, NPC_COLONEL_JULES, 15.0f))
+                    {
                         m_colonelGuid = pColonel->GetObjectGuid();
+                    }
 
                     m_creature->SetStandState(UNIT_STAND_STATE_STAND);
                     m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
@@ -789,7 +791,9 @@ struct npc_anchorite_barada : public CreatureScript
             case 6:
                 // event completed - wait for player to get quest credit by gossip
                 if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                {
                     m_creature->SetFacingToObject(pColonel);
+                }
                 m_creature->GetMotionMaster()->Clear();
                 m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
                 m_bEventComplete = true;
@@ -840,7 +844,9 @@ struct npc_anchorite_barada : public CreatureScript
                 break;
             case NPC_COLONEL_JULES:
                 if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                {
                     DoScriptText(aColonelTexts[urand(0, 2)], pColonel);
+                }
                 break;
             case NPC_ANCHORITE_BARADA:
                 DoScriptText(aAnchoriteTexts[urand(0, 2)], m_creature);
@@ -903,7 +909,9 @@ struct npc_anchorite_barada : public CreatureScript
     {
         // check if quest is active but not completed
         if (pPlayer->IsCurrentQuest(QUEST_ID_EXORCISM, 1))
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_EXORCISM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        }
 
         pPlayer->SEND_GOSSIP_MENU(TEXT_ID_ANCHORITE, pCreature->GetObjectGuid());
         return true;
@@ -978,7 +986,9 @@ struct spell_just_release_darkness : public SpellScript
 
             // spawn a Darkness Released npc and move around the room
             if (Creature* pDarkness = pCreatureTarget->SummonCreature(NPC_DARKNESS_RELEASED, 0, 0, 0, 0, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 20000))
+            {
                 pDarkness->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+            }
 
             // always return true when we are handling this spell and effect
             return true;
@@ -1055,7 +1065,9 @@ struct npc_caretaker_dilandrus : public CreatureScript
                         uVisitGraveTimer = 5000;
                     }
                     else uVisitGraveTimer = 0;
-                    uCurrentStage = 4;
+                    {
+                        uCurrentStage = 4;
+                    }
                 }
                 else if (uCurrentStage == 4)
                 {
@@ -1076,7 +1088,9 @@ struct npc_caretaker_dilandrus : public CreatureScript
                         m_creature->HandleEmote(EMOTE_ONESHOT_CRY);
                     }
                     else uVisitGraveTimer = 5000;
-                    uCurrentStage = 6;
+                    {
+                        uCurrentStage = 6;
+                    }
                 }
                 else if (uCurrentStage == 6) // go back to start
                 {
@@ -1160,7 +1174,9 @@ struct  npc_magister_aledisAI : public ScriptedAI
         m_creature->CombatStop(true);
 
         if (!m_bIsDefeated)
+        {
             m_creature->LoadCreatureAddon(true);
+        }
 
         if (m_creature->IsAlive())
         {
@@ -1170,7 +1186,9 @@ struct  npc_magister_aledisAI : public ScriptedAI
                 m_creature->GetMotionMaster()->MoveWaypoint();
             }
             else
+            {
                 m_creature->GetMotionMaster()->MoveIdle();
+            }
         }
 
         m_creature->SetLootRecipient(nullptr);
@@ -1200,26 +1218,38 @@ struct  npc_magister_aledisAI : public ScriptedAI
         if (m_uiPyroblastTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PYROBLAST) == CAST_OK)
+            {
                 m_uiPyroblastTimer = urand(18000, 21000);
+            }
         }
         else
+        {
             m_uiPyroblastTimer -= uiDiff;
+        }
 
         if (m_uiFireballTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIREBALL) == CAST_OK)
+            {
                 m_uiFireballTimer = urand(3000, 4000);
+            }
         }
         else
+        {
             m_uiFireballTimer -= uiDiff;
+        }
 
         if (m_uiFrostNovaTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_FROST_NOVA) == CAST_OK)
+            {
                 m_uiFrostNovaTimer = urand(12000, 16000);
+            }
         }
         else
+        {
             m_uiFrostNovaTimer -= uiDiff;
+        }
 
         DoMeleeAttackIfReady();
     }

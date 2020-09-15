@@ -115,7 +115,9 @@ struct boss_garr : public CreatureScript
             if (type == AI_EVENT_CUSTOM_B && pSender == m_creature)
             {
                 if (Creature* spawn = m_creature->SummonCreature(NPC_FIRESWORN, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSUMMON_CORPSE_DESPAWN, true))
+                {
                     spawn->SetOwnerGuid(ObjectGuid());  // trying to prevent despawn of the summon at Garr death
+                }
                 m_uiExplodeAddTimer = 25 * IN_MILLISECONDS;
             }
         }
@@ -160,7 +162,9 @@ struct boss_garr : public CreatureScript
                 {
                     ObjectGuid guid = m_pInstance->GetGuid(NPC_FIRESWORN);
                     if (Creature* firesworn = m_pInstance->instance->GetCreature(guid))
+                    {
                         SendAIEvent(AI_EVENT_CUSTOM_A, firesworn, firesworn, SPELL_MASSIVE_ERUPTION);   // this is an instant explosion with no SPELL_ERUPTION_TRIGGER
+                    }
                 }
                 m_uiExplodeAddTimer = 15 * IN_MILLISECONDS;
             }
@@ -229,7 +233,9 @@ struct mob_firesworn : public CreatureScript
         if (m_pInstance)
         {
             if (Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR))
+            {
                 pGarr->CastSpell(pGarr, SPELL_GARR_ENRAGE, true, nullptr, nullptr, m_creature->GetObjectGuid());
+            }
         }
     }
 #endif

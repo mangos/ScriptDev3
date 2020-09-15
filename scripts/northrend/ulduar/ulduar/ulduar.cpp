@@ -94,35 +94,51 @@ struct go_ulduar_teleporter : public GameObjectScript
 
         // Formation grounds
         if (pInstance->GetData(TYPE_LEVIATHAN) != NOT_STARTED || pPlayer->isGameMaster())
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_FORMATION_GROUNDS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        }
 
         // Colossal Forge
         if (pInstance->GetData(TYPE_LEVIATHAN) == DONE || pPlayer->isGameMaster())
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_COLOSSAL_FORGE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+        }
 
         // Scrapyard
         if (pInstance->GetData(TYPE_XT002) != NOT_STARTED || pPlayer->isGameMaster())
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_SCRAPYARD, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+        }
 
         // Antechamber
         if (pInstance->GetData(TYPE_XT002) == DONE || pPlayer->isGameMaster())
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_ANTECHAMBER, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+        }
 
         // Shattered walkway
         if (pInstance->GetData(TYPE_KOLOGARN) == DONE || pPlayer->isGameMaster())
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_WALKWAY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+        }
 
         // Conservatory of life
         if (pInstance->GetData(TYPE_AURIAYA) == DONE || pPlayer->isGameMaster())
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_CONSERVATORY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
+        }
 
         // Spark of imagination
         if (pInstance->GetData(TYPE_MIMIRON) != NOT_STARTED || pPlayer->isGameMaster())
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_SPARK_IMAGINATION, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
+        }
 
         // Prison of Yogg-Saron
         if (pInstance->GetData(TYPE_VEZAX) == DONE || pPlayer->isGameMaster())
+        {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELE_YOGG_SARON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
+        }
 
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pGo->GetGOInfo()->GetGossipMenuId(), pGo), pGo->GetObjectGuid());
 
@@ -222,7 +238,9 @@ struct npc_brann_ulduar : public CreatureScript
         if (InstanceData* pInstance = pCreature->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_LEVIATHAN_GAUNTLET) == NOT_STARTED && pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED)
+            {
                 pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BEGIN_ASSAULT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            }
 
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_BRANN, pCreature->GetObjectGuid());
         }
@@ -306,9 +324,13 @@ struct npc_keeper_norgannon : public CreatureScript
                 pCreature->ForcedDespawn(10000);
 
                 if (Creature* pDellorah = pInstance->GetSingleCreatureFromStorage(NPC_EXPLORER_DELLORAH))
+                {
                     pDellorah->GetMotionMaster()->MoveWaypoint();
+                }
                 if (Creature* pBrann = pInstance->GetSingleCreatureFromStorage(NPC_BRANN_BRONZEBEARD))
+                {
                     pBrann->GetMotionMaster()->MoveWaypoint();
+                }
             }
 
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_ACTIVATED, pCreature->GetObjectGuid());
@@ -418,7 +440,9 @@ struct npc_storm_tempered_keeper : public CreatureScript
         {
             // initialize nearby buddy
             if (Creature* pKeeper = GetClosestCreatureWithEntry(m_creature, m_creature->GetEntry() == NPC_TEMPERED_KEEPER_1 ? NPC_TEMPERED_KEEPER_2 : NPC_TEMPERED_KEEPER_1, 20))
+            {
                 m_buddyGuid = pKeeper->GetObjectGuid();
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -459,36 +483,52 @@ struct npc_storm_tempered_keeper : public CreatureScript
                     if (!pBuddy->IsWithinDistInMap(m_creature, MAX_KEEPER_DISTANCE))
                     {
                         if (DoCastSpellIfCan(m_creature, SPELL_SEPARATION_ANXIETY) == CAST_OK)
+                        {
                             m_uiCheckBuddyTimer = 5000;
+                        }
                     }
                     else if (!pBuddy->IsAlive())
                     {
                         if (DoCastSpellIfCan(m_creature, SPELL_VENGEFUL_SURGE) == CAST_OK)
+                        {
                             m_uiCheckBuddyTimer = 0;
+                        }
                     }
                     else
+                    {
                         m_uiCheckBuddyTimer = 1000;
+                    }
                 }
                 else
+                {
                     m_uiCheckBuddyTimer -= uiDiff;
+                }
 
                 // spawn a sphere only if the buddy is stil alive
                 if (m_uiSphereTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_CHARGED_SPHERE) == CAST_OK)
+                    {
                         m_uiSphereTimer = urand(20000, 35000);
+                    }
                 }
                 else
+                {
                     m_uiSphereTimer -= uiDiff;
+                }
             }
 
             if (m_uiLightningTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_FORKED_LIGHTNING) == CAST_OK)
+                {
                     m_uiLightningTimer = urand(10000, 15000);
+                }
             }
             else
+            {
                 m_uiLightningTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -536,7 +576,9 @@ struct npc_charged_sphere : public CreatureScript
         {
             // inity entry of the buddy keeper
             if (eventType == AI_EVENT_CUSTOM_A)
+            {
                 m_uiBuddyEntry = uiMiscValue;
+            }
         }
 
         void AttackStart(Unit* /*pWho*/) override { }
@@ -577,32 +619,42 @@ struct npc_ulduar_keeper : public CreatureScript
         if (InstanceData* pInstance = pCreature->GetInstanceData())
         {
             if (pInstance->GetData(TYPE_YOGGSARON) == DONE)
+            {
                 pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_YOGG_DEFEATED, pCreature->GetObjectGuid());
+            }
             else
             {
                 switch (pCreature->GetEntry())
                 {
                 case NPC_KEEPER_HODIR:
                     if (pInstance->GetData(TYPE_KEEPER_HODIR) != DONE)
+                    {
                         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                    }
 
                     pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_HODIR, pCreature->GetObjectGuid());
                     break;
                 case NPC_KEEPER_FREYA:
                     if (pInstance->GetData(TYPE_KEEPER_FREYA) != DONE)
+                    {
                         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                    }
 
                     pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_FREYA, pCreature->GetObjectGuid());
                     break;
                 case NPC_KEEPER_THORIM:
                     if (pInstance->GetData(TYPE_KEEPER_THORIM) != DONE)
+                    {
                         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                    }
 
                     pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_THORIM, pCreature->GetObjectGuid());
                     break;
                 case NPC_KEEPER_MIMIRON:
                     if (pInstance->GetData(TYPE_KEEPER_MIMIRON) != DONE)
+                    {
                         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                    }
 
                     pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_MIMIRON, pCreature->GetObjectGuid());
                     break;

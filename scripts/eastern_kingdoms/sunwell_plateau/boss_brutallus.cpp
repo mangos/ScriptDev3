@@ -331,7 +331,9 @@ struct boss_brutallus : public CreatureScript
                 break;
             case YELL_MADR_INTRO:
                 if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
+                {
                     pMadrigosa->GetMotionMaster()->MovePoint(POINT_MOVE_GROUND, aMadrigosaLoc[0].m_fX, aMadrigosaLoc[0].m_fY, aMadrigosaLoc[0].m_fZ);
+                }
                 break;
             case YELL_INTRO:
                 if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
@@ -382,7 +384,9 @@ struct boss_brutallus : public CreatureScript
                 break;
             case POINT_MOVE_GROUND:
                 if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
+                {
                     pMadrigosa->GetMotionMaster()->MovePoint(POINT_MOVE_GROUND, aMadrigosaLoc[0].m_fX, aMadrigosaLoc[0].m_fY, aMadrigosaLoc[0].m_fZ);
+                }
                 m_uiMadrigosaSpellTimer = 0;
                 break;
             case YELL_MADR_TRAP:
@@ -419,7 +423,9 @@ struct boss_brutallus : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature *pSender, Unit* /*pInvoker*/, uint32 /*data*/) override
         {
             if (eventType == AI_EVENT_CUSTOM_A && pSender == m_creature)
+            {
                 StartNextDialogueText(NPC_MADRIGOSA);
+            }
         }
 
         // Wrapper to keep all the intro event stuff together

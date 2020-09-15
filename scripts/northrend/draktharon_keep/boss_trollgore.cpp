@@ -100,7 +100,9 @@ struct boss_trollgore : public CreatureScript
         void KilledUnit(Unit* pVictim) override
         {
             if (pVictim->GetCharmerOrOwnerPlayerOrPlayerItself())
+            {
                 DoScriptText(SAY_KILL, m_creature);
+            }
         }
 
         void JustDied(Unit* /*pKiller*/) override
@@ -108,13 +110,17 @@ struct boss_trollgore : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_TROLLGORE, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_TROLLGORE, FAIL);
+            }
         }
 
         void SpellHit(Unit* /*pTarget*/, const SpellEntry* pSpell) override
@@ -127,7 +133,9 @@ struct boss_trollgore : public CreatureScript
                 if (m_uiConsumeStacks == MAX_CONSOME_STACKS)
                 {
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_TROLLGORE, SPECIAL);
+                    }
                 }
             }
         }
@@ -148,27 +156,39 @@ struct boss_trollgore : public CreatureScript
             if (m_uiCrushTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CRUSH) == CAST_OK)
+                {
                     m_uiCrushTimer = 10000;
+                }
             }
             else
+            {
                 m_uiCrushTimer -= uiDiff;
+            }
 
             if (m_uiInfectedWoundTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_INFECTED_WOUND) == CAST_OK)
+                {
                     m_uiInfectedWoundTimer = urand(20000, 30000);
+                }
             }
             else
+            {
                 m_uiInfectedWoundTimer -= uiDiff;
+            }
 
             if (m_uiWaveTimer < uiDiff)
             {
                 if (m_pInstance)
+                {
                     m_pInstance->SetData(TYPE_DO_TROLLGORE, 0);
+                }
                 m_uiWaveTimer = 30000;
             }
             else
+            {
                 m_uiWaveTimer -= uiDiff;
+            }
 
             if (m_uiConsumeTimer < uiDiff)
             {
@@ -179,7 +199,9 @@ struct boss_trollgore : public CreatureScript
                 }
             }
             else
+            {
                 m_uiConsumeTimer -= uiDiff;
+            }
 
             if (m_uiCorpseExplodeTimer < uiDiff)
             {
@@ -190,7 +212,9 @@ struct boss_trollgore : public CreatureScript
                 }
             }
             else
+            {
                 m_uiCorpseExplodeTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

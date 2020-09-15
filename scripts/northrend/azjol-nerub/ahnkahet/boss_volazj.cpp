@@ -161,7 +161,9 @@ struct boss_volazj : public CreatureScript
             }
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_VOLAZJ, DONE);
+            }
         }
 
         void EnterEvadeMode() override
@@ -177,7 +179,9 @@ struct boss_volazj : public CreatureScript
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_VOLAZJ, FAIL);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -214,14 +218,18 @@ struct boss_volazj : public CreatureScript
                     SetCombatMovement(false);
 
                     if (m_pInstance)
+                    {
                         m_pInstance->SetData(TYPE_VOLAZJ, SPECIAL);
+                    }
 
                     m_bIsInsanityInProgress = true;
                 }
 
                 // Store the players in the instance, in order to better handle phasing
                 if (m_pInstance)
+                {
                     m_pInstance->SetData64(DATA_INSANITY_PLAYER, pTarget->GetObjectGuid());
+                }
 
                 // Phase and summon a Visage for each player
                 pTarget->CastSpell(pTarget, aInsanityPhaseSpells[m_uiInsanityIndex], true, 0, 0, m_creature->GetObjectGuid());
@@ -263,29 +271,41 @@ struct boss_volazj : public CreatureScript
             if (m_uiMindFlayTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_MIND_FLAY : SPELL_MIND_FLAY_H) == CAST_OK)
+                {
                     m_uiMindFlayTimer = urand(10000, 20000);
+                }
             }
             else
+            {
                 m_uiMindFlayTimer -= uiDiff;
+            }
 
             if (m_uiShadowBoltTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SHADOW_BOLT : SPELL_SHADOW_BOLT_H) == CAST_OK)
+                {
                     m_uiShadowBoltTimer = urand(8000, 13000);
+                }
             }
             else
+            {
                 m_uiShadowBoltTimer -= uiDiff;
+            }
 
             if (m_uiShiverTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_SHIVER : SPELL_SHIVER_H) == CAST_OK)
+                    {
                         m_uiShiverTimer = 30000;
+                    }
                 }
             }
             else
+            {
                 m_uiShiverTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

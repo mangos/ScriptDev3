@@ -169,8 +169,8 @@ void ScriptedInstance::DoRespawnGameObject(uint32 uiEntry, uint32 uiTimeToDespaw
         DoRespawnGameObject(find->second, uiTimeToDespawn);
     }
     else
-        // Output log, possible reason is not added GO to storage, or not yet loaded;
     {
+        // Output log, possible reason is not added GO to storage, or not yet loaded;
         debug_log("SD3: Script call DoRespawnGameObject(by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
     }
 }
@@ -267,11 +267,15 @@ void ScriptedInstance::DoStartTimedAchievement(AchievementCriteriaTypes criteria
         for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
         {
             if (Player* pPlayer = itr->getSource())
+            {
                 pPlayer->StartTimedAchievementCriteria(criteriaType, uiTimedCriteriaMiscId);
+            }
         }
     }
     else
+    {
         debug_log("SD3: DoStartTimedAchievement attempt start achievements but no players in map.");
+    }
 }
 #endif
 

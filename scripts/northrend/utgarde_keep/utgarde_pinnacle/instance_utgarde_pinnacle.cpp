@@ -77,9 +77,13 @@ struct is_pinnacle : public InstanceScript
                 break;
             case NPC_WORLD_TRIGGER:
                 if (pCreature->GetPositionX() < 250.0f)
+                {
                     m_gortokEventTriggerGuid = pCreature->GetObjectGuid();
+                }
                 else if (pCreature->GetPositionX() > 400.0f && pCreature->GetPositionX() < 500.0f)
+                {
                     m_skadiMobsTriggerGuid = pCreature->GetObjectGuid();
+                }
                 break;
             case NPC_YMIRJAR_HARPOONER:
             case NPC_YMIRJAR_WARRIOR:
@@ -95,11 +99,15 @@ struct is_pinnacle : public InstanceScript
             {
             case GO_DOOR_SKADI:
                 if (m_auiEncounter[TYPE_SKADI] == DONE)
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
             case GO_DOOR_YMIRON:
                 if (m_auiEncounter[TYPE_YMIRON] == DONE)
+                {
                     pGo->SetGoState(GO_STATE_ACTIVE);
+                }
                 break;
             default:
                 return;
@@ -145,7 +153,9 @@ struct is_pinnacle : public InstanceScript
             {
             case TYPE_SVALA:
                 if (uiData == IN_PROGRESS || uiData == FAIL)
+                {
                     SetSpecialAchievementCriteria(TYPE_ACHIEV_INCREDIBLE_HULK, false);
+                }
                 m_auiEncounter[uiType] = uiData;
                 break;
             case TYPE_GORTOK:
@@ -165,9 +175,13 @@ struct is_pinnacle : public InstanceScript
                     if (Creature* pOrb = instance->GetCreature(m_gortokEventTriggerGuid))
                     {
                         if (!pOrb->IsAlive())
+                        {
                             pOrb->Respawn();
+                        }
                         else
+                        {
                             pOrb->RemoveAllAuras();
+                        }
 
                         // For some reasone the Orb doesn't evade automatically
                         pOrb->GetMotionMaster()->MoveTargetedHome();
@@ -179,7 +193,9 @@ struct is_pinnacle : public InstanceScript
                         if (Creature* pTemp = GetSingleCreatureFromStorage(aGortokMiniBosses[i]))
                         {
                             if (!pTemp->IsAlive())
+                            {
                                 pTemp->Respawn();
+                            }
 
                             pTemp->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                         }
@@ -210,7 +226,9 @@ struct is_pinnacle : public InstanceScript
                 case FAIL:
                     // Handle Grauf evade - if event is in phase 1
                     if (Creature* pGrauf = GetSingleCreatureFromStorage(NPC_GRAUF))
+                    {
                         pGrauf->AI()->EnterEvadeMode();
+                    }
 
                     // no break;
                 case NOT_STARTED:
@@ -218,30 +236,42 @@ struct is_pinnacle : public InstanceScript
                     for (GuidList::const_iterator itr = m_lskadiGauntletMobsList.begin(); itr != m_lskadiGauntletMobsList.end(); ++itr)
                     {
                         if (Creature* pYmirjar = instance->GetCreature(*itr))
+                        {
                             pYmirjar->ForcedDespawn();
+                        }
                     }
 
                     // Reset position
                     if (Creature* pGrauf = GetSingleCreatureFromStorage(NPC_GRAUF))
+                    {
                         pGrauf->GetMotionMaster()->MoveTargetedHome();
+                    }
 
                     // no break;
                 case IN_PROGRESS:
 
                     // Remove the summon aura on phase 2 or fail
                     if (Creature* pTrigger = instance->GetCreature(m_skadiMobsTriggerGuid))
+                    {
                         pTrigger->RemoveAllAuras();
+                    }
                     break;
                 }
                 m_auiEncounter[uiType] = uiData;
                 break;
             case TYPE_YMIRON:
                 if (uiData == DONE)
+                {
                     DoUseDoorOrButton(GO_DOOR_YMIRON);
+                }
                 else if (uiData == IN_PROGRESS)
+                {
                     SetSpecialAchievementCriteria(TYPE_ACHIEV_KINGS_BANE, true);
+                }
                 else if (uiData == SPECIAL)
+                {
                     SetSpecialAchievementCriteria(TYPE_ACHIEV_KINGS_BANE, false);
+                }
                 m_auiEncounter[uiType] = uiData;
                 break;
             case TYPE_ACHIEV_KINGS_BANE:
@@ -342,7 +372,9 @@ struct is_pinnacle : public InstanceScript
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     m_auiEncounter[i] = NOT_STARTED;
+                }
             }
 
             OUT_LOAD_INST_DATA_COMPLETE;
@@ -357,7 +389,9 @@ struct is_pinnacle : public InstanceScript
                     if (!m_uiGortokOrbPhase)
                     {
                         if (Creature* pOrb = instance->GetCreature(m_gortokEventTriggerGuid))
+                        {
                             pOrb->GetMotionMaster()->MovePoint(0, aOrbPositions[1][0], aOrbPositions[1][1], aOrbPositions[1][2]);
+                        }
 
                         m_uiGortokOrbTimer = 18000;
                     }
@@ -372,7 +406,9 @@ struct is_pinnacle : public InstanceScript
                             pOrb->CastSpell(pOrb, uiSpellId, false);
 
                             if (m_uiGortokOrbPhase == uiMaxOrbPhase)
+                            {
                                 pOrb->ForcedDespawn(10000);
+                            }
                         }
 
                         m_uiGortokOrbTimer = 0;
@@ -380,7 +416,9 @@ struct is_pinnacle : public InstanceScript
                     ++m_uiGortokOrbPhase;
                 }
                 else
+                {
                     m_uiGortokOrbTimer -= uiDiff;
+                }
             }
         }
 
@@ -388,7 +426,9 @@ struct is_pinnacle : public InstanceScript
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
         {
             if (uiType < MAX_SPECIAL_ACHIEV_CRITS)
+            {
                 m_abAchievCriteria[uiType] = bIsMet;
+            }
         }
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];

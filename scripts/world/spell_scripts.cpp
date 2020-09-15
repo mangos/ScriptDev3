@@ -118,12 +118,16 @@ struct spell_cast_fishing_net : public SpellScript
                 if (urand(0, 3))
                 {
                     if (Item* pItem = ((Player*)pCaster)->StoreNewItemInInventorySlot(ITEM_TASTY_REEF_FISH, 1))
+                    {
                         ((Player*)pCaster)->SendNewItem(pItem, 1, true, false);
+                    }
                 }
                 else
                 {
                     if (Creature* pShark = pCaster->SummonCreature(NPC_REEF_SHARK, pGOTarget->GetPositionX(), pGOTarget->GetPositionY(), pGOTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 30000))
+                    {
                         pShark->AI()->AttackStart(pCaster);
+                    }
                 }
 
                 pGOTarget->SetLootState(GO_JUST_DEACTIVATED);

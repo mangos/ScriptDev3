@@ -98,7 +98,9 @@ struct boss_tyrannus : public CreatureScript
 
                 // Set Rimefang in combat - ToDo: research if it has some wp movement during combat
                 if (Creature* pRimefang = m_pInstance->GetSingleCreatureFromStorage(NPC_RIMEFANG))
+                {
                     pRimefang->AI()->AttackStart(pWho);
+                }
             }
         }
 
@@ -138,7 +140,9 @@ struct boss_tyrannus : public CreatureScript
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_TYRANNUS, FAIL);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -151,21 +155,29 @@ struct boss_tyrannus : public CreatureScript
             if (m_uiForcefulSmashTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FORCEFUL_SMASH) == CAST_OK)
+                {
                     m_uiForcefulSmashTimer = 50000;
+                }
             }
             else
+            {
                 m_uiForcefulSmashTimer -= uiDiff;
+            }
 
             if (m_uiOverlordsBrandTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_OVERLORDS_BRAND) == CAST_OK)
+                    {
                         m_uiOverlordsBrandTimer = urand(10000, 13000);
+                    }
                 }
             }
             else
+            {
                 m_uiOverlordsBrandTimer -= uiDiff;
+            }
 
             if (m_uiUnholyPowerTimer < uiDiff)
             {
@@ -177,7 +189,9 @@ struct boss_tyrannus : public CreatureScript
                 }
             }
             else
+            {
                 m_uiUnholyPowerTimer -= uiDiff;
+            }
 
             if (m_uiMarkOfRimefangTimer < uiDiff)
             {
@@ -200,7 +214,9 @@ struct boss_tyrannus : public CreatureScript
                 }
             }
             else
+            {
                 m_uiMarkOfRimefangTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -290,7 +306,9 @@ struct boss_rimefang_pos : public CreatureScript
 
             // Check for out of range players - ToDo: confirm the distance
             if (m_pInstance->GetData(TYPE_TYRANNUS) == IN_PROGRESS && pWho->GetTypeId() == TYPEID_PLAYER && !m_creature->IsWithinDistInMap(pWho, DEFAULT_VISIBILITY_INSTANCE))
+            {
                 DoCastSpellIfCan(pWho, SPELL_KILLING_ICE);
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override
@@ -306,12 +324,16 @@ struct boss_rimefang_pos : public CreatureScript
                 if (m_uiMountTimer <= uiDiff)
                 {
                     if (Creature* pTyrannus = m_pInstance->GetSingleCreatureFromStorage(NPC_TYRANNUS))
+                    {
                         pTyrannus->CastSpell(m_creature, SPELL_RIDE_VEHICLE_HARDCODED, true);
+                    }
 
                     m_uiMountTimer = 0;
                 }
                 else
+                {
                     m_uiMountTimer -= uiDiff;
+                }
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -331,7 +353,9 @@ struct boss_rimefang_pos : public CreatureScript
                 }
             }
             else
+            {
                 m_uiIcyBlastTimer -= uiDiff;
+            }
         }
     };
 

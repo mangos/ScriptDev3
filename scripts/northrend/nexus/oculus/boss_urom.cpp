@@ -137,7 +137,9 @@ struct boss_urom : public CreatureScript
         void Aggro(Unit* /*pWho*/) override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_UROM, IN_PROGRESS);
+            }
         }
 
         void AttackStart(Unit* pWho) override
@@ -160,15 +162,21 @@ struct boss_urom : public CreatureScript
                 {
                 case 0:
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_1) == CAST_OK)
+                    {
                         DoScriptText(SAY_SUMMON_1, m_creature);
+                    }
                     break;
                 case 1:
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_2) == CAST_OK)
+                    {
                         DoScriptText(SAY_SUMMON_2, m_creature);
+                    }
                     break;
                 case 2:
                     if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_3) == CAST_OK)
+                    {
                         DoScriptText(SAY_SUMMON_3, m_creature);
+                    }
                     break;
                 }
             }
@@ -199,13 +207,17 @@ struct boss_urom : public CreatureScript
             DoCastSpellIfCan(m_creature, SPELL_DEATH_SPELL, CAST_TRIGGERED);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_UROM, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_UROM, FAIL);
+            }
         }
 
         void EnterEvadeMode() override
@@ -238,7 +250,9 @@ struct boss_urom : public CreatureScript
         void JustSummoned(Creature* pSummon) override
         {
             if (Unit* pTarget = m_creature->GetMap()->GetUnit(m_attackTarget))
+            {
                 pSummon->AI()->AttackStart(pTarget);
+            }
         }
 
         void DoSpawnTrashPack()
@@ -279,10 +293,14 @@ struct boss_urom : public CreatureScript
                 if (m_uiArcaneShieldTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_ARCANE_SHIELD) == CAST_OK)
+                    {
                         m_uiArcaneShieldTimer = 0;
+                    }
                 }
                 else
+                {
                     m_uiArcaneShieldTimer -= uiDiff;
+                }
             }
 
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -307,7 +325,9 @@ struct boss_urom : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiExplosionTimer -= uiDiff;
+                }
             }
 
             if (m_uiExplosionExpireTimer)
@@ -324,7 +344,9 @@ struct boss_urom : public CreatureScript
                     m_uiExplosionExpireTimer = 0;
                 }
                 else
+                {
                     m_uiExplosionExpireTimer -= uiDiff;
+                }
 
                 // Don't decrease timers during the explosion event
                 return;
@@ -348,26 +370,36 @@ struct boss_urom : public CreatureScript
                 }
             }
             else
+            {
                 m_uiTeleportTimer -= uiDiff;
+            }
 
             if (m_uiFrostBombTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROSTBOMB) == CAST_OK)
+                {
                     m_uiFrostBombTimer = urand(4000, 6000);
+                }
             }
             else
+            {
                 m_uiFrostBombTimer -= uiDiff;
+            }
 
             if (m_uiTimeBombTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_TIME_BOMB : SPELL_TIME_BOMB_H) == CAST_OK)
+                    {
                         m_uiTimeBombTimer = urand(10000, 15000);
+                    }
                 }
             }
             else
+            {
                 m_uiTimeBombTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

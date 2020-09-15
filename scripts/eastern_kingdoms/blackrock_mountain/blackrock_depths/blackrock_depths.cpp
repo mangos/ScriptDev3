@@ -366,7 +366,9 @@ struct npc_grimstone : public CreatureScript
             {
                 Player* pPlayer = itr->getSource();
                 if (pPlayer && pPlayer->GetQuestStatus(QUEST_THE_CHALLENGE) == QUEST_STATUS_INCOMPLETE)
+                {
                     pPlayer->KilledMonsterCredit(NPC_THELDREN_QUEST_CREDIT);
+                }
             }
         }
 
@@ -380,7 +382,9 @@ struct npc_grimstone : public CreatureScript
                 case PHASE_BOSS:                                // Ring boss killed
                     // One Boss
                     if (m_uiAliveSummonedMob == 0)
+                    {
                         m_uiEventTimer = 5000;
+                    }
                     break;
                 case PHASE_GLADIATORS:                          // Theldren and his band killed
                     // Adds + Theldren
@@ -463,7 +467,9 @@ struct npc_grimstone : public CreatureScript
                 for (GuidList::const_iterator itr = m_lSummonedGUIDList.begin(); itr != m_lSummonedGUIDList.end(); ++itr)
                 {
                     if (Creature* pSummoned = m_creature->GetMap()->GetCreature(*itr))
+                    {
                         pSummoned->ForcedDespawn();
+                    }
                 }
                 m_lSummonedGUIDList.clear();
 
@@ -491,7 +497,9 @@ struct npc_grimstone : public CreatureScript
                                 if (Creature* pSpectator = m_creature->GetMap()->GetCreature(*itr))
                                 {
                                     if (urand(0, 3) < 1)
+                                    {
                                         pSpectator->HandleEmote(EMOTE_ONESHOT_CHEER);
+                                    }
                                 }
                             }
                             Start(false);
@@ -584,7 +592,9 @@ struct npc_grimstone : public CreatureScript
                     ++m_uiEventPhase;
                 }
                 else
+                {
                     m_uiEventTimer -= uiDiff;
+                }
             }
         }
     };
@@ -699,7 +709,9 @@ struct npc_phalanxAI : public npc_escortAI
                     }
                 }
                 else
+                {
                     m_creature->SetFactionTemporary(FACTION_DARK_IRON, TEMPFACTION_NONE);
+                }
 
                 m_creature->SetFacingTo(m_fKeepDoorOrientation);
                 break;
@@ -721,7 +733,9 @@ struct npc_phalanxAI : public npc_escortAI
                 uiCallPatrolTimer = 0;
             }
             else
+            {
                 uiCallPatrolTimer -= uiDiff;
+            }
         }
 
         // Combat check
@@ -730,28 +744,40 @@ struct npc_phalanxAI : public npc_escortAI
             if (uiThunderclapTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_THUNDERCLAP) == CAST_OK)
+                {
                     uiThunderclapTimer = 10000;
+                }
             }
             else
+            {
                 uiThunderclapTimer -= uiDiff;
+            }
 
             if (uiMightyBlowTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIGHTY_BLOW) == CAST_OK)
+                {
                     uiMightyBlowTimer = 10000;
+                }
             }
             else
+            {
                 uiMightyBlowTimer -= uiDiff;
+            }
 
             if (m_creature->GetHealthPercent() < 51.0f)
             {
                 if (uiFireballVolleyTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_FIREBALL_VOLLEY) == CAST_OK)
+                    {
                         uiFireballVolleyTimer = 15000;
+                    }
                 }
                 else
+                {
                     uiFireballVolleyTimer -= uiDiff;
+                }
             }
 
             DoMeleeAttackIfReady();
@@ -838,7 +864,9 @@ struct npc_mistress_nagmaraAI : public ScriptedAI
         if (m_uiPhaseTimer)
         {
             if (m_uiPhaseTimer <= uiDiff)
+            {
                 m_uiPhaseTimer = 0;
+            }
             else
             {
                 m_uiPhaseTimer -= uiDiff;
@@ -866,7 +894,9 @@ struct npc_mistress_nagmaraAI : public ScriptedAI
                     m_uiPhaseTimer = 5000;
                 }
                 else
+                {
                     m_creature->GetMotionMaster()->MoveFollow(pRocknot, 2.0f, 0);
+                }
                 break;
             case 2:     // Phase 2 : Nagmara is "seducing" Rocknot
                 DoScriptText(SAY_NAGMARA_2, m_creature);
@@ -910,7 +940,9 @@ struct npc_mistress_nagmara : public CreatureScript
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
         if (pCreature->IsQuestGiver())
+        {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+        }
 
         if (pPlayer->GetQuestStatus(QUEST_POTION_LOVE) == QUEST_STATUS_COMPLETE)
         {
@@ -918,7 +950,9 @@ struct npc_mistress_nagmara : public CreatureScript
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_ID_NAGMARA_2, pCreature->GetObjectGuid());
         }
         else
+        {
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_ID_NAGMARA, pCreature->GetObjectGuid());
+        }
 
         return true;
     }
@@ -930,7 +964,9 @@ struct npc_mistress_nagmara : public CreatureScript
             case GOSSIP_ACTION_INFO_DEF+1:
                 pPlayer->CLOSE_GOSSIP_MENU();
                 if (npc_mistress_nagmaraAI* pNagmaraAI = dynamic_cast<npc_mistress_nagmaraAI*>(pCreature->AI()))
+                {
                     pNagmaraAI->DoPotionOfLoveIfCan();
+                }
                 break;
         }
         return true;
@@ -948,7 +984,9 @@ struct npc_mistress_nagmara : public CreatureScript
         if (pQuest->GetQuestId() == QUEST_POTION_LOVE)
         {
             if (npc_mistress_nagmaraAI* pNagmaraAI = dynamic_cast<npc_mistress_nagmaraAI*>(pCreature->AI()))
+            {
                 pNagmaraAI->DoPotionOfLoveIfCan();
+            }
         }
 
         return true;
@@ -1566,7 +1604,9 @@ struct npc_hurley_blackbreath : public CreatureScript
                 SetEscortPaused(false);
             }
             else
+            {
                 m_uiEventTimer  = 1000;
+            }
 
             bIsEnraged          = false;
         }
@@ -1582,7 +1622,9 @@ struct npc_hurley_blackbreath : public CreatureScript
                     return;
                 }
                 else
+                {
                     ScriptedAI::AttackStart(pWho);
+                }
             }
         }
 
@@ -1627,15 +1669,21 @@ struct npc_hurley_blackbreath : public CreatureScript
                 if (uiFlameBreathTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FLAME_BREATH) == CAST_OK)
+                    {
                         uiFlameBreathTimer = 10000;
+                    }
                 }
                 else
+                {
                     uiFlameBreathTimer -= uiDiff;
+                }
 
                 if (m_creature->GetHealthPercent() < 31.0f && !bIsEnraged)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_DRUNKEN_RAGE) == CAST_OK)
-                            bIsEnraged = true;
+                    {
+                        bIsEnraged = true;
+                    }
                 }
 
                 DoMeleeAttackIfReady();
@@ -1651,7 +1699,9 @@ struct npc_hurley_blackbreath : public CreatureScript
                         m_uiEventTimer = 0;
                     }
                     else
+                    {
                         m_uiEventTimer -= uiDiff;
+                    }
                 }
             }
         }
@@ -1801,7 +1851,9 @@ struct boss_plugger_spazzringAI : public ScriptedAI
             if (Creature* pPhalanx = m_pInstance->GetSingleCreatureFromStorage(NPC_PHALANX))
             {
                 if (npc_phalanxAI* pEscortAI = dynamic_cast<npc_phalanxAI*>(pPhalanx->AI()))
+                {
                     pEscortAI->Start(false, nullptr, nullptr, true);
+                }
             }
             m_pInstance->HandleBarPatrons(PATRON_HOSTILE);
             m_pInstance->SetData(TYPE_PLUGGER, IN_PROGRESS); // The event is set IN_PROGRESS even if Plugger is dead because his death triggers more actions that are part of the event
@@ -1813,7 +1865,9 @@ struct boss_plugger_spazzringAI : public ScriptedAI
         if (pCaster->GetTypeId() == TYPEID_PLAYER)
         {
             if (pSpell->Id == SPELL_PICKPOCKET)
+            {
                 m_uiPickpocketTimer = 5000;
+            }
         }
     }
 
@@ -1846,38 +1900,54 @@ struct boss_plugger_spazzringAI : public ScriptedAI
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_BANISH) == CAST_OK)
+                    {
                         m_uiBanishTimer = urand(26, 28) * 1000;
+                    }
                 }
             }
             else
+            {
                 m_uiBanishTimer -= uiDiff;
+            }
 
             if (m_uiImmolateTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_IMMOLATE) == CAST_OK)
+                {
                     m_uiImmolateTimer = 25000;
+                }
             }
             else
+            {
                 m_uiImmolateTimer -= uiDiff;
+            }
 
             if (m_uiShadowBoltTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOW_BOLT) == CAST_OK)
+                {
                     m_uiShadowBoltTimer = urand(36, 63) * 100;
+                }
             }
             else
+            {
                 m_uiShadowBoltTimer -= uiDiff;
+            }
 
             if (m_uiCurseOfTonguesTimer < uiDiff)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_CURSE_OF_TONGUES, SELECT_FLAG_POWER_MANA))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_CURSE_OF_TONGUES) == CAST_OK)
+                    {
                         m_uiCurseOfTonguesTimer = urand(19, 31) * 1000;
+                    }
                 }
             }
             else
+            {
                 m_uiCurseOfTonguesTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -1890,7 +1960,9 @@ struct boss_plugger_spazzringAI : public ScriptedAI
                 m_uiOocSayTimer = urand(10, 20) * 1000;
             }
             else
+            {
                 m_uiOocSayTimer -= uiDiff;
+            }
 
             if (m_uiPickpocketTimer)
             {
@@ -1901,16 +1973,22 @@ struct boss_plugger_spazzringAI : public ScriptedAI
                     m_uiPickpocketTimer = 0;
                 }
                 else
+                {
                     m_uiPickpocketTimer -= uiDiff;
+                }
             }
 
             if (m_uiDemonArmorTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_DEMON_ARMOR) == CAST_OK)
+                {
                     m_uiDemonArmorTimer = 30 * MINUTE * IN_MILLISECONDS;
+                }
             }
             else
+            {
                 m_uiDemonArmorTimer -= uiDiff;
+            }
         }
     }
 };
@@ -1955,18 +2033,28 @@ struct npc_kharan_mighthammer : public CreatureScript
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
         if (pCreature->IsQuestGiver())
+        {
             pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+        }
 
         if (pPlayer->GetQuestStatus(QUEST_WHAT_IS_GOING_ON) == QUEST_STATUS_INCOMPLETE)
+        {
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        }
 
         if (pPlayer->GetQuestStatus(QUEST_KHARANS_TALE) == QUEST_STATUS_INCOMPLETE)
+        {
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KHARAN_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+        }
 
         if (pPlayer->GetTeam() == HORDE)
+        {
             pPlayer->SEND_GOSSIP_MENU(2473, pCreature->GetObjectGuid());
+        }
         else
+        {
             pPlayer->SEND_GOSSIP_MENU(2474, pCreature->GetObjectGuid());
+        }
 
         return true;
     }
@@ -2011,9 +2099,13 @@ struct npc_kharan_mighthammer : public CreatureScript
             case GOSSIP_ACTION_INFO_DEF+9:
                 pPlayer->CLOSE_GOSSIP_MENU();
                 if (pPlayer->GetTeam() == HORDE)
+                {
                     pPlayer->AreaExploredOrEventHappens(QUEST_WHAT_IS_GOING_ON);
+                }
                 else
+                {
                     pPlayer->AreaExploredOrEventHappens(QUEST_KHARANS_TALE);
+                }
                 break;
         }
         return true;
@@ -2043,9 +2135,13 @@ struct go_bar_ale_mug : public GameObjectScript
                     {
                         pInstance->SetData(TYPE_PLUGGER, SPECIAL);
                         if (pInstance->GetData(TYPE_PLUGGER) == IN_PROGRESS)
+                        {
                             pPluggerAI->AttackThief(pPlayer);
+                        }
                         else
+                        {
                             pPluggerAI->WarnThief(pPlayer);
+                        }
                     }
                 }
             }
@@ -2104,16 +2200,22 @@ struct npc_ironhand_guardian : public CreatureScript
                 case 0:
                     m_creature->RemoveAurasDueToSpell(SPELL_STONED);
                     if (DoCastSpellIfCan(m_creature, SPELL_STONED_VISUAL) == CAST_OK)
+                    {
                         m_uiPhase = 1;
+                    }
                     break;
                 case 1:
                         if (m_uiGoutOfFlameTimer < uiDiff)
                         {
                             if (DoCastSpellIfCan(m_creature, SPELL_GOUT_OF_FLAME) == CAST_OK)
+                            {
                                 m_uiGoutOfFlameTimer = urand(13, 18) * 1000;
+                            }
                         }
                         else
+                        {
                             m_uiGoutOfFlameTimer -= uiDiff;
+                        }
                     break;
             }
         }

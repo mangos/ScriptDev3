@@ -480,7 +480,9 @@ struct is_zulaman : public InstanceScript
         void SetData64(uint32 type, uint64 data) override
         {
             if (type != TYPE_BEAR_PHASE)
+            {
                 return;
+            }
             Unit *pTarget = instance->GetUnit(ObjectGuid(data));
             for (GuidSet::const_iterator itr = m_aNalorakkEvent[m_uiBearEventPhase].sBearTrashGuidSet.begin(); itr != m_aNalorakkEvent[m_uiBearEventPhase].sBearTrashGuidSet.end(); ++itr)
             {

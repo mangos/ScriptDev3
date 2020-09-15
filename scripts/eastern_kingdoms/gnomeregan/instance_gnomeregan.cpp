@@ -212,7 +212,9 @@ struct is_gnomeregan : public InstanceScript
 
                     // Always directly activates this bomb-face
                     if (thermaplugg && thermaplugg->AI())
+                    {
                         thermaplugg->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, thermaplugg, thermaplugg, 2);
+                    }
                 }
                 else if (uiData == DONE || uiData == FAIL)
                 {
@@ -228,7 +230,9 @@ struct is_gnomeregan : public InstanceScript
 
                     // Deactivate all remaining BombFaces
                     if (thermaplugg && thermaplugg->AI())
+                    {
                         thermaplugg->AI()->SendAIEvent(AI_EVENT_CUSTOM_C, thermaplugg, thermaplugg);
+                    }
                 }
                 break;
                 }
@@ -236,7 +240,9 @@ struct is_gnomeregan : public InstanceScript
                 if (Creature *thermaplugg = GetSingleCreatureFromStorage(NPC_MEKGINEER_THERMAPLUGG))
                 {
                     if (thermaplugg->AI())
+                    {
                         thermaplugg->AI()->SendAIEvent(AI_EVENT_CUSTOM_B, thermaplugg, thermaplugg, uiData);
+                    }
                 }
                 return;
             }

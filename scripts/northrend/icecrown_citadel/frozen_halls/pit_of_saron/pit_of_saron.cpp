@@ -83,11 +83,15 @@ struct npc_ymirjar_deathbringer : public CreatureScript
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_EMPOWERED_SHADOW_BOLT) == CAST_OK)
+                    {
                         m_uiShadowBoltTimer = urand(2000, 3000);
+                    }
                 }
             }
             else
+            {
                 m_uiShadowBoltTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -158,7 +162,9 @@ struct npc_collapsing_icicle : public CreatureScript
         {
             // Mark the achiev failed
             if (pSpell->Id == SPELL_ICE_SHARDS_H && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_ACHIEV_DONT_LOOK_UP, uint32(false));
+            }
         }
 
         void AttackStart(Unit* /*pWho*/) override { }

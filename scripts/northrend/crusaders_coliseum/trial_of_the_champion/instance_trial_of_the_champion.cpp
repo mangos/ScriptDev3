@@ -283,16 +283,22 @@ struct is_trial_of_the_champion : public InstanceScript
             case TYPE_GRAND_CHAMPIONS:
                 m_auiEncounter[uiType] = uiData;
                 if (uiData == DONE)
+                {
                     DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_CHAMPIONS_LOOT : GO_CHAMPIONS_LOOT_H, 30 * MINUTE);
+                }
                 break;
             case TYPE_ARGENT_CHAMPION:
                 m_auiEncounter[uiType] = uiData;
                 if (uiData == DONE)
                 {
                     if (m_uiGrandChampionEntry == NPC_EADRIC)
+                    {
                         DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_EADRIC_LOOT : GO_EADRIC_LOOT_H, 30 * MINUTE);
+                    }
                     else if (m_uiGrandChampionEntry == NPC_PALETRESS)
+                    {
                         DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_PALETRESS_LOOT : GO_PALETRESS_LOOT_H, 30 * MINUTE);
+                    }
                 }
                 break;
             case TYPE_BLACK_KNIGHT:
@@ -347,7 +353,9 @@ struct is_trial_of_the_champion : public InstanceScript
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
                 if (m_auiEncounter[i] == IN_PROGRESS)
+                {
                     m_auiEncounter[i] = NOT_STARTED;
+                }
             }
 
             OUT_LOAD_INST_DATA_COMPLETE;

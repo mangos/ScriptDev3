@@ -193,7 +193,9 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             if (m_bEventComplete)
             {
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     m_creature->SetFacingToObject(pPlayer);
+                }
 
                 StartNextDialogueText(SAY_SLIM_DEFEAT);
             }
@@ -203,7 +205,9 @@ struct npc_tapoke_slim_jahn : public CreatureScript
         {
             // start escort
             if (eventType == AI_EVENT_START_ESCORT && pInvoker->GetTypeId() == TYPEID_PLAYER)
+            {
                 Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue), true);
+            }
         }
 
         void JustDidDialogueStep(int32 iEntry) override
@@ -212,7 +216,9 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             {
                 // complete quest
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     pPlayer->GroupEventHappens(QUEST_MISSING_DIPLO_PT11, m_creature);
+                }
 
                 // despawn and respawn at inn
                 m_creature->ForcedDespawn(1000);

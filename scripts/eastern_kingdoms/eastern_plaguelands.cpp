@@ -248,7 +248,9 @@ struct npc_eris_havenfire : public CreatureScript
                     {
                         // Only the first mob needs to yell
                         if (!i)
+                        {
                             DoScriptText(aPeasantSpawnYells[urand(0, 2)], pTemp);
+                        }
                     }
                 }
 
@@ -297,11 +299,15 @@ struct npc_eris_havenfire : public CreatureScript
             for (GuidList::const_iterator itr = m_lSummonedGuidList.begin(); itr != m_lSummonedGuidList.end(); ++itr)
             {
                 if (bIsEventEnd && ((*itr).GetEntry() == NPC_INJURED_PEASANT || (*itr).GetEntry() == NPC_PLAGUED_PEASANT))
+                {
                     continue;
+                }
 
                 if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
                     if (pTemp->IsAlive())
+                    {
                         pTemp->ForcedDespawn();
+                    }
             }
         }
 

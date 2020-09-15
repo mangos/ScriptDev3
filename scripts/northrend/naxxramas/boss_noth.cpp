@@ -131,7 +131,9 @@ struct boss_noth : public CreatureScript
             }
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_NOTH, IN_PROGRESS);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -149,13 +151,17 @@ struct boss_noth : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_NOTH, DONE);
+            }
         }
 
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_NOTH, FAIL);
+            }
         }
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
@@ -164,7 +170,9 @@ struct boss_noth : public CreatureScript
             if (SpellEffectEntry const* pSpellEffect = pSpell->GetSpellEffect(EFFECT_INDEX_0))
             {
                 if (pSpellEffect->Effect == SPELL_EFFECT_LEAP)
+                {
                     DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_CRIPPLE : SPELL_CRIPPLE_H);
+                }
             }
 #else
             if (pCaster == m_creature && pSpell->Effect[EFFECT_INDEX_0] == SPELL_EFFECT_LEAP)
@@ -204,7 +212,9 @@ struct boss_noth : public CreatureScript
                         }
                     }
                     else
+                    {
                         m_uiPhaseTimer -= uiDiff;
+                    }
                 }
 
                 if (!m_bIsRegularMode)                          // Blink is used only in 25man
@@ -223,7 +233,9 @@ struct boss_noth : public CreatureScript
                         }
                     }
                     else
+                    {
                         m_uiBlinkTimer -= uiDiff;
+                    }
                 }
 
                 if (m_uiCurseTimer < uiDiff)
@@ -232,7 +244,9 @@ struct boss_noth : public CreatureScript
                     m_uiCurseTimer = 28000;
                 }
                 else
+                {
                     m_uiCurseTimer -= uiDiff;
+                }
 
                 if (m_uiSummonTimer < uiDiff)
                 {
@@ -259,7 +273,9 @@ struct boss_noth : public CreatureScript
                     m_uiSummonTimer = 30000;
                 }
                 else
+                {
                     m_uiSummonTimer -= uiDiff;
+                }
 
                 DoMeleeAttackIfReady();
             }
@@ -287,7 +303,9 @@ struct boss_noth : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiPhaseTimer -= uiDiff;
+                }
 
                 if (m_uiSummonTimer < uiDiff)
                 {
@@ -332,7 +350,9 @@ struct boss_noth : public CreatureScript
                     m_uiSummonTimer = 30000;
                 }
                 else
+                {
                     m_uiSummonTimer -= uiDiff;
+                }
             }
         }
     };

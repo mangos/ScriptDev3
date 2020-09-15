@@ -126,20 +126,28 @@ struct boss_emperor_dagran_thaurissan : public CreatureScript
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_HANDOFTHAURISSAN) == CAST_OK)
+                    {
                         m_uiHandOfThaurissan_Timer = urand(5, 10) * 1000;
+                    }
                 }
             }
             else
+            {
                 m_uiHandOfThaurissan_Timer -= uiDiff;
+            }
 
             // AvatarOfFlame_Timer
             if (m_uiAvatarOfFlame_Timer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_AVATAROFFLAME) == CAST_OK)
+                {
                     m_uiAvatarOfFlame_Timer = 18000;
+                }
             }
             else
+            {
                 m_uiAvatarOfFlame_Timer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

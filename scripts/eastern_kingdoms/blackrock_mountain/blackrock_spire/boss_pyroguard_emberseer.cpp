@@ -110,7 +110,9 @@ struct boss_pyroguard_emberseer : public CreatureScript
         void ReceiveAIEvent(AIEventType type, Creature* pSender, Unit* /*pInvoker*/, uint32 /*uiMiscValue*/) override
         {
             if (type == AI_EVENT_CUSTOM_A && pSender == m_creature) //defined in the spell
+            {
                 DoHandleEmberseerGrowing();
+            }
         }
 
         void UpdateAI(const uint32 uiDiff) override

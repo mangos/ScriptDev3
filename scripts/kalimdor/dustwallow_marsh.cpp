@@ -879,7 +879,9 @@ struct npc_stinky_ignatz : public CreatureScript
                 break;
             case 26:
                 if (Player* pPlayer = GetPlayerForEscort())
+                {
                     DoScriptText(SAY_STINKY_THIRD_STOP_3, m_creature, pPlayer);
+                }
                 break;
             case 29:
                 m_creature->HandleEmote(EMOTE_STATE_USESTANDING);
@@ -997,7 +999,9 @@ struct boss_tethyr : public CreatureScript
         {
             // send world states to player summoner
             if (m_creature->IsTemporarySummon())
+            {
                 m_summonerGuid = ((TemporarySummon*)m_creature)->GetSummonerGuid();
+            }
 
             if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_summonerGuid))
             {
@@ -1034,7 +1038,9 @@ struct boss_tethyr : public CreatureScript
         {
             // quest complete and cleanup
             if (Player* pSummoner = m_creature->GetMap()->GetPlayer(m_summonerGuid))
+            {
                 pSummoner->GroupEventHappens(QUEST_ID_TETHYR, m_creature);
+            }
 
             // ToDo: trigger some fireworks!
             DoEncounterCleanup();
@@ -1132,7 +1138,9 @@ struct boss_tethyr : public CreatureScript
         {
             // remove world state
             if (Player* pSummoner = m_creature->GetMap()->GetPlayer(m_summonerGuid))
+            {
                 pSummoner->SendUpdateWorldState(WORLD_STATE_TETHYR_SHOW, 0);
+            }
 
             // reset all cannons
             std::list<GameObject*> lCannonsInRange;
@@ -1196,7 +1204,9 @@ struct boss_tethyr : public CreatureScript
                     m_uiWaterBoltTimer = urand(0, 1000);
                 }
                 else
+                {
                     m_uiSpoutEndTimer -= uiDiff;
+                }
             }
             else if (m_uiPhase == PHASE_NORMAL)
             {
@@ -1215,7 +1225,9 @@ struct boss_tethyr : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiWaterBoltTimer -= uiDiff;
+                }
             }
         }
     };

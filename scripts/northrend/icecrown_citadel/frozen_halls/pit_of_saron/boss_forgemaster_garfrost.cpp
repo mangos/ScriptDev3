@@ -101,7 +101,9 @@ struct boss_forgemaster_garfrost : public CreatureScript
             DoCastSpellIfCan(m_creature, SPELL_PERMAFROST);
 
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_GARFROST, IN_PROGRESS);
+            }
         }
 
         void JustDied(Unit* pKiller) override
@@ -128,7 +130,9 @@ struct boss_forgemaster_garfrost : public CreatureScript
         void JustReachedHome() override
         {
             if (m_pInstance)
+            {
                 m_pInstance->SetData(TYPE_GARFROST, FAIL);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -198,7 +202,9 @@ struct boss_forgemaster_garfrost : public CreatureScript
                                 if (pAuraIntenseCold->GetStackAmount() > MAX_PERMAFROST_STACK)
                                 {
                                     if (m_pInstance)
+                                    {
                                         m_pInstance->SetData(TYPE_ACHIEV_DOESNT_GO_ELEVEN, uint32(false));
+                                    }
 
                                     m_uiCheckPermafrostTimer = 0;
                                     return;
@@ -209,7 +215,9 @@ struct boss_forgemaster_garfrost : public CreatureScript
                     m_uiCheckPermafrostTimer = 1000;
                 }
                 else
+                {
                     m_uiCheckPermafrostTimer -= uiDiff;
+                }
             }
 
             // Do nothing more while moving
@@ -232,7 +240,9 @@ struct boss_forgemaster_garfrost : public CreatureScript
                 }
             }
             else
+            {
                 m_uiThrowSaroniteTimer -= uiDiff;
+            }
 
             switch (m_uiPhase)
             {
@@ -265,10 +275,14 @@ struct boss_forgemaster_garfrost : public CreatureScript
                 if (m_uiChillingWaveTimer < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHILLING_WAVE) == CAST_OK)
+                    {
                         m_uiChillingWaveTimer = 14000;
+                    }
                 }
                 else
+                {
                     m_uiChillingWaveTimer -= uiDiff;
+                }
 
                 break;
             case PHASE_MACE_ENCHANTMENT:
@@ -284,7 +298,9 @@ struct boss_forgemaster_garfrost : public CreatureScript
                     }
                 }
                 else
+                {
                     m_uiDeepFreezeTimer -= uiDiff;
+                }
 
                 break;
             }
