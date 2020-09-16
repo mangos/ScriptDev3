@@ -153,7 +153,8 @@ struct npc_millhouse_manastorm : public CreatureScript
             if (m_pInstance && m_pInstance->GetData(TYPE_HARBINGERSKYRISS) != DONE)
             {
                 ->FailQuest();
-            }/*
+            }
+            */
         }
 
         void EnterEvadeMode() override
