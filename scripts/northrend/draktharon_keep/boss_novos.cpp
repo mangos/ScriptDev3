@@ -47,11 +47,11 @@ enum
     SPELL_ARCANE_BLAST_H            = 59909,
     SPELL_BLIZZARD                  = 49034,
     SPELL_BLIZZARD_H                = 59854,
-    SPELL_TOUCH_OF_MISERY           = 50090,                // TODO - purpose of this spell (triggers SPELL_WRATH_OF_MISERY) unknown
+    SPELL_TOUCH_OF_MISERY           = 50090,                /* TODO - purpose of this spell (triggers SPELL_WRATH_OF_MISERY) unknown */
     SPELL_WRATH_OF_MISERY           = 50089,
     SPELL_WRATH_OF_MISERY_H         = 59856,
 
-    // SPELL_SUMMON_CRYSTAL_HANDLER    = 49179,             // Spell seems to be unused, perhaps only server-side, and especially no suitable positioned caster are found for this spell
+    /* SPELL_SUMMON_CRYSTAL_HANDLER    = 49179,             // Spell seems to be unused, perhaps only server-side, and especially no suitable positioned caster are found for this spell */
     SPELL_SUMMON_FETID_TROLL_CORPSE = 49103,
     SPELL_SUMMON_HULKING_CORPSE     = 49104,
     SPELL_SUMMON_RISON_SHADOWCASTER = 49105,
@@ -62,7 +62,7 @@ enum
     NPC_HULKING_CORPSE              = 27597,
     NPC_FETID_TROLL_CORPSE          = 27598,
     NPC_RISON_SHADOWCASTER          = 27600,
-    NPC_ROTTED_TROLL_CORPSE         = 32786,                // On heroic as effect of SPELL_SUMMON_MINIONS_H
+    NPC_ROTTED_TROLL_CORPSE         = 32786,                /* On heroic as effect of SPELL_SUMMON_MINIONS_H */
 };
 
 // The Crystal Handlers are summoned around the two entrances of the room

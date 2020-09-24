@@ -41,7 +41,7 @@ enum
     SPELL_CORPSE_EXPLODE_H          = 59807,
     SPELL_CONSUME                   = 49380,
     SPELL_CONSUME_H                 = 59803,
-    SPELL_CONSUME_BUFF              = 49381,            // used to measure the achiev
+    SPELL_CONSUME_BUFF              = 49381,            /* used to measure the achievement */
     SPELL_CONSUME_BUFF_H            = 59805,
 
     // SPELL_SUMMON_INVADER_3        = 49458,            // summon 27754
