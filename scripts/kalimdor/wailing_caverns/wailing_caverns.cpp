@@ -308,7 +308,7 @@ struct npc_disciple_of_naralex : public CreatureScript
                             {
                                 DoSpawnMob(NPC_DEVIATE_VIPER, aSummonPositions[2][0], aSummonPositions[2][1] + 2 * M_PI_F / 3 * i);
                             }
-                            m_uiEventTimer = 2000;
+                            m_uiEventTimer = 0;
                             ++m_uiSubeventPhase;
                             break;
                         case 3:
@@ -318,7 +318,7 @@ struct npc_disciple_of_naralex : public CreatureScript
                             break;
                         case 4:
                             DoScriptText(SAY_PURIFIED, m_creature);
-                            m_uiEventTimer = 4000;
+                            m_uiEventTimer = 0;
                             ++m_uiPoint;             // Increment this in order to avoid the special case evade
                             SetEscortPaused(false);
                             break;
