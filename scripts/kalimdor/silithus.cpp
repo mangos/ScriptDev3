@@ -833,10 +833,8 @@ struct npc_solenor_the_slayer : public CreatureScript
 
     struct npc_solenor_the_slayerAI : public ScriptedAI
     {
-        npc_solenor_the_slayerAI(Creature* pCreature) : ScriptedAI(pCreature)
+        npc_solenor_the_slayerAI(Creature* pCreature) : ScriptedAI(pCreature), m_uiDespawn_Timer(0), m_bTransform(false)
         {
-            m_bTransform = false;
-            m_uiDespawn_Timer = 0;
             Reset();
         }
 
