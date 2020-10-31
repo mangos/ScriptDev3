@@ -1021,10 +1021,14 @@ struct npc_solenor_the_slayer : public CreatureScript
                 if (m_uiDespawn_Timer <= uiDiff)
                 {
                     if (m_creature->IsAlive() && !m_creature->IsInCombat())
-                        DemonDespawn(false);
+                    {
+                        DemonDespawn(NULL, false);
+                    }
                 }
                 else
+                {
                     m_uiDespawn_Timer -= uiDiff;
+                }
             }
 
             if (m_uiCastSoulFlame_Timer)
