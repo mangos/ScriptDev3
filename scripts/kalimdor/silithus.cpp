@@ -943,7 +943,7 @@ struct npc_solenor_the_slayer : public CreatureScript
             m_creature->SaveRespawnTime();
         }
 
-        void DemonDespawn(Unit * playerFacing,  bool triggered = true)
+        void DemonDespawn(Unit * playerFacing = nullptr,  bool triggered = true)
         {
             m_creature->RemoveGuardians();
             uint32 respawnTime = urand(12,15);
@@ -1021,10 +1021,14 @@ struct npc_solenor_the_slayer : public CreatureScript
                 if (m_uiDespawn_Timer <= uiDiff)
                 {
                     if (m_creature->IsAlive() && !m_creature->IsInCombat())
+                    {
                         DemonDespawn(false);
+                    }
                 }
                 else
+                {
                     m_uiDespawn_Timer -= uiDiff;
+                }
             }
 
             if (m_uiCastSoulFlame_Timer)
@@ -1047,7 +1051,9 @@ struct npc_solenor_the_slayer : public CreatureScript
             }
 
             if (m_creature->HasAura(SPELL_SOUL_FLAME) && m_creature->HasAura(SPELL_FROST_TRAP))
+            {
                 m_creature->RemoveAurasDueToSpell(SPELL_SOUL_FLAME);
+            }
 
             if (m_creature->GetThreatManager().getThreatList().size() > 1 /*|| pHunter->IsDead()*/)
             {
