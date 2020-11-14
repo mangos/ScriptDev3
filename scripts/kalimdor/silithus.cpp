@@ -1022,7 +1022,7 @@ struct npc_solenor_the_slayer : public CreatureScript
                 {
                     if (m_creature->IsAlive() && !m_creature->IsInCombat())
                     {
-                        DemonDespawn(false);
+                        DemonDespawn(nullptr, false);
                     }
                 }
                 else

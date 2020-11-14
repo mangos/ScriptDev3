@@ -726,7 +726,7 @@ struct npc_klinfran_the_crazed : public CreatureScript
                 {
                     if (m_creature->IsAlive() && !m_creature->IsInCombat())
                     {
-                        DemonDespawn(false);
+                        DemonDespawn(nullptr,false);
                     }
                 }
                 else

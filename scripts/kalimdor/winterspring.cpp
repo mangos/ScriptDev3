@@ -743,7 +743,7 @@ struct npc_artorius_the_doombringer : public CreatureScript
                 {
                     if (m_creature->IsAlive() && !m_creature->IsInCombat())
                     {
-                        DemonDespawn(false);
+                        DemonDespawn(nullptr, false);
                     }
                 }
                 else
