@@ -1732,7 +1732,7 @@ struct  npc_dimensiusAI : public Scripted_NoMovementAI
             for (uint8 i = 0; i < 4; ++i)
             {
                 m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 30.0f, i * (M_PI_F / 2));
-                m_creature->SummonCreature(NPC_SPAWN_OF_DIMENSIUS, fX, fY, fZ, 0, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 120000);
+                m_creature->SummonCreature(NPC_SPAWN_OF_DIMENSIUS, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 120000);
             }
 
             m_uiRainTimer = 5000;
