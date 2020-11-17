@@ -123,7 +123,7 @@ struct is_sunwell_plateau : public InstanceScript
             }
 
             // Summon Felmyst in reload case
-            pPlayer->SummonCreature(NPC_FELMYST, aMadrigosaLoc[0].m_fX, aMadrigosaLoc[0].m_fY, aMadrigosaLoc[0].m_fZ, aMadrigosaLoc[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+            pPlayer->SummonCreature(NPC_FELMYST, aMadrigosaLoc[0].m_fX, aMadrigosaLoc[0].m_fY, aMadrigosaLoc[0].m_fZ, aMadrigosaLoc[0].m_fO, TEMPSPAWN_DEAD_DESPAWN, 0);
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // Spawn Felmyst if not already dead and Brutallus is complete
@@ -254,7 +254,7 @@ struct is_sunwell_plateau : public InstanceScript
                 {
                     if (Creature* pController = GetSingleCreatureFromStorage(NPC_KILJAEDEN_CONTROLLER))
                     {
-                        if (Creature* pKiljaeden = pController->SummonCreature(NPC_KILJAEDEN, pController->GetPositionX(), pController->GetPositionY(), pController->GetPositionZ(), pController->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 0))
+                        if (Creature* pKiljaeden = pController->SummonCreature(NPC_KILJAEDEN, pController->GetPositionX(), pController->GetPositionY(), pController->GetPositionZ(), pController->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0))
                         {
                             pKiljaeden->SetInCombatWithZone();
                         }
@@ -535,7 +535,7 @@ struct is_sunwell_plateau : public InstanceScript
             case NPC_KALECGOS_MADRIGOSA:
                 if (Creature* pTrigger = GetSingleCreatureFromStorage(NPC_FLIGHT_TRIGGER_LEFT))
                 {
-                    if (Creature* pKalec = pTrigger->SummonCreature(NPC_KALECGOS_MADRIGOSA, aKalecLoc[0].m_fX, aKalecLoc[0].m_fY, aKalecLoc[0].m_fZ, aKalecLoc[0].m_fO, TEMPSUMMON_CORPSE_DESPAWN, 0))
+                    if (Creature* pKalec = pTrigger->SummonCreature(NPC_KALECGOS_MADRIGOSA, aKalecLoc[0].m_fX, aKalecLoc[0].m_fY, aKalecLoc[0].m_fZ, aKalecLoc[0].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0))
                     {
                         pKalec->SetWalk(false);
                         pKalec->SetLevitate(true);

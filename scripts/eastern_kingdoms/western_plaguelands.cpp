@@ -185,8 +185,8 @@ struct npc_anchorite_truuen : public CreatureScript
             case 10:
                 DoScriptText(SAY_FIRST_ATTACK, m_creature);
                 // spawn first attacker wave
-                m_creature->SummonCreature(NPC_HAUNDING_VISION, 1045.26f, -1576.50f, 62.42f, 2.82f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_HUNGERING_WRAITH, 1021.74f, -1547.49f, 63.44f, 5.24f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_HAUNDING_VISION, 1045.26f, -1576.50f, 62.42f, 2.82f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_HUNGERING_WRAITH, 1021.74f, -1547.49f, 63.44f, 5.24f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
                 break;
             case 11:
                 DoScriptText(SAY_PURITY, m_creature);
@@ -194,10 +194,10 @@ struct npc_anchorite_truuen : public CreatureScript
             case 21:
                 DoScriptText(SAY_SECOND_ATTACK, m_creature);
                 // spawn second attacker wave
-                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1123.08f, -1738.70f, 61.65f, 3.63f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1117.07f, -1763.47f, 62.72f, 1.83f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1096.79f, -1719.14f, 62.69f, 4.88f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1068.92f, -1739.68f, 62.23f, 6.21f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1123.08f, -1738.70f, 61.65f, 3.63f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1117.07f, -1763.47f, 62.72f, 1.83f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1096.79f, -1719.14f, 62.69f, 4.88f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1068.92f, -1739.68f, 62.23f, 6.21f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
                 break;
             case 22:
                 DoScriptText(SAY_CLEANSE, m_creature);
@@ -210,7 +210,7 @@ struct npc_anchorite_truuen : public CreatureScript
                 break;
             case 38:
                 m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                m_creature->SummonCreature(NPC_GHOST_OF_UTHER, 972.96f, -1824.82f, 82.54f, 0.27f, TEMPSUMMON_TIMED_DESPAWN, 45000);
+                m_creature->SummonCreature(NPC_GHOST_OF_UTHER, 972.96f, -1824.82f, 82.54f, 0.27f, TEMPSPAWN_TIMED_DESPAWN, 45000);
                 // complete the quest - the event continues with the dialogue
                 if (Player* pPlayer = GetPlayerForEscort())
                 {

@@ -952,7 +952,7 @@ struct at_nats_landing : public AreaTriggerScript
 
             if (!pShark)
             {
-                pShark = pPlayer->SummonCreature(NPC_LURKING_SHARK, -4246.243f, -3922.356f, -7.488f, 5.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 100000);
+                pShark = pPlayer->SummonCreature(NPC_LURKING_SHARK, -4246.243f, -3922.356f, -7.488f, 5.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 100000);
             }
 
             pShark->AI()->AttackStart(pPlayer);
