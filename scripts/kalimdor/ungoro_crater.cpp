@@ -417,7 +417,7 @@ enum
 
 struct npc_precious_the_devourerAI : public ScriptedAI
 {
-    npc_precious_the_devourerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    explicit npc_precious_the_devourerAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
     ObjectGuid m_simoneGuid;
     uint32 m_uiSplitCheck_Timer;
@@ -486,7 +486,7 @@ struct npc_precious_the_devourerAI : public ScriptedAI
 
 struct npc_precious_the_devourer : public CreatureScript
 {
-    npc_precious_the_devourer() : CreatureScript("npc_precious_the_devourer") {}
+    explicit npc_precious_the_devourer() : CreatureScript("npc_precious_the_devourer") {}
 
     CreatureAI* GetAI(Creature* pCreature) override
     {
@@ -500,9 +500,8 @@ struct npc_precious_the_devourer : public CreatureScript
 
 struct npc_simone_the_seductressAI : public ScriptedAI
 {
-    npc_simone_the_seductressAI(Creature* pCreature) : ScriptedAI(pCreature)
+    explicit npc_simone_the_seductressAI(Creature* pCreature) : ScriptedAI(pCreature), m_uiDespawn_Timer(20 * MINUTE * IN_MILLISECONDS)
     {
-        m_uiDespawn_Timer = 20 * MINUTE * IN_MILLISECONDS;
         Reset();
     }
 
@@ -751,7 +750,7 @@ struct npc_simone_the_seductressAI : public ScriptedAI
 
 struct npc_simone_the_seductress : public CreatureScript
 {
-    npc_simone_the_seductress() : CreatureScript("npc_simone_the_seductress") {}
+    explicit npc_simone_the_seductress() : CreatureScript("npc_simone_the_seductress") {}
 
     CreatureAI* GetAI(Creature* pCreature) override
     {
@@ -765,7 +764,7 @@ struct npc_simone_the_seductress : public CreatureScript
 
 struct npc_simone_the_inconspicuousAI : public ScriptedAI
 {
-    npc_simone_the_inconspicuousAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    explicit npc_simone_the_inconspicuousAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
     uint32 m_uiFoolsPlight_Timer;
     uint32 m_uiTransform_Timer;
@@ -903,7 +902,7 @@ struct npc_simone_the_inconspicuousAI : public ScriptedAI
 
 struct npc_simone_the_inconspicuous : public CreatureScript
 {
-    npc_simone_the_inconspicuous() : CreatureScript("npc_simone_the_inconspicuous") {}
+    explicit npc_simone_the_inconspicuous() : CreatureScript("npc_simone_the_inconspicuous") {}
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
