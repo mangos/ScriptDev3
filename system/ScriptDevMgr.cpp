@@ -265,6 +265,22 @@ bool SD3::GOGossipHello(Player* pPlayer, GameObject* pGo)
     return pTempScript->ToGameObjectScript()->OnGossipHello(pPlayer, pGo);
 }
 
+bool SD3::ItemGossipHello(Player* pPlayer, Item* pItem)
+{
+    Script* pTempScript = m_scripts[pItem->GetScriptId()];
+
+    if (!pTempScript || !pTempScript->ToItemScript())
+    {
+        return false;
+    }
+
+    // Clear menus
+    pPlayer->PlayerTalkClass->ClearMenus();
+
+    return pTempScript->ToItemScript()->OnGossipHello(pPlayer, pItem);
+}
+
+
 bool SD3::GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     debug_log("[SD3]: Gossip selection, sender: %u, action: %u", uiSender, uiAction);
@@ -293,6 +309,20 @@ bool SD3::GOGossipSelect(Player* pPlayer, GameObject* pGo, uint32 uiSender, uint
     return pTempScript->ToGameObjectScript()->OnGossipSelect(pPlayer, pGo, uiSender, uiAction);
 }
 
+bool SD3::ItemGossipSelect(Player* pPlayer, Item* pItem, uint32 uiSender, uint32 uiAction)
+{
+    debug_log("[SD3]: ITEM Gossip selection, sender: %u, action: %u", uiSender, uiAction);
+
+    Script* pTempScript = m_scripts[pItem->GetScriptId()];
+
+    if (!pTempScript || !pTempScript->ToItemScript())
+    {
+        return false;
+    }
+
+    return pTempScript->ToItemScript()->OnGossipSelect(pPlayer, pItem, uiSender, uiAction);
+}
+
 bool SD3::GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction, const char* sCode)
 {
     debug_log("[SD3]: Gossip selection with code, sender: %u, action: %u", uiSender, uiAction);
@@ -319,6 +349,20 @@ bool SD3::GOGossipSelectWithCode(Player* pPlayer, GameObject* pGo, uint32 uiSend
     }
 
     return pTempScript->ToGameObjectScript()->OnGossipSelectWithCode(pPlayer, pGo, uiSender, uiAction, sCode);
+}
+
+bool SD3::ItemGossipSelectWithCode(Player* pPlayer, Item* pItem, uint32 uiSender, uint32 uiAction, const char* sCode)
+{
+    debug_log("[SD3]: ITEM Gossip selection with code, sender: %u, action: %u, code : %s", uiSender, uiAction, sCode);
+
+    Script* pTempScript = m_scripts[pItem->GetScriptId()];
+
+    if (!pTempScript || !pTempScript->ToItemScript())
+    {
+        return false;
+    }
+
+    return pTempScript->ToItemScript()->OnGossipSelectWithCode(pPlayer, pItem, uiSender, uiAction, sCode);
 }
 
 bool SD3::QuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest)

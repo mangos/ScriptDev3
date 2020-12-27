@@ -64,10 +64,13 @@ public:
 
     static bool GossipHello(Player*, Creature*);
     static bool GOGossipHello(Player*, GameObject*);
+    static bool ItemGossipHello(Player*, Item*);
     static bool GossipSelect(Player*, Creature*, uint32, uint32);
     static bool GOGossipSelect(Player*, GameObject*, uint32, uint32);
+    static bool ItemGossipSelect(Player*, Item*, uint32, uint32);
     static bool GossipSelectWithCode(Player*, Creature*, uint32, uint32, const char*);
     static bool GOGossipSelectWithCode(Player*, GameObject*, uint32, uint32, const char*);
+    static bool ItemGossipSelectWithCode(Player*, Item*, uint32, uint32, const char*);
     static bool QuestAccept(Player*, Creature*, Quest const*);
     static bool GOQuestAccept(Player*, GameObject*, Quest const*);
     static bool ItemQuestAccept(Player*, Item*, Quest const*);
@@ -211,6 +214,9 @@ struct ItemScript : public Script
     virtual bool OnUse(Player*, Item*, SpellCastTargets const&) { return false; }
     virtual bool OnEquip(Player*, Item*, bool on) { return false; }
     virtual bool OnDelete(Player*, Item*) { return false; }
+    virtual bool OnGossipHello(Player*, Item*) { return false; }
+    virtual bool OnGossipSelect(Player*, Item*, uint32, uint32) { return false; }
+    virtual bool OnGossipSelectWithCode(Player*, Item*, uint32, uint32, const char*) { return false; }
 };
 
 struct AreaTriggerScript : public Script
