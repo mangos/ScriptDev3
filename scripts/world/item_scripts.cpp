@@ -4,7 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013  ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2014-2020 MaNGOS <https://getmangos.eu>
+ * Copyright (C) 2014-2021 MaNGOS <https://getmangos.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@
 #include "precompiled.h"
 
 /*
-    In order to work properly you must use a false spell to trigegr the OnUse Method => you can assign spell 18282 to the object bound to this script.
+    In order to work properly you must use a false spell to trigger the OnUse Method => you can assign spell 18282 to the object bound to this script.
 
 */
 struct item_gossip_test : public ItemScript
@@ -55,10 +55,10 @@ struct item_gossip_test : public ItemScript
     item_gossip_test() : ItemScript("item_gossip_test") {}
 
     bool OnUse(Player* pPlayer, Item* pItem, const SpellCastTargets& pTargets) override
-    {   
+    {
         // Logging
         sLog.outString("Item [item_gossip_test] %s was used by %s ! ", pItem->GetProto()->Name1, pPlayer->GetName());
-        
+
         pPlayer->PlayerTalkClass->ClearMenus();
 
         uint32 gossip_menu_id = 1;
@@ -78,7 +78,7 @@ struct item_gossip_test : public ItemScript
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT_11, "Option with GOSSIP_ICON_CHAT_11", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT_12, "Option with GOSSIP_ICON_CHAT_12", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_13, "Option with GOSSIP_ICON_DOT_13", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-        
+
         // Max gossip optiosn seem to be 15
       /*  pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_14, "Option with GOSSIP_ICON_DOT_14", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_15, "Option with GOSSIP_ICON_DOT_15", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
@@ -103,20 +103,20 @@ struct item_gossip_test : public ItemScript
             case GOSSIP_ACTION_INFO_DEF + 1:
             {
                 uint32 playerGUID = pPlayer->GetGUIDLow();
-           
+
                 sLog.outString("Item [item_gossip_test] %s was used by %s and choose action %u ", pItem->GetProto()->Name1, pPlayer->GetName(), uiAction);
 
                 pPlayer->CLOSE_GOSSIP_MENU();
 
                 break;
             }
-            
+
         }
         return true;
     }
 
     bool OnGossipSelectWithCode(Player* pPlayer, Item* pItem, uint32 uiSender, uint32 uiAction, const char* code)
-    { 
+    {
         sLog.outString("Item [item_gossip_test] %s was used by %s and choose action %u with code %s ", pItem->GetProto()->Name1, pPlayer->GetName(), uiAction, code);
 
         switch (uiAction)
@@ -128,9 +128,9 @@ struct item_gossip_test : public ItemScript
                 break;
             }
         }
-        
+
         pPlayer->CLOSE_GOSSIP_MENU();
-        return true; 
+        return true;
     }
 };
 
