@@ -643,7 +643,9 @@ struct npc_simone_the_seductressAI : public ScriptedAI
                         if (Unit* pUnit = m_creature->GetMap()->GetUnit(itr->getUnitGuid()))
                         {
                             if (pUnit->IsAlive())
+                            {
                                 pCleaner->AI()->AttackStart(pUnit);
+                            }
                         }
                     }
                 }
@@ -678,10 +680,14 @@ struct npc_simone_the_seductressAI : public ScriptedAI
         if (m_uiDespawn_Timer < uiDiff)
         {
             if (m_creature->IsAlive() && !m_creature->IsInCombat())
+            {
                 DemonDespawn(false);
+            }
         }
         else
+        {
             m_uiDespawn_Timer -= uiDiff;
+        }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -720,7 +726,9 @@ struct npc_simone_the_seductressAI : public ScriptedAI
             }
         }
         else
+        {
             m_uiThreatCheck_Timer -= uiDiff;
+        }
 
         if (m_uiTemptressKiss_Timer < uiDiff)
         {
@@ -730,7 +738,9 @@ struct npc_simone_the_seductressAI : public ScriptedAI
             }
         }
         else
+        {
             m_uiTemptressKiss_Timer -= uiDiff;
+        }
 
         if (m_uiLightingBolt_Timer < uiDiff)
         {

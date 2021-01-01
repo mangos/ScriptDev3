@@ -549,7 +549,7 @@ enum
     SPELL_DEMONIC_DOOM = 23298,
     SPELL_STINGING_TRAUMA = 23299,
 
-    EMOTE_POISON = -1001251, 
+    EMOTE_POISON = -1001251,
 
     NPC_ARTORIUS_THE_AMIABLE = 14531,
     GOSSIP_ITEM_ARTORIUS_THE_AMIABLE = -3509003, /* TODO */
@@ -624,7 +624,9 @@ struct npc_artorius_the_doombringer : public CreatureScript
                 break;
             case NPC_ARTORIUS_THE_DOOMBRINGER:
                 if (!m_uiDespawn_Timer)
+                {
                     m_uiDespawn_Timer = 20 * MINUTE * IN_MILLISECONDS;
+                }
 
                 m_hunterGuid.Clear();
                 m_uiDemonic_Doom_Timer = 7500;
@@ -689,7 +691,9 @@ struct npc_artorius_the_doombringer : public CreatureScript
                         if (Unit* pUnit = m_creature->GetMap()->GetUnit(itr->getUnitGuid()))
                         {
                             if (pUnit->IsAlive())
+                            {
                                 creature_the_cleaner->AI()->AttackStart(pUnit);
+                            }
                         }
                     }
                 }
@@ -703,7 +707,9 @@ struct npc_artorius_the_doombringer : public CreatureScript
             if (pSpell->Id == 13555 || pSpell->Id == 25295)             // Serpent Sting (Rank 8 or Rank 9)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_STINGING_TRAUMA, CAST_TRIGGERED) == CAST_OK)
+                {
                     DoScriptText(EMOTE_POISON, m_creature);
+                }
             }
         }
 
