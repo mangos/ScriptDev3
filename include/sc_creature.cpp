@@ -361,9 +361,9 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
 
         // Get the Range
 #if defined(MISTS)
-    	pTempRange = GetSpellRangeStore()->LookupEntry(pTempSpell->GetRangeIndex());
+        pTempRange = GetSpellRangeStore()->LookupEntry(pTempSpell->GetRangeIndex());
 #else
-    	pTempRange = GetSpellRangeStore()->LookupEntry(pTempSpell->rangeIndex);
+        pTempRange = GetSpellRangeStore()->LookupEntry(pTempSpell->rangeIndex);
 #endif
         // Spell has invalid range store so we can't use it
         if (!pTempRange)
@@ -429,9 +429,9 @@ bool ScriptedAI::CanCast(Unit* pTarget, SpellEntry const* pSpellEntry, bool bTri
     }
 
 #if defined(MISTS)
-	SpellRangeEntry const* pTempRange = GetSpellRangeStore()->LookupEntry(pSpellEntry->GetRangeIndex());
+    SpellRangeEntry const* pTempRange = GetSpellRangeStore()->LookupEntry(pSpellEntry->GetRangeIndex());
 #else
-	SpellRangeEntry const* pTempRange = GetSpellRangeStore()->LookupEntry(pSpellEntry->rangeIndex);
+    SpellRangeEntry const* pTempRange = GetSpellRangeStore()->LookupEntry(pSpellEntry->rangeIndex);
 #endif
 
     // Spell has invalid range store so we can't use it
