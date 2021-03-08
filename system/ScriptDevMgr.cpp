@@ -549,12 +549,12 @@ GameObjectAI* SD3::GetGameObjectAI(GameObject* pGo)
     Script* pTempScript = m_scripts[pGo->GetScriptId()];
 
     if (!pTempScript || !pTempScript->ToGameObjectScript())
-    { 
+    {
         return nullptr;
     }
 
     GameObjectAI * goAI = pTempScript->ToGameObjectScript()->GetAI(pGo);
-    
+
     return goAI;
 }
 

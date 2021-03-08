@@ -561,7 +561,7 @@ struct npc_klinfran_the_crazed : public CreatureScript
         return true;
     }
 
-    struct npc_klinfran_the_crazedAI : public ScriptedAI 
+    struct npc_klinfran_the_crazedAI : public ScriptedAI
     {
         npc_klinfran_the_crazedAI(Creature* pCreature) : ScriptedAI(pCreature), m_uiDespawn_Timer(0), m_bTransform(false)
         {
@@ -599,7 +599,7 @@ struct npc_klinfran_the_crazed : public CreatureScript
                     m_uiDespawn_Timer = 0;
                     break;
                 }
-                    
+
                 case NPC_KLINFRAN_THE_CRAZED:
                 {
                     if (!m_uiDespawn_Timer)
@@ -610,7 +610,7 @@ struct npc_klinfran_the_crazed : public CreatureScript
                     m_hunterGuid.Clear();
                     m_uiDemonic_Frenzy_Timer = 5000;
                     break;
-                }                   
+                }
             }
         }
 

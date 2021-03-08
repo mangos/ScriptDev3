@@ -307,7 +307,7 @@ struct is_dire_maul : public InstanceScript
             case TYPE_KING_GORDOK:
                 m_auiEncounter[uiType] = uiData;
                 if (uiData == DONE)
-                {                   
+                {
                     if (Creature* pOgre = GetSingleCreatureFromStorage(NPC_CHORUSH))
                     {
                         // Chorush evades and yells on king death (if alive)

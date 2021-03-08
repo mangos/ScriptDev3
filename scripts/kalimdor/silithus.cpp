@@ -871,7 +871,7 @@ struct npc_solenor_the_slayer : public CreatureScript
                     m_uiDespawn_Timer = 0;
                     m_uiCastSoulFlame_Timer = 0;
                     break;
-                }                   
+                }
                 case NPC_SOLENOR_THE_SLAYER:
                 {
                     if (!m_uiDespawn_Timer)
@@ -885,7 +885,7 @@ struct npc_solenor_the_slayer : public CreatureScript
                     m_uiDreadfulFright_Timer = urand(10000, 15000);
                     m_uiCreepingDoom_Timer = urand(3000, 6000);
                     break;
-                }                    
+                }
             }
         }
 
@@ -901,7 +901,7 @@ struct npc_solenor_the_slayer : public CreatureScript
             m_hunterGuid = playerGuid;
             m_creature->GetMotionMaster()->Clear(false);
             m_creature->GetMotionMaster()->MoveIdle();
-            m_creature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);     
+            m_creature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
             Player * player = sObjectMgr.GetPlayer(playerGuid);
             m_creature->SetFacingToObject(player);
             m_bTransform = true;
@@ -955,7 +955,7 @@ struct npc_solenor_the_slayer : public CreatureScript
             {
                 Creature* creature_the_cleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetAngle(playerFacing), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
                 if (creature_the_cleaner)
-                {   
+                {
                     DoScriptText(SAY_THE_CLEANER_AGGRO, creature_the_cleaner);
                     ThreatList const& tList = m_creature->GetThreatManager().getThreatList();
                     for (auto itr : tList)
@@ -1074,7 +1074,7 @@ struct npc_solenor_the_slayer : public CreatureScript
             {
                 if (Unit* pUnit = m_creature->getVictim())
                 {
-                
+
                     if (m_creature->GetDistance2d(pUnit) > 5.0f)
                     {
                         if (DoCastSpellIfCan(pUnit, SPELL_DREADFUL_FRIGHT) == CAST_OK)

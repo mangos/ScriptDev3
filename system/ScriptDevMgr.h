@@ -169,8 +169,8 @@ struct Script
     AuraScript* ToAuraScript() { return Type == SCRIPTED_AURASPELL && IsValid() ? (AuraScript*)this : nullptr; }
     ConditionScript* ToConditionScript() { return Type == SCRIPTED_CONDITION && IsValid() ? (ConditionScript*)this : nullptr; }
     AchievementScript* ToAchievementScript() { return Type == SCRIPTED_ACHIEVEMENT && IsValid() ? (AchievementScript*)this : nullptr; }
-    
-   
+
+
 };
 
 struct CreatureScript : public Script
