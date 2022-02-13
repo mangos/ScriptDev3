@@ -38,7 +38,6 @@ struct is_baradin_hold : public InstanceScript
 {
     is_baradin_hold() : InstanceScript("instance_baradin_hold") {}
 
-    // class instance_baradin_hold : public ScriptedInstance, private DialogueHelper
     class instance_baradin_hold : public ScriptedInstance
     {
     public:
