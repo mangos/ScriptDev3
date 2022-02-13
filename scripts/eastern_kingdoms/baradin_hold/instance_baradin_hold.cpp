@@ -156,6 +156,8 @@ struct is_baradin_hold : public InstanceScript
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
+    protected:
+        bool m_bFirstSpecialDone;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override
