@@ -517,6 +517,10 @@ file(GLOB sources_instance_m_sc scripts/maelstrom/stonecore/*.cpp scripts/maelst
     LIST(APPEND mangosscript_LIB_SRCS ${sources_instance_m_sc})
     source_group("Eastern Kingdoms Scripts\\Instances\\Stonecore" FILES ${sources_instance_m_sc})
 endif()
+#Raid: Baradin Hold
+file(GLOB sources_raid_ek_bh scripts/eastern_kingdoms/baradin_hold/*.cpp scripts/eastern_kingdoms/baradin_hold/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_ek_bh})
+  source_group("Eastern Kingdoms Scripts\\Raids\\Baradin Hold" FILES ${sources_raid_ek_bh})
 # --- END IF ---
 
 #WorldScript: Scarlet Enclave
