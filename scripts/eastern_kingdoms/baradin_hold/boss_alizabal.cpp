@@ -107,7 +107,7 @@ struct boss_alizabal : public CreatureScript
 
         // Data Storage
         uint8 m_uiSpecial;                                                          // 0 = Seething Hate, 1 = Skewer
-        bool m_bFirstSpecialDone;                                                   // True = Second Special is next, False = First Special is next
+        // bool m_bFirstSpecialDone;                                                   // True = Second Special is next, False = First Special is next
 
         void Reset() override
         {
