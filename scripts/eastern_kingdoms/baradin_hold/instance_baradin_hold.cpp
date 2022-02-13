@@ -145,8 +145,7 @@ struct is_baradin_hold : public InstanceScript
             OUT_LOAD_INST_DATA(in);
 
             std::istringstream loadStream(in);
-            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >>
-                m_auiEncounter[3] >> m_auiEncounter[4] >> m_auiEncounter[5];
+            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2];
 
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             {
