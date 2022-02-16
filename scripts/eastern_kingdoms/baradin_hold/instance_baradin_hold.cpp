@@ -47,13 +47,13 @@ struct is_baradin_hold : public InstanceScript
         }
 
         ~instance_baradin_hold() {}
-        
+
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
         void Initialize() override
         {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter)); 
+            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
         }
 
         bool IsEncounterInProgress() const override
@@ -76,7 +76,7 @@ struct is_baradin_hold : public InstanceScript
 
         void OnObjectCreate(GameObject* pGo) override
         {
-        
+
         }
 
         void OnCreatureCreate(Creature* pCreature) override
@@ -93,17 +93,17 @@ struct is_baradin_hold : public InstanceScript
 
         void OnCreatureDeath(Creature* pCreature) override
         {
-            
+
         }
 
         void OnCreatureEvade(Creature* pCreature)
         {
-            
+
         }
 
         void SetData(uint32 uiType, uint32 uiData) override
         {
-        
+
         }
 
         uint32 GetData(uint32 uiType) const override
@@ -114,16 +114,6 @@ struct is_baradin_hold : public InstanceScript
             }
 
             return 0;
-        }
-
-        void SetData64(uint32 type, uint64 data) override
-        {
-            
-        }
-
-        uint64 GetData64(uint32 type) const override
-        {
-            
         }
 
         void Update(uint32 uiDiff) override

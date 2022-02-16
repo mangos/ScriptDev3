@@ -107,7 +107,7 @@ struct boss_alizabal : public CreatureScript
 
         // Data Storage
         uint8 m_uiSpecial;                                                          // 0 = Seething Hate, 1 = Skewer
-        // bool m_bFirstSpecialDone;                                                   // True = Second Special is next, False = First Special is next
+        bool m_bFirstSpecialDone;                                                   // True = Second Special is next, False = First Special is next
 
         void Reset() override
         {
@@ -121,7 +121,7 @@ struct boss_alizabal : public CreatureScript
 
             m_uiSpecial = 0;
             m_bFirstSpecialDone = false;
-            
+
             m_creature->SetSpeedRate(MOVE_RUN, 2.0f);
         }
 
@@ -167,7 +167,7 @@ struct boss_alizabal : public CreatureScript
 
                 case 1:   // Skewer is cast onto current target.
                     if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SKEWER) == CAST_OK)
-                    {                        
+                    {
                         DoScriptText(urand(0, 1) ? YELL_ALIZABAL_SKEWER_1 : YELL_ALIZABAL_SKEWER_2, m_creature);
 
                         m_uiSpecial = 0; // This makes sure that the next time a special is done it will be the other one.
@@ -178,7 +178,7 @@ struct boss_alizabal : public CreatureScript
                 if (!m_bFirstSpecialDone)                         // True = Second Special is next, False = First Special is next
                 {
                     m_bFirstSpecialDone = true;                   // Next time we run SpecialTimer we will NOT randomize the special.
-                    m_uiSpecialTimer = 8 * IN_MILLISECONDS;     
+                    m_uiSpecialTimer = 8 * IN_MILLISECONDS;
                 }
                 else
                 {
