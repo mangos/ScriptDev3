@@ -64,7 +64,7 @@ enum
     NPC_CORRUPT_SABER           = 10042
 };
 //TODO
-#define GOSSIP_ITEM_RELEASE     "I want to release the corrupted saber to Winna."
+constexpr auto GOSSIP_ITEM_RELEASE = "I want to release the corrupted saber to Winna.";
 
 struct npc_kitten : public CreatureScript
 {
