@@ -635,6 +635,8 @@ struct npc_death_knight_initiate : public CreatureScript
         void Reset() override
         {
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
+            m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
             m_duelerGuid.Clear();
 
             m_uiDuelStartStage = 0;
@@ -694,6 +696,7 @@ struct npc_death_knight_initiate : public CreatureScript
                     // complete duel and evade (without home movemnet)
                     m_bIsDuelComplete = true;
                     m_creature->RemoveAllAurasOnEvade();
+                    m_creature->GetMap()->GetPlayer(m_duelerGuid)->RemoveAllAurasOnEvade();
                     m_creature->DeleteThreatList();
                     m_creature->CombatStop(true);
                     m_creature->SetLootRecipient(nullptr);
@@ -742,6 +745,7 @@ struct npc_death_knight_initiate : public CreatureScript
                         break;
                     case 4:
                         m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_COMBAT_STOP | TEMPFACTION_RESTORE_RESPAWN);
+                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
                         AttackStart(pPlayer);
                         m_uiDuelTimer = 0;
                         break;
@@ -835,6 +839,7 @@ struct npc_death_knight_initiate : public CreatureScript
 
             pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
             pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
+            pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
             pCreature->SetFacingToObject(pPlayer);
 
             DoScriptText(m_auiRandomSay[urand(0, countof(m_auiRandomSay) - 1)], pCreature, pPlayer);
