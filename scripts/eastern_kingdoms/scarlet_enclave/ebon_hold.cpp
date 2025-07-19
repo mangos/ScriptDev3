@@ -697,7 +697,6 @@ struct npc_death_knight_initiate : public CreatureScript
                     // complete duel and evade (without home movemnet)
                     m_bIsDuelComplete = true;
                     m_creature->RemoveAllAurasOnEvade();
-                    m_creature->GetMap()->GetPlayer(m_duelerGuid)->RemoveAllAurasOnEvade();
                     m_creature->DeleteThreatList();
                     m_creature->CombatStop(true);
                     m_creature->SetLootRecipient(nullptr);
