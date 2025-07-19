@@ -691,6 +691,7 @@ struct npc_death_knight_initiate : public CreatureScript
                     {
                         m_creature->CastSpell(pPlayer, SPELL_DUEL_VICTORY, true);
                         m_creature->SetFacingToObject(pPlayer);
+                        pPlayer->RemoveAllAurasOnEvade();
                     }
 
                     // complete duel and evade (without home movemnet)
@@ -700,6 +701,7 @@ struct npc_death_knight_initiate : public CreatureScript
                     m_creature->DeleteThreatList();
                     m_creature->CombatStop(true);
                     m_creature->SetLootRecipient(nullptr);
+                    m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
 
                     // remove duel flag
                     if (GameObject* pFlag = GetClosestGameObjectWithEntry(m_creature, GO_DUEL_FLAG, 30.0f))
@@ -824,6 +826,7 @@ struct npc_death_knight_initiate : public CreatureScript
     {
         if (pPlayer->GetQuestStatus(QUEST_DEATH_CHALLENGE) == QUEST_STATUS_INCOMPLETE)
         {
+            pPlayer->CLEAR_GOSSIP_MENU();
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_ACCEPT_DUEL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_DUEL, pCreature->GetObjectGuid());
             return true;
