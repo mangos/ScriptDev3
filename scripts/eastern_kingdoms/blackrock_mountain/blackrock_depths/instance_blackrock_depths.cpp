@@ -845,7 +845,7 @@ void instance_blackrock_depths::Update(uint32 uiDiff)
     {
         if (m_uiPatrolTimer <= uiDiff)
         {
-            switch(GetData(TYPE_BAR))
+            switch (GetData(TYPE_BAR))
             {
                 case IN_PROGRESS:
                     HandleBarPatrol(1);

@@ -777,7 +777,7 @@ struct is_naxxramas : public InstanceScript
 
         uint64 GetData64(uint32 type) const override
         {
-            switch(type)
+            switch (type)
             {
             case TYPE_SIGNAL_5: //sequential retrieving of required trigger GUIDs; TODO fix the whole Gothik encounter code design
                 if (gtit == m_mGothTriggerMap.end())
