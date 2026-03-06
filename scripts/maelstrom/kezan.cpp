@@ -4,7 +4,7 @@
  * the default database scripting in mangos.
  *
  * Copyright (C) 2006-2013 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2014-2025 MaNGOS <https://www.getmangos.eu>
+ * Copyright (C) 2014-2026 MaNGOS <https://www.getmangos.eu>
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
