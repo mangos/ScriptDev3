@@ -24,6 +24,7 @@ SDCategory: Kezan
 EndScriptData */
 
 /* ContentData
+npc_defiant_troll_q14069
 EndContentData */
 
 #include "precompiled.h"
@@ -32,6 +33,93 @@ EndContentData */
 #
 ######*/
 
+enum
+{
+    QUEST_GOOD_HELP_IS_HARD_TO_FIND         = 14069,
+    NPC_DEFIANT_TROLL                       = 34830,
+    SPELL_GOBLIN_ALL_IN_1_DER_BELT_SHOCKER = 66306,
+    MAX_TROLLS_TO_ADJUST                    = 8,
+    DEFIANT_TROLL_DESPAWN_DELAY             = 2000,
+};
+
+static const char* const aDefiantTrollTexts[] =
+{
+    "Don't tase me, mon!",
+    "I report you to HR!",
+    "I'm going. I'm going!",
+    "Oops, break's over.",
+    "Ouch! Dat hurt!",
+    "Sorry, mon. It won't happen again.",
+    "What I doin' wrong? Don't I get a lunch and two breaks a day, mon?",
+    "Work was bettah in da Undermine!",
+};
+
+struct npc_defiant_troll_q14069 : public CreatureScript
+{
+    npc_defiant_troll_q14069() : CreatureScript("npc_defiant_troll_q14069") {}
+
+    struct npc_defiant_troll_q14069AI : public ScriptedAI
+    {
+        npc_defiant_troll_q14069AI(Creature* pCreature) : ScriptedAI(pCreature)
+        {
+            Reset();
+        }
+
+        void Reset() override
+        {
+            m_bAdjusted = false;
+        }
+
+        bool m_bAdjusted;
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new npc_defiant_troll_q14069AI(pCreature);
+    }
+
+    bool OnSpellClick(Player* pPlayer, Creature* pCreature, uint32 uiSpellId) override
+    {
+        if (!pPlayer || !pCreature || pCreature->GetEntry() != NPC_DEFIANT_TROLL ||
+            uiSpellId != SPELL_GOBLIN_ALL_IN_1_DER_BELT_SHOCKER)
+        {
+            return true;
+        }
+
+        QuestStatus status = pPlayer->GetQuestStatus(QUEST_GOOD_HELP_IS_HARD_TO_FIND);
+        if (status != QUEST_STATUS_INCOMPLETE && status != QUEST_STATUS_COMPLETE)
+        {
+            return true;
+        }
+
+        if (status == QUEST_STATUS_COMPLETE ||
+            pPlayer->GetReqKillOrCastCurrentCount(QUEST_GOOD_HELP_IS_HARD_TO_FIND, NPC_DEFIANT_TROLL) >= MAX_TROLLS_TO_ADJUST)
+        {
+            pPlayer->GetSession()->SendNotification("The goblin All-In-1-Der Belt's battery is depleted.");
+            return true;
+        }
+
+        npc_defiant_troll_q14069AI* pAI = dynamic_cast<npc_defiant_troll_q14069AI*>(pCreature->AI());
+        if (!pAI || pAI->m_bAdjusted)
+        {
+            return true;
+        }
+
+        pAI->m_bAdjusted = true;
+        pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK);
+
+        pPlayer->CastSpell(pCreature, SPELL_GOBLIN_ALL_IN_1_DER_BELT_SHOCKER, true);
+        pCreature->MonsterSay(aDefiantTrollTexts[urand(0, sizeof(aDefiantTrollTexts) / sizeof(aDefiantTrollTexts[0]) - 1)], LANG_UNIVERSAL, pPlayer);
+        pCreature->ForcedDespawn(DEFIANT_TROLL_DESPAWN_DELAY);
+
+        return true;
+    }
+};
+
 void AddSC_kezan()
 {
+    Script* s;
+
+    s = new npc_defiant_troll_q14069();
+    s->RegisterSelf();
 }
