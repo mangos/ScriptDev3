@@ -24,6 +24,7 @@ SDCategory: Kezan
 EndScriptData */
 
 /* ContentData
+npc_sassy_hardwrench_kezan
 EndContentData */
 
 #include "precompiled.h"
@@ -32,6 +33,33 @@ EndContentData */
 #
 ######*/
 
+enum
+{
+    QUEST_MEGS_IN_MARKETING = 28349,
+    SAY_SASSY_PROMOTION_MALE   = -1999942,
+    SAY_SASSY_PROMOTION_FEMALE = -1999943,
+};
+
+struct npc_sassy_hardwrench_kezan : public CreatureScript
+{
+    npc_sassy_hardwrench_kezan() : CreatureScript("npc_sassy_hardwrench_kezan") {}
+
+    bool OnQuestAccept(Player* pPlayer, Creature* pCreature, Quest const* pQuest) override
+    {
+        if (!pPlayer || !pCreature || !pQuest || pQuest->GetQuestId() != QUEST_MEGS_IN_MARKETING)
+        {
+            return false;
+        }
+
+        DoScriptText(pPlayer->getGender() == GENDER_FEMALE ? SAY_SASSY_PROMOTION_FEMALE : SAY_SASSY_PROMOTION_MALE, pCreature, pPlayer);
+        return true;
+    }
+};
+
 void AddSC_kezan()
 {
+    Script* s;
+
+    s = new npc_sassy_hardwrench_kezan();
+    s->RegisterSelf();
 }
