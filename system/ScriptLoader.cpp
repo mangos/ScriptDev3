@@ -1142,6 +1142,10 @@ void AddBattlegroundScripts()
     AddSC_battleground();
 }
 
+#if defined (CATA) || defined(MISTS)
+void AddSC_kezan();
+#endif
+
 // initialize scripts
 void AddScripts()
 {
@@ -1154,6 +1158,10 @@ void AddScripts()
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
     AddNorthrendScripts();
+#endif
+
+#if defined (CATA) || defined(MISTS)
+    AddSC_kezan();
 #endif
 
     AddBattlegroundScripts();
