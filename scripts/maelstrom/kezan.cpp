@@ -58,6 +58,7 @@ struct npc_sassy_hardwrench_kezan : public CreatureScript
         }
 
         DoScriptText(pPlayer->getGender() == GENDER_FEMALE ? SAY_SASSY_PROMOTION_FEMALE : SAY_SASSY_PROMOTION_MALE, pCreature, pPlayer);
+    }
 };
 
 static const char* const aDefiantTrollTexts[] =
