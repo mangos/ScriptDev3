@@ -36,9 +36,14 @@ EndContentData */
 
 enum
 {
-    QUEST_MEGS_IN_MARKETING = 28349,
-    SAY_SASSY_PROMOTION_MALE   = -1999942,
-    SAY_SASSY_PROMOTION_FEMALE = -1999943,
+    QUEST_MEGS_IN_MARKETING                 = 28349,
+    SAY_SASSY_PROMOTION_MALE                = -1999942,
+    SAY_SASSY_PROMOTION_FEMALE              = -1999943,
+    QUEST_GOOD_HELP_IS_HARD_TO_FIND         = 14069,
+    NPC_DEFIANT_TROLL                       = 34830,
+    SPELL_GOBLIN_ALL_IN_1_DER_BELT_SHOCKER  = 66306,
+    MAX_TROLLS_TO_ADJUST                    = 8,
+    DEFIANT_TROLL_DESPAWN_DELAY             = 2000,
 };
 
 struct npc_sassy_hardwrench_kezan : public CreatureScript
@@ -53,11 +58,6 @@ struct npc_sassy_hardwrench_kezan : public CreatureScript
         }
 
         DoScriptText(pPlayer->getGender() == GENDER_FEMALE ? SAY_SASSY_PROMOTION_FEMALE : SAY_SASSY_PROMOTION_MALE, pCreature, pPlayer);
-    QUEST_GOOD_HELP_IS_HARD_TO_FIND         = 14069,
-    NPC_DEFIANT_TROLL                       = 34830,
-    SPELL_GOBLIN_ALL_IN_1_DER_BELT_SHOCKER = 66306,
-    MAX_TROLLS_TO_ADJUST                    = 8,
-    DEFIANT_TROLL_DESPAWN_DELAY             = 2000,
 };
 
 static const char* const aDefiantTrollTexts[] =
