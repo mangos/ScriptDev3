@@ -73,6 +73,7 @@
  */
 
 #include "precompiled.h"
+#include "ObjectMgr.h"
 
 /**
  * When you make a spell effect:
@@ -401,6 +402,10 @@ enum
     SPELL_PROTOVOLTAIC_MAGNETO_COLLECTOR = 37136,
     NPC_ENCASED_ELECTROMENTAL           = 21731,
 #endif
+#if defined (CATA) || defined(MISTS)
+    SPELL_KAJACOLA_ITEM_EFFECT          = 70478,
+    SPELL_KAJACOLA_BUFF                 = 70483,
+#endif
 
     // quest 6661
     SPELL_MELODIOUS_RAPTURE             = 21050,
@@ -604,6 +609,48 @@ struct aura_photovoltaic_magneto_collector : public AuraScript
         {
             ((Creature*)pTarget)->UpdateEntry(NPC_ENCASED_ELECTROMENTAL);
         }
+        return true;
+    }
+};
+#endif
+
+#if defined (CATA) || defined(MISTS)
+static const int32 aKajaColaIdeas[] =
+{
+    -1002000, -1002001, -1002002, -1002003, -1002004, -1002005, -1002006, -1002007,
+    -1002008, -1002009, -1002010, -1002011, -1002012, -1002013, -1002014, -1002015,
+    -1002016, -1002017, -1002018, -1002019, -1002020, -1002021, -1002022, -1002023,
+    -1002024, -1002025, -1002026, -1002027, -1002028, -1002029, -1002030, -1002031,
+    -1002032, -1002033, -1002034, -1002035, -1002036, -1002037
+};
+
+struct aura_kajacola_item_effect : public AuraScript
+{
+    aura_kajacola_item_effect() : AuraScript("aura_kajacola_item_effect") {}
+
+    bool OnDummyApply(const Aura* pAura, bool bApply) override
+    {
+        if (!bApply || pAura->GetId() != SPELL_KAJACOLA_ITEM_EFFECT || pAura->GetEffIndex() != EFFECT_INDEX_0)
+        {
+            return false;
+        }
+
+        Unit* pTarget = pAura->GetTarget();
+        if (!pTarget || pTarget->GetTypeId() != TYPEID_PLAYER)
+        {
+            return false;
+        }
+
+        Player* pPlayer = static_cast<Player*>(pTarget);
+        MangosStringLocale const* pText = GetMangosStringData(aKajaColaIdeas[urand(0, countof(aKajaColaIdeas) - 1)]);
+        if (!pText || pText->Content.empty())
+        {
+            return false;
+        }
+
+        pPlayer->CastSpell(pPlayer, SPELL_KAJACOLA_BUFF, true);
+        pPlayer->Yell(pText->Content[0], pText->LanguageId);
+
         return true;
     }
 };
@@ -1256,6 +1303,10 @@ void AddSC_spell_scripts()
     s->RegisterSelf();
     s = new aura_photovoltaic_magneto_collector();
     s->RegisterSelf();
+#if defined (CATA) || defined(MISTS)
+    s = new aura_kajacola_item_effect();
+    s->RegisterSelf();
+#endif
     s = new spell_administer_antidote();
     s->RegisterSelf();
     s = new spell_inoculate_owlkin();
