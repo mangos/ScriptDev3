@@ -73,7 +73,7 @@ struct mob_aquementas : public CreatureScript
 
     struct mob_aquementasAI : public ScriptedAI
     {
-        mob_aquementasAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_aquementasAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiSwitchFactionTimer;
         uint32 m_uiFrostShockTimer;
@@ -162,7 +162,6 @@ struct mob_aquementas : public CreatureScript
         return new mob_aquementasAI(pCreature);
     }
 };
-
 
 #if defined(TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######
@@ -290,7 +289,7 @@ struct npc_oox17tn : public CreatureScript
 
     struct npc_oox17tnAI : public npc_escortAI
     {
-        npc_oox17tnAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_oox17tnAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 i) override
         {
@@ -478,7 +477,7 @@ struct npc_tooga : public CreatureScript
 
     struct npc_toogaAI : public FollowerAI
     {
-        npc_toogaAI(Creature* pCreature) : FollowerAI(pCreature) { }
+        npc_toogaAI(Creature* pCreature) : FollowerAI(pCreature) {}
 
         uint32 m_uiCheckSpeechTimer;
         uint32 m_uiPostEventTimer;

@@ -40,5 +40,4 @@
 #include "sc_instance.h"
 #include "SpellAuras.h"
 
-
 #endif

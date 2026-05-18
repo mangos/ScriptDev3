@@ -818,7 +818,10 @@ struct is_violet_hold : public InstanceScript
             }
         }
 
-        PortalData const* GetPortalData() { return &afPortalLocation[m_uiPortalId]; }
+        PortalData const* GetPortalData()
+        {
+             return &afPortalLocation[m_uiPortalId];
+        }
 
         void UpdateWorldState(bool bEnable = true)
         {

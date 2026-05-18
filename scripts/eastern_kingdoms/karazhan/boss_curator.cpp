@@ -251,6 +251,9 @@ struct boss_curator : public CreatureScript
     }
 };
 
+/**
+ * Registers the Curator encounter script.
+ */
 void AddSC_boss_curator()
 {
     Script* s;

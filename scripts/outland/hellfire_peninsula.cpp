@@ -67,7 +67,7 @@ struct npc_aeranas : public CreatureScript
 
     struct npc_aeranasAI : public ScriptedAI
     {
-        npc_aeranasAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_aeranasAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiFactionTimer;
         uint32 m_uiEnvelopingWindsTimer;
@@ -515,7 +515,7 @@ struct npc_fel_guard_hound : public CreatureScript
 
     struct npc_fel_guard_houndAI : public ScriptedPetAI
     {
-        npc_fel_guard_houndAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
+        npc_fel_guard_houndAI(Creature* pCreature) : ScriptedPetAI(pCreature) {}
 
         uint32 m_uiPoodadTimer;
 
@@ -726,7 +726,10 @@ struct npc_anchorite_barada : public CreatureScript
             ScriptedAI::EnterEvadeMode();
         }
 
-        bool IsExorcismComplete() { return m_bEventComplete; }
+        bool IsExorcismComplete()
+        {
+             return m_bEventComplete;
+        }
 
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {

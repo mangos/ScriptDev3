@@ -259,7 +259,7 @@ struct npc_ball_of_flame : public CreatureScript
 
     struct npc_ball_of_flameAI : public ScriptedAI
     {
-        npc_ball_of_flameAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_ball_of_flameAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bHasFlamesCasted;
 
@@ -301,9 +301,9 @@ struct npc_ball_of_flame : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -322,7 +322,7 @@ struct npc_kinetic_bomb : public CreatureScript
 
     struct npc_kinetic_bombAI : public ScriptedAI
     {
-        npc_kinetic_bombAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_kinetic_bombAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset() override
         {
@@ -347,11 +347,11 @@ struct npc_kinetic_bomb : public CreatureScript
             m_creature->ForcedDespawn(1000);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -370,7 +370,7 @@ struct npc_dark_nucleus : public CreatureScript
 
     struct npc_dark_nucleusAI : public ScriptedAI
     {
-        npc_dark_nucleusAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_dark_nucleusAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiDistanceCheck;
 

@@ -78,7 +78,6 @@ enum Spells
     SPELL_BLADE_DANCE_CHARGE          = 105726,         // https://www.wowhead.com/spell=105726/blade-dance
     SPELL_BLADE_DANCE_AURA2           = 105828,         // https://www.wowhead.com/spell=105828/blade-dance , causes Alizabal to spin for 22 seconds.
 
-
     SPELL_BERSERK                     = 47008,
 };
 
@@ -96,7 +95,7 @@ struct boss_alizabal : public CreatureScript
 
     struct boss_alizabalAI : public ScriptedAI
     {
-        boss_alizabalAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_alizabalAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         // Timers
         uint32 m_uiEnrageTimer;
@@ -163,7 +162,6 @@ struct boss_alizabal : public CreatureScript
                         }
                     }
                     break;
-
 
                 case 1:   // Skewer is cast onto current target.
                     if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SKEWER) == CAST_OK)
@@ -302,6 +300,9 @@ struct boss_alizabal : public CreatureScript
     }
 };
 
+/**
+ * Registers the Alizabal encounter script.
+ */
 void AddSC_boss_alizabal()
 {
     Script* s;

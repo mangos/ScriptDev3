@@ -201,6 +201,9 @@ struct boss_coren_direbrew : public CreatureScript
     }
 };
 
+/**
+ * Registers the Coren Direbrew encounter script.
+ */
 void AddSC_boss_coren_direbrew()
 {
     Script* s;

@@ -57,7 +57,7 @@ struct npc_shenthul : public CreatureScript
 
     struct npc_shenthulAI : public ScriptedAI
     {
-        npc_shenthulAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_shenthulAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiSaluteTimer;
         uint32 m_uiResetTimer;

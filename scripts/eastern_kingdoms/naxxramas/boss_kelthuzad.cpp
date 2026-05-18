@@ -663,6 +663,9 @@ struct boss_kelthuzad : public CreatureScript
     }
 };
 
+/**
+ * Registers the Kel'Thuzad encounter script.
+ */
 void AddSC_boss_kelthuzad()
 {
     Script* s;

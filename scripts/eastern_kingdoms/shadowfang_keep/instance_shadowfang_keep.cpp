@@ -318,7 +318,6 @@ struct is_shadowfang_keep : public InstanceScript
             OUT_LOAD_INST_DATA_COMPLETE;
         }
 
-
     private:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;

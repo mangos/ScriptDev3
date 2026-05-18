@@ -360,11 +360,9 @@ struct go_table_theka : public GameObjectScript
     }
 };
 
-
 // go_fixed_trap
 
 #endif
-
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
 /*######

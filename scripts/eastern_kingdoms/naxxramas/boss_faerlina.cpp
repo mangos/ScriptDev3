@@ -226,6 +226,9 @@ struct boss_faerlina : public CreatureScript
     }
 };
 
+/**
+ * Registers the Grand Widow Faerlina encounter script.
+ */
 void AddSC_boss_faerlina()
 {
     Script* s;

@@ -396,7 +396,7 @@ struct mob_hellfire_channeler : public CreatureScript
         }
 
         // Don't attack on LoS check
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDied(Unit* /*pKiller*/) override
         {
@@ -572,7 +572,7 @@ struct npc_target_trigger : public CreatureScript
 
     struct npc_target_triggerAI : public Scripted_NoMovementAI
     {
-        npc_target_triggerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_target_triggerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiDebrisTimer;
 
@@ -629,7 +629,7 @@ struct mob_abyssal : public CreatureScript
 
     struct mob_abyssalAI : public ScriptedAI
     {
-        mob_abyssalAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_abyssalAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiFireBlastTimer;
         uint32 m_uiDespawnTimer;

@@ -151,6 +151,9 @@ struct boss_lucifron : public CreatureScript
     }
 };
 
+/**
+ * Registers the Lucifron encounter script.
+ */
 void AddSC_boss_lucifron()
 {
     Script* s;

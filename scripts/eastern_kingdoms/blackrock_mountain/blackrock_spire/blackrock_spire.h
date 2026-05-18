@@ -69,7 +69,6 @@ enum
     GO_DRAKKISATH_DOOR_1        = 175946,
     GO_DRAKKISATH_DOOR_2        = 175947,
 
-
 #if defined (CLASSIC)
     // upper spire entrance
     GO_DRAGONSPINE              = 164725,

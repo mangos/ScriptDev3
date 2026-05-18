@@ -641,7 +641,7 @@ struct npc_salsalabim : public CreatureScript
 
     struct npc_salsalabimAI : public ScriptedAI
     {
-        npc_salsalabimAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_salsalabimAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiMagneticPullTimer;
 

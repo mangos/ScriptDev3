@@ -70,7 +70,7 @@ struct npc_professor_phizzlethorpe : public CreatureScript
 
     struct npc_professor_phizzlethorpeAI : public npc_escortAI
     {
-        npc_professor_phizzlethorpeAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_professor_phizzlethorpeAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -178,7 +178,7 @@ struct npc_kinelory : public CreatureScript
 
     struct npc_kineloryAI : public npc_escortAI
     {
-        npc_kineloryAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_kineloryAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiBearFormTimer;
         uint32 m_uiHealTimer;
@@ -304,6 +304,9 @@ struct npc_kinelory : public CreatureScript
     }
 };
 
+/**
+ * Registers Arathi Highlands script content.
+ */
 void AddSC_arathi_highlands()
 {
     Script* s;

@@ -372,8 +372,8 @@ struct npc_flash_freeze : public CreatureScript
             m_bFreezeInit = false;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDied(Unit* /*pKiller*/) override
         {
@@ -496,16 +496,16 @@ struct npc_icicle_target : public CreatureScript
 
     struct npc_icicle_targetAI : public Scripted_NoMovementAI
     {
-        npc_icicle_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_icicle_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         void Reset() override
         {
             DoCastSpellIfCan(m_creature, SPELL_SAFE_AREA);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

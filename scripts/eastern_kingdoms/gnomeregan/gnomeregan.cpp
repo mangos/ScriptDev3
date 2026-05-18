@@ -790,6 +790,9 @@ struct npc_kernobee : public CreatureScript
     }
 };
 
+/**
+ * Registers Gnomeregan zone script content.
+ */
 void AddSC_gnomeregan()
 {
     Script *s;

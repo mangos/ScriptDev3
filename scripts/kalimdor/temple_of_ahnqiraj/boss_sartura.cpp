@@ -248,7 +248,7 @@ struct mob_sartura_royal_guard : public CreatureScript
 
     struct mob_sartura_royal_guardAI : public ScriptedAI
     {
-        mob_sartura_royal_guardAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_sartura_royal_guardAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiWhirlWindTimer;
         uint32 m_uiWhirlWindRandomTimer;

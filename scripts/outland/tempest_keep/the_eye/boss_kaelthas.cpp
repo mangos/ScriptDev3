@@ -927,7 +927,7 @@ struct boss_thaladred_the_darkener : public CreatureScript
 
     struct boss_thaladred_the_darkenerAI : public advisor_base_ai
     {
-        boss_thaladred_the_darkenerAI(Creature* pCreature) : advisor_base_ai(pCreature) { }
+        boss_thaladred_the_darkenerAI(Creature* pCreature) : advisor_base_ai(pCreature) {}
 
         uint32 m_uiGazeTimer;
         uint32 m_uiRendTimer;
@@ -1039,7 +1039,7 @@ struct boss_lord_sanguinar : public CreatureScript
 
     struct boss_lord_sanguinarAI : public advisor_base_ai
     {
-        boss_lord_sanguinarAI(Creature* pCreature) : advisor_base_ai(pCreature) { }
+        boss_lord_sanguinarAI(Creature* pCreature) : advisor_base_ai(pCreature) {}
 
         uint32 m_uiFearTimer;
 
@@ -1105,7 +1105,7 @@ struct boss_grand_astromancer_capernian : public CreatureScript
 
     struct boss_grand_astromancer_capernianAI : public advisor_base_ai
     {
-        boss_grand_astromancer_capernianAI(Creature* pCreature) : advisor_base_ai(pCreature) { }
+        boss_grand_astromancer_capernianAI(Creature* pCreature) : advisor_base_ai(pCreature) {}
 
         uint32 m_uiFireballTimer;
         uint32 m_uiConflagrationTimer;
@@ -1222,7 +1222,7 @@ struct boss_master_engineer_telonicus : public CreatureScript
 
     struct boss_master_engineer_telonicusAI : public advisor_base_ai
     {
-        boss_master_engineer_telonicusAI(Creature* pCreature) : advisor_base_ai(pCreature) { }
+        boss_master_engineer_telonicusAI(Creature* pCreature) : advisor_base_ai(pCreature) {}
 
         uint32 m_uiBombTimer;
         uint32 m_uiRemoteToyTimer;
@@ -1305,7 +1305,7 @@ struct mob_phoenix_tk : public CreatureScript
 
     struct mob_phoenix_tkAI : public ScriptedAI
     {
-        mob_phoenix_tkAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_phoenix_tkAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiCycleTimer;
 
@@ -1456,11 +1456,11 @@ struct mob_phoenix_egg_tk : public CreatureScript
 
     struct mob_phoenix_egg_tkAI : public Scripted_NoMovementAI
     {
-        mob_phoenix_egg_tkAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        mob_phoenix_egg_tkAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

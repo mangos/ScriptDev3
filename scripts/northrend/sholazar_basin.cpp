@@ -251,9 +251,9 @@ struct npc_injured_rainspeaker : public CreatureScript
 
     struct npc_injured_rainspeakerAI : public npc_escortAI
     {
-        npc_injured_rainspeakerAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_injured_rainspeakerAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
-        void Reset() override { }
+        void Reset() override {}
 
         void JustStartedEscort() override
         {
@@ -519,7 +519,7 @@ struct npc_tipsy_mcmanus : public CreatureScript
 
     struct npc_tipsy_mcmanusAI : public ScriptedAI
     {
-        npc_tipsy_mcmanusAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_tipsy_mcmanusAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint8 m_uiTaskIndex;
         uint32 m_uiTaskOwnerEntry;

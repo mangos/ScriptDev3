@@ -329,7 +329,7 @@ struct npc_frozen_core : public CreatureScript
 
     struct npc_frozen_coreAI : public Scripted_NoMovementAI
     {
-        npc_frozen_coreAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_frozen_coreAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         ObjectGuid m_ahuheGuid;
 
@@ -367,9 +367,9 @@ struct npc_frozen_core : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -436,9 +436,9 @@ struct npc_ice_spear_bunny : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

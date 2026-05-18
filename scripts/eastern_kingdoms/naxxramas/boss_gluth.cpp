@@ -289,6 +289,9 @@ struct boss_gluth : public CreatureScript
     }
 };
 
+/**
+ * Registers the Gluth encounter script.
+ */
 void AddSC_boss_gluth()
 {
     Script* s;

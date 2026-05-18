@@ -65,7 +65,7 @@ struct npc_ame01 : public CreatureScript
 
     struct npc_ame01AI : public npc_escortAI
     {
-        npc_ame01AI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_ame01AI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -186,7 +186,7 @@ struct npc_ringo : public CreatureScript
 
     struct npc_ringoAI : public FollowerAI
     {
-        npc_ringoAI(Creature* pCreature) : FollowerAI(pCreature) { }
+        npc_ringoAI(Creature* pCreature) : FollowerAI(pCreature) {}
 
         uint32 m_uiFaintTimer;
         uint32 m_uiEndEventProgress;

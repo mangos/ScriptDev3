@@ -51,7 +51,6 @@
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
 #include "escort_ai.h"
 
-
 /*#####
 ## npc_rizzle_sprysprocket
 #####*/

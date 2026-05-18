@@ -49,7 +49,7 @@ struct boss_cannon_master_willey : public CreatureScript
 
     struct boss_cannon_master_willeyAI : public ScriptedAI
     {
-        boss_cannon_master_willeyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_cannon_master_willeyAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiKnockAwayTimer;
         uint32 m_uiPummelTimer;

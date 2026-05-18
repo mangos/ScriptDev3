@@ -352,7 +352,7 @@ struct boss_krick : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void EnterEvadeMode() override
         {
@@ -426,7 +426,7 @@ struct npc_exploding_orb : public CreatureScript
 
     struct npc_exploding_orbAI : public Scripted_NoMovementAI
     {
-        npc_exploding_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_exploding_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint8 m_uiGrowCount;
 
@@ -435,8 +435,8 @@ struct npc_exploding_orb : public CreatureScript
             m_uiGrowCount = 0;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
@@ -455,7 +455,7 @@ struct npc_exploding_orb : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

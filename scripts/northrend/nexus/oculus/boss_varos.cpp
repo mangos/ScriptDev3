@@ -311,9 +311,9 @@ struct npc_azure_ring_captain : public CreatureScript
 
         ObjectGuid m_arcaneBeamGuid;
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -348,7 +348,7 @@ struct npc_azure_ring_captain : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -367,7 +367,7 @@ struct npc_arcane_beam : public CreatureScript
 
     struct npc_arcane_beamAI : public ScriptedAI
     {
-        npc_arcane_beamAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_arcane_beamAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset() override
         {
@@ -386,9 +386,9 @@ struct npc_arcane_beam : public CreatureScript
             m_creature->ForcedDespawn(10000);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -408,13 +408,13 @@ struct npc_centrifuge_core : public CreatureScript
 
     struct npc_centrifuge_coreAI : public Scripted_NoMovementAI
     {
-        npc_centrifuge_coreAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_centrifuge_coreAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         // Note: visual already handled in creature_template_addon
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -438,7 +438,6 @@ void AddSC_boss_varos()
 
     s = new event_spell_call_captain();
     s->RegisterSelf();
-
 
     //pNewScript = new Script;
     //pNewScript->Name = "boss_varos";

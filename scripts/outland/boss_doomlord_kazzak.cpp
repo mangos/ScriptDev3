@@ -65,7 +65,7 @@ struct boss_doomlordkazzak : public CreatureScript
 
     struct boss_doomlordkazzakAI : public ScriptedAI
     {
-        boss_doomlordkazzakAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_doomlordkazzakAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiShadowVolleyTimer;
         uint32 m_uiCleaveTimer;

@@ -53,7 +53,7 @@ struct boss_kurinnaxx : public CreatureScript
 
     struct boss_kurinnaxxAI : public ScriptedAI
     {
-        boss_kurinnaxxAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_kurinnaxxAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiMortalWoundTimer;
         uint32 m_uiSandTrapTimer;

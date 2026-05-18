@@ -450,6 +450,9 @@ struct at_vaelastrasz : public AreaTriggerScript
     }
 };
 
+/**
+ * Registers the Vaelastrasz encounter script.
+ */
 void AddSC_boss_vaelastrasz()
 {
     Script* s;

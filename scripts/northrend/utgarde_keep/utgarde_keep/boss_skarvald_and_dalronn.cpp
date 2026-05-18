@@ -107,7 +107,7 @@ struct boss_s_and_d_dummyAI : public ScriptedAI
         return m_pInstance->GetSingleCreatureFromStorage(m_creature->GetEntry() == NPC_DALRONN ? NPC_SKARVALD : NPC_DALRONN);
     }
 
-    void Reset() override { }
+    void Reset() override {}
 
     void JustReachedHome() override
     {
@@ -198,7 +198,7 @@ struct boss_skarvald : public CreatureScript
 
     struct boss_skarvaldAI : public boss_s_and_d_dummyAI
     {
-        boss_skarvaldAI(Creature* pCreature) : boss_s_and_d_dummyAI(pCreature) { }
+        boss_skarvaldAI(Creature* pCreature) : boss_s_and_d_dummyAI(pCreature) {}
 
         uint32 m_uiYellDelayTimer;
         uint32 m_uiChargeTimer;
@@ -302,7 +302,7 @@ struct boss_dalronn : public CreatureScript
 
     struct boss_dalronnAI : public boss_s_and_d_dummyAI
     {
-        boss_dalronnAI(Creature* pCreature) : boss_s_and_d_dummyAI(pCreature) { }
+        boss_dalronnAI(Creature* pCreature) : boss_s_and_d_dummyAI(pCreature) {}
 
         uint32 m_uiDebilitateTimer;
         uint32 m_uiShadowBoltTimer;

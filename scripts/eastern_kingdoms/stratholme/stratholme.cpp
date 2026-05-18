@@ -198,7 +198,7 @@ struct mob_restless_soul : public CreatureScript
     // TODO - likely entirely not needed workaround
     struct mob_restless_soulAI : public ScriptedAI
     {
-        mob_restless_soulAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_restless_soulAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_taggerGuid;
         uint32 m_uiDieTimer;
@@ -296,7 +296,7 @@ struct mobs_spectral_ghostly_citizen : public CreatureScript
 
     struct mobs_spectral_ghostly_citizenAI : public ScriptedAI
     {
-        mobs_spectral_ghostly_citizenAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mobs_spectral_ghostly_citizenAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiDieTimer;
         bool m_bIsTagged;

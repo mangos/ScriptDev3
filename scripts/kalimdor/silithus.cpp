@@ -774,7 +774,6 @@ struct go_crystalline_tear : public GameObjectScript
     }
 };
 
-
 enum
 {
     SPELL_FOOLS_PLIGHT = 23504,
@@ -1098,8 +1097,6 @@ struct npc_solenor_the_slayer : public CreatureScript
         return new npc_solenor_the_slayerAI(pCreature);
     }
 };
-
-
 
 void AddSC_silithus()
 {

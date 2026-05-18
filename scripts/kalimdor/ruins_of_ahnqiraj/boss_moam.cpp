@@ -59,7 +59,7 @@ struct boss_moam : public CreatureScript
 
     struct boss_moamAI : public ScriptedAI
     {
-        boss_moamAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_moamAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint8 m_uiPhase;
 

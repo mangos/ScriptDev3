@@ -540,7 +540,7 @@ struct npc_void_sentinel_summoner : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

@@ -114,7 +114,7 @@ struct mob_omrogg_heads : public CreatureScript
 
     struct mob_omrogg_headsAI : public ScriptedAI
     {
-        mob_omrogg_headsAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_omrogg_headsAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiDeathTimer;
         bool m_bDeathYell;

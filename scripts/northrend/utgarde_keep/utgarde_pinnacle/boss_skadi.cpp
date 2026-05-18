@@ -386,8 +386,8 @@ struct npc_grauf : public CreatureScript
             m_uiFlightDelayTimer = 0;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustReachedHome() override
         {

@@ -689,7 +689,7 @@ struct npc_expedition_commander : public CreatureScript
 
         ObjectGuid m_playerGuid;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -806,7 +806,7 @@ struct npc_razorscale_spawner : public CreatureScript
 
     struct npc_razorscale_spawnerAI : public Scripted_NoMovementAI
     {
-        npc_razorscale_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_razorscale_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiSpawnTimer;
         bool m_bIsSentinelSpawn;
@@ -878,12 +878,12 @@ struct npc_harpoon_fire_state : public CreatureScript
 
     struct npc_harpoon_fire_stateAI : public Scripted_NoMovementAI
     {
-        npc_harpoon_fire_stateAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_harpoon_fire_stateAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature)

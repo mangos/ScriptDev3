@@ -198,7 +198,7 @@ struct boss_emeriss : public CreatureScript
 
     struct boss_emerissAI : public boss_emerald_dragonAI
     {
-        boss_emerissAI(Creature* pCreature) : boss_emerald_dragonAI(pCreature) { }
+        boss_emerissAI(Creature* pCreature) : boss_emerald_dragonAI(pCreature) {}
 
         uint32 m_uiVolatileInfectionTimer;
 
@@ -353,7 +353,7 @@ struct npc_spirit_shade : public CreatureScript
 
     struct npc_spirit_shadeAI : public ScriptedAI
     {
-        npc_spirit_shadeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_spirit_shadeAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bHasHealed;
 
@@ -374,9 +374,9 @@ struct npc_spirit_shade : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -413,7 +413,7 @@ struct boss_taerar : public CreatureScript
 
     struct boss_taerarAI : public boss_emerald_dragonAI
     {
-        boss_taerarAI(Creature* pCreature) : boss_emerald_dragonAI(pCreature) { }
+        boss_taerarAI(Creature* pCreature) : boss_emerald_dragonAI(pCreature) {}
 
         uint32 m_uiArcaneBlastTimer;
         uint32 m_uiBellowingRoarTimer;
@@ -564,7 +564,7 @@ struct boss_ysondre : public CreatureScript
 
     struct boss_ysondreAI : public boss_emerald_dragonAI
     {
-        boss_ysondreAI(Creature* pCreature) : boss_emerald_dragonAI(pCreature) { }
+        boss_ysondreAI(Creature* pCreature) : boss_emerald_dragonAI(pCreature) {}
 
         uint32 m_uiLightningWaveTimer;
 

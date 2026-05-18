@@ -75,7 +75,7 @@ struct mobs_nether_drake : public CreatureScript
 
     struct mobs_nether_drakeAI : public ScriptedAI
     {
-        mobs_nether_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mobs_nether_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bIsNihil;
         uint32 m_uiNihilSpeechTimer;
@@ -269,7 +269,7 @@ struct npc_daranelle : public CreatureScript
 
     struct npc_daranelleAI : public ScriptedAI
     {
-        npc_daranelleAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_daranelleAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -317,7 +317,7 @@ struct npc_bloodmaul_stout_trigger : public CreatureScript
 
     struct npc_bloodmaul_stout_triggerAI : public ScriptedAI
     {
-        npc_bloodmaul_stout_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_bloodmaul_stout_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiStartTimer;
         bool m_bHasValidOgre;
@@ -552,7 +552,7 @@ struct npc_simon_game_bunny : public CreatureScript
 
     struct npc_simon_game_bunnyAI : public ScriptedAI
     {
-        npc_simon_game_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_simon_game_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint8 m_uiGamePhase;
 
@@ -826,8 +826,8 @@ struct npc_simon_game_bunny : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 /*uiDiff*/) override
         {

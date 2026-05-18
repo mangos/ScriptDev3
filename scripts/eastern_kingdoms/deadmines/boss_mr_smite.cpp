@@ -66,7 +66,7 @@ struct boss_mr_smite : public CreatureScript
 
     struct boss_mr_smiteAI : public ScriptedAI
     {
-        boss_mr_smiteAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_mr_smiteAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiPhase;
         uint32 m_uiEquipTimer;
@@ -291,6 +291,9 @@ struct boss_mr_smite : public CreatureScript
     }
 };
 
+/**
+ * Registers the Mr. Smite encounter script.
+ */
 void AddSC_boss_mr_smite()
 {
     Script *s;

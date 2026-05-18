@@ -36,7 +36,6 @@
 #include "precompiled.h"
 #include "blackrock_depths.h"
 
-
 struct is_blackrock_depths : public InstanceScript
 {
     is_blackrock_depths() : InstanceScript("instance_blackrock_depths") {}

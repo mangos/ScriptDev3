@@ -91,7 +91,7 @@ struct boss_dathrohan_balnazzar : public CreatureScript
 
     struct boss_dathrohan_balnazzarAI : public ScriptedAI
     {
-        boss_dathrohan_balnazzarAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_dathrohan_balnazzarAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiCrusadersHammer_Timer;
         uint32 m_uiCrusaderStrike_Timer;

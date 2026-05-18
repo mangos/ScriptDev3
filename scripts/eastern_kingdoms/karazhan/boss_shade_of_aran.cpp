@@ -461,9 +461,9 @@ struct npc_shade_of_aran_blizzard : public CreatureScript
     {
         npc_shade_of_aran_blizzardAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -472,6 +472,9 @@ struct npc_shade_of_aran_blizzard : public CreatureScript
     }
 };
 
+/**
+ * Registers the Shade of Aran encounter script.
+ */
 void AddSC_boss_shade_of_aran()
 {
     Script* s;

@@ -411,7 +411,7 @@ struct mob_ohgan : public CreatureScript
 
     struct mob_ohganAI : public ScriptedAI
     {
-        mob_ohganAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_ohganAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiSunderArmorTimer;
 

@@ -216,6 +216,9 @@ struct npc_miran : public CreatureScript
     }
 };
 
+/**
+ * Registers Loch Modan script content.
+ */
 void AddSC_loch_modan()
 {
     Script* s;

@@ -175,6 +175,9 @@ struct boss_broodlord : public CreatureScript
     }
 };
 
+/**
+ * Registers the Broodlord Lashlayer encounter script.
+ */
 void AddSC_boss_broodlord()
 {
     Script* s;

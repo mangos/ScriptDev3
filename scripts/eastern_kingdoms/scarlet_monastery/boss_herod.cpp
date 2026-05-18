@@ -60,7 +60,7 @@ struct boss_herod : public CreatureScript
 
     struct boss_herodAI : public ScriptedAI
     {
-        boss_herodAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_herodAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bEnrage;
         bool m_bTraineeSay;

@@ -171,6 +171,9 @@ struct boss_baron_geddon : public CreatureScript
     }
 };
 
+/**
+ * Registers the Baron Geddon encounter script.
+ */
 void AddSC_boss_baron_geddon()
 {
     Script* s;

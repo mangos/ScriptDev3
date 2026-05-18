@@ -290,6 +290,9 @@ struct spell_go_black_dragon_egg : public SpellScript
     }
 };
 
+/**
+ * Registers the Razorgore encounter script.
+ */
 void AddSC_boss_razorgore()
 {
     Script* s;

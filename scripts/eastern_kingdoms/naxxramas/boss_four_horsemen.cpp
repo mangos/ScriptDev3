@@ -534,6 +534,9 @@ struct boss_sir_zeliek : public CreatureScript
     }
 };
 
+/**
+ * Registers the Four Horsemen encounter scripts.
+ */
 void AddSC_boss_four_horsemen()
 {
     Script* s;

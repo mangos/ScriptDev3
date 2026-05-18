@@ -276,16 +276,16 @@ struct mob_naga_distiller : public CreatureScript
 
     struct mob_naga_distillerAI : public Scripted_NoMovementAI
     {
-        mob_naga_distillerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        mob_naga_distillerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         void Reset() override
         {
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

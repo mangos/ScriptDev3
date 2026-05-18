@@ -231,6 +231,9 @@ struct boss_patchwerk : public CreatureScript
     }
 };
 
+/**
+ * Registers the Patchwerk encounter script.
+ */
 void AddSC_boss_patchwerk()
 {
     Script* s;

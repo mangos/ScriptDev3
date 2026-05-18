@@ -980,7 +980,7 @@ struct npc_arugal : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*who*/) override { }
+        void AttackStart(Unit* /*who*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

@@ -471,8 +471,8 @@ struct npc_amanishi_hatcher : public CreatureScript
             m_creature->SetWalk(false);
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {

@@ -68,7 +68,7 @@ struct boss_kazzak : public CreatureScript
 
     struct boss_kazzakAI : public ScriptedAI
     {
-        boss_kazzakAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_kazzakAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiShadowVolleyTimer;
         uint32 m_uiCleaveTimer;
@@ -239,6 +239,9 @@ struct boss_kazzak : public CreatureScript
     }
 };
 
+/**
+ * Registers the Lord Kazzak encounter script.
+ */
 void AddSC_boss_kazzakAI()
 {
     Script* s;

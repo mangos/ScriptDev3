@@ -40,6 +40,9 @@
 
 #include "precompiled.h"
 
+/**
+ * Registers Ironforge script content.
+ */
 void AddSC_ironforge()
 {
 }

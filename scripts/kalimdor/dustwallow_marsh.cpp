@@ -71,7 +71,7 @@ struct mobs_risen_husk_spirit : public CreatureScript
 
     struct mobs_risen_husk_spiritAI : public ScriptedAI
     {
-        mobs_risen_husk_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mobs_risen_husk_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiConsumeFlesh_Timer;
         uint32 m_uiIntangiblePresence_Timer;
@@ -178,7 +178,7 @@ struct npc_restless_apparition : public CreatureScript
 
     struct npc_restless_apparitionAI : public ScriptedAI
     {
-        npc_restless_apparitionAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_restless_apparitionAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiTalk_Timer;
 
@@ -737,7 +737,7 @@ struct npc_private_hendel : public CreatureScript
 
     struct npc_private_hendelAI : public ScriptedAI
     {
-        npc_private_hendelAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_private_hendelAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset() override {}
 

@@ -49,7 +49,7 @@ struct boss_maleki_the_pallid : public CreatureScript
 
     struct boss_maleki_the_pallidAI : public ScriptedAI
     {
-        boss_maleki_the_pallidAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_maleki_the_pallidAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiDrainManaTimer;
         uint32 m_uiFrostboltTimer;

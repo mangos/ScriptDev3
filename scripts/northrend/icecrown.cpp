@@ -98,7 +98,7 @@ struct npc_squad_leader : public CreatureScript
 
     struct npc_squad_leaderAI : public npc_escortAI
     {
-        npc_squad_leaderAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_squad_leaderAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiCleaveTimer;
         uint32 m_uiFrostShotTimer;

@@ -78,7 +78,7 @@ struct boss_ayamiss : public CreatureScript
 
     struct boss_ayamissAI : public ScriptedAI
     {
-        boss_ayamissAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_ayamissAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiStingerSprayTimer;
         uint32 m_uiPoisonStingerTimer;

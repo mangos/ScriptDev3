@@ -420,8 +420,8 @@ struct boss_head_of_horseman : public CreatureScript
 
         uint8 m_uiHeadPhase;
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDied(Unit* /*pKiller*/) override
         {

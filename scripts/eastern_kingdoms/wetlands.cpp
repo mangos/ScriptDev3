@@ -236,7 +236,6 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             return nullptr;
         }
 
-
         void UpdateEscortAI(const uint32 uiDiff) override
         {
             DialogueUpdate(uiDiff);

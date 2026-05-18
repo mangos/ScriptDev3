@@ -1015,6 +1015,9 @@ struct go_father_flame : public GameObjectScript
     }
 };
 
+/**
+ * Registers the Blackrock Spire instance script.
+ */
 void AddSC_instance_blackrock_spire()
 {
     Script* s;

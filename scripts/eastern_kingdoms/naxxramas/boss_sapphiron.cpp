@@ -386,6 +386,9 @@ struct go_sapphiron_birth : public GameObjectScript
     }
 };
 
+/**
+ * Registers the Sapphiron encounter script.
+ */
 void AddSC_boss_sapphiron()
 {
     Script* s;

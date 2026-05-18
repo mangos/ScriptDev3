@@ -49,7 +49,7 @@ struct boss_noxxion : public CreatureScript
 
     struct boss_noxxionAI : public ScriptedAI
     {
-        boss_noxxionAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_noxxionAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiToxicVolleyTimer;
         uint32 m_uiUppercutTimer;

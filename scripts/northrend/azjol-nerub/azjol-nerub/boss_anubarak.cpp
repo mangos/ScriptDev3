@@ -80,7 +80,6 @@ enum
     PHASE_SUBMERGED                 = 2
 };
 
-
 /*######
 ## boss_anubarak
 ######*/
@@ -395,8 +394,8 @@ struct npc_impale_target : public CreatureScript
             m_uiImpaleTimer = 3000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {

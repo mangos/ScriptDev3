@@ -847,7 +847,7 @@ struct npc_water_spirit : public CreatureScript
 
     struct npc_water_spiritAI : public three_nature_alliesAI
     {
-        npc_water_spiritAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { }
+        npc_water_spiritAI(Creature* pCreature) : three_nature_alliesAI(pCreature) {}
 
         uint32 m_uiTidalWaveTimer;
 
@@ -897,7 +897,7 @@ struct npc_snaplasher : public CreatureScript
 
     struct npc_snaplasherAI : public three_nature_alliesAI
     {
-        npc_snaplasherAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { }
+        npc_snaplasherAI(Creature* pCreature) : three_nature_alliesAI(pCreature) {}
 
         void Reset() override
         {
@@ -925,7 +925,7 @@ struct npc_storm_lasher : public CreatureScript
 
     struct npc_storm_lasherAI : public three_nature_alliesAI
     {
-        npc_storm_lasherAI(Creature* pCreature) : three_nature_alliesAI(pCreature) { }
+        npc_storm_lasherAI(Creature* pCreature) : three_nature_alliesAI(pCreature) {}
 
         uint32 m_uiLightningLashTimer;
         uint32 m_uiStormBoltTimer;
@@ -1007,8 +1007,8 @@ struct npc_eonars_gift : public CreatureScript
             m_uiGiftTimer = 10000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -1107,9 +1107,9 @@ struct npc_iron_roots : public CreatureScript
 
         bool m_bIsRegularMode;
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDied(Unit* /*pKiller*/) override
         {
@@ -1128,7 +1128,7 @@ struct npc_iron_roots : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -1158,9 +1158,9 @@ struct npc_healthy_spore : public CreatureScript
             m_creature->ForcedDespawn(25000);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

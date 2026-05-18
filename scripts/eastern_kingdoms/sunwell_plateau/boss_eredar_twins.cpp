@@ -641,7 +641,7 @@ struct npc_shadow_image : public CreatureScript
 
     struct npc_shadow_imageAI : public ScriptedAI
     {
-        npc_shadow_imageAI(Creature* pCreature) : ScriptedAI(pCreature)  { }
+        npc_shadow_imageAI(Creature* pCreature) : ScriptedAI(pCreature)  {}
 
         uint32 m_uiChosenAbility;
         uint32 m_uiSuicideTimer;

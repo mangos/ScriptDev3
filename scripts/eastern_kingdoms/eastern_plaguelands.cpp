@@ -380,6 +380,9 @@ struct npc_eris_havenfire : public CreatureScript
     }
 };
 
+/**
+ * Registers Eastern Plaguelands script content.
+ */
 void AddSC_eastern_plaguelands()
 {
     Script* s;

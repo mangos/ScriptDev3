@@ -157,6 +157,9 @@ struct boss_gehennas : public CreatureScript
     }
 };
 
+/**
+ * Registers the Gehennas encounter script.
+ */
 void AddSC_boss_gehennas()
 {
     Script* s;

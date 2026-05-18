@@ -72,6 +72,9 @@ struct go_molten_core_rune : public GameObjectScript
     }
 };
 #endif
+/**
+ * Registers Molten Core zone script content.
+ */
 void AddSC_molten_core()
 {
 #if defined (CLASSIC) || defined (TBC) || defined(WOTLK) || defined(CATA) || defined(MISTS)

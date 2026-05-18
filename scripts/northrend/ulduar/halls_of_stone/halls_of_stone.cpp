@@ -742,8 +742,8 @@ struct npc_dark_matter : public CreatureScript
             m_uiSummonTimer = 0;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
@@ -826,9 +826,9 @@ struct npc_searing_gaze : public CreatureScript
             m_creature->ForcedDespawn(30000);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

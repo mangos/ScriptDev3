@@ -519,10 +519,10 @@ struct mob_lesser_shadow_fissure : public CreatureScript
 
     struct mob_lesser_shadow_fissureAI : public Scripted_NoMovementAI
     {
-        mob_lesser_shadow_fissureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        mob_lesser_shadow_fissureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

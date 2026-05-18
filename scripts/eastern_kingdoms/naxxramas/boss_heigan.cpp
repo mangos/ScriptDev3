@@ -322,6 +322,9 @@ struct boss_heigan : public CreatureScript
     }
 };
 
+/**
+ * Registers the Heigan the Unclean encounter script.
+ */
 void AddSC_boss_heigan()
 {
     Script* s;

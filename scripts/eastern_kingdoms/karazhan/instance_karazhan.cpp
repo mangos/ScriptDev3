@@ -968,6 +968,9 @@ struct is_karazhan : public InstanceScript
     }
 };
 
+/**
+ * Registers the Karazhan instance script.
+ */
 void AddSC_instance_karazhan()
 {
     Script* s;

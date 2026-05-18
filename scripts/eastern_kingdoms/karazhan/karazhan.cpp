@@ -409,8 +409,8 @@ struct npc_image_of_medivh : public CreatureScript
 
         ObjectGuid m_eventStarterGuid;
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -513,7 +513,7 @@ struct npc_image_arcanagos : public CreatureScript
 
     struct npc_image_arcanagosAI : public ScriptedAI
     {
-        npc_image_arcanagosAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_image_arcanagosAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
@@ -529,9 +529,9 @@ struct npc_image_arcanagos : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -570,6 +570,9 @@ struct event_spell_medivh_journal : public MapEventScript
     }
 };
 
+/**
+ * Registers Karazhan zone script content.
+ */
 void AddSC_karazhan()
 {
     Script* s;

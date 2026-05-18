@@ -161,24 +161,78 @@ struct Script
      * @brief Checks if the script is valid.
      * @return True if the script is valid, false otherwise.
      */
-    virtual bool IsValid() { return true; }
+    virtual bool IsValid()
+    {
+         return true;
+    }
 
     Script() : Name(""), Type(SCRIPTED_MAX_TYPE) {}
     Script(ScriptedObjectType type, const char* name) : Name(name), Type(type) {}
 
-    CreatureScript* ToCreatureScript() { return Type == SCRIPTED_UNIT && IsValid() ? (CreatureScript*)this : nullptr; }
-    GameObjectScript* ToGameObjectScript() { return Type == SCRIPTED_GAMEOBJECT && IsValid() ? (GameObjectScript*)this : nullptr; }
-    ItemScript* ToItemScript() { return Type == SCRIPTED_ITEM && IsValid() ? (ItemScript*)this : nullptr; }
-    AreaTriggerScript* ToAreaTriggerScript() { return Type == SCRIPTED_AREATRIGGER && IsValid() ? (AreaTriggerScript*)this : nullptr; }
-    MapEventScript* ToMapEventScript() { return Type == SCRIPTED_MAPEVENT && IsValid() ? (MapEventScript*)this : nullptr; }
-    ZoneScript* ToZoneScript() { return Type == SCRIPTED_MAP && IsValid() ? (ZoneScript*)this : nullptr; }
-    OutdoorPvPScript* ToOutdoorPvPScript() { return Type == SCRIPTED_PVP_ZONE && IsValid() ? (OutdoorPvPScript*)this : nullptr; }
-    BattleGroundScript* ToBattleGroundScript() { return Type == SCRIPTED_BATTLEGROUND && IsValid() ? (BattleGroundScript*)this : nullptr; }
-    InstanceScript* ToInstanceScript() { return Type == SCRIPTED_INSTANCE && IsValid() ? (InstanceScript*)this : nullptr; }
-    SpellScript* ToSpellScript() { return Type == SCRIPTED_SPELL && IsValid() ? (SpellScript*)this : nullptr; }
-    AuraScript* ToAuraScript() { return Type == SCRIPTED_AURASPELL && IsValid() ? (AuraScript*)this : nullptr; }
-    ConditionScript* ToConditionScript() { return Type == SCRIPTED_CONDITION && IsValid() ? (ConditionScript*)this : nullptr; }
-    AchievementScript* ToAchievementScript() { return Type == SCRIPTED_ACHIEVEMENT && IsValid() ? (AchievementScript*)this : nullptr; }
+    CreatureScript* ToCreatureScript()
+    {
+         return Type == SCRIPTED_UNIT && IsValid() ? (CreatureScript*)this : nullptr;
+    }
+
+    GameObjectScript* ToGameObjectScript()
+    {
+         return Type == SCRIPTED_GAMEOBJECT && IsValid() ? (GameObjectScript*)this : nullptr;
+    }
+
+    ItemScript* ToItemScript()
+    {
+         return Type == SCRIPTED_ITEM && IsValid() ? (ItemScript*)this : nullptr;
+    }
+
+    AreaTriggerScript* ToAreaTriggerScript()
+    {
+         return Type == SCRIPTED_AREATRIGGER && IsValid() ? (AreaTriggerScript*)this : nullptr;
+    }
+
+    MapEventScript* ToMapEventScript()
+    {
+         return Type == SCRIPTED_MAPEVENT && IsValid() ? (MapEventScript*)this : nullptr;
+    }
+
+    ZoneScript* ToZoneScript()
+    {
+         return Type == SCRIPTED_MAP && IsValid() ? (ZoneScript*)this : nullptr;
+    }
+
+    OutdoorPvPScript* ToOutdoorPvPScript()
+    {
+         return Type == SCRIPTED_PVP_ZONE && IsValid() ? (OutdoorPvPScript*)this : nullptr;
+    }
+
+    BattleGroundScript* ToBattleGroundScript()
+    {
+         return Type == SCRIPTED_BATTLEGROUND && IsValid() ? (BattleGroundScript*)this : nullptr;
+    }
+
+    InstanceScript* ToInstanceScript()
+    {
+         return Type == SCRIPTED_INSTANCE && IsValid() ? (InstanceScript*)this : nullptr;
+    }
+
+    SpellScript* ToSpellScript()
+    {
+         return Type == SCRIPTED_SPELL && IsValid() ? (SpellScript*)this : nullptr;
+    }
+
+    AuraScript* ToAuraScript()
+    {
+         return Type == SCRIPTED_AURASPELL && IsValid() ? (AuraScript*)this : nullptr;
+    }
+
+    ConditionScript* ToConditionScript()
+    {
+         return Type == SCRIPTED_CONDITION && IsValid() ? (ConditionScript*)this : nullptr;
+    }
+
+    AchievementScript* ToAchievementScript()
+    {
+         return Type == SCRIPTED_ACHIEVEMENT && IsValid() ? (AchievementScript*)this : nullptr;
+    }
 };
 
 /**

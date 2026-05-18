@@ -59,6 +59,9 @@ struct go_defias_cannon : public GameObjectScript
     }
 };
 
+/**
+ * Registers Deadmines zone script content.
+ */
 void AddSC_deadmines()
 {
     Script *s;

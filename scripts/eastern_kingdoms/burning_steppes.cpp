@@ -52,7 +52,7 @@ struct npc_ragged_john : public CreatureScript
 
     struct npc_ragged_johnAI : public ScriptedAI
     {
-        npc_ragged_johnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_ragged_johnAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void MoveInLineOfSight(Unit* who) override
         {
@@ -768,7 +768,9 @@ struct npc_klinfran_the_crazed : public CreatureScript
     }
 };
 
-
+/**
+ * Registers Burning Steppes script content.
+ */
 void AddSC_burning_steppes()
 {
     Script* s;

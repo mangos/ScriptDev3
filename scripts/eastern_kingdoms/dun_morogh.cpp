@@ -40,6 +40,9 @@
 
 #include "precompiled.h"
 
+/**
+ * Registers Dun Morogh script content.
+ */
 void AddSC_dun_morogh()
 {
 }

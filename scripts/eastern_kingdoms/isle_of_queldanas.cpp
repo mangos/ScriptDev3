@@ -56,7 +56,7 @@ struct npc_converted_sentry : public CreatureScript
 
     struct npc_converted_sentryAI : public ScriptedAI
     {
-        npc_converted_sentryAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_converted_sentryAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiCreditTimer;
 
@@ -93,6 +93,9 @@ struct npc_converted_sentry : public CreatureScript
     }
 };
 
+/**
+ * Registers Isle of Quel'Danas script content.
+ */
 void AddSC_isle_of_queldanas()
 {
     Script* s;

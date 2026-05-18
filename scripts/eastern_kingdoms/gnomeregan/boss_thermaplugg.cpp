@@ -414,6 +414,9 @@ struct go_gnomeface_button : public GameObjectScript
     }
 };
 
+/**
+ * Registers the Mekgineer Thermaplugg encounter script.
+ */
 void AddSC_boss_thermaplugg()
 {
     Script *s;

@@ -869,8 +869,8 @@ struct npc_voice_yogg_saron : public CreatureScript
             std::shuffle(m_vuiMadnessPhases.begin(), m_vuiMadnessPhases.end(), rng);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
         {
@@ -1130,8 +1130,8 @@ struct npc_brain_yogg_saron : public CreatureScript
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
         {
@@ -1611,7 +1611,7 @@ struct npc_constrictor_tentacle : public CreatureScript
 
         bool m_bIsRegularMode;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void JustDied(Unit* /*pKiller*/) override
         {
@@ -1638,7 +1638,7 @@ struct npc_ominous_cloud : public CreatureScript
 
     struct npc_ominous_cloudAI : public Scripted_NoMovementAI
     {
-        npc_ominous_cloudAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_ominous_cloudAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiDelayTimer;
 
@@ -1647,7 +1647,7 @@ struct npc_ominous_cloud : public CreatureScript
             m_uiDelayTimer = 0;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -1709,7 +1709,7 @@ struct npc_death_ray : public CreatureScript
 
     struct npc_death_rayAI : public ScriptedAI
     {
-        npc_death_rayAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_death_rayAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiDeathRayTimer;
 
@@ -1718,8 +1718,8 @@ struct npc_death_ray : public CreatureScript
             m_uiDeathRayTimer = 5000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* pWho) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* pWho) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -1765,7 +1765,7 @@ struct npc_descent_madness : public CreatureScript
 
         uint32 m_uiCurentSpell;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* /*pInvoker*/, uint32 uiMiscValue) override
         {
@@ -1775,7 +1775,10 @@ struct npc_descent_madness : public CreatureScript
             }
         }
 
-        uint32 GetCurrentSpell() { return m_uiCurentSpell; }
+        uint32 GetCurrentSpell()
+        {
+             return m_uiCurentSpell;
+        }
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -1818,12 +1821,12 @@ struct npc_laughing_skull : public CreatureScript
 
     struct npc_laughing_skullAI : public Scripted_NoMovementAI
     {
-        npc_laughing_skullAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_laughing_skullAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -1842,7 +1845,7 @@ struct npc_keeper_mimiron : public CreatureScript
 
     struct npc_keeper_mimironAI : public Scripted_NoMovementAI
     {
-        npc_keeper_mimironAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_keeper_mimironAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiMatrixTimer;
 
@@ -1851,8 +1854,8 @@ struct npc_keeper_mimiron : public CreatureScript
             m_uiMatrixTimer = 0;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {
@@ -1898,12 +1901,12 @@ struct npc_keeper_thorim : public CreatureScript
 
     struct npc_keeper_thorimAI : public Scripted_NoMovementAI
     {
-        npc_keeper_thorimAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_keeper_thorimAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -1911,7 +1914,6 @@ struct npc_keeper_thorim : public CreatureScript
         return new npc_keeper_thorimAI(pCreature);
     }
 };
-
 
 void AddSC_boss_yogg_saron()
 {

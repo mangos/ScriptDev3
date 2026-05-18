@@ -299,6 +299,9 @@ struct boss_chromaggus : public CreatureScript
     }
 };
 
+/**
+ * Registers the Chromaggus encounter script.
+ */
 void AddSC_boss_chromaggus()
 {
     Script* s;

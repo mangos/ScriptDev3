@@ -572,9 +572,9 @@ struct npc_focused_eyebeam : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
@@ -584,7 +584,7 @@ struct npc_focused_eyebeam : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -610,9 +610,9 @@ struct npc_rubble_stalker : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -626,7 +626,7 @@ struct npc_rubble_stalker : public CreatureScript
                 pSummoned->SetInCombatWithZone();
             }
         }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

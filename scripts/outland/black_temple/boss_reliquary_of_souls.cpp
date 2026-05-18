@@ -171,7 +171,7 @@ struct boss_reliquary_of_souls : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -460,7 +460,7 @@ struct boss_essence_of_suffering : public CreatureScript
 
     struct boss_essence_of_sufferingAI : public essence_base_AI
     {
-        boss_essence_of_sufferingAI(Creature* pCreature) : essence_base_AI(pCreature) { }
+        boss_essence_of_sufferingAI(Creature* pCreature) : essence_base_AI(pCreature) {}
 
         uint32 m_uiEnrageTimer;
         uint32 m_uiSoulDrainTimer;
@@ -537,7 +537,7 @@ struct boss_essence_of_desire : public CreatureScript
 
     struct boss_essence_of_desireAI : public essence_base_AI
     {
-        boss_essence_of_desireAI(Creature* pCreature) : essence_base_AI(pCreature) { }
+        boss_essence_of_desireAI(Creature* pCreature) : essence_base_AI(pCreature) {}
 
         uint32 m_uiRuneShieldTimer;
         uint32 m_uiDeadenTimer;

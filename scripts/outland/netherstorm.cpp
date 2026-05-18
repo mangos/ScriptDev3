@@ -96,7 +96,7 @@ struct npc_manaforge_control_console : public CreatureScript
 
     struct npc_manaforge_control_consoleAI : public ScriptedAI
     {
-        npc_manaforge_control_consoleAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_manaforge_control_consoleAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_playerGuid;
         ObjectGuid m_consoleGuid;
@@ -492,7 +492,7 @@ struct npc_commander_dawnforge : public CreatureScript
 
     struct npc_commander_dawnforgeAI : public ScriptedAI
     {
-        npc_commander_dawnforgeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_commander_dawnforgeAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_playerGuid;
         ObjectGuid m_ardonisGuid;
@@ -769,7 +769,7 @@ struct npc_bessy : public CreatureScript
 
     struct npc_bessyAI : public npc_escortAI
     {
-        npc_bessyAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_bessyAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -841,7 +841,7 @@ struct npc_maxx_a_million_escort : public CreatureScript
 
     struct npc_maxx_a_million_escortAI : public npc_escortAI
     {
-        npc_maxx_a_million_escortAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_maxx_a_million_escortAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint8 m_uiSubEvent;
         uint32 m_uiSubEventTimer;
@@ -1008,7 +1008,7 @@ struct npc_zeppit : public CreatureScript
 
     struct npc_zeppitAI : public ScriptedPetAI
     {
-        npc_zeppitAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
+        npc_zeppitAI(Creature* pCreature) : ScriptedPetAI(pCreature) {}
 
         void OwnerKilledUnit(Unit* pVictim) override
         {
@@ -1064,7 +1064,7 @@ struct npc_protectorate_demolitionist : public CreatureScript
 
     struct npc_protectorate_demolitionistAI : public npc_escortAI
     {
-        npc_protectorate_demolitionistAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_protectorate_demolitionistAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiEventTimer;
         uint8 m_uiEventStage;
@@ -1084,7 +1084,7 @@ struct npc_protectorate_demolitionist : public CreatureScript
         }
 
         // No attack done by this npc
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -1229,7 +1229,7 @@ struct npc_captured_vanguard : public CreatureScript
 
     struct npc_captured_vanguardAI : public npc_escortAI
     {
-        npc_captured_vanguardAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_captured_vanguardAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiGlaiveTimer;
         uint32 m_uiHamstringTimer;
@@ -1372,7 +1372,7 @@ struct npc_drijya : public CreatureScript
 
     struct npc_drijyaAI : public npc_escortAI
     {
-        npc_drijyaAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_drijyaAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint8 m_uiSpawnCount;
         uint32 m_uiSpawnImpTimer;
@@ -1649,15 +1649,13 @@ enum
 // order based on the increasing range of damage
 static const uint32 auiShadowRainSpells[5] = { 37399, 37405, 37397, 37396, 37409 };
 
-
-
 struct npc_dimensius : public CreatureScript
 {
     npc_dimensius() : CreatureScript("npc_dimensius") {}
 
 struct  npc_dimensiusAI : public Scripted_NoMovementAI
 {
-    npc_dimensiusAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+    npc_dimensiusAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
     uint32 m_uiSpiralTimer;
     uint32 m_uiVaultTimer;

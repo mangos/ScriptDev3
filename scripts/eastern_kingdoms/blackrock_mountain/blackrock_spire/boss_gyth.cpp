@@ -167,6 +167,9 @@ struct boss_gyth : public CreatureScript
     }
 };
 
+/**
+ * Registers the Gyth encounter script.
+ */
 void AddSC_boss_gyth()
 {
     Script *s;

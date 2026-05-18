@@ -809,10 +809,10 @@ struct dummy_dragonAI : public ScriptedAI
     }
 
     // Handle breath yell
-    virtual void DoHandleBreathYell() { }
+    virtual void DoHandleBreathYell() {}
 
     // Handle special events for each dragon
-    virtual void UpdateDragonAI(const uint32 /*uiDiff*/) { }
+    virtual void UpdateDragonAI(const uint32 /*uiDiff*/) {}
 
     void UpdateAI(const uint32 uiDiff) override
     {
@@ -1298,7 +1298,7 @@ struct mob_twilight_eggs : public CreatureScript
 
     struct mob_twilight_eggsAI : public Scripted_NoMovementAI
     {
-        mob_twilight_eggsAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        mob_twilight_eggsAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiHatchTimer;
 
@@ -1307,8 +1307,8 @@ struct mob_twilight_eggs : public CreatureScript
             m_uiHatchTimer = 20000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -1372,8 +1372,8 @@ struct npc_tenebron_egg_controller : public CreatureScript
             m_uiHatchTimer = 20000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -1416,7 +1416,7 @@ struct npc_flame_tsunami : public CreatureScript
 
     struct npc_flame_tsunamiAI : public ScriptedAI
     {
-        npc_flame_tsunamiAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_flame_tsunamiAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiTsunamiTimer;
 
@@ -1428,8 +1428,8 @@ struct npc_flame_tsunami : public CreatureScript
             DoCastSpellIfCan(m_creature, SPELL_FLAME_TSUNAMI_DMG_AURA, CAST_TRIGGERED);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
@@ -1485,10 +1485,10 @@ struct npc_fire_cyclone : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset()  override { }
+        void Reset()  override {}
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
@@ -1534,7 +1534,6 @@ void AddSC_boss_sartharion()
     s->RegisterSelf();
     s = new npc_fire_cyclone();
     s->RegisterSelf();
-
 
     //pNewScript = new Script;
     //pNewScript->Name = "boss_sartharion";

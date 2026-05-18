@@ -152,7 +152,7 @@ struct npc_lakota_windsong : public CreatureScript
 
     struct npc_lakota_windsongAI : public npc_escortAI
     {
-        npc_lakota_windsongAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_lakota_windsongAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -237,7 +237,7 @@ struct npc_paoka_swiftmountain : public CreatureScript
 
     struct npc_paoka_swiftmountainAI : public npc_escortAI
     {
-        npc_paoka_swiftmountainAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_paoka_swiftmountainAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {

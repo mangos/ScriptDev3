@@ -696,7 +696,6 @@ struct go_fixed_trap : public GameObjectScript
 
 };
 
-
 void AddSC_instance_dire_maul()
 {
     Script* s;

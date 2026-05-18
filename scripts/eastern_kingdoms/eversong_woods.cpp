@@ -317,7 +317,7 @@ struct npc_prospector_anvilward : public CreatureScript
     struct npc_prospector_anvilwardAI : public npc_escortAI
     {
         // CreatureAI functions
-        npc_prospector_anvilwardAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_prospector_anvilwardAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         // Pure Virtual Functions
         void WaypointReached(uint32 uiPointId) override
@@ -404,7 +404,7 @@ struct npc_apprentice_mirveda : public CreatureScript
 
     struct npc_apprentice_mirvedaAI : public ScriptedAI
     {
-        npc_apprentice_mirvedaAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_apprentice_mirvedaAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint8 m_uiMobCount;
         uint32 m_uiFireballTimer;
@@ -619,6 +619,9 @@ struct npc_infused_crystal : public CreatureScript
     }
 };
 
+/**
+ * Registers Eversong Woods script content.
+ */
 void AddSC_eversong_woods()
 {
     Script* s;

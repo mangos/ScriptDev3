@@ -275,7 +275,6 @@ enum
     DATA64_THORIM_SMASH_CASTER  = 9,
     DATA64_XT_TOY_PILE          = 10,
 
-
     // Loot chests
     // Kologarn
     GO_CACHE_OF_LIVING_STONE_10 = 195046,

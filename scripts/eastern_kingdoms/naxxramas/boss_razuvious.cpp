@@ -206,6 +206,9 @@ struct boss_razuvious : public CreatureScript
     }
 };
 
+/**
+ * Registers the Instructor Razuvious encounter script.
+ */
 void AddSC_boss_razuvious()
 {
     Script* s;

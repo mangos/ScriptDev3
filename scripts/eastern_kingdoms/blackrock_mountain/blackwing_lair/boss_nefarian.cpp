@@ -318,6 +318,9 @@ struct boss_nefarian : public CreatureScript
     }
 };
 
+/**
+ * Registers the Nefarian encounter script.
+ */
 void AddSC_boss_nefarian()
 {
     Script* s;

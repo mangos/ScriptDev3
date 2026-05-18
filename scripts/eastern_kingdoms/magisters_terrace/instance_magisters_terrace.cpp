@@ -286,6 +286,9 @@ struct is_magisters_terrace : public InstanceScript
     }
 };
 
+/**
+ * Registers the Magisters' Terrace instance script.
+ */
 void AddSC_instance_magisters_terrace()
 {
     Script* s;

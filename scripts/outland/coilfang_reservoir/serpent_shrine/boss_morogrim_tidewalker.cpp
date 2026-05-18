@@ -289,7 +289,7 @@ struct mob_water_globule : public CreatureScript
 
     struct mob_water_globuleAI : public ScriptedAI
     {
-        mob_water_globuleAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_water_globuleAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiTargetTimer;
 

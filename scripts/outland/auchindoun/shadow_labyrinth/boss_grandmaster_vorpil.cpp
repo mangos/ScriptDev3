@@ -341,7 +341,7 @@ struct npc_void_traveler : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {

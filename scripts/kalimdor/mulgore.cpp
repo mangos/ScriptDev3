@@ -64,7 +64,7 @@ struct npc_kyle_the_frenzied : public CreatureScript
 
     struct npc_kyle_the_frenziedAI : public ScriptedAI
     {
-        npc_kyle_the_frenziedAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_kyle_the_frenziedAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bEvent;
         bool m_bIsMovingToLunch;

@@ -201,8 +201,8 @@ struct mob_broggok_poisoncloud : public CreatureScript
     {
         mob_broggok_poisoncloudAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-        void MoveInLineOfSight(Unit* /*who*/) override { }
-        void AttackStart(Unit* /*who*/) override { }
+        void MoveInLineOfSight(Unit* /*who*/) override {}
+        void AttackStart(Unit* /*who*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

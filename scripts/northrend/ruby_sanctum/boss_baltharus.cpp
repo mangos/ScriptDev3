@@ -290,7 +290,7 @@ struct npc_baltharus_clone : public CreatureScript
 
     struct npc_baltharus_cloneAI : public ScriptedAI
     {
-        npc_baltharus_cloneAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_baltharus_cloneAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiBladeTempestTimer;
         uint32 m_uiEnervatingBrandTimer;

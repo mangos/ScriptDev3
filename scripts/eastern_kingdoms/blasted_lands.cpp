@@ -139,6 +139,9 @@ struct npc_fallen_hero_of_horde : public CreatureScript
     }
 };
 
+/**
+ * Registers Blasted Lands script content.
+ */
 void AddSC_blasted_lands()
 {
     Script* s;

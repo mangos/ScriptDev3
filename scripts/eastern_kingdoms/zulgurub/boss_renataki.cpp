@@ -49,7 +49,7 @@ struct boss_renataki : public CreatureScript
 
     struct boss_renatakiAI : public ScriptedAI
     {
-        boss_renatakiAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_renatakiAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiVanishTimer;
         uint32 m_uiAmbushTimer;

@@ -1521,6 +1521,9 @@ struct boss_romulo : public CreatureScript
     }
 };
 
+/**
+ * Registers the Karazhan Opera event scripts.
+ */
 void AddSC_bosses_opera()
 {
     Script* s;

@@ -187,7 +187,6 @@ struct at_shadowforge_bridge : public AreaTriggerScript
     }
 };
 
-
 /*######
 ## at_ring_of_law
 ######*/
@@ -625,7 +624,6 @@ struct spell_banner_of_provocation : public SpellScript
     }
 };
 
-
 /*######
 +## npc_phalanx
 +######*/
@@ -789,13 +787,11 @@ struct npc_phalanx : public CreatureScript
 {
     npc_phalanx() : CreatureScript("npc_phalanx") {}
 
-
     CreatureAI* GetAI(Creature* pCreature) override
     {
         return new npc_phalanxAI(pCreature);
     }
 };
-
 
 /*######
 ## npc_mistress_nagmara
@@ -1162,7 +1158,6 @@ struct npc_rocknot : public CreatureScript
         return true;
     }
 };
-
 
 /*######
 ## npc_marshal_windsor
@@ -1559,7 +1554,6 @@ struct npc_tobias_seecher : public CreatureScript
     }
 };
 
-
 /*######
  ## npc_hurley_blackbreath
  ######*/
@@ -1713,7 +1707,6 @@ struct npc_hurley_blackbreath : public CreatureScript
     }
 };
 
-
 /*######
 ## boss_doomrel
 ######*/
@@ -1762,7 +1755,6 @@ struct boss_doomrel : public CreatureScript
         return true;
     }
 };
-
 
 /*######
 ## boss_plugger_spazzring
@@ -1997,13 +1989,11 @@ struct boss_plugger_spazzring : public CreatureScript
 {
     boss_plugger_spazzring() : CreatureScript("boss_plugger_spazzring") {}
 
-
     CreatureAI* GetAI(Creature* pCreature) override
     {
         return new boss_plugger_spazzringAI(pCreature);
     }
 };
-
 
 /*######
 ## npc_kharan_mighthammer
@@ -2227,6 +2217,9 @@ struct npc_ironhand_guardian : public CreatureScript
     }
 };
 
+/**
+ * Registers Blackrock Depths script content.
+ */
 void AddSC_blackrock_depths()
 {
     Script *s;

@@ -320,7 +320,7 @@ struct boss_mimiron : public CreatureScript
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -1878,7 +1878,7 @@ struct npc_proximity_mine : public CreatureScript
 
     struct npc_proximity_mineAI : public Scripted_NoMovementAI
     {
-        npc_proximity_mineAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_proximity_mineAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiExplodeTimer;
 
@@ -1887,8 +1887,8 @@ struct npc_proximity_mine : public CreatureScript
             m_uiExplodeTimer = 35000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -1952,8 +1952,8 @@ struct npc_bot_trigger : public CreatureScript
             m_uiSummonSpell = 0;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* /*pInvoker*/, uint32 uiMiscValue) override
         {
@@ -2079,8 +2079,8 @@ struct npc_mimiron_flames : public CreatureScript
             m_uiSpreadTimer = 4000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         // function to select the closest player to spread the fire
         Unit* SelectClosestSpreadTarget()
@@ -2156,7 +2156,7 @@ struct npc_frost_bomb : public CreatureScript
 
     struct npc_frost_bombAI : public Scripted_NoMovementAI
     {
-        npc_frost_bombAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_frost_bombAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiExplosionTimer;
         uint32 m_uiFireClearTimer;
@@ -2167,8 +2167,8 @@ struct npc_frost_bomb : public CreatureScript
             m_uiFireClearTimer = 12000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -2222,7 +2222,7 @@ struct npc_rocket_strike : public CreatureScript
 
     struct npc_rocket_strikeAI : public Scripted_NoMovementAI
     {
-        npc_rocket_strikeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_rocket_strikeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         void Reset() override
         {
@@ -2238,9 +2238,9 @@ struct npc_rocket_strike : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -2262,10 +2262,10 @@ struct boss_leviathan_mk2_turret : public CreatureScript
     {
         boss_leviathan_mk2_turretAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -2287,10 +2287,10 @@ struct npc_computer : public CreatureScript
     {
         npc_computerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

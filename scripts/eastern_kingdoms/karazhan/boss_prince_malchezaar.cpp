@@ -396,9 +396,9 @@ struct npc_infernal_target : public CreatureScript
     {
         npc_infernal_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -407,6 +407,9 @@ struct npc_infernal_target : public CreatureScript
     }
 };
 
+/**
+ * Registers the Prince Malchezaar encounter script.
+ */
 void AddSC_boss_prince_malchezaar()
 {
     Script* s;

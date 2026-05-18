@@ -69,7 +69,7 @@ struct npc_ancient_male_vrykul : public CreatureScript
 
     struct  npc_ancient_male_vrykulAI : public ScriptedAI
     {
-        npc_ancient_male_vrykulAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_ancient_male_vrykulAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bEventInProgress;
         uint32 m_uiPhase;
@@ -212,7 +212,7 @@ struct npc_daegarn : public CreatureScript
 
     struct  npc_daegarnAI : public ScriptedAI
     {
-        npc_daegarnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_daegarnAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bEventInProgress;
         ObjectGuid m_playerGuid;
@@ -335,7 +335,7 @@ struct npc_silvermoon_harry : public CreatureScript
 
     struct  npc_silvermoon_harryAI : public ScriptedAI
     {
-        npc_silvermoon_harryAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_silvermoon_harryAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bHarryBeaten;
         uint32 m_uiBlastWaveTimer;
@@ -871,7 +871,7 @@ struct npc_firecrackers_bunny : public CreatureScript
 
     struct  npc_firecrackers_bunnyAI : public ScriptedAI
     {
-        npc_firecrackers_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_firecrackers_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiStartTimer;
         bool m_bHasValidBat;
@@ -989,7 +989,7 @@ struct npc_apothecary_hanes : public CreatureScript
 
     struct npc_apothecary_hanesAI : public npc_escortAI
     {
-        npc_apothecary_hanesAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_apothecary_hanesAI(Creature* pCreature) : npc_escortAI(pCreature) {}
         uint32 m_uiHealingTimer;
 
         void Reset() override

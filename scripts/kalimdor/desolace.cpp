@@ -76,7 +76,7 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
 
     struct npc_aged_dying_ancient_kodoAI : public ScriptedAI
     {
-        npc_aged_dying_ancient_kodoAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_aged_dying_ancient_kodoAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiDespawnTimer;
 
@@ -214,7 +214,7 @@ struct npc_dalinda_malem : public CreatureScript
 
     struct npc_dalinda_malemAI : public npc_escortAI
     {
-        npc_dalinda_malemAI(Creature* m_creature) : npc_escortAI(m_creature) { }
+        npc_dalinda_malemAI(Creature* m_creature) : npc_escortAI(m_creature) {}
 
         void JustStartedEscort() override
         {

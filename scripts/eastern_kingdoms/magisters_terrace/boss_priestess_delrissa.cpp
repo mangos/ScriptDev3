@@ -483,7 +483,7 @@ struct npc_kagani_nightstrike : public CreatureScript
 
     struct npc_kagani_nightstrikeAI : public priestess_companion_commonAI
     {
-        npc_kagani_nightstrikeAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
+        npc_kagani_nightstrikeAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) {}
 
         uint32 m_uiGougeTimer;
         uint32 m_uiKickTimer;
@@ -779,7 +779,7 @@ struct npc_eramas_brightblaze : public CreatureScript
 
     struct npc_eramas_brightblazeAI : public priestess_companion_commonAI
     {
-        npc_eramas_brightblazeAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
+        npc_eramas_brightblazeAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) {}
 
         uint32 m_uiKnockdownTimer;
         uint32 m_uiSnapKickTimer;
@@ -853,7 +853,7 @@ struct npc_yazzai : public CreatureScript
 
     struct npc_yazzaiAI : public priestess_companion_commonAI
     {
-        npc_yazzaiAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
+        npc_yazzaiAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) {}
 
         bool m_bHasIceBlocked;
 
@@ -1026,7 +1026,7 @@ struct npc_warlord_salaris : public CreatureScript
 
     struct npc_warlord_salarisAI : public priestess_companion_commonAI
     {
-        npc_warlord_salarisAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
+        npc_warlord_salarisAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) {}
 
         uint32 m_uiInterceptStunTimer;
         uint32 m_uiDisarmTimer;
@@ -1171,7 +1171,7 @@ struct npc_garaxxas : public CreatureScript
 
     struct npc_garaxxasAI : public priestess_companion_commonAI
     {
-        npc_garaxxasAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
+        npc_garaxxasAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) {}
 
         uint32 m_uiAimedShotTimer;
         uint32 m_uiShootTimer;
@@ -1333,7 +1333,7 @@ struct npc_apoko : public CreatureScript
 
     struct npc_apokoAI : public priestess_companion_commonAI
     {
-        npc_apokoAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
+        npc_apokoAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) {}
 
         uint32 m_uiTotemTimer;
         uint32 m_uiWarStompTimer;
@@ -1456,7 +1456,7 @@ struct npc_zelfan : public CreatureScript
 
     struct npc_zelfanAI : public priestess_companion_commonAI
     {
-        npc_zelfanAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) { }
+        npc_zelfanAI(Creature* pCreature) : priestess_companion_commonAI(pCreature) {}
 
         uint32 m_uiGoblinDragonGunTimer;
         uint32 m_uiRocketLaunchTimer;
@@ -1577,6 +1577,9 @@ struct npc_zelfan : public CreatureScript
     }
 };
 
+/**
+ * Registers the Priestess Delrissa encounter script.
+ */
 void AddSC_boss_priestess_delrissa()
 {
     Script* s;

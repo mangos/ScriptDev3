@@ -59,7 +59,7 @@ struct boss_high_botanist_freywinn : public CreatureScript
 
     struct boss_high_botanist_freywinnAI : public ScriptedAI
     {
-        boss_high_botanist_freywinnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_high_botanist_freywinnAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiSummonSeedlingTimer;
         uint32 m_uiTreeFormTimer;

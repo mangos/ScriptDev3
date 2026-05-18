@@ -87,7 +87,7 @@ struct npc_destructive_ward : public CreatureScript
         bool m_bFirst;
         bool m_bCanPulse;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void JustSummoned(Creature* pSummoned) override
         {

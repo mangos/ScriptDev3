@@ -290,6 +290,9 @@ struct mob_flamewaker_priest : public CreatureScript
     }
 };
 
+/**
+ * Registers the Sulfuron Harbinger encounter script.
+ */
 void AddSC_boss_sulfuron()
 {
     Script* s;

@@ -487,7 +487,7 @@ struct mob_solarium_priest : public CreatureScript
 
     struct mob_solarium_priestAI : public ScriptedAI
     {
-        mob_solarium_priestAI(Creature* pCreature) : ScriptedAI(pCreature)  { }
+        mob_solarium_priestAI(Creature* pCreature) : ScriptedAI(pCreature)  {}
 
         uint32 m_uiHealTimer;
         uint32 m_uiHolySmiteTimer;

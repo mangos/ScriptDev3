@@ -401,7 +401,7 @@ struct npc_doomfire_spirit : public CreatureScript
 
     struct npc_doomfire_spiritAI : public ScriptedAI
     {
-        npc_doomfire_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_doomfire_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_doomfireGuid;
 

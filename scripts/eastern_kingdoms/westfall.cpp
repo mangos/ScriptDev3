@@ -240,7 +240,7 @@ struct npc_defias_traitor : public CreatureScript
 
     struct npc_defias_traitorAI : public npc_escortAI
     {
-        npc_defias_traitorAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_defias_traitorAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {

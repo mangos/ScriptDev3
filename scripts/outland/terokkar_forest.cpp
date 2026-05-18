@@ -71,7 +71,7 @@ struct mob_unkor_the_ruthless : public CreatureScript
 
     struct mob_unkor_the_ruthlessAI : public ScriptedAI
     {
-        mob_unkor_the_ruthlessAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_unkor_the_ruthlessAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bCanDoQuest;
         uint32 m_uiUnfriendlyTimer;
@@ -187,7 +187,7 @@ struct mob_netherweb_victim : public CreatureScript
             SetCombatMovement(false);
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -242,7 +242,7 @@ struct npc_akuno : public CreatureScript
 
     struct npc_akunoAI : public npc_escortAI
     {
-        npc_akunoAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_akunoAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiChainLightningTimer;
 
@@ -349,7 +349,7 @@ struct npc_hungry_nether_ray : public CreatureScript
 
     struct npc_hungry_nether_rayAI : public ScriptedPetAI
     {
-        npc_hungry_nether_rayAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
+        npc_hungry_nether_rayAI(Creature* pCreature) : ScriptedPetAI(pCreature) {}
 
         void OwnerKilledUnit(Unit* pVictim) override
         {
@@ -678,7 +678,7 @@ struct npc_mana_bomb_exp_trigger : public CreatureScript
 
     struct npc_mana_bomb_exp_triggerAI : public ScriptedAI
     {
-        npc_mana_bomb_exp_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_mana_bomb_exp_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         GameObject* pManaBomb;
 
@@ -853,7 +853,7 @@ struct npc_captive_child : public CreatureScript
 
     struct npc_captive_childAI : public ScriptedAI
     {
-        npc_captive_childAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_captive_childAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void MovementInform(uint32 uiMotionType, uint32 /*uiPointId*/) override
         {
@@ -1079,7 +1079,7 @@ struct npc_skywing : public CreatureScript
 
     struct npc_skywingAI : public npc_escortAI
     {
-        npc_skywingAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_skywingAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiCycloneTimer;
         uint8 m_uiCycloneCounter;
@@ -1213,7 +1213,7 @@ struct npc_cenarion_sparrowhawk : public CreatureScript
 
     struct npc_cenarion_sparrowhawkAI : public ScriptedAI
     {
-        npc_cenarion_sparrowhawkAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_cenarion_sparrowhawkAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiSurveyTimer;
         bool m_bFirstTimer;
@@ -1323,7 +1323,7 @@ struct npc_skyguard_prisoner : public CreatureScript
 
     struct npc_skyguard_prisonerAI : public npc_escortAI
     {
-        npc_skyguard_prisonerAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_skyguard_prisonerAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
         {

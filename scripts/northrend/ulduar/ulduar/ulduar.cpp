@@ -428,7 +428,7 @@ struct npc_storm_tempered_keeper : public CreatureScript
 
     struct npc_storm_tempered_keeperAI : public ScriptedAI
     {
-        npc_storm_tempered_keeperAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_storm_tempered_keeperAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiCheckBuddyTimer;
         uint32 m_uiLightningTimer;
@@ -557,7 +557,7 @@ struct npc_charged_sphere : public CreatureScript
 
     struct npc_charged_sphereAI : public ScriptedAI
     {
-        npc_charged_sphereAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_charged_sphereAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bIsCharged;
         uint32 m_uiBuddyEntry;
@@ -588,8 +588,8 @@ struct npc_charged_sphere : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

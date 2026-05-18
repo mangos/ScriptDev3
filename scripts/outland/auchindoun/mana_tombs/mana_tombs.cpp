@@ -24,7 +24,6 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-
 /**
  * ScriptData
  * SDName:      mana_tombs
@@ -104,7 +103,6 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
-
 struct npc_shaheen : public CreatureScript
 {
     npc_shaheen() : CreatureScript("npc_shaheen") {}
@@ -121,7 +119,7 @@ struct npc_shaheen : public CreatureScript
         ObjectGuid m_xiraxisGuid;
         uint32 m_uiSummonCount;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
         {
@@ -299,7 +297,6 @@ struct npc_shaheen : public CreatureScript
 
             DoMeleeAttackIfReady();
         }
-
 
     };
 

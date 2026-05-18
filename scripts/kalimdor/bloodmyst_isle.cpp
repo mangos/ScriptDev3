@@ -55,10 +55,10 @@ struct mob_webbed_creature : public CreatureScript
 
     struct mob_webbed_creatureAI : public Scripted_NoMovementAI
     {
-        mob_webbed_creatureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        mob_webbed_creatureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDied(Unit* pKiller) override
         {

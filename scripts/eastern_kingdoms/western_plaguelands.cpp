@@ -58,7 +58,7 @@ struct npc_the_scourge_cauldron : public CreatureScript
 
     struct npc_the_scourge_cauldronAI : public ScriptedAI
     {
-        npc_the_scourge_cauldronAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_the_scourge_cauldronAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void DoDie()
         {
@@ -159,7 +159,7 @@ struct npc_anchorite_truuen : public CreatureScript
 
     struct npc_anchorite_truuenAI : public npc_escortAI
     {
-        npc_anchorite_truuenAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_anchorite_truuenAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         ObjectGuid m_utherGhostGuid;
 
@@ -1094,7 +1094,7 @@ struct npc_tirion_fordring : public CreatureScript
 
     struct npc_tirion_fordringAI : public npc_escortAI
     {
-        npc_tirion_fordringAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_tirion_fordringAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         ObjectGuid m_taelanGuid;
 

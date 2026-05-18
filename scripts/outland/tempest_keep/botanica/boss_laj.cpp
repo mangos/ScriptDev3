@@ -63,7 +63,7 @@ struct boss_laj : public CreatureScript
 
     struct boss_lajAI : public ScriptedAI
     {
-        boss_lajAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_lajAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiTeleportTimer;
         uint32 m_uiSummonTimer;

@@ -364,7 +364,6 @@ struct is_stratholme : public InstanceScript
                 if (uiData == IN_PROGRESS)
                 {
 
-
                     // Close Slaughterhouse door if needed
                     if (m_auiEncounter[uiType] == FAIL)
                     {

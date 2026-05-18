@@ -60,7 +60,7 @@ struct mob_yenniku : public CreatureScript
 
     struct mob_yennikuAI : public ScriptedAI
     {
-        mob_yennikuAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_yennikuAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiResetTimer;
 

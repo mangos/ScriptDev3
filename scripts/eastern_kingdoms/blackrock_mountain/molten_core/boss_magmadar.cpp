@@ -157,6 +157,9 @@ struct boss_magmadar : public CreatureScript
     }
 };
 
+/**
+ * Registers the Magmadar encounter script.
+ */
 void AddSC_boss_magmadar()
 {
     Script* s;

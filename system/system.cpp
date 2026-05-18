@@ -33,7 +33,7 @@
 /**
  * @brief Constructor for SystemMgr.
  */
-SystemMgr::SystemMgr() { }
+SystemMgr::SystemMgr() {}
 
 /**
  * @brief Gets the singleton instance of SystemMgr.

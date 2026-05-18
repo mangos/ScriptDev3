@@ -104,7 +104,11 @@ struct npc_escortAI : public ScriptedAI
         void SetCurrentWaypoint(uint32 uiPointId);
 
     protected:
-        Player* GetPlayerForEscort() { return m_creature->GetMap()->GetPlayer(m_playerGuid); }
+        Player* GetPlayerForEscort()
+        {
+             return m_creature->GetMap()->GetPlayer(m_playerGuid);
+        }
+
         virtual void JustStartedEscort() {}
 
     private:

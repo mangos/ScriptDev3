@@ -303,7 +303,7 @@ struct npc_planar_anomaly : public CreatureScript
 
     struct npc_planar_anomalyAI : public ScriptedAI
     {
-        npc_planar_anomalyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_planar_anomalyAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiPlanarBlastTimer;
         bool m_bHasBlastCasted;
@@ -314,7 +314,7 @@ struct npc_planar_anomaly : public CreatureScript
             m_bHasBlastCasted = false;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {

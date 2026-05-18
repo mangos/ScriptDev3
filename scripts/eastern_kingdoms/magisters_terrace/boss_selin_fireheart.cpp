@@ -305,7 +305,7 @@ struct mob_fel_crystal : public CreatureScript
 
     struct mob_fel_crystalAI : public ScriptedAI
     {
-        mob_fel_crystalAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_fel_crystalAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         GuidSet m_sWretchedGuids;
 
@@ -371,6 +371,9 @@ struct mob_fel_crystal : public CreatureScript
     }
 };
 
+/**
+ * Registers the Selin Fireheart encounter script.
+ */
 void AddSC_boss_selin_fireheart()
 {
     Script* s;

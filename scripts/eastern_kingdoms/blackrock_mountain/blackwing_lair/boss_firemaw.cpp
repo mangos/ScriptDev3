@@ -168,6 +168,9 @@ struct boss_firemaw : public CreatureScript
     }
 };
 
+/**
+ * Registers the Firemaw encounter script.
+ */
 void AddSC_boss_firemaw()
 {
     Script* s;

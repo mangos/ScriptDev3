@@ -461,7 +461,7 @@ struct npc_twilight_volunteer : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -477,9 +477,9 @@ struct npc_twilight_volunteer : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

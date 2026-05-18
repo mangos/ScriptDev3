@@ -327,8 +327,7 @@ struct npc_ouro_spawner : public CreatureScript
 
     struct npc_ouro_spawnerAI : public Scripted_NoMovementAI
     {
-        npc_ouro_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
-
+        npc_ouro_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     uint32 m_uiQuakeTimer;

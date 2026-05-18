@@ -491,8 +491,8 @@ struct boss_heart_deconstructor : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -544,7 +544,7 @@ struct npc_scrapbot : public CreatureScript
 
     struct npc_scrapbotAI : public ScriptedAI
     {
-        npc_scrapbotAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_scrapbotAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bIsHealed;
 
@@ -583,12 +583,12 @@ struct npc_xt_toy_pile : public CreatureScript
 
     struct npc_xt_toy_pileAI : public Scripted_NoMovementAI
     {
-        npc_xt_toy_pileAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_xt_toy_pileAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

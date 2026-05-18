@@ -428,7 +428,7 @@ struct mob_spark_of_ionar : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {

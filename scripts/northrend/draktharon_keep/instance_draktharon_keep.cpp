@@ -248,7 +248,10 @@ struct is_draktharon_keep : public InstanceScript
         }
 
         void GetTrollgoreOutsideTriggers(GuidVector& vTriggers) { vTriggers = m_vTriggerGuids; }
-        ObjectGuid GetTrollgoreCornerTrigger() { return m_trollgoreCornerTriggerGuid; }
+        ObjectGuid GetTrollgoreCornerTrigger()
+        {
+             return m_trollgoreCornerTriggerGuid;
+        }
 
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override
         {

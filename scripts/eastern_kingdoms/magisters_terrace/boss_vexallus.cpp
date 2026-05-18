@@ -233,7 +233,7 @@ struct mob_pure_energy : public CreatureScript
 
     struct mob_pure_energyAI : public ScriptedAI
     {
-        mob_pure_energyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_pure_energyAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -268,6 +268,9 @@ struct mob_pure_energy : public CreatureScript
     }
 };
 
+/**
+ * Registers the Vexallus encounter script.
+ */
 void AddSC_boss_vexallus()
 {
     Script* s;

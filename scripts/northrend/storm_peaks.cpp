@@ -65,7 +65,7 @@ struct npc_floating_spirit : public CreatureScript
 
     struct npc_floating_spiritAI : public ScriptedAI
     {
-        npc_floating_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_floating_spiritAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset() override
         {
@@ -150,9 +150,9 @@ struct npc_injured_miner : public CreatureScript
 
     struct npc_injured_minerAI : public npc_escortAI
     {
-        npc_injured_minerAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_injured_minerAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
-        void Reset() override { }
+        void Reset() override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
         {

@@ -789,7 +789,7 @@ struct boss_sif : public CreatureScript
             ScriptedAI::AttackStart(pWho);
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void EnterEvadeMode() override
         {
@@ -1121,7 +1121,7 @@ struct npc_thunder_orb : public CreatureScript
 
     struct npc_thunder_orbAI : public Scripted_NoMovementAI
     {
-        npc_thunder_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_thunder_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiTriggerTimer;
 
@@ -1130,8 +1130,8 @@ struct npc_thunder_orb : public CreatureScript
             m_uiTriggerTimer = 0;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {

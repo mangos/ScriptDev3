@@ -40,6 +40,9 @@
 
 #include "precompiled.h"
 
+/**
+ * Registers Alterac Mountains script content.
+ */
 void AddSC_alterac_mountains()
 {
 }

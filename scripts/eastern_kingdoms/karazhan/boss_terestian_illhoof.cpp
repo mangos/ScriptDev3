@@ -280,7 +280,7 @@ struct npc_fiendish_portal : public CreatureScript
 
     struct npc_fiendish_portalAI : public ScriptedAI
     {
-        npc_fiendish_portalAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_fiendish_portalAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiSummonTimer;
 
@@ -326,9 +326,9 @@ struct mob_demon_chain : public CreatureScript
     {
         mob_demon_chainAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -337,6 +337,9 @@ struct mob_demon_chain : public CreatureScript
     }
 };
 
+/**
+ * Registers the Terestian Illhoof encounter script.
+ */
 void AddSC_boss_terestian_illhoof()
 {
     Script* s;

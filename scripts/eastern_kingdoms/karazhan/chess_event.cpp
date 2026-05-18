@@ -229,8 +229,8 @@ struct npc_echo_of_medivh : public CreatureScript
             m_uiCheatTimer = 90000;
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -389,9 +389,9 @@ struct npc_chess_piece_genericAI : public ScriptedAI
     }
 
     // no default attacking or evading
-    void MoveInLineOfSight(Unit* /*pWho*/) override { }
-    void AttackStart(Unit* /*pWho*/) override { }
-    void EnterEvadeMode() override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override {}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void EnterEvadeMode() override {}
 
     void JustDied(Unit* /*pKiller*/) override
     {
@@ -498,8 +498,15 @@ struct npc_chess_piece_genericAI : public ScriptedAI
         return nullptr;
     }
 
-    virtual uint32 DoCastPrimarySpell() { return 5000; }
-    virtual uint32 DoCastSecondarySpell() { return 5000; }
+    virtual uint32 DoCastPrimarySpell()
+    {
+         return 5000;
+    }
+    virtual uint32 DoCastSecondarySpell()
+    {
+         return 5000;
+    }
+
 
     void UpdateAI(const uint32 uiDiff) override
     {
@@ -978,7 +985,7 @@ struct npc_human_conjurer : public ChessPieceScript
 
     struct npc_human_conjurerAI : public npc_chess_piece_genericAI
     {
-        npc_human_conjurerAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_human_conjurerAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1079,7 +1086,7 @@ struct npc_orc_warlock : public ChessPieceScript
 
     struct npc_orc_warlockAI : public npc_chess_piece_genericAI
     {
-        npc_orc_warlockAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_orc_warlockAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1180,7 +1187,7 @@ struct npc_human_footman : public ChessPieceScript
 
     struct npc_human_footmanAI : public npc_chess_piece_genericAI
     {
-        npc_human_footmanAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_human_footmanAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1291,7 +1298,7 @@ struct npc_orc_grunt : public ChessPieceScript
 
     struct npc_orc_gruntAI : public npc_chess_piece_genericAI
     {
-        npc_orc_gruntAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_orc_gruntAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1402,7 +1409,7 @@ struct npc_water_elemental : public ChessPieceScript
 
     struct npc_water_elementalAI : public npc_chess_piece_genericAI
     {
-        npc_water_elementalAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_water_elementalAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1503,7 +1510,7 @@ struct npc_summoned_daemon : public ChessPieceScript
 
     struct npc_summoned_daemonAI : public npc_chess_piece_genericAI
     {
-        npc_summoned_daemonAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_summoned_daemonAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1604,7 +1611,7 @@ struct npc_human_charger : public ChessPieceScript
 
     struct npc_human_chargerAI : public npc_chess_piece_genericAI
     {
-        npc_human_chargerAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_human_chargerAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1705,7 +1712,7 @@ struct npc_orc_wolf : public ChessPieceScript
 
     struct npc_orc_wolfAI : public npc_chess_piece_genericAI
     {
-        npc_orc_wolfAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_orc_wolfAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1806,7 +1813,7 @@ struct npc_human_cleric : public ChessPieceScript
 
     struct npc_human_clericAI : public npc_chess_piece_genericAI
     {
-        npc_human_clericAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_human_clericAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1907,7 +1914,7 @@ struct npc_orc_necrolyte : public ChessPieceScript
 
     struct npc_orc_necrolyteAI : public npc_chess_piece_genericAI
     {
-        npc_orc_necrolyteAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) { }
+        npc_orc_necrolyteAI(Creature* pCreature) : npc_chess_piece_genericAI(pCreature) {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -1999,6 +2006,9 @@ struct npc_orc_necrolyte : public ChessPieceScript
     }
 };
 
+/**
+ * Registers the Karazhan chess event scripts.
+ */
 void AddSC_chess_event()
 {
     Script* s;

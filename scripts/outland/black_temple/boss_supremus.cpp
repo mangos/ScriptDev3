@@ -76,7 +76,7 @@ struct molten_flame : public CreatureScript
 
     struct molten_flameAI : public Scripted_NoMovementAI
     {
-        molten_flameAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        molten_flameAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         void AttackStart(Unit* /*pWho*/) override {}
         void MoveInLineOfSight(Unit* /*pWho*/) override {}
@@ -96,7 +96,7 @@ struct npc_volcano : public CreatureScript
 
     struct npc_volcanoAI : public Scripted_NoMovementAI
     {
-        npc_volcanoAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_volcanoAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         void AttackStart(Unit* /*pWho*/) override {}
         void MoveInLineOfSight(Unit* /*pWho*/) override {}

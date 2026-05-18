@@ -464,6 +464,9 @@ struct is_molten_core : public InstanceScript
     }
 };
 
+/**
+ * Registers the Molten Core instance script.
+ */
 void AddSC_instance_molten_core()
 {
     Script* s;

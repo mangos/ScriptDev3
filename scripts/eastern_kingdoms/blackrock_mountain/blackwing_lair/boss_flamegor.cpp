@@ -171,6 +171,9 @@ struct boss_flamegor : public CreatureScript
     }
 };
 
+/**
+ * Registers the Flamegor encounter script.
+ */
 void AddSC_boss_flamegor()
 {
     Script* s;

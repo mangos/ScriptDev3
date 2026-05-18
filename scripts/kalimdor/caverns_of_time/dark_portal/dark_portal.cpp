@@ -63,7 +63,7 @@ struct npc_medivh_black_morass : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -97,7 +97,7 @@ struct npc_medivh_black_morass : public CreatureScript
             DoScriptText(SAY_DEATH, m_creature);
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -383,7 +383,7 @@ struct npc_time_rift : public CreatureScript
             pSummoned->CastSpell(pSummoned, SPELL_CORRUPT_AEONUS, false);
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

@@ -67,7 +67,7 @@ struct npc_galen_goodward : public CreatureScript
 
     struct npc_galen_goodwardAI : public npc_escortAI
     {
-        npc_galen_goodwardAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_galen_goodwardAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         ObjectGuid m_galensCageGuid;
         uint32 m_uiPeriodicSay;

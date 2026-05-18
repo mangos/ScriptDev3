@@ -550,7 +550,7 @@ struct npc_demonic_vapor : public CreatureScript
 
     struct npc_demonic_vaporAI : public ScriptedAI
     {
-        npc_demonic_vaporAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_demonic_vaporAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset() override
         {
@@ -574,9 +574,9 @@ struct npc_demonic_vapor : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

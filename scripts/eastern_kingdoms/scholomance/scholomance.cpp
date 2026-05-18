@@ -48,7 +48,6 @@ enum
     SPELL_SILENCE                   = 12528,
 };
 
-
 struct npc_spectral_tutor : public CreatureScript
 {
     npc_spectral_tutor() : CreatureScript("npc_spectral_tutor") {}
@@ -143,7 +142,6 @@ struct npc_spectral_tutor : public CreatureScript
         return new npc_spectral_tutorAI(pCreature);
     }
 };
-
 
 void AddSC_scholomance()
 {

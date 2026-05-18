@@ -73,7 +73,7 @@ struct npc_nesingwary_trapper : public CreatureScript
 
     struct npc_nesingwary_trapperAI : public ScriptedAI
     {
-        npc_nesingwary_trapperAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_nesingwary_trapperAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint8 m_uiPhase;
         uint32 m_uiPhaseTimer;
@@ -216,7 +216,7 @@ struct npc_oil_stained_wolf : public CreatureScript
 
     struct npc_oil_stained_wolfAI : public ScriptedAI
     {
-        npc_oil_stained_wolfAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_oil_stained_wolfAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bCanCrapInPublic;
         uint32 m_uiPooTimer;
@@ -356,7 +356,7 @@ struct npc_sinkhole_kill_credit : public CreatureScript
 
     struct npc_sinkhole_kill_creditAI : public ScriptedAI
     {
-        npc_sinkhole_kill_creditAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_sinkhole_kill_creditAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_cartGuid;
         ObjectGuid m_wormGuid;
@@ -721,7 +721,7 @@ struct npc_nexus_drake_hatchling : public CreatureScript
 
     struct npc_nexus_drake_hatchlingAI : public FollowerAI
     {
-        npc_nexus_drake_hatchlingAI(Creature* pCreature) : FollowerAI(pCreature) { }
+        npc_nexus_drake_hatchlingAI(Creature* pCreature) : FollowerAI(pCreature) {}
 
         uint32 m_uiNetherbreathTimer;
         uint32 m_uiPresenceTimer;
@@ -1024,7 +1024,7 @@ struct npc_scourged_flamespitter : public CreatureScript
 
     struct  npc_scourged_flamespitterAI : public ScriptedAI
     {
-        npc_scourged_flamespitterAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_scourged_flamespitterAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiIncinerateTimer;
         uint32 m_uiNetExpireTimer;
@@ -1171,9 +1171,9 @@ struct npc_bonker_togglevolt : public CreatureScript
 
     struct npc_bonker_togglevoltAI : public npc_escortAI
     {
-        npc_bonker_togglevoltAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_bonker_togglevoltAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
-        void Reset() override { }
+        void Reset() override {}
 
         void Aggro(Unit* /*pWho*/) override
         {
@@ -1295,7 +1295,7 @@ struct npc_jenny : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* pWho) override { }
+        void AttackStart(Unit* pWho) override {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {

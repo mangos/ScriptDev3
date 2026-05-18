@@ -123,12 +123,6 @@ struct npc_prince_liam_greymane_phase1 : public CreatureScript
     }
 };
 
-
-
-
-
-
-
 /*######
 # npc_prince_liam_greymane_phase2
 ######*/
@@ -232,7 +226,6 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
             }
             else m_uiSayStoryTimer -= uiDiff;
 
-
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             {
@@ -281,11 +274,9 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
     }
 };
 
-
 /*######
 # rampaging_worgen
 ######*/
-
 
 enum {
     SPELL_ENRAGE          = 8599,
@@ -379,7 +370,6 @@ struct rampaging_worgen : public CreatureScript
     }
 };
 
-
 /*######
 ## creature_frightened_citizen_quest
 ######*/
@@ -393,7 +383,6 @@ enum {
     SAY_ON_ESCAPE7             = -1654015,
     SAY_ON_ESCAPE_DELAY        = 12000
 };
-
 
 struct frightened_citizen_quest : public CreatureScript
 {
@@ -411,7 +400,6 @@ struct frightened_citizen_quest : public CreatureScript
             m_uiSayOnEscapeTimer = SAY_ON_ESCAPE_DELAY;
             m_bCanSayOnEscape = true;
         }
-
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -452,6 +440,9 @@ struct frightened_citizen_quest : public CreatureScript
     }
 };
 
+/**
+ * Registers Gilneas City script content.
+ */
 void AddSC_gilneas_city()
 {
     Script* s;

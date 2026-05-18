@@ -216,7 +216,7 @@ struct npc_nagrand_captive : public CreatureScript
 
     struct npc_nagrand_captiveAI : public npc_escortAI
     {
-        npc_nagrand_captiveAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_nagrand_captiveAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiChainLightningTimer;
         uint32 m_uiHealTimer;
@@ -419,7 +419,7 @@ struct npc_creditmarker_visit_with_ancestors : public CreatureScript
 
     struct npc_creditmarker_visit_with_ancestorsAI : public ScriptedAI
     {
-        npc_creditmarker_visit_with_ancestorsAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_creditmarker_visit_with_ancestorsAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -486,7 +486,7 @@ struct npc_rethhedron : public CreatureScript
 
     struct npc_rethhedronAI : public ScriptedAI
     {
-        npc_rethhedronAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_rethhedronAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiCrippleTimer;
         uint32 m_uiShadowBoltTimer;

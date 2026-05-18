@@ -80,7 +80,7 @@ struct npc_web_wrap : public CreatureScript
 
     struct npc_web_wrapAI : public ScriptedAI
     {
-        npc_web_wrapAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_web_wrapAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_victimGuid;
         uint32 m_uiWebWrapTimer;

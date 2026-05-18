@@ -247,6 +247,9 @@ struct spell_emberseer_growing : public SpellScript
     }
 };
 
+/**
+ * Registers the Pyroguard Emberseer encounter script.
+ */
 void AddSC_boss_pyroguard_emberseer()
 {
     Script *s;

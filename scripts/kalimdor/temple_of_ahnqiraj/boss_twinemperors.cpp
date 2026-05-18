@@ -240,7 +240,7 @@ struct boss_veknilash : public CreatureScript
 
     struct boss_veknilashAI : public boss_twin_emperorsAI
     {
-        boss_veknilashAI(Creature* pCreature) : boss_twin_emperorsAI(pCreature) { }
+        boss_veknilashAI(Creature* pCreature) : boss_twin_emperorsAI(pCreature) {}
 
         uint32 m_uiUppercutTimer;
         uint32 m_uiUnbalancingStrikeTimer;
@@ -382,7 +382,7 @@ struct boss_veklor : public CreatureScript
 
     struct boss_veklorAI : public boss_twin_emperorsAI
     {
-        boss_veklorAI(Creature* pCreature) : boss_twin_emperorsAI(pCreature) { }
+        boss_veklorAI(Creature* pCreature) : boss_twin_emperorsAI(pCreature) {}
 
         uint32 m_uiShadowBoltTimer;
         uint32 m_uiBlizzardTimer;

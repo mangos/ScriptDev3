@@ -73,7 +73,7 @@ struct npc_clintar_dw_spirit : public CreatureScript
 
     struct npc_clintar_dw_spiritAI : public npc_escortAI
     {
-        npc_clintar_dw_spiritAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_clintar_dw_spiritAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 i) override
         {
@@ -736,7 +736,7 @@ struct boss_eranikus : public CreatureScript
 
     struct boss_eranikusAI : public ScriptedAI
     {
-        boss_eranikusAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_eranikusAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiAcidBreathTimer;
         uint32 m_uiNoxiousBreathTimer;
@@ -1125,7 +1125,6 @@ void AddSC_moonglade()
     s->RegisterSelf();
     s = new spell_conjure_rift();
     s->RegisterSelf();
-
 
 //#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;

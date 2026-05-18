@@ -121,7 +121,7 @@ struct npc_barrett_ramsey : public CreatureScript
 
     struct npc_barrett_ramseyAI : public ScriptedAI
     {
-        npc_barrett_ramseyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_barrett_ramseyAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ScriptedInstance* m_pInstance;
 

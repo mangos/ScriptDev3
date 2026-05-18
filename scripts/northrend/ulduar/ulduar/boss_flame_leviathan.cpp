@@ -668,8 +668,8 @@ struct npc_hodir_fury_reticle : public CreatureScript
             SetCombatMovement(false);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -738,12 +738,12 @@ struct npc_hodir_fury : public CreatureScript
 
     struct npc_hodir_furyAI : public Scripted_NoMovementAI
     {
-        npc_hodir_furyAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_hodir_furyAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -772,8 +772,8 @@ struct npc_freya_ward : public CreatureScript
             m_uiFreyaWardTimer = 30000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -825,8 +825,8 @@ struct npc_mimiron_inferno : public CreatureScript
             m_uiMimironInfernoTimer = 15000;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {

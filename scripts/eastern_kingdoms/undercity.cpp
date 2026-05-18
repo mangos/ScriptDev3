@@ -82,7 +82,7 @@ struct npc_lady_sylvanas_windrunner : public CreatureScript
 
     struct npc_lady_sylvanas_windrunnerAI : public ScriptedAI
     {
-        npc_lady_sylvanas_windrunnerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_lady_sylvanas_windrunnerAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiLamentEventTimer;
         uint32 m_uiSummonTimer;

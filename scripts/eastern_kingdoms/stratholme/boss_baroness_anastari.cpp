@@ -51,7 +51,7 @@ struct boss_baroness_anastari : public CreatureScript
 
     struct boss_baroness_anastariAI : public ScriptedAI
     {
-        boss_baroness_anastariAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_baroness_anastariAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiBansheeWailTimer;
         uint32 m_uiBansheeCurseTimer;

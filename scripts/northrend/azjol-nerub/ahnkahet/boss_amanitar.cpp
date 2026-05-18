@@ -249,13 +249,13 @@ struct npc_amanitar_mushroom : public CreatureScript
 
     struct npc_amanitar_mushroomAI : public Scripted_NoMovementAI
     {
-        npc_amanitar_mushroomAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_amanitar_mushroomAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
-        void Reset() override { }
+        void Reset() override {}
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

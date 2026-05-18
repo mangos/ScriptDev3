@@ -553,12 +553,12 @@ struct boss_netherspite : public CreatureScript
 //            }
 //#endif
 //#if defined (TBC)
-//            void MoveInLineOfSight(Unit* pWho) { }
-//            void AttackStart(Unit* pWho) { }
+//            void MoveInLineOfSight(Unit* pWho) {}
+//            void AttackStart(Unit* pWho) {}
 //#endif
 //#if defined (WOTLK) || defined (CATA) || defined(MISTS)
-//            void MoveInLineOfSight(Unit* /*pWho*/) { }
-//            void AttackStart(Unit* /*pWho*/) { }
+//            void MoveInLineOfSight(Unit* /*pWho*/) {}
+//            void AttackStart(Unit* /*pWho*/) {}
 //#endif
 //#if defined (TODO)
 //            void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
@@ -641,6 +641,9 @@ struct boss_netherspite : public CreatureScript
 //#endif
 };
 
+/**
+ * Registers the Netherspite encounter script.
+ */
 void AddSC_boss_netherspite()
 {
     Script* s;
@@ -660,5 +663,4 @@ void AddSC_boss_netherspite()
 //        pNewScript->RegisterSelf();
 //#endif
 };
-
 

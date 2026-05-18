@@ -171,7 +171,7 @@ struct guard_shattrath_aldor : public CreatureScript
 
     struct guard_shattrath_aldorAI : public guard_shattrath_asAI
     {
-        guard_shattrath_aldorAI(Creature* pCreature) : guard_shattrath_asAI(pCreature, SPELL_BANISHED_SHATTRATH_A) { }
+        guard_shattrath_aldorAI(Creature* pCreature) : guard_shattrath_asAI(pCreature, SPELL_BANISHED_SHATTRATH_A) {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -186,7 +186,7 @@ struct guard_shattrath_scryer : public CreatureScript
 
     struct guard_shattrath_scryerAI : public guard_shattrath_asAI
     {
-        guard_shattrath_scryerAI(Creature* pCreature) : guard_shattrath_asAI(pCreature, SPELL_BANISHED_SHATTRATH_S) { }
+        guard_shattrath_scryerAI(Creature* pCreature) : guard_shattrath_asAI(pCreature, SPELL_BANISHED_SHATTRATH_S) {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

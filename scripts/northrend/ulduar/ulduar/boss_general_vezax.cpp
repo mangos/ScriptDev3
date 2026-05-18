@@ -427,7 +427,7 @@ struct npc_saronite_vapor : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void JustDied(Unit* /*pKiller*/) override
         {
@@ -457,8 +457,8 @@ struct npc_saronite_vapor : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

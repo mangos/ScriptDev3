@@ -64,7 +64,7 @@ struct npc_ranger_lilatha : public CreatureScript
 
     struct npc_ranger_lilathaAI : public npc_escortAI
     {
-        npc_ranger_lilathaAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_ranger_lilathaAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         ObjectGuid m_goCageGuid;
         ObjectGuid m_heliosGuid;
@@ -182,6 +182,9 @@ struct npc_ranger_lilatha : public CreatureScript
     }
 };
 
+/**
+ * Registers Ghostlands script content.
+ */
 void AddSC_ghostlands()
 {
     Script* s;

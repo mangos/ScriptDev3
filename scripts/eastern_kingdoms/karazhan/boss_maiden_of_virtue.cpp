@@ -185,6 +185,9 @@ struct boss_maiden_of_virtue : public CreatureScript
     }
 };
 
+/**
+ * Registers the Maiden of Virtue encounter script.
+ */
 void AddSC_boss_maiden_of_virtue()
 {
     Script* s;

@@ -279,7 +279,7 @@ struct boss_fathomguard_sharkkis : public CreatureScript
 
     struct boss_fathomguard_sharkkisAI : public ScriptedAI
     {
-        boss_fathomguard_sharkkisAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_fathomguard_sharkkisAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiHurlTridentTimer;
         uint32 m_uiLeechingThrowTimer;
@@ -417,7 +417,7 @@ struct boss_fathomguard_tidalvess : public CreatureScript
 
     struct boss_fathomguard_tidalvessAI : public ScriptedAI
     {
-        boss_fathomguard_tidalvessAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_fathomguard_tidalvessAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiFrostShockTimer;
         uint32 m_uiWindfuryTimer;
@@ -504,7 +504,7 @@ struct boss_fathomguard_caribdis : public CreatureScript
 
     struct boss_fathomguard_caribdisAI : public ScriptedAI
     {
-        boss_fathomguard_caribdisAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_fathomguard_caribdisAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiWaterBoltVolleyTimer;
         uint32 m_uiTidalSurgeTimer;

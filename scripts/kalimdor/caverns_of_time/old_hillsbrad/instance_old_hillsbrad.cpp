@@ -300,7 +300,10 @@ struct is_old_hillsbrad : public InstanceScript
             return 0;
         }
 
-        uint32 GetThrallEventCount() { return m_uiThrallEventCount; }
+        uint32 GetThrallEventCount()
+        {
+             return m_uiThrallEventCount;
+        }
 
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override

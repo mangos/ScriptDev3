@@ -640,7 +640,7 @@ struct npc_power_spark : public CreatureScript
 
     struct npc_power_sparkAI : public ScriptedAI
     {
-        npc_power_sparkAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_power_sparkAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset() override
         {
@@ -661,9 +661,9 @@ struct npc_power_spark : public CreatureScript
             DoCastSpellIfCan(m_creature, SPELL_POWER_SPARK_PLAYERS, CAST_TRIGGERED);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -690,7 +690,7 @@ struct npc_wyrmrest_skytalon : public CreatureScript
 
         bool m_bHasMounted;
 
-        void Reset() override { }
+        void Reset() override {}
 
         // TODO: Temporary workaround - please remove when the boarding wrappers are implemented in core
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override

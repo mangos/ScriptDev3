@@ -63,7 +63,7 @@ struct npc_dorius_stonetender : public CreatureScript
 
     struct npc_dorius_stonetenderAI : public npc_escortAI
     {
-        npc_dorius_stonetenderAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_dorius_stonetenderAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void Aggro(Unit* pWho) override
         {

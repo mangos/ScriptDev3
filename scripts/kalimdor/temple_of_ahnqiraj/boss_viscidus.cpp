@@ -105,7 +105,6 @@ enum
 static const uint32 auiGlobSummonSpells[MAX_VISCIDUS_GLOBS] = { 25865, 25866, 25867, 25868, 25869, 25870, 25871, 25872, 25873, 25874, 25875, 25876, 25877, 25878, 25879, 25880, 25881, 25882, 25883, 25884 };
 #endif
 
-
 struct boss_viscidus : public CreatureScript
 {
     boss_viscidus() : CreatureScript("boss_viscidus") {}
@@ -472,13 +471,13 @@ struct npc_glob_of_viscidus : public CreatureScript
 
     struct  npc_glob_of_viscidusAI : public ScriptedAI
     {
-        npc_glob_of_viscidusAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_glob_of_viscidusAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
-        void Reset() override { }
+        void Reset() override {}
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

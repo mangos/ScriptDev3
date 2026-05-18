@@ -63,7 +63,7 @@ struct npc_gurgthock : public CreatureScript
 
     struct npc_gurgthockAI : public ScriptedAI
     {
-        npc_gurgthockAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_gurgthockAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_playerGuid;
 
@@ -135,7 +135,7 @@ struct npc_ghoul_feeding_bunny : public CreatureScript
 
     struct npc_ghoul_feeding_bunnyAI : public ScriptedAI
     {
-        npc_ghoul_feeding_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_ghoul_feeding_bunnyAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiAttractTimer;
 

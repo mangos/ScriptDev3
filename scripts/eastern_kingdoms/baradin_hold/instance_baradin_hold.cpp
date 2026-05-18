@@ -166,6 +166,9 @@ struct at_baradin_hold : public AreaTriggerScript
     }
 };
 
+/**
+ * Registers the Baradin Hold instance script.
+ */
 void AddSC_instance_baradin_hold()
 {
     Script* s;

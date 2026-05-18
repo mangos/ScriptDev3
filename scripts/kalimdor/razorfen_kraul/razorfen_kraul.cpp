@@ -83,7 +83,7 @@ struct npc_willix_the_importer : public CreatureScript
 
     struct npc_willix_the_importerAI : public npc_escortAI
     {
-        npc_willix_the_importerAI(Creature* m_creature) : npc_escortAI(m_creature) { }
+        npc_willix_the_importerAI(Creature* m_creature) : npc_escortAI(m_creature) {}
 
         // Exact use of these texts remains unknown, it seems that he should only talk when he initiates the attack or he is the first who is attacked by a npc
         void Aggro(Unit* pWho) override
@@ -195,7 +195,7 @@ struct npc_snufflenose_gopher : public CreatureScript
 
     struct npc_snufflenose_gopherAI : public ScriptedPetAI
     {
-        npc_snufflenose_gopherAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
+        npc_snufflenose_gopherAI(Creature* pCreature) : ScriptedPetAI(pCreature) {}
 
         bool m_bIsMovementActive;
 

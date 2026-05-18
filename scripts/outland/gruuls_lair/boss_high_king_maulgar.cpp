@@ -291,7 +291,7 @@ struct boss_olm_the_summoner : public CreatureScript
 
     struct boss_olm_the_summonerAI : public Council_Base_AI
     {
-        boss_olm_the_summonerAI(Creature* pCreature) : Council_Base_AI(pCreature) { }
+        boss_olm_the_summonerAI(Creature* pCreature) : Council_Base_AI(pCreature) {}
 
         uint32 m_uiDarkDecayTimer;
         uint32 m_uiDeathCoilTimer;
@@ -486,7 +486,7 @@ struct boss_blindeye_the_seer : public CreatureScript
 
     struct boss_blindeye_the_seerAI : public Council_Base_AI
     {
-        boss_blindeye_the_seerAI(Creature* pCreature) : Council_Base_AI(pCreature) { }
+        boss_blindeye_the_seerAI(Creature* pCreature) : Council_Base_AI(pCreature) {}
 
         uint32 m_uiGreaterPowerWordShieldTimer;
         uint32 m_uiHealTimer;
@@ -562,7 +562,7 @@ struct boss_krosh_firehand : public CreatureScript
 
     struct boss_krosh_firehandAI : public Council_Base_AI
     {
-        boss_krosh_firehandAI(Creature* pCreature) : Council_Base_AI(pCreature) { }
+        boss_krosh_firehandAI(Creature* pCreature) : Council_Base_AI(pCreature) {}
 
         uint32 m_uiGreaterFireballTimer;
         uint32 m_uiSpellShieldTimer;

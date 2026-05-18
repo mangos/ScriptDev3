@@ -49,7 +49,7 @@ struct boss_high_interrogator_gerstahn : public CreatureScript
 
     struct boss_high_interrogator_gerstahnAI : public ScriptedAI
     {
-        boss_high_interrogator_gerstahnAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_high_interrogator_gerstahnAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiShadowWordPainTimer;
         uint32 m_uiManaBurnTimer;
@@ -136,6 +136,9 @@ struct boss_high_interrogator_gerstahn : public CreatureScript
     }
 };
 
+/**
+ * Registers the High Interrogator Gerstahn encounter script.
+ */
 void AddSC_boss_high_interrogator_gerstahn()
 {
     Script *s;

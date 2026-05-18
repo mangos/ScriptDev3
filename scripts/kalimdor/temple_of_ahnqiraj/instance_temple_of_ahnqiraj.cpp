@@ -64,7 +64,6 @@ struct is_temple_of_ahnqiraj : public InstanceScript
             Initialize();
         };
 
-
         void Initialize() override
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));

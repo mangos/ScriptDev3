@@ -694,8 +694,8 @@ struct mob_arcane_sphere : public CreatureScript
             DoCastSpellIfCan(m_creature, SPELL_ARCANE_SPHERE_PASSIVE);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void UpdateAI(const uint32 uiDiff) override
         {
@@ -741,6 +741,9 @@ struct mob_arcane_sphere : public CreatureScript
     }
 };
 
+/**
+ * Registers the Felblood Kael'thas encounter script.
+ */
 void AddSC_boss_felblood_kaelthas()
 {
     Script* s;

@@ -74,7 +74,7 @@ struct mob_mature_netherwing_drake : public CreatureScript
 
     struct mob_mature_netherwing_drakeAI : public ScriptedAI
     {
-        mob_mature_netherwing_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_mature_netherwing_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_playerGuid;
 
@@ -340,7 +340,7 @@ struct npc_dragonmaw_peon : public CreatureScript
 
     struct npc_dragonmaw_peonAI : public ScriptedAI
     {
-        npc_dragonmaw_peonAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_dragonmaw_peonAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_playerGuid;
         uint32 m_uiPoisonTimer;
@@ -1052,7 +1052,7 @@ struct mob_torloth : public CreatureScript
 
     struct mob_torlothAI : public ScriptedAI
     {
-        mob_torlothAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_torlothAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_lordIllidanGuid;
         ObjectGuid m_playerGuid;
@@ -1233,7 +1233,7 @@ struct npc_lord_illidan_stormrage : public CreatureScript
 
     struct npc_lord_illidan_stormrageAI : public Scripted_NoMovementAI
     {
-        npc_lord_illidan_stormrageAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_lord_illidan_stormrageAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         ObjectGuid m_playerGuid;
         uint32 m_uiWaveTimer;
@@ -1551,7 +1551,7 @@ struct npc_totem_of_spirits : public CreatureScript
 
     struct npc_totem_of_spiritsAI : public ScriptedPetAI
     {
-        npc_totem_of_spiritsAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
+        npc_totem_of_spiritsAI(Creature* pCreature) : ScriptedPetAI(pCreature) {}
 
         void UpdateAI(const uint32 /*uiDiff*/) override {}
         void AttackedBy(Unit* /*pAttacker*/) override {}
@@ -2158,7 +2158,7 @@ struct npc_domesticated_felboar : public CreatureScript
 
     struct npc_domesticated_felboarAI : public ScriptedAI
     {
-        npc_domesticated_felboarAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_domesticated_felboarAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiTuberTimer;
         uint8 m_uiTuberStage;
@@ -2303,7 +2303,7 @@ struct npc_veneratus_spawn_node : public CreatureScript
 
     struct npc_veneratus_spawn_nodeAI : public Scripted_NoMovementAI
     {
-        npc_veneratus_spawn_nodeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_veneratus_spawn_nodeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -2317,10 +2317,10 @@ struct npc_veneratus_spawn_node : public CreatureScript
         }
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-        void UpdateAI(const uint32 uiDiff) override { }
+        void UpdateAI(const uint32 uiDiff) override {}
 #endif
 //#if defined (WOTLK) || defined (CATA) || defined(MISTS)
-//    void UpdateAI(const uint32 /* uiDiff */) override { }
+//    void UpdateAI(const uint32 /* uiDiff */) override {}
 //
     };
 

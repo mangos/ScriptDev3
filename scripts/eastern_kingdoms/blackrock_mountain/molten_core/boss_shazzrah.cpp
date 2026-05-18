@@ -189,6 +189,9 @@ struct boss_shazzrah : public CreatureScript
     }
 };
 
+/**
+ * Registers the Shazzrah encounter script.
+ */
 void AddSC_boss_shazzrah()
 {
     Script* s;

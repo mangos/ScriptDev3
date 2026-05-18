@@ -51,7 +51,7 @@ struct boss_general_angerforge : public CreatureScript
 
     struct boss_general_angerforgeAI : public ScriptedAI
     {
-        boss_general_angerforgeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_general_angerforgeAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiMightyBlowTimer;
         uint32 m_uiHamStringTimer;
@@ -160,6 +160,9 @@ struct boss_general_angerforge : public CreatureScript
     }
 };
 
+/**
+ * Registers the General Angerforge encounter script.
+ */
 void AddSC_boss_general_angerforge()
 {
     Script *s;

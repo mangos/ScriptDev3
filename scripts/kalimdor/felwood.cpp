@@ -225,7 +225,7 @@ struct npc_niby_the_almighty : public CreatureScript
 
     struct npc_niby_the_almightyAI : public ScriptedAI
     {
-        npc_niby_the_almightyAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_niby_the_almightyAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiSummonTimer;
         uint8  m_uiSpeech;
@@ -518,7 +518,7 @@ struct npc_captured_arkonarin : public CreatureScript
 
     struct npc_captured_arkonarinAI : public npc_escortAI
     {
-        npc_captured_arkonarinAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_captured_arkonarinAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         ObjectGuid m_treyGuid;
 

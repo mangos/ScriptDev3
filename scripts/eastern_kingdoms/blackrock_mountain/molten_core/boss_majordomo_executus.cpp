@@ -542,6 +542,9 @@ struct spell_boss_majordomo : public SpellScript
     }
 };
 
+/**
+ * Registers the Majordomo Executus encounter script.
+ */
 void AddSC_boss_majordomo()
 {
     Script* s;

@@ -288,7 +288,6 @@ struct is_scholomance : public InstanceScript
             DoSpawnGandlingIfCan(true);
         }
 
-
         void SetData(uint32 uiType, uint32 uiData) override
         {
             switch (uiType)

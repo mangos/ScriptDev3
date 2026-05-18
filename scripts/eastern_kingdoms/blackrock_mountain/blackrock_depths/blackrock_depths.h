@@ -239,8 +239,6 @@ static const uint32 aBarPatrolId[3] = {NPC_FIREGUARD_DESTROYER, NPC_ANVILRAGE_OF
 // Tomb of the Seven dwarfs
 static const uint32 aTombDwarfes[MAX_DWARFS] = {NPC_ANGERREL, NPC_SEETHREL, NPC_DOPEREL, NPC_GLOOMREL, NPC_VILEREL, NPC_HATEREL, NPC_DOOMREL};
 
-
-
 class instance_blackrock_depths : public ScriptedInstance
 {
     public:
@@ -269,7 +267,11 @@ class instance_blackrock_depths : public ScriptedInstance
         void GetArenaCrowdGuid(GuidSet& sCrowdSet) { sCrowdSet = m_sArenaCrowdNpcGuids; }
 
         // Bar events
-        void SetBarDoorIsOpen() { m_bIsBarDoorOpen = true; }
+        void SetBarDoorIsOpen()
+        {
+             m_bIsBarDoorOpen = true;
+        }
+
         void GetBarDoorIsOpen(bool& bIsOpen) { bIsOpen = m_bIsBarDoorOpen; }
         void HandleBarPatrons(uint8 uiEventType);
         void HandleBarPatrol(uint8 uiStep);
@@ -303,6 +305,5 @@ class instance_blackrock_depths : public ScriptedInstance
         GuidSet m_sBarPatrolGuids;
 
 };
-
 
 #endif

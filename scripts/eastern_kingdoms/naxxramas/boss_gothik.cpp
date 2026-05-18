@@ -453,11 +453,13 @@ struct spell_anchor : public SpellScript
         pInstance->SetData64(TYPE_SIGNAL_2, pCreatureTarget->GetObjectGuid().GetRawValue());
         pInstance->SetData(TYPE_SIGNAL_2, uiSpellId);
 
-
         return true;
     }
 };
 
+/**
+ * Registers the Gothik the Harvester encounter script.
+ */
 void AddSC_boss_gothik()
 {
     Script* s;

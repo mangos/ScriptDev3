@@ -114,6 +114,9 @@ void guardAI::JustDied(Unit* pKiller)
     }
 }
 
+/**
+ * Updates the guard AI combat and support behavior for the current tick.
+ */
 void guardAI::UpdateAI(const uint32 uiDiff)
 {
     // Always decrease our global cooldown first

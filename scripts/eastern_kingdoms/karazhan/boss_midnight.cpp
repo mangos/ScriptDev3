@@ -429,6 +429,9 @@ struct spell_mount_attumen : public SpellScript
     }
 };
 
+/**
+ * Registers the Attumen the Huntsman encounter script.
+ */
 void AddSC_boss_attumen()
 {
     Script* s;

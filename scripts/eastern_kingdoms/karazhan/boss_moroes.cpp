@@ -328,6 +328,9 @@ struct boss_moroes : public CreatureScript
     }
 };
 
+/**
+ * Registers the Moroes encounter script.
+ */
 void AddSC_boss_moroes()
 {
     Script* s;

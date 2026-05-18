@@ -123,7 +123,7 @@ struct npc_kayra_longmane : public CreatureScript
 
     struct npc_kayra_longmaneAI : public npc_escortAI
     {
-        npc_kayra_longmaneAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_kayra_longmaneAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 i) override
         {
@@ -237,7 +237,7 @@ struct npc_fhwoor : public CreatureScript
 
     struct npc_fhwoorAI : public npc_escortAI
     {
-        npc_fhwoorAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_fhwoorAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiStompTimer;
         uint32 m_uiShockTimer;

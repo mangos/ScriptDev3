@@ -301,7 +301,7 @@ struct npc_ruul_snowhoof : public CreatureScript
 
     struct npc_ruul_snowhoofAI : public npc_escortAI
     {
-        npc_ruul_snowhoofAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_ruul_snowhoofAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -382,7 +382,7 @@ struct npc_torek : public CreatureScript
 
     struct npc_torekAI : public npc_escortAI
     {
-        npc_torekAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_torekAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiRend_Timer;
         uint32 m_uiThunderclap_Timer;

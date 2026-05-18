@@ -268,6 +268,9 @@ struct boss_anubrekhan : public CreatureScript
     }
 };
 
+/**
+ * Registers the Anub'Rekhan encounter script.
+ */
 void AddSC_boss_anubrekhan()
 {
     Script* s;

@@ -40,6 +40,9 @@
 
 #include "precompiled.h"
 
+/**
+ * Registers Elwynn Forest script content.
+ */
 void AddSC_elwynn_forest()
 {
 }

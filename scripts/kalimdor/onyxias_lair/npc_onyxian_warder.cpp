@@ -26,7 +26,7 @@ struct npc_onyxian_warder : public CreatureScript
 
     struct npc_onyxian_warderAI : public ScriptedAI
     {
-        npc_onyxian_warderAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_onyxian_warderAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 Cleave_Timer;
         uint32 Fire_Nova_Timer;

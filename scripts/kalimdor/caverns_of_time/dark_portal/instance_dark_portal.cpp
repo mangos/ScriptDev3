@@ -381,7 +381,10 @@ struct is_dark_portal : public InstanceScript
         }
 
     private:
-        bool IsBossTimeRift() { return m_uiWorldStateRiftCount == 6 || m_uiWorldStateRiftCount == 12; }
+        bool IsBossTimeRift()
+        {
+             return m_uiWorldStateRiftCount == 6 || m_uiWorldStateRiftCount == 12;
+        }
         void UpdateWorldState(bool bEnable = true)
         {
             m_uiWorldState = bEnable ? 1 : 0;

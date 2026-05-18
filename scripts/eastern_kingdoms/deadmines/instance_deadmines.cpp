@@ -282,6 +282,9 @@ struct is_deadmines : public InstanceScript
     }
 };
 
+/**
+ * Registers the Deadmines instance script.
+ */
 void AddSC_instance_deadmines()
 {
     Script* s;

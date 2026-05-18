@@ -320,7 +320,6 @@ struct at_waygate : public AreaTriggerScript
     }
 };
 
-
 /*######
 ## Quest 12741
 ######*/

@@ -392,7 +392,7 @@ struct npc_deathstalker_faerleia : public CreatureScript
 
     struct npc_deathstalker_faerleiaAI : public ScriptedAI
     {
-        npc_deathstalker_faerleiaAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_deathstalker_faerleiaAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset()
         {
@@ -563,7 +563,6 @@ struct npc_deathstalker_faerleia : public CreatureScript
 
                 FinishEvent();
             }
-
 
             if (m_bEventStarted && m_bWaveDied && m_uiRunbackTimer < uiDiff && m_uiWaveCount <= 3)
             {

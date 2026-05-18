@@ -699,8 +699,8 @@ struct npc_living_constellation : public CreatureScript
             m_uiArcaneBarrageTimer = 0;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* /*pInvoker*/, uint32 /*uiMiscValue*/) override
         {
@@ -746,7 +746,7 @@ struct npc_worm_hole : public CreatureScript
 
     struct npc_worm_holeAI : public Scripted_NoMovementAI
     {
-        npc_worm_holeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_worm_holeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiDarkMatterTimer;
 
@@ -755,8 +755,8 @@ struct npc_worm_hole : public CreatureScript
             m_uiDarkMatterTimer = urand(1000, 3000);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -806,7 +806,7 @@ struct npc_black_hole : public CreatureScript
 
     struct npc_black_holeAI : public Scripted_NoMovementAI
     {
-        npc_black_holeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_black_holeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         bool m_bIsDespawned;
 
@@ -842,8 +842,8 @@ struct npc_black_hole : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -862,12 +862,12 @@ struct npc_collapsing_star : public CreatureScript
 
     struct npc_collapsing_starAI : public ScriptedAI
     {
-        npc_collapsing_starAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_collapsing_starAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
-        void Reset() override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

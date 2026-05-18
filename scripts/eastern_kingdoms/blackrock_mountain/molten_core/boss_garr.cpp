@@ -295,6 +295,9 @@ struct mob_firesworn : public CreatureScript
     }
 };
 
+/**
+ * Registers the Garr encounter script.
+ */
 void AddSC_boss_garr()
 {
     Script* s;

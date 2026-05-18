@@ -66,7 +66,7 @@ struct boss_overlordwyrmthalak : public CreatureScript
 
     struct boss_overlordwyrmthalakAI : public ScriptedAI
     {
-        boss_overlordwyrmthalakAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_overlordwyrmthalakAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiBlastWaveTimer;
         uint32 m_uiShoutTimer;
@@ -179,6 +179,9 @@ struct boss_overlordwyrmthalak : public CreatureScript
     }
 };
 
+/**
+ * Registers the Overlord Wyrmthalak encounter script.
+ */
 void AddSC_boss_overlordwyrmthalak()
 {
     Script *s;

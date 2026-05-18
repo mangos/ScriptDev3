@@ -66,7 +66,7 @@ struct npc_kaya : public CreatureScript
 
     struct npc_kayaAI : public npc_escortAI
     {
-        npc_kayaAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_kayaAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -171,7 +171,6 @@ MovePointStone MovePointsst[] =   // // Set Movementpoints for Waves
     { 953.72f, -257.25f, -3.38f}
 };
 
-
 struct npc_piznik : public CreatureScript
 {
     npc_piznik() : CreatureScript("npc_piznik") {}
@@ -273,7 +272,6 @@ struct npc_piznik : public CreatureScript
 
                 FinishEvent();
             }
-
 
             if (m_bEventStarted && !m_uiSummonCount)
             {

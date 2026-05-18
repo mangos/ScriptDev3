@@ -60,7 +60,7 @@ struct boss_doomwalker : public CreatureScript
 
     struct boss_doomwalkerAI : public ScriptedAI
     {
-        boss_doomwalkerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_doomwalkerAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiChainTimer;
         uint32 m_uiOverrunTimer;

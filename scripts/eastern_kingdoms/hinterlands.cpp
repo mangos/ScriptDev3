@@ -67,7 +67,7 @@ struct npc_00x09hl : public CreatureScript
 
     struct npc_00x09hlAI : public npc_escortAI
     {
-        npc_00x09hlAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_00x09hlAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -362,6 +362,9 @@ struct npc_rinji : public CreatureScript
     }
 };
 
+/**
+ * Registers Hinterlands script content.
+ */
 void AddSC_hinterlands()
 {
     Script* s;

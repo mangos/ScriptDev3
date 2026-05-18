@@ -81,7 +81,6 @@ struct is_zulaman : public InstanceScript
             Initialize();
         }
 
-
         void Initialize() override
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));

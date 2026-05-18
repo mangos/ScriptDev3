@@ -61,7 +61,7 @@ struct npc_mist : public CreatureScript
 
     struct npc_mistAI : public FollowerAI
     {
-        npc_mistAI(Creature* pCreature) : FollowerAI(pCreature) { }
+        npc_mistAI(Creature* pCreature) : FollowerAI(pCreature) {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {

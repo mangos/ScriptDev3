@@ -238,8 +238,8 @@ struct mob_illidari_council : public CreatureScript
             m_uiEquivalencyTimer = urand(2000, 3000);
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDied(Unit* /*pKiller*/) override
         {
@@ -437,7 +437,7 @@ struct boss_gathios_the_shatterer : public CreatureScript
 
     struct boss_gathios_the_shattererAI : public boss_illidari_councilAI
     {
-        boss_gathios_the_shattererAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { }
+        boss_gathios_the_shattererAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) {}
 
         uint32 m_uiConsecrationTimer;
         uint32 m_uiHammerOfJusticeTimer;
@@ -581,7 +581,7 @@ struct boss_high_nethermancer_zerevor : public CreatureScript
 
     struct boss_high_nethermancer_zerevorAI : public boss_illidari_councilAI
     {
-        boss_high_nethermancer_zerevorAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { }
+        boss_high_nethermancer_zerevorAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) {}
 
         uint32 m_uiBlizzardTimer;
         uint32 m_uiFlamestrikeTimer;
@@ -714,7 +714,7 @@ struct boss_lady_malande : public CreatureScript
 
     struct boss_lady_malandeAI : public boss_illidari_councilAI
     {
-        boss_lady_malandeAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { }
+        boss_lady_malandeAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) {}
 
         uint32 m_uiEmpoweredSmiteTimer;
         uint32 m_uiCircleOfHealingTimer;
@@ -833,7 +833,7 @@ struct boss_veras_darkshadow : public CreatureScript
 
     struct boss_veras_darkshadowAI : public boss_illidari_councilAI
     {
-        boss_veras_darkshadowAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) { }
+        boss_veras_darkshadowAI(Creature* pCreature) : boss_illidari_councilAI(pCreature) {}
 
         uint32 m_uiDeadlyPoisonTimer;
         uint32 m_uiVanishTimer;

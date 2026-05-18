@@ -863,6 +863,9 @@ struct boss_feugen : public CreatureScript
     }
 };
 
+/**
+ * Registers the Thaddius encounter scripts.
+ */
 void AddSC_boss_thaddius()
 {
     Script* s;

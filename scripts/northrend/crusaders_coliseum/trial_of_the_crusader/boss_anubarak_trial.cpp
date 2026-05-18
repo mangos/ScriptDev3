@@ -467,7 +467,7 @@ struct npc_anubarak_trial_spike : public CreatureScript
 
     struct npc_anubarak_trial_spikeAI : public ScriptedAI
     {
-        npc_anubarak_trial_spikeAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_anubarak_trial_spikeAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         PursuingSpikesPhases m_Phase;
         uint32 m_PhaseSwitchTimer;
@@ -625,7 +625,7 @@ struct npc_anubarak_trial_frostsphere : public CreatureScript
 
     struct npc_anubarak_trial_frostsphereAI : public Scripted_NoMovementAI
     {
-        npc_anubarak_trial_frostsphereAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        npc_anubarak_trial_frostsphereAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         bool m_bPermafrost;
 
@@ -636,8 +636,8 @@ struct npc_anubarak_trial_frostsphere : public CreatureScript
             m_creature->GetMotionMaster()->MoveRandomAroundPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 15.0f);
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
         {
@@ -708,10 +708,10 @@ struct npc_nerubian_borrow : public CreatureScript
     {
         npc_nerubian_borrowAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-        void Reset() override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

@@ -67,7 +67,7 @@ struct npc_draenei_survivor : public CreatureScript
 
     struct npc_draenei_survivorAI : public ScriptedAI
     {
-        npc_draenei_survivorAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_draenei_survivorAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_casterGuid;
 
@@ -333,7 +333,7 @@ struct npc_injured_draenei : public CreatureScript
 
     struct npc_injured_draeneiAI : public ScriptedAI
     {
-        npc_injured_draeneiAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_injured_draeneiAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset() override
         {
@@ -379,7 +379,7 @@ struct npc_magwin : public CreatureScript
 
     struct npc_magwinAI : public npc_escortAI
     {
-        npc_magwinAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_magwinAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {

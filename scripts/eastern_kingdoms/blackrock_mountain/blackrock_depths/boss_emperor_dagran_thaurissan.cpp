@@ -297,6 +297,9 @@ struct boss_moira_bronzebeard : public CreatureScript
     }
 };
 
+/**
+ * Registers the Emperor Dagran Thaurissan encounter script.
+ */
 void AddSC_boss_draganthaurissan()
 {
     Script *s;

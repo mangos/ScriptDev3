@@ -256,6 +256,9 @@ struct boss_grobbulus : public CreatureScript
     }
 };
 
+/**
+ * Registers the Grobbulus encounter script.
+ */
 void AddSC_boss_grobbulus()
 {
     Script* s;

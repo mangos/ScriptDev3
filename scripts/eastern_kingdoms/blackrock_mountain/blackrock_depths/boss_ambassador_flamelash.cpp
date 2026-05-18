@@ -116,7 +116,6 @@ struct boss_ambassador_flamelash : public CreatureScript
         }
     };
 
-
     CreatureAI* GetAI(Creature* pCreature) override
     {
         return new boss_ambassador_flamelashAI(pCreature);
@@ -139,6 +138,9 @@ struct spell_boss_ambassador_flamelash : public SpellScript
     }
 };
 
+/**
+ * Registers the Ambassador Flamelash encounter script.
+ */
 void AddSC_boss_ambassador_flamelash()
 {
     Script *s;

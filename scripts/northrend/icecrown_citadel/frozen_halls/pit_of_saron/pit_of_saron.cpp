@@ -59,7 +59,7 @@ struct npc_ymirjar_deathbringer : public CreatureScript
 
     struct npc_ymirjar_deathbringerAI : public ScriptedAI
     {
-        npc_ymirjar_deathbringerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_ymirjar_deathbringerAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiShadowBoltTimer;
 
@@ -174,9 +174,9 @@ struct npc_collapsing_icicle : public CreatureScript
             }
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

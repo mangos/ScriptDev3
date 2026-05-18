@@ -1,5 +1,3 @@
-
-
 /**
  * ScriptDev3 is an extension for mangos providing enhanced features for
  * area triggers, creatures, game objects, instances, items, and spells beyond

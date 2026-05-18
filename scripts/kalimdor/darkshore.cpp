@@ -85,7 +85,7 @@ struct npc_kerlonian : public CreatureScript
 
     struct npc_kerlonianAI : public FollowerAI
     {
-        npc_kerlonianAI(Creature* pCreature) : FollowerAI(pCreature) { }
+        npc_kerlonianAI(Creature* pCreature) : FollowerAI(pCreature) {}
 
         uint32 m_uiFallAsleepTimer;
 
@@ -254,7 +254,7 @@ struct npc_prospector_remtravel : public CreatureScript
 
     struct npc_prospector_remtravelAI : public npc_escortAI
     {
-        npc_prospector_remtravelAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_prospector_remtravelAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -379,7 +379,7 @@ struct npc_threshwackonator : public CreatureScript
 
     struct npc_threshwackonatorAI : public FollowerAI
     {
-        npc_threshwackonatorAI(Creature* pCreature) : FollowerAI(pCreature) { }
+        npc_threshwackonatorAI(Creature* pCreature) : FollowerAI(pCreature) {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -496,7 +496,7 @@ struct npc_volcor : public CreatureScript
 
     struct npc_volcorAI : public npc_escortAI
     {
-        npc_volcorAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_volcorAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         uint32 m_uiQuestId;
 
@@ -657,7 +657,7 @@ struct npc_therylune : public CreatureScript
 
     struct npc_theryluneAI : public npc_escortAI
     {
-        npc_theryluneAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_theryluneAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         void WaypointReached(uint32 uiPointId) override
         {

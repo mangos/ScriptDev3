@@ -467,6 +467,9 @@ struct is_blackwing_lair : public InstanceScript
     }
 };
 
+/**
+ * Registers the Blackwing Lair instance script.
+ */
 void AddSC_instance_blackwing_lair()
 {
     Script* s;

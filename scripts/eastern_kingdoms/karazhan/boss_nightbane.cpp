@@ -442,6 +442,9 @@ struct event_spell_summon_nightbane : public MapEventScript
     }
 };
 
+/**
+ * Registers the Nightbane encounter script.
+ */
 void AddSC_boss_nightbane()
 {
     Script* s;

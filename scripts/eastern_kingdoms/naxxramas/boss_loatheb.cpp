@@ -215,6 +215,9 @@ struct boss_loatheb : public CreatureScript
     }
 };
 
+/**
+ * Registers the Loatheb encounter script.
+ */
 void AddSC_boss_loatheb()
 {
     Script* s;

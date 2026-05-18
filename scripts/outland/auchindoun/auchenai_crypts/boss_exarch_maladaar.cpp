@@ -61,7 +61,7 @@ struct mob_stolen_soul : public CreatureScript
 
     struct mob_stolen_soulAI : public ScriptedAI
     {
-        mob_stolen_soulAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_stolen_soulAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint8 m_uiStolenClass;
         uint32 m_uiSpellTimer;

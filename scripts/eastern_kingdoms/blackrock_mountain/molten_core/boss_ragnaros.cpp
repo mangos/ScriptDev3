@@ -396,6 +396,9 @@ struct boss_ragnaros : public CreatureScript
     }
 };
 
+/**
+ * Registers the Ragnaros encounter script.
+ */
 void AddSC_boss_ragnaros()
 {
     Script* s;

@@ -238,6 +238,9 @@ struct mob_core_rager : public CreatureScript
     }
 };
 
+/**
+ * Registers the Golemagg encounter script.
+ */
 void AddSC_boss_golemagg()
 {
     Script* s;

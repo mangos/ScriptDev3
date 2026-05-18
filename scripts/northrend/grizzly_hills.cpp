@@ -61,9 +61,9 @@ struct npc_depleted_war_golem : public CreatureScript
 
     struct  npc_depleted_war_golemAI : public ScriptedPetAI
     {
-        npc_depleted_war_golemAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
+        npc_depleted_war_golemAI(Creature* pCreature) : ScriptedPetAI(pCreature) {}
 
-        void Reset() override { }
+        void Reset() override {}
 
         void OwnerKilledUnit(Unit* pVictim) override
         {
@@ -181,7 +181,7 @@ struct npc_harrison_jones : public CreatureScript
 
         GuidList m_lImmolationBunnyGuids;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void JustDied(Unit* pKiller) override
         {
@@ -452,11 +452,11 @@ struct npc_emily : public CreatureScript
 
     struct npc_emilyAI : public npc_escortAI
     {
-        npc_emilyAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_emilyAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         ObjectGuid m_floppyGuid;
 
-        void Reset() override { }
+        void Reset() override {}
 
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 uiMiscValue) override
         {

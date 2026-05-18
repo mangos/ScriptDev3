@@ -894,7 +894,7 @@ struct npc_shield_orb : public CreatureScript
 
         void AttackStart(Unit* /*pWho*/) override {}
         void MoveInLineOfSight(Unit* /*pWho*/) override {}
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

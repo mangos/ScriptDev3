@@ -92,7 +92,6 @@ enum
     SAY_MAIEV_TAUNT_2               = -1564117,
     SAY_MAIEV_TAUNT_3               = -1564119,
 
-
     /************** Spells *************/
     // Normal Form
     SPELL_SHEAR                     = 41032,                // Reduces Max. Health by 60% for 7 seconds. Can stack 19 times. 1.5 second cast
@@ -128,7 +127,6 @@ enum
     SPELL_CAGE_TRAP                 = 40693,                // Cast by Illidan on Maiev - teleports Maiev for the trap
     SPELL_DEATH                     = 41220,                // This spell doesn't do anything except stun Illidan and set him on his knees.
     SPELL_BERSERK                   = 45078,                // Damage increased by 500%, attack speed by 150%
-
 
     /************** Non-Illidan Spells *************/
     // Akama
@@ -170,7 +168,6 @@ enum
     SPELL_CAGE_TRAP_PERIODIC        = 40760,                // purpose unk
     SPELL_CAGE_TRAP_DUMMY           = 40761,                // purpose unk
     SPELL_CAGED                     = 40695,                // Caged Trap triggers will cast this on Illidan if he is within 3 yards
-
 
     /************** Creature Summons **************/
     NPC_ILLIDARI_ELITE              = 23226,                // attacks Akama on the stairs
@@ -418,7 +415,7 @@ struct boss_illidan_stormrage : public CreatureScript
         }
 
         // Do not attack using LoS function. The attack is triggered in script
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustReachedHome() override
         {
@@ -634,7 +631,10 @@ struct boss_illidan_stormrage : public CreatureScript
         }
 
         // Wrapper to start the combat dialogue
-        void DoStartCombatEvent() { StartNextDialogueText(NPC_AKAMA); }
+        void DoStartCombatEvent()
+        {
+             StartNextDialogueText(NPC_AKAMA);
+        }
 
         // Wrapper to land Illidan when both flames are killed
         void DoInformFlameKilled()
@@ -1512,7 +1512,7 @@ struct boss_maiev : public CreatureScript
         }
 
         // Attack only by script
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDidDialogueStep(int32 iEntry) override
         {
@@ -1618,7 +1618,7 @@ struct npc_cage_trap_trigger : public CreatureScript
 
     struct npc_cage_trap_triggerAI : public ScriptedAI
     {
-        npc_cage_trap_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_cage_trap_triggerAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bActive;
 
@@ -1627,7 +1627,7 @@ struct npc_cage_trap_trigger : public CreatureScript
             m_bActive = false;
         }
 
-        void AttackStart(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {
@@ -1656,7 +1656,7 @@ struct npc_cage_trap_trigger : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -1675,7 +1675,7 @@ struct npc_flame_of_azzinoth : public CreatureScript
 
     struct npc_flame_of_azzinothAI : public ScriptedAI
     {
-        npc_flame_of_azzinothAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_flame_of_azzinothAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiFlameBlastTimer;
         uint32 m_uiSummonBlazeTimer;
@@ -1816,7 +1816,7 @@ struct npc_shadow_demon : public CreatureScript
 
     struct npc_shadow_demonAI : public ScriptedAI
     {
-        npc_shadow_demonAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_shadow_demonAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_targetGuid;
 
@@ -1826,7 +1826,7 @@ struct npc_shadow_demon : public CreatureScript
             m_targetGuid = pWho->GetObjectGuid();
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustDied(Unit* /*pKiller*/) override
         {
@@ -1852,7 +1852,7 @@ struct npc_shadow_demon : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override
@@ -1879,8 +1879,8 @@ struct npc_blade_of_azzinoth : public CreatureScript
         ScriptedInstance* m_pInstance;
 
         // Do-Nothing-But-Stand-There
-        void AttackStart(Unit* /*pWho*/) override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void AttackStart(Unit* /*pWho*/) override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -1910,7 +1910,7 @@ struct npc_blade_of_azzinoth : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

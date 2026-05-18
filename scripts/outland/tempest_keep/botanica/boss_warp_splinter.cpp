@@ -192,7 +192,7 @@ struct npc_sapling : public CreatureScript
 
     struct npc_saplingAI : public ScriptedAI
     {
-        npc_saplingAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_saplingAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void Reset() override
         {
@@ -200,7 +200,7 @@ struct npc_sapling : public CreatureScript
             // m_creature->SetSpeedRate(MOVE_RUN, 0.5f);
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
         void UpdateAI(const uint32 /*uiDiff*/) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

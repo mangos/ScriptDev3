@@ -438,7 +438,7 @@ struct npc_dancing_flames : public CreatureScript
 
     struct npc_dancing_flamesAI : public ScriptedAI
     {
-        npc_dancing_flamesAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_dancing_flamesAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void ReceiveEmote(Player* pPlayer, uint32 uiEmote) override
         {
@@ -554,7 +554,7 @@ struct npc_doctor : public CreatureScript
 
     struct npc_doctorAI : public ScriptedAI
     {
-        npc_doctorAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_doctorAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_playerGuid;
 
@@ -796,7 +796,7 @@ struct npc_injured_patient : public CreatureScript
 
     struct npc_injured_patientAI : public ScriptedAI
     {
-        npc_injured_patientAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_injured_patientAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_doctorGuid;
         Location* m_pCoord;
@@ -979,7 +979,7 @@ struct npc_garments_of_quests : public CreatureScript
 
     struct npc_garments_of_questsAI : public npc_escortAI
     {
-        npc_garments_of_questsAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_garments_of_questsAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
         ObjectGuid m_playerGuid;
 
@@ -1316,7 +1316,7 @@ struct npc_spring_rabbit : public CreatureScript
 
     struct  npc_spring_rabbitAI : public ScriptedPetAI
     {
-        npc_spring_rabbitAI(Creature* pCreature) : ScriptedPetAI(pCreature) { }
+        npc_spring_rabbitAI(Creature* pCreature) : ScriptedPetAI(pCreature) {}
 
         ObjectGuid m_partnerGuid;
         uint32 m_uiStep;
@@ -1331,7 +1331,10 @@ struct npc_spring_rabbit : public CreatureScript
             m_fMoveAngle = 0.0f;
         }
 
-        bool CanStartWhatRabbitsDo() { return !m_partnerGuid && !m_uiStepTimer; }
+        bool CanStartWhatRabbitsDo()
+        {
+             return !m_partnerGuid && !m_uiStepTimer;
+        }
 
         void StartWhatRabbitsDo(Creature* pPartner)
         {
@@ -1522,7 +1525,7 @@ struct npc_redemption_target : public CreatureScript
 
     struct npc_redemption_targetAI : public ScriptedAI
     {
-        npc_redemption_targetAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_redemption_targetAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiEvadeTimer;
         uint32 m_uiHealTimer;
@@ -1703,7 +1706,7 @@ struct npc_burster_worm : public CreatureScript
 
     struct npc_burster_wormAI : public ScriptedAI
     {
-        npc_burster_wormAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_burster_wormAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint8 m_uiPhase;
 
@@ -1958,7 +1961,6 @@ void AddSC_npcs_special()
     s = new npc_spring_rabbit();
     s->RegisterSelf();
 #endif
-
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_chicken_cluck";

@@ -68,7 +68,7 @@ struct boss_buru : public CreatureScript
 
     struct boss_buruAI : public ScriptedAI
     {
-        boss_buruAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_buruAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint8 m_uiPhase;
         uint32 m_uiDismemberTimer;
@@ -233,8 +233,7 @@ struct npc_buru_egg : public CreatureScript
 
         ScriptedInstance* m_pInstance;
 
-        void Reset() override
-        { }
+        void Reset() override {}
 
         void JustSummoned(Creature* pSummoned) override
         {
@@ -275,7 +274,7 @@ struct npc_buru_egg : public CreatureScript
             }
         }
 
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

@@ -115,9 +115,9 @@ struct npc_gilthares : public CreatureScript
 
     struct npc_giltharesAI : public npc_escortAI
     {
-        npc_giltharesAI(Creature* pCreature) : npc_escortAI(pCreature) { }
+        npc_giltharesAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
-        void Reset() override { }
+        void Reset() override {}
 
         void WaypointReached(uint32 uiPointId) override
         {
@@ -223,7 +223,7 @@ struct npc_taskmaster_fizzule : public CreatureScript
 
     struct npc_taskmaster_fizzuleAI : public ScriptedAI
     {
-        npc_taskmaster_fizzuleAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_taskmaster_fizzuleAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiResetTimer;
         uint8 m_uiFlareCount;
@@ -351,7 +351,7 @@ struct npc_twiggy_flathead : public CreatureScript
 
     struct npc_twiggy_flatheadAI : public ScriptedAI
     {
-        npc_twiggy_flatheadAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_twiggy_flatheadAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         bool m_bIsEventInProgress;
 
@@ -810,7 +810,7 @@ struct npc_regthar_deathgate : public CreatureScript
 
     struct npc_regthar_deathgateAI : public ScriptedAI
     {
-        npc_regthar_deathgateAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_regthar_deathgateAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         std::list<Creature*> lCreatureList;
         std::list<uint32> lSpawnList;
@@ -1229,7 +1229,7 @@ struct horde_defender : public CreatureScript
 
     struct npc_horde_defenderAI : public ScriptedAI
     {
-        npc_horde_defenderAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_horde_defenderAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint64 i_victimGuid;
         bool m_bCreatureFound;
@@ -1324,7 +1324,7 @@ struct kolkar_invader : public CreatureScript
 
     struct npc_kolkar_invaderAI : public ScriptedAI
     {
-        npc_kolkar_invaderAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_kolkar_invaderAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint64 i_victimGuid;
         bool m_bCreatureFound;
@@ -1369,8 +1369,6 @@ struct kolkar_invader : public CreatureScript
                 }
             }
         }
-
-
 
         void UpdateAI(const uint32 /*uiDiff*/)
         {

@@ -230,7 +230,7 @@ struct mob_chaotic_rift : public CreatureScript
 
     struct mob_chaotic_riftAI : public Scripted_NoMovementAI
     {
-        mob_chaotic_riftAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { }
+        mob_chaotic_riftAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
         uint32 m_uiChargedRemoveTimer;
 

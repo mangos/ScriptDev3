@@ -70,7 +70,7 @@ struct mob_anubisath_guardian : public CreatureScript
 
     struct mob_anubisath_guardianAI : public ScriptedAI
     {
-        mob_anubisath_guardianAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        mob_anubisath_guardianAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiSpell1;
         uint32 m_uiSpell2;

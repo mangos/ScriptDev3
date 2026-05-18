@@ -51,7 +51,7 @@ struct boss_hazzara : public CreatureScript
 
     struct boss_hazzarahAI : public ScriptedAI
     {
-        boss_hazzarahAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_hazzarahAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiManaBurnTimer;
         uint32 m_uiSleepTimer;

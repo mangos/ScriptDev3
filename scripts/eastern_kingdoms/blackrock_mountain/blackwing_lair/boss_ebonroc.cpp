@@ -163,6 +163,9 @@ struct boss_ebonroc : public CreatureScript
     }
 };
 
+/**
+ * Registers the Ebonroc encounter script.
+ */
 void AddSC_boss_ebonroc()
 {
     Script* s;

@@ -1085,7 +1085,7 @@ struct npc_unworthy_initiate_anchor : public CreatureScript
 
     struct  npc_unworthy_initiate_anchorAI : public ScriptedAI
     {
-        npc_unworthy_initiate_anchorAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_unworthy_initiate_anchorAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         ObjectGuid m_myInitiateGuid;
         ObjectGuid m_myPrisonGuid;
@@ -3314,10 +3314,10 @@ struct npc_lich_king_light_dawn : public CreatureScript
     {
         npc_lich_king_light_dawnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-        void Reset() override { }
-        void MoveInLineOfSight(Unit* /*pWho*/) override { }
-        void AttackStart(Unit* /*pWho*/) override { }
-        void UpdateAI(const uint32 /*uiDiff*/) override { }
+        void Reset() override {}
+        void MoveInLineOfSight(Unit* /*pWho*/) override {}
+        void AttackStart(Unit* /*pWho*/) override {}
+        void UpdateAI(const uint32 /*uiDiff*/) override {}
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

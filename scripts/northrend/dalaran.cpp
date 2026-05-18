@@ -58,7 +58,7 @@ struct npc_dalaran_guardian_mage : public CreatureScript
 
     struct npc_dalaran_guardian_mageAI : public ScriptedAI
     {
-        npc_dalaran_guardian_mageAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        npc_dalaran_guardian_mageAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         void MoveInLineOfSight(Unit* pWho) override
         {

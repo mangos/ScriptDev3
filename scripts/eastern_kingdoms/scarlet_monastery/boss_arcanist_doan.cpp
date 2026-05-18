@@ -53,7 +53,7 @@ struct boss_arcanist_doan : public CreatureScript
 
     struct boss_arcanist_doanAI : public ScriptedAI
     {
-        boss_arcanist_doanAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+        boss_arcanist_doanAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
         uint32 m_uiPolymorphTimer;
         uint32 m_uiSilenceTimer;

@@ -372,6 +372,9 @@ struct boss_noth : public CreatureScript
     }
 };
 
+/**
+ * Registers the Noth the Plaguebringer encounter script.
+ */
 void AddSC_boss_noth()
 {
     Script* s;

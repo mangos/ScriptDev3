@@ -462,6 +462,9 @@ struct boss_victor_nefarius : public CreatureScript
     }
 };
 
+/**
+ * Registers the Victor Nefarius encounter script.
+ */
 void AddSC_boss_victor_nefarius()
 {
     Script* s;
