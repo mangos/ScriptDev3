@@ -507,7 +507,6 @@ struct npc_chess_piece_genericAI : public ScriptedAI
          return 5000;
     }
 
-
     void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_CHESS) != IN_PROGRESS)

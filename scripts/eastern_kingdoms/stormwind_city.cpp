@@ -435,7 +435,6 @@ struct npc_squire_rowe : public CreatureScript
              return m_bIsEventInProgress;
         }
 
-
         void UpdateEscortAI(const uint32 uiDiff) { DialogueUpdate(uiDiff); }
     };
 
@@ -1085,7 +1084,6 @@ struct npc_reginald_windsor : public CreatureScript
         {
              return m_bIsKeepReady;
         }
-
 
         void UpdateEscortAI(const uint32 uiDiff) override
         {

@@ -236,7 +236,8 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
             if (m_creature->GetCombatDistance(m_creature->getVictim(), false) > 0 && m_creature->CanUseEquippedWeapon(RANGED_ATTACK) )
             {
                 // Make sure our attack is ready
-                if (m_creature->isAttackReady(RANGED_ATTACK)){
+                if (m_creature->isAttackReady(RANGED_ATTACK))
+                {
                     // Use spell instead of normal ranged attack that seem not working. TODO: check ranged attack!
                     DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHOOT);
                     //m_creature->AttackerStateUpdate(m_creature->getVictim(),RANGED_ATTACK);
@@ -321,10 +322,9 @@ struct rampaging_worgen : public CreatureScript
             if (m_creature->IsInCombat() && m_creature->IsAlive())
             {
                 // Cast enrage spell if less than 70% hp ONLY and not casted already
-                if (m_creature->GetHealthPercent() < 70.0f && !spellCooldown) {
+                if (m_creature->GetHealthPercent() < 70.0f && !spellCooldown)
                 {
                     DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
-                }
                     spellCooldown = SPELL_ENRAGE_DELAY;
                 }
 
