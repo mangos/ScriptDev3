@@ -265,9 +265,9 @@ struct is_oculus : public InstanceScript
 
         // Check Varos' shield
         //bool IsShieldBroken()
-        {
-             return ;
-        }
+        //{
+        //     return ;
+        //}
 
     protected:
         void DoSpawnNextBossIfCan()

@@ -360,13 +360,13 @@ struct is_pinnacle : public InstanceScript
 
         //void SetGortokEventStarter(ObjectGuid playerGuid) { m_gortokEventStarterGuid = playerGuid; }
         //ObjectGuid GetGortokEventStarter()
-        {
-             return m_gortokEventStarterGuid;
-        }
+        //{
+        //     return m_gortokEventStarterGuid;
+        //}
         //ObjectGuid GetSkadiMobsTrigger()
-        {
-             return m_skadiMobsTriggerGuid;
-        }
+        //{
+        //     return m_skadiMobsTriggerGuid;
+        //}
 
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override
