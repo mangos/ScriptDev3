@@ -530,92 +530,92 @@ struct boss_onyxia : public CreatureScript
                     if (m_uiMovementTimer < uiDiff)
                     {
                          // 3 possible actions
-                         switch (urand(0, 2))
-                         {
-                             case 0:                             // breath
-                                 DoScriptText(EMOTE_BREATH, m_creature);
-                                 DoCastSpellIfCan(m_creature, aMoveData[m_uiMovePoint].uiSpellId, CAST_INTERRUPT_PREVIOUS);
-                                 m_uiMovePoint += NUM_MOVE_POINT / 2;
-                                 m_uiMovePoint %= NUM_MOVE_POINT;
-                                 m_uiMovementTimer = 25000;
-                                 return;
-                              case 1:                             // a point on the left side
-                              {
+                        switch (urand(0, 2))
+                        {
+                            case 0:                             // breath
+                                DoScriptText(EMOTE_BREATH, m_creature);
+                                DoCastSpellIfCan(m_creature, aMoveData[m_uiMovePoint].uiSpellId, CAST_INTERRUPT_PREVIOUS);
+                                m_uiMovePoint += NUM_MOVE_POINT / 2;
+                                m_uiMovePoint %= NUM_MOVE_POINT;
+                                m_uiMovementTimer = 25000;
+                                return;
+                            case 1:                             // a point on the left side
+                            {
                                   // C++ is stupid, so add -1 with +7
-                                  m_uiMovePoint += NUM_MOVE_POINT - 1;
-                                  m_uiMovePoint %= NUM_MOVE_POINT;
-                                  break;
-                              }
-                              case 2:                             // a point on the right side
-                                   ++m_uiMovePoint %= NUM_MOVE_POINT;
-                                   break;
-                          }
+                                m_uiMovePoint += NUM_MOVE_POINT - 1;
+                                m_uiMovePoint %= NUM_MOVE_POINT;
+                                break;
+                            }
+                            case 2:                             // a point on the right side
+                                ++m_uiMovePoint %= NUM_MOVE_POINT;
+                                break;
+                        }
 
-                          m_uiMovementTimer = urand(15000, 25000);
-                          m_creature->GetMotionMaster()->MovePoint(m_uiMovePoint, aMoveData[m_uiMovePoint].fX, aMoveData[m_uiMovePoint].fY, aMoveData[m_uiMovePoint].fZ);
-                      }
-                      else
-                      {
-                          m_uiMovementTimer -= uiDiff;
-                      }
+                        m_uiMovementTimer = urand(15000, 25000);
+                        m_creature->GetMotionMaster()->MovePoint(m_uiMovePoint, aMoveData[m_uiMovePoint].fX, aMoveData[m_uiMovePoint].fY, aMoveData[m_uiMovePoint].fZ);
+                    }
+                    else
+                    {
+                        m_uiMovementTimer -= uiDiff;
+                    }
 
-                      if (m_uiFireballTimer < uiDiff)
-                      {
-                          if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                          {
+                    if (m_uiFireballTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
 #if defined (CLASSIC) || defined (TBC)
-                              if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
+                            if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
 #endif
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
-                              if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_FIREBALL : SPELL_FIREBALL_H) == CAST_OK)
+                            if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_FIREBALL : SPELL_FIREBALL_H) == CAST_OK)
 #endif
-                              {
-                                  m_uiFireballTimer = urand(3000, 5000);
-                              }
-                          }
-                      }
-                      else
-                      {
-                          m_uiFireballTimer -= uiDiff;    // engulfingflames is supposed to be activated by a fireball but haven't come by
-                      }
+                            {
+                                m_uiFireballTimer = urand(3000, 5000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiFireballTimer -= uiDiff;    // engulfingflames is supposed to be activated by a fireball but haven't come by
+                    }
 
-                      if (m_bIsSummoningWhelps)
-                      {
-                          if (DidSummonWhelps(uiDiff))
-                          {
-                              m_bIsSummoningWhelps = false;
-                              m_uiSummonCount = 0;
-                              m_uiSummonWhelpsTimer = 80000;      // 90s - 10s for summoning
-                          }
-                      }
-                      else
-                      {
-                          if (m_uiSummonWhelpsTimer < uiDiff)
-                          {
-                              m_bIsSummoningWhelps = true;
-                          }
-                          else
-                          {
-                              m_uiSummonWhelpsTimer -= uiDiff;
-                          }
-                      }
+                    if (m_bIsSummoningWhelps)
+                    {
+                        if (DidSummonWhelps(uiDiff))
+                        {
+                            m_bIsSummoningWhelps = false;
+                            m_uiSummonCount = 0;
+                            m_uiSummonWhelpsTimer = 80000;      // 90s - 10s for summoning
+                        }
+                    }
+                    else
+                    {
+                        if (m_uiSummonWhelpsTimer < uiDiff)
+                        {
+                            m_bIsSummoningWhelps = true;
+                        }
+                        else
+                        {
+                            m_uiSummonWhelpsTimer -= uiDiff;
+                        }
+                    }
 
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
-                      if (m_uiSummonGuardTimer < uiDiff)
-                      {
-                          if (!m_creature->IsNonMeleeSpellCasted(false))
-                          {
-                              m_creature->CastSpell(afSpawnLocations[2][0], afSpawnLocations[2][1], afSpawnLocations[2][2], SPELL_SUMMON_LAIR_GUARD, true);
-                              m_uiSummonGuardTimer = 30000;
-                          }
-                      }
-                      else
-                      {
-                          m_uiSummonGuardTimer -= uiDiff;
-                      }
+                    if (m_uiSummonGuardTimer < uiDiff)
+                    {
+                        if (!m_creature->IsNonMeleeSpellCasted(false))
+                        {
+                            m_creature->CastSpell(afSpawnLocations[2][0], afSpawnLocations[2][1], afSpawnLocations[2][2], SPELL_SUMMON_LAIR_GUARD, true);
+                            m_uiSummonGuardTimer = 30000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiSummonGuardTimer -= uiDiff;
+                    }
 #endif
 
-                      break;
+                    break;
                 }
                 case PHASE_BREATH_PRE:                          // Summon first rounds of whelps
                     DidSummonWhelps(uiDiff);

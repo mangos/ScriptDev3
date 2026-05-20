@@ -163,14 +163,14 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             {
                 uiDamage = 0;
 
-                 if (Player* pPlayer = GetPlayerForEscort())
-                 {
-                     pPlayer->GroupEventHappens(QUEST_MISSING_DIPLO_PT11, m_creature);
-                     if (Creature* pFriend = m_creature->GetMap()->GetCreature(friendGUID))
-                     {
-                         pFriend->ForcedDespawn(0);
-                     }
-                 }
+                if (Player* pPlayer = GetPlayerForEscort())
+                {
+                    pPlayer->GroupEventHappens(QUEST_MISSING_DIPLO_PT11, m_creature);
+                    if (Creature* pFriend = m_creature->GetMap()->GetCreature(friendGUID))
+                    {
+                        pFriend->ForcedDespawn(0);
+                    }
+                }
                 // despawn friend - Note: may not work on guardian pets
 
                 // set escort on pause and evade

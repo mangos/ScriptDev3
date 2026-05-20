@@ -622,7 +622,7 @@ struct is_icecrown_citadel : public InstanceScript
         // Open Putricide door in a few seconds
         void DoPreparePutricideDoor()
         {
-             m_uiPutricideValveTimer = 15000;
+            m_uiPutricideValveTimer = 15000;
         }
 
         void DoHandleCitadelAreaTrigger(Player* pPlayer)

@@ -728,7 +728,7 @@ struct npc_anchorite_barada : public CreatureScript
 
         bool IsExorcismComplete()
         {
-             return m_bEventComplete;
+            return m_bEventComplete;
         }
 
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
@@ -1022,7 +1022,7 @@ static const float aGraveYardLocation[11][4] =
 
 struct npc_caretaker_dilandrus : public CreatureScript
 {
-       npc_caretaker_dilandrus() : CreatureScript("npc_caretaker_dilandrus") {}
+    npc_caretaker_dilandrus() : CreatureScript("npc_caretaker_dilandrus") {}
 
     struct npc_caretaker_dilandrusAI : public ScriptedAI
     {

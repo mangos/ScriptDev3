@@ -51,9 +51,9 @@
  * spell 34665
  * spell 37136
  * spell 39246
- #if defined (WOTLK) || defined (CATA) || defined(MISTS)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
  * spell 43340
- #endif
+#endif
  * spell 44935
  * spell 45109
  * spell 45111
@@ -90,7 +90,7 @@ enum
     NPC_ANGRY_MURLOC            = 17102,
     ITEM_RED_SNAPPER            = 23614,
     // SPELL_SUMMON_TEST           = 49214                  // ! Just wrong spell name? It summon correct creature (17102)but does not appear to be used.
- #if defined (WOTLK) || defined (CATA) || defined(MISTS)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 11472
     SPELL_ANUNIAQS_NET          = 21014,
     GO_TASTY_REEF_FISH          = 186949,
@@ -105,7 +105,7 @@ struct spell_cast_fishing_net : public SpellScript
 
     bool EffectDummy(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pTarget, ObjectGuid /*originalCasterGuid*/) override
     {
- #if defined (WOTLK) || defined (CATA) || defined(MISTS)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
         if (uiSpellId == SPELL_ANUNIAQS_NET)
         {
             GameObject* pGOTarget = pTarget->ToGameObject();
@@ -136,7 +136,7 @@ struct spell_cast_fishing_net : public SpellScript
             }
             return true;
         }
- #endif
+#endif
         if (uiSpellId == SPELL_CAST_FISHING_NET)
         {
             GameObject* pGOTarget = pTarget->ToGameObject();
@@ -234,7 +234,7 @@ enum
     NPC_OWLKIN                          = 16518,
     NPC_OWLKIN_INOC                     = 16534,
 
- #if defined (WOTLK) || defined (CATA) || defined(MISTS)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // target for quest 12166)
     SPELL_LIQUID_FIRE                   = 46770,
     SPELL_LIQUID_FIRE_AURA              = 47972,
@@ -311,7 +311,7 @@ enum
     NPC_DARKSPINE_MYRMIDON              = 25060,
     NPC_DARKSPINE_SIREN                 = 25073,
 
- #if defined (WOTLK) || defined (CATA) || defined(MISTS)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 14107
     SPELL_BLESSING_OF_PEACE             = 66719,
     NPC_FALLEN_HERO_SPIRIT              = 32149,
@@ -329,7 +329,7 @@ enum
     NPC_SAND_GNOME                      = 22483,
     NPC_MATURE_BONE_SIFTER              = 22482,
 
- #if defined (WOTLK) || defined (CATA) || defined(MISTS)
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     // quest 12813, by item 40587
     SPELL_DARKMENDER_TINCTURE           = 52741,
     SPELL_SUMMON_CORRUPTED_SCARLET      = 54415,

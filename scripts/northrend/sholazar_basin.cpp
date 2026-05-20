@@ -88,33 +88,33 @@ struct npc_helice : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 2:
-            {
-                      if (Player* pPlayer = GetPlayerForEscort())
-                      {
-                          DoScriptText(SAY_HELICE_EXPLOSIVES_1, m_creature, pPlayer);
-                          SetEscortPaused(true);
-                      }
-                      break;
-            }
-            case 13:
-            {
-                       if (Player* pPlayer = GetPlayerForEscort())
-                       {
-                           DoScriptText(SAY_HELICE_EXPLOSIVES_2, m_creature, pPlayer);
-                           SetEscortPaused(true);
-                       }
-                       break;
-            }
-            case 22:
-            {
-                       if (Player* pPlayer = GetPlayerForEscort())
-                       {
-                           DoScriptText(SAY_HELICE_COMPLETE, m_creature, pPlayer);
-                           pPlayer->GroupEventHappens(QUEST_ENGINEERING_DISASTER, m_creature);
-                       }
-                       break;
-            }
+                case 2:
+                {
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_HELICE_EXPLOSIVES_1, m_creature, pPlayer);
+                        SetEscortPaused(true);
+                    }
+                    break;
+                }
+                case 13:
+                {
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_HELICE_EXPLOSIVES_2, m_creature, pPlayer);
+                        SetEscortPaused(true);
+                    }
+                    break;
+                }
+                case 22:
+                {
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_HELICE_COMPLETE, m_creature, pPlayer);
+                        pPlayer->GroupEventHappens(QUEST_ENGINEERING_DISASTER, m_creature);
+                    }
+                    break;
+                }
             }
         }
 
@@ -268,29 +268,29 @@ struct npc_injured_rainspeaker : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 22:
-            {
-                       if (Player* pPlayer = GetPlayerForEscort())
-                       {
-                           DoScriptText(SAY_END_1, m_creature, pPlayer);
-                           DoCastSpellIfCan(m_creature, SPELL_ORACLE_INTRO);
-                       }
-                       break;
-            }
-            case 23:
-            {
-                       DoScriptText(SAY_END_2, m_creature);
+                case 22:
+                {
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_END_1, m_creature, pPlayer);
+                        DoCastSpellIfCan(m_creature, SPELL_ORACLE_INTRO);
+                    }
+                    break;
+                }
+                case 23:
+                {
+                    DoScriptText(SAY_END_2, m_creature);
 
                        // location behind
-                       float fAngle = m_creature->GetOrientation();
-                       fAngle += M_PI_F;
+                    float fAngle = m_creature->GetOrientation();
+                    fAngle += M_PI_F;
 
-                       float fX, fY, fZ;
-                       m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0.0f, 15.0f, fAngle);
+                    float fX, fY, fZ;
+                    m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0.0f, 15.0f, fAngle);
 
-                       m_creature->SummonCreature(NPC_FRENZYHEART_TRACKER, fX, fY, fZ, m_creature->GetOrientation(), TEMPSPAWN_TIMED_DESPAWN, 30000);
-                       break;
-            }
+                    m_creature->SummonCreature(NPC_FRENZYHEART_TRACKER, fX, fY, fZ, m_creature->GetOrientation(), TEMPSPAWN_TIMED_DESPAWN, 30000);
+                    break;
+                }
             }
         }
 
@@ -614,13 +614,13 @@ struct npc_tipsy_mcmanus : public CreatureScript
                     case 6:
                     case 7:
                     {
-                              uint8 uiIndex = urand(0, 2);
-                              DoScriptText(aStillAtItFruits[uiIndex].iText, m_creature);
-                              m_uiTaskOwnerEntry = aStillAtItFruits[uiIndex].uiOwnerEntry;
+                        uint8 uiIndex = urand(0, 2);
+                        DoScriptText(aStillAtItFruits[uiIndex].iText, m_creature);
+                        m_uiTaskOwnerEntry = aStillAtItFruits[uiIndex].uiOwnerEntry;
 
-                              m_uiTaskTimer = 0;
-                              m_uiActionTimer = 5000;
-                              break;
+                        m_uiTaskTimer = 0;
+                        m_uiActionTimer = 5000;
+                        break;
                     }
                         // valve or fire task
                     case 2:
@@ -628,13 +628,13 @@ struct npc_tipsy_mcmanus : public CreatureScript
                     case 5:
                     case 8:
                     {
-                              uint8 uiIndex = urand(0, 1);
-                              DoScriptText(aStillAtItMachines[uiIndex].iText, m_creature);
-                              m_uiTaskOwnerEntry = aStillAtItMachines[uiIndex].uiOwnerEntry;
+                        uint8 uiIndex = urand(0, 1);
+                        DoScriptText(aStillAtItMachines[uiIndex].iText, m_creature);
+                        m_uiTaskOwnerEntry = aStillAtItMachines[uiIndex].uiOwnerEntry;
 
-                              m_uiTaskTimer = 0;
-                              m_uiActionTimer = 5000;
-                              break;
+                        m_uiTaskTimer = 0;
+                        m_uiActionTimer = 5000;
+                        break;
                     }
                         // complete event
                     case 9:

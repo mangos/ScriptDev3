@@ -101,6 +101,7 @@ struct guardAI : public ScriptedAI
  */
 struct guardAI_orgrimmar : public guardAI
 {
+
     /**
      * @brief Constructor for guardAI_orgrimmar.
      * @param pCreature Pointer to the creature this AI is associated with.
@@ -121,6 +122,7 @@ struct guardAI_orgrimmar : public guardAI
  */
 struct guardAI_stormwind : public guardAI
 {
+
     /**
      * @brief Constructor for guardAI_stormwind.
      * @param pCreature Pointer to the creature this AI is associated with.

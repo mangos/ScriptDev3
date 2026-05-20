@@ -125,19 +125,19 @@ struct boss_shirrak : public CreatureScript
                 switch (m_uiFocusFireCount)
                 {
                 case 1:
-                {
-                          // engage the target
-                          pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_PLAYER);
+                    {
+                        // engage the target
+                        pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_PLAYER);
 
-                          if (!pTarget)
-                          {
-                              pTarget = m_creature->getVictim();
-                          }
+                        if (!pTarget)
+                        {
+                            pTarget = m_creature->getVictim();
+                        }
 
-                          DoScriptText(EMOTE_FOCUS, m_creature, pTarget);
-                          m_focusTargetGuid = pTarget->GetObjectGuid();
-                          // no break;
-                }
+                        DoScriptText(EMOTE_FOCUS, m_creature, pTarget);
+                        m_focusTargetGuid = pTarget->GetObjectGuid();
+                        // no break;
+                    }
                 case 2:
                     // we have a delay of 1 sec between the summons
                     m_uiFocusFireTimer = 1000;

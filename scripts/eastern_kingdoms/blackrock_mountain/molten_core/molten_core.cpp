@@ -35,9 +35,7 @@
 
 /**
  * ContentData
-#if defined (CLASSIC) || defined (TBC) || defined(WOTLK) || defined(CATA) || defined(MISTS)
  * go_molten_core_rune
-#endif
  * EndContentData
  */
 
@@ -72,6 +70,7 @@ struct go_molten_core_rune : public GameObjectScript
     }
 };
 #endif
+
 /**
  * Registers Molten Core zone script content.
  */

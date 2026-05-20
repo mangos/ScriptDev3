@@ -150,6 +150,7 @@ struct npc_spirit_guide : public CreatureScript
         }
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
+
         /**
          * @brief Handles the spell hit target event.
          *

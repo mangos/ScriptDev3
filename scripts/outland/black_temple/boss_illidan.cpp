@@ -37,6 +37,7 @@ EndScriptData */
 
 enum
 {
+
     /************* Quotes and Sounds ***********************/
     // Intro yells and gossip
     SAY_AKAMA_BEWARE                = -1564120,
@@ -633,7 +634,7 @@ struct boss_illidan_stormrage : public CreatureScript
         // Wrapper to start the combat dialogue
         void DoStartCombatEvent()
         {
-             StartNextDialogueText(NPC_AKAMA);
+            StartNextDialogueText(NPC_AKAMA);
         }
 
         // Wrapper to land Illidan when both flames are killed

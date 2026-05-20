@@ -1123,17 +1123,17 @@ struct mob_torloth : public CreatureScript
                 }
                 break;
             case 6:
-            {
-                      if (Player* pTarget = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                      {
-                          SetCombatMovement(true);
-                          m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                          float fLocX, fLocY, fLocZ;
-                          pTarget->GetPosition(fLocX, fLocY, fLocZ);
-                          m_creature->GetMotionMaster()->MovePoint(0, fLocX, fLocY, fLocZ);
-                      }
-                      break;
-            }
+                {
+                    if (Player* pTarget = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                    {
+                        SetCombatMovement(true);
+                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                        float fLocX, fLocY, fLocZ;
+                        pTarget->GetPosition(fLocX, fLocY, fLocZ);
+                        m_creature->GetMotionMaster()->MovePoint(0, fLocX, fLocY, fLocZ);
+                    }
+                    break;
+                }
             }
 
             ++m_uiAnimationCount;

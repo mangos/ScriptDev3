@@ -106,7 +106,7 @@ struct npc_escortAI : public ScriptedAI
     protected:
         Player* GetPlayerForEscort()
         {
-             return m_creature->GetMap()->GetPlayer(m_playerGuid);
+            return m_creature->GetMap()->GetPlayer(m_playerGuid);
         }
 
         virtual void JustStartedEscort() {}

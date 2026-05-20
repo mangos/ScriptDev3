@@ -297,18 +297,18 @@ struct npc_harrison_jones : public CreatureScript
                 break;
             case 16:
             {
-                       // set mummies in fire
-                       std::list<Creature*> lBunniesInRange;
-                       GetCreatureListWithEntryInGrid(lBunniesInRange, m_creature, NPC_MUMMY_EFFECT_BUNNY, 50.0f);
+                // set mummies in fire
+                std::list<Creature*> lBunniesInRange;
+                GetCreatureListWithEntryInGrid(lBunniesInRange, m_creature, NPC_MUMMY_EFFECT_BUNNY, 50.0f);
 
-                       for (std::list<Creature*>::const_iterator itr = lBunniesInRange.begin(); itr != lBunniesInRange.end(); ++itr)
-                       {
-                           (*itr)->CastSpell((*itr), SPELL_BUNNY_IMMOLATION, true);
-                       }
+                for (std::list<Creature*>::const_iterator itr = lBunniesInRange.begin(); itr != lBunniesInRange.end(); ++itr)
+                {
+                    (*itr)->CastSpell((*itr), SPELL_BUNNY_IMMOLATION, true);
+                }
 
-                       m_creature->SetFacingTo(5.0f);
-                       DoCastSpellIfCan(m_creature, SPELL_GONG_EFFECT);
-                       break;
+                m_creature->SetFacingTo(5.0f);
+                DoCastSpellIfCan(m_creature, SPELL_GONG_EFFECT);
+                break;
             }
             case 17:
                 DoScriptText(SAY_HARRISON_CHAMBER_3, m_creature);

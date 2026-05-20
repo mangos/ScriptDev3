@@ -500,11 +500,11 @@ struct npc_chess_piece_genericAI : public ScriptedAI
 
     virtual uint32 DoCastPrimarySpell()
     {
-         return 5000;
+        return 5000;
     }
     virtual uint32 DoCastSecondarySpell()
     {
-         return 5000;
+        return 5000;
     }
 
     void UpdateAI(const uint32 uiDiff) override

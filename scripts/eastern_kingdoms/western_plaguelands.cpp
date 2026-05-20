@@ -580,159 +580,159 @@ struct npc_taelan_fordring : public CreatureScript
         {
             switch (iEntry)
             {
-            case NPC_SCARLET_CAVALIER:
-            {
-                                         // kneel and make everyone worried
-                                         m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                                         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-
-                                         std::list<Creature*> lCavaliersInRange;
-                                         GetCreatureListWithEntryInGrid(lCavaliersInRange, m_creature, NPC_SCARLET_CAVALIER, 10.0f);
-
-                                         uint8 uiIndex = 0;
-                                         for (std::list<Creature*>::const_iterator itr = lCavaliersInRange.begin(); itr != lCavaliersInRange.end(); ++itr)
-                                         {
-                                             m_lCavalierGuids.push_back((*itr)->GetObjectGuid());
-                                             (*itr)->SetFacingToObject(m_creature);
-                                             DoScriptText(aCavalierYells[uiIndex], (*itr));
-                                             ++uiIndex;
-                                         }
-                                         break;
-            }
-            case QUEST_ID_SCARLET_SUBTERFUGE:
-            {
-                                                float fX, fY, fZ;
-                                                for (GuidList::const_iterator itr = m_lCavalierGuids.begin(); itr != m_lCavalierGuids.end(); ++itr)
-                                                {
-                                                    if (Creature* pCavalier = m_creature->GetMap()->GetCreature(*itr))
-                                                    {
-                                                        m_creature->GetContactPoint(pCavalier, fX, fY, fZ);
-                                                        pCavalier->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
-                                                    }
-                                                }
-                                                break;
-            }
-            case SAY_SCARLET_COMPLETE_1:
-                // stand up and knock down effect
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                DoCastSpellIfCan(m_creature, SPELL_TAELAN_SUFFERING);
-                break;
-            case QUEST_ID_IN_DREAMS:
-                // force attack
-                for (GuidList::const_iterator itr = m_lCavalierGuids.begin(); itr != m_lCavalierGuids.end(); ++itr)
+                case NPC_SCARLET_CAVALIER:
                 {
-                    if (Creature* pCavalier = m_creature->GetMap()->GetCreature(*itr))
+                    // kneel and make everyone worried
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+
+                    std::list<Creature*> lCavaliersInRange;
+                    GetCreatureListWithEntryInGrid(lCavaliersInRange, m_creature, NPC_SCARLET_CAVALIER, 10.0f);
+
+                    uint8 uiIndex = 0;
+                    for (std::list<Creature*>::const_iterator itr = lCavaliersInRange.begin(); itr != lCavaliersInRange.end(); ++itr)
                     {
-                        pCavalier->AI()->AttackStart(m_creature);
+                        m_lCavalierGuids.push_back((*itr)->GetObjectGuid());
+                        (*itr)->SetFacingToObject(m_creature);
+                        DoScriptText(aCavalierYells[uiIndex], (*itr));
+                        ++uiIndex;
                     }
+                    break;
                 }
-                m_bScarletComplete = true;
-                break;
-            case SAY_SCARLET_COMPLETE_2:
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                break;
-            case MODEL_TAELAN_MOUNT:
-                // mount when outside
-                m_bHasMount = true;
-                SetEscortPaused(false);
-                m_creature->Mount(MODEL_TAELAN_MOUNT);
-                break;
-            case SAY_REACH_TOWER:
-                // start fight event
-                m_creature->SummonCreature(NPC_ISILLIEN, 2693.12f, -1943.04f, 72.04f, 2.11f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
-                break;
-            case SAY_ISILLIEN_2:
-                if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
+                case QUEST_ID_SCARLET_SUBTERFUGE:
                 {
-                    m_creature->SetFacingToObject(pIsillien);
-                }
-                break;
-            case SPELL_CRUSADER_STRIKE:
-            {
-                                          // spawn additioinal elites
-                                          m_creature->SummonCreature(NPC_CRIMSON_ELITE, 2711.32f, -1882.67f, 67.89f, 3.2f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
-                                          m_creature->SummonCreature(NPC_CRIMSON_ELITE, 2710.93f, -1878.90f, 67.97f, 3.2f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
-                                          m_creature->SummonCreature(NPC_CRIMSON_ELITE, 2710.53f, -1875.28f, 67.90f, 3.2f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
-
-                                          std::list<Creature*> lElitesInRange;
-                                          Player* pPlayer = GetPlayerForEscort();
-                                          if (!pPlayer)
-                                          {
-                                              return;
-                                          }
-
-                                          GetCreatureListWithEntryInGrid(lElitesInRange, m_creature, NPC_CRIMSON_ELITE, 70.0f);
-
-                                          for (std::list<Creature*>::const_iterator itr = lElitesInRange.begin(); itr != lElitesInRange.end(); ++itr)
-                                          {
-                                              (*itr)->AI()->AttackStart(pPlayer);
-                                          }
-
-                                          // Isillien only attacks Taelan
-                                          if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
-                                          {
-                                              pIsillien->AI()->AttackStart(m_creature);
-                                              AttackStart(pIsillien);
-                                          }
-
-                                          m_bFightStarted = true;
-                                          break;
-            }
-            case SAY_KILL_TAELAN_1:
-                // kill taelan and attack players
-                if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
-                {
-                    SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pIsillien);
-                }
-                break;
-            case EMOTE_ATTACK_PLAYER:
-                // attack players
-                if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
-                {
-                    if (Player* pPlayer = GetPlayerForEscort())
+                    float fX, fY, fZ;
+                    for (GuidList::const_iterator itr = m_lCavalierGuids.begin(); itr != m_lCavalierGuids.end(); ++itr)
                     {
-                        pIsillien->AI()->AttackStart(pPlayer);
+                        if (Creature* pCavalier = m_creature->GetMap()->GetCreature(*itr))
+                        {
+                            m_creature->GetContactPoint(pCavalier, fX, fY, fZ);
+                            pCavalier->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                        }
                     }
+                    break;
                 }
-                break;
-                // tirion event
-            case SAY_TIRION_5:
-                if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
+                case SAY_SCARLET_COMPLETE_1:
+                    // stand up and knock down effect
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                    DoCastSpellIfCan(m_creature, SPELL_TAELAN_SUFFERING);
+                    break;
+                case QUEST_ID_IN_DREAMS:
+                    // force attack
+                    for (GuidList::const_iterator itr = m_lCavalierGuids.begin(); itr != m_lCavalierGuids.end(); ++itr)
+                    {
+                        if (Creature* pCavalier = m_creature->GetMap()->GetCreature(*itr))
+                        {
+                            pCavalier->AI()->AttackStart(m_creature);
+                        }
+                    }
+                    m_bScarletComplete = true;
+                    break;
+                case SAY_SCARLET_COMPLETE_2:
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                    break;
+                case MODEL_TAELAN_MOUNT:
+                    // mount when outside
+                    m_bHasMount = true;
+                    SetEscortPaused(false);
+                    m_creature->Mount(MODEL_TAELAN_MOUNT);
+                    break;
+                case SAY_REACH_TOWER:
+                    // start fight event
+                    m_creature->SummonCreature(NPC_ISILLIEN, 2693.12f, -1943.04f, 72.04f, 2.11f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
+                    break;
+                case SAY_ISILLIEN_2:
+                    if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
+                    {
+                        m_creature->SetFacingToObject(pIsillien);
+                    }
+                    break;
+                case SPELL_CRUSADER_STRIKE:
                 {
+                    // spawn additioinal elites
+                    m_creature->SummonCreature(NPC_CRIMSON_ELITE, 2711.32f, -1882.67f, 67.89f, 3.2f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
+                    m_creature->SummonCreature(NPC_CRIMSON_ELITE, 2710.93f, -1878.90f, 67.97f, 3.2f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
+                    m_creature->SummonCreature(NPC_CRIMSON_ELITE, 2710.53f, -1875.28f, 67.90f, 3.2f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
+
+                    std::list<Creature*> lElitesInRange;
+                    Player* pPlayer = GetPlayerForEscort();
+                    if (!pPlayer)
+                    {
+                        return;
+                    }
+
+                    GetCreatureListWithEntryInGrid(lElitesInRange, m_creature, NPC_CRIMSON_ELITE, 70.0f);
+
+                    for (std::list<Creature*>::const_iterator itr = lElitesInRange.begin(); itr != lElitesInRange.end(); ++itr)
+                    {
+                        (*itr)->AI()->AttackStart(pPlayer);
+                    }
+
+                      // Isillien only attacks Taelan
+                    if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
+                    {
+                        pIsillien->AI()->AttackStart(m_creature);
+                        AttackStart(pIsillien);
+                    }
+
+                    m_bFightStarted = true;
+                    break;
+                }
+                case SAY_KILL_TAELAN_1:
+                    // kill taelan and attack players
+                    if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
+                    {
+                        SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pIsillien);
+                    }
+                    break;
+                case EMOTE_ATTACK_PLAYER:
+                    // attack players
+                    if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
+                    {
+                        if (Player* pPlayer = GetPlayerForEscort())
+                        {
+                            pIsillien->AI()->AttackStart(pPlayer);
+                        }
+                    }
+                    break;
+                    // tirion event
+                case SAY_TIRION_5:
+                    if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
+                    {
+                        if (Creature* pTirion = m_creature->GetMap()->GetCreature(m_tirionGuid))
+                        {
+                            pTirion->AI()->AttackStart(pIsillien);
+                            pIsillien->AI()->AttackStart(pTirion);
+                        }
+                    }
+                    break;
+                    // epilog dialogue
+                case EMOTE_HOLD_TAELAN:
                     if (Creature* pTirion = m_creature->GetMap()->GetCreature(m_tirionGuid))
                     {
-                        pTirion->AI()->AttackStart(pIsillien);
-                        pIsillien->AI()->AttackStart(pTirion);
+                        pTirion->SetStandState(UNIT_STAND_STATE_KNEEL);
                     }
-                }
-                break;
-                // epilog dialogue
-            case EMOTE_HOLD_TAELAN:
-                if (Creature* pTirion = m_creature->GetMap()->GetCreature(m_tirionGuid))
-                {
-                    pTirion->SetStandState(UNIT_STAND_STATE_KNEEL);
-                }
-                break;
-            case SAY_EPILOG_4:
-                if (Creature* pTirion = m_creature->GetMap()->GetCreature(m_tirionGuid))
-                {
-                    pTirion->SetStandState(UNIT_STAND_STATE_STAND);
-                }
-                break;
-            case SAY_EPILOG_5:
-                if (Creature* pTirion = m_creature->GetMap()->GetCreature(m_tirionGuid))
-                {
-                    if (Player* pPlayer = GetPlayerForEscort())
+                    break;
+                case SAY_EPILOG_4:
+                    if (Creature* pTirion = m_creature->GetMap()->GetCreature(m_tirionGuid))
                     {
-                        pPlayer->GroupEventHappens(QUEST_ID_IN_DREAMS, m_creature);
-                        pTirion->SetFacingToObject(pPlayer);
+                        pTirion->SetStandState(UNIT_STAND_STATE_STAND);
                     }
+                    break;
+                case SAY_EPILOG_5:
+                    if (Creature* pTirion = m_creature->GetMap()->GetCreature(m_tirionGuid))
+                    {
+                        if (Player* pPlayer = GetPlayerForEscort())
+                        {
+                            pPlayer->GroupEventHappens(QUEST_ID_IN_DREAMS, m_creature);
+                            pTirion->SetFacingToObject(pPlayer);
+                        }
 
-                    pTirion->ForcedDespawn(3 * MINUTE*IN_MILLISECONDS);
-                    pTirion->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                }
-                m_creature->ForcedDespawn(3 * MINUTE*IN_MILLISECONDS);
-                break;
+                        pTirion->ForcedDespawn(3 * MINUTE*IN_MILLISECONDS);
+                        pTirion->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                    }
+                    m_creature->ForcedDespawn(3 * MINUTE*IN_MILLISECONDS);
+                    break;
             }
         }
 

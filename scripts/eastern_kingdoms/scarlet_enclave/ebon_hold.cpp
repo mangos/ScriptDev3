@@ -990,19 +990,19 @@ struct npc_koltira_deathweaver : public CreatureScript
                         break;
                     case 4:
                     {
-                              Creature* pTemp = m_creature->GetMap()->GetCreature(m_valrothGuid);
+                        Creature* pTemp = m_creature->GetMap()->GetCreature(m_valrothGuid);
 
-                              if (!pTemp || !pTemp->IsAlive())
-                              {
-                                  DoScriptText(SAY_BREAKOUT8, m_creature);
-                                  m_uiWave_Timer = 5000;
-                              }
-                              else
-                              {
-                                  m_uiWave_Timer = 2500;
-                                  return;                         // return, we don't want m_uiWave to increment now
-                              }
-                              break;
+                        if (!pTemp || !pTemp->IsAlive())
+                        {
+                            DoScriptText(SAY_BREAKOUT8, m_creature);
+                            m_uiWave_Timer = 5000;
+                        }
+                        else
+                        {
+                            m_uiWave_Timer = 2500;
+                            return;                         // return, we don't want m_uiWave to increment now
+                        }
+                        break;
                     }
                     case 5:
                         DoScriptText(SAY_BREAKOUT9, m_creature);

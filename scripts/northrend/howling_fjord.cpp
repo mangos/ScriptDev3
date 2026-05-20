@@ -1022,19 +1022,19 @@ struct npc_apothecary_hanes : public CreatureScript
             case 21:
             case 29:
             {
-                       m_creature->HandleEmote(EMOTE_ONESHOT_ATTACK1H);
+                m_creature->HandleEmote(EMOTE_ONESHOT_ATTACK1H);
 
-                       // set all nearby triggers on fire - ToDo: research if done by spell!
-                       std::list<Creature*> lTriggersInRange;
-                       GetCreatureListWithEntryInGrid(lTriggersInRange, m_creature, NPC_HANES_TRIGGER, 10.0f);
+                   // set all nearby triggers on fire - ToDo: research if done by spell!
+                std::list<Creature*> lTriggersInRange;
+                GetCreatureListWithEntryInGrid(lTriggersInRange, m_creature, NPC_HANES_TRIGGER, 10.0f);
 
-                       for (std::list<Creature*>::const_iterator itr = lTriggersInRange.begin(); itr != lTriggersInRange.end(); ++itr)
-                       {
-                           (*itr)->CastSpell((*itr), SPELL_LOW_POLY_FIRE, true);
-                           (*itr)->ForcedDespawn(30000);
-                       }
+                for (std::list<Creature*>::const_iterator itr = lTriggersInRange.begin(); itr != lTriggersInRange.end(); ++itr)
+                {
+                    (*itr)->CastSpell((*itr), SPELL_LOW_POLY_FIRE, true);
+                    (*itr)->ForcedDespawn(30000);
+                }
 
-                       break;
+                break;
             }
 
             case 15:

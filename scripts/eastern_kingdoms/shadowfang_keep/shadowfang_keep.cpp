@@ -615,34 +615,34 @@ struct boss_arugal : public CreatureScript
                         break;
                     case 5:
                     {
-                              Creature* pVoidwalker = nullptr;
-                              Creature* pLeader = nullptr;
+                        Creature* pVoidwalker = nullptr;
+                        Creature* pLeader = nullptr;
 
-                              for (uint8 i = 0; i < 4; ++i)
-                              {
-                                  pVoidwalker = m_creature->SummonCreature(NPC_VOIDWALKER, VWSpawns[i].fX,
-                                      VWSpawns[i].fY, VWSpawns[i].fZ, VWSpawns[i].fO, TEMPSPAWN_DEAD_DESPAWN, 1);
+                        for (uint8 i = 0; i < 4; ++i)
+                        {
+                            pVoidwalker = m_creature->SummonCreature(NPC_VOIDWALKER, VWSpawns[i].fX,
+                                  VWSpawns[i].fY, VWSpawns[i].fZ, VWSpawns[i].fO, TEMPSPAWN_DEAD_DESPAWN, 1);
 
-                                  if (!pVoidwalker)
-                                  {
-                                      continue;
-                                  }
+                            if (!pVoidwalker)
+                            {
+                                continue;
+                            }
 
-                                  if (!i)
-                                  {
-                                      pLeader = pVoidwalker;
-                                  }
+                            if (!i)
+                            {
+                                pLeader = pVoidwalker;
+                            }
 
-                                  if (CreatureAI* pVoidwalkerAI = pVoidwalker->AI())
-                                  {
-                                      SendAIEvent(AI_EVENT_CUSTOM_A, pLeader, pVoidwalker, i);
-                                      //pVoidwalkerAI->SetPosition(i, pLeader);
-                                  }
+                            if (CreatureAI* pVoidwalkerAI = pVoidwalker->AI())
+                            {
+                                SendAIEvent(AI_EVENT_CUSTOM_A, pLeader, pVoidwalker, i);
+                                  //pVoidwalkerAI->SetPosition(i, pLeader);
+                            }
 
-                                  pVoidwalker = nullptr;
-                              }
-                              m_uiSpeechStep = 0;
-                              return;
+                            pVoidwalker = nullptr;
+                        }
+                        m_uiSpeechStep = 0;
+                        return;
                     }
                     default:
                         m_uiSpeechStep = 0;

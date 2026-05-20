@@ -181,6 +181,7 @@ struct ScriptedAI : public CreatureAI
         void Reset() override {}
 
         /// Called at creature EnterCombat with an enemy
+
         /**
          * This is a SD3 internal function
          * Called by default on creature EnterCombat with an enemy

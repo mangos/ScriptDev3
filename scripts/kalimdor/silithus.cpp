@@ -987,6 +987,7 @@ struct npc_solenor_the_slayer : public CreatureScript
 
         void UpdateAI(const uint32 uiDiff) override
         {
+
             /** Nelson the Nice */
             if (m_bTransform)
             {

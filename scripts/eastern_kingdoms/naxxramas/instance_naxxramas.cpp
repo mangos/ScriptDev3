@@ -687,7 +687,7 @@ struct is_naxxramas : public InstanceScript
                 }
                 return;
             case TYPE_SIGNAL_3:
-                 SetGothTriggers();
+                SetGothTriggers();
                 return;
             case TYPE_SIGNAL_8:
                 DoTriggerHeiganTraps(instance->GetCreature(ObjectGuid(m_tempCreatureGuid)), uint8(uiData));

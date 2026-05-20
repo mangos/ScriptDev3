@@ -83,13 +83,13 @@ enum
     SPELL_ANCIENT_SPARK         = 39349,
 };
 
-/* Finally, Archimonde's script. His script isn't extremely complex, most are simply spells on timers.
-   The only complicated aspect of the battle is Finger of Death and Doomfire, with Doomfire being the
-   hardest bit to code. Finger of Death is simply a distance check - if no one is in melee range, then
-   select a random target and cast the spell on them. However, if someone IS in melee range, and this
-   is NOT the main tank (creature's victim), then we aggro that player and they become the new victim.
-   For Doomfire, we summon a mob (Doomfire Spirit) for the Doomfire mob to follow. It's spirit will
-   randomly select it's target to follow and then we create the random movement making it unpredictable.
+/*  Finally, Archimonde's script. His script isn't extremely complex, most are simply spells on timers.
+    The only complicated aspect of the battle is Finger of Death and Doomfire, with Doomfire being the
+    hardest bit to code. Finger of Death is simply a distance check - if no one is in melee range, then
+    select a random target and cast the spell on them. However, if someone IS in melee range, and this
+    is NOT the main tank (creature's victim), then we aggro that player and they become the new victim.
+    For Doomfire, we summon a mob (Doomfire Spirit) for the Doomfire mob to follow. It's spirit will
+    randomly select it's target to follow and then we create the random movement making it unpredictable.
 */
 
 struct boss_archimonde : public CreatureScript

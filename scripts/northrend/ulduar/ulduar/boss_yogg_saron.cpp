@@ -1777,7 +1777,7 @@ struct npc_descent_madness : public CreatureScript
 
         uint32 GetCurrentSpell()
         {
-             return m_uiCurentSpell;
+            return m_uiCurentSpell;
         }
     };
 

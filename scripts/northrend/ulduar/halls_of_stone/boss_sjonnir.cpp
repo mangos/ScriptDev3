@@ -156,32 +156,32 @@ struct boss_sjonnir : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_EARTHEN_DWARF:
-                pSummoned->AI()->AttackStart(m_creature);
-                break;
-            case NPC_MALFORMED_OOZE:
-            {
-                                       pSummoned->CastSpell(pSummoned, SPELL_OOZE_COMBINE, true);
+                case NPC_EARTHEN_DWARF:
+                    pSummoned->AI()->AttackStart(m_creature);
+                    break;
+                case NPC_MALFORMED_OOZE:
+                {
+                    pSummoned->CastSpell(pSummoned, SPELL_OOZE_COMBINE, true);
 
-                                       // Always move to the center of the room
-                                       float fX, fY, fZ;
-                                       m_creature->GetRespawnCoord(fX, fY, fZ);
+                    // Always move to the center of the room
+                    float fX, fY, fZ;
+                    m_creature->GetRespawnCoord(fX, fY, fZ);
 
-                                       pSummoned->SetWalk(false);
-                                       pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
-                                       break;
-            }
-            case NPC_IRON_TROGG:
-            case NPC_IRON_DWARF:
-            {
-                                   // Move to a random point around the room in order to start the attack
-                                   float fX, fY, fZ;
-                                   pSummoned->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f, fX, fY, fZ);
+                    pSummoned->SetWalk(false);
+                    pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                    break;
+                }
+                case NPC_IRON_TROGG:
+                case NPC_IRON_DWARF:
+                {
+                    // Move to a random point around the room in order to start the attack
+                    float fX, fY, fZ;
+                    pSummoned->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f, fX, fY, fZ);
 
-                                   pSummoned->SetWalk(false);
-                                   pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
-                                   break;
-            }
+                    pSummoned->SetWalk(false);
+                    pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                    break;
+                }
             }
         }
 

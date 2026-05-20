@@ -538,129 +538,129 @@ struct npc_ogron : public CreatureScript
 
                         switch (m_uiPhase)
                         {
-                        case PHASE_INTRO:
-                        {
-                                            switch (m_uiPhaseCounter)
-                                            {
-                                            case 0:
-                                                if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                                {
-                                                    DoScriptText(SAY_OGR_RET_SWEAR, pReethe);
-                                                }
-                                                break;
-                                            case 1:
-                                                DoScriptText(SAY_OGR_REPLY_RET, m_creature);
-                                                break;
-                                            case 2:
-                                                if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                                {
-                                                    DoScriptText(SAY_OGR_RET_TAKEN, pReethe);
-                                                }
-                                                break;
-                                            case 3:
-                                                DoScriptText(SAY_OGR_TELL_FIRE, m_creature);
-                                                if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                                {
-                                                    DoScriptText(SAY_OGR_RET_NOCLOSER, pReethe);
-                                                }
-                                                break;
-                                            case 4:
-                                                if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                                {
-                                                    DoScriptText(SAY_OGR_RET_NOFIRE, pReethe);
-                                                }
-                                                break;
-                                            case 5:
-                                                if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                                {
-                                                    DoScriptText(SAY_OGR_RET_HEAR, pReethe);
-                                                }
+                            case PHASE_INTRO:
+                            {
+                                switch (m_uiPhaseCounter)
+                                {
+                                case 0:
+                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                    {
+                                        DoScriptText(SAY_OGR_RET_SWEAR, pReethe);
+                                    }
+                                    break;
+                                case 1:
+                                    DoScriptText(SAY_OGR_REPLY_RET, m_creature);
+                                    break;
+                                case 2:
+                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                    {
+                                        DoScriptText(SAY_OGR_RET_TAKEN, pReethe);
+                                    }
+                                    break;
+                                case 3:
+                                    DoScriptText(SAY_OGR_TELL_FIRE, m_creature);
+                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                    {
+                                        DoScriptText(SAY_OGR_RET_NOCLOSER, pReethe);
+                                    }
+                                    break;
+                                case 4:
+                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                    {
+                                        DoScriptText(SAY_OGR_RET_NOFIRE, pReethe);
+                                    }
+                                    break;
+                                case 5:
+                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                    {
+                                        DoScriptText(SAY_OGR_RET_HEAR, pReethe);
+                                    }
 
-                                                m_creature->SummonCreature(NPC_CALDWELL, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
-                                                m_creature->SummonCreature(NPC_HALLAN, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
-                                                m_creature->SummonCreature(NPC_SKIRMISHER, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
-                                                m_creature->SummonCreature(NPC_SKIRMISHER, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                                    m_creature->SummonCreature(NPC_CALDWELL, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                                    m_creature->SummonCreature(NPC_HALLAN, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                                    m_creature->SummonCreature(NPC_SKIRMISHER, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                                    m_creature->SummonCreature(NPC_SKIRMISHER, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
 
-                                                m_uiPhase = PHASE_GUESTS;
-                                                break;
-                                            }
-                                            break;
-                        }
-                        case PHASE_GUESTS:
-                        {
-                                             switch (m_uiPhaseCounter)
-                                             {
-                                             case 6:
-                                                 if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
-                                                 {
-                                                     DoScriptText(SAY_OGR_CAL_FOUND, pCaldwell);
-                                                 }
-                                                 break;
-                                             case 7:
-                                                 if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
-                                                 {
-                                                     DoScriptText(SAY_OGR_CAL_MERCY, pCaldwell);
-                                                 }
-                                                 break;
-                                             case 8:
-                                                 if (Creature* pHallan = GetCreature(NPC_HALLAN))
-                                                 {
-                                                     DoScriptText(SAY_OGR_HALL_GLAD, pHallan);
+                                    m_uiPhase = PHASE_GUESTS;
+                                    break;
+                                }
+                                break;
+                            }
+                            case PHASE_GUESTS:
+                            {
+                                switch (m_uiPhaseCounter)
+                                {
+                                case 6:
+                                    if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
+                                    {
+                                        DoScriptText(SAY_OGR_CAL_FOUND, pCaldwell);
+                                    }
+                                    break;
+                                case 7:
+                                    if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
+                                    {
+                                        DoScriptText(SAY_OGR_CAL_MERCY, pCaldwell);
+                                    }
+                                    break;
+                                case 8:
+                                    if (Creature* pHallan = GetCreature(NPC_HALLAN))
+                                    {
+                                        DoScriptText(SAY_OGR_HALL_GLAD, pHallan);
 
-                                                     if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                                     {
-                                                         pHallan->CastSpell(pReethe, SPELL_FAKE_SHOT, false);
-                                                     }
-                                                 }
-                                                 break;
-                                             case 9:
-                                                 if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                                 {
-                                                     DoScriptText(EMOTE_OGR_RET_ARROW, pReethe);
-                                                     DoScriptText(SAY_OGR_RET_ARROW, pReethe);
-                                                 }
-                                                 break;
-                                             case 10:
-                                                 if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
-                                                 {
-                                                     DoScriptText(SAY_OGR_CAL_CLEANUP, pCaldwell);
-                                                 }
+                                        if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                        {
+                                            pHallan->CastSpell(pReethe, SPELL_FAKE_SHOT, false);
+                                        }
+                                    }
+                                    break;
+                                case 9:
+                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                    {
+                                        DoScriptText(EMOTE_OGR_RET_ARROW, pReethe);
+                                        DoScriptText(SAY_OGR_RET_ARROW, pReethe);
+                                    }
+                                    break;
+                                case 10:
+                                    if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
+                                    {
+                                        DoScriptText(SAY_OGR_CAL_CLEANUP, pCaldwell);
+                                    }
 
-                                                 DoScriptText(SAY_OGR_NODIE, m_creature);
-                                                 break;
-                                             case 11:
-                                                 DoStartAttackMe();
-                                                 m_uiPhase = PHASE_FIGHT;
-                                                 break;
-                                             }
-                                             break;
-                        }
-                        case PHASE_COMPLETE:
-                        {
-                                               switch (m_uiPhaseCounter)
-                                               {
-                                               case 12:
-                                                   if (Player* pPlayer = GetPlayerForEscort())
-                                                   {
-                                                       pPlayer->GroupEventHappens(QUEST_QUESTIONING, m_creature);
-                                                   }
+                                    DoScriptText(SAY_OGR_NODIE, m_creature);
+                                    break;
+                                case 11:
+                                    DoStartAttackMe();
+                                    m_uiPhase = PHASE_FIGHT;
+                                    break;
+                                }
+                                break;
+                            }
+                            case PHASE_COMPLETE:
+                            {
+                                switch (m_uiPhaseCounter)
+                                {
+                                case 12:
+                                    if (Player* pPlayer = GetPlayerForEscort())
+                                    {
+                                        pPlayer->GroupEventHappens(QUEST_QUESTIONING, m_creature);
+                                    }
 
-                                                   DoScriptText(SAY_OGR_SURVIVE, m_creature);
-                                                   break;
-                                               case 13:
-                                                   if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                                   {
-                                                       DoScriptText(SAY_OGR_RET_LUCKY, pReethe);
-                                                   }
-                                                   break;
-                                               case 14:
-                                                   DoScriptText(SAY_OGR_THANKS, m_creature);
-                                                   SetRun();
-                                                   SetEscortPaused(false);
-                                                   break;
-                                               }
-                                               break;
-                        }
+                                    DoScriptText(SAY_OGR_SURVIVE, m_creature);
+                                    break;
+                                case 13:
+                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                    {
+                                        DoScriptText(SAY_OGR_RET_LUCKY, pReethe);
+                                    }
+                                    break;
+                                case 14:
+                                    DoScriptText(SAY_OGR_THANKS, m_creature);
+                                    SetRun();
+                                    SetEscortPaused(false);
+                                    break;
+                                }
+                                break;
+                            }
                         }
 
                         if (m_uiPhase != PHASE_FIGHT)

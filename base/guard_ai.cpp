@@ -35,6 +35,7 @@ EndScriptData */
 #include "guard_ai.h"
 
 // This script is for use within every single guard to save coding time
+
 /**
  * @brief Constructor for guardAI.
  *

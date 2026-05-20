@@ -273,28 +273,28 @@ struct boss_general_vezax : public CreatureScript
                 {
                     switch (m_uiHardModeStage)
                     {
-                    case 0:
-                    {
-                              if (DoCastSpellIfCan(m_creature, SPELL_SARONITE_BARRIER, CAST_TRIGGERED | CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                              {
-                                  DoScriptText(SAY_HARD_MODE, m_creature);
-                                  m_uiHardModeTimer = 2000;
-                              }
-                              break;
-                    }
-                    case 1:
-                    {
-                              if (m_pInstance)
-                              {
-                                  if (Creature* pBunny = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_VEZAX_ANIMUS))))
-                                  {
-                                      pBunny->RemoveAurasDueToSpell(SPELL_ANIMUS_FORMATION);
-                                      pBunny->CastSpell(pBunny, SPELL_SUMMON_ANIMUS, true, nullptr, nullptr, m_creature->GetObjectGuid());
-                                  }
-                              }
-                              m_uiHardModeTimer = 0;
-                              break;
-                    }
+                        case 0:
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_SARONITE_BARRIER, CAST_TRIGGERED | CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                            {
+                                DoScriptText(SAY_HARD_MODE, m_creature);
+                                m_uiHardModeTimer = 2000;
+                            }
+                            break;
+                        }
+                        case 1:
+                        {
+                            if (m_pInstance)
+                            {
+                                if (Creature* pBunny = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_VEZAX_ANIMUS))))
+                                {
+                                    pBunny->RemoveAurasDueToSpell(SPELL_ANIMUS_FORMATION);
+                                    pBunny->CastSpell(pBunny, SPELL_SUMMON_ANIMUS, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                                }
+                            }
+                            m_uiHardModeTimer = 0;
+                            break;
+                        }
                     }
                     ++m_uiHardModeStage;
                 }

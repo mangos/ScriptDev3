@@ -746,15 +746,15 @@ struct is_naxxramas : public InstanceScript
             case ACHIEV_CRIT_UNDYING_LOA:
             case ACHIEV_CRIT_UNDYING_THAD:
             {
-                                             // First, check if all bosses are killed (except the last encounter)
-                                             uint8 uiEncounterDone = 0;
-                                             for (uint8 i = 0; i < TYPE_KELTHUZAD; ++i)
-                                             if (m_auiEncounter[i] == DONE)
-                                             {
-                                                 ++uiEncounterDone;
-                                             }
+                // First, check if all bosses are killed (except the last encounter)
+                uint8 uiEncounterDone = 0;
+                for (uint8 i = 0; i < TYPE_KELTHUZAD; ++i)
+                if (m_auiEncounter[i] == DONE)
+                {
+                    ++uiEncounterDone;
+                }
 
-                                             return uiEncounterDone >= 14 && GetData(TYPE_UNDYING_FAILED) != DONE;
+                return uiEncounterDone >= 14 && GetData(TYPE_UNDYING_FAILED) != DONE;
             }
             default:
                 return false;

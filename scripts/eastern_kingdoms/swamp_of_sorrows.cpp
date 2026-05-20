@@ -89,28 +89,28 @@ struct npc_galen_goodward : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-            {
-                      GameObject* pCage = nullptr;
-                      if (m_galensCageGuid)
-                      {
-                          pCage = m_creature->GetMap()->GetGameObject(m_galensCageGuid);
-                      }
-                      else
-                      {
-                          pCage = GetClosestGameObjectWithEntry(m_creature, GO_GALENS_CAGE, INTERACTION_DISTANCE);
-                      }
+                case 0:
+                {
+                    GameObject* pCage = nullptr;
+                    if (m_galensCageGuid)
+                    {
+                        pCage = m_creature->GetMap()->GetGameObject(m_galensCageGuid);
+                    }
+                    else
+                    {
+                        pCage = GetClosestGameObjectWithEntry(m_creature, GO_GALENS_CAGE, INTERACTION_DISTANCE);
+                    }
 
-                      if (pCage)
-                      {
-                          pCage->UseDoorOrButton();
-                          m_galensCageGuid = pCage->GetObjectGuid();
-                      }
-                      break;
-            }
-            case 21:
-                DoScriptText(EMOTE_DISAPPEAR, m_creature);
-                break;
+                    if (pCage)
+                    {
+                        pCage->UseDoorOrButton();
+                        m_galensCageGuid = pCage->GetObjectGuid();
+                    }
+                    break;
+                }
+                case 21:
+                    DoScriptText(EMOTE_DISAPPEAR, m_creature);
+                    break;
             }
         }
 

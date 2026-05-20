@@ -269,7 +269,7 @@ class instance_blackrock_depths : public ScriptedInstance
         // Bar events
         void SetBarDoorIsOpen()
         {
-             m_bIsBarDoorOpen = true;
+            m_bIsBarDoorOpen = true;
         }
 
         void GetBarDoorIsOpen(bool& bIsOpen) { bIsOpen = m_bIsBarDoorOpen; }

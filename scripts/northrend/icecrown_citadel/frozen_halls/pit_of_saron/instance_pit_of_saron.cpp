@@ -643,23 +643,23 @@ struct is_pit_of_saron : public InstanceScript
                 break;
             case NPC_TYRANNUS:
             {
-                                 Creature* pTyrannus = GetSingleCreatureFromStorage(NPC_TYRANNUS);
-                                 if (!pTyrannus)
-                                 {
-                                     return;
-                                 }
+                Creature* pTyrannus = GetSingleCreatureFromStorage(NPC_TYRANNUS);
+                if (!pTyrannus)
+                {
+                    return;
+                }
 
-                                 // Spawn tunnel end event mobs
-                                 for (uint8 i = 0; i < countof(aEventTunnelEndLocations); ++i)
-                                 {
-                                     if (Creature* pSummon = pTyrannus->SummonCreature(m_uiTeam == HORDE ? aEventTunnelEndLocations[i].uiEntryHorde : aEventTunnelEndLocations[i].uiEntryAlliance,
-                                         aEventTunnelEndLocations[i].fX, aEventTunnelEndLocations[i].fY, aEventTunnelEndLocations[i].fZ, aEventTunnelEndLocations[i].fO, TEMPSPAWN_DEAD_DESPAWN, 0))
-                                     {
-                                         pSummon->SetWalk(false);
-                                         pSummon->GetMotionMaster()->MovePoint(0, aEventTunnelEndLocations[i].fMoveX, aEventTunnelEndLocations[i].fMoveY, aEventTunnelEndLocations[i].fMoveZ);
-                                     }
-                                 }
-                                 break;
+                 // Spawn tunnel end event mobs
+                for (uint8 i = 0; i < countof(aEventTunnelEndLocations); ++i)
+                {
+                    if (Creature* pSummon = pTyrannus->SummonCreature(m_uiTeam == HORDE ? aEventTunnelEndLocations[i].uiEntryHorde : aEventTunnelEndLocations[i].uiEntryAlliance,
+                         aEventTunnelEndLocations[i].fX, aEventTunnelEndLocations[i].fY, aEventTunnelEndLocations[i].fZ, aEventTunnelEndLocations[i].fO, TEMPSPAWN_DEAD_DESPAWN, 0))
+                    {
+                        pSummon->SetWalk(false);
+                        pSummon->GetMotionMaster()->MovePoint(0, aEventTunnelEndLocations[i].fMoveX, aEventTunnelEndLocations[i].fMoveY, aEventTunnelEndLocations[i].fMoveZ);
+                    }
+                }
+                break;
             }
             case NPC_RIMEFANG:
                 // Eject Tyrannus and prepare for combat
@@ -676,27 +676,27 @@ struct is_pit_of_saron : public InstanceScript
                 break;
             case SAY_VICTUS_OUTRO_1:
             {
-                                       Player* pPlayer = GetPlayerInMap();
-                                       if (!pPlayer)
-                                       {
-                                           return;
-                                       }
+                Player* pPlayer = GetPlayerInMap();
+                if (!pPlayer)
+                {
+                    return;
+                }
 
-                                       // Spawn Sindragosa
-                                       if (Creature* pSummon = pPlayer->SummonCreature(aEventOutroLocations[0].uiEntryHorde, aEventOutroLocations[0].fX, aEventOutroLocations[0].fY,
-                                           aEventOutroLocations[0].fZ, aEventOutroLocations[0].fO, TEMPSPAWN_TIMED_DESPAWN, 2 * MINUTE * IN_MILLISECONDS))
-                                       {
-                                           pSummon->SetWalk(false);
-                                           pSummon->GetMotionMaster()->MovePoint(0, aEventOutroLocations[0].fMoveX, aEventOutroLocations[0].fMoveY, aEventOutroLocations[0].fMoveZ);
-                                       }
-                                       // Spawn Jaina or Sylvanas
-                                       if (Creature* pSummon = pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventOutroLocations[1].uiEntryHorde : aEventOutroLocations[1].uiEntryAlliance,
-                                           aEventOutroLocations[1].fX, aEventOutroLocations[1].fY, aEventOutroLocations[1].fZ, aEventOutroLocations[1].fO, TEMPSPAWN_TIMED_DESPAWN, 24 * HOUR * IN_MILLISECONDS))
-                                       {
-                                           pSummon->SetWalk(false);
-                                           pSummon->GetMotionMaster()->MovePoint(0, aEventOutroLocations[1].fMoveX, aEventOutroLocations[1].fMoveY, aEventOutroLocations[1].fMoveZ);
-                                       }
-                                       break;
+                   // Spawn Sindragosa
+                if (Creature* pSummon = pPlayer->SummonCreature(aEventOutroLocations[0].uiEntryHorde, aEventOutroLocations[0].fX, aEventOutroLocations[0].fY,
+                       aEventOutroLocations[0].fZ, aEventOutroLocations[0].fO, TEMPSPAWN_TIMED_DESPAWN, 2 * MINUTE * IN_MILLISECONDS))
+                {
+                    pSummon->SetWalk(false);
+                    pSummon->GetMotionMaster()->MovePoint(0, aEventOutroLocations[0].fMoveX, aEventOutroLocations[0].fMoveY, aEventOutroLocations[0].fMoveZ);
+                }
+                   // Spawn Jaina or Sylvanas
+                if (Creature* pSummon = pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventOutroLocations[1].uiEntryHorde : aEventOutroLocations[1].uiEntryAlliance,
+                       aEventOutroLocations[1].fX, aEventOutroLocations[1].fY, aEventOutroLocations[1].fZ, aEventOutroLocations[1].fO, TEMPSPAWN_TIMED_DESPAWN, 24 * HOUR * IN_MILLISECONDS))
+                {
+                    pSummon->SetWalk(false);
+                    pSummon->GetMotionMaster()->MovePoint(0, aEventOutroLocations[1].fMoveX, aEventOutroLocations[1].fMoveY, aEventOutroLocations[1].fMoveZ);
+                }
+                break;
             }
             case SAY_JAINA_OUTRO_1:
                 // Visual effect

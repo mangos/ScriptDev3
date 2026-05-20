@@ -745,6 +745,7 @@ struct boss_crone : public CreatureScript
 
 enum
 {
+
     /**** Yells for the Wolf ****/
     SAY_WOLF_AGGRO                  = -1532043,
     SAY_WOLF_SLAY                   = -1532044,
@@ -901,6 +902,7 @@ struct boss_bigbadwolf : public CreatureScript
 
 enum
 {
+
     /**** Speech *****/
     SAY_JULIANNE_AGGRO              = -1532046,
     SAY_JULIANNE_ENTER              = -1532047,

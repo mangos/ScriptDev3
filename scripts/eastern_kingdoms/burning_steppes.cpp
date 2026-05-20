@@ -302,24 +302,24 @@ struct npc_grark_lorkrub : public CreatureScript
                 break;
             case 30:
             {
-                       SetEscortPaused(true);
-                       DoScriptText(SAY_THIRD_AMBUSH_START, m_creature);
+                SetEscortPaused(true);
+                DoScriptText(SAY_THIRD_AMBUSH_START, m_creature);
 
-                       Player* pPlayer = GetPlayerForEscort();
-                       if (!pPlayer)
-                       {
-                           return;
-                       }
+                Player* pPlayer = GetPlayerForEscort();
+                if (!pPlayer)
+                {
+                    return;
+                }
 
-                       // Set all the dragons in combat
-                       for (GuidList::const_iterator itr = m_lSearscaleGuidList.begin(); itr != m_lSearscaleGuidList.end(); ++itr)
-                       {
-                           if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
-                           {
-                               pTemp->AI()->AttackStart(pPlayer);
-                           }
-                       }
-                       break;
+                // Set all the dragons in combat
+                for (GuidList::const_iterator itr = m_lSearscaleGuidList.begin(); itr != m_lSearscaleGuidList.end(); ++itr)
+                {
+                    if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
+                    {
+                        pTemp->AI()->AttackStart(pPlayer);
+                    }
+                }
+                break;
             }
             case 36:
                 DoScriptText(EMOTE_LAUGH, m_creature);
@@ -692,6 +692,7 @@ struct npc_klinfran_the_crazed : public CreatureScript
 
         void UpdateAI(const uint32 uiDiff) override
         {
+
             /** Franklin the Friendly */
             if (m_bTransform)
             {

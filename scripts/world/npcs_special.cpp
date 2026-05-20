@@ -1333,7 +1333,7 @@ struct npc_spring_rabbit : public CreatureScript
 
         bool CanStartWhatRabbitsDo()
         {
-             return !m_partnerGuid && !m_uiStepTimer;
+            return !m_partnerGuid && !m_uiStepTimer;
         }
 
         void StartWhatRabbitsDo(Creature* pPartner)

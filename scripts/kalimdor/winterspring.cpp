@@ -275,56 +275,56 @@ struct npc_ranshalla : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 3:
-                DoScriptText(SAY_ENTER_OWL_THICKET, m_creature);
-                break;
-            case 10: // Cavern 1
-            case 15: // Cavern 2
-            case 20: // Cavern 3
-            case 25: // Cavern 4
-            case 36: // Cavern 5
-                DoChannelTorchSpell();
-                break;
-            case 39:
-                StartNextDialogueText(SAY_REACH_ALTAR_1);
-                SetEscortPaused(true);
-                break;
-            case 41:
-            {
-                       // Search for all nearest lights and respawn them
-                       std::list<GameObject*> m_lEluneLights;
-                       GetGameObjectListWithEntryInGrid(m_lEluneLights, m_creature, GO_ELUNE_LIGHT, 20.0f);
-                       for (std::list<GameObject*>::const_iterator itr = m_lEluneLights.begin(); itr != m_lEluneLights.end(); ++itr)
-                       {
-                           if ((*itr)->isSpawned())
-                           {
-                               continue;
-                           }
-
-                           (*itr)->SetRespawnTime(115);
-                           (*itr)->Refresh();
-                       }
-
-                       if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
-                       {
-                           m_creature->SetFacingToObject(pAltar);
-                       }
-                       break;
-            }
-            case 42:
-                // Summon the 2 priestess
-                SetEscortPaused(true);
-                DoSummonPriestess();
-                DoScriptText(SAY_RANSHALLA_ALTAR_2, m_creature);
-                break;
-            case 44:
-                // Stop the escort and turn towards the altar
-                SetEscortPaused(true);
-                if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
+                case 3:
+                    DoScriptText(SAY_ENTER_OWL_THICKET, m_creature);
+                    break;
+                case 10: // Cavern 1
+                case 15: // Cavern 2
+                case 20: // Cavern 3
+                case 25: // Cavern 4
+                case 36: // Cavern 5
+                    DoChannelTorchSpell();
+                    break;
+                case 39:
+                    StartNextDialogueText(SAY_REACH_ALTAR_1);
+                    SetEscortPaused(true);
+                    break;
+                case 41:
                 {
-                    m_creature->SetFacingToObject(pAltar);
+                    // Search for all nearest lights and respawn them
+                    std::list<GameObject*> m_lEluneLights;
+                    GetGameObjectListWithEntryInGrid(m_lEluneLights, m_creature, GO_ELUNE_LIGHT, 20.0f);
+                    for (std::list<GameObject*>::const_iterator itr = m_lEluneLights.begin(); itr != m_lEluneLights.end(); ++itr)
+                    {
+                        if ((*itr)->isSpawned())
+                        {
+                            continue;
+                        }
+
+                        (*itr)->SetRespawnTime(115);
+                        (*itr)->Refresh();
+                    }
+
+                    if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
+                    {
+                        m_creature->SetFacingToObject(pAltar);
+                    }
+                    break;
                 }
-                break;
+                case 42:
+                    // Summon the 2 priestess
+                    SetEscortPaused(true);
+                    DoSummonPriestess();
+                    DoScriptText(SAY_RANSHALLA_ALTAR_2, m_creature);
+                    break;
+                case 44:
+                    // Stop the escort and turn towards the altar
+                    SetEscortPaused(true);
+                    if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
+                    {
+                        m_creature->SetFacingToObject(pAltar);
+                    }
+                    break;
             }
         }
 
@@ -715,6 +715,7 @@ struct npc_artorius_the_doombringer : public CreatureScript
 
         void UpdateAI(const uint32 uiDiff) override
         {
+
             /** Artorius the Amiable */
             if (m_bTransform)
             {

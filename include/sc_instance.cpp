@@ -275,6 +275,7 @@ Creature* ScriptedInstance::GetSingleCreatureFromStorage(uint32 uiEntry, bool bS
 }
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
+
 /**
  * @brief Starts a timed achievement criteria for players in the map.
  * @param criteriaType The Type that is required to complete the criteria, see enum AchievementCriteriaTypes in MaNGOS.

@@ -1554,9 +1554,9 @@ struct npc_tobias_seecher : public CreatureScript
     }
 };
 
-/*######
- ## npc_hurley_blackbreath
- ######*/
+//#########################
+//## npc_hurley_blackbreath
+//#########################
 
 enum
 {
