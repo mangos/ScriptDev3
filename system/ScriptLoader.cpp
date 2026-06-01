@@ -440,7 +440,7 @@ void AddEasternKingdomsScripts()
     AddSC_westfall();
     AddSC_wetlands();
 
-// Cata zones
+    // Cata zones
 #if defined (CATA) || defined(MISTS)
     AddSC_gilneas();
     AddSC_gilneas_city();
@@ -621,7 +621,7 @@ void AddKalimdorScripts()
     AddSC_ungoro_crater();
     AddSC_winterspring();
 
-// Cata zones
+    // Cata zones
 #if defined (CATA) || defined(MISTS)
     AddSC_uldum();
     AddSC_mount_hyjal();

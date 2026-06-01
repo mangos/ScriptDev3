@@ -80,7 +80,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
     if (iTextEntry >= 0)
     {
         script_error_log("DoScriptText with source entry %u (TypeId=%u, guid=%u) attempts to process text entry %i, but text entry must be negative.",
-                            pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
+            pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
 
         return;
     }
@@ -126,7 +126,7 @@ void DoOrSimulateScriptTextForMap(int32 iTextEntry, uint32 uiCreatureEntry, Map*
     }
 
     debug_log("[SD3]: DoOrSimulateScriptTextForMap: text entry=%i, Sound=%u, Type=%u, Language=%u, Emote=%u",
-                iTextEntry, pData->SoundId, pData->Type, pData->LanguageId, pData->Emote);
+        iTextEntry, pData->SoundId, pData->Type, pData->LanguageId, pData->Emote);
 
     if (pData->Type != CHAT_TYPE_ZONE_YELL)
     {
