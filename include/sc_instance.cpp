@@ -306,8 +306,8 @@ void ScriptedInstance::DoStartTimedAchievement(AchievementCriteriaTypes criteria
  * @brief Constructor for DialogueHelper.
  * @param pDialogueArray The static const array of DialogueEntry holding the information about the dialogue. This array MUST be terminated by {0,0,0}.
  */
-DialogueHelper::DialogueHelper(DialogueEntry const* pDialogueArray) :
-    m_pInstance(nullptr),
+DialogueHelper::DialogueHelper(DialogueEntry const* pDialogueArray)
+    : m_pInstance(nullptr),
     m_pDialogueArray(pDialogueArray),
     m_pCurrentEntry(nullptr),
     m_pDialogueTwoSideArray(nullptr),
@@ -321,8 +321,8 @@ DialogueHelper::DialogueHelper(DialogueEntry const* pDialogueArray) :
  * @brief Constructor for DialogueHelper (Two Sides).
  * @param pDialogueTwoSideArray The static const array of DialogueEntryTwoSide holding the information about the dialogue. This array MUST be terminated by {0,0,0,0,0}.
  */
-DialogueHelper::DialogueHelper(DialogueEntryTwoSide const* pDialogueTwoSideArray) :
-    m_pInstance(nullptr),
+DialogueHelper::DialogueHelper(DialogueEntryTwoSide const* pDialogueTwoSideArray)
+    : m_pInstance(nullptr),
     m_pDialogueArray(nullptr),
     m_pCurrentEntry(nullptr),
     m_pDialogueTwoSideArray(pDialogueTwoSideArray),

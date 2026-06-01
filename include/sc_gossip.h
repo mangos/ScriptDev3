@@ -158,14 +158,15 @@ extern uint32 GetSkillLevel(Player* pPlayer, uint32 uiSkill);
 
 // Defined functions to use with player.
 
-// This function adds a menu item,
-// Icon Id
-// Text
-// Sender (this is to identify the current Menu with this item)
-// Option id (identifies this Menu Item)
-// Text to be displayed in pop up box
-// Money value in pop up box
-// Coded
+/** This function adds a menu item,
+ * Icon Id
+ * Text
+ * Sender (this is to identify the current Menu with this item)
+ * Option id (identifies this Menu Item)
+ * Text to be displayed in pop up box
+ * Money value in pop up box
+ * Coded
+ */
 #define ADD_GOSSIP_ITEM(uiIcon, chrText, uiSender, uiOptionId)   PlayerTalkClass->GetGossipMenu().AddMenuItem(uiIcon, chrText, uiSender, uiOptionId, "", 0)
 #define ADD_GOSSIP_ITEM_ID(uiIcon, iTextId, uiSender, uiOptionId)   PlayerTalkClass->GetGossipMenu().AddMenuItem(uiIcon, iTextId, uiSender, uiOptionId, 0, 0)
 

@@ -546,13 +546,16 @@ void FillSpellSummary()
 #if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CHAIN_DAMAGE ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CURRENT_ENEMY_COORDINATES)
-#else
-            if (pTempSpell->EffectImplicitTargetA[j] == TARGET_CHAIN_DAMAGE ||
-                pTempSpell->EffectImplicitTargetA[j] == TARGET_CURRENT_ENEMY_COORDINATES)
-#endif
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_ENEMY - 1);
             }
+#else
+            if (pTempSpell->EffectImplicitTargetA[j] == TARGET_CHAIN_DAMAGE ||
+                pTempSpell->EffectImplicitTargetA[j] == TARGET_CURRENT_ENEMY_COORDINATES)
+            {
+                SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_ENEMY - 1);
+            }
+#endif
 
             // Spell targets AoE at enemy
 #if defined (CATA) || defined (MISTS)
@@ -560,15 +563,18 @@ void FillSpellSummary()
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
+            {
+                SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_ENEMY - 1);
+            }
 #else
             if (pTempSpell->EffectImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_CASTER_COORDINATES ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
-#endif
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_ENEMY - 1);
             }
+#endif
 
             // Spell targets an enemy
 #if defined (CATA) || defined (MISTS)
@@ -578,6 +584,9 @@ void FillSpellSummary()
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
+            {
+                SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_ENEMY - 1);
+            }
 #else
             if (pTempSpell->EffectImplicitTargetA[j] == TARGET_CHAIN_DAMAGE ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_CURRENT_ENEMY_COORDINATES ||
@@ -585,38 +594,44 @@ void FillSpellSummary()
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_CASTER_COORDINATES ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
-#endif
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_ENEMY - 1);
             }
+#endif
 
             // Spell targets a single friend(or self)
 #if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SELF ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_FRIEND ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_PARTY)
+            {
+                SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_FRIEND - 1);
+            }
 #else
             if (pTempSpell->EffectImplicitTargetA[j] == TARGET_SELF ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_SINGLE_FRIEND ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_SINGLE_PARTY)
-#endif
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_FRIEND - 1);
             }
+#endif
 
             // Spell targets aoe friends
 #if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_PARTY_AROUND_CASTER ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_AREAEFFECT_PARTY ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES)
+            {
+                SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_FRIEND - 1);
+            }
 #else
             if (pTempSpell->EffectImplicitTargetA[j] == TARGET_ALL_PARTY_AROUND_CASTER ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_AREAEFFECT_PARTY ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_CASTER_COORDINATES)
-#endif
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_FRIEND - 1);
             }
+#endif
 
             // Spell targets any friend(or self)
 #if defined (CATA) || defined (MISTS)
@@ -626,6 +641,9 @@ void FillSpellSummary()
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_PARTY_AROUND_CASTER ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_AREAEFFECT_PARTY ||
                 pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES)
+            {
+                SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_FRIEND - 1);
+            }
 #else
             if (pTempSpell->EffectImplicitTargetA[j] == TARGET_SELF ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_SINGLE_FRIEND ||
@@ -633,10 +651,10 @@ void FillSpellSummary()
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_ALL_PARTY_AROUND_CASTER ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_AREAEFFECT_PARTY ||
                 pTempSpell->EffectImplicitTargetA[j] == TARGET_CASTER_COORDINATES)
-#endif
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_FRIEND - 1);
             }
+#endif
 
             // Make sure that this spell includes a damage effect
 #if defined (CATA) || defined (MISTS)
@@ -644,31 +662,37 @@ void FillSpellSummary()
                 pSpellEffect->Effect == SPELL_EFFECT_INSTAKILL ||
                 pSpellEffect->Effect == SPELL_EFFECT_ENVIRONMENTAL_DAMAGE ||
                 pSpellEffect->Effect == SPELL_EFFECT_HEALTH_LEECH)
+            {
+                SpellSummary[i].Effects |= 1 << (SELECT_EFFECT_DAMAGE - 1);
+            }
 #else
             if (pTempSpell->Effect[j] == SPELL_EFFECT_SCHOOL_DAMAGE ||
                 pTempSpell->Effect[j] == SPELL_EFFECT_INSTAKILL ||
                 pTempSpell->Effect[j] == SPELL_EFFECT_ENVIRONMENTAL_DAMAGE ||
                 pTempSpell->Effect[j] == SPELL_EFFECT_HEALTH_LEECH)
-#endif
             {
                 SpellSummary[i].Effects |= 1 << (SELECT_EFFECT_DAMAGE - 1);
             }
+#endif
 
             // Make sure that this spell includes a healing effect (or an apply aura with a periodic heal)
 #if defined (CATA) || defined (MISTS)
             if (pSpellEffect->Effect == SPELL_EFFECT_HEAL ||
-                    pSpellEffect->Effect == SPELL_EFFECT_HEAL_MAX_HEALTH ||
-                    pSpellEffect->Effect == SPELL_EFFECT_HEAL_MECHANICAL ||
-                    (pSpellEffect->Effect == SPELL_EFFECT_APPLY_AURA  && pTempSpell->GetEffectApplyAuraNameByIndex(SpellEffectIndex(j)) == 8))
+                pSpellEffect->Effect == SPELL_EFFECT_HEAL_MAX_HEALTH ||
+                pSpellEffect->Effect == SPELL_EFFECT_HEAL_MECHANICAL ||
+                (pSpellEffect->Effect == SPELL_EFFECT_APPLY_AURA  && pTempSpell->GetEffectApplyAuraNameByIndex(SpellEffectIndex(j)) == 8))
+            {
+                SpellSummary[i].Effects |= 1 << (SELECT_EFFECT_HEALING - 1);
+            }
 #else
             if (pTempSpell->Effect[j] == SPELL_EFFECT_HEAL ||
                 pTempSpell->Effect[j] == SPELL_EFFECT_HEAL_MAX_HEALTH ||
                 pTempSpell->Effect[j] == SPELL_EFFECT_HEAL_MECHANICAL ||
                 (pTempSpell->Effect[j] == SPELL_EFFECT_APPLY_AURA  && pTempSpell->EffectApplyAuraName[j] == 8))
-#endif
             {
                 SpellSummary[i].Effects |= 1 << (SELECT_EFFECT_HEALING - 1);
             }
+#endif
 
             // Make sure that this spell applies an aura
 #if defined (CATA) || defined (MISTS)
