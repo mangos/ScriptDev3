@@ -44,171 +44,171 @@ struct is_obsidian_sanctum : public InstanceScript
 
     class instance_obsidian_sanctum : public ScriptedInstance
     {
-    public:
-        instance_obsidian_sanctum(Map* pMap) : ScriptedInstance(pMap),
-            m_uiAliveDragons(0)
-        {
-            Initialize();
-        }
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-
-            for (uint8 i = 0; i < MAX_TWILIGHT_DRAGONS; ++i)
+        public:
+            instance_obsidian_sanctum(Map* pMap) : ScriptedInstance(pMap),
+                m_uiAliveDragons(0)
             {
-                m_bPortalActive[i] = false;
+                Initialize();
             }
-        }
 
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+            void Initialize() override
             {
-                // The three dragons below set to active state once created.
-                // We must expect bigger raid to encounter main boss, and then three dragons must be active due to grid differences
-            case NPC_TENEBRON:
-            case NPC_SHADRON:
-            case NPC_VESPERON:
-                pCreature->SetActiveObjectState(true);
-            case NPC_SARTHARION:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
-            case NPC_FIRE_CYCLONE:
-                m_lFireCycloneGuidList.push_back(pCreature->GetObjectGuid());
-                break;
-            }
-        }
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
-            {
-            case TYPE_SARTHARION_EVENT:
-                m_auiEncounter[0] = uiData;
-                if (uiData == IN_PROGRESS)
+                for (uint8 i = 0; i < MAX_TWILIGHT_DRAGONS; ++i)
                 {
-                    m_sVolcanoBlowFailPlayers.clear();
+                    m_bPortalActive[i] = false;
                 }
-                break;
-            case TYPE_ALIVE_DRAGONS:
-                m_uiAliveDragons = uiData;
-                break;
-            case TYPE_VOLCANO_BLOW_FAILED:
-                // Insert the players who fail the achiev and haven't been already inserted in the set
-                if (m_sVolcanoBlowFailPlayers.find(uiData) == m_sVolcanoBlowFailPlayers.end())
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
                 {
-                    m_sVolcanoBlowFailPlayers.insert(uiData);
+                    // The three dragons below set to active state once created.
+                    // We must expect bigger raid to encounter main boss, and then three dragons must be active due to grid differences
+                    case NPC_TENEBRON:
+                    case NPC_SHADRON:
+                    case NPC_VESPERON:
+                        pCreature->SetActiveObjectState(true);
+                    case NPC_SARTHARION:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
+                    case NPC_FIRE_CYCLONE:
+                        m_lFireCycloneGuidList.push_back(pCreature->GetObjectGuid());
+                        break;
                 }
-                break;
-            case TYPE_DATA_PORTAL_OFF:
-            case TYPE_DATA_PORTAL_ON:
-                SetPortalStatus(uint8(uiData), uiType == TYPE_DATA_PORTAL_ON);
-                return;
-            default:
-                break;
             }
 
-            // No need to save anything here
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType == TYPE_SARTHARION_EVENT)
+            void SetData(uint32 uiType, uint32 uiData) override
             {
-                return m_auiEncounter[0];
+                switch (uiType)
+                {
+                    case TYPE_SARTHARION_EVENT:
+                        m_auiEncounter[0] = uiData;
+                        if (uiData == IN_PROGRESS)
+                        {
+                            m_sVolcanoBlowFailPlayers.clear();
+                        }
+                        break;
+                    case TYPE_ALIVE_DRAGONS:
+                        m_uiAliveDragons = uiData;
+                        break;
+                    case TYPE_VOLCANO_BLOW_FAILED:
+                        // Insert the players who fail the achiev and haven't been already inserted in the set
+                        if (m_sVolcanoBlowFailPlayers.find(uiData) == m_sVolcanoBlowFailPlayers.end())
+                        {
+                            m_sVolcanoBlowFailPlayers.insert(uiData);
+                        }
+                        break;
+                    case TYPE_DATA_PORTAL_OFF:
+                    case TYPE_DATA_PORTAL_ON:
+                        SetPortalStatus(uint8(uiData), uiType == TYPE_DATA_PORTAL_ON);
+                        return;
+                    default:
+                        break;
+                }
+
+                // No need to save anything here
             }
 
-            if (uiType == TYPE_DATA_PORTAL_STATUS)
+            uint32 GetData(uint32 uiType) const override
             {
-                return uint32(IsActivePortal());
+                if (uiType == TYPE_SARTHARION_EVENT)
+                {
+                    return m_auiEncounter[0];
+                }
+
+                if (uiType == TYPE_DATA_PORTAL_STATUS)
+                {
+                    return uint32(IsActivePortal());
+                }
+                return 0;
             }
-            return 0;
-        }
 
-        uint64 GetData64(uint32 uiType) const override
-        {
-            if (uiType == DATA64_FIRE_CYCLONE)
+            uint64 GetData64(uint32 uiType) const override
             {
-                return SelectRandomFireCycloneGuid().GetRawValue();
+                if (uiType == DATA64_FIRE_CYCLONE)
+                {
+                    return SelectRandomFireCycloneGuid().GetRawValue();
+                }
+
+                return 0;
             }
 
-            return 0;
-        }
-
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override
-        {
-            switch (uiCriteriaId)
+            bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override
             {
-            case ACHIEV_DRAGONS_ALIVE_1_N:
-            case ACHIEV_DRAGONS_ALIVE_1_H:
-                return m_uiAliveDragons >= 1;
-            case ACHIEV_DRAGONS_ALIVE_2_N:
-            case ACHIEV_DRAGONS_ALIVE_2_H:
-                return m_uiAliveDragons >= 2;
-            case ACHIEV_DRAGONS_ALIVE_3_N:
-            case ACHIEV_DRAGONS_ALIVE_3_H:
-                return m_uiAliveDragons >= 3;
-            case ACHIEV_CRIT_VOLCANO_BLOW_N:
-            case ACHIEV_CRIT_VOLCANO_BLOW_H:
-                // Return true if not found in the set
-                return m_sVolcanoBlowFailPlayers.find(pSource->GetGUIDLow()) == m_sVolcanoBlowFailPlayers.end();
-            default:
+                switch (uiCriteriaId)
+                {
+                    case ACHIEV_DRAGONS_ALIVE_1_N:
+                    case ACHIEV_DRAGONS_ALIVE_1_H:
+                        return m_uiAliveDragons >= 1;
+                    case ACHIEV_DRAGONS_ALIVE_2_N:
+                    case ACHIEV_DRAGONS_ALIVE_2_H:
+                        return m_uiAliveDragons >= 2;
+                    case ACHIEV_DRAGONS_ALIVE_3_N:
+                    case ACHIEV_DRAGONS_ALIVE_3_H:
+                        return m_uiAliveDragons >= 3;
+                    case ACHIEV_CRIT_VOLCANO_BLOW_N:
+                    case ACHIEV_CRIT_VOLCANO_BLOW_H:
+                        // Return true if not found in the set
+                        return m_sVolcanoBlowFailPlayers.find(pSource->GetGUIDLow()) == m_sVolcanoBlowFailPlayers.end();
+                    default:
+                        return false;
+                }
+            }
+
+            bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const override
+            {
+                switch (uiInstanceConditionId)
+                {
+                    case INSTANCE_CONDITION_ID_HARD_MODE:               // Exactly one dragon alive on event start
+                    case INSTANCE_CONDITION_ID_HARD_MODE_2:             // Exactly two dragons alive on event start
+                    case INSTANCE_CONDITION_ID_HARD_MODE_3:             // All three dragons alive on event start
+                        return m_uiAliveDragons == uiInstanceConditionId;
+                }
+
+                script_error_log("instance_obsidian_sanctum::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
+                    uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "nullptr", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "nullptr", conditionSourceType);
                 return false;
             }
-        }
 
-        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const override
-        {
-            switch (uiInstanceConditionId)
+        private:
+            void SetPortalStatus(uint8 uiType, bool bStatus) { m_bPortalActive[uiType] = bStatus; }
+            bool IsActivePortal() const
             {
-            case INSTANCE_CONDITION_ID_HARD_MODE:               // Exactly one dragon alive on event start
-            case INSTANCE_CONDITION_ID_HARD_MODE_2:             // Exactly two dragons alive on event start
-            case INSTANCE_CONDITION_ID_HARD_MODE_3:             // All three dragons alive on event start
-                return m_uiAliveDragons == uiInstanceConditionId;
-            }
-
-            script_error_log("instance_obsidian_sanctum::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
-                uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "nullptr", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "nullptr", conditionSourceType);
-            return false;
-        }
-
-    private:
-        void SetPortalStatus(uint8 uiType, bool bStatus) { m_bPortalActive[uiType] = bStatus; }
-        bool IsActivePortal() const
-        {
-            for (uint8 i = 0; i < MAX_TWILIGHT_DRAGONS; ++i)
-            {
-                if (m_bPortalActive[i])
+                for (uint8 i = 0; i < MAX_TWILIGHT_DRAGONS; ++i)
                 {
-                    return true;
+                    if (m_bPortalActive[i])
+                    {
+                        return true;
+                    }
                 }
+
+                return false;
             }
 
-            return false;
-        }
-
-        ObjectGuid SelectRandomFireCycloneGuid() const
-        {
-            if (m_lFireCycloneGuidList.empty())
+            ObjectGuid SelectRandomFireCycloneGuid() const
             {
-                return ObjectGuid();
+                if (m_lFireCycloneGuidList.empty())
+                {
+                    return ObjectGuid();
+                }
+
+                GuidList::const_iterator iter = m_lFireCycloneGuidList.begin();
+                advance(iter, urand(0, m_lFireCycloneGuidList.size() - 1));
+
+                return *iter;
             }
 
-            GuidList::const_iterator iter = m_lFireCycloneGuidList.begin();
-            advance(iter, urand(0, m_lFireCycloneGuidList.size() - 1));
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            bool m_bPortalActive[MAX_TWILIGHT_DRAGONS];
 
-            return *iter;
-        }
+            uint8 m_uiAliveDragons;
 
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        bool m_bPortalActive[MAX_TWILIGHT_DRAGONS];
+            std::set<uint32> m_sVolcanoBlowFailPlayers;
 
-        uint8 m_uiAliveDragons;
-
-        std::set<uint32> m_sVolcanoBlowFailPlayers;
-
-        GuidList m_lFireCycloneGuidList;
+            GuidList m_lFireCycloneGuidList;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

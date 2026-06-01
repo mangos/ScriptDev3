@@ -149,16 +149,16 @@ struct npc_belnistrasz : public CreatureScript
 
                 switch (i)
                 {
-                case 0:
-                case 1:
-                    uiEntry = NPC_WITHERED_BATTLE_BOAR;
-                    break;
-                case 2:
-                    uiEntry = NPC_WITHERED_QUILGUARD;
-                    break;
-                case 3:
-                    uiEntry = NPC_DEATHS_HEAD_GEOMANCER;
-                    break;
+                    case 0:
+                    case 1:
+                        uiEntry = NPC_WITHERED_BATTLE_BOAR;
+                        break;
+                    case 2:
+                        uiEntry = NPC_WITHERED_QUILGUARD;
+                        break;
+                    case 3:
+                        uiEntry = NPC_DEATHS_HEAD_GEOMANCER;
+                        break;
                 }
 
                 pSummoner->SummonCreature(uiEntry, fX, fZ, fY, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
@@ -192,65 +192,65 @@ struct npc_belnistrasz : public CreatureScript
                 {
                     switch (m_uiRitualPhase)
                     {
-                    case 0:
-                        DoCastSpellIfCan(m_creature, SPELL_IDOL_SHUTDOWN);
-                        m_uiRitualTimer = 1000;
-                        break;
-                    case 1:
-                        DoSummonSpawner(irand(1, 3));
-                        m_uiRitualTimer = 39000;
-                        break;
-                    case 2:
-                        DoSummonSpawner(irand(1, 3));
-                        m_uiRitualTimer = 20000;
-                        break;
-                    case 3:
-                        DoScriptText(SAY_BELNISTRASZ_3_MIN, m_creature, m_creature);
-                        m_uiRitualTimer = 20000;
-                        break;
-                    case 4:
-                        DoSummonSpawner(irand(1, 3));
-                        m_uiRitualTimer = 40000;
-                        break;
-                    case 5:
-                        DoSummonSpawner(irand(1, 3));
-                        DoScriptText(SAY_BELNISTRASZ_2_MIN, m_creature, m_creature);
-                        m_uiRitualTimer = 40000;
-                        break;
-                    case 6:
-                        DoSummonSpawner(irand(1, 3));
-                        m_uiRitualTimer = 20000;
-                        break;
-                    case 7:
-                        DoScriptText(SAY_BELNISTRASZ_1_MIN, m_creature, m_creature);
-                        m_uiRitualTimer = 40000;
-                        break;
-                    case 8:
-                        DoSummonSpawner(irand(1, 3));
-                        m_uiRitualTimer = 20000;
-                        break;
-                    case 9:
-                        DoScriptText(SAY_BELNISTRASZ_FINISH, m_creature, m_creature);
-                        m_uiRitualTimer = 3000;
-                        break;
-                    case 10:
-                        if (Player* pPlayer = GetPlayerForEscort())
-                        {
-                            pPlayer->GroupEventHappens(QUEST_EXTINGUISHING_THE_IDOL, m_creature);
-
-                            if (GameObject* pGo = GetClosestGameObjectWithEntry(m_creature, GO_BELNISTRASZ_BRAZIER, 10.0f))
+                        case 0:
+                            DoCastSpellIfCan(m_creature, SPELL_IDOL_SHUTDOWN);
+                            m_uiRitualTimer = 1000;
+                            break;
+                        case 1:
+                            DoSummonSpawner(irand(1, 3));
+                            m_uiRitualTimer = 39000;
+                            break;
+                        case 2:
+                            DoSummonSpawner(irand(1, 3));
+                            m_uiRitualTimer = 20000;
+                            break;
+                        case 3:
+                            DoScriptText(SAY_BELNISTRASZ_3_MIN, m_creature, m_creature);
+                            m_uiRitualTimer = 20000;
+                            break;
+                        case 4:
+                            DoSummonSpawner(irand(1, 3));
+                            m_uiRitualTimer = 40000;
+                            break;
+                        case 5:
+                            DoSummonSpawner(irand(1, 3));
+                            DoScriptText(SAY_BELNISTRASZ_2_MIN, m_creature, m_creature);
+                            m_uiRitualTimer = 40000;
+                            break;
+                        case 6:
+                            DoSummonSpawner(irand(1, 3));
+                            m_uiRitualTimer = 20000;
+                            break;
+                        case 7:
+                            DoScriptText(SAY_BELNISTRASZ_1_MIN, m_creature, m_creature);
+                            m_uiRitualTimer = 40000;
+                            break;
+                        case 8:
+                            DoSummonSpawner(irand(1, 3));
+                            m_uiRitualTimer = 20000;
+                            break;
+                        case 9:
+                            DoScriptText(SAY_BELNISTRASZ_FINISH, m_creature, m_creature);
+                            m_uiRitualTimer = 3000;
+                            break;
+                        case 10:
+                            if (Player* pPlayer = GetPlayerForEscort())
                             {
-                                if (!pGo->isSpawned())
+                                pPlayer->GroupEventHappens(QUEST_EXTINGUISHING_THE_IDOL, m_creature);
+
+                                if (GameObject* pGo = GetClosestGameObjectWithEntry(m_creature, GO_BELNISTRASZ_BRAZIER, 10.0f))
                                 {
-                                    pGo->SetRespawnTime(HOUR * IN_MILLISECONDS);
-                                    pGo->Refresh();
+                                    if (!pGo->isSpawned())
+                                    {
+                                        pGo->SetRespawnTime(HOUR * IN_MILLISECONDS);
+                                        pGo->Refresh();
+                                    }
                                 }
                             }
-                        }
 
-                        m_creature->RemoveAurasDueToSpell(SPELL_IDOL_SHUTDOWN);
-                        SetEscortPaused(false);
-                        break;
+                            m_creature->RemoveAurasDueToSpell(SPELL_IDOL_SHUTDOWN);
+                            SetEscortPaused(false);
+                            break;
                     }
 
                     ++m_uiRitualPhase;

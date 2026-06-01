@@ -270,13 +270,13 @@ struct boss_anubarak_trial : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_ANUBARAK_SPIKE:
-                m_PursuingSpikesGuid = pSummoned->GetObjectGuid();
-                // no break here
-            case NPC_NERUBIAN_BURROWER:
-            case NPC_SCARAB:
-                pSummoned->AI()->AttackStart(m_creature->getVictim());
-                break;
+                case NPC_ANUBARAK_SPIKE:
+                    m_PursuingSpikesGuid = pSummoned->GetObjectGuid();
+                    // no break here
+                case NPC_NERUBIAN_BURROWER:
+                case NPC_SCARAB:
+                    pSummoned->AI()->AttackStart(m_creature->getVictim());
+                    break;
             }
         }
 
@@ -320,114 +320,114 @@ struct boss_anubarak_trial : public CreatureScript
 
             switch (m_Phase)
             {
-            case PHASE_GROUND:
+                case PHASE_GROUND:
 
-                // Switch to underground phase on timer
-                if (m_PhaseSwitchTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUBMERGE) == CAST_OK)
+                    // Switch to underground phase on timer
+                    if (m_PhaseSwitchTimer < uiDiff)
                     {
-                        DoScriptText(SAY_SUBMERGE, m_creature);
-                        DoScriptText(EMOTE_BURROW, m_creature);
-                        m_PhaseSwitchTimer = 63000;
-                        m_Phase = PHASE_SUBMERGING;
-                        return;
-                    }
-                }
-                else
-                {
-                    m_PhaseSwitchTimer -= uiDiff;
-                }
-
-                // Switch to phase 3 when below 30%
-                if (m_creature->GetHealthPercent() <= 30.0f)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_LEECHING_SWARM) == CAST_OK)
-                    {
-                        DoScriptText(SAY_LEECHING_SWARM, m_creature);
-                        DoScriptText(EMOTE_LEECHING_SWARM, m_creature);
-                        m_Phase = PHASE_LEECHING_SWARM;
-                    }
-                }
-
-                // No break - the spells are used in both phase 1 and 3
-            case PHASE_LEECHING_SWARM:
-
-                if (m_uiFreezingSlashTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FREEZING_SLASH) == CAST_OK)
-                    {
-                        m_uiFreezingSlashTimer = 20000;
-                    }
-                }
-                else
-                {
-                    m_uiFreezingSlashTimer -= uiDiff;
-                }
-
-                if (m_uiPenetratingColdTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_PENETRATING_COLD) == CAST_OK)
-                    {
-                        m_uiPenetratingColdTimer = 15000;
-                    }
-                }
-                else
-                {
-                    m_uiPenetratingColdTimer -= uiDiff;
-                }
-
-                // The Borrowers are summoned in Ground phase only on normal mode or during Ground and Swarm phase on heroic mode
-                if (m_Phase == PHASE_GROUND || (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC)))
-                {
-                    if (m_uiBurrowerSummonTimer < uiDiff)
-                    {
-                        // The number of targets is handled in core, based on difficulty
-                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_NERUBIAN_BURROWER) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUBMERGE) == CAST_OK)
                         {
-                            m_uiBurrowerSummonTimer = 45000;
+                            DoScriptText(SAY_SUBMERGE, m_creature);
+                            DoScriptText(EMOTE_BURROW, m_creature);
+                            m_PhaseSwitchTimer = 63000;
+                            m_Phase = PHASE_SUBMERGING;
+                            return;
                         }
                     }
                     else
                     {
-                        m_uiBurrowerSummonTimer -= uiDiff;
+                        m_PhaseSwitchTimer -= uiDiff;
                     }
-                }
 
-                DoMeleeAttackIfReady();
-
-                break;
-
-            case PHASE_UNDERGROUND:
-
-                // Underground phase is finished
-                if (m_PhaseSwitchTimer < uiDiff)
-                {
-                    DoCastSpellIfCan(m_creature, SPELL_EMERGE, CAST_TRIGGERED);
-                    DoCastSpellIfCan(m_creature, SPELL_TELEPORT_TO_SPIKE, CAST_TRIGGERED);
-                    DoScriptText(EMOTE_EMERGE, m_creature);
-                    DoDespawnPursuingSpikes();
-
-                    m_creature->RemoveAurasDueToSpell(SPELL_SUBMERGE);
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-
-                    // Refresh spheres only on normal difficulty
-                    if (m_pInstance && !m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
+                    // Switch to phase 3 when below 30%
+                    if (m_creature->GetHealthPercent() <= 30.0f)
                     {
-                        DoRefreshSpheres();
+                        if (DoCastSpellIfCan(m_creature, SPELL_LEECHING_SWARM) == CAST_OK)
+                        {
+                            DoScriptText(SAY_LEECHING_SWARM, m_creature);
+                            DoScriptText(EMOTE_LEECHING_SWARM, m_creature);
+                            m_Phase = PHASE_LEECHING_SWARM;
+                        }
                     }
 
-                    m_PhaseSwitchTimer = 80000;
-                    m_Phase = PHASE_GROUND;
-                }
-                else
-                {
-                    m_PhaseSwitchTimer -= uiDiff;
-                }
+                    // No break - the spells are used in both phase 1 and 3
+                case PHASE_LEECHING_SWARM:
 
-                break;
-            case PHASE_SUBMERGING:                          // Do nothing, but continue berserk timer
-                break;
+                    if (m_uiFreezingSlashTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FREEZING_SLASH) == CAST_OK)
+                        {
+                            m_uiFreezingSlashTimer = 20000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiFreezingSlashTimer -= uiDiff;
+                    }
+
+                    if (m_uiPenetratingColdTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_PENETRATING_COLD) == CAST_OK)
+                        {
+                            m_uiPenetratingColdTimer = 15000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiPenetratingColdTimer -= uiDiff;
+                    }
+
+                    // The Borrowers are summoned in Ground phase only on normal mode or during Ground and Swarm phase on heroic mode
+                    if (m_Phase == PHASE_GROUND || (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC)))
+                    {
+                        if (m_uiBurrowerSummonTimer < uiDiff)
+                        {
+                            // The number of targets is handled in core, based on difficulty
+                            if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_NERUBIAN_BURROWER) == CAST_OK)
+                            {
+                                m_uiBurrowerSummonTimer = 45000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiBurrowerSummonTimer -= uiDiff;
+                        }
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+
+                case PHASE_UNDERGROUND:
+
+                    // Underground phase is finished
+                    if (m_PhaseSwitchTimer < uiDiff)
+                    {
+                        DoCastSpellIfCan(m_creature, SPELL_EMERGE, CAST_TRIGGERED);
+                        DoCastSpellIfCan(m_creature, SPELL_TELEPORT_TO_SPIKE, CAST_TRIGGERED);
+                        DoScriptText(EMOTE_EMERGE, m_creature);
+                        DoDespawnPursuingSpikes();
+
+                        m_creature->RemoveAurasDueToSpell(SPELL_SUBMERGE);
+                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+
+                        // Refresh spheres only on normal difficulty
+                        if (m_pInstance && !m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
+                        {
+                            DoRefreshSpheres();
+                        }
+
+                        m_PhaseSwitchTimer = 80000;
+                        m_Phase = PHASE_GROUND;
+                    }
+                    else
+                    {
+                        m_PhaseSwitchTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_SUBMERGING:                          // Do nothing, but continue berserk timer
+                    break;
             }
 
             if (m_uiBerserkTimer)
@@ -507,17 +507,17 @@ struct npc_anubarak_trial_spike : public CreatureScript
             // Remove the speed auras
             switch (m_Phase)
             {
-            case PHASE_IMPALE_NORMAL:
-                m_creature->RemoveAurasDueToSpell(SPELL_PURSUING_SPIKES_SPEED1);
-                break;
-            case PHASE_IMPALE_MIDDLE:
-                m_creature->RemoveAurasDueToSpell(SPELL_PURSUING_SPIKES_SPEED2);
-                break;
-            case PHASE_IMPALE_FAST:
-                m_creature->RemoveAurasDueToSpell(SPELL_PURSUING_SPIKES_SPEED3);
-                break;
-            default:
-                break;
+                case PHASE_IMPALE_NORMAL:
+                    m_creature->RemoveAurasDueToSpell(SPELL_PURSUING_SPIKES_SPEED1);
+                    break;
+                case PHASE_IMPALE_MIDDLE:
+                    m_creature->RemoveAurasDueToSpell(SPELL_PURSUING_SPIKES_SPEED2);
+                    break;
+                case PHASE_IMPALE_FAST:
+                    m_creature->RemoveAurasDueToSpell(SPELL_PURSUING_SPIKES_SPEED3);
+                    break;
+                default:
+                    break;
             }
 
             // Set Spike fail animation and despawn
@@ -551,31 +551,31 @@ struct npc_anubarak_trial_spike : public CreatureScript
                 {
                     switch (m_Phase)
                     {
-                    case PHASE_NO_MOVEMENT:
-                        if (DoCastSpellIfCan(m_creature, SPELL_PURSUING_SPIKES_SPEED1) == CAST_OK)
-                        {
-                            DoCastSpellIfCan(m_creature, SPELL_PURSUING_SPIKES_DUMMY, CAST_TRIGGERED);
+                        case PHASE_NO_MOVEMENT:
+                            if (DoCastSpellIfCan(m_creature, SPELL_PURSUING_SPIKES_SPEED1) == CAST_OK)
+                            {
+                                DoCastSpellIfCan(m_creature, SPELL_PURSUING_SPIKES_DUMMY, CAST_TRIGGERED);
 
-                            m_Phase = PHASE_IMPALE_NORMAL;
-                            m_PhaseSwitchTimer = 7000;
-                        }
-                        break;
-                    case PHASE_IMPALE_NORMAL:
-                        if (DoCastSpellIfCan(m_creature, SPELL_PURSUING_SPIKES_SPEED2) == CAST_OK)
-                        {
-                            m_Phase = PHASE_IMPALE_MIDDLE;
-                            m_PhaseSwitchTimer = 7000;
-                        }
-                        break;
-                    case PHASE_IMPALE_MIDDLE:
-                        if (DoCastSpellIfCan(m_creature, SPELL_PURSUING_SPIKES_SPEED3) == CAST_OK)
-                        {
-                            m_Phase = PHASE_IMPALE_FAST;
-                            m_PhaseSwitchTimer = 0;
-                        }
-                        break;
-                    default:
-                        break;
+                                m_Phase = PHASE_IMPALE_NORMAL;
+                                m_PhaseSwitchTimer = 7000;
+                            }
+                            break;
+                        case PHASE_IMPALE_NORMAL:
+                            if (DoCastSpellIfCan(m_creature, SPELL_PURSUING_SPIKES_SPEED2) == CAST_OK)
+                            {
+                                m_Phase = PHASE_IMPALE_MIDDLE;
+                                m_PhaseSwitchTimer = 7000;
+                            }
+                            break;
+                        case PHASE_IMPALE_MIDDLE:
+                            if (DoCastSpellIfCan(m_creature, SPELL_PURSUING_SPIKES_SPEED3) == CAST_OK)
+                            {
+                                m_Phase = PHASE_IMPALE_FAST;
+                                m_PhaseSwitchTimer = 0;
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
                 else

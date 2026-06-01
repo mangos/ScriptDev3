@@ -36,9 +36,7 @@
 /**
  * ContentData
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * npc_lady_sylvanas_windrunner
-#endif
+ * npc_lady_sylvanas_windrunner (TBC Onwards)
 
  * EndContentData
  */

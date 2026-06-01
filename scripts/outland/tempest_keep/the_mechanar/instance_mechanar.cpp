@@ -86,233 +86,233 @@ struct is_mechanar : public InstanceScript
 
     class instance_mechanar : public ScriptedInstance
     {
-    public:
-        instance_mechanar(Map* pMap) : ScriptedInstance(pMap),
-            m_uiBridgeEventTimer(0),
-            m_uiBridgeEventPhase(0)
-        {
-            Initialize();
-        }
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        void OnPlayerEnter(Player* pPlayer) override
-        {
-            // Check encounter states
-            if (GetData(TYPE_SEPETHREA) != DONE || GetData(TYPE_PATHALEON) == DONE)
+        public:
+            instance_mechanar(Map* pMap) : ScriptedInstance(pMap),
+                m_uiBridgeEventTimer(0),
+                m_uiBridgeEventPhase(0)
             {
-                return;
+                Initialize();
             }
 
-            // Check if already summoned
-            if (GetSingleCreatureFromStorage(NPC_PATHALEON, true))
+            void Initialize() override
             {
-                return;
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
             }
 
-            pPlayer->SummonCreature(aBridgeEventLocs[6][0].m_uiSpawnEntry, aBridgeEventLocs[6][0].m_fX, aBridgeEventLocs[6][0].m_fY, aBridgeEventLocs[6][0].m_fZ, aBridgeEventLocs[6][0].m_fO, TEMPSPAWN_DEAD_DESPAWN, 0);
-        }
-
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            if (pGo->GetEntry() == GO_FACTORY_ELEVATOR)
+            void OnPlayerEnter(Player* pPlayer) override
             {
-                // ToDo: activate elevator if TYPE_GYRO_KILL && TYPE_IRON_HAND && TYPE_CAPACITUS are DONE
-                m_mGoEntryGuidStore[GO_FACTORY_ELEVATOR] = pGo->GetObjectGuid();
-            }
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
-            {
-            case NPC_PATHALEON:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
-            case NPC_ASTROMAGE:
-            case NPC_PHYSICIAN:
-            case NPC_CENTURION:
-            case NPC_ENGINEER:
-            case NPC_NETHERBINDER:
-            case NPC_FORGE_DESTROYER:
-                if (pCreature->IsTemporarySummon())
+                // Check encounter states
+                if (GetData(TYPE_SEPETHREA) != DONE || GetData(TYPE_PATHALEON) == DONE)
                 {
-                    m_sBridgeTrashGuidSet.insert(pCreature->GetObjectGuid());
+                    return;
                 }
-                break;
-            }
-        }
 
-        void OnCreatureDeath(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
-            {
-            case NPC_GYRO_KILL:      SetData(TYPE_GYRO_KILL, DONE); break;
-            case NPC_IRON_HAND:      SetData(TYPE_IRON_HAND, DONE); break;
-            case NPC_LORD_CAPACITUS: SetData(TYPE_CAPACITUS, DONE); break;
-
-            case NPC_ASTROMAGE:
-            case NPC_PHYSICIAN:
-            case NPC_CENTURION:
-            case NPC_ENGINEER:
-            case NPC_NETHERBINDER:
-            case NPC_FORGE_DESTROYER:
-                if (m_sBridgeTrashGuidSet.find(pCreature->GetObjectGuid()) != m_sBridgeTrashGuidSet.end())
+                // Check if already summoned
+                if (GetSingleCreatureFromStorage(NPC_PATHALEON, true))
                 {
-                    m_sBridgeTrashGuidSet.erase(pCreature->GetObjectGuid());
+                    return;
+                }
 
-                    if (m_sBridgeTrashGuidSet.empty())
-                    {
-                        // After the 3rd wave wait 10 seconds
-                        if (m_uiBridgeEventPhase == 3)
+                pPlayer->SummonCreature(aBridgeEventLocs[6][0].m_uiSpawnEntry, aBridgeEventLocs[6][0].m_fX, aBridgeEventLocs[6][0].m_fY, aBridgeEventLocs[6][0].m_fZ, aBridgeEventLocs[6][0].m_fO, TEMPSPAWN_DEAD_DESPAWN, 0);
+            }
+
+            void OnObjectCreate(GameObject* pGo) override
+            {
+                if (pGo->GetEntry() == GO_FACTORY_ELEVATOR)
+                {
+                    // ToDo: activate elevator if TYPE_GYRO_KILL && TYPE_IRON_HAND && TYPE_CAPACITUS are DONE
+                    m_mGoEntryGuidStore[GO_FACTORY_ELEVATOR] = pGo->GetObjectGuid();
+                }
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_PATHALEON:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
+                    case NPC_ASTROMAGE:
+                    case NPC_PHYSICIAN:
+                    case NPC_CENTURION:
+                    case NPC_ENGINEER:
+                    case NPC_NETHERBINDER:
+                    case NPC_FORGE_DESTROYER:
+                        if (pCreature->IsTemporarySummon())
+                        {
+                            m_sBridgeTrashGuidSet.insert(pCreature->GetObjectGuid());
+                        }
+                        break;
+                }
+            }
+
+            void OnCreatureDeath(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_GYRO_KILL:      SetData(TYPE_GYRO_KILL, DONE); break;
+                    case NPC_IRON_HAND:      SetData(TYPE_IRON_HAND, DONE); break;
+                    case NPC_LORD_CAPACITUS: SetData(TYPE_CAPACITUS, DONE); break;
+
+                    case NPC_ASTROMAGE:
+                    case NPC_PHYSICIAN:
+                    case NPC_CENTURION:
+                    case NPC_ENGINEER:
+                    case NPC_NETHERBINDER:
+                    case NPC_FORGE_DESTROYER:
+                        if (m_sBridgeTrashGuidSet.find(pCreature->GetObjectGuid()) != m_sBridgeTrashGuidSet.end())
+                        {
+                            m_sBridgeTrashGuidSet.erase(pCreature->GetObjectGuid());
+
+                            if (m_sBridgeTrashGuidSet.empty())
+                            {
+                                // After the 3rd wave wait 10 seconds
+                                if (m_uiBridgeEventPhase == 3)
+                                {
+                                    m_uiBridgeEventTimer = 10000;
+                                }
+                                else
+                                {
+                                    DoSpawnBridgeWave();
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                switch (uiType)
+                {
+                    case TYPE_GYRO_KILL:
+                    case TYPE_IRON_HAND:
+                    case TYPE_CAPACITUS:
+                        m_auiEncounter[uiType] = uiData;
+                        // ToDo: Activate the Elevator when all these 3 are done
+                        break;
+                    case TYPE_SEPETHREA:
+                        m_auiEncounter[uiType] = uiData;
+                        if (uiData == DONE)
                         {
                             m_uiBridgeEventTimer = 10000;
                         }
-                        else
-                        {
-                            DoSpawnBridgeWave();
-                        }
-                    }
+                        break;
+                    case TYPE_PATHALEON:
+                        m_auiEncounter[uiType] = uiData;
+                        break;
                 }
-                break;
-            }
-        }
 
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
-            {
-            case TYPE_GYRO_KILL:
-            case TYPE_IRON_HAND:
-            case TYPE_CAPACITUS:
-                m_auiEncounter[uiType] = uiData;
-                // ToDo: Activate the Elevator when all these 3 are done
-                break;
-            case TYPE_SEPETHREA:
-                m_auiEncounter[uiType] = uiData;
                 if (uiData == DONE)
                 {
-                    m_uiBridgeEventTimer = 10000;
-                }
-                break;
-            case TYPE_PATHALEON:
-                m_auiEncounter[uiType] = uiData;
-                break;
-            }
+                    OUT_SAVE_INST_DATA;
 
-            if (uiData == DONE)
-            {
-                OUT_SAVE_INST_DATA;
+                    std::ostringstream saveStream;
 
-                std::ostringstream saveStream;
+                    saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
+                               << m_auiEncounter[3] << " " << m_auiEncounter[4];
 
-                saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
-                    << m_auiEncounter[3] << " " << m_auiEncounter[4];
+                    m_strInstData = saveStream.str();
 
-                m_strInstData = saveStream.str();
-
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
-            }
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType < MAX_ENCOUNTER)
-            {
-                return m_auiEncounter[uiType];
-            }
-
-            return 0;
-        }
-
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
-            {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
-                >> m_auiEncounter[4];
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                {
-                    m_auiEncounter[i] = NOT_STARTED;
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
                 }
             }
 
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
-
-        void Update(uint32 uiDiff) override
-        {
-            if (m_uiBridgeEventTimer)
+            uint32 GetData(uint32 uiType) const override
             {
-                if (m_uiBridgeEventTimer <= uiDiff)
+                if (uiType < MAX_ENCOUNTER)
                 {
-                    DoSpawnBridgeWave();
-                    m_uiBridgeEventTimer = 0;
+                    return m_auiEncounter[uiType];
                 }
-                else
-                {
-                    m_uiBridgeEventTimer -= uiDiff;
-                }
+
+                return 0;
             }
-        }
 
-    private:
-        void DoSpawnBridgeWave()
-        {
-            if (Player* pPlayer = GetPlayerInMap(true, false))
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* chrIn) override
             {
-                for (uint8 i = 0; i < MAX_BRIDGE_TRASH; ++i)
+                if (!chrIn)
                 {
-                    // Skip the blank entries
-                    if (aBridgeEventLocs[m_uiBridgeEventPhase][i].m_uiSpawnEntry == 0)
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+                loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
+                           >> m_auiEncounter[4];
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
                     {
-                        break;
+                        m_auiEncounter[i] = NOT_STARTED;
                     }
+                }
 
-                    if (Creature* pTemp = pPlayer->SummonCreature(aBridgeEventLocs[m_uiBridgeEventPhase][i].m_uiSpawnEntry, aBridgeEventLocs[m_uiBridgeEventPhase][i].m_fX, aBridgeEventLocs[m_uiBridgeEventPhase][i].m_fY, aBridgeEventLocs[m_uiBridgeEventPhase][i].m_fZ, aBridgeEventLocs[m_uiBridgeEventPhase][i].m_fO, TEMPSPAWN_DEAD_DESPAWN, 0))
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
+
+            void Update(uint32 uiDiff) override
+            {
+                if (m_uiBridgeEventTimer)
+                {
+                    if (m_uiBridgeEventTimer <= uiDiff)
                     {
-                        pTemp->CastSpell(pTemp, SPELL_ETHEREAL_TELEPORT, false);
+                        DoSpawnBridgeWave();
+                        m_uiBridgeEventTimer = 0;
+                    }
+                    else
+                    {
+                        m_uiBridgeEventTimer -= uiDiff;
+                    }
+                }
+            }
 
-                        switch (m_uiBridgeEventPhase)
+        private:
+            void DoSpawnBridgeWave()
+            {
+                if (Player* pPlayer = GetPlayerInMap(true, false))
+                {
+                    for (uint8 i = 0; i < MAX_BRIDGE_TRASH; ++i)
+                    {
+                        // Skip the blank entries
+                        if (aBridgeEventLocs[m_uiBridgeEventPhase][i].m_uiSpawnEntry == 0)
                         {
-                        case 1:                                 // These waves should attack the player directly
-                        case 2:
-                        case 4:
-                        case 5:
-                            pTemp->AI()->AttackStart(pPlayer);
                             break;
-                        case 6:                                 // Pathaleon
-                            DoScriptText(SAY_PATHALEON_INTRO, pTemp);
-                            break;
+                        }
+
+                        if (Creature* pTemp = pPlayer->SummonCreature(aBridgeEventLocs[m_uiBridgeEventPhase][i].m_uiSpawnEntry, aBridgeEventLocs[m_uiBridgeEventPhase][i].m_fX, aBridgeEventLocs[m_uiBridgeEventPhase][i].m_fY, aBridgeEventLocs[m_uiBridgeEventPhase][i].m_fZ, aBridgeEventLocs[m_uiBridgeEventPhase][i].m_fO, TEMPSPAWN_DEAD_DESPAWN, 0))
+                        {
+                            pTemp->CastSpell(pTemp, SPELL_ETHEREAL_TELEPORT, false);
+
+                            switch (m_uiBridgeEventPhase)
+                            {
+                                case 1:                                 // These waves should attack the player directly
+                                case 2:
+                                case 4:
+                                case 5:
+                                    pTemp->AI()->AttackStart(pPlayer);
+                                    break;
+                                case 6:                                 // Pathaleon
+                                    DoScriptText(SAY_PATHALEON_INTRO, pTemp);
+                                    break;
+                            }
                         }
                     }
                 }
+                ++m_uiBridgeEventPhase;
             }
-            ++m_uiBridgeEventPhase;
-        }
 
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
 
-        uint32 m_uiBridgeEventTimer;
-        uint8 m_uiBridgeEventPhase;
+            uint32 m_uiBridgeEventTimer;
+            uint8 m_uiBridgeEventPhase;
 
-        GuidSet m_sBridgeTrashGuidSet;
+            GuidSet m_sBridgeTrashGuidSet;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

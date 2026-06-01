@@ -71,19 +71,19 @@ struct npc_ame01 : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(SAY_AME_START, m_creature);
-                break;
-            case 19:
-                DoScriptText(SAY_AME_PROGRESS, m_creature);
-                break;
-            case 37:
-                DoScriptText(SAY_AME_END, m_creature);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_CHASING_AME, m_creature);
-                }
-                break;
+                case 0:
+                    DoScriptText(SAY_AME_START, m_creature);
+                    break;
+                case 19:
+                    DoScriptText(SAY_AME_PROGRESS, m_creature);
+                    break;
+                case 37:
+                    DoScriptText(SAY_AME_END, m_creature);
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_CHASING_AME, m_creature);
+                    }
+                    break;
             }
         }
 
@@ -103,15 +103,15 @@ struct npc_ame01 : public CreatureScript
 
                 switch (urand(0, 2))
                 {
-                case 0:
-                    DoScriptText(SAY_AME_AGGRO1, m_creature, pWho);
-                    break;
-                case 1:
-                    DoScriptText(SAY_AME_AGGRO2, m_creature, pWho);
-                    break;
-                case 2:
-                    DoScriptText(SAY_AME_AGGRO3, m_creature, pWho);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_AME_AGGRO1, m_creature, pWho);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_AME_AGGRO2, m_creature, pWho);
+                        break;
+                    case 2:
+                        DoScriptText(SAY_AME_AGGRO3, m_creature, pWho);
+                        break;
                 }
             }
         }
@@ -240,18 +240,18 @@ struct npc_ringo : public CreatureScript
 
                 switch (urand(0, 3))
                 {
-                case 0:
-                    DoScriptText(SAY_FAINT_1, m_creature);
-                    break;
-                case 1:
-                    DoScriptText(SAY_FAINT_2, m_creature);
-                    break;
-                case 2:
-                    DoScriptText(SAY_FAINT_3, m_creature);
-                    break;
-                case 3:
-                    DoScriptText(SAY_FAINT_4, m_creature);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_FAINT_1, m_creature);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_FAINT_2, m_creature);
+                        break;
+                    case 2:
+                        DoScriptText(SAY_FAINT_3, m_creature);
+                        break;
+                    case 3:
+                        DoScriptText(SAY_FAINT_4, m_creature);
+                        break;
                 }
             }
 
@@ -270,18 +270,18 @@ struct npc_ringo : public CreatureScript
 
             switch (urand(0, 3))
             {
-            case 0:
-                DoScriptText(SAY_WAKE_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_WAKE_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_WAKE_3, m_creature);
-                break;
-            case 3:
-                DoScriptText(SAY_WAKE_4, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_WAKE_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_WAKE_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_WAKE_3, m_creature);
+                    break;
+                case 3:
+                    DoScriptText(SAY_WAKE_4, m_creature);
+                    break;
             }
 
             SetFollowPaused(false);
@@ -303,43 +303,43 @@ struct npc_ringo : public CreatureScript
 
                         switch (m_uiEndEventProgress)
                         {
-                        case 1:
-                            DoScriptText(SAY_RIN_END_1, m_creature);
-                            m_uiEndEventTimer = 3000;
-                            break;
-                        case 2:
-                            DoScriptText(SAY_SPR_END_2, pSpraggle);
-                            m_uiEndEventTimer = 5000;
-                            break;
-                        case 3:
-                            DoScriptText(SAY_RIN_END_3, m_creature);
-                            m_uiEndEventTimer = 1000;
-                            break;
-                        case 4:
-                            DoScriptText(EMOTE_RIN_END_4, m_creature);
-                            SetFaint();
-                            m_uiEndEventTimer = 9000;
-                            break;
-                        case 5:
-                            DoScriptText(EMOTE_RIN_END_5, m_creature);
-                            ClearFaint();
-                            m_uiEndEventTimer = 1000;
-                            break;
-                        case 6:
-                            DoScriptText(SAY_RIN_END_6, m_creature);
-                            m_uiEndEventTimer = 3000;
-                            break;
-                        case 7:
-                            DoScriptText(SAY_SPR_END_7, pSpraggle);
-                            m_uiEndEventTimer = 10000;
-                            break;
-                        case 8:
-                            DoScriptText(EMOTE_RIN_END_8, m_creature);
-                            m_uiEndEventTimer = 5000;
-                            break;
-                        case 9:
-                            SetFollowComplete();
-                            break;
+                            case 1:
+                                DoScriptText(SAY_RIN_END_1, m_creature);
+                                m_uiEndEventTimer = 3000;
+                                break;
+                            case 2:
+                                DoScriptText(SAY_SPR_END_2, pSpraggle);
+                                m_uiEndEventTimer = 5000;
+                                break;
+                            case 3:
+                                DoScriptText(SAY_RIN_END_3, m_creature);
+                                m_uiEndEventTimer = 1000;
+                                break;
+                            case 4:
+                                DoScriptText(EMOTE_RIN_END_4, m_creature);
+                                SetFaint();
+                                m_uiEndEventTimer = 9000;
+                                break;
+                            case 5:
+                                DoScriptText(EMOTE_RIN_END_5, m_creature);
+                                ClearFaint();
+                                m_uiEndEventTimer = 1000;
+                                break;
+                            case 6:
+                                DoScriptText(SAY_RIN_END_6, m_creature);
+                                m_uiEndEventTimer = 3000;
+                                break;
+                            case 7:
+                                DoScriptText(SAY_SPR_END_7, pSpraggle);
+                                m_uiEndEventTimer = 10000;
+                                break;
+                            case 8:
+                                DoScriptText(EMOTE_RIN_END_8, m_creature);
+                                m_uiEndEventTimer = 5000;
+                                break;
+                            case 9:
+                                SetFollowComplete();
+                                break;
                         }
 
                         ++m_uiEndEventProgress;

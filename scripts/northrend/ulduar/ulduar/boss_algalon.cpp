@@ -198,7 +198,7 @@ struct boss_algalon : public CreatureScript
     struct boss_algalonAI : public ScriptedAI, private DialogueHelper
     {
         boss_algalonAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aAlgalonDialogue)
+            DialogueHelper(aAlgalonDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
@@ -348,45 +348,45 @@ struct boss_algalon : public CreatureScript
             switch (pSummoned->GetEntry())
             {
                 // move Brann to the center of the platform (and override pathfinding because of missing GO support)
-            case NPC_BRANN_ALGALON:
-                pSummoned->SetWalk(false);
-                pSummoned->GetMotionMaster()->MovePoint(0, 1631.986f, -297.7831f, 417.321f, false);
-                break;
-            case NPC_AZEROTH:
-                pSummoned->ForcedDespawn(30000);
-                break;
-            case NPC_ASTEROID_STALKER_1:
-                // visual impact point for Cosmic Smash
-                pSummoned->CastSpell(pSummoned, SPELL_COSMIC_SMASH_STATE, true);
-                break;
-            case NPC_COLLAPSING_STAR:
-                // cast Collapse and move around spawn point
-                pSummoned->CastSpell(pSummoned, SPELL_COLLAPSE, true);
-                pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 30.0f);
-                ++m_uiActiveStars;
-                m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
-                break;
-            case NPC_LIVING_CONSTELLATION:
-                m_lConstellationsGuids.push_back(pSummoned->GetObjectGuid());
-                m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
-                break;
-            case NPC_BLACK_HOLE:
-                // cast Black Hole visuals
-                pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_SPAWN_VISUAL, true);
-                pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_STATE, true);
-                pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_TRIGG, true);
-                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_VOID_ZONE_VISUAL, true, nullptr, nullptr, m_creature->GetObjectGuid());
-                m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
-                break;
-            case NPC_WORM_HOLE:
-                pSummoned->CastSpell(pSummoned, SPELL_WORM_HOLE_TRIGGER, true);
-                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_VOID_ZONE_VISUAL, true, nullptr, nullptr, m_creature->GetObjectGuid());
-                m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
-                break;
-            case NPC_VOID_ZONE_VISUAL:
-                pSummoned->CastSpell(pSummoned, SPELL_VOID_ZONE_VISUAL, true);
-                m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
-                break;
+                case NPC_BRANN_ALGALON:
+                    pSummoned->SetWalk(false);
+                    pSummoned->GetMotionMaster()->MovePoint(0, 1631.986f, -297.7831f, 417.321f, false);
+                    break;
+                case NPC_AZEROTH:
+                    pSummoned->ForcedDespawn(30000);
+                    break;
+                case NPC_ASTEROID_STALKER_1:
+                    // visual impact point for Cosmic Smash
+                    pSummoned->CastSpell(pSummoned, SPELL_COSMIC_SMASH_STATE, true);
+                    break;
+                case NPC_COLLAPSING_STAR:
+                    // cast Collapse and move around spawn point
+                    pSummoned->CastSpell(pSummoned, SPELL_COLLAPSE, true);
+                    pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 30.0f);
+                    ++m_uiActiveStars;
+                    m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
+                    break;
+                case NPC_LIVING_CONSTELLATION:
+                    m_lConstellationsGuids.push_back(pSummoned->GetObjectGuid());
+                    m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
+                    break;
+                case NPC_BLACK_HOLE:
+                    // cast Black Hole visuals
+                    pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_SPAWN_VISUAL, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_STATE, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_BLACK_HOLE_TRIGG, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_SUMMON_VOID_ZONE_VISUAL, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                    m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
+                    break;
+                case NPC_WORM_HOLE:
+                    pSummoned->CastSpell(pSummoned, SPELL_WORM_HOLE_TRIGGER, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_SUMMON_VOID_ZONE_VISUAL, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                    m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
+                    break;
+                case NPC_VOID_ZONE_VISUAL:
+                    pSummoned->CastSpell(pSummoned, SPELL_VOID_ZONE_VISUAL, true);
+                    m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
+                    break;
             }
         }
 
@@ -424,31 +424,31 @@ struct boss_algalon : public CreatureScript
 
             switch (iEntry)
             {
-            case SPELL_SUMMON_AZEROTH:
-                DoCastSpellIfCan(m_creature, SPELL_SUMMON_AZEROTH, CAST_TRIGGERED);
-                break;
-            case SAY_INTRO_2:
-                DoCastSpellIfCan(m_creature, SPELL_REORIGINATION);
-                break;
-            case SAY_ENGAGE:
-                // summon Living Constellations at this point
-                DoSpawnConstellations();
-                break;
-            case SPELL_BERSERK:
-                EnterEvadeMode();
-                break;
-            case SPELL_TELEPORT:
-                // despawn when time has run out
-                DoCastSpellIfCan(m_creature, SPELL_TELEPORT, CAST_TRIGGERED);
-                m_creature->ForcedDespawn(2000);
-                break;
-            case NPC_ALGALON:
-                // spawn Brann for epilogue dialogue
-                m_creature->SummonCreature(NPC_BRANN_ALGALON, 1631.962f, -208.6464f, 420.8867f, 4.71f, TEMPSPAWN_DEAD_DESPAWN, 0);
-                break;
-            case SAY_OUTRO_1:
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                break;
+                case SPELL_SUMMON_AZEROTH:
+                    DoCastSpellIfCan(m_creature, SPELL_SUMMON_AZEROTH, CAST_TRIGGERED);
+                    break;
+                case SAY_INTRO_2:
+                    DoCastSpellIfCan(m_creature, SPELL_REORIGINATION);
+                    break;
+                case SAY_ENGAGE:
+                    // summon Living Constellations at this point
+                    DoSpawnConstellations();
+                    break;
+                case SPELL_BERSERK:
+                    EnterEvadeMode();
+                    break;
+                case SPELL_TELEPORT:
+                    // despawn when time has run out
+                    DoCastSpellIfCan(m_creature, SPELL_TELEPORT, CAST_TRIGGERED);
+                    m_creature->ForcedDespawn(2000);
+                    break;
+                case NPC_ALGALON:
+                    // spawn Brann for epilogue dialogue
+                    m_creature->SummonCreature(NPC_BRANN_ALGALON, 1631.962f, -208.6464f, 420.8867f, 4.71f, TEMPSPAWN_DEAD_DESPAWN, 0);
+                    break;
+                case SAY_OUTRO_1:
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    break;
             }
         }
 

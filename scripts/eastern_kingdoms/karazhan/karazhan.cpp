@@ -111,7 +111,7 @@ struct npc_barnes : public CreatureScript
     struct npc_barnesAI : public npc_escortAI, private DialogueHelper
     {
         npc_barnesAI(Creature* pCreature) : npc_escortAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -144,32 +144,32 @@ struct npc_barnes : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0:
-                DoCastSpellIfCan(m_creature, SPELL_TUXEDO);
-                m_pInstance->DoUseDoorOrButton(GO_STAGE_DOOR_LEFT);
-                break;
-            case 4:
-                switch (m_pInstance->GetData(TYPE_OPERA_PERFORMANCE))
-                {
-                case OPERA_EVENT_WIZARD_OZ:
-                    StartNextDialogueText(SAY_BARNES_OZ_1);
+                case 0:
+                    DoCastSpellIfCan(m_creature, SPELL_TUXEDO);
+                    m_pInstance->DoUseDoorOrButton(GO_STAGE_DOOR_LEFT);
                     break;
-                case OPERA_EVENT_RED_RIDING_HOOD:
-                    StartNextDialogueText(SAY_BARNES_HOOD_1);
+                case 4:
+                    switch (m_pInstance->GetData(TYPE_OPERA_PERFORMANCE))
+                    {
+                        case OPERA_EVENT_WIZARD_OZ:
+                            StartNextDialogueText(SAY_BARNES_OZ_1);
+                            break;
+                        case OPERA_EVENT_RED_RIDING_HOOD:
+                            StartNextDialogueText(SAY_BARNES_HOOD_1);
+                            break;
+                        case OPERA_EVENT_ROMULO_AND_JUL:
+                            StartNextDialogueText(SAY_BARNES_RAJ_1);
+                            break;
+                    }
+                    SetEscortPaused(true);
+                    m_creature->SummonCreature(NPC_SPOTLIGHT, 0, 0, 0, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                     break;
-                case OPERA_EVENT_ROMULO_AND_JUL:
-                    StartNextDialogueText(SAY_BARNES_RAJ_1);
+                case 8:
+                    m_pInstance->DoUseDoorOrButton(GO_STAGE_DOOR_LEFT);
                     break;
-                }
-                SetEscortPaused(true);
-                m_creature->SummonCreature(NPC_SPOTLIGHT, 0, 0, 0, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
-                break;
-            case 8:
-                m_pInstance->DoUseDoorOrButton(GO_STAGE_DOOR_LEFT);
-                break;
-            case 9:
-                m_pInstance->SetData64(0, m_creature->GetObjectGuid().GetRawValue());
-                break;
+                case 9:
+                    m_pInstance->SetData64(0, m_creature->GetObjectGuid().GetRawValue());
+                    break;
             }
         }
 
@@ -177,16 +177,16 @@ struct npc_barnes : public CreatureScript
         {
             switch (iEntry)
             {
-            case OPERA_EVENT_WIZARD_OZ:
-            case OPERA_EVENT_RED_RIDING_HOOD:
-            case OPERA_EVENT_ROMULO_AND_JUL:
-                // Despawn spotlight and resume escort
-                if (Creature* pSpotlight = m_creature->GetMap()->GetCreature(m_spotlightGuid))
-                {
-                    pSpotlight->ForcedDespawn();
-                }
-                SetEscortPaused(false);
-                break;
+                case OPERA_EVENT_WIZARD_OZ:
+                case OPERA_EVENT_RED_RIDING_HOOD:
+                case OPERA_EVENT_ROMULO_AND_JUL:
+                    // Despawn spotlight and resume escort
+                    if (Creature* pSpotlight = m_creature->GetMap()->GetCreature(m_spotlightGuid))
+                    {
+                        pSpotlight->ForcedDespawn();
+                    }
+                    SetEscortPaused(false);
+                    break;
             }
         }
 
@@ -248,7 +248,7 @@ struct npc_barnes : public CreatureScript
                     pBarnesAI->Start(false, nullptr, nullptr, true);
                 }
                 break;
-                // GM gossip options
+            // GM gossip options
             case GOSSIP_ACTION_INFO_DEF+3:
                 pPlayer->CLOSE_GOSSIP_MENU();
                 if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
@@ -363,10 +363,10 @@ enum
     POINT_ID_DESPAWN        = 2,
 };
 
-/* Notes for future development of the event:
- * this whole event includes a lot of guesswork
- * the dummy spells usage is unk; for the moment they are not used
- * also all coords are guesswork
+/** Notes for future development of the event:
+ *  this whole event includes a lot of guesswork
+ *  the dummy spells usage is unk; for the moment they are not used
+ *  also all coords are guesswork
  */
 static const float afMedivhSpawnLoc[4] = { -11153.18f, -1889.65f, 91.47f, 2.07f};
 static const float afMedivhExitLoc[3] = { -11121.81f, -1881.24f, 91.47f};
@@ -399,7 +399,7 @@ struct npc_image_of_medivh : public CreatureScript
     struct npc_image_of_medivhAI : public ScriptedAI, private DialogueHelper
     {
         npc_image_of_medivhAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aMedivhDialogue)
+            DialogueHelper(aMedivhDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -432,19 +432,19 @@ struct npc_image_of_medivh : public CreatureScript
 
             switch (uiPointId)
             {
-            case POINT_ID_INTRO:
-                StartNextDialogueText(NPC_IMAGE_OF_MEDIVH);
-                break;
-            case POINT_ID_DESPAWN:
-                pSummoned->ForcedDespawn();
-                m_creature->ForcedDespawn(10000);
-                m_creature->GetMotionMaster()->MovePoint(0, afMedivhExitLoc[0], afMedivhExitLoc[1], afMedivhExitLoc[2]);
-                // complete quest
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_eventStarterGuid))
-                {
-                    pPlayer->GroupEventHappens(QUEST_MASTERS_TERRACE, m_creature);
-                }
-                break;
+                case POINT_ID_INTRO:
+                    StartNextDialogueText(NPC_IMAGE_OF_MEDIVH);
+                    break;
+                case POINT_ID_DESPAWN:
+                    pSummoned->ForcedDespawn();
+                    m_creature->ForcedDespawn(10000);
+                    m_creature->GetMotionMaster()->MovePoint(0, afMedivhExitLoc[0], afMedivhExitLoc[1], afMedivhExitLoc[2]);
+                    // complete quest
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_eventStarterGuid))
+                    {
+                        pPlayer->GroupEventHappens(QUEST_MASTERS_TERRACE, m_creature);
+                    }
+                    break;
             }
         }
 
@@ -466,23 +466,23 @@ struct npc_image_of_medivh : public CreatureScript
 
             switch (iEntry)
             {
-            case SAY_ARCANAGOS_6:
-                if (Creature* pDragon = m_pInstance->GetSingleCreatureFromStorage(NPC_IMAGE_OF_ARCANAGOS))
-                {
-                    DoCastSpellIfCan(pDragon, SPELL_FIREBALL);
-                }
-                break;
-            case EMOTE_CAST_SPELL:
-                DoCastSpellIfCan(m_creature, SPELL_EVOCATION);
-                break;
-            case SPELL_CONFLAG_BLAST:
-                m_creature->RemoveAurasDueToSpell(SPELL_EVOCATION);
-                if (Creature* pDragon = m_pInstance->GetSingleCreatureFromStorage(NPC_IMAGE_OF_ARCANAGOS))
-                {
-                    DoCastSpellIfCan(pDragon, SPELL_CONFLAG_BLAST, CAST_TRIGGERED);
-                    pDragon->GetMotionMaster()->MovePoint(POINT_ID_DESPAWN, afArcanagosFleeLoc[0], afArcanagosFleeLoc[1], afArcanagosFleeLoc[2]);
-                }
-                break;
+                case SAY_ARCANAGOS_6:
+                    if (Creature* pDragon = m_pInstance->GetSingleCreatureFromStorage(NPC_IMAGE_OF_ARCANAGOS))
+                    {
+                        DoCastSpellIfCan(pDragon, SPELL_FIREBALL);
+                    }
+                    break;
+                case EMOTE_CAST_SPELL:
+                    DoCastSpellIfCan(m_creature, SPELL_EVOCATION);
+                    break;
+                case SPELL_CONFLAG_BLAST:
+                    m_creature->RemoveAurasDueToSpell(SPELL_EVOCATION);
+                    if (Creature* pDragon = m_pInstance->GetSingleCreatureFromStorage(NPC_IMAGE_OF_ARCANAGOS))
+                    {
+                        DoCastSpellIfCan(pDragon, SPELL_CONFLAG_BLAST, CAST_TRIGGERED);
+                        pDragon->GetMotionMaster()->MovePoint(POINT_ID_DESPAWN, afArcanagosFleeLoc[0], afArcanagosFleeLoc[1], afArcanagosFleeLoc[2]);
+                    }
+                    break;
             }
         }
 

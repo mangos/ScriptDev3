@@ -96,59 +96,59 @@ struct npc_ranger_lilatha : public CreatureScript
 
             switch (i)
             {
-            case 0:
-                if (GameObject* pGoTemp = GetClosestGameObjectWithEntry(m_creature, GO_CAGE, 10.0f))
-                {
-                    m_goCageGuid = pGoTemp->GetObjectGuid();
-                    pGoTemp->SetGoState(GO_STATE_ACTIVE);
-                }
+                case 0:
+                    if (GameObject* pGoTemp = GetClosestGameObjectWithEntry(m_creature, GO_CAGE, 10.0f))
+                    {
+                        m_goCageGuid = pGoTemp->GetObjectGuid();
+                        pGoTemp->SetGoState(GO_STATE_ACTIVE);
+                    }
 
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
 
-                DoScriptText(SAY_START, m_creature, pPlayer);
-                break;
-            case 1:
-                if (GameObject* pGo = m_creature->GetMap()->GetGameObject(m_goCageGuid))
-                {
-                    pGo->SetGoState(GO_STATE_READY);
-                }
-                break;
-            case 5:
-                DoScriptText(SAY_PROGRESS1, m_creature, pPlayer);
-                break;
-            case 11:
-                DoScriptText(SAY_PROGRESS2, m_creature, pPlayer);
-                break;
-            case 18:
-                DoScriptText(SAY_PROGRESS3, m_creature, pPlayer);
-                if (Creature* pSum1 = m_creature->SummonCreature(16342, 7627.083984f, -7532.538086f, 152.128616f, 1.082733f, TEMPSPAWN_DEAD_DESPAWN, 0))
-                {
-                    pSum1->AI()->AttackStart(m_creature);
-                }
-                if (Creature* pSum2 = m_creature->SummonCreature(16343, 7620.432129f, -7532.550293f, 152.454865f, 0.827478f, TEMPSPAWN_DEAD_DESPAWN, 0))
-                {
-                    pSum2->AI()->AttackStart(pPlayer);
-                }
-                break;
-            case 19:
-                SetRun();
-                break;
-            case 25:
-                SetRun(false);
-                break;
-            case 30:
-                pPlayer->GroupEventHappens(QUEST_CATACOMBS, m_creature);
-                break;
-            case 32:
-                DoScriptText(SAY_END1, m_creature, pPlayer);
-                break;
-            case 33:
-                DoScriptText(SAY_END2, m_creature, pPlayer);
-                if (Creature* pHelios = m_creature->GetMap()->GetCreature(m_heliosGuid))
-                {
-                    DoScriptText(CAPTAIN_ANSWER, pHelios, m_creature);
-                }
-                break;
+                    DoScriptText(SAY_START, m_creature, pPlayer);
+                    break;
+                case 1:
+                    if (GameObject* pGo = m_creature->GetMap()->GetGameObject(m_goCageGuid))
+                    {
+                        pGo->SetGoState(GO_STATE_READY);
+                    }
+                    break;
+                case 5:
+                    DoScriptText(SAY_PROGRESS1, m_creature, pPlayer);
+                    break;
+                case 11:
+                    DoScriptText(SAY_PROGRESS2, m_creature, pPlayer);
+                    break;
+                case 18:
+                    DoScriptText(SAY_PROGRESS3, m_creature, pPlayer);
+                    if (Creature* pSum1 = m_creature->SummonCreature(16342, 7627.083984f, -7532.538086f, 152.128616f, 1.082733f, TEMPSPAWN_DEAD_DESPAWN, 0))
+                    {
+                        pSum1->AI()->AttackStart(m_creature);
+                    }
+                    if (Creature* pSum2 = m_creature->SummonCreature(16343, 7620.432129f, -7532.550293f, 152.454865f, 0.827478f, TEMPSPAWN_DEAD_DESPAWN, 0))
+                    {
+                        pSum2->AI()->AttackStart(pPlayer);
+                    }
+                    break;
+                case 19:
+                    SetRun();
+                    break;
+                case 25:
+                    SetRun(false);
+                    break;
+                case 30:
+                    pPlayer->GroupEventHappens(QUEST_CATACOMBS, m_creature);
+                    break;
+                case 32:
+                    DoScriptText(SAY_END1, m_creature, pPlayer);
+                    break;
+                case 33:
+                    DoScriptText(SAY_END2, m_creature, pPlayer);
+                    if (Creature* pHelios = m_creature->GetMap()->GetCreature(m_heliosGuid))
+                    {
+                        DoScriptText(CAPTAIN_ANSWER, pHelios, m_creature);
+                    }
+                    break;
             }
         }
 

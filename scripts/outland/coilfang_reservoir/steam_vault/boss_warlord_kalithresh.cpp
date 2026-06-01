@@ -97,9 +97,9 @@ struct boss_warlord_kalithresh : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
             }
 
             if (m_pInstance)

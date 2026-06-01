@@ -54,408 +54,408 @@ struct is_molten_core : public InstanceScript
 
     class instance_molten_core : public ScriptedInstance
     {
-    public:
-        instance_molten_core(Map* pMap) : ScriptedInstance(pMap)
-        {
-            Initialize();
-        }
-
-        ~instance_molten_core() {}
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-            memset(&m_auiRuneState, 0, sizeof(m_auiRuneState));
-        }
-
-        bool IsEncounterInProgress() const override
-        {
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+        public:
+            instance_molten_core(Map* pMap) : ScriptedInstance(pMap)
             {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                {
-                    return true;
-                }
+                Initialize();
             }
 
-            return false;
-        }
+            ~instance_molten_core() {}
 
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+            void Initialize() override
             {
-                // Bosses
-            case NPC_GARR:
-            case NPC_SULFURON:
-            case NPC_MAJORDOMO:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
-            case NPC_FIRESWORN:
-                m_sFireswornGUID.insert(pCreature->GetObjectGuid());
-                break;
-            case NPC_LAVA_SURGER:
-                if (GetData(TYPE_GARR) == DONE)
-                {
-                    pCreature->ForcedDespawn(500);
-                }
-                break;
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+                memset(&m_auiRuneState, 0, sizeof(m_auiRuneState));
             }
-        }
 
-        void OnCreatureDeath(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+            bool IsEncounterInProgress() const override
             {
-            case NPC_FIRESWORN:
-                m_sFireswornGUID.erase(pCreature->GetObjectGuid());
-                if (Creature* pGarr = GetSingleCreatureFromStorage(NPC_GARR))
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 {
-                    if (pGarr->IsAlive())
+                    if (m_auiEncounter[i] == IN_PROGRESS)
                     {
-                        pGarr->CastSpell(pGarr, SPELL_GARR_ENRAGE, true);
-                        pGarr->CastSpell(pGarr, SPELL_GARR_ARMOR_DEBUFF, true);
-
-                        if (!m_sFireswornGUID.size())
-                        {
-                            pGarr->AI()->ReceiveAIEvent(AI_EVENT_CUSTOM_B, pGarr, pGarr, 0);
-                        }
+                        return true;
                     }
                 }
-                break;
-            default:
-                break;
-            }
-        }
 
-        void OnCreatureDespawn(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
-            {
-            case NPC_FIRESWORN:
-                OnCreatureDeath(pCreature);
-                break;
-            default:
-                break;
+                return false;
             }
-        }
 
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
+            void OnCreatureCreate(Creature* pCreature) override
             {
-                // Runes
-            case GO_RUNE_KRESS:
-            case GO_RUNE_MOHN:
-            case GO_RUNE_BLAZ:
-            case GO_RUNE_MAZJ:
-            case GO_RUNE_ZETH:
-            case GO_RUNE_THERI:
-            case GO_RUNE_KORO:
-                if (sRuneEncounters const *rstr = GetRuneStructForTrapEntry(pGo->GetGOInfo()->button.linkedTrapId))
+                switch (pCreature->GetEntry())
                 {
-                    switch (m_auiRuneState[rstr->getRuneType()])
-                    {
-                    case DONE:
-                        pGo->SetGoState(GO_STATE_READY);
+                    // Bosses
+                    case NPC_GARR:
+                    case NPC_SULFURON:
+                    case NPC_MAJORDOMO:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
+                    case NPC_FIRESWORN:
+                        m_sFireswornGUID.insert(pCreature->GetObjectGuid());
+                        break;
+                    case NPC_LAVA_SURGER:
+                        if (GetData(TYPE_GARR) == DONE)
+                        {
+                            pCreature->ForcedDespawn(500);
+                        }
+                        break;
+                }
+            }
+
+            void OnCreatureDeath(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_FIRESWORN:
+                        m_sFireswornGUID.erase(pCreature->GetObjectGuid());
+                        if (Creature* pGarr = GetSingleCreatureFromStorage(NPC_GARR))
+                        {
+                            if (pGarr->IsAlive())
+                            {
+                                pGarr->CastSpell(pGarr, SPELL_GARR_ENRAGE, true);
+                                pGarr->CastSpell(pGarr, SPELL_GARR_ARMOR_DEBUFF, true);
+
+                                if (!m_sFireswornGUID.size())
+                                {
+                                    pGarr->AI()->ReceiveAIEvent(AI_EVENT_CUSTOM_B, pGarr, pGarr, 0);
+                                }
+                            }
+                        }
                         break;
                     default:
-                        pGo->SetGoState(GO_STATE_ACTIVE);
                         break;
-                    }
                 }
-                // no break here!
-                // Majordomo event chest
-            case GO_CACHE_OF_THE_FIRE_LORD:
-                // Ragnaros GOs
-            case GO_LAVA_STEAM:
-            case GO_LAVA_SPLASH:
-                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-                break;
-                // rune traps: just change state
-            case GO_RUNE_KRESS_TRAP:
-            case GO_RUNE_MOHN_TRAP:
-            case GO_RUNE_BLAZ_TRAP:
-            case GO_RUNE_MAZJ_TRAP:
-            case GO_RUNE_ZETH_TRAP:
-            case GO_RUNE_THERI_TRAP:
-            case GO_RUNE_KORO_TRAP:
-                if (sRuneEncounters const *rstr = GetRuneStructForTrapEntry(pGo->GetEntry()))
+            }
+
+            void OnCreatureDespawn(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
                 {
-                    switch (m_auiRuneState[rstr->getRuneType()])
-                    {
-                    case DONE:
-                        pGo->SetLootState(GO_JUST_DEACTIVATED); //TODO fix GameObject::Use for traps
+                    case NPC_FIRESWORN:
+                        OnCreatureDeath(pCreature);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            void OnObjectCreate(GameObject* pGo) override
+            {
+                switch (pGo->GetEntry())
+                {
+                    // Runes
+                    case GO_RUNE_KRESS:
+                    case GO_RUNE_MOHN:
+                    case GO_RUNE_BLAZ:
+                    case GO_RUNE_MAZJ:
+                    case GO_RUNE_ZETH:
+                    case GO_RUNE_THERI:
+                    case GO_RUNE_KORO:
+                        if (sRuneEncounters const *rstr = GetRuneStructForTrapEntry(pGo->GetGOInfo()->button.linkedTrapId))
+                        {
+                            switch (m_auiRuneState[rstr->getRuneType()])
+                            {
+                                case DONE:
+                                    pGo->SetGoState(GO_STATE_READY);
+                                    break;
+                                default:
+                                    pGo->SetGoState(GO_STATE_ACTIVE);
+                                    break;
+                            }
+                        }
                         // no break here!
-                    case NOT_STARTED:
-                        pGo->SetGoState(GO_STATE_ACTIVE);
-                    default:
+                        // Majordomo event chest
+                    case GO_CACHE_OF_THE_FIRE_LORD:
+                        // Ragnaros GOs
+                    case GO_LAVA_STEAM:
+                    case GO_LAVA_SPLASH:
+                        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
                         break;
-                    }
-                }
-                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-                break;
-            }
-        }
-
-        void OnPlayerEnter(Player* pPlayer) override
-        {
-            // Summon Majordomo if can
-            DoSpawnMajordomoIfCan(true);
-        }
-
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            bool save = (uiData == DONE);
-            switch (uiType)
-            {
-            case TYPE_MAJORDOMO:
-                if (uiData == DONE)
-                {
-                    DoRespawnGameObject(GO_CACHE_OF_THE_FIRE_LORD, HOUR);
-                }
-                // no break here!
-            case TYPE_LUCIFRON:
-            case TYPE_MAGMADAR:
-            case TYPE_GEHENNAS:
-            case TYPE_GARR:
-            case TYPE_SHAZZRAH:
-            case TYPE_GEDDON:
-            case TYPE_GOLEMAGG:
-            case TYPE_SULFURON:
-            case TYPE_RAGNAROS:
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_FLAME_DOUSED:
-                save = true;
-                SetRuneDoused(GetRuneStructForTrapEntry(uiData));
-                DoSpawnMajordomoIfCan(false);
-                break;
-            case TYPE_DO_FREE_GARR_ADDS:
-                for (std::set<ObjectGuid>::const_iterator it = m_sFireswornGUID.begin(); it != m_sFireswornGUID.end(); ++it)
-                {
-                    ObjectGuid guid = *it;
-                    int32 bp0 = 0;
-                    if (Creature* firesworn = instance->GetCreature(guid))
-                    {
-                        if (firesworn->IsAlive())
+                    // rune traps: just change state
+                    case GO_RUNE_KRESS_TRAP:
+                    case GO_RUNE_MOHN_TRAP:
+                    case GO_RUNE_BLAZ_TRAP:
+                    case GO_RUNE_MAZJ_TRAP:
+                    case GO_RUNE_ZETH_TRAP:
+                    case GO_RUNE_THERI_TRAP:
+                    case GO_RUNE_KORO_TRAP:
+                        if (sRuneEncounters const *rstr = GetRuneStructForTrapEntry(pGo->GetEntry()))
                         {
-                            firesworn->CastCustomSpell(firesworn, SPELL_SEPARATION_ANXIETY, &bp0, nullptr, nullptr, true);
+                            switch (m_auiRuneState[rstr->getRuneType()])
+                            {
+                                case DONE:
+                                    pGo->SetLootState(GO_JUST_DEACTIVATED); //TODO fix GameObject::Use for traps
+                                    // no break here!
+                                case NOT_STARTED:
+                                    pGo->SetGoState(GO_STATE_ACTIVE);
+                                default:
+                                    break;
+                            }
+                        }
+                        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+                        break;
+                }
+            }
+
+            void OnPlayerEnter(Player* pPlayer) override
+            {
+                // Summon Majordomo if can
+                DoSpawnMajordomoIfCan(true);
+            }
+
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                bool save = (uiData == DONE);
+                switch (uiType)
+                {
+                    case TYPE_MAJORDOMO:
+                        if (uiData == DONE)
+                        {
+                            DoRespawnGameObject(GO_CACHE_OF_THE_FIRE_LORD, HOUR);
+                        }
+                        // no break here!
+                    case TYPE_LUCIFRON:
+                    case TYPE_MAGMADAR:
+                    case TYPE_GEHENNAS:
+                    case TYPE_GARR:
+                    case TYPE_SHAZZRAH:
+                    case TYPE_GEDDON:
+                    case TYPE_GOLEMAGG:
+                    case TYPE_SULFURON:
+                    case TYPE_RAGNAROS:
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_FLAME_DOUSED:
+                        save = true;
+                        SetRuneDoused(GetRuneStructForTrapEntry(uiData));
+                        DoSpawnMajordomoIfCan(false);
+                        break;
+                    case TYPE_DO_FREE_GARR_ADDS:
+                        for (std::set<ObjectGuid>::const_iterator it = m_sFireswornGUID.begin(); it != m_sFireswornGUID.end(); ++it)
+                        {
+                            ObjectGuid guid = *it;
+                            int32 bp0 = 0;
+                            if (Creature* firesworn = instance->GetCreature(guid))
+                            {
+                                if (firesworn->IsAlive())
+                                {
+                                    firesworn->CastCustomSpell(firesworn, SPELL_SEPARATION_ANXIETY, &bp0, nullptr, nullptr, true);
+                                }
+                            }
+                        }
+                        return;
+                }
+
+                // if a rune boss is done, then: pre-WOTLK: allow to use the rune GO; WOTLK and later: set the rune as doused
+                if (uiType > TYPE_LUCIFRON && uiType < TYPE_MAJORDOMO && uiData == DONE)
+                {
+#if defined (CLASSIC) || defined (TBC)
+                    if (sRuneEncounters const *rstr = GetRuneStructForBoss(uiType))
+                    {
+                        m_auiRuneState[rstr->getRuneType()] = SPECIAL;
+                        if (GameObject *trap = GetSingleGameObjectFromStorage(rstr->m_uiTrapEntry))
+                        {
+                            trap->SetGoState(GO_STATE_READY);
                         }
                     }
-                }
-                return;
-            }
-
-            // if a rune boss is done, then: pre-WOTLK: allow to use the rune GO; WOTLK and later: set the rune as doused
-            if (uiType > TYPE_LUCIFRON && uiType < TYPE_MAJORDOMO && uiData == DONE)
-            {
-#if defined (CLASSIC) || defined (TBC)
-                if (sRuneEncounters const *rstr = GetRuneStructForBoss(uiType))
-                {
-                    m_auiRuneState[rstr->getRuneType()] = SPECIAL;
-                    if (GameObject *trap = GetSingleGameObjectFromStorage(rstr->m_uiTrapEntry))
-                    {
-                        trap->SetGoState(GO_STATE_READY);
-                    }
-                }
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                SetRuneDoused(GetRuneStructForBoss(uiType));
-                DoSpawnMajordomoIfCan(false);
+                    SetRuneDoused(GetRuneStructForBoss(uiType));
+                    DoSpawnMajordomoIfCan(false);
 #endif
-            }
+                }
 
-            if (save)
-            {
-                OUT_SAVE_INST_DATA;
-
-                std::ostringstream saveStream;
-                saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
-                    << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " "
-                    << m_auiEncounter[6] << " " << m_auiEncounter[7] << " " << m_auiEncounter[8] << " "
-                    << m_auiEncounter[9] << " " << m_auiRuneState[0] << " " << m_auiRuneState[1] << " "
-                    << m_auiRuneState[2] << " " << m_auiRuneState[3] << " " << m_auiRuneState[4] << " "
-                    << m_auiRuneState[5] << " " << m_auiRuneState[6];
-
-                m_strInstData = saveStream.str();
-
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
-            }
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType < MAX_ENCOUNTER)
-            {
-                return m_auiEncounter[uiType];
-            }
-            else if (sRuneEncounters const *rstr = GetRuneStructForTrapEntry(uiType))
-            {
-                return m_auiRuneState[rstr->getRuneType()];
-            }
-
-            return 0;
-        }
-
-        uint64 GetData64(uint32 uiType) const override
-        {
-            switch (uiType)
-            {
-            case NPC_FIRESWORN:
-            {
-                Creature* garr = GetSingleCreatureFromStorage(NPC_GARR);
-                for (std::set<ObjectGuid>::const_iterator it = m_sFireswornGUID.begin(); it != m_sFireswornGUID.end(); ++it)
+                if (save)
                 {
-                    ObjectGuid guid = *it;
-                    if (Creature* firesworn = instance->GetCreature(guid))
+                    OUT_SAVE_INST_DATA;
+
+                    std::ostringstream saveStream;
+                    saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
+                               << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " "
+                               << m_auiEncounter[6] << " " << m_auiEncounter[7] << " " << m_auiEncounter[8] << " "
+                               << m_auiEncounter[9] << " " << m_auiRuneState[0] << " " << m_auiRuneState[1] << " "
+                               << m_auiRuneState[2] << " " << m_auiRuneState[3] << " " << m_auiRuneState[4] << " "
+                               << m_auiRuneState[5] << " " << m_auiRuneState[6];
+
+                    m_strInstData = saveStream.str();
+
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
+                }
+            }
+
+            uint32 GetData(uint32 uiType) const override
+            {
+                if (uiType < MAX_ENCOUNTER)
+                {
+                    return m_auiEncounter[uiType];
+                }
+                else if (sRuneEncounters const *rstr = GetRuneStructForTrapEntry(uiType))
+                {
+                    return m_auiRuneState[rstr->getRuneType()];
+                }
+
+                return 0;
+            }
+
+            uint64 GetData64(uint32 uiType) const override
+            {
+                switch (uiType)
+                {
+                    case NPC_FIRESWORN:
                     {
-                        if (firesworn->IsAlive() && firesworn->IsWithinDistInMap(garr, 20.0f, false))
+                        Creature* garr = GetSingleCreatureFromStorage(NPC_GARR);
+                        for (std::set<ObjectGuid>::const_iterator it = m_sFireswornGUID.begin(); it != m_sFireswornGUID.end(); ++it)
                         {
-                            return guid.GetRawValue();
+                            ObjectGuid guid = *it;
+                            if (Creature* firesworn = instance->GetCreature(guid))
+                            {
+                                if (firesworn->IsAlive() && firesworn->IsWithinDistInMap(garr, 20.0f, false))
+                                {
+                                    return guid.GetRawValue();
+                                }
+                            }
                         }
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                return 0;
+            }
+
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* chrIn) override
+            {
+                if (!chrIn)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+
+                loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
+                           >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6] >> m_auiEncounter[7]
+                           >> m_auiEncounter[8] >> m_auiEncounter[9] >> m_auiRuneState[0] >> m_auiRuneState[1]
+                           >> m_auiRuneState[2] >> m_auiRuneState[3] >> m_auiRuneState[4] >> m_auiRuneState[5]
+                           >> m_auiRuneState[6];
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        m_auiEncounter[i] = NOT_STARTED;
                     }
                 }
-                break;
-            }
-            default:
-                break;
-            }
-            return 0;
-        }
 
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
+
+        protected:
+            void DoSpawnMajordomoIfCan(bool bByPlayerEnter)
             {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-
-            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
-                >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6] >> m_auiEncounter[7]
-                >> m_auiEncounter[8] >> m_auiEncounter[9] >> m_auiRuneState[0] >> m_auiRuneState[1]
-                >> m_auiRuneState[2] >> m_auiRuneState[3] >> m_auiRuneState[4] >> m_auiRuneState[5]
-                >> m_auiRuneState[6];
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                {
-                    m_auiEncounter[i] = NOT_STARTED;
-                }
-            }
-
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
-
-    protected:
-        void DoSpawnMajordomoIfCan(bool bByPlayerEnter)
-        {
-            // If both Majordomo and Ragnaros events are finished, return
-            if (m_auiEncounter[TYPE_MAJORDOMO] == DONE && m_auiEncounter[TYPE_RAGNAROS] == DONE)
-            {
-                return;
-            }
-
-            // If already spawned return
-            if (GetSingleCreatureFromStorage(NPC_MAJORDOMO, true))
-            {
-                return;
-            }
-
-            // Check if all rune bosses are done
-            for (uint8 i = TYPE_MAGMADAR; i < TYPE_MAJORDOMO; ++i)
-            {
-                if (m_auiEncounter[i] != DONE || m_auiRuneState[i - TYPE_MAGMADAR] != DONE)
+                // If both Majordomo and Ragnaros events are finished, return
+                if (m_auiEncounter[TYPE_MAJORDOMO] == DONE && m_auiEncounter[TYPE_RAGNAROS] == DONE)
                 {
                     return;
                 }
-            }
 
-            Player* pPlayer = GetPlayerInMap();
-            if (!pPlayer)
-            {
-                return;
-            }
-
-            // Summon Majordomo
-            // If Majordomo encounter isn't done, summon at encounter place, else near Ragnaros
-            uint8 uiSummonPos = m_auiEncounter[TYPE_MAJORDOMO] == DONE ? 1 : 0;
-            if (Creature* pMajordomo = pPlayer->SummonCreature(m_aMajordomoLocations[uiSummonPos].m_uiEntry, m_aMajordomoLocations[uiSummonPos].m_fX, m_aMajordomoLocations[uiSummonPos].m_fY, m_aMajordomoLocations[uiSummonPos].m_fZ, m_aMajordomoLocations[uiSummonPos].m_fO, TEMPSPAWN_MANUAL_DESPAWN, 2 * HOUR * IN_MILLISECONDS))
-            {
-                if (uiSummonPos)                                    // Majordomo encounter already done, set faction
+                // If already spawned return
+                if (GetSingleCreatureFromStorage(NPC_MAJORDOMO, true))
                 {
-                    pMajordomo->SetFactionTemporary(FACTION_MAJORDOMO_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
-                    pMajordomo->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-                    pMajordomo->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    return;
                 }
-                else                                                // Else yell and summon adds
-                {
-                    if (!bByPlayerEnter)
-                    {
-                        DoScriptText(SAY_MAJORDOMO_SPAWN, pMajordomo);
-                    }
 
-                    for (uint8 i = 0; i < MAX_MAJORDOMO_ADDS; ++i)
+                // Check if all rune bosses are done
+                for (uint8 i = TYPE_MAGMADAR; i < TYPE_MAJORDOMO; ++i)
+                {
+                    if (m_auiEncounter[i] != DONE || m_auiRuneState[i - TYPE_MAGMADAR] != DONE)
                     {
-                        pMajordomo->SummonCreature(m_aBosspawnLocs[i].m_uiEntry, m_aBosspawnLocs[i].m_fX, m_aBosspawnLocs[i].m_fY, m_aBosspawnLocs[i].m_fZ, m_aBosspawnLocs[i].m_fO, TEMPSPAWN_MANUAL_DESPAWN, DAY * IN_MILLISECONDS);
+                        return;
                     }
                 }
-            }
-        }
 
-        sRuneEncounters const *GetRuneStructForBoss(uint32 uiType) const
-        {
-            for (int i = 0; i < MAX_MOLTEN_RUNES; ++i)
+                Player* pPlayer = GetPlayerInMap();
+                if (!pPlayer)
+                {
+                    return;
+                }
+
+                // Summon Majordomo
+                // If Majordomo encounter isn't done, summon at encounter place, else near Ragnaros
+                uint8 uiSummonPos = m_auiEncounter[TYPE_MAJORDOMO] == DONE ? 1 : 0;
+                if (Creature* pMajordomo = pPlayer->SummonCreature(m_aMajordomoLocations[uiSummonPos].m_uiEntry, m_aMajordomoLocations[uiSummonPos].m_fX, m_aMajordomoLocations[uiSummonPos].m_fY, m_aMajordomoLocations[uiSummonPos].m_fZ, m_aMajordomoLocations[uiSummonPos].m_fO, TEMPSPAWN_MANUAL_DESPAWN, 2 * HOUR * IN_MILLISECONDS))
+                {
+                    if (uiSummonPos)                                    // Majordomo encounter already done, set faction
+                    {
+                        pMajordomo->SetFactionTemporary(FACTION_MAJORDOMO_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
+                        pMajordomo->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                        pMajordomo->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    }
+                    else                                                // Else yell and summon adds
+                    {
+                        if (!bByPlayerEnter)
+                        {
+                            DoScriptText(SAY_MAJORDOMO_SPAWN, pMajordomo);
+                        }
+
+                        for (uint8 i = 0; i < MAX_MAJORDOMO_ADDS; ++i)
+                        {
+                            pMajordomo->SummonCreature(m_aBosspawnLocs[i].m_uiEntry, m_aBosspawnLocs[i].m_fX, m_aBosspawnLocs[i].m_fY, m_aBosspawnLocs[i].m_fZ, m_aBosspawnLocs[i].m_fO, TEMPSPAWN_MANUAL_DESPAWN, DAY * IN_MILLISECONDS);
+                        }
+                    }
+                }
+            }
+
+            sRuneEncounters const *GetRuneStructForBoss(uint32 uiType) const
             {
-                if (m_aMoltenCoreRunes[i].m_bossType == uiType)
+                for (int i = 0; i < MAX_MOLTEN_RUNES; ++i)
                 {
-                    return &m_aMoltenCoreRunes[i];
+                    if (m_aMoltenCoreRunes[i].m_bossType == uiType)
+                    {
+                        return &m_aMoltenCoreRunes[i];
+                    }
                 }
+                return nullptr;
             }
-            return nullptr;
-        }
 
-        sRuneEncounters const *GetRuneStructForTrapEntry(uint32 entry) const
-        {
-            for (int i = 0; i < MAX_MOLTEN_RUNES; ++i)
+            sRuneEncounters const *GetRuneStructForTrapEntry(uint32 entry) const
             {
-                if (m_aMoltenCoreRunes[i].m_uiTrapEntry == entry)
+                for (int i = 0; i < MAX_MOLTEN_RUNES; ++i)
                 {
-                    return &m_aMoltenCoreRunes[i];
+                    if (m_aMoltenCoreRunes[i].m_uiTrapEntry == entry)
+                    {
+                        return &m_aMoltenCoreRunes[i];
+                    }
                 }
+                return nullptr;
             }
-            return nullptr;
-        }
 
-        void SetRuneDoused(sRuneEncounters const* rstr)
-        {
-            if (rstr)
+            void SetRuneDoused(sRuneEncounters const* rstr)
             {
-                m_auiRuneState[rstr->getRuneType()] = DONE;
-                if (GameObject *trap = GetSingleGameObjectFromStorage(rstr->m_uiTrapEntry))
+                if (rstr)
                 {
-                    trap->SetGoState(GO_STATE_ACTIVE);
-                    trap->SetLootState(GO_JUST_DEACTIVATED);    //TODO fix GameObject::Use for traps
-                }
-                if (GameObject *rune = GetSingleGameObjectFromStorage(rstr->m_uiRuneEntry))
-                {
-                    rune->SetGoState(GO_STATE_READY);
+                    m_auiRuneState[rstr->getRuneType()] = DONE;
+                    if (GameObject *trap = GetSingleGameObjectFromStorage(rstr->m_uiTrapEntry))
+                    {
+                        trap->SetGoState(GO_STATE_ACTIVE);
+                        trap->SetLootState(GO_JUST_DEACTIVATED);    //TODO fix GameObject::Use for traps
+                    }
+                    if (GameObject *rune = GetSingleGameObjectFromStorage(rstr->m_uiRuneEntry))
+                    {
+                        rune->SetGoState(GO_STATE_READY);
+                    }
                 }
             }
-        }
 
-        std::string m_strInstData;
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        uint32 m_auiRuneState[MAX_MOLTEN_RUNES];
-        std::set<ObjectGuid> m_sFireswornGUID;
+            std::string m_strInstData;
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            uint32 m_auiRuneState[MAX_MOLTEN_RUNES];
+            std::set<ObjectGuid> m_sFireswornGUID;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

@@ -213,50 +213,50 @@ struct boss_kologarn : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_RIGHT_ARM:
-            {
-                int32 uiSeat = (int32)SEAT_ID_RIGHT;
-                pSummoned->CastCustomSpell(m_creature, SPELL_RIDE_KOLOGARN_ARMS, &uiSeat, nullptr, nullptr, true);
-                pSummoned->CastSpell(pSummoned, SPELL_ARM_VISUAL, true);
-
-                if (m_creature->getVictim())
+                case NPC_RIGHT_ARM:
                 {
-                    pSummoned->AI()->AttackStart(m_creature->getVictim());
-                }
-                break;
-            }
-            case NPC_LEFT_ARM:
-            {
-                int32 uiSeat = (int32)SEAT_ID_LEFT;
-                pSummoned->CastCustomSpell(m_creature, SPELL_RIDE_KOLOGARN_ARMS, &uiSeat, nullptr, nullptr, true);
-                pSummoned->CastSpell(pSummoned, SPELL_ARM_VISUAL, true);
+                    int32 uiSeat = (int32)SEAT_ID_RIGHT;
+                    pSummoned->CastCustomSpell(m_creature, SPELL_RIDE_KOLOGARN_ARMS, &uiSeat, nullptr, nullptr, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_ARM_VISUAL, true);
 
-                if (m_creature->getVictim())
-                {
-                    pSummoned->AI()->AttackStart(m_creature->getVictim());
-                }
-                break;
-            }
-            case NPC_FOCUSED_EYEBEAM_RIGHT:
-            case NPC_FOCUSED_EYEBEAM_LEFT:
-                // force despawn - if the npc gets in combat it won't despawn automatically
-                pSummoned->ForcedDespawn(10000);
-
-                // cast visuals and damage spell
-                pSummoned->CastSpell(m_creature, pSummoned->GetEntry() == NPC_FOCUSED_EYEBEAM_LEFT ? SPELL_EYEBEAM_VISUAL_LEFT : SPELL_EYEBEAM_VISUAL_RIGHT, true);
-                pSummoned->CastSpell(pSummoned, m_bIsRegularMode ? SPELL_EYEBEAM_PERIODIC : SPELL_EYEBEAM_PERIODIC_H, true);
-
-                // follow the summoner
-                if (pSummoned->IsTemporarySummon())
-                {
-                    TemporarySummon* pTemporary = (TemporarySummon*)pSummoned;
-
-                    if (Unit* pPlayer = m_creature->GetMap()->GetUnit(pTemporary->GetSummonerGuid()))
+                    if (m_creature->getVictim())
                     {
-                        pSummoned->GetMotionMaster()->MoveChase(pPlayer);
+                        pSummoned->AI()->AttackStart(m_creature->getVictim());
                     }
+                    break;
                 }
-                break;
+                case NPC_LEFT_ARM:
+                {
+                    int32 uiSeat = (int32)SEAT_ID_LEFT;
+                    pSummoned->CastCustomSpell(m_creature, SPELL_RIDE_KOLOGARN_ARMS, &uiSeat, nullptr, nullptr, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_ARM_VISUAL, true);
+
+                    if (m_creature->getVictim())
+                    {
+                        pSummoned->AI()->AttackStart(m_creature->getVictim());
+                    }
+                    break;
+                }
+                case NPC_FOCUSED_EYEBEAM_RIGHT:
+                case NPC_FOCUSED_EYEBEAM_LEFT:
+                    // force despawn - if the npc gets in combat it won't despawn automatically
+                    pSummoned->ForcedDespawn(10000);
+
+                    // cast visuals and damage spell
+                    pSummoned->CastSpell(m_creature, pSummoned->GetEntry() == NPC_FOCUSED_EYEBEAM_LEFT ? SPELL_EYEBEAM_VISUAL_LEFT : SPELL_EYEBEAM_VISUAL_RIGHT, true);
+                    pSummoned->CastSpell(pSummoned, m_bIsRegularMode ? SPELL_EYEBEAM_PERIODIC : SPELL_EYEBEAM_PERIODIC_H, true);
+
+                    // follow the summoner
+                    if (pSummoned->IsTemporarySummon())
+                    {
+                        TemporarySummon* pTemporary = (TemporarySummon*)pSummoned;
+
+                        if (Unit* pPlayer = m_creature->GetMap()->GetUnit(pTemporary->GetSummonerGuid()))
+                        {
+                            pSummoned->GetMotionMaster()->MoveChase(pPlayer);
+                        }
+                    }
+                    break;
             }
         }
 

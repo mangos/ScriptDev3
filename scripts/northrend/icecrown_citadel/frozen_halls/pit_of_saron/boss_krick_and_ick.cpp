@@ -243,9 +243,9 @@ struct boss_ick : public CreatureScript
                     {
                         switch (urand(0, 2))
                         {
-                        case 0: DoScriptText(SAY_TARGET_1, pKrick); break;
-                        case 1: DoScriptText(SAY_TARGET_2, pKrick); break;
-                        case 2: DoScriptText(SAY_TARGET_3, pKrick); break;
+                            case 0: DoScriptText(SAY_TARGET_1, pKrick); break;
+                            case 1: DoScriptText(SAY_TARGET_2, pKrick); break;
+                            case 2: DoScriptText(SAY_TARGET_3, pKrick); break;
                         }
                     }
 
@@ -372,19 +372,19 @@ struct boss_krick : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_SYLVANAS_PART1:
-            case NPC_JAINA_PART1:
-            {
-                float fX, fY, fZ;
-                pSummoned->SetWalk(false);
-                m_creature->GetContactPoint(pSummoned, fX, fY, fZ, 2 * INTERACTION_DISTANCE);
-                pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
-                break;
-            }
-            case NPC_EXPLODING_ORB:
-                pSummoned->CastSpell(pSummoned, SPELL_EXPLODING_ORB_VISUAL, true);
-                pSummoned->CastSpell(pSummoned, SPELL_AUTO_GROW_AND_SPEED_BOOST, true);
-                break;
+                case NPC_SYLVANAS_PART1:
+                case NPC_JAINA_PART1:
+                {
+                    float fX, fY, fZ;
+                    pSummoned->SetWalk(false);
+                    m_creature->GetContactPoint(pSummoned, fX, fY, fZ, 2 * INTERACTION_DISTANCE);
+                    pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                    break;
+                }
+                case NPC_EXPLODING_ORB:
+                    pSummoned->CastSpell(pSummoned, SPELL_EXPLODING_ORB_VISUAL, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_AUTO_GROW_AND_SPEED_BOOST, true);
+                    break;
             }
         }
 

@@ -80,7 +80,7 @@ struct boss_soccothrates : public CreatureScript
     struct boss_soccothratesAI : public ScriptedAI, private DialogueHelper
     {
         boss_soccothratesAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();

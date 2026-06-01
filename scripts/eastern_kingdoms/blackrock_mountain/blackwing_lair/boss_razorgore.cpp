@@ -229,14 +229,14 @@ struct boss_razorgore : public CreatureScript
                 m_uiConflagrationTimer -= uiDiff;
             }
 
-            /* This is obsolete code, not working anymore, keep as reference, should be handled in core though
-            * // Aura Check. If the gamer is affected by confliguration we attack a random gamer.
-            * if (m_creature->getVictim()->HasAura(SPELL_CONFLAGRATION, EFFECT_INDEX_0))
-            * {
-            *     if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
-            *         m_creature->TauntApply(pTarget);
-            * }
-            */
+            /** This is obsolete code, not working anymore, keep as reference, should be handled in core though
+             * // Aura Check. If the gamer is affected by confliguration we attack a random gamer.
+             * if (m_creature->getVictim()->HasAura(SPELL_CONFLAGRATION, EFFECT_INDEX_0))
+             * {
+             *     if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+             *         m_creature->TauntApply(pTarget);
+             * }
+             */
 
             DoMeleeAttackIfReady();
         }
@@ -267,15 +267,15 @@ struct spell_go_black_dragon_egg : public SpellScript
                 {
                     switch (urand(0, 2))
                     {
-                    case 0:
-                        DoScriptText(SAY_EGGS_BROKEN_1, pCaster);
-                        break;
-                    case 1:
-                        DoScriptText(SAY_EGGS_BROKEN_2, pCaster);
-                        break;
-                    case 2:
-                        DoScriptText(SAY_EGGS_BROKEN_3, pCaster);
-                        break;
+                        case 0:
+                            DoScriptText(SAY_EGGS_BROKEN_1, pCaster);
+                            break;
+                        case 1:
+                            DoScriptText(SAY_EGGS_BROKEN_2, pCaster);
+                            break;
+                        case 2:
+                            DoScriptText(SAY_EGGS_BROKEN_3, pCaster);
+                            break;
                     }
                 }
 

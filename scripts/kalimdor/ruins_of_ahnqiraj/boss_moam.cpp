@@ -94,80 +94,80 @@ struct boss_moam : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_ATTACKING:
-                if (m_uiCheckoutManaTimer <= uiDiff)
-                {
-                    m_uiCheckoutManaTimer = 1500;
-                    if (m_creature->GetPower(POWER_MANA) * 100 / m_creature->GetMaxPower(POWER_MANA) > 75.0f)
+                case PHASE_ATTACKING:
+                    if (m_uiCheckoutManaTimer <= uiDiff)
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_ENERGIZE);
-                        DoScriptText(EMOTE_ENERGIZING, m_creature);
-                        m_uiPhase = PHASE_ENERGIZING;
-                        return;
-                    }
-                }
-                else
-                {
-                    m_uiCheckoutManaTimer -= uiDiff;
-                }
-
-                if (m_uiSummonManaFiendsTimer <= uiDiff)
-                {
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUMMON_MANAFIEND_1, CAST_TRIGGERED);
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUMMON_MANAFIEND_2, CAST_TRIGGERED);
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUMMON_MANAFIEND_3, CAST_TRIGGERED);
-                    m_uiSummonManaFiendsTimer = 90000;
-                }
-                else
-                {
-                    m_uiSummonManaFiendsTimer -= uiDiff;
-                }
-
-                if (m_uiManaDrainTimer <= uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_DRAIN_MANA, SELECT_FLAG_POWER_MANA))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_DRAIN_MANA) == CAST_OK)
+                        m_uiCheckoutManaTimer = 1500;
+                        if (m_creature->GetPower(POWER_MANA) * 100 / m_creature->GetMaxPower(POWER_MANA) > 75.0f)
                         {
-                            m_uiManaDrainTimer = urand(2000, 6000);
+                            DoCastSpellIfCan(m_creature, SPELL_ENERGIZE);
+                            DoScriptText(EMOTE_ENERGIZING, m_creature);
+                            m_uiPhase = PHASE_ENERGIZING;
+                            return;
                         }
                     }
-                }
-                else
-                {
-                    m_uiManaDrainTimer -= uiDiff;
-                }
-
-                if (m_uiTrampleTimer <= uiDiff)
-                {
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_TRAMPLE);
-                    m_uiTrampleTimer = 15000;
-                }
-                else
-                {
-                    m_uiTrampleTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-                break;
-            case PHASE_ENERGIZING:
-                if (m_uiCheckoutManaTimer <= uiDiff)
-                {
-                    m_uiCheckoutManaTimer = 1500;
-                    if (m_creature->GetPower(POWER_MANA) == m_creature->GetMaxPower(POWER_MANA))
+                    else
                     {
-                        m_creature->RemoveAurasDueToSpell(SPELL_ENERGIZE);
-                        DoCastSpellIfCan(m_creature, SPELL_ARCANE_ERUPTION);
-                        DoScriptText(EMOTE_MANA_FULL, m_creature);
-                        m_uiPhase = PHASE_ATTACKING;
-                        return;
+                        m_uiCheckoutManaTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiCheckoutManaTimer -= uiDiff;
-                }
-                break;
+
+                    if (m_uiSummonManaFiendsTimer <= uiDiff)
+                    {
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUMMON_MANAFIEND_1, CAST_TRIGGERED);
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUMMON_MANAFIEND_2, CAST_TRIGGERED);
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUMMON_MANAFIEND_3, CAST_TRIGGERED);
+                        m_uiSummonManaFiendsTimer = 90000;
+                    }
+                    else
+                    {
+                        m_uiSummonManaFiendsTimer -= uiDiff;
+                    }
+
+                    if (m_uiManaDrainTimer <= uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_DRAIN_MANA, SELECT_FLAG_POWER_MANA))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_DRAIN_MANA) == CAST_OK)
+                            {
+                                m_uiManaDrainTimer = urand(2000, 6000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiManaDrainTimer -= uiDiff;
+                    }
+
+                    if (m_uiTrampleTimer <= uiDiff)
+                    {
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_TRAMPLE);
+                        m_uiTrampleTimer = 15000;
+                    }
+                    else
+                    {
+                        m_uiTrampleTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+                    break;
+                case PHASE_ENERGIZING:
+                    if (m_uiCheckoutManaTimer <= uiDiff)
+                    {
+                        m_uiCheckoutManaTimer = 1500;
+                        if (m_creature->GetPower(POWER_MANA) == m_creature->GetMaxPower(POWER_MANA))
+                        {
+                            m_creature->RemoveAurasDueToSpell(SPELL_ENERGIZE);
+                            DoCastSpellIfCan(m_creature, SPELL_ARCANE_ERUPTION);
+                            DoScriptText(EMOTE_MANA_FULL, m_creature);
+                            m_uiPhase = PHASE_ATTACKING;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        m_uiCheckoutManaTimer -= uiDiff;
+                    }
+                    break;
             }
         }
     };

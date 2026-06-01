@@ -58,7 +58,7 @@ enum
     SPELL_MUTATED_INFECTION_5   = 70006,
 
     // Slime Spray
-// SPELL_SLIME_SPRAY_SUMMON    = 70882, // precast of Slime Spray dmg spell
+    // SPELL_SLIME_SPRAY_SUMMON    = 70882, // precast of Slime Spray dmg spell
     SPELL_SLIME_SPRAY           = 69508,
 
     // Ooze Flood
@@ -70,7 +70,7 @@ enum
     SPELL_STICKY_AURA           = 69776, // aura on dummy Sticky Ooze NPC
     SPELL_WEAK_RADIATING_OOZE   = 69750,
     SPELL_LITTLE_OOZE_COMBINE   = 69537, // periodic check
-// SPELL_MERGE                 = 69889,
+    // SPELL_MERGE                 = 69889,
 
     // Big Ooze
     SPELL_UNSTABLE_OOZE         = 69558, // stacking buff

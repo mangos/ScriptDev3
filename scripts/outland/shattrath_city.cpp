@@ -177,27 +177,27 @@ struct npc_dirty_larry : public CreatureScript
 
             switch (uiStep)
             {
-            case 1:
-                DoScriptText(SAY_START, m_creature, pPlayer);
-                SetRuffies(m_creepjackGuid, false, false);
-                SetRuffies(m_maloneGuid, false, false);
-                return 3000;
-            case 2: DoScriptText(SAY_COUNT, m_creature, pPlayer);   return 5000;
-            case 3: DoScriptText(SAY_COUNT_1, m_creature, pPlayer); return 3000;
-            case 4: DoScriptText(SAY_COUNT_2, m_creature, pPlayer); return 3000;
-            case 5: DoScriptText(SAY_ATTACK, m_creature, pPlayer);  return 3000;
-            case 6:
-                if (!m_creature->IsInCombat() && pPlayer->IsAlive())
-                {
-                    AttackStart(pPlayer);
-                }
+                case 1:
+                    DoScriptText(SAY_START, m_creature, pPlayer);
+                    SetRuffies(m_creepjackGuid, false, false);
+                    SetRuffies(m_maloneGuid, false, false);
+                    return 3000;
+                case 2: DoScriptText(SAY_COUNT, m_creature, pPlayer);   return 5000;
+                case 3: DoScriptText(SAY_COUNT_1, m_creature, pPlayer); return 3000;
+                case 4: DoScriptText(SAY_COUNT_2, m_creature, pPlayer); return 3000;
+                case 5: DoScriptText(SAY_ATTACK, m_creature, pPlayer);  return 3000;
+                case 6:
+                    if (!m_creature->IsInCombat() && pPlayer->IsAlive())
+                    {
+                        AttackStart(pPlayer);
+                    }
 
-                SetRuffies(m_creepjackGuid, true, false);
-                SetRuffies(m_maloneGuid, true, false);
-                bActiveAttack = true;
-                return 2000;
-            default:
-                return 0;
+                    SetRuffies(m_creepjackGuid, true, false);
+                    SetRuffies(m_maloneGuid, true, false);
+                    bActiveAttack = true;
+                    return 2000;
+                default:
+                    return 0;
             }
         }
 
@@ -392,27 +392,27 @@ struct npc_khadgars_servant : public CreatureScript
             {
                 switch (pWho->GetEntry())
                 {
-                case NPC_HAGGARD:
-                    if (Player* pPlayer = GetPlayerForEscort())
-                    {
-                        DoScriptText(SAY_KHAD_HAGGARD, pWho, pPlayer);
-                    }
-                    m_uiRandomTalkCooldown = 7500;
-                    break;
-                case NPC_ANCHORITE:
-                    if (Player* pPlayer = GetPlayerForEscort())
-                    {
-                        DoScriptText(SAY_KHAD_ALDOR_GREET, pWho, pPlayer);
-                    }
-                    m_uiRandomTalkCooldown = 7500;
-                    break;
-                case NPC_ARCANIST:
-                    if (Player* pPlayer = GetPlayerForEscort())
-                    {
-                        DoScriptText(SAY_KHAD_SCRYER_GREET, pWho, pPlayer);
-                    }
-                    m_uiRandomTalkCooldown = 7500;
-                    break;
+                    case NPC_HAGGARD:
+                        if (Player* pPlayer = GetPlayerForEscort())
+                        {
+                            DoScriptText(SAY_KHAD_HAGGARD, pWho, pPlayer);
+                        }
+                        m_uiRandomTalkCooldown = 7500;
+                        break;
+                    case NPC_ANCHORITE:
+                        if (Player* pPlayer = GetPlayerForEscort())
+                        {
+                            DoScriptText(SAY_KHAD_ALDOR_GREET, pWho, pPlayer);
+                        }
+                        m_uiRandomTalkCooldown = 7500;
+                        break;
+                    case NPC_ARCANIST:
+                        if (Player* pPlayer = GetPlayerForEscort())
+                        {
+                            DoScriptText(SAY_KHAD_SCRYER_GREET, pWho, pPlayer);
+                        }
+                        m_uiRandomTalkCooldown = 7500;
+                        break;
                 }
             }
         }
@@ -431,32 +431,32 @@ struct npc_khadgars_servant : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0:
-                if (Creature* pKhadgar = GetClosestCreatureWithEntry(m_creature, NPC_KHADGAR, 10.0f))
-                {
-                    DoScriptText(SAY_KHAD_START, pKhadgar);
-                }
-                break;
-            case 5:
-            case 24:
-            case 50:
-            case 63:
-            case 74:
-            case 75:
-                SetEscortPaused(true);
-                break;
-            case 34:
-                if (Creature* pIzzard = GetClosestCreatureWithEntry(m_creature, NPC_IZZARD, 10.0f))
-                {
-                    DoScriptText(SAY_KHAD_MIND_YOU, pIzzard);
-                }
-                break;
-            case 35:
-                if (Creature* pAdyria = GetClosestCreatureWithEntry(m_creature, NPC_ADYRIA, 10.0f))
-                {
-                    DoScriptText(SAY_KHAD_MIND_ALWAYS, pAdyria);
-                }
-                break;
+                case 0:
+                    if (Creature* pKhadgar = GetClosestCreatureWithEntry(m_creature, NPC_KHADGAR, 10.0f))
+                    {
+                        DoScriptText(SAY_KHAD_START, pKhadgar);
+                    }
+                    break;
+                case 5:
+                case 24:
+                case 50:
+                case 63:
+                case 74:
+                case 75:
+                    SetEscortPaused(true);
+                    break;
+                case 34:
+                    if (Creature* pIzzard = GetClosestCreatureWithEntry(m_creature, NPC_IZZARD, 10.0f))
+                    {
+                        DoScriptText(SAY_KHAD_MIND_YOU, pIzzard);
+                    }
+                    break;
+                case 35:
+                    if (Creature* pAdyria = GetClosestCreatureWithEntry(m_creature, NPC_ADYRIA, 10.0f))
+                    {
+                        DoScriptText(SAY_KHAD_MIND_ALWAYS, pAdyria);
+                    }
+                    break;
             }
         }
 
@@ -490,123 +490,123 @@ struct npc_khadgars_servant : public CreatureScript
 
                     switch (m_uiPointId)
                     {
-                    case 5:                                 // to lower city
-                    {
-                                                                switch (m_uiTalkCount)
-                                                                {
-                                                                case 1:
-                                                                    DoScriptText(SAY_KHAD_SERV_1, m_creature, pPlayer);
-                                                                    break;
-                                                                case 2:
-                                                                    DoScriptText(SAY_KHAD_SERV_2, m_creature, pPlayer);
-                                                                    break;
-                                                                case 3:
-                                                                    DoScriptText(SAY_KHAD_SERV_3, m_creature, pPlayer);
-                                                                    break;
-                                                                case 4:
-                                                                    DoScriptText(SAY_KHAD_SERV_4, m_creature, pPlayer);
-                                                                    SetEscortPaused(false);
-                                                                    break;
-                                                                }
-                                                                break;
-                    }
-                    case 24:                                // in lower city
-                    {
-                                                                switch (m_uiTalkCount)
-                                                                {
-                                                                case 5:
-                                                                    if (Creature* pShanir = GetClosestCreatureWithEntry(m_creature, NPC_SHANIR, 15.0f))
-                                                                    {
-                                                                        DoScriptText(SAY_KHAD_INJURED, pShanir, pPlayer);
-                                                                    }
+                        case 5:                                 // to lower city
+                        {
+                            switch (m_uiTalkCount)
+                            {
+                                case 1:
+                                    DoScriptText(SAY_KHAD_SERV_1, m_creature, pPlayer);
+                                    break;
+                                case 2:
+                                    DoScriptText(SAY_KHAD_SERV_2, m_creature, pPlayer);
+                                    break;
+                                case 3:
+                                    DoScriptText(SAY_KHAD_SERV_3, m_creature, pPlayer);
+                                    break;
+                                case 4:
+                                    DoScriptText(SAY_KHAD_SERV_4, m_creature, pPlayer);
+                                    SetEscortPaused(false);
+                                    break;
+                            }
+                            break;
+                        }
+                        case 24:                                // in lower city
+                        {
+                            switch (m_uiTalkCount)
+                            {
+                                case 5:
+                                    if (Creature* pShanir = GetClosestCreatureWithEntry(m_creature, NPC_SHANIR, 15.0f))
+                                    {
+                                        DoScriptText(SAY_KHAD_INJURED, pShanir, pPlayer);
+                                    }
 
-                                                                    DoScriptText(SAY_KHAD_SERV_5, m_creature, pPlayer);
-                                                                    break;
-                                                                case 6:
-                                                                    DoScriptText(SAY_KHAD_SERV_6, m_creature, pPlayer);
-                                                                    break;
-                                                                case 7:
-                                                                    DoScriptText(SAY_KHAD_SERV_7, m_creature, pPlayer);
-                                                                    SetEscortPaused(false);
-                                                                    break;
-                                                                }
-                                                                break;
-                    }
-                    case 50:                                // outside
-                    {
-                                                                switch (m_uiTalkCount)
-                                                                {
-                                                                case 8:
-                                                                    DoScriptText(SAY_KHAD_SERV_8, m_creature, pPlayer);
-                                                                    break;
-                                                                case 9:
-                                                                    DoScriptText(SAY_KHAD_SERV_9, m_creature, pPlayer);
-                                                                    break;
-                                                                case 10:
-                                                                    DoScriptText(SAY_KHAD_SERV_10, m_creature, pPlayer);
-                                                                    break;
-                                                                case 11:
-                                                                    DoScriptText(SAY_KHAD_SERV_11, m_creature, pPlayer);
-                                                                    SetEscortPaused(false);
-                                                                    break;
-                                                                }
-                                                                break;
-                    }
-                    case 63:                                // scryer
-                    {
-                                                                switch (m_uiTalkCount)
-                                                                {
-                                                                case 12:
-                                                                    DoScriptText(SAY_KHAD_SERV_12, m_creature, pPlayer);
-                                                                    break;
-                                                                case 13:
-                                                                    DoScriptText(SAY_KHAD_SERV_13, m_creature, pPlayer);
-                                                                    SetEscortPaused(false);
-                                                                    break;
-                                                                }
-                                                                break;
-                    }
-                    case 74:                                // aldor
-                    {
-                                                                switch (m_uiTalkCount)
-                                                                {
-                                                                case 14:
-                                                                    DoScriptText(SAY_KHAD_SERV_14, m_creature, pPlayer);
-                                                                    break;
-                                                                case 15:
-                                                                    DoScriptText(SAY_KHAD_SERV_15, m_creature, pPlayer);
-                                                                    break;
-                                                                case 16:
-                                                                    DoScriptText(SAY_KHAD_SERV_16, m_creature, pPlayer);
-                                                                    break;
-                                                                case 17:
-                                                                    DoScriptText(SAY_KHAD_SERV_17, m_creature, pPlayer);
-                                                                    SetEscortPaused(false);
-                                                                    break;
-                                                                }
-                                                                break;
-                    }
-                    case 75:                                // a'dal
-                    {
-                                                                switch (m_uiTalkCount)
-                                                                {
-                                                                case 18:
-                                                                    DoScriptText(SAY_KHAD_SERV_18, m_creature, pPlayer);
-                                                                    break;
-                                                                case 19:
-                                                                    DoScriptText(SAY_KHAD_SERV_19, m_creature, pPlayer);
-                                                                    break;
-                                                                case 20:
-                                                                    DoScriptText(SAY_KHAD_SERV_20, m_creature, pPlayer);
-                                                                    break;
-                                                                case 21:
-                                                                    DoScriptText(SAY_KHAD_SERV_21, m_creature, pPlayer);
-                                                                    pPlayer->AreaExploredOrEventHappens(QUEST_CITY_LIGHT);
-                                                                    SetEscortPaused(false);
-                                                                    break;
-                                                                }
-                                                                break;
-                    }
+                                    DoScriptText(SAY_KHAD_SERV_5, m_creature, pPlayer);
+                                    break;
+                                case 6:
+                                    DoScriptText(SAY_KHAD_SERV_6, m_creature, pPlayer);
+                                    break;
+                                case 7:
+                                    DoScriptText(SAY_KHAD_SERV_7, m_creature, pPlayer);
+                                    SetEscortPaused(false);
+                                    break;
+                            }
+                            break;
+                        }
+                        case 50:                                // outside
+                        {
+                            switch (m_uiTalkCount)
+                            {
+                                case 8:
+                                    DoScriptText(SAY_KHAD_SERV_8, m_creature, pPlayer);
+                                    break;
+                                case 9:
+                                    DoScriptText(SAY_KHAD_SERV_9, m_creature, pPlayer);
+                                    break;
+                                case 10:
+                                    DoScriptText(SAY_KHAD_SERV_10, m_creature, pPlayer);
+                                    break;
+                                case 11:
+                                    DoScriptText(SAY_KHAD_SERV_11, m_creature, pPlayer);
+                                    SetEscortPaused(false);
+                                    break;
+                            }
+                            break;
+                        }
+                        case 63:                                // scryer
+                        {
+                            switch (m_uiTalkCount)
+                            {
+                                case 12:
+                                    DoScriptText(SAY_KHAD_SERV_12, m_creature, pPlayer);
+                                    break;
+                                case 13:
+                                    DoScriptText(SAY_KHAD_SERV_13, m_creature, pPlayer);
+                                    SetEscortPaused(false);
+                                    break;
+                            }
+                            break;
+                        }
+                        case 74:                                // aldor
+                        {
+                            switch (m_uiTalkCount)
+                            {
+                                case 14:
+                                    DoScriptText(SAY_KHAD_SERV_14, m_creature, pPlayer);
+                                    break;
+                                case 15:
+                                    DoScriptText(SAY_KHAD_SERV_15, m_creature, pPlayer);
+                                    break;
+                                case 16:
+                                    DoScriptText(SAY_KHAD_SERV_16, m_creature, pPlayer);
+                                    break;
+                                case 17:
+                                    DoScriptText(SAY_KHAD_SERV_17, m_creature, pPlayer);
+                                    SetEscortPaused(false);
+                                    break;
+                            }
+                            break;
+                        }
+                        case 75:                                // a'dal
+                        {
+                            switch (m_uiTalkCount)
+                            {
+                                case 18:
+                                    DoScriptText(SAY_KHAD_SERV_18, m_creature, pPlayer);
+                                    break;
+                                case 19:
+                                    DoScriptText(SAY_KHAD_SERV_19, m_creature, pPlayer);
+                                    break;
+                                case 20:
+                                    DoScriptText(SAY_KHAD_SERV_20, m_creature, pPlayer);
+                                    break;
+                                case 21:
+                                    DoScriptText(SAY_KHAD_SERV_21, m_creature, pPlayer);
+                                    pPlayer->AreaExploredOrEventHappens(QUEST_CITY_LIGHT);
+                                    SetEscortPaused(false);
+                                    break;
+                            }
+                            break;
+                        }
                     }
                 }
                 else

@@ -80,7 +80,7 @@ struct npc_tapoke_slim_jahn : public CreatureScript
     struct npc_tapoke_slim_jahnAI : public npc_escortAI, private DialogueHelper
     {
         npc_tapoke_slim_jahnAI(Creature* pCreature) : m_bFriendSummoned(false), m_bEventComplete(false),
-        friendGUID(ObjectGuid()), npc_escortAI(pCreature), DialogueHelper(aDiplomatDialogue)
+            friendGUID(ObjectGuid()), npc_escortAI(pCreature), DialogueHelper(aDiplomatDialogue)
         {
         }
 
@@ -113,20 +113,20 @@ struct npc_tapoke_slim_jahn : public CreatureScript
         {
             switch (uiPointId)
             {
-            case WAYPOINT_MAILBOX:
-                SetRun();
-                m_creature->RemoveAurasDueToSpell(SPELL_STEALTH);
-                m_creature->SetFactionTemporary(FACTION_ENEMY, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
-                break;
+                case WAYPOINT_MAILBOX:
+                    SetRun();
+                    m_creature->RemoveAurasDueToSpell(SPELL_STEALTH);
+                    m_creature->SetFactionTemporary(FACTION_ENEMY, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
+                    break;
 
-            case WAYPOINT_GATE:
-                // fail the quest if he escapes
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    JustDied(pPlayer);
-                }
-                m_creature->ForcedDespawn(5000);
-                break;
+                case WAYPOINT_GATE:
+                    // fail the quest if he escapes
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        JustDied(pPlayer);
+                    }
+                    m_creature->ForcedDespawn(5000);
+                    break;
             }
         }
 
@@ -248,10 +248,10 @@ struct npc_tapoke_slim_jahn : public CreatureScript
             DoMeleeAttackIfReady();
         }
 
-    private:
-        ObjectGuid friendGUID;
-        bool m_bFriendSummoned;
-        bool m_bEventComplete;
+        private:
+            ObjectGuid friendGUID;
+            bool m_bFriendSummoned;
+            bool m_bEventComplete;
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

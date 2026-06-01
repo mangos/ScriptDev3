@@ -137,56 +137,56 @@ struct npc_kyle_the_frenzied : public CreatureScript
 
                     switch (m_uiEventPhase)
                     {
-                    case 1:
-                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                        {
-                            GameObject* pGo = pPlayer->GetGameObject(SPELL_LUNCH);
-
-                            // Workaround for broken function GetGameObject
-                            if (!pGo)
+                        case 1:
+                            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                             {
-                                const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_LUNCH);
+                                GameObject* pGo = pPlayer->GetGameObject(SPELL_LUNCH);
+
+                                // Workaround for broken function GetGameObject
+                                if (!pGo)
+                                {
+                                    const SpellEntry* pSpell = GetSpellStore()->LookupEntry(SPELL_LUNCH);
 #if defined (CATA) || defined(MISTS)
-                                uint32 uiGameobjectEntry = pSpell->GetEffectMiscValue(EFFECT_INDEX_1);
+                                    uint32 uiGameobjectEntry = pSpell->GetEffectMiscValue(EFFECT_INDEX_1);
 #else
-                                uint32 uiGameobjectEntry = pSpell->EffectMiscValue[EFFECT_INDEX_1];
+                                    uint32 uiGameobjectEntry = pSpell->EffectMiscValue[EFFECT_INDEX_1];
 #endif
-                                pGo = GetClosestGameObjectWithEntry(pPlayer, uiGameobjectEntry, 2 * INTERACTION_DISTANCE);
-                            }
+                                    pGo = GetClosestGameObjectWithEntry(pPlayer, uiGameobjectEntry, 2 * INTERACTION_DISTANCE);
+                                }
 
-                            if (pGo)
+                                if (pGo)
+                                {
+                                    m_bIsMovingToLunch = true;
+
+                                    float fX, fY, fZ;
+                                    pGo->GetContactPoint(m_creature, fX, fY, fZ, CONTACT_DISTANCE);
+
+                                    m_creature->GetMotionMaster()->MovePoint(POINT_ID, fX, fY, fZ);
+                                }
+                            }
+                            break;
+                        case 2:
+                            DoScriptText(EMOTE_EAT_LUNCH, m_creature);
+                            m_creature->HandleEmote(EMOTE_STATE_USESTANDING);
+                            break;
+                        case 3:
+                            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                             {
-                                m_bIsMovingToLunch = true;
-
-                                float fX, fY, fZ;
-                                pGo->GetContactPoint(m_creature, fX, fY, fZ, CONTACT_DISTANCE);
-
-                                m_creature->GetMotionMaster()->MovePoint(POINT_ID, fX, fY, fZ);
+                                pPlayer->TalkedToCreature(m_creature->GetEntry(), m_creature->GetObjectGuid());
                             }
-                        }
-                        break;
-                    case 2:
-                        DoScriptText(EMOTE_EAT_LUNCH, m_creature);
-                        m_creature->HandleEmote(EMOTE_STATE_USESTANDING);
-                        break;
-                    case 3:
-                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                        {
-                            pPlayer->TalkedToCreature(m_creature->GetEntry(), m_creature->GetObjectGuid());
-                        }
 
-                        m_creature->UpdateEntry(NPC_KYLE_FRIENDLY);
-                        break;
-                    case 4:
-                        m_uiEventTimer = 30000;
-                        DoScriptText(EMOTE_DANCE, m_creature);
-                        m_creature->HandleEmote(EMOTE_STATE_DANCESPECIAL);
-                        break;
-                    case 5:
-                        m_creature->HandleEmote(EMOTE_STATE_NONE);
-                        Reset();
-                        m_creature->GetMotionMaster()->Clear();
-                        break;
+                            m_creature->UpdateEntry(NPC_KYLE_FRIENDLY);
+                            break;
+                        case 4:
+                            m_uiEventTimer = 30000;
+                            DoScriptText(EMOTE_DANCE, m_creature);
+                            m_creature->HandleEmote(EMOTE_STATE_DANCESPECIAL);
+                            break;
+                        case 5:
+                            m_creature->HandleEmote(EMOTE_STATE_NONE);
+                            Reset();
+                            m_creature->GetMotionMaster()->Clear();
+                            break;
                     }
                 }
                 else

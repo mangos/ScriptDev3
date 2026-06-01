@@ -158,15 +158,15 @@ struct boss_hydross_the_unstable : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_PURE_SPAWN:
-                pSummoned->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_FROST, true);
-                break;
-            case NPC_TAINTED_SPAWN:
-                pSummoned->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_NATURE, true);
-                break;
-            case NPC_TAINTED_ELEMENTAL:
-                pSummoned->GetMotionMaster()->MovePoint(POINT_ID_ELEMENTAL_CLEAN, aElementalCleanPoint[0], aElementalCleanPoint[1], aElementalCleanPoint[2]);
-                break;
+                case NPC_PURE_SPAWN:
+                    pSummoned->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_FROST, true);
+                    break;
+                case NPC_TAINTED_SPAWN:
+                    pSummoned->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_NATURE, true);
+                    break;
+                case NPC_TAINTED_ELEMENTAL:
+                    pSummoned->GetMotionMaster()->MovePoint(POINT_ID_ELEMENTAL_CLEAN, aElementalCleanPoint[0], aElementalCleanPoint[1], aElementalCleanPoint[2]);
+                    break;
             }
 
             // Attack only in combat

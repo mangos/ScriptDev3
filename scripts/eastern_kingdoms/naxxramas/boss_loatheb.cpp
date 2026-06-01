@@ -128,17 +128,6 @@ struct boss_loatheb : public CreatureScript
                 return;
             }
 
-            /* Berserk - not used
-            if (m_uiBerserkTimer < uiDiff)
-            {
-            DoCastSpellIfCan(m_creature, SPELL_BERSERK);
-            m_uiBerserkTimer = 300000;
-            }
-            else
-            {
-                m_uiBerserkTimer -= uiDiff;
-            }*/
-
             // Inevitable Doom
             if (m_uiInevitableDoomTimer < uiDiff)
             {

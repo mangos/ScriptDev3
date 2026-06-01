@@ -88,76 +88,76 @@ struct npc_shadowfang_prisoner : public CreatureScript
         {
             switch (uiPoint)
             {
-            case 0:
-                if (m_uiNpcEntry == NPC_ASH)
-                {
-                    DoScriptText(SAY_FREE_AS, m_creature);
-                }
-                else
-                {
-                    DoScriptText(SAY_FREE_AD, m_creature);
-                }
-                break;
-            case 10:
-                if (m_uiNpcEntry == NPC_ASH)
-                {
-                    DoScriptText(SAY_OPEN_DOOR_AS, m_creature);
-                }
-                else
-                {
-                    DoScriptText(SAY_OPEN_DOOR_AD, m_creature);
-                }
-                break;
-            case 11:
-                if (m_uiNpcEntry == NPC_ASH)
-                {
-                    DoCastSpellIfCan(m_creature, SPELL_UNLOCK);
-                }
-                else
-                {
-                    DoScriptText(EMOTE_UNLOCK_DOOR_AD, m_creature);
-                }
-                break;
+                case 0:
+                    if (m_uiNpcEntry == NPC_ASH)
+                    {
+                        DoScriptText(SAY_FREE_AS, m_creature);
+                    }
+                    else
+                    {
+                        DoScriptText(SAY_FREE_AD, m_creature);
+                    }
+                    break;
+                case 10:
+                    if (m_uiNpcEntry == NPC_ASH)
+                    {
+                        DoScriptText(SAY_OPEN_DOOR_AS, m_creature);
+                    }
+                    else
+                    {
+                        DoScriptText(SAY_OPEN_DOOR_AD, m_creature);
+                    }
+                    break;
+                case 11:
+                    if (m_uiNpcEntry == NPC_ASH)
+                    {
+                        DoCastSpellIfCan(m_creature, SPELL_UNLOCK);
+                    }
+                    else
+                    {
+                        DoScriptText(EMOTE_UNLOCK_DOOR_AD, m_creature);
+                    }
+                    break;
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-            case 12:
-                if (m_uiNpcEntry != NPC_ASH)
-                {
-                    m_creature->HandleEmote(EMOTE_ONESHOT_USESTANDING);
-                }
-                break;
+                case 12:
+                    if (m_uiNpcEntry != NPC_ASH)
+                    {
+                        m_creature->HandleEmote(EMOTE_ONESHOT_USESTANDING);
+                    }
+                    break;
 #endif
-            case 13:
-                if (m_uiNpcEntry == NPC_ASH)
-                {
-                    DoScriptText(SAY_POST_DOOR_AS, m_creature);
-                }
-                else
-                {
-                    DoScriptText(SAY_POST1_DOOR_AD, m_creature);
-                }
+                case 13:
+                    if (m_uiNpcEntry == NPC_ASH)
+                    {
+                        DoScriptText(SAY_POST_DOOR_AS, m_creature);
+                    }
+                    else
+                    {
+                        DoScriptText(SAY_POST1_DOOR_AD, m_creature);
+                    }
 
-                if (m_pInstance)
-                {
-                    m_pInstance->SetData(TYPE_FREE_NPC, DONE);
-                }
-                break;
-            case 14:
-                if (m_uiNpcEntry == NPC_ASH)
-                {
-                    DoCastSpellIfCan(m_creature, SPELL_FIRE);
-                }
-                else
-                {
-                    DoScriptText(SAY_POST2_DOOR_AD, m_creature);
-                    SetRun();
-                }
-                break;
-            case 15:
-                if (m_uiNpcEntry == NPC_ASH)
-                {
-                    DoScriptText(EMOTE_VANISH_AS, m_creature);
-                }
-                break;
+                    if (m_pInstance)
+                    {
+                        m_pInstance->SetData(TYPE_FREE_NPC, DONE);
+                    }
+                    break;
+                case 14:
+                    if (m_uiNpcEntry == NPC_ASH)
+                    {
+                        DoCastSpellIfCan(m_creature, SPELL_FIRE);
+                    }
+                    else
+                    {
+                        DoScriptText(SAY_POST2_DOOR_AD, m_creature);
+                        SetRun();
+                    }
+                    break;
+                case 15:
+                    if (m_uiNpcEntry == NPC_ASH)
+                    {
+                        DoScriptText(EMOTE_VANISH_AS, m_creature);
+                    }
+                    break;
             }
         }
 
@@ -378,18 +378,18 @@ struct mob_arugal_voidwalker : public CreatureScript
 
             switch (uiPointId)
             {
-            case 1:
-                if (m_bReverse)
-                {
-                    m_bReverse = false;
-                }
-                break;
-            case LAST_WAYPOINT:
-                if (!m_bReverse)
-                {
-                    m_bReverse = true;
-                }
-                break;
+                case 1:
+                    if (m_bReverse)
+                    {
+                        m_bReverse = false;
+                    }
+                    break;
+                case LAST_WAYPOINT:
+                    if (!m_bReverse)
+                    {
+                        m_bReverse = true;
+                    }
+                    break;
             }
 
             if (m_bReverse)
@@ -449,9 +449,11 @@ struct mob_arugal_voidwalker : public CreatureScript
             for (std::list<Creature*>::iterator itr = lVoidwalkerList.begin(); itr != lVoidwalkerList.end(); ++itr)
             {
                 if ((*itr)->IsAlive())
-                if (mob_arugal_voidwalkerAI* pVoidwalkerAI = dynamic_cast<mob_arugal_voidwalkerAI*>((*itr)->AI()))
                 {
-                    pVoidwalkerAI->ReceiveWaypoint(m_uiCurrentPoint, m_bReverse);
+                    if (mob_arugal_voidwalkerAI* pVoidwalkerAI = dynamic_cast<mob_arugal_voidwalkerAI*>((*itr)->AI()))
+                    {
+                        pVoidwalkerAI->ReceiveWaypoint(m_uiCurrentPoint, m_bReverse);
+                    }
                 }
             }
         }
@@ -591,62 +593,64 @@ struct boss_arugal : public CreatureScript
                 {
                     switch (m_uiSpeechStep)
                     {
-                    case 1:
-                        DoScriptText(YELL_FENRUS, m_creature);
-                        m_creature->SetVisibility(VISIBILITY_ON);
-                        m_uiSpeechTimer = 2000;
-                        break;
-                    case 2:
-                        DoCastSpellIfCan(m_creature, SPELL_FIRE);
-                        m_uiSpeechTimer = 5000;
-                        break;
-                    case 3:
-                        if (m_pInstance)
-                        if (GameObject* pLightning = m_pInstance->GetSingleGameObjectFromStorage(GO_ARUGAL_FOCUS))
+                        case 1:
+                            DoScriptText(YELL_FENRUS, m_creature);
+                            m_creature->SetVisibility(VISIBILITY_ON);
+                            m_uiSpeechTimer = 2000;
+                            break;
+                        case 2:
+                            DoCastSpellIfCan(m_creature, SPELL_FIRE);
+                            m_uiSpeechTimer = 5000;
+                            break;
+                        case 3:
+                            if (m_pInstance)
+                            {
+                                if (GameObject* pLightning = m_pInstance->GetSingleGameObjectFromStorage(GO_ARUGAL_FOCUS))
+                                {
+                                    pLightning->Use(m_creature);
+                                }
+
+                                m_uiSpeechTimer = 5000;
+                            }
+                            break;
+                        case 4:
+                            m_creature->SetVisibility(VISIBILITY_OFF);
+                            m_uiSpeechTimer = 500;
+                            break;
+                        case 5:
                         {
-                            pLightning->Use(m_creature);
+                            Creature* pVoidwalker = nullptr;
+                            Creature* pLeader = nullptr;
+
+                            for (uint8 i = 0; i < 4; ++i)
+                            {
+                                pVoidwalker = m_creature->SummonCreature(NPC_VOIDWALKER, VWSpawns[i].fX,
+                                    VWSpawns[i].fY, VWSpawns[i].fZ, VWSpawns[i].fO, TEMPSPAWN_DEAD_DESPAWN, 1);
+
+                                if (!pVoidwalker)
+                                {
+                                    continue;
+                                }
+
+                                if (!i)
+                                {
+                                    pLeader = pVoidwalker;
+                                }
+
+                                if (CreatureAI* pVoidwalkerAI = pVoidwalker->AI())
+                                {
+                                    SendAIEvent(AI_EVENT_CUSTOM_A, pLeader, pVoidwalker, i);
+                                    //pVoidwalkerAI->SetPosition(i, pLeader);
+                                }
+
+                                pVoidwalker = nullptr;
+                            }
+                            m_uiSpeechStep = 0;
+                            return;
                         }
-
-                        m_uiSpeechTimer = 5000;
-                        break;
-                    case 4:
-                        m_creature->SetVisibility(VISIBILITY_OFF);
-                        m_uiSpeechTimer = 500;
-                        break;
-                    case 5:
-                    {
-                        Creature* pVoidwalker = nullptr;
-                        Creature* pLeader = nullptr;
-
-                        for (uint8 i = 0; i < 4; ++i)
-                        {
-                            pVoidwalker = m_creature->SummonCreature(NPC_VOIDWALKER, VWSpawns[i].fX,
-                                  VWSpawns[i].fY, VWSpawns[i].fZ, VWSpawns[i].fO, TEMPSPAWN_DEAD_DESPAWN, 1);
-
-                            if (!pVoidwalker)
-                            {
-                                continue;
-                            }
-
-                            if (!i)
-                            {
-                                pLeader = pVoidwalker;
-                            }
-
-                            if (CreatureAI* pVoidwalkerAI = pVoidwalker->AI())
-                            {
-                                SendAIEvent(AI_EVENT_CUSTOM_A, pLeader, pVoidwalker, i);
-                                  //pVoidwalkerAI->SetPosition(i, pLeader);
-                            }
-
-                            pVoidwalker = nullptr;
-                        }
-                        m_uiSpeechStep = 0;
-                        return;
-                    }
-                    default:
-                        m_uiSpeechStep = 0;
-                        return;
+                        default:
+                            m_uiSpeechStep = 0;
+                            return;
                     }
                     ++m_uiSpeechStep;
                 }
@@ -758,15 +762,15 @@ struct boss_arugal : public CreatureScript
 
                 switch (posNewPosition)
                 {
-                case POSITION_SPAWN_LEDGE:
-                    DoCastSpellIfCan(m_creature, SPELL_SHADOW_PORT_SPAWN_LEDGE, true);
-                    break;
-                case POSITION_UPPER_LEDGE:
-                    DoCastSpellIfCan(m_creature, SPELL_SHADOW_PORT_UPPER_LEDGE, true);
-                    break;
-                case POSITION_STAIRS:
-                    DoCastSpellIfCan(m_creature, SPELL_SHADOW_PORT_STAIRS, true);
-                    break;
+                    case POSITION_SPAWN_LEDGE:
+                        DoCastSpellIfCan(m_creature, SPELL_SHADOW_PORT_SPAWN_LEDGE, true);
+                        break;
+                    case POSITION_UPPER_LEDGE:
+                        DoCastSpellIfCan(m_creature, SPELL_SHADOW_PORT_UPPER_LEDGE, true);
+                        break;
+                    case POSITION_STAIRS:
+                        DoCastSpellIfCan(m_creature, SPELL_SHADOW_PORT_STAIRS, true);
+                        break;
                 }
 
                 if (GetManaPercent() < 6.0f)
@@ -908,69 +912,69 @@ struct npc_arugal : public CreatureScript
             {
                 switch (m_uiSpeechStep)
                 {
-                case 1:
-                    m_creature->SetVisibility(VISIBILITY_ON);
-                    m_uiSpeechTimer = 500;
-                    break;
-                case 2:
-                    DoCastSpellIfCan(m_creature, SPELL_SPAWN);
-                    m_uiSpeechTimer = 2000;
-                    break;
-                case 3:
-                    // Make him die
-                    if (Creature* pVincent = GetClosestCreatureWithEntry(m_creature, NPC_VINCENT, 20.0f))
-                    {
-                        pVincent->SetStandState(UNIT_STAND_STATE_DEAD);
-                    }
+                    case 1:
+                        m_creature->SetVisibility(VISIBILITY_ON);
+                        m_uiSpeechTimer = 500;
+                        break;
+                    case 2:
+                        DoCastSpellIfCan(m_creature, SPELL_SPAWN);
+                        m_uiSpeechTimer = 2000;
+                        break;
+                    case 3:
+                        // Make him die
+                        if (Creature* pVincent = GetClosestCreatureWithEntry(m_creature, NPC_VINCENT, 20.0f))
+                        {
+                            pVincent->SetStandState(UNIT_STAND_STATE_DEAD);
+                        }
 
-                    m_uiSpeechTimer = 10000;
-                    break;
-                case 4:
-                    DoScriptText(SAY_INTRO_1, m_creature);
-                    // m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
-                    m_uiSpeechTimer = 1750;
-                    break;
-                case 5:
-                    m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
-                    m_uiSpeechTimer = 1750;
-                    break;
-                case 6:
-                    DoScriptText(SAY_INTRO_2, m_creature);
-                    m_uiSpeechTimer = 1750;
-                    break;
-                case 7:
-                    m_creature->HandleEmote(EMOTE_ONESHOT_EXCLAMATION);
-                    m_uiSpeechTimer = 1750;
-                    break;
-                case 8:
-                    // m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
-                    DoScriptText(SAY_INTRO_3, m_creature);
-                    m_uiSpeechTimer = 1750;
-                    break;
-                case 9:
-                    m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH);
-                    m_uiSpeechTimer = 1750;
-                    break;
-                case 10:
-                    DoScriptText(SAY_INTRO_4, m_creature);
-                    m_uiSpeechTimer = 2000;
-                    break;
-                case 11:
-                    DoCastSpellIfCan(m_creature, SPELL_SPAWN);
-                    m_uiSpeechTimer = 500;
-                    break;
-                case 12:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_INTRO, DONE);
-                    }
+                        m_uiSpeechTimer = 10000;
+                        break;
+                    case 4:
+                        DoScriptText(SAY_INTRO_1, m_creature);
+                        // m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
+                        m_uiSpeechTimer = 1750;
+                        break;
+                    case 5:
+                        m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
+                        m_uiSpeechTimer = 1750;
+                        break;
+                    case 6:
+                        DoScriptText(SAY_INTRO_2, m_creature);
+                        m_uiSpeechTimer = 1750;
+                        break;
+                    case 7:
+                        m_creature->HandleEmote(EMOTE_ONESHOT_EXCLAMATION);
+                        m_uiSpeechTimer = 1750;
+                        break;
+                    case 8:
+                        // m_creature->HandleEmote(EMOTE_ONESHOT_TALK);
+                        DoScriptText(SAY_INTRO_3, m_creature);
+                        m_uiSpeechTimer = 1750;
+                        break;
+                    case 9:
+                        m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH);
+                        m_uiSpeechTimer = 1750;
+                        break;
+                    case 10:
+                        DoScriptText(SAY_INTRO_4, m_creature);
+                        m_uiSpeechTimer = 2000;
+                        break;
+                    case 11:
+                        DoCastSpellIfCan(m_creature, SPELL_SPAWN);
+                        m_uiSpeechTimer = 500;
+                        break;
+                    case 12:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_INTRO, DONE);
+                        }
 
-                    m_creature->SetVisibility(VISIBILITY_OFF);
-                    m_uiSpeechStep = 0;
-                    return;
-                default:
-                    m_uiSpeechStep = 0;
-                    return;
+                        m_creature->SetVisibility(VISIBILITY_OFF);
+                        m_uiSpeechStep = 0;
+                        return;
+                    default:
+                        m_uiSpeechStep = 0;
+                        return;
                 }
                 ++m_uiSpeechStep;
             }

@@ -131,31 +131,31 @@ struct npc_kerlonian : public CreatureScript
 
             switch (urand(0, 2))
             {
-            case 0:
-                DoScriptText(EMOTE_KER_SLEEP_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(EMOTE_KER_SLEEP_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(EMOTE_KER_SLEEP_3, m_creature);
-                break;
+                case 0:
+                    DoScriptText(EMOTE_KER_SLEEP_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(EMOTE_KER_SLEEP_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(EMOTE_KER_SLEEP_3, m_creature);
+                    break;
             }
 
             switch (urand(0, 3))
             {
-            case 0:
-                DoScriptText(SAY_KER_SLEEP_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_KER_SLEEP_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_KER_SLEEP_3, m_creature);
-                break;
-            case 3:
-                DoScriptText(SAY_KER_SLEEP_4, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_KER_SLEEP_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_KER_SLEEP_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_KER_SLEEP_3, m_creature);
+                    break;
+                case 3:
+                    DoScriptText(SAY_KER_SLEEP_4, m_creature);
+                    break;
             }
 
             m_creature->SetStandState(UNIT_STAND_STATE_SLEEP);
@@ -267,57 +267,57 @@ struct npc_prospector_remtravel : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(SAY_REM_START, m_creature, pPlayer);
-                break;
-            case 5:
-                DoScriptText(SAY_REM_RAMP1_1, m_creature, pPlayer);
-                break;
-            case 6:
-                DoSpawnCreature(NPC_GRAVEL_SCOUT, -10.0f, 5.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                DoSpawnCreature(NPC_GRAVEL_BONE, -10.0f, 7.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                break;
-            case 9:
-                DoScriptText(SAY_REM_RAMP1_2, m_creature, pPlayer);
-                break;
-            case 14:
-                // depend quest rewarded?
-                DoScriptText(SAY_REM_BOOK, m_creature, pPlayer);
-                break;
-            case 15:
-                DoScriptText(SAY_REM_TENT1_1, m_creature, pPlayer);
-                break;
-            case 16:
-                DoSpawnCreature(NPC_GRAVEL_SCOUT, -10.0f, 5.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                DoSpawnCreature(NPC_GRAVEL_BONE, -10.0f, 7.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                break;
-            case 17:
-                DoScriptText(SAY_REM_TENT1_2, m_creature, pPlayer);
-                break;
-            case 26:
-                DoScriptText(SAY_REM_MOSS, m_creature, pPlayer);
-                break;
-            case 27:
-                DoScriptText(EMOTE_REM_MOSS, m_creature, pPlayer);
-                break;
-            case 28:
-                DoScriptText(SAY_REM_MOSS_PROGRESS, m_creature, pPlayer);
-                break;
-            case 29:
-                DoSpawnCreature(NPC_GRAVEL_SCOUT, -15.0f, 3.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                DoSpawnCreature(NPC_GRAVEL_BONE, -15.0f, 5.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                DoSpawnCreature(NPC_GRAVEL_GEO, -15.0f, 7.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                break;
-            case 31:
-                DoScriptText(SAY_REM_PROGRESS, m_creature, pPlayer);
-                break;
-            case 41:
-                DoScriptText(SAY_REM_REMEMBER, m_creature, pPlayer);
-                break;
-            case 42:
-                DoScriptText(EMOTE_REM_END, m_creature, pPlayer);
-                pPlayer->GroupEventHappens(QUEST_ABSENT_MINDED_PT2, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_REM_START, m_creature, pPlayer);
+                    break;
+                case 5:
+                    DoScriptText(SAY_REM_RAMP1_1, m_creature, pPlayer);
+                    break;
+                case 6:
+                    DoSpawnCreature(NPC_GRAVEL_SCOUT, -10.0f, 5.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    DoSpawnCreature(NPC_GRAVEL_BONE, -10.0f, 7.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    break;
+                case 9:
+                    DoScriptText(SAY_REM_RAMP1_2, m_creature, pPlayer);
+                    break;
+                case 14:
+                    // depend quest rewarded?
+                    DoScriptText(SAY_REM_BOOK, m_creature, pPlayer);
+                    break;
+                case 15:
+                    DoScriptText(SAY_REM_TENT1_1, m_creature, pPlayer);
+                    break;
+                case 16:
+                    DoSpawnCreature(NPC_GRAVEL_SCOUT, -10.0f, 5.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    DoSpawnCreature(NPC_GRAVEL_BONE, -10.0f, 7.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    break;
+                case 17:
+                    DoScriptText(SAY_REM_TENT1_2, m_creature, pPlayer);
+                    break;
+                case 26:
+                    DoScriptText(SAY_REM_MOSS, m_creature, pPlayer);
+                    break;
+                case 27:
+                    DoScriptText(EMOTE_REM_MOSS, m_creature, pPlayer);
+                    break;
+                case 28:
+                    DoScriptText(SAY_REM_MOSS_PROGRESS, m_creature, pPlayer);
+                    break;
+                case 29:
+                    DoSpawnCreature(NPC_GRAVEL_SCOUT, -15.0f, 3.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    DoSpawnCreature(NPC_GRAVEL_BONE, -15.0f, 5.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    DoSpawnCreature(NPC_GRAVEL_GEO, -15.0f, 7.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    break;
+                case 31:
+                    DoScriptText(SAY_REM_PROGRESS, m_creature, pPlayer);
+                    break;
+                case 41:
+                    DoScriptText(SAY_REM_REMEMBER, m_creature, pPlayer);
+                    break;
+                case 42:
+                    DoScriptText(EMOTE_REM_END, m_creature, pPlayer);
+                    pPlayer->GroupEventHappens(QUEST_ABSENT_MINDED_PT2, m_creature);
+                    break;
             }
         }
 
@@ -513,15 +513,15 @@ struct npc_volcor : public CreatureScript
             // shouldn't always use text on agro
             switch (urand(0, 4))
             {
-            case 0:
-                DoScriptText(SAY_AGGRO_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_AGGRO_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_AGGRO_3, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_AGGRO_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_AGGRO_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_AGGRO_3, m_creature);
+                    break;
             }
         }
 
@@ -568,51 +568,51 @@ struct npc_volcor : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 2:
-                DoScriptText(SAY_START, m_creature);
-                break;
-            case 5:
-                m_creature->SummonCreature(NPC_BLACKWOOD_SHAMAN, aVolcorSpawnLocs[0].m_fX, aVolcorSpawnLocs[0].m_fY, aVolcorSpawnLocs[0].m_fZ, aVolcorSpawnLocs[0].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_BLACKWOOD_URSA, aVolcorSpawnLocs[1].m_fX, aVolcorSpawnLocs[1].m_fY, aVolcorSpawnLocs[1].m_fZ, aVolcorSpawnLocs[1].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                break;
-            case 6:
-                DoScriptText(SAY_FIRST_AMBUSH, m_creature);
-                break;
-            case 11:
-                m_creature->SummonCreature(NPC_BLACKWOOD_SHAMAN, aVolcorSpawnLocs[2].m_fX, aVolcorSpawnLocs[2].m_fY, aVolcorSpawnLocs[2].m_fZ, aVolcorSpawnLocs[2].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_BLACKWOOD_URSA, aVolcorSpawnLocs[3].m_fX, aVolcorSpawnLocs[3].m_fY, aVolcorSpawnLocs[3].m_fZ, aVolcorSpawnLocs[3].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-            case 13:
-                m_creature->SummonCreature(NPC_BLACKWOOD_URSA, aVolcorSpawnLocs[4].m_fX, aVolcorSpawnLocs[4].m_fY, aVolcorSpawnLocs[4].m_fZ, aVolcorSpawnLocs[4].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_BLACKWOOD_URSA, aVolcorSpawnLocs[5].m_fX, aVolcorSpawnLocs[5].m_fY, aVolcorSpawnLocs[5].m_fZ, aVolcorSpawnLocs[5].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                break;
-            case 15:
-                DoScriptText(SAY_END, m_creature);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ESCAPE_THROUGH_FORCE, m_creature);
-                }
-                SetEscortPaused(true);
-                m_creature->ForcedDespawn(10000);
-                break;
+                case 2:
+                    DoScriptText(SAY_START, m_creature);
+                    break;
+                case 5:
+                    m_creature->SummonCreature(NPC_BLACKWOOD_SHAMAN, aVolcorSpawnLocs[0].m_fX, aVolcorSpawnLocs[0].m_fY, aVolcorSpawnLocs[0].m_fZ, aVolcorSpawnLocs[0].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_BLACKWOOD_URSA, aVolcorSpawnLocs[1].m_fX, aVolcorSpawnLocs[1].m_fY, aVolcorSpawnLocs[1].m_fZ, aVolcorSpawnLocs[1].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    break;
+                case 6:
+                    DoScriptText(SAY_FIRST_AMBUSH, m_creature);
+                    break;
+                case 11:
+                    m_creature->SummonCreature(NPC_BLACKWOOD_SHAMAN, aVolcorSpawnLocs[2].m_fX, aVolcorSpawnLocs[2].m_fY, aVolcorSpawnLocs[2].m_fZ, aVolcorSpawnLocs[2].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_BLACKWOOD_URSA, aVolcorSpawnLocs[3].m_fX, aVolcorSpawnLocs[3].m_fY, aVolcorSpawnLocs[3].m_fZ, aVolcorSpawnLocs[3].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                case 13:
+                    m_creature->SummonCreature(NPC_BLACKWOOD_URSA, aVolcorSpawnLocs[4].m_fX, aVolcorSpawnLocs[4].m_fY, aVolcorSpawnLocs[4].m_fZ, aVolcorSpawnLocs[4].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_BLACKWOOD_URSA, aVolcorSpawnLocs[5].m_fX, aVolcorSpawnLocs[5].m_fY, aVolcorSpawnLocs[5].m_fZ, aVolcorSpawnLocs[5].m_fO, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    break;
+                case 15:
+                    DoScriptText(SAY_END, m_creature);
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ESCAPE_THROUGH_FORCE, m_creature);
+                    }
+                    SetEscortPaused(true);
+                    m_creature->ForcedDespawn(10000);
+                    break;
                 // Quest 995 waypoints
-            case 16:
-                m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
-                break;
-            case 17:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_ESCAPE, m_creature, pPlayer);
-                }
-                break;
-            case 18:
-                DoCastSpellIfCan(m_creature, SPELL_MOONSTALKER_FORM);
-                break;
-            case 24:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ESCAPE_THROUGH_STEALTH, m_creature);
-                }
-                break;
+                case 16:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
+                    break;
+                case 17:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_ESCAPE, m_creature, pPlayer);
+                    }
+                    break;
+                case 18:
+                    DoCastSpellIfCan(m_creature, SPELL_MOONSTALKER_FORM);
+                    break;
+                case 24:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ESCAPE_THROUGH_STEALTH, m_creature);
+                    }
+                    break;
             }
         }
     };
@@ -663,19 +663,19 @@ struct npc_therylune : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 17:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_THERYLUNE_ESCAPE, m_creature);
-                }
-                break;
-            case 19:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_THERYLUNE_FINISH, m_creature, pPlayer);
-                }
-                SetRun();
-                break;
+                case 17:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_THERYLUNE_ESCAPE, m_creature);
+                    }
+                    break;
+                case 19:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_THERYLUNE_FINISH, m_creature, pPlayer);
+                    }
+                    SetRun();
+                    break;
             }
         }
     };

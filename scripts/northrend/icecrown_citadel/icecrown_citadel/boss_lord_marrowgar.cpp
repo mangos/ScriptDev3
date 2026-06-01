@@ -192,133 +192,133 @@ struct boss_lord_marrowgar : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_NORMAL:
+                case PHASE_NORMAL:
 
-                // Coldflame
-                if (m_uiColdflameTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_COLDFLAME) == CAST_OK)
+                    // Coldflame
+                    if (m_uiColdflameTimer < uiDiff)
                     {
-                        m_uiColdflameTimer = 5000;
-                    }
-                }
-                else
-                {
-                    m_uiColdflameTimer -= uiDiff;
-                }
-
-                // Bone Storm
-                if (m_uiBoneStormTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_BONE_STORM) == CAST_OK)
-                    {
-                        // ToDo: research if we need to increase the speed here
-                        DoScriptText(SAY_BONE_STORM, m_creature);
-                        m_uiPhase = PHASE_BONE_STORM_CHARGE;
-                        SetCombatMovement(false);
-                        m_creature->GetMotionMaster()->MoveIdle();
-                        m_uiBoneStormTimer = 90000;
-                    }
-                }
-                else
-                {
-                    m_uiBoneStormTimer -= uiDiff;
-                }
-
-                // Bone Slice
-                if (m_uiBoneSliceTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_BONE_SLICE) == CAST_OK)
-                    {
-                        m_uiBoneSliceTimer = 1000;
-                    }
-                }
-                else
-                {
-                    m_uiBoneSliceTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_BONE_STORM_CHARGE:
-
-                // next charge to random enemy
-                if (m_uiBoneStormChargeTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
-                    {
-                        float fX, fY, fZ;
-                        pTarget->GetPosition(fX, fY, fZ);
-                        m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
-                        m_uiBoneStormChargeTimer = 3000;
-                        m_uiPhase = PHASE_BONE_STORM_CHARGING;
-                    }
-                }
-                else
-                {
-                    m_uiBoneStormChargeTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_BONE_STORM_CHARGING:
-                // waiting to arrive at target position
-                break;
-            case PHASE_BONE_STORM_COLDFLAME:
-
-                if (m_uiBoneStormColdflameTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_COLDFLAME_STORM) == CAST_OK)
-                    {
-                        // When the max cold flame charges are reached, remove Bone storm aura
-                        if (m_uiChargesCount == m_uiMaxCharges)
+                        if (DoCastSpellIfCan(m_creature, SPELL_COLDFLAME) == CAST_OK)
                         {
-                            m_creature->RemoveAurasDueToSpell(SPELL_BONE_STORM);
-                            m_uiBoneStormTimer = 60000;
-                            m_uiBoneSliceTimer = 10000;
-                            SetCombatMovement(true);
-                            m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                            m_uiChargesCount = 0;
-                            m_uiPhase = PHASE_NORMAL;
+                            m_uiColdflameTimer = 5000;
                         }
-                        else
+                    }
+                    else
+                    {
+                        m_uiColdflameTimer -= uiDiff;
+                    }
+
+                    // Bone Storm
+                    if (m_uiBoneStormTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_BONE_STORM) == CAST_OK)
                         {
+                            // ToDo: research if we need to increase the speed here
+                            DoScriptText(SAY_BONE_STORM, m_creature);
                             m_uiPhase = PHASE_BONE_STORM_CHARGE;
+                            SetCombatMovement(false);
+                            m_creature->GetMotionMaster()->MoveIdle();
+                            m_uiBoneStormTimer = 90000;
                         }
-
-                        m_uiBoneStormColdflameTimer = 1000;
                     }
-                }
-                else
-                {
-                    m_uiBoneStormColdflameTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiBoneStormTimer -= uiDiff;
+                    }
 
-                break;
+                    // Bone Slice
+                    if (m_uiBoneSliceTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_BONE_SLICE) == CAST_OK)
+                        {
+                            m_uiBoneSliceTimer = 1000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiBoneSliceTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_BONE_STORM_CHARGE:
+
+                    // next charge to random enemy
+                    if (m_uiBoneStormChargeTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
+                        {
+                            float fX, fY, fZ;
+                            pTarget->GetPosition(fX, fY, fZ);
+                            m_creature->GetMotionMaster()->Clear();
+                            m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                            m_uiBoneStormChargeTimer = 3000;
+                            m_uiPhase = PHASE_BONE_STORM_CHARGING;
+                        }
+                    }
+                    else
+                    {
+                        m_uiBoneStormChargeTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_BONE_STORM_CHARGING:
+                    // waiting to arrive at target position
+                    break;
+                case PHASE_BONE_STORM_COLDFLAME:
+
+                    if (m_uiBoneStormColdflameTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_COLDFLAME_STORM) == CAST_OK)
+                        {
+                            // When the max cold flame charges are reached, remove Bone storm aura
+                            if (m_uiChargesCount == m_uiMaxCharges)
+                            {
+                                m_creature->RemoveAurasDueToSpell(SPELL_BONE_STORM);
+                                m_uiBoneStormTimer = 60000;
+                                m_uiBoneSliceTimer = 10000;
+                                SetCombatMovement(true);
+                                m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                                m_uiChargesCount = 0;
+                                m_uiPhase = PHASE_NORMAL;
+                            }
+                            else
+                            {
+                                m_uiPhase = PHASE_BONE_STORM_CHARGE;
+                            }
+
+                            m_uiBoneStormColdflameTimer = 1000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiBoneStormColdflameTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             // Bone spike - different spells for the normal phase or storm phase
             // ToDo: uncommnet this when vehicles and the Bone spike spells are properly supported by core
             /*if (m_pInstance && (m_pInstance->IsHeroicDifficulty() || m_uiPhase == PHASE_NORMAL))
             {
-            if (m_uiBoneSpikeTimer < uiDiff)
-            {
-            if (DoCastSpellIfCan(m_creature, m_uiPhase == PHASE_NORMAL ? SPELL_BONE_SPIKE : SPELL_BONE_SPIKE_STORM) == CAST_OK)
-            {
-            switch (urand(0, 2))
-            {
-            case 0: DoScriptText(SAY_BONE_SPIKE_1, m_creature); break;
-            case 1: DoScriptText(SAY_BONE_SPIKE_2, m_creature); break;
-            case 2: DoScriptText(SAY_BONE_SPIKE_3, m_creature); break;
-            }
-            m_uiBoneSpikeTimer = 18000;
-            }
-            }
-            else
-            {
-                m_uiBoneSpikeTimer -= uiDiff;
-            }
+                if (m_uiBoneSpikeTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature, m_uiPhase == PHASE_NORMAL ? SPELL_BONE_SPIKE : SPELL_BONE_SPIKE_STORM) == CAST_OK)
+                    {
+                        switch (urand(0, 2))
+                        {
+                            case 0: DoScriptText(SAY_BONE_SPIKE_1, m_creature); break;
+                            case 1: DoScriptText(SAY_BONE_SPIKE_2, m_creature); break;
+                            case 2: DoScriptText(SAY_BONE_SPIKE_3, m_creature); break;
+                        }
+                        m_uiBoneSpikeTimer = 18000;
+                    }
+                }
+                else
+                {
+                    m_uiBoneSpikeTimer -= uiDiff;
+                }
             }*/
 
             // Berserk

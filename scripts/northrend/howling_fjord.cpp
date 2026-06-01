@@ -118,38 +118,38 @@ struct npc_ancient_male_vrykul : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case 0:
-                DoScriptText(SAY_VRYKUL_CURSED, m_creature);
-                DoScriptText(EMOTE_VRYKUL_POINT, m_creature);
-                break;
-            case 1:
-                if (pFemale)
-                {
-                    DoScriptText(EMOTE_VRYKUL_SOB, pFemale);
-                }
-                DoScriptText(SAY_VRYKUL_DISPOSE, m_creature);
-                break;
-            case 2:
-                if (pFemale)
-                {
-                    DoScriptText(SAY_VRYKUL_BEG, pFemale);
-                }
-                break;
-            case 3:
-                DoScriptText(SAY_VRYKUL_WHAT, m_creature);
-                break;
-            case 4:
-                if (pFemale)
-                {
-                    DoScriptText(SAY_VRYKUL_HIDE, pFemale);
-                }
-                break;
-            case 5:
-                DoCastSpellIfCan(m_creature, SPELL_SECRET_OF_WYRMSKULL);
-                break;
-            case 6:
-                Reset();
-                return;
+                case 0:
+                    DoScriptText(SAY_VRYKUL_CURSED, m_creature);
+                    DoScriptText(EMOTE_VRYKUL_POINT, m_creature);
+                    break;
+                case 1:
+                    if (pFemale)
+                    {
+                        DoScriptText(EMOTE_VRYKUL_SOB, pFemale);
+                    }
+                    DoScriptText(SAY_VRYKUL_DISPOSE, m_creature);
+                    break;
+                case 2:
+                    if (pFemale)
+                    {
+                        DoScriptText(SAY_VRYKUL_BEG, pFemale);
+                    }
+                    break;
+                case 3:
+                    DoScriptText(SAY_VRYKUL_WHAT, m_creature);
+                    break;
+                case 4:
+                    if (pFemale)
+                    {
+                        DoScriptText(SAY_VRYKUL_HIDE, pFemale);
+                    }
+                    break;
+                case 5:
+                    DoCastSpellIfCan(m_creature, SPELL_SECRET_OF_WYRMSKULL);
+                    break;
+                case 6:
+                    Reset();
+                    return;
             }
 
             ++m_uiPhase;
@@ -279,10 +279,10 @@ struct npc_daegarn : public CreatureScript
             // will eventually reset the event if something goes wrong
             switch (pSummoned->GetEntry())
             {
-            case NPC_FIRJUS:    uiEntry = NPC_JLARBORN; break;
-            case NPC_JLARBORN:  uiEntry = NPC_YOROS;    break;
-            case NPC_YOROS:     uiEntry = NPC_OLUF;     break;
-            case NPC_OLUF:      Reset();                return;
+                case NPC_FIRJUS:    uiEntry = NPC_JLARBORN; break;
+                case NPC_JLARBORN:  uiEntry = NPC_YOROS;    break;
+                case NPC_YOROS:     uiEntry = NPC_OLUF;     break;
+                case NPC_OLUF:      Reset();                return;
             }
 
             SummonGladiator(uiEntry);
@@ -476,27 +476,27 @@ struct npc_silvermoon_harry : public CreatureScript
     {
         switch (uiAction)
         {
-        case GOSSIP_ACTION_TRADE:
-            pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->CLOSE_GOSSIP_MENU();
+            case GOSSIP_ACTION_TRADE:
+                pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->CLOSE_GOSSIP_MENU();
 
-            DoScriptText(SAY_AGGRO, pCreature, pPlayer);
-            pCreature->SetFactionTemporary(FACTION_HOSTILE_SH, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
-            pCreature->AI()->AttackStart(pPlayer);
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            if (!pPlayer->HasItemCount(ITEM_HARRY_DEBT, 1))
-            {
-                if (Item* pItem = pPlayer->StoreNewItemInInventorySlot(ITEM_HARRY_DEBT, 1))
+                DoScriptText(SAY_AGGRO, pCreature, pPlayer);
+                pCreature->SetFactionTemporary(FACTION_HOSTILE_SH, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
+                pCreature->AI()->AttackStart(pPlayer);
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                if (!pPlayer->HasItemCount(ITEM_HARRY_DEBT, 1))
                 {
-                    pPlayer->SendNewItem(pItem, 1, true, false);
-                    pPlayer->CLOSE_GOSSIP_MENU();
-                    pCreature->AI()->EnterEvadeMode();
+                    if (Item* pItem = pPlayer->StoreNewItemInInventorySlot(ITEM_HARRY_DEBT, 1))
+                    {
+                        pPlayer->SendNewItem(pItem, 1, true, false);
+                        pPlayer->CLOSE_GOSSIP_MENU();
+                        pCreature->AI()->EnterEvadeMode();
+                    }
                 }
-            }
-            break;
+                break;
         }
 
         return true;
@@ -556,7 +556,7 @@ struct npc_lich_king_village : public CreatureScript
     struct  npc_lich_king_villageAI : public ScriptedAI, private DialogueHelper
     {
         npc_lich_king_villageAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aLichDialogue)
+            DialogueHelper(aLichDialogue)
         {
         }
 
@@ -572,34 +572,34 @@ struct npc_lich_king_village : public CreatureScript
         {
             switch (iEntry)
             {
-            case QUEST_ID_LK_FLAG:
-                m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH);
-                break;
-            case NPC_VALKYR_SOULCLAIMER:
-                if (Creature* pCreature = GetClosestCreatureWithEntry(m_creature, NPC_VALKYR_SOULCLAIMER, 20.0f))
-                {
-                    DoScriptText(SAY_PREPARE, pCreature);
-                }
-                break;
-            case SPELL_WRATH_LICH_KING_FIRST:
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_pHeldPlayer))
-                {
-                    DoCastSpellIfCan(pPlayer, SPELL_WRATH_LICH_KING_FIRST);
-                    // handle spell scriptEffect in the script
-                    m_creature->DealDamage(pPlayer, pPlayer->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
-                }
-                break;
-            case SPELL_WRATH_LICH_KING:
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_pHeldPlayer))
-                {
-                    DoCastSpellIfCan(pPlayer, SPELL_WRATH_LICH_KING);
-                    // handle spell scriptEffect in the script
-                    m_creature->DealDamage(pPlayer, pPlayer->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
-                }
-                break;
-            case NPC_LICH_KING_WYRMSKULL:
-                EnterEvadeMode();
-                break;
+                case QUEST_ID_LK_FLAG:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH);
+                    break;
+                case NPC_VALKYR_SOULCLAIMER:
+                    if (Creature* pCreature = GetClosestCreatureWithEntry(m_creature, NPC_VALKYR_SOULCLAIMER, 20.0f))
+                    {
+                        DoScriptText(SAY_PREPARE, pCreature);
+                    }
+                    break;
+                case SPELL_WRATH_LICH_KING_FIRST:
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_pHeldPlayer))
+                    {
+                        DoCastSpellIfCan(pPlayer, SPELL_WRATH_LICH_KING_FIRST);
+                        // handle spell scriptEffect in the script
+                        m_creature->DealDamage(pPlayer, pPlayer->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
+                    }
+                    break;
+                case SPELL_WRATH_LICH_KING:
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_pHeldPlayer))
+                    {
+                        DoCastSpellIfCan(pPlayer, SPELL_WRATH_LICH_KING);
+                        // handle spell scriptEffect in the script
+                        m_creature->DealDamage(pPlayer, pPlayer->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
+                    }
+                    break;
+                case NPC_LICH_KING_WYRMSKULL:
+                    EnterEvadeMode();
+                    break;
             }
         }
 
@@ -707,7 +707,7 @@ struct  npc_king_ymiron : public CreatureScript
     struct  npc_king_ymironAI : public ScriptedAI, private DialogueHelper
     {
         npc_king_ymironAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aNifflevarDialogue)
+            DialogueHelper(aNifflevarDialogue)
         {
         }
 
@@ -731,8 +731,8 @@ struct  npc_king_ymiron : public CreatureScript
             if (!m_bEventInit && pWho->GetTypeId() == TYPEID_PLAYER)
             {
                 // Get all the citizen around the king for future use
-                if (pWho->IsAlive() && m_creature->IsWithinDistInMap(pWho, 60.0) && ((Player*)pWho)->GetQuestStatus(QUEST_ID_ANGUISH_OF_NIFFLEVAR) == QUEST_STATUS_INCOMPLETE
-                    && pWho->HasAura(SPELL_ECHO_OF_YMIRON_NIFFLEVAR))
+                if (pWho->IsAlive() && m_creature->IsWithinDistInMap(pWho, 60.0) && ((Player*)pWho)->GetQuestStatus(QUEST_ID_ANGUISH_OF_NIFFLEVAR) == QUEST_STATUS_INCOMPLETE &&
+                    pWho->HasAura(SPELL_ECHO_OF_YMIRON_NIFFLEVAR))
                 {
                     std::list<Creature*> lCrowdList;
                     GetCreatureListWithEntryInGrid(lCrowdList, m_creature, NPC_CITIZEN_OF_NIFFLEVAR_MALE, 60.0f);
@@ -753,12 +753,12 @@ struct  npc_king_ymiron : public CreatureScript
         {
             switch (iEntry)
             {
-            case SPELL_SECRETS_OF_NIFFLEVAR:
-                DoCastSpellIfCan(m_creature, SPELL_SECRETS_OF_NIFFLEVAR);
-                break;
-            case QUEST_ID_ANGUISH_OF_NIFFLEVAR:
-                EnterEvadeMode();
-                break;
+                case SPELL_SECRETS_OF_NIFFLEVAR:
+                    DoCastSpellIfCan(m_creature, SPELL_SECRETS_OF_NIFFLEVAR);
+                    break;
+                case QUEST_ID_ANGUISH_OF_NIFFLEVAR:
+                    EnterEvadeMode();
+                    break;
             }
         }
 
@@ -961,9 +961,9 @@ struct npc_firecrackers_bunny : public CreatureScript
     }
 };
 
-/*######
-## npc_apothecary_hanes
-######*/
+/** ######
+ *  ## npc_apothecary_hanes
+ *  ######*/
 enum
 {
     // yells
@@ -1011,56 +1011,56 @@ struct npc_apothecary_hanes : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 2:
-                DoScriptText(SAY_HANES_FIRE_1, m_creature);
-                break;
-            case 3:
-                DoScriptText(SAY_HANES_FIRE_2, m_creature);
-                break;
-            case 14:
-            case 20:
-            case 21:
-            case 29:
-            {
-                m_creature->HandleEmote(EMOTE_ONESHOT_ATTACK1H);
-
-                   // set all nearby triggers on fire - ToDo: research if done by spell!
-                std::list<Creature*> lTriggersInRange;
-                GetCreatureListWithEntryInGrid(lTriggersInRange, m_creature, NPC_HANES_TRIGGER, 10.0f);
-
-                for (std::list<Creature*>::const_iterator itr = lTriggersInRange.begin(); itr != lTriggersInRange.end(); ++itr)
+                case 2:
+                    DoScriptText(SAY_HANES_FIRE_1, m_creature);
+                    break;
+                case 3:
+                    DoScriptText(SAY_HANES_FIRE_2, m_creature);
+                    break;
+                case 14:
+                case 20:
+                case 21:
+                case 29:
                 {
-                    (*itr)->CastSpell((*itr), SPELL_LOW_POLY_FIRE, true);
-                    (*itr)->ForcedDespawn(30000);
+                    m_creature->HandleEmote(EMOTE_ONESHOT_ATTACK1H);
+
+                    // set all nearby triggers on fire - ToDo: research if done by spell!
+                    std::list<Creature*> lTriggersInRange;
+                    GetCreatureListWithEntryInGrid(lTriggersInRange, m_creature, NPC_HANES_TRIGGER, 10.0f);
+
+                    for (std::list<Creature*>::const_iterator itr = lTriggersInRange.begin(); itr != lTriggersInRange.end(); ++itr)
+                    {
+                        (*itr)->CastSpell((*itr), SPELL_LOW_POLY_FIRE, true);
+                        (*itr)->ForcedDespawn(30000);
+                    }
+
+                    break;
                 }
 
-                break;
-            }
-
-            case 15:
-                DoScriptText(SAY_HANES_SUPPLIES_1, m_creature);
-                break;
-            case 22:
-                DoScriptText(SAY_HANES_SUPPLIES_2, m_creature);
-                break;
-            case 30:
-                m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH_NOSHEATHE);
-                break;
-            case 31:
-                DoScriptText(SAY_HANES_SUPPLIES_COMPLETE, m_creature);
-                break;
-            case 32:
-                DoScriptText(SAY_HANES_SUPPLIES_ESCAPE, m_creature);
-                break;
-            case 40:
-                DoScriptText(SAY_HANES_ARRIVE_BASE, m_creature);
-                break;
-            case 44:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_TRIAL_OF_FIRE, m_creature);
-                }
-                break;
+                case 15:
+                    DoScriptText(SAY_HANES_SUPPLIES_1, m_creature);
+                    break;
+                case 22:
+                    DoScriptText(SAY_HANES_SUPPLIES_2, m_creature);
+                    break;
+                case 30:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH_NOSHEATHE);
+                    break;
+                case 31:
+                    DoScriptText(SAY_HANES_SUPPLIES_COMPLETE, m_creature);
+                    break;
+                case 32:
+                    DoScriptText(SAY_HANES_SUPPLIES_ESCAPE, m_creature);
+                    break;
+                case 40:
+                    DoScriptText(SAY_HANES_ARRIVE_BASE, m_creature);
+                    break;
+                case 44:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_TRIAL_OF_FIRE, m_creature);
+                    }
+                    break;
             }
         }
 

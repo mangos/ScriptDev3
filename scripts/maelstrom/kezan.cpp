@@ -63,14 +63,14 @@ struct npc_sassy_hardwrench_kezan : public CreatureScript
 
 static const char* const aDefiantTrollTexts[] =
 {
-    "Don't tase me, mon!",
-    "I report you to HR!",
-    "I'm going. I'm going!",
-    "Oops, break's over.",
-    "Ouch! Dat hurt!",
-    "Sorry, mon. It won't happen again.",
-    "What I doin' wrong? Don't I get a lunch and two breaks a day, mon?",
-    "Work was bettah in da Undermine!",
+        "Don't tase me, mon!",
+        "I report you to HR!",
+        "I'm going. I'm going!",
+        "Oops, break's over.",
+        "Ouch! Dat hurt!",
+        "Sorry, mon. It won't happen again.",
+        "What I doin' wrong? Don't I get a lunch and two breaks a day, mon?",
+        "Work was bettah in da Undermine!",
 };
 
 struct npc_defiant_troll_q14069 : public CreatureScript

@@ -239,18 +239,18 @@ struct npc_time_rift : public CreatureScript
                 // On Heroic Mode if Chrono Lord and Temporus are already killed, we need to summon the replacement
                 switch (m_uiRiftNumber)
                 {
-                case 6:
-                    uiSummonEntry = (m_pInstance->GetData(TYPE_CHRONO_LORD) == DONE && !m_bIsRegularMode) ? NPC_CHRONO_LORD : NPC_CHRONO_LORD_DEJA;
-                    break;
-                case 12:
-                    uiSummonEntry = (m_pInstance->GetData(TYPE_TEMPORUS) == DONE && !m_bIsRegularMode) ? NPC_TIMEREAVER : NPC_TEMPORUS;
-                    break;
-                case 18:
-                    uiSummonEntry = NPC_AEONUS;
-                    break;
-                default:
-                    uiSummonEntry = urand(0, 1) ? NPC_RIFT_KEEPER : NPC_RIFT_LORD;
-                    break;
+                    case 6:
+                        uiSummonEntry = (m_pInstance->GetData(TYPE_CHRONO_LORD) == DONE && !m_bIsRegularMode) ? NPC_CHRONO_LORD : NPC_CHRONO_LORD_DEJA;
+                        break;
+                    case 12:
+                        uiSummonEntry = (m_pInstance->GetData(TYPE_TEMPORUS) == DONE && !m_bIsRegularMode) ? NPC_TIMEREAVER : NPC_TEMPORUS;
+                        break;
+                    case 18:
+                        uiSummonEntry = NPC_AEONUS;
+                        break;
+                    default:
+                        uiSummonEntry = urand(0, 1) ? NPC_RIFT_KEEPER : NPC_RIFT_LORD;
+                        break;
                 }
 
                 // Set the next rift delay
@@ -300,36 +300,36 @@ struct npc_time_rift : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_CHRONO_LORD_DEJA:
-                DoCastSpellIfCan(pSummoned, SPELL_RIFT_CHANNEL);
-                DoScriptText(SAY_CHRONO_LORD_ENTER, pSummoned);
-                break;
-            case NPC_TEMPORUS:
-                DoCastSpellIfCan(pSummoned, SPELL_RIFT_CHANNEL);
-                DoScriptText(SAY_TEMPORUS_ENTER, pSummoned);
-                break;
-            case NPC_CHRONO_LORD:
-            case NPC_TIMEREAVER:
-            case NPC_RIFT_KEEPER:
-            case NPC_RIFT_LORD:
-                DoCastSpellIfCan(pSummoned, SPELL_RIFT_CHANNEL);
-                break;
-            case NPC_AEONUS:
-                DoScriptText(SAY_AEONUS_ENTER, pSummoned);
-                // Remove Time Rift aura so it won't spawn other mobs
-                m_creature->RemoveAurasDueToSpell(SPELL_RIFT_PERIODIC);
-                // Move to Medivh and cast Corrupt on him
-                pSummoned->SetWalk(false);
-                if (m_pInstance)
-                {
-                    if (Creature* pMedivh = m_pInstance->GetSingleCreatureFromStorage(NPC_MEDIVH))
+                case NPC_CHRONO_LORD_DEJA:
+                    DoCastSpellIfCan(pSummoned, SPELL_RIFT_CHANNEL);
+                    DoScriptText(SAY_CHRONO_LORD_ENTER, pSummoned);
+                    break;
+                case NPC_TEMPORUS:
+                    DoCastSpellIfCan(pSummoned, SPELL_RIFT_CHANNEL);
+                    DoScriptText(SAY_TEMPORUS_ENTER, pSummoned);
+                    break;
+                case NPC_CHRONO_LORD:
+                case NPC_TIMEREAVER:
+                case NPC_RIFT_KEEPER:
+                case NPC_RIFT_LORD:
+                    DoCastSpellIfCan(pSummoned, SPELL_RIFT_CHANNEL);
+                    break;
+                case NPC_AEONUS:
+                    DoScriptText(SAY_AEONUS_ENTER, pSummoned);
+                    // Remove Time Rift aura so it won't spawn other mobs
+                    m_creature->RemoveAurasDueToSpell(SPELL_RIFT_PERIODIC);
+                    // Move to Medivh and cast Corrupt on him
+                    pSummoned->SetWalk(false);
+                    if (m_pInstance)
                     {
-                        float fX, fY, fZ;
-                        pMedivh->GetNearPoint(pMedivh, fX, fY, fZ, 0, 20.0f, pMedivh->GetAngle(pSummoned));
-                        pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                        if (Creature* pMedivh = m_pInstance->GetSingleCreatureFromStorage(NPC_MEDIVH))
+                        {
+                            float fX, fY, fZ;
+                            pMedivh->GetNearPoint(pMedivh, fX, fY, fZ, 0, 20.0f, pMedivh->GetAngle(pSummoned));
+                            pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                        }
                     }
-                }
-                break;
+                    break;
             }
         }
 
@@ -337,22 +337,22 @@ struct npc_time_rift : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_AEONUS:
-                m_creature->ForcedDespawn();
-                break;
-            case NPC_CHRONO_LORD_DEJA:
-            case NPC_TEMPORUS:
-            case NPC_CHRONO_LORD:
-            case NPC_TIMEREAVER:
-            case NPC_RIFT_KEEPER:
-            case NPC_RIFT_LORD:
-                m_creature->ForcedDespawn(3000);
-                // No need to set the data to DONE if there is a new portal spawned already
-                if (m_pInstance && m_uiRiftNumber == m_pInstance->GetData(TYPE_RIFT_ID))
-                {
-                    m_pInstance->SetData(TYPE_TIME_RIFT, DONE);
-                }
-                break;
+                case NPC_AEONUS:
+                    m_creature->ForcedDespawn();
+                    break;
+                case NPC_CHRONO_LORD_DEJA:
+                case NPC_TEMPORUS:
+                case NPC_CHRONO_LORD:
+                case NPC_TIMEREAVER:
+                case NPC_RIFT_KEEPER:
+                case NPC_RIFT_LORD:
+                    m_creature->ForcedDespawn(3000);
+                    // No need to set the data to DONE if there is a new portal spawned already
+                    if (m_pInstance && m_uiRiftNumber == m_pInstance->GetData(TYPE_RIFT_ID))
+                    {
+                        m_pInstance->SetData(TYPE_TIME_RIFT, DONE);
+                    }
+                    break;
             }
         }
 
@@ -360,16 +360,16 @@ struct npc_time_rift : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_AEONUS:
-            case NPC_CHRONO_LORD_DEJA:
-            case NPC_TEMPORUS:
-            case NPC_CHRONO_LORD:
-            case NPC_TIMEREAVER:
-            case NPC_RIFT_KEEPER:
-            case NPC_RIFT_LORD:
-                // Despawn in case of event reset
-                m_creature->ForcedDespawn();
-                break;
+                case NPC_AEONUS:
+                case NPC_CHRONO_LORD_DEJA:
+                case NPC_TEMPORUS:
+                case NPC_CHRONO_LORD:
+                case NPC_TIMEREAVER:
+                case NPC_RIFT_KEEPER:
+                case NPC_RIFT_LORD:
+                    // Despawn in case of event reset
+                    m_creature->ForcedDespawn();
+                    break;
             }
         }
 

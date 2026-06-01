@@ -112,7 +112,10 @@ struct npc_prince_liam_greymane_phase1 : public CreatureScript
                 m_bCanSayStory = true;
                 m_uiSayStoryTimer = m_uiSayStoryDelay;
             }
-            else m_uiSayStoryTimer -= uiDiff;
+            else
+            {
+                m_uiSayStoryTimer -= uiDiff;
+            }
         }
 
     };
@@ -224,7 +227,10 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
                 m_bCanSayStory = true;
                 m_uiSayStoryTimer = SAY_STORY_DELAY;
             }
-            else m_uiSayStoryTimer -= uiDiff;
+            else
+            {
+                m_uiSayStoryTimer -= uiDiff;
+            }
 
             // Return since we have no target
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -316,7 +322,10 @@ struct rampaging_worgen : public CreatureScript
             {
                 spellCooldown -= diff;
             }
-            else spellCooldown = 0;
+            else
+            {
+                spellCooldown = 0;
+            }
 
             // Enrage timer (only enrage when we are alive and  in combat)
             if (m_creature->IsInCombat() && m_creature->IsAlive())
@@ -370,9 +379,9 @@ struct rampaging_worgen : public CreatureScript
     }
 };
 
-/*######
-## creature_frightened_citizen_quest
-######*/
+/** ######
+ *  ## creature_frightened_citizen_quest
+ *  ######*/
 enum {
     SAY_ON_ESCAPE1             = -1654009,
     SAY_ON_ESCAPE2             = -1654010,
@@ -428,7 +437,10 @@ struct frightened_citizen_quest : public CreatureScript
                 m_bCanSayOnEscape = true;
                 m_uiSayOnEscapeTimer = SAY_ON_ESCAPE_DELAY;
             }
-            else m_uiSayOnEscapeTimer -= uiDiff;
+            else
+            {
+                m_uiSayOnEscapeTimer -= uiDiff;
+            }
 
         }
 

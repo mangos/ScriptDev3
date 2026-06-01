@@ -177,17 +177,17 @@ struct boss_nightbane : public CreatureScript
             {
                 switch (uiPointId)
                 {
-                case POINT_ID_AIR:
-                    m_uiPhase = PHASE_AIR;
-                    break;
-                case POINT_ID_GROUND:
-                    m_creature->SetLevitate(false);
-                    m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                    case POINT_ID_AIR:
+                        m_uiPhase = PHASE_AIR;
+                        break;
+                    case POINT_ID_GROUND:
+                        m_creature->SetLevitate(false);
+                        m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
 
-                    m_uiPhase = PHASE_GROUND;
-                    SetCombatMovement(true);
-                    DoStartMovement(m_creature->getVictim());
-                    break;
+                        m_uiPhase = PHASE_GROUND;
+                        SetCombatMovement(true);
+                        DoStartMovement(m_creature->getVictim());
+                        break;
                 }
             }
         }
@@ -209,192 +209,192 @@ struct boss_nightbane : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_GROUND:
+                case PHASE_GROUND:
 
-                if (m_uiBellowingRoarTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_BELLOWING_ROAR) == CAST_OK)
+                    if (m_uiBellowingRoarTimer < uiDiff)
                     {
-                        m_uiBellowingRoarTimer = urand(20000, 30000);
-                    }
-                }
-                else
-                {
-                    m_uiBellowingRoarTimer -= uiDiff;
-                }
-
-                if (m_uiSmolderingBreathTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SMOLDERING_BREATH) == CAST_OK)
-                    {
-                        m_uiSmolderingBreathTimer = urand(14000, 20000);
-                    }
-                }
-                else
-                {
-                    m_uiSmolderingBreathTimer -= uiDiff;
-                }
-
-                if (m_uiCharredEarthTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_CHARRED_EARTH) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_BELLOWING_ROAR) == CAST_OK)
                         {
-                            m_uiCharredEarthTimer = urand(25000, 35000);
+                            m_uiBellowingRoarTimer = urand(20000, 30000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiCharredEarthTimer -= uiDiff;
-                }
-
-                if (m_uiTailSweepTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TAIL_SWEEP) == CAST_OK)
+                    else
                     {
-                        m_uiTailSweepTimer = urand(14000, 20000);
+                        m_uiBellowingRoarTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiTailSweepTimer -= uiDiff;
-                }
 
-                if (m_uiCleavetimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                    if (m_uiSmolderingBreathTimer < uiDiff)
                     {
-                        m_uiCleavetimer = urand(6000, 12000);
+                        if (DoCastSpellIfCan(m_creature, SPELL_SMOLDERING_BREATH) == CAST_OK)
+                        {
+                            m_uiSmolderingBreathTimer = urand(14000, 20000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiCleavetimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiSmolderingBreathTimer -= uiDiff;
+                    }
 
-                if (m_creature->GetHealthPercent() < 100 - 25 * m_uiFlightPhase)
-                {
-                    // Start air phase movement (handled by creature_movement_template)
-                    SetCombatMovement(false);
-                    m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-                    m_creature->SetLevitate(true);
-                    DoMoveToClosestTrigger(false);
-
-                    DoScriptText(SAY_AIR_PHASE, m_creature);
-                    m_uiPhase = PHASE_TRANSITION;
-                    DoResetAirTimers();
-                    ++m_uiFlightPhase;
-                }
-
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_AIR:
-
-                if (m_uiRainBonesTimer)
-                {
-                    if (m_uiRainBonesTimer <= uiDiff)
+                    if (m_uiCharredEarthTimer < uiDiff)
                     {
                         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         {
-                            if (DoCastSpellIfCan(pTarget, SPELL_RAIN_OF_BONES) == CAST_OK)
+                            if (DoCastSpellIfCan(pTarget, SPELL_CHARRED_EARTH) == CAST_OK)
                             {
-                                DoScriptText(EMOTE_DEEP_BREATH, m_creature);
-                                m_uiRainBonesTimer = 0;
+                                m_uiCharredEarthTimer = urand(25000, 35000);
                             }
                         }
                     }
                     else
                     {
-                        m_uiRainBonesTimer -= uiDiff;
+                        m_uiCharredEarthTimer -= uiDiff;
                     }
-                }
 
-                if (m_uiDistractingAshTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    if (m_uiTailSweepTimer < uiDiff)
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_DISTRACTING_ASH) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_TAIL_SWEEP) == CAST_OK)
                         {
-                            m_uiDistractingAshTimer = urand(7000, 13000);
+                            m_uiTailSweepTimer = urand(14000, 20000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiDistractingAshTimer -= uiDiff;
-                }
-
-                if (m_uiSmokingBlastTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    else
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_SMOKING_BLAST) == CAST_OK)
+                        m_uiTailSweepTimer -= uiDiff;
+                    }
+
+                    if (m_uiCleavetimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
                         {
-                            m_uiSmokingBlastTimer = urand(1000, 3000);
+                            m_uiCleavetimer = urand(6000, 12000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiSmokingBlastTimer -= uiDiff;
-                }
-
-                if (m_uiFireballBarrageTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_FIREBALL_BARRAGE, SELECT_FLAG_NOT_IN_MELEE_RANGE))
+                    else
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL_BARRAGE) == CAST_OK)
+                        m_uiCleavetimer -= uiDiff;
+                    }
+
+                    if (m_creature->GetHealthPercent() < 100 - 25 * m_uiFlightPhase)
+                    {
+                        // Start air phase movement (handled by creature_movement_template)
+                        SetCombatMovement(false);
+                        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                        m_creature->SetLevitate(true);
+                        DoMoveToClosestTrigger(false);
+
+                        DoScriptText(SAY_AIR_PHASE, m_creature);
+                        m_uiPhase = PHASE_TRANSITION;
+                        DoResetAirTimers();
+                        ++m_uiFlightPhase;
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_AIR:
+
+                    if (m_uiRainBonesTimer)
+                    {
+                        if (m_uiRainBonesTimer <= uiDiff)
                         {
-                            m_uiFireballBarrageTimer = urand(3000, 6000);
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                            {
+                                if (DoCastSpellIfCan(pTarget, SPELL_RAIN_OF_BONES) == CAST_OK)
+                                {
+                                    DoScriptText(EMOTE_DEEP_BREATH, m_creature);
+                                    m_uiRainBonesTimer = 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiRainBonesTimer -= uiDiff;
                         }
                     }
-                }
-                else
-                {
-                    m_uiFireballBarrageTimer -= uiDiff;
-                }
 
-                if (m_uiPhaseResetTimer < uiDiff)
-                {
-                    // ToDo: more circle movement should be done here!
-                    DoScriptText(urand(0, 1) ? SAY_LAND_PHASE_1 : SAY_LAND_PHASE_2, m_creature);
-                    DoMoveToClosestTrigger(true);
+                    if (m_uiDistractingAshTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_DISTRACTING_ASH) == CAST_OK)
+                            {
+                                m_uiDistractingAshTimer = urand(7000, 13000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiDistractingAshTimer -= uiDiff;
+                    }
 
-                    m_uiPhase = PHASE_TRANSITION;
-                    m_uiPhaseResetTimer = 20000;
-                }
-                else
-                {
-                    m_uiPhaseResetTimer -= uiDiff;
-                }
+                    if (m_uiSmokingBlastTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_SMOKING_BLAST) == CAST_OK)
+                            {
+                                m_uiSmokingBlastTimer = urand(1000, 3000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiSmokingBlastTimer -= uiDiff;
+                    }
 
-                break;
-            case PHASE_TRANSITION:
-                // nothing here
-                break;
+                    if (m_uiFireballBarrageTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_FIREBALL_BARRAGE, SELECT_FLAG_NOT_IN_MELEE_RANGE))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL_BARRAGE) == CAST_OK)
+                            {
+                                m_uiFireballBarrageTimer = urand(3000, 6000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiFireballBarrageTimer -= uiDiff;
+                    }
+
+                    if (m_uiPhaseResetTimer < uiDiff)
+                    {
+                        // ToDo: more circle movement should be done here!
+                        DoScriptText(urand(0, 1) ? SAY_LAND_PHASE_1 : SAY_LAND_PHASE_2, m_creature);
+                        DoMoveToClosestTrigger(true);
+
+                        m_uiPhase = PHASE_TRANSITION;
+                        m_uiPhaseResetTimer = 20000;
+                    }
+                    else
+                    {
+                        m_uiPhaseResetTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_TRANSITION:
+                    // nothing here
+                    break;
             }
         }
 
-    private:
-        // Wrapper to handle movement to the closest trigger
-        void DoMoveToClosestTrigger(bool bGround)
-        {
-            if (!m_pInstance)
+        private:
+            // Wrapper to handle movement to the closest trigger
+            void DoMoveToClosestTrigger(bool bGround)
             {
-                return;
-            }
+                if (!m_pInstance)
+                {
+                    return;
+                }
 
-            ObjectGuid tguid = ObjectGuid(m_pInstance->GetData64(bGround ? TYPE_NIGHTBANE_TRIGGER_GROUND : TYPE_NIGHTBANE_TRIGGER_AIR));
-            if (Creature* trigger = m_pInstance->instance->GetCreature(tguid))
-            {
-                float fX, fY, fZ;
-                trigger->GetPosition(fX, fY, fZ);
-                m_creature->GetMotionMaster()->MovePoint(bGround ? POINT_ID_GROUND : POINT_ID_AIR, fX, fY, fZ);
+                ObjectGuid tguid = ObjectGuid(m_pInstance->GetData64(bGround ? TYPE_NIGHTBANE_TRIGGER_GROUND : TYPE_NIGHTBANE_TRIGGER_AIR));
+                if (Creature* trigger = m_pInstance->instance->GetCreature(tguid))
+                {
+                    float fX, fY, fZ;
+                    trigger->GetPosition(fX, fY, fZ);
+                    m_creature->GetMotionMaster()->MovePoint(bGround ? POINT_ID_GROUND : POINT_ID_AIR, fX, fY, fZ);
+                }
             }
-        }
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

@@ -42,18 +42,14 @@
 /**
  * ContentData
  * npc_chicken_cluck          100%    support for quest 3861 (Cluck!)
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * npc_air_force_bots          80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
- * npc_dancing_flames         100%    midsummer event NPC
- * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD3
-#endif
+ * npc_air_force_bots          80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell (WOTLK onwards)
+ * npc_dancing_flames         100%    midsummer event NPC (WOTLK onwards)
+ * npc_guardian               100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by SD3 (WOTLK onwards)
  * npc_garments_of_quests     100%    NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
  * npc_injured_patient         80%    patients for triage-quests (6622 and 6624)
  * npc_doctor                 100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
  * npc_innkeeper               25%    ScriptName not assigned. Innkeepers in general.
-#if defined (WOTLK) || defined (CATA) || defined(MISTS)
- * npc_spring_rabbit            1%    Used for pet "Spring Rabbit" of Noblegarden
-#endif
+ * npc_spring_rabbit            1%    Used for pet "Spring Rabbit" of Noblegarden (WOTLK onwards)
  * npc_redemption_target      100%    Used for the paladin quests: 1779,1781,9600,9685
  * EndContentData
  */
@@ -214,37 +210,58 @@ struct npc_air_force_bots : public CreatureScript
 
                 switch (m_pSpawnAssoc->m_SpawnType)
                 {
-                case SPAWNTYPE_ALARMBOT:
-                {
-                    if (!pWho->IsWithinDistInMap(m_creature, RANGE_GUARDS_MARK))
+                    case SPAWNTYPE_ALARMBOT:
                     {
-                        return;
-                    }
-
-                    Aura* pMarkAura = pWho->GetAura(SPELL_GUARDS_MARK, EFFECT_INDEX_0);
-                    if (pMarkAura)
-                    {
-                        // the target wasn't able to move out of our range within 25 seconds
-                        if (!pLastSpawnedGuard)
+                        if (!pWho->IsWithinDistInMap(m_creature, RANGE_GUARDS_MARK))
                         {
-                            pLastSpawnedGuard = SummonGuard();
+                            return;
+                        }
+
+                        Aura* pMarkAura = pWho->GetAura(SPELL_GUARDS_MARK, EFFECT_INDEX_0);
+                        if (pMarkAura)
+                        {
+                            // the target wasn't able to move out of our range within 25 seconds
+                            if (!pLastSpawnedGuard)
+                            {
+                                pLastSpawnedGuard = SummonGuard();
+
+                                if (!pLastSpawnedGuard)
+                                {
+                                    return;
+                                }
+                            }
+
+                            if (pMarkAura->GetAuraDuration() < AURA_DURATION_TIME_LEFT)
+                            {
+                                if (!pLastSpawnedGuard->getVictim())
+                                {
+                                    pLastSpawnedGuard->AI()->AttackStart(pWho);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!pLastSpawnedGuard)
+                            {
+                                pLastSpawnedGuard = SummonGuard();
+                            }
 
                             if (!pLastSpawnedGuard)
                             {
                                 return;
                             }
+
+                            pLastSpawnedGuard->CastSpell(pWho, SPELL_GUARDS_MARK, true);
+                        }
+                        break;
+                    }
+                    case SPAWNTYPE_TRIPWIRE_ROOFTOP:
+                    {
+                        if (!pWho->IsWithinDistInMap(m_creature, RANGE_TRIPWIRE))
+                        {
+                            return;
                         }
 
-                        if (pMarkAura->GetAuraDuration() < AURA_DURATION_TIME_LEFT)
-                        {
-                            if (!pLastSpawnedGuard->getVictim())
-                            {
-                                pLastSpawnedGuard->AI()->AttackStart(pWho);
-                            }
-                        }
-                    }
-                    else
-                    {
                         if (!pLastSpawnedGuard)
                         {
                             pLastSpawnedGuard = SummonGuard();
@@ -255,37 +272,16 @@ struct npc_air_force_bots : public CreatureScript
                             return;
                         }
 
-                        pLastSpawnedGuard->CastSpell(pWho, SPELL_GUARDS_MARK, true);
-                    }
-                    break;
-                }
-                case SPAWNTYPE_TRIPWIRE_ROOFTOP:
-                {
-                    if (!pWho->IsWithinDistInMap(m_creature, RANGE_TRIPWIRE))
-                    {
-                        return;
-                    }
-
-                    if (!pLastSpawnedGuard)
-                    {
-                        pLastSpawnedGuard = SummonGuard();
-                    }
-
-                    if (!pLastSpawnedGuard)
-                    {
-                        return;
-                    }
-
-                    // ROOFTOP only triggers if the player is on the ground
-                    if (!pPlayerTarget->IsFlying())
-                    {
-                        if (!pLastSpawnedGuard->getVictim())
+                        // ROOFTOP only triggers if the player is on the ground
+                        if (!pPlayerTarget->IsFlying())
                         {
-                            pLastSpawnedGuard->AI()->AttackStart(pWho);
+                            if (!pLastSpawnedGuard->getVictim())
+                            {
+                                pLastSpawnedGuard->AI()->AttackStart(pWho);
+                            }
                         }
+                        break;
                     }
-                    break;
-                }
                 }
             }
         }
@@ -457,11 +453,11 @@ struct npc_dancing_flames : public CreatureScript
 
             switch (uiEmote)
             {
-            case TEXTEMOTE_DANCE: DoCastSpellIfCan(pPlayer, SPELL_FIERY_SEDUCTION); break;// dance -> cast SPELL_FIERY_SEDUCTION
-            case TEXTEMOTE_WAVE:  m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);      break;// wave -> wave
-            case TEXTEMOTE_JOKE:  m_creature->HandleEmote(EMOTE_STATE_LAUGH);       break;// silly -> laugh(with sound)
-            case TEXTEMOTE_BOW:   m_creature->HandleEmote(EMOTE_ONESHOT_BOW);       break;// bow -> bow
-            case TEXTEMOTE_KISS:  m_creature->HandleEmote(TEXTEMOTE_CURTSEY);       break;// kiss -> curtsey
+                case TEXTEMOTE_DANCE: DoCastSpellIfCan(pPlayer, SPELL_FIERY_SEDUCTION); break;// dance -> cast SPELL_FIERY_SEDUCTION
+                case TEXTEMOTE_WAVE:  m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);      break;// wave -> wave
+                case TEXTEMOTE_JOKE:  m_creature->HandleEmote(EMOTE_STATE_LAUGH);       break;// silly -> laugh(with sound)
+                case TEXTEMOTE_BOW:   m_creature->HandleEmote(EMOTE_ONESHOT_BOW);       break;// bow -> bow
+                case TEXTEMOTE_KISS:  m_creature->HandleEmote(TEXTEMOTE_CURTSEY);       break;// kiss -> curtsey
             }
         }
 
@@ -603,18 +599,18 @@ struct npc_doctor : public CreatureScript
 
             switch (m_creature->GetEntry())
             {
-            case DOCTOR_ALLIANCE:
-                for (uint8 i = 0; i < ALLIANCE_COORDS; ++i)
-                {
-                    m_vPatientSummonCoordinates.push_back(new Location(AllianceCoords[i]));
-                }
-                break;
-            case DOCTOR_HORDE:
-                for (uint8 i = 0; i < HORDE_COORDS; ++i)
-                {
-                    m_vPatientSummonCoordinates.push_back(new Location(HordeCoords[i]));
-                }
-                break;
+                case DOCTOR_ALLIANCE:
+                    for (uint8 i = 0; i < ALLIANCE_COORDS; ++i)
+                    {
+                        m_vPatientSummonCoordinates.push_back(new Location(AllianceCoords[i]));
+                    }
+                    break;
+                case DOCTOR_HORDE:
+                    for (uint8 i = 0; i < HORDE_COORDS; ++i)
+                    {
+                        m_vPatientSummonCoordinates.push_back(new Location(HordeCoords[i]));
+                    }
+                    break;
             }
 
             m_bIsEventInProgress = true;
@@ -723,15 +719,15 @@ struct npc_doctor : public CreatureScript
 
                     switch (m_creature->GetEntry())
                     {
-                    case DOCTOR_ALLIANCE:
-                        patientEntry = AllianceSoldierId[urand(0, 2)];
-                        break;
-                    case DOCTOR_HORDE:
-                        patientEntry = HordeSoldierId[urand(0, 2)];
-                        break;
-                    default:
-                        script_error_log("Invalid entry for Triage doctor. Please check your database");
-                        return;
+                        case DOCTOR_ALLIANCE:
+                            patientEntry = AllianceSoldierId[urand(0, 2)];
+                            break;
+                        case DOCTOR_HORDE:
+                            patientEntry = HordeSoldierId[urand(0, 2)];
+                            break;
+                        default:
+                            script_error_log("Invalid entry for Triage doctor. Please check your database");
+                            return;
                     }
 
                     if (Creature* Patient = m_creature->SummonCreature(patientEntry, (*itr)->x, (*itr)->y, (*itr)->z, (*itr)->o, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000))
@@ -741,8 +737,8 @@ struct npc_doctor : public CreatureScript
                         Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP);
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                // 303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
-                Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+                        // 303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
+                        Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 #endif
 
                         m_lPatientGuids.push_back(Patient->GetObjectGuid());
@@ -816,18 +812,18 @@ struct npc_injured_patient : public CreatureScript
             switch (m_creature->GetEntry())
             {
                 // lower max health
-            case 12923:
-            case 12938:                                     // Injured Soldier
-                m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.75));
-                break;
-            case 12924:
-            case 12936:                                     // Badly injured Soldier
-                m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.50));
-                break;
-            case 12925:
-            case 12937:                                     // Critically injured Soldier
-                m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.25));
-                break;
+                case 12923:
+                case 12938:                                     // Injured Soldier
+                    m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.75));
+                    break;
+                case 12924:
+                case 12936:                                     // Badly injured Soldier
+                    m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.50));
+                    break;
+                case 12925:
+                case 12937:                                     // Critically injured Soldier
+                    m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.25));
+                    break;
             }
         }
 
@@ -860,31 +856,31 @@ struct npc_injured_patient : public CreatureScript
 
                 switch (urand(0, 2))
                 {
-                case 0:
-                    DoScriptText(SAY_DOC1, m_creature);
-                    break;
-                case 1:
-                    DoScriptText(SAY_DOC2, m_creature);
-                    break;
-                case 2:
-                    DoScriptText(SAY_DOC3, m_creature);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_DOC1, m_creature);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_DOC2, m_creature);
+                        break;
+                    case 2:
+                        DoScriptText(SAY_DOC3, m_creature);
+                        break;
                 }
 
                 m_creature->SetWalk(false);
 
                 switch (m_creature->GetEntry())
                 {
-                case 12923:
-                case 12924:
-                case 12925:
-                    m_creature->GetMotionMaster()->MovePoint(0, H_RUNTOX, H_RUNTOY, H_RUNTOZ);
-                    break;
-                case 12936:
-                case 12937:
-                case 12938:
-                    m_creature->GetMotionMaster()->MovePoint(0, A_RUNTOX, A_RUNTOY, A_RUNTOZ);
-                    break;
+                    case 12923:
+                    case 12924:
+                    case 12925:
+                        m_creature->GetMotionMaster()->MovePoint(0, H_RUNTOX, H_RUNTOY, H_RUNTOZ);
+                        break;
+                    case 12936:
+                    case 12937:
+                    case 12938:
+                        m_creature->GetMotionMaster()->MovePoint(0, A_RUNTOX, A_RUNTOY, A_RUNTOZ);
+                        break;
                 }
             }
         }
@@ -1023,91 +1019,91 @@ struct npc_garments_of_quests : public CreatureScript
                 {
                     switch (m_creature->GetEntry())
                     {
-                    case ENTRY_SHAYA:
-                        if (((Player*)pCaster)->GetQuestStatus(QUEST_MOON) == QUEST_STATUS_INCOMPLETE)
-                        {
-                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                        case ENTRY_SHAYA:
+                            if (((Player*)pCaster)->GetQuestStatus(QUEST_MOON) == QUEST_STATUS_INCOMPLETE)
                             {
-                                DoScriptText(SAY_SHAYA_THANKS, m_creature, pCaster);
-                                m_bCanRun = true;
+                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                {
+                                    DoScriptText(SAY_SHAYA_THANKS, m_creature, pCaster);
+                                    m_bCanRun = true;
+                                }
+                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                {
+                                    m_playerGuid = pCaster->GetObjectGuid();
+                                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                                    DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                    m_bIsHealed = true;
+                                }
                             }
-                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                            break;
+                        case ENTRY_ROBERTS:
+                            if (((Player*)pCaster)->GetQuestStatus(QUEST_LIGHT_1) == QUEST_STATUS_INCOMPLETE)
                             {
-                                m_playerGuid = pCaster->GetObjectGuid();
-                                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
-                                m_bIsHealed = true;
+                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                {
+                                    DoScriptText(SAY_ROBERTS_THANKS, m_creature, pCaster);
+                                    m_bCanRun = true;
+                                }
+                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                {
+                                    m_playerGuid = pCaster->GetObjectGuid();
+                                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                                    DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                    m_bIsHealed = true;
+                                }
                             }
-                        }
-                        break;
-                    case ENTRY_ROBERTS:
-                        if (((Player*)pCaster)->GetQuestStatus(QUEST_LIGHT_1) == QUEST_STATUS_INCOMPLETE)
-                        {
-                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                            break;
+                        case ENTRY_DOLF:
+                            if (((Player*)pCaster)->GetQuestStatus(QUEST_LIGHT_2) == QUEST_STATUS_INCOMPLETE)
                             {
-                                DoScriptText(SAY_ROBERTS_THANKS, m_creature, pCaster);
-                                m_bCanRun = true;
+                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                {
+                                    DoScriptText(SAY_DOLF_THANKS, m_creature, pCaster);
+                                    m_bCanRun = true;
+                                }
+                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                {
+                                    m_playerGuid = pCaster->GetObjectGuid();
+                                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                                    DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                    m_bIsHealed = true;
+                                }
                             }
-                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                            break;
+                        case ENTRY_KORJA:
+                            if (((Player*)pCaster)->GetQuestStatus(QUEST_SPIRIT) == QUEST_STATUS_INCOMPLETE)
                             {
-                                m_playerGuid = pCaster->GetObjectGuid();
-                                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
-                                m_bIsHealed = true;
+                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                {
+                                    DoScriptText(SAY_KORJA_THANKS, m_creature, pCaster);
+                                    m_bCanRun = true;
+                                }
+                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                {
+                                    m_playerGuid = pCaster->GetObjectGuid();
+                                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                                    DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                    m_bIsHealed = true;
+                                }
                             }
-                        }
-                        break;
-                    case ENTRY_DOLF:
-                        if (((Player*)pCaster)->GetQuestStatus(QUEST_LIGHT_2) == QUEST_STATUS_INCOMPLETE)
-                        {
-                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                            break;
+                        case ENTRY_DG_KEL:
+                            if (((Player*)pCaster)->GetQuestStatus(QUEST_DARKNESS) == QUEST_STATUS_INCOMPLETE)
                             {
-                                DoScriptText(SAY_DOLF_THANKS, m_creature, pCaster);
-                                m_bCanRun = true;
+                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                {
+                                    DoScriptText(SAY_DG_KEL_THANKS, m_creature, pCaster);
+                                    m_bCanRun = true;
+                                }
+                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                {
+                                    m_playerGuid = pCaster->GetObjectGuid();
+                                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                                    DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                    m_bIsHealed = true;
+                                }
                             }
-                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
-                            {
-                                m_playerGuid = pCaster->GetObjectGuid();
-                                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
-                                m_bIsHealed = true;
-                            }
-                        }
-                        break;
-                    case ENTRY_KORJA:
-                        if (((Player*)pCaster)->GetQuestStatus(QUEST_SPIRIT) == QUEST_STATUS_INCOMPLETE)
-                        {
-                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
-                            {
-                                DoScriptText(SAY_KORJA_THANKS, m_creature, pCaster);
-                                m_bCanRun = true;
-                            }
-                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
-                            {
-                                m_playerGuid = pCaster->GetObjectGuid();
-                                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
-                                m_bIsHealed = true;
-                            }
-                        }
-                        break;
-                    case ENTRY_DG_KEL:
-                        if (((Player*)pCaster)->GetQuestStatus(QUEST_DARKNESS) == QUEST_STATUS_INCOMPLETE)
-                        {
-                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
-                            {
-                                DoScriptText(SAY_DG_KEL_THANKS, m_creature, pCaster);
-                                m_bCanRun = true;
-                            }
-                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
-                            {
-                                m_playerGuid = pCaster->GetObjectGuid();
-                                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
-                                m_bIsHealed = true;
-                            }
-                        }
-                        break;
+                            break;
                     }
 
                     // give quest credit, not expect any special quest objectives
@@ -1131,21 +1127,21 @@ struct npc_garments_of_quests : public CreatureScript
                     {
                         switch (m_creature->GetEntry())
                         {
-                        case ENTRY_SHAYA:
-                            DoScriptText(SAY_SHAYA_GOODBYE, m_creature, pPlayer);
-                            break;
-                        case ENTRY_ROBERTS:
-                            DoScriptText(SAY_ROBERTS_GOODBYE, m_creature, pPlayer);
-                            break;
-                        case ENTRY_DOLF:
-                            DoScriptText(SAY_DOLF_GOODBYE, m_creature, pPlayer);
-                            break;
-                        case ENTRY_KORJA:
-                            DoScriptText(SAY_KORJA_GOODBYE, m_creature, pPlayer);
-                            break;
-                        case ENTRY_DG_KEL:
-                            DoScriptText(SAY_DG_KEL_GOODBYE, m_creature, pPlayer);
-                            break;
+                            case ENTRY_SHAYA:
+                                DoScriptText(SAY_SHAYA_GOODBYE, m_creature, pPlayer);
+                                break;
+                            case ENTRY_ROBERTS:
+                                DoScriptText(SAY_ROBERTS_GOODBYE, m_creature, pPlayer);
+                                break;
+                            case ENTRY_DOLF:
+                                DoScriptText(SAY_DOLF_GOODBYE, m_creature, pPlayer);
+                                break;
+                            case ENTRY_KORJA:
+                                DoScriptText(SAY_KORJA_GOODBYE, m_creature, pPlayer);
+                                break;
+                            case ENTRY_DG_KEL:
+                                DoScriptText(SAY_DG_KEL_GOODBYE, m_creature, pPlayer);
+                                break;
                         }
 
                         Start(true);
@@ -1254,7 +1250,7 @@ struct npc_innkeeper : public CreatureScript
         {
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
-        if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
+            if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
 #endif
             {
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
@@ -1271,20 +1267,20 @@ struct npc_innkeeper : public CreatureScript
         pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->SEND_GOSSIP_MENU(TEXT_ID_WHAT_TO_DO, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pCreature->CastSpell(pPlayer, SPELL_TRICK_OR_TREAT, true);
-            break;
-        case GOSSIP_OPTION_VENDOR:
-            pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_OPTION_INNKEEPER:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->SetBindPoint(pCreature->GetObjectGuid());
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->SEND_GOSSIP_MENU(TEXT_ID_WHAT_TO_DO, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                pCreature->CastSpell(pPlayer, SPELL_TRICK_OR_TREAT, true);
+                break;
+            case GOSSIP_OPTION_VENDOR:
+                pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_OPTION_INNKEEPER:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                pPlayer->SetBindPoint(pCreature->GetObjectGuid());
+                break;
         }
 
         return true;
@@ -1453,40 +1449,40 @@ struct npc_spring_rabbit : public CreatureScript
             {
                 switch (m_uiStep)
                 {
-                case 1:                                     // Timer expired, before reached meeting point. Reset.
-                    Reset();
-                    break;
+                    case 1:                                     // Timer expired, before reached meeting point. Reset.
+                        Reset();
+                        break;
 
-                case 2:                                     // Called for the rabbit first reached meeting point
-                    if (Creature* pBunny = m_creature->GetMap()->GetAnyTypeCreature(m_partnerGuid))
-                    {
-                        pBunny->CastSpell(pBunny, SPELL_SPRING_RABBIT_IN_LOVE, false);
-                    }
+                    case 2:                                     // Called for the rabbit first reached meeting point
+                        if (Creature* pBunny = m_creature->GetMap()->GetAnyTypeCreature(m_partnerGuid))
+                        {
+                            pBunny->CastSpell(pBunny, SPELL_SPRING_RABBIT_IN_LOVE, false);
+                        }
 
-                    DoCastSpellIfCan(m_creature, SPELL_SPRING_RABBIT_IN_LOVE);
-                    // no break here
-                case 3:
-                    m_uiStepTimer = 5000;
-                    m_uiStep += 2;
-                    break;
+                        DoCastSpellIfCan(m_creature, SPELL_SPRING_RABBIT_IN_LOVE);
+                        // no break here
+                    case 3:
+                        m_uiStepTimer = 5000;
+                        m_uiStep += 2;
+                        break;
 
-                case 4:                                     // Called for the rabbit first reached meeting point
-                    DoCastSpellIfCan(m_creature, SEPLL_SUMMON_BABY_BUNNY);
-                    // no break here
-                case 5:
-                    // Let owner cast achievement related spell
-                    if (Unit* pOwner = m_creature->GetCharmerOrOwner())
-                    {
-                        pOwner->CastSpell(pOwner, SPELL_SPRING_FLING, true);
-                    }
+                    case 4:                                     // Called for the rabbit first reached meeting point
+                        DoCastSpellIfCan(m_creature, SEPLL_SUMMON_BABY_BUNNY);
+                        // no break here
+                    case 5:
+                        // Let owner cast achievement related spell
+                        if (Unit* pOwner = m_creature->GetCharmerOrOwner())
+                        {
+                            pOwner->CastSpell(pOwner, SPELL_SPRING_FLING, true);
+                        }
 
-                    m_uiStep = 6;
-                    m_uiStepTimer = 30000;
-                    break;
-                case 6:
-                    m_creature->RemoveAurasDueToSpell(SPELL_SPRING_RABBIT_IN_LOVE);
-                    Reset();
-                    break;
+                        m_uiStep = 6;
+                        m_uiStepTimer = 30000;
+                        break;
+                    case 6:
+                        m_creature->RemoveAurasDueToSpell(SPELL_SPRING_RABBIT_IN_LOVE);
+                        Reset();
+                        break;
                 }
             }
             else
@@ -1597,7 +1593,7 @@ struct npc_redemption_target : public CreatureScript
                 {
                     EnterEvadeMode();
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-                m_uiEvadeTimer = 0;
+                    m_uiEvadeTimer = 0;
 #endif
                 }
                 else
@@ -1777,10 +1773,11 @@ struct npc_burster_worm : public CreatureScript
         // function to check for bone worms
         bool IsBoneWorm()
         {
-            if (m_creature->GetEntry() == NPC_BONE_CRAWLER || m_creature->GetEntry() == NPC_HAISHULUD || m_creature->GetEntry() == NPC_BONE_SIFTER
-                || m_creature->GetEntry() == NPC_MATURE_BONE_SIFTER)
+            if (m_creature->GetEntry() == NPC_BONE_CRAWLER || m_creature->GetEntry() == NPC_HAISHULUD || m_creature->GetEntry() == NPC_BONE_SIFTER ||
+                m_creature->GetEntry() == NPC_MATURE_BONE_SIFTER)
+            {
                 return true;
-
+            }
             return false;
         }
 
@@ -1969,12 +1966,12 @@ void AddSC_npcs_special()
     //pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_chicken_cluck;
     //pNewScript->RegisterSelf();
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
+    // TBC Onwards
     //pNewScript = new Script;
     //pNewScript->Name = "npc_dancing_flames";
     //pNewScript->GetAI = &GetAI_npc_dancing_flames;
     //pNewScript->RegisterSelf();
-//#endif
+    // End of exceptions
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_injured_patient";
@@ -2003,12 +2000,12 @@ void AddSC_npcs_special()
     //pNewScript->pGossipSelect = &GossipSelect_npc_innkeeper;
     //pNewScript->RegisterSelf(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
 
-//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
+    // WOTLK onwards
     //pNewScript = new Script;
     //pNewScript->Name = "npc_spring_rabbit";
     //pNewScript->GetAI = &GetAI_npc_spring_rabbit;
     //pNewScript->RegisterSelf();
-//#endif
+    // End of exceptions
 
     //pNewScript = new Script;
     //pNewScript->Name = "npc_redemption_target";

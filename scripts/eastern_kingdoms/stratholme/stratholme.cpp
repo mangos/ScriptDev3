@@ -231,18 +231,18 @@ struct mob_restless_soul : public CreatureScript
 
                 switch (urand(0, 3))
                 {
-                case 0:
-                    DoScriptText(SAY_ZAPPED0, pSummoned);
-                    break;
-                case 1:
-                    DoScriptText(SAY_ZAPPED1, pSummoned);
-                    break;
-                case 2:
-                    DoScriptText(SAY_ZAPPED2, pSummoned);
-                    break;
-                case 3:
-                    DoScriptText(SAY_ZAPPED3, pSummoned);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_ZAPPED0, pSummoned);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_ZAPPED1, pSummoned);
+                        break;
+                    case 2:
+                        DoScriptText(SAY_ZAPPED2, pSummoned);
+                        break;
+                    case 3:
+                        DoScriptText(SAY_ZAPPED3, pSummoned);
+                        break;
                 }
             }
         }
@@ -360,28 +360,28 @@ struct mobs_spectral_ghostly_citizen : public CreatureScript
         {
             switch (uiEmote)
             {
-            case TEXTEMOTE_DANCE:
-                EnterEvadeMode();
-                break;
-            case TEXTEMOTE_RUDE:
-                if (m_creature->IsWithinDistInMap(pPlayer, INTERACTION_DISTANCE))
-                {
-                    m_creature->CastSpell(pPlayer, SPELL_SLAP, false);
-                }
-                else
-                {
-                    m_creature->HandleEmote(EMOTE_ONESHOT_RUDE);
-                }
-                break;
-            case TEXTEMOTE_WAVE:
-                m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);
-                break;
-            case TEXTEMOTE_BOW:
-                m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
-                break;
-            case TEXTEMOTE_KISS:
-                m_creature->HandleEmote(EMOTE_ONESHOT_FLEX);
-                break;
+                case TEXTEMOTE_DANCE:
+                    EnterEvadeMode();
+                    break;
+                case TEXTEMOTE_RUDE:
+                    if (m_creature->IsWithinDistInMap(pPlayer, INTERACTION_DISTANCE))
+                    {
+                        m_creature->CastSpell(pPlayer, SPELL_SLAP, false);
+                    }
+                    else
+                    {
+                        m_creature->HandleEmote(EMOTE_ONESHOT_RUDE);
+                    }
+                    break;
+                case TEXTEMOTE_WAVE:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);
+                    break;
+                case TEXTEMOTE_BOW:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
+                    break;
+                case TEXTEMOTE_KISS:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_FLEX);
+                    break;
             }
         }
     };

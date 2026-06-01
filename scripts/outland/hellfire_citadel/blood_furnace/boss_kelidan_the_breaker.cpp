@@ -159,25 +159,25 @@ struct boss_kelidan_the_breaker : public CreatureScript
         {
             switch (eventType)
             {
-            case AI_EVENT_CUSTOM_A:
-                if (pSender->GetEntry() == NPC_SHADOWMOON_CHANNELER)
-                {
-                    m_uiSetupAddsTimer = 2000;
-                }
-                break;
-            case AI_EVENT_CUSTOM_B:
-                if (pSender->GetEntry() == NPC_SHADOWMOON_CHANNELER)
-                {
-                    ++m_uiKilledAdds;
-                    if (m_uiKilledAdds == MAX_ADDS)
+                case AI_EVENT_CUSTOM_A:
+                    if (pSender->GetEntry() == NPC_SHADOWMOON_CHANNELER)
                     {
-                        m_creature->InterruptNonMeleeSpells(true);
-                        AttackStart(pInvoker);
+                        m_uiSetupAddsTimer = 2000;
                     }
-                }
-                break;
-            default:
-                break;
+                    break;
+                case AI_EVENT_CUSTOM_B:
+                    if (pSender->GetEntry() == NPC_SHADOWMOON_CHANNELER)
+                    {
+                        ++m_uiKilledAdds;
+                        if (m_uiKilledAdds == MAX_ADDS)
+                        {
+                            m_creature->InterruptNonMeleeSpells(true);
+                            AttackStart(pInvoker);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -324,15 +324,15 @@ struct mob_shadowmoon_channeler : public CreatureScript
 
             switch (urand(0, 2))
             {
-            case 0:
-                DoScriptText(SAY_ADD_AGGRO_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_ADD_AGGRO_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_ADD_AGGRO_3, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_ADD_AGGRO_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_ADD_AGGRO_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_ADD_AGGRO_3, m_creature);
+                    break;
             }
 
             if (m_pInstance)

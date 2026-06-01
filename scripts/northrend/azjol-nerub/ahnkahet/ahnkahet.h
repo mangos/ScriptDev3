@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ScriptDev3 is an extension for mangos providing enhanced features for
  * area triggers, creatures, game objects, instances, items, and spells beyond
  * the default database scripting in mangos.
@@ -26,13 +26,13 @@
 
 #ifndef DEF_AHNKAHET_H
 #define DEF_AHNKAHET_H
-/* Encounters
+/** Encounters
  * Elder Nadox         = 1
  * Prince Taldram      = 2
  * Jedoga Shadowseeker = 3
  * Herald Volazj       = 4
  * Amanitar            = 5
-*/
+ */
 enum
 {
     MAX_ENCOUNTER               = 5,

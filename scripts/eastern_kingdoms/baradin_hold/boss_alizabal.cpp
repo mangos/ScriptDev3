@@ -81,9 +81,9 @@ enum Spells
     SPELL_BERSERK                     = 47008,
 };
 
-/*
-    Unused at the moment - but we'll need to close the door at time of encounter.
-*/
+/**
+ Unused at the moment - but we'll need to close the door at time of encounter.
+ */
 enum GameObjects
 {
     GAMEOBJECT_TOLBARAD_DOOR_01       = 207849
@@ -146,31 +146,31 @@ struct boss_alizabal : public CreatureScript
 
                 switch (m_uiSpecial)
                 {
-                case 0:  // Seething Hate is cast onto random target.
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SEETHING_HATE, SELECT_FLAG_PLAYER))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_SEETHING_HATE) == CAST_OK)
+                    case 0:  // Seething Hate is cast onto random target.
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SEETHING_HATE, SELECT_FLAG_PLAYER))
                         {
-                            switch (urand(0,2))
+                            if (DoCastSpellIfCan(pTarget, SPELL_SEETHING_HATE) == CAST_OK)
                             {
-                                case 0: DoScriptText(YELL_ALIZABAL_SEETHING_HATE_1, m_creature); break;
-                                case 1: DoScriptText(YELL_ALIZABAL_SEETHING_HATE_2, m_creature); break;
-                                case 2: DoScriptText(YELL_ALIZABAL_SEETHING_HATE_3, m_creature); break;
+                                switch (urand(0,2))
+                                {
+                                    case 0: DoScriptText(YELL_ALIZABAL_SEETHING_HATE_1, m_creature); break;
+                                    case 1: DoScriptText(YELL_ALIZABAL_SEETHING_HATE_2, m_creature); break;
+                                    case 2: DoScriptText(YELL_ALIZABAL_SEETHING_HATE_3, m_creature); break;
+                                }
+
+                                m_uiSpecial = 1; // This makes sure that the next time a special is done it will be the other one.
                             }
-
-                            m_uiSpecial = 1; // This makes sure that the next time a special is done it will be the other one.
                         }
-                    }
-                    break;
+                        break;
 
-                case 1:   // Skewer is cast onto current target.
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SKEWER) == CAST_OK)
-                    {
-                        DoScriptText(urand(0, 1) ? YELL_ALIZABAL_SKEWER_1 : YELL_ALIZABAL_SKEWER_2, m_creature);
+                    case 1:   // Skewer is cast onto current target.
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SKEWER) == CAST_OK)
+                        {
+                            DoScriptText(urand(0, 1) ? YELL_ALIZABAL_SKEWER_1 : YELL_ALIZABAL_SKEWER_2, m_creature);
 
-                        m_uiSpecial = 0; // This makes sure that the next time a special is done it will be the other one.
-                    }
-                    break;
+                            m_uiSpecial = 0; // This makes sure that the next time a special is done it will be the other one.
+                        }
+                        break;
                 }
 
                 if (!m_bFirstSpecialDone)                         // True = Second Special is next, False = First Special is next
@@ -239,10 +239,10 @@ struct boss_alizabal : public CreatureScript
                         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         {
                             m_creature->FixateTarget(pTarget);
-                        if (DoCastSpellIfCan(pTarget, SPELL_BLADE_DANCE_CHARGE) == CAST_OK)
-                        {
-                            DoCastSpellIfCan(m_creature, SPELL_BLADE_DANCE_ROOT, CAST_TRIGGERED);
-                        }
+                            if (DoCastSpellIfCan(pTarget, SPELL_BLADE_DANCE_CHARGE) == CAST_OK)
+                            {
+                                DoCastSpellIfCan(m_creature, SPELL_BLADE_DANCE_ROOT, CAST_TRIGGERED);
+                            }
                         }
                     }
                 }

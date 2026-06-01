@@ -146,15 +146,15 @@ struct boss_forgemaster_garfrost : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_IRONSKULL_PART1:
-            case NPC_VICTUS_PART1:
-            {
-                float fX, fY, fZ;
-                pSummoned->SetWalk(false);
-                m_creature->GetContactPoint(pSummoned, fX, fY, fZ, 4 * INTERACTION_DISTANCE);
-                pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
-                break;
-            }
+                case NPC_IRONSKULL_PART1:
+                case NPC_VICTUS_PART1:
+                {
+                    float fX, fY, fZ;
+                    pSummoned->SetWalk(false);
+                    m_creature->GetContactPoint(pSummoned, fX, fY, fZ, 4 * INTERACTION_DISTANCE);
+                    pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                    break;
+                }
             }
         }
 
@@ -253,63 +253,63 @@ struct boss_forgemaster_garfrost : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_NO_ENCHANTMENT:
-                if (m_creature->GetHealthPercent() < 66.0f)
-                {
-                    DoCastSpellIfCan(m_creature, SPELL_THUNDERING_STOMP, CAST_INTERRUPT_PREVIOUS);
-                    SetCombatMovement(false);
-
-                    m_creature->GetMotionMaster()->MoveJump(aGarfrostMoveLocs[0][0], aGarfrostMoveLocs[0][1], aGarfrostMoveLocs[0][2], 3 * m_creature->GetSpeed(MOVE_RUN), 10.0f, PHASE_BLADE_ENCHANTMENT);
-                    m_uiPhase = PHASE_MOVEMENT;
-
-                    // Stop further action
-                    return;
-                }
-                break;
-            case PHASE_BLADE_ENCHANTMENT:
-                if (m_creature->GetHealthPercent() < 33.0f)
-                {
-                    DoCastSpellIfCan(m_creature, SPELL_THUNDERING_STOMP, CAST_INTERRUPT_PREVIOUS);
-                    SetCombatMovement(false);
-
-                    m_creature->GetMotionMaster()->MoveJump(aGarfrostMoveLocs[1][0], aGarfrostMoveLocs[1][1], aGarfrostMoveLocs[1][2], 3 * m_creature->GetSpeed(MOVE_RUN), 10.0f, PHASE_MACE_ENCHANTMENT);
-                    m_uiPhase = PHASE_MOVEMENT;
-
-                    // Stop further action
-                    return;
-                }
-
-                if (m_uiChillingWaveTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHILLING_WAVE) == CAST_OK)
+                case PHASE_NO_ENCHANTMENT:
+                    if (m_creature->GetHealthPercent() < 66.0f)
                     {
-                        m_uiChillingWaveTimer = 14000;
+                        DoCastSpellIfCan(m_creature, SPELL_THUNDERING_STOMP, CAST_INTERRUPT_PREVIOUS);
+                        SetCombatMovement(false);
+
+                        m_creature->GetMotionMaster()->MoveJump(aGarfrostMoveLocs[0][0], aGarfrostMoveLocs[0][1], aGarfrostMoveLocs[0][2], 3 * m_creature->GetSpeed(MOVE_RUN), 10.0f, PHASE_BLADE_ENCHANTMENT);
+                        m_uiPhase = PHASE_MOVEMENT;
+
+                        // Stop further action
+                        return;
                     }
-                }
-                else
-                {
-                    m_uiChillingWaveTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_MACE_ENCHANTMENT:
-                if (m_uiDeepFreezeTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    break;
+                case PHASE_BLADE_ENCHANTMENT:
+                    if (m_creature->GetHealthPercent() < 33.0f)
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_DEEP_FREEZE) == CAST_OK)
+                        DoCastSpellIfCan(m_creature, SPELL_THUNDERING_STOMP, CAST_INTERRUPT_PREVIOUS);
+                        SetCombatMovement(false);
+
+                        m_creature->GetMotionMaster()->MoveJump(aGarfrostMoveLocs[1][0], aGarfrostMoveLocs[1][1], aGarfrostMoveLocs[1][2], 3 * m_creature->GetSpeed(MOVE_RUN), 10.0f, PHASE_MACE_ENCHANTMENT);
+                        m_uiPhase = PHASE_MOVEMENT;
+
+                        // Stop further action
+                        return;
+                    }
+
+                    if (m_uiChillingWaveTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHILLING_WAVE) == CAST_OK)
                         {
-                            DoScriptText(EMOTE_DEEP_FREEZE, m_creature, pTarget);
-                            m_uiDeepFreezeTimer = 20000;
+                            m_uiChillingWaveTimer = 14000;
                         }
                     }
-                }
-                else
-                {
-                    m_uiDeepFreezeTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiChillingWaveTimer -= uiDiff;
+                    }
 
-                break;
+                    break;
+                case PHASE_MACE_ENCHANTMENT:
+                    if (m_uiDeepFreezeTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_DEEP_FREEZE) == CAST_OK)
+                            {
+                                DoScriptText(EMOTE_DEEP_FREEZE, m_creature, pTarget);
+                                m_uiDeepFreezeTimer = 20000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiDeepFreezeTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();

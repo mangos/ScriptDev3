@@ -204,20 +204,20 @@ struct boss_thermaplugg : public CreatureScript
 
             switch (eventType)
             {
-            case AI_EVENT_CUSTOM_A:
-                DoActivateBombFace(data);
-                break;
-            case AI_EVENT_CUSTOM_B:
-                DoDeactivateBombFace(data);
-                break;
-            case AI_EVENT_CUSTOM_C:
-                for (uint8 i = 0; i < MAX_GNOME_FACES; ++i)
-                {
-                    DoDeactivateBombFace(i);
-                }
-                break;
-            default:
-                break;
+                case AI_EVENT_CUSTOM_A:
+                    DoActivateBombFace(data);
+                    break;
+                case AI_EVENT_CUSTOM_B:
+                    DoDeactivateBombFace(data);
+                    break;
+                case AI_EVENT_CUSTOM_C:
+                    for (uint8 i = 0; i < MAX_GNOME_FACES; ++i)
+                    {
+                        DoDeactivateBombFace(i);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -390,24 +390,24 @@ struct go_gnomeface_button : public GameObjectScript
         // If a button is used, the related face should be deactivated (if already activated)
         switch (pGo->GetEntry())
         {
-        case GO_BUTTON_1:
-            pInstance->SetData(TYPE_DO_BOMB_OFF, 0);
-            break;
-        case GO_BUTTON_2:
-            pInstance->SetData(TYPE_DO_BOMB_OFF, 1);
-            break;
-        case GO_BUTTON_3:
-            pInstance->SetData(TYPE_DO_BOMB_OFF, 2);
-            break;
-        case GO_BUTTON_4:
-            pInstance->SetData(TYPE_DO_BOMB_OFF, 3);
-            break;
-        case GO_BUTTON_5:
-            pInstance->SetData(TYPE_DO_BOMB_OFF, 4);
-            break;
-        case GO_BUTTON_6:
-            pInstance->SetData(TYPE_DO_BOMB_OFF, 5);
-            break;
+            case GO_BUTTON_1:
+                pInstance->SetData(TYPE_DO_BOMB_OFF, 0);
+                break;
+            case GO_BUTTON_2:
+                pInstance->SetData(TYPE_DO_BOMB_OFF, 1);
+                break;
+            case GO_BUTTON_3:
+                pInstance->SetData(TYPE_DO_BOMB_OFF, 2);
+                break;
+            case GO_BUTTON_4:
+                pInstance->SetData(TYPE_DO_BOMB_OFF, 3);
+                break;
+            case GO_BUTTON_5:
+                pInstance->SetData(TYPE_DO_BOMB_OFF, 4);
+                break;
+            case GO_BUTTON_6:
+                pInstance->SetData(TYPE_DO_BOMB_OFF, 5);
+                break;
         }
 
         return false;

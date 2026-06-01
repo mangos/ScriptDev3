@@ -115,7 +115,7 @@ struct boss_victor_nefarius : public CreatureScript
     struct boss_victor_nefariusAI : public ScriptedAI, private DialogueHelper
     {
         boss_victor_nefariusAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             // Select the 2 different drakes that we are going to use until despawned
             // 5 possiblities for the first drake, 4 for the second, 20 total possiblites
@@ -438,25 +438,25 @@ struct boss_victor_nefarius : public CreatureScript
 
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pCreature->HandleEmote(EMOTE_ONESHOT_TALK);
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_NEFARIUS_2, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pCreature->HandleEmote(EMOTE_ONESHOT_TALK);
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_NEFARIUS_3, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-            pPlayer->CLOSE_GOSSIP_MENU();
-            // Start the intro event
-            if (boss_victor_nefariusAI* pBossAI = dynamic_cast<boss_victor_nefariusAI*>(pCreature->AI()))
-            {
-                pBossAI->DoStartIntro();
-            }
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pCreature->HandleEmote(EMOTE_ONESHOT_TALK);
+                pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_NEFARIUS_2, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pCreature->HandleEmote(EMOTE_ONESHOT_TALK);
+                pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NEFARIUS_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+                pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_NEFARIUS_3, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 3:
+                pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                pPlayer->CLOSE_GOSSIP_MENU();
+                // Start the intro event
+                if (boss_victor_nefariusAI* pBossAI = dynamic_cast<boss_victor_nefariusAI*>(pCreature->AI()))
+                {
+                    pBossAI->DoStartIntro();
+                }
+                break;
         }
         return true;
     }

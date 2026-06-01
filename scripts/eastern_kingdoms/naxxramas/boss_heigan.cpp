@@ -113,15 +113,15 @@ struct boss_heigan : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0:
-                DoScriptText(SAY_AGGRO1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_AGGRO2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_AGGRO3, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_AGGRO1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_AGGRO2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_AGGRO3, m_creature);
+                    break;
             }
 
             if (m_pInstance)
@@ -262,18 +262,18 @@ struct boss_heigan : public CreatureScript
             {
                 switch (urand(0, 3))
                 {
-                case 0:
-                    DoScriptText(SAY_TAUNT1, m_creature);
-                    break;
-                case 1:
-                    DoScriptText(SAY_TAUNT2, m_creature);
-                    break;
-                case 2:
-                    DoScriptText(SAY_TAUNT3, m_creature);
-                    break;
-                case 3:
-                    DoScriptText(SAY_TAUNT4, m_creature);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_TAUNT1, m_creature);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_TAUNT2, m_creature);
+                        break;
+                    case 2:
+                        DoScriptText(SAY_TAUNT3, m_creature);
+                        break;
+                    case 3:
+                        DoScriptText(SAY_TAUNT4, m_creature);
+                        break;
                 }
                 m_uiTauntTimer = urand(20000, 70000);
             }

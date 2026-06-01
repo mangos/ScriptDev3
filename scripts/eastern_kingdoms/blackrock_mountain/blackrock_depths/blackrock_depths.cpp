@@ -77,8 +77,10 @@ struct go_bar_beer_keg : public GameObjectScript
                 return false;
             }
             else
+            {
                 // Every time we set the event to SPECIAL, the instance script increments the number of broken kegs, capping at 3
                 pInstance->SetData(TYPE_HURLEY, SPECIAL);
+            }
         }
         return false;
     }
@@ -132,9 +134,9 @@ struct go_relic_coffer_door : public GameObjectScript
     }
 };
 
- /*######
-## at_shadowforge_bridge
-######*/
+/** ######
+ *  ## at_shadowforge_bridge
+ *  ######*/
 
 static const float aGuardSpawnPositions[2][4] =
 {
@@ -191,7 +193,7 @@ struct at_shadowforge_bridge : public AreaTriggerScript
 ## at_ring_of_law
 ######*/
 
-/* Notes about this event:
+/** Notes about this event:
  * Visual: Npc Grimstone should use some visual spell when appear/ disappear / opening/ closing doors
  * Texts: The texts and their positions need confirmation
  * Event timer might also need adjustment
@@ -1047,22 +1049,22 @@ struct npc_rocknot : public CreatureScript
 
             switch (uiPointId)
             {
-            case 1:
-                m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
-                break;
-            case 2:
-                m_creature->HandleEmote(EMOTE_ONESHOT_ATTACKUNARMED);
-                break;
-            case 3:
-                m_creature->HandleEmote(EMOTE_ONESHOT_ATTACKUNARMED);
-                break;
-            case 4:
-                m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
-                break;
-            case 5:
-                m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
-                m_uiBreakKegTimer = 2000;
-                break;
+                case 1:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
+                    break;
+                case 2:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_ATTACKUNARMED);
+                    break;
+                case 3:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_ATTACKUNARMED);
+                    break;
+                case 4:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
+                    break;
+                case 5:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_KICK);
+                    m_uiBreakKegTimer = 2000;
+                    break;
             }
         }
 
@@ -1230,15 +1232,15 @@ struct npc_marshal_windsor : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0:
-                DoScriptText(SAY_WINDSOR_AGGRO1, m_creature, pWho);
-                break;
-            case 1:
-                DoScriptText(SAY_WINDSOR_AGGRO2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_WINDSOR_AGGRO3, m_creature, pWho);
-                break;
+                case 0:
+                    DoScriptText(SAY_WINDSOR_AGGRO1, m_creature, pWho);
+                    break;
+                case 1:
+                    DoScriptText(SAY_WINDSOR_AGGRO2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_WINDSOR_AGGRO3, m_creature, pWho);
+                    break;
             }
         }
 
@@ -1246,170 +1248,170 @@ struct npc_marshal_windsor : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 1:
-                if (m_pInstance)
-                {
-                    m_pInstance->SetData(TYPE_QUEST_JAIL_BREAK, IN_PROGRESS);
-                }
+                case 1:
+                    if (m_pInstance)
+                    {
+                        m_pInstance->SetData(TYPE_QUEST_JAIL_BREAK, IN_PROGRESS);
+                    }
 
-                DoScriptText(SAY_WINDSOR_START, m_creature);
-                break;
-            case 7:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_WINDSOR_CELL_DUGHAL_1, m_creature, pPlayer);
-                }
-                if (m_pInstance)
-                {
-                    if (Creature* pDughal = m_pInstance->GetSingleCreatureFromStorage(NPC_DUGHAL))
+                    DoScriptText(SAY_WINDSOR_START, m_creature);
+                    break;
+                case 7:
+                    if (Player* pPlayer = GetPlayerForEscort())
                     {
-                        pDughal->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                        m_creature->SetFacingToObject(pDughal);
+                        DoScriptText(SAY_WINDSOR_CELL_DUGHAL_1, m_creature, pPlayer);
                     }
-                }
-                ++m_uiEventPhase;
-                SetEscortPaused(true);
-                break;
-            case 9:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_WINDSOR_CELL_DUGHAL_3, m_creature, pPlayer);
-                }
-                break;
-            case 14:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_WINDSOR_EQUIPMENT_1, m_creature, pPlayer);
-                }
-                break;
-            case 15:
+                    if (m_pInstance)
+                    {
+                        if (Creature* pDughal = m_pInstance->GetSingleCreatureFromStorage(NPC_DUGHAL))
+                        {
+                            pDughal->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                            m_creature->SetFacingToObject(pDughal);
+                        }
+                    }
+                    ++m_uiEventPhase;
+                    SetEscortPaused(true);
+                    break;
+                case 9:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_WINDSOR_CELL_DUGHAL_3, m_creature, pPlayer);
+                    }
+                    break;
+                case 14:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_WINDSOR_EQUIPMENT_1, m_creature, pPlayer);
+                    }
+                    break;
+                case 15:
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
+                    m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
 #endif
-                break;
-            case 16:
-                if (m_pInstance)
-                {
-                    m_pInstance->DoUseDoorOrButton(GO_JAIL_DOOR_SUPPLY);
-                }
-                break;
-            case 18:
-                DoScriptText(SAY_WINDSOR_EQUIPMENT_2, m_creature);
-                break;
-            case 19:
+                    break;
+                case 16:
+                    if (m_pInstance)
+                    {
+                        m_pInstance->DoUseDoorOrButton(GO_JAIL_DOOR_SUPPLY);
+                    }
+                    break;
+                case 18:
+                    DoScriptText(SAY_WINDSOR_EQUIPMENT_2, m_creature);
+                    break;
+                case 19:
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
+                    m_creature->HandleEmoteCommand(EMOTE_ONESHOT_USESTANDING);
 #endif
-                break;
-            case 20:
-                if (m_pInstance)
-                {
-                    m_pInstance->DoUseDoorOrButton(GO_JAIL_SUPPLY_CRATE);
-                }
-                break;
-            case 21:
-                m_creature->UpdateEntry(NPC_REGINALD_WINDSOR);
-                break;
-            case 22:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_WINDSOR_EQUIPMENT_3, m_creature, pPlayer);
-                    m_creature->SetFacingToObject(pPlayer);
-                }
-                break;
-            case 23:
-                DoScriptText(SAY_WINDSOR_EQUIPMENT_4, m_creature);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    m_creature->SetFacingToObject(pPlayer);
-                }
-                break;
-            case 30:
-                if (m_pInstance)
-                {
-                    if (Creature* pJaz = m_pInstance->GetSingleCreatureFromStorage(NPC_JAZ))
+                    break;
+                case 20:
+                    if (m_pInstance)
                     {
-                        m_creature->SetFacingToObject(pJaz);
+                        m_pInstance->DoUseDoorOrButton(GO_JAIL_SUPPLY_CRATE);
                     }
-                }
-                DoScriptText(SAY_WINDSOR_CELL_JAZ_1, m_creature);
-                ++m_uiEventPhase;
-                SetEscortPaused(true);
-                break;
-            case 32:
-                DoScriptText(SAY_WINDSOR_CELL_JAZ_2, m_creature);
-                break;
-            case 35:
-                if (m_pInstance)
-                {
-                    if (Creature* pShill = m_pInstance->GetSingleCreatureFromStorage(NPC_SHILL))
+                    break;
+                case 21:
+                    m_creature->UpdateEntry(NPC_REGINALD_WINDSOR);
+                    break;
+                case 22:
+                    if (Player* pPlayer = GetPlayerForEscort())
                     {
-                        m_creature->SetFacingToObject(pShill);
+                        DoScriptText(SAY_WINDSOR_EQUIPMENT_3, m_creature, pPlayer);
+                        m_creature->SetFacingToObject(pPlayer);
                     }
-                }
-                DoScriptText(SAY_WINDSOR_CELL_SHILL_1, m_creature);
-                ++m_uiEventPhase;
-                SetEscortPaused(true);
-                break;
-            case 37:
-                DoScriptText(SAY_WINDSOR_CELL_SHILL_2, m_creature);
-                break;
-            case 38:
-                DoScriptText(SAY_WINDSOR_CELL_SHILL_3, m_creature);
-                break;
-            case 45:
-                if (m_pInstance)
-                {
-                    if (Creature* pCrest = m_pInstance->GetSingleCreatureFromStorage(NPC_CREST))
+                    break;
+                case 23:
+                    DoScriptText(SAY_WINDSOR_EQUIPMENT_4, m_creature);
+                    if (Player* pPlayer = GetPlayerForEscort())
                     {
-                        m_creature->SetFacingToObject(pCrest);
+                        m_creature->SetFacingToObject(pPlayer);
                     }
-                }
-                DoScriptText(SAY_WINDSOR_CELL_CREST_1, m_creature);
-                ++m_uiEventPhase;
-                SetEscortPaused(true);
-                break;
-            case 47:
-                DoScriptText(SAY_WINDSOR_CELL_CREST_2, m_creature);
-                break;
-            case 49:
-                DoScriptText(SAY_WINDSOR_CELL_TOBIAS_1, m_creature);
-                if (m_pInstance)
-                {
-                    if (Creature* pTobias = m_pInstance->GetSingleCreatureFromStorage(NPC_TOBIAS))
+                    break;
+                case 30:
+                    if (m_pInstance)
                     {
-                        pTobias->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                        m_creature->SetFacingToObject(pTobias);
+                        if (Creature* pJaz = m_pInstance->GetSingleCreatureFromStorage(NPC_JAZ))
+                        {
+                            m_creature->SetFacingToObject(pJaz);
+                        }
                     }
-                }
-                ++m_uiEventPhase;
-                SetEscortPaused(true);
-                break;
-            case 51:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_WINDSOR_CELL_TOBIAS_2, m_creature, pPlayer);
-                }
-                break;
-            case 57:
-                DoScriptText(SAY_WINDSOR_FREE_1, m_creature);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    m_creature->SetFacingToObject(pPlayer);
-                }
-                break;
-            case 58:
-                DoScriptText(SAY_WINDSOR_FREE_2, m_creature);
-                if (m_pInstance)
-                {
-                    m_pInstance->SetData(TYPE_QUEST_JAIL_BREAK, DONE);
-                }
+                    DoScriptText(SAY_WINDSOR_CELL_JAZ_1, m_creature);
+                    ++m_uiEventPhase;
+                    SetEscortPaused(true);
+                    break;
+                case 32:
+                    DoScriptText(SAY_WINDSOR_CELL_JAZ_2, m_creature);
+                    break;
+                case 35:
+                    if (m_pInstance)
+                    {
+                        if (Creature* pShill = m_pInstance->GetSingleCreatureFromStorage(NPC_SHILL))
+                        {
+                            m_creature->SetFacingToObject(pShill);
+                        }
+                    }
+                    DoScriptText(SAY_WINDSOR_CELL_SHILL_1, m_creature);
+                    ++m_uiEventPhase;
+                    SetEscortPaused(true);
+                    break;
+                case 37:
+                    DoScriptText(SAY_WINDSOR_CELL_SHILL_2, m_creature);
+                    break;
+                case 38:
+                    DoScriptText(SAY_WINDSOR_CELL_SHILL_3, m_creature);
+                    break;
+                case 45:
+                    if (m_pInstance)
+                    {
+                        if (Creature* pCrest = m_pInstance->GetSingleCreatureFromStorage(NPC_CREST))
+                        {
+                            m_creature->SetFacingToObject(pCrest);
+                        }
+                    }
+                    DoScriptText(SAY_WINDSOR_CELL_CREST_1, m_creature);
+                    ++m_uiEventPhase;
+                    SetEscortPaused(true);
+                    break;
+                case 47:
+                    DoScriptText(SAY_WINDSOR_CELL_CREST_2, m_creature);
+                    break;
+                case 49:
+                    DoScriptText(SAY_WINDSOR_CELL_TOBIAS_1, m_creature);
+                    if (m_pInstance)
+                    {
+                        if (Creature* pTobias = m_pInstance->GetSingleCreatureFromStorage(NPC_TOBIAS))
+                        {
+                            pTobias->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                            m_creature->SetFacingToObject(pTobias);
+                        }
+                    }
+                    ++m_uiEventPhase;
+                    SetEscortPaused(true);
+                    break;
+                case 51:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_WINDSOR_CELL_TOBIAS_2, m_creature, pPlayer);
+                    }
+                    break;
+                case 57:
+                    DoScriptText(SAY_WINDSOR_FREE_1, m_creature);
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        m_creature->SetFacingToObject(pPlayer);
+                    }
+                    break;
+                case 58:
+                    DoScriptText(SAY_WINDSOR_FREE_2, m_creature);
+                    if (m_pInstance)
+                    {
+                        m_pInstance->SetData(TYPE_QUEST_JAIL_BREAK, DONE);
+                    }
 
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_JAIL_BREAK, m_creature);
-                }
-                break;
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_JAIL_BREAK, m_creature);
+                    }
+                    break;
             }
         }
 
@@ -1420,16 +1422,16 @@ struct npc_marshal_windsor : public CreatureScript
             {
                 switch (m_uiEventPhase)
                 {
-                case 1:                     // Dughal
-                case 3:                     // Ograbisi
-                case 4:                     // Crest
-                case 5:                     // Shill
-                case 6:                     // Tobias
-                    SetEscortPaused(false);
-                    break;
-                case 2:                     // Jaz
-                    ++m_uiEventPhase;
-                    break;
+                    case 1:                     // Dughal
+                    case 3:                     // Ograbisi
+                    case 4:                     // Crest
+                    case 5:                     // Shill
+                    case 6:                     // Tobias
+                        SetEscortPaused(false);
+                        break;
+                    case 2:                     // Jaz
+                        ++m_uiEventPhase;
+                        break;
                 }
 
                 m_pInstance->SetData(TYPE_QUEST_JAIL_BREAK, IN_PROGRESS);
@@ -1741,16 +1743,16 @@ struct boss_doomrel : public CreatureScript
         pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            DoScriptText(SAY_DOOMREL_START_EVENT, pCreature);
-            // start event
-            if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
-            {
-                pInstance->SetData(TYPE_TOMB_OF_SEVEN, IN_PROGRESS);
-            }
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                DoScriptText(SAY_DOOMREL_START_EVENT, pCreature);
+                // start event
+                if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
+                {
+                    pInstance->SetData(TYPE_TOMB_OF_SEVEN, IN_PROGRESS);
+                }
 
-            break;
+                break;
         }
         return true;
     }
@@ -1995,9 +1997,9 @@ struct boss_plugger_spazzring : public CreatureScript
     }
 };
 
-/*######
-## npc_kharan_mighthammer
-######*/
+/** ######
+ *  ## npc_kharan_mighthammer
+ *  ######*/
 enum
 {
     QUEST_WHAT_IS_GOING_ON = 4001,
@@ -2102,9 +2104,9 @@ struct npc_kharan_mighthammer : public CreatureScript
     }
 };
 
-/*######
-## go_bar_ale_mug
-######*/
+/** ######
+ *  ## go_bar_ale_mug
+ *  ######*/
 struct go_bar_ale_mug : public GameObjectScript
 {
     go_bar_ale_mug() : GameObjectScript("go_bar_ale_mug") {}
@@ -2195,17 +2197,17 @@ struct npc_ironhand_guardian : public CreatureScript
                     }
                     break;
                 case 1:
-                        if (m_uiGoutOfFlameTimer < uiDiff)
+                    if (m_uiGoutOfFlameTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_GOUT_OF_FLAME) == CAST_OK)
                         {
-                            if (DoCastSpellIfCan(m_creature, SPELL_GOUT_OF_FLAME) == CAST_OK)
-                            {
-                                m_uiGoutOfFlameTimer = urand(13, 18) * 1000;
-                            }
+                            m_uiGoutOfFlameTimer = urand(13, 18) * 1000;
                         }
-                        else
-                        {
-                            m_uiGoutOfFlameTimer -= uiDiff;
-                        }
+                    }
+                    else
+                    {
+                        m_uiGoutOfFlameTimer -= uiDiff;
+                    }
                     break;
             }
         }

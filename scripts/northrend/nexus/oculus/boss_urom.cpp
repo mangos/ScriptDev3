@@ -171,24 +171,24 @@ struct boss_urom : public CreatureScript
                 // teleport to next platform and spawn adds
                 switch (m_uiPlatformPhase)
                 {
-                case 0:
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_1) == CAST_OK)
-                    {
-                        DoScriptText(SAY_SUMMON_1, m_creature);
-                    }
-                    break;
-                case 1:
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_2) == CAST_OK)
-                    {
-                        DoScriptText(SAY_SUMMON_2, m_creature);
-                    }
-                    break;
-                case 2:
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_3) == CAST_OK)
-                    {
-                        DoScriptText(SAY_SUMMON_3, m_creature);
-                    }
-                    break;
+                    case 0:
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_1) == CAST_OK)
+                        {
+                            DoScriptText(SAY_SUMMON_1, m_creature);
+                        }
+                        break;
+                    case 1:
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_2) == CAST_OK)
+                        {
+                            DoScriptText(SAY_SUMMON_2, m_creature);
+                        }
+                        break;
+                    case 2:
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_MENAGERIE_3) == CAST_OK)
+                        {
+                            DoScriptText(SAY_SUMMON_3, m_creature);
+                        }
+                        break;
                 }
             }
             // Boss has teleported in the central ring - start normal combat
@@ -206,9 +206,9 @@ struct boss_urom : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_KILL_1, m_creature); break;
-            case 1: DoScriptText(SAY_KILL_2, m_creature); break;
-            case 2: DoScriptText(SAY_KILL_3, m_creature); break;
+                case 0: DoScriptText(SAY_KILL_1, m_creature); break;
+                case 1: DoScriptText(SAY_KILL_2, m_creature); break;
+                case 2: DoScriptText(SAY_KILL_3, m_creature); break;
             }
         }
 
@@ -287,12 +287,12 @@ struct boss_urom : public CreatureScript
         {
             switch (pSpell->Id)
             {
-            case SPELL_SUMMON_MENAGERIE_3:
-            case SPELL_SUMMON_MENAGERIE_2:
-            case SPELL_SUMMON_MENAGERIE_1:
-                EnterEvadeMode();
-                ++m_uiPlatformPhase;
-                break;
+                case SPELL_SUMMON_MENAGERIE_3:
+                case SPELL_SUMMON_MENAGERIE_2:
+                case SPELL_SUMMON_MENAGERIE_1:
+                    EnterEvadeMode();
+                    ++m_uiPlatformPhase;
+                    break;
             }
         }
 

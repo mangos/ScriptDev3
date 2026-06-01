@@ -116,9 +116,9 @@ struct boss_talon_king_ikiss : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
             }
 
             if (m_pInstance)
@@ -229,9 +229,9 @@ struct boss_talon_king_ikiss : public CreatureScript
                     // There is no relationship between the health percentages
                     switch (m_uiBlinkPhase)
                     {
-                    case 0: m_fHealthCheck = 50.0f; break;
-                    case 1: m_fHealthCheck = 25.0f; break;
-                    case 2: m_fHealthCheck = 0.0f; break;
+                        case 0: m_fHealthCheck = 50.0f; break;
+                        case 1: m_fHealthCheck = 25.0f; break;
+                        case 2: m_fHealthCheck = 0.0f; break;
                     }
 
                     ++m_uiBlinkPhase;

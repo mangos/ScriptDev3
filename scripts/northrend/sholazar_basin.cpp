@@ -135,55 +135,55 @@ struct npc_helice : public CreatureScript
                         {
                             switch (m_uiExplodePhase)
                             {
-                            case 0:
-                                DoCastSpellIfCan(m_creature, SPELL_DETONATE_EXPLOSIVES_1);
+                                case 0:
+                                    DoCastSpellIfCan(m_creature, SPELL_DETONATE_EXPLOSIVES_1);
 
-                                if (Player* pPlayer = GetPlayerForEscort())
-                                {
-                                    DoScriptText(SAY_HELICE_EXPLODE_1, m_creature, pPlayer);
-                                }
+                                    if (Player* pPlayer = GetPlayerForEscort())
+                                    {
+                                        DoScriptText(SAY_HELICE_EXPLODE_1, m_creature, pPlayer);
+                                    }
 
-                                m_uiExplodeTimer = 2500;
-                                ++m_uiExplodePhase;
-                                break;
-                            case 1:
-                                if (Player* pPlayer = GetPlayerForEscort())
-                                {
-                                    DoScriptText(SAY_HELICE_MOVE_ON, m_creature, pPlayer);
-                                }
+                                    m_uiExplodeTimer = 2500;
+                                    ++m_uiExplodePhase;
+                                    break;
+                                case 1:
+                                    if (Player* pPlayer = GetPlayerForEscort())
+                                    {
+                                        DoScriptText(SAY_HELICE_MOVE_ON, m_creature, pPlayer);
+                                    }
 
-                                m_uiExplodeTimer = 2500;
-                                ++m_uiExplodePhase;
-                                break;
-                            case 2:
-                                SetEscortPaused(false);
-                                m_uiExplodePhase = 0;
-                                m_uiExplodeTimer = 5000;
-                                m_bFirstBarrel = false;
-                                break;
+                                    m_uiExplodeTimer = 2500;
+                                    ++m_uiExplodePhase;
+                                    break;
+                                case 2:
+                                    SetEscortPaused(false);
+                                    m_uiExplodePhase = 0;
+                                    m_uiExplodeTimer = 5000;
+                                    m_bFirstBarrel = false;
+                                    break;
                             }
                         }
                         else
                         {
                             switch (m_uiExplodePhase)
                             {
-                            case 0:
-                                DoCastSpellIfCan(m_creature, SPELL_DETONATE_EXPLOSIVES_2);
+                                case 0:
+                                    DoCastSpellIfCan(m_creature, SPELL_DETONATE_EXPLOSIVES_2);
 
-                                if (Player* pPlayer = GetPlayerForEscort())
-                                {
-                                    DoScriptText(SAY_HELICE_EXPLODE_2, m_creature, pPlayer);
-                                }
+                                    if (Player* pPlayer = GetPlayerForEscort())
+                                    {
+                                        DoScriptText(SAY_HELICE_EXPLODE_2, m_creature, pPlayer);
+                                    }
 
-                                m_uiExplodeTimer = 2500;
-                                ++m_uiExplodePhase;
-                                break;
-                            case 1:
-                                SetEscortPaused(false);
-                                m_uiExplodePhase = 0;
-                                m_uiExplodeTimer = 5000;
-                                m_bFirstBarrel = true;
-                                break;
+                                    m_uiExplodeTimer = 2500;
+                                    ++m_uiExplodePhase;
+                                    break;
+                                case 1:
+                                    SetEscortPaused(false);
+                                    m_uiExplodePhase = 0;
+                                    m_uiExplodeTimer = 5000;
+                                    m_bFirstBarrel = true;
+                                    break;
                             }
                         }
                     }
@@ -281,7 +281,7 @@ struct npc_injured_rainspeaker : public CreatureScript
                 {
                     DoScriptText(SAY_END_2, m_creature);
 
-                       // location behind
+                    // location behind
                     float fAngle = m_creature->GetOrientation();
                     fAngle += M_PI_F;
 
@@ -329,34 +329,34 @@ struct npc_injured_rainspeaker : public CreatureScript
     }
 };
 
-/*
-bool GossipHello_npc_injured_rainspeaker(Player* pPlayer, Creature* pCreature)
-{
-    if (pPlayer->GetQuestStatus(QUEST_FORTUNATE_MISUNDERSTAND) == QUEST_STATUS_INCOMPLETE)
-    {
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_READY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
-        return true;
-    }
-
-    return false;
-}
-
-bool GossipSelect_npc_injured_rainspeaker(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
-{
-    if (uiAction == GOSSIP_ACTION_INFO_DEF)
-    {
-        pPlayer->CLOSE_GOSSIP_MENU();
-
-        if (npc_injured_rainspeakerAI* pEscortAI = dynamic_cast<npc_injured_rainspeakerAI*>(pCreature->AI()))
-        {
-            pEscortAI->Start(true, pPlayer);
-        }
-    }
-
-    return false;
-}
-*/
+/**
+ * bool GossipHello_npc_injured_rainspeaker(Player* pPlayer, Creature* pCreature)
+ * {
+ *     if (pPlayer->GetQuestStatus(QUEST_FORTUNATE_MISUNDERSTAND) == QUEST_STATUS_INCOMPLETE)
+ *     {
+ *         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_READY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+ *         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
+ *         return true;
+ *     }
+ *
+ *     return false;
+ * }
+ *
+ * bool GossipSelect_npc_injured_rainspeaker(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+ * {
+ *     if (uiAction == GOSSIP_ACTION_INFO_DEF)
+ *     {
+ *         pPlayer->CLOSE_GOSSIP_MENU();
+ *
+ *         if (npc_injured_rainspeakerAI* pEscortAI = dynamic_cast<npc_injured_rainspeakerAI*>(pCreature->AI()))
+ *         {
+ *             pEscortAI->Start(true, pPlayer);
+ *         }
+ *     }
+ *
+ *     return false;
+ * }
+ */
 
 /*######
 ## npc_mosswalker_victim
@@ -427,22 +427,22 @@ struct npc_mosswalker_victim : public CreatureScript
             {
                 switch (urand(0, 5))
                 {
-                case 0: DoScriptText(SAY_DIE_1, pCreature, pPlayer); break;
-                case 1: DoScriptText(SAY_DIE_2, pCreature, pPlayer); break;
-                case 2: DoScriptText(SAY_DIE_3, pCreature, pPlayer); break;
-                case 3: DoScriptText(SAY_DIE_4, pCreature, pPlayer); break;
-                case 4: DoScriptText(SAY_DIE_5, pCreature, pPlayer); break;
-                case 5: DoScriptText(SAY_DIE_6, pCreature, pPlayer); break;
+                    case 0: DoScriptText(SAY_DIE_1, pCreature, pPlayer); break;
+                    case 1: DoScriptText(SAY_DIE_2, pCreature, pPlayer); break;
+                    case 2: DoScriptText(SAY_DIE_3, pCreature, pPlayer); break;
+                    case 3: DoScriptText(SAY_DIE_4, pCreature, pPlayer); break;
+                    case 4: DoScriptText(SAY_DIE_5, pCreature, pPlayer); break;
+                    case 5: DoScriptText(SAY_DIE_6, pCreature, pPlayer); break;
                 }
             }
             else                                                // survive
             {
                 switch (urand(0, 3))
                 {
-                case 0: DoScriptText(SAY_RESCUE_1, pCreature, pPlayer); break;
-                case 1: DoScriptText(SAY_RESCUE_2, pCreature, pPlayer); break;
-                case 2: DoScriptText(SAY_RESCUE_3, pCreature, pPlayer); break;
-                case 3: DoScriptText(SAY_RESCUE_4, pCreature, pPlayer); break;
+                    case 0: DoScriptText(SAY_RESCUE_1, pCreature, pPlayer); break;
+                    case 1: DoScriptText(SAY_RESCUE_2, pCreature, pPlayer); break;
+                    case 2: DoScriptText(SAY_RESCUE_3, pCreature, pPlayer); break;
+                    case 3: DoScriptText(SAY_RESCUE_4, pCreature, pPlayer); break;
                 }
 
                 pCreature->CastSpell(pPlayer, SPELL_MOSSWALKER_QUEST_CREDIT, true);
@@ -582,10 +582,10 @@ struct npc_tipsy_mcmanus : public CreatureScript
             {
                 switch (urand(0, 3))
                 {
-                case 0: DoScriptText(SAY_ACTION_COMPLETE_1, m_creature); break;
-                case 1: DoScriptText(SAY_ACTION_COMPLETE_2, m_creature); break;
-                case 2: DoScriptText(SAY_ACTION_COMPLETE_3, m_creature); break;
-                case 3: DoScriptText(SAY_ACTION_COMPLETE_4, m_creature); break;
+                    case 0: DoScriptText(SAY_ACTION_COMPLETE_1, m_creature); break;
+                    case 1: DoScriptText(SAY_ACTION_COMPLETE_2, m_creature); break;
+                    case 2: DoScriptText(SAY_ACTION_COMPLETE_3, m_creature); break;
+                    case 3: DoScriptText(SAY_ACTION_COMPLETE_4, m_creature); break;
                 }
 
                 m_uiTaskTimer = 6000;
@@ -608,48 +608,48 @@ struct npc_tipsy_mcmanus : public CreatureScript
                     switch (m_uiTaskIndex)
                     {
                         // fruit tasks
-                    case 0:
-                    case 1:
-                    case 3:
-                    case 6:
-                    case 7:
-                    {
-                        uint8 uiIndex = urand(0, 2);
-                        DoScriptText(aStillAtItFruits[uiIndex].iText, m_creature);
-                        m_uiTaskOwnerEntry = aStillAtItFruits[uiIndex].uiOwnerEntry;
-
-                        m_uiTaskTimer = 0;
-                        m_uiActionTimer = 5000;
-                        break;
-                    }
-                        // valve or fire task
-                    case 2:
-                    case 4:
-                    case 5:
-                    case 8:
-                    {
-                        uint8 uiIndex = urand(0, 1);
-                        DoScriptText(aStillAtItMachines[uiIndex].iText, m_creature);
-                        m_uiTaskOwnerEntry = aStillAtItMachines[uiIndex].uiOwnerEntry;
-
-                        m_uiTaskTimer = 0;
-                        m_uiActionTimer = 5000;
-                        break;
-                    }
-                        // complete event
-                    case 9:
-                        DoScriptText(SAY_DISTILLATION_COMPLETE, m_creature);
-                        if (GameObject* pPunch = GetClosestGameObjectWithEntry(m_creature, GO_THUNDERBREW_JUNGLE_PUNCH, 10.0f))
+                        case 0:
+                        case 1:
+                        case 3:
+                        case 6:
+                        case 7:
                         {
-                            pPunch->SetRespawnTime(30);
-                            pPunch->Refresh();
+                            uint8 uiIndex = urand(0, 2);
+                            DoScriptText(aStillAtItFruits[uiIndex].iText, m_creature);
+                            m_uiTaskOwnerEntry = aStillAtItFruits[uiIndex].uiOwnerEntry;
+
+                            m_uiTaskTimer = 0;
+                            m_uiActionTimer = 5000;
+                            break;
                         }
-                        m_uiTaskTimer = 20000;
-                        break;
-                    case 10:
-                        EnterEvadeMode();
-                        m_uiTaskTimer = 0;
-                        break;
+                        // valve or fire task
+                        case 2:
+                        case 4:
+                        case 5:
+                        case 8:
+                        {
+                            uint8 uiIndex = urand(0, 1);
+                            DoScriptText(aStillAtItMachines[uiIndex].iText, m_creature);
+                            m_uiTaskOwnerEntry = aStillAtItMachines[uiIndex].uiOwnerEntry;
+
+                            m_uiTaskTimer = 0;
+                            m_uiActionTimer = 5000;
+                            break;
+                        }
+                        // complete event
+                        case 9:
+                            DoScriptText(SAY_DISTILLATION_COMPLETE, m_creature);
+                            if (GameObject* pPunch = GetClosestGameObjectWithEntry(m_creature, GO_THUNDERBREW_JUNGLE_PUNCH, 10.0f))
+                            {
+                                pPunch->SetRespawnTime(30);
+                                pPunch->Refresh();
+                            }
+                            m_uiTaskTimer = 20000;
+                            break;
+                        case 10:
+                            EnterEvadeMode();
+                            m_uiTaskTimer = 0;
+                            break;
                     }
                     ++m_uiTaskIndex;
                 }

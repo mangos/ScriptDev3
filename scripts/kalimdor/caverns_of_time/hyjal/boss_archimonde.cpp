@@ -83,14 +83,14 @@ enum
     SPELL_ANCIENT_SPARK         = 39349,
 };
 
-/*  Finally, Archimonde's script. His script isn't extremely complex, most are simply spells on timers.
-    The only complicated aspect of the battle is Finger of Death and Doomfire, with Doomfire being the
-    hardest bit to code. Finger of Death is simply a distance check - if no one is in melee range, then
-    select a random target and cast the spell on them. However, if someone IS in melee range, and this
-    is NOT the main tank (creature's victim), then we aggro that player and they become the new victim.
-    For Doomfire, we summon a mob (Doomfire Spirit) for the Doomfire mob to follow. It's spirit will
-    randomly select it's target to follow and then we create the random movement making it unpredictable.
-*/
+/** Finally, Archimonde's script. His script isn't extremely complex, most are simply spells on timers.
+ *  The only complicated aspect of the battle is Finger of Death and Doomfire, with Doomfire being the
+ *  hardest bit to code. Finger of Death is simply a distance check - if no one is in melee range, then
+ *  select a random target and cast the spell on them. However, if someone IS in melee range, and this
+ *  is NOT the main tank (creature's victim), then we aggro that player and they become the new victim.
+ *  For Doomfire, we summon a mob (Doomfire Spirit) for the Doomfire mob to follow. It's spirit will
+ *  randomly select it's target to follow and then we create the random movement making it unpredictable.
+ */
 
 struct boss_archimonde : public CreatureScript
 {
@@ -165,28 +165,28 @@ struct boss_archimonde : public CreatureScript
 
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY3, m_creature); break;
             }
 
             switch (pVictim->getClass())
             {
-            case CLASS_PRIEST:
-            case CLASS_PALADIN:
-            case CLASS_WARLOCK:
-                pVictim->CastSpell(m_creature, SPELL_SOUL_CHARGE_RED, true);
-                break;
-            case CLASS_MAGE:
-            case CLASS_ROGUE:
-            case CLASS_WARRIOR:
-                pVictim->CastSpell(m_creature, SPELL_SOUL_CHARGE_YELLOW, true);
-                break;
-            case CLASS_DRUID:
-            case CLASS_SHAMAN:
-            case CLASS_HUNTER:
-                pVictim->CastSpell(m_creature, SPELL_SOUL_CHARGE_GREEN, true);
-                break;
+                case CLASS_PRIEST:
+                case CLASS_PALADIN:
+                case CLASS_WARLOCK:
+                    pVictim->CastSpell(m_creature, SPELL_SOUL_CHARGE_RED, true);
+                    break;
+                case CLASS_MAGE:
+                case CLASS_ROGUE:
+                case CLASS_WARRIOR:
+                    pVictim->CastSpell(m_creature, SPELL_SOUL_CHARGE_YELLOW, true);
+                    break;
+                case CLASS_DRUID:
+                case CLASS_SHAMAN:
+                case CLASS_HUNTER:
+                    pVictim->CastSpell(m_creature, SPELL_SOUL_CHARGE_GREEN, true);
+                    break;
             }
         }
 

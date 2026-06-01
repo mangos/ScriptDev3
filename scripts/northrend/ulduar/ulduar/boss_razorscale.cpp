@@ -383,277 +383,277 @@ struct boss_razorscale : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_AIR:
+                case PHASE_AIR:
 
-                if (m_uiFireballTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    if (m_uiFireballTimer < uiDiff)
                     {
-                        if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_FIREBALL : SPELL_FIREBALL_H) == CAST_OK)
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         {
-                            m_uiFireballTimer = 2000;
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiFireballTimer -= uiDiff;
-                }
-
-                if (m_uiDevouringFlameTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_DEVOURING_FLAME) == CAST_OK)
-                        {
-                            m_uiDevouringFlameTimer = 10000;
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiDevouringFlameTimer -= uiDiff;
-                }
-
-                // harpoon is repaired; move to next one, or to home position if all are completed
-                if (m_uiRepairHarpoonTimer)
-                {
-                    if (m_uiRepairHarpoonTimer <= uiDiff)
-                    {
-                        // handle fire extinguish after a grounded phase
-                        if (!m_pInstance->GetData(TYPE_DATA_CURRENT_HARPOON))
-                        {
-                            // extinguish fires
-                            if (m_pInstance)
+                            if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_FIREBALL : SPELL_FIREBALL_H) == CAST_OK)
                             {
-                                if (Creature* pCommander = m_pInstance->GetSingleCreatureFromStorage(NPC_EXPEDITION_COMMANDER))
-                                {
-                                    if (Creature* pEngineer = GetClosestCreatureWithEntry(pCommander, NPC_EXPEDITION_ENGINEER, 15.0f))
-                                    {
-                                        DoScriptText(SAY_EXTINGUISH_FIRE, pEngineer);
-                                    }
-                                }
-                            }
-
-                            // move engineers to the first harpoon again
-                            DoMoveEngineersToHarpoon();
-                            m_uiRepairHarpoonTimer = 20000;
-                        }
-                        else
-                        {
-                            DoScriptText(EMOTE_HARPOON_READY, m_creature);
-
-                            // despawn the current broken harpoon and spawn the repaired one
-                            if (GameObject* pHarpoon = m_creature->GetMap()->GetGameObject(ObjectGuid(m_pInstance->GetData64(DATA64_BROKEN_HARPOON))))
-                            {
-                                pHarpoon->SetRespawnTime(HOUR);
-                                pHarpoon->SetLootState(GO_JUST_DEACTIVATED);
-
-                                DoRepairHarpoon(pHarpoon);
-                            }
-
-                            // if all harpoons have been repaired stop
-                            if (uint8(m_pInstance->GetData(TYPE_DATA_CURRENT_HARPOON)) == m_uiMaxHarpoons)
-                            {
-                                m_pInstance->SetData(TYPE_DO_HARPOONS_OK, 0);
-
-                                m_uiRepairHarpoonTimer = 0;
-                            }
-                            // move to next harpoon
-                            else
-                            {
-                                DoMoveEngineersToHarpoon();
-                                m_uiRepairHarpoonTimer = 20000;
+                                m_uiFireballTimer = 2000;
                             }
                         }
                     }
                     else
                     {
-                        m_uiRepairHarpoonTimer -= uiDiff;
+                        m_uiFireballTimer -= uiDiff;
                     }
-                }
 
-                // spawn Mole Machines with dwarfes
-                if (m_uiDwarfSpawnTimer < uiDiff)
-                {
-                    DoSpawnMoleMachines();
-                    m_uiDwarfSpawnTimer = 40000;
-                }
-                else
-                {
-                    m_uiDwarfSpawnTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_TRANSITION:
-
-                if (m_uiShackleTimer < uiDiff)
-                {
-                    // cast trap visual
-                    m_pInstance->SetData(TYPE_DO_TRAPPERS_CAST, SPELL_SHACKLE);
-
-                    // stun Razorscale
-                    if (DoCastSpellIfCan(m_creature, SPELL_STUN) == CAST_OK)
+                    if (m_uiDevouringFlameTimer < uiDiff)
                     {
-                        m_creature->SetLevitate(false);
-                        m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-
-                        m_uiPhase = PHASE_GROUNDED;
-                        m_uiGroundedTimer = 30000;
-                        m_uiGroundedStep = 0;
-                        m_uiShackleTimer = 5000;
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_DEVOURING_FLAME) == CAST_OK)
+                            {
+                                m_uiDevouringFlameTimer = 10000;
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    m_uiShackleTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_GROUNDED:
-
-                if (m_uiGroundedTimer < uiDiff)
-                {
-                    switch (m_uiGroundedStep)
+                    else
                     {
-                    case 0:
+                        m_uiDevouringFlameTimer -= uiDiff;
+                    }
+
+                    // harpoon is repaired; move to next one, or to home position if all are completed
+                    if (m_uiRepairHarpoonTimer)
+                    {
+                        if (m_uiRepairHarpoonTimer <= uiDiff)
+                        {
+                            // handle fire extinguish after a grounded phase
+                            if (!m_pInstance->GetData(TYPE_DATA_CURRENT_HARPOON))
+                            {
+                                // extinguish fires
+                                if (m_pInstance)
+                                {
+                                    if (Creature* pCommander = m_pInstance->GetSingleCreatureFromStorage(NPC_EXPEDITION_COMMANDER))
+                                    {
+                                        if (Creature* pEngineer = GetClosestCreatureWithEntry(pCommander, NPC_EXPEDITION_ENGINEER, 15.0f))
+                                        {
+                                            DoScriptText(SAY_EXTINGUISH_FIRE, pEngineer);
+                                        }
+                                    }
+                                }
+
+                                // move engineers to the first harpoon again
+                                DoMoveEngineersToHarpoon();
+                                m_uiRepairHarpoonTimer = 20000;
+                            }
+                            else
+                            {
+                                DoScriptText(EMOTE_HARPOON_READY, m_creature);
+
+                                // despawn the current broken harpoon and spawn the repaired one
+                                if (GameObject* pHarpoon = m_creature->GetMap()->GetGameObject(ObjectGuid(m_pInstance->GetData64(DATA64_BROKEN_HARPOON))))
+                                {
+                                    pHarpoon->SetRespawnTime(HOUR);
+                                    pHarpoon->SetLootState(GO_JUST_DEACTIVATED);
+
+                                    DoRepairHarpoon(pHarpoon);
+                                }
+
+                                // if all harpoons have been repaired stop
+                                if (uint8(m_pInstance->GetData(TYPE_DATA_CURRENT_HARPOON)) == m_uiMaxHarpoons)
+                                {
+                                    m_pInstance->SetData(TYPE_DO_HARPOONS_OK, 0);
+
+                                    m_uiRepairHarpoonTimer = 0;
+                                }
+                                // move to next harpoon
+                                else
+                                {
+                                    DoMoveEngineersToHarpoon();
+                                    m_uiRepairHarpoonTimer = 20000;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiRepairHarpoonTimer -= uiDiff;
+                        }
+                    }
+
+                    // spawn Mole Machines with dwarfes
+                    if (m_uiDwarfSpawnTimer < uiDiff)
+                    {
+                        DoSpawnMoleMachines();
+                        m_uiDwarfSpawnTimer = 40000;
+                    }
+                    else
+                    {
+                        m_uiDwarfSpawnTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_TRANSITION:
+
+                    if (m_uiShackleTimer < uiDiff)
+                    {
+                        // cast trap visual
+                        m_pInstance->SetData(TYPE_DO_TRAPPERS_CAST, SPELL_SHACKLE);
+
+                        // stun Razorscale
+                        if (DoCastSpellIfCan(m_creature, SPELL_STUN) == CAST_OK)
+                        {
+                            m_creature->SetLevitate(false);
+                            m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+
+                            m_uiPhase = PHASE_GROUNDED;
+                            m_uiGroundedTimer = 30000;
+                            m_uiGroundedStep = 0;
+                            m_uiShackleTimer = 5000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiShackleTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_GROUNDED:
+
+                    if (m_uiGroundedTimer < uiDiff)
+                    {
+                        switch (m_uiGroundedStep)
+                        {
+                            case 0:
+                                m_creature->RemoveAurasDueToSpell(SPELL_STUN);
+                                if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_FLAME_BREATH : SPELL_FLAME_BREATH_H) == CAST_OK)
+                                {
+                                    DoScriptText(EMOTE_BREATH, m_creature);
+                                    m_uiGroundedTimer = 2500;
+                                }
+                                break;
+                            case 1:
+                                if (DoCastSpellIfCan(m_creature, SPELL_WING_BUFFET) == CAST_OK)
+                                {
+                                    m_uiGroundedTimer = 1500;
+                                }
+                                break;
+                            case 2:
+                                if (DoCastSpellIfCan(m_creature, SPELL_FIREBOLT) == CAST_OK)
+                                {
+                                    m_uiGroundedTimer = 2000;
+                                }
+                                break;
+                            case 3:
+                                // if fully grounded then go to ground phase
+                                if (m_bIsGrounded)
+                                {
+                                    SetCombatMovement(true);
+                                    DoResetThreat();
+                                    DoStartMovement(m_creature->getVictim());
+                                    m_uiPhase = PHASE_ONLY_GROUND;
+                                }
+                                // resume air phase
+                                else
+                                {
+                                    m_creature->SetLevitate(true);
+                                    m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+
+                                    float fX, fY, fZ;
+                                    m_creature->GetRespawnCoord(fX, fY, fZ);
+
+                                    // use upgraded speed rate for FlyOrLand. This isn't supported by DB but it's confirmed to happen on retail
+                                    uint32 uiSpeedRate = m_creature->GetSpeedRate(MOVE_RUN);
+                                    m_creature->SetSpeedRate(MOVE_RUN, SPEED_RATE_RAZORSCALE);
+                                    m_creature->GetMotionMaster()->MoveFlyOrLand(1, fX, fY, fZ, true);
+                                    m_creature->SetSpeedRate(MOVE_RUN, uiSpeedRate);
+
+                                    // reset timers
+                                    m_uiPhase = PHASE_AIR;
+                                    m_pInstance->SetData(TYPE_DATA_CURRENT_HARPOON, 0);
+                                    m_uiHarpoonsUsed = 0;
+                                    m_uiRepairHarpoonTimer = 20000;
+                                    m_uiFireballTimer = 5000;
+                                    m_uiDevouringFlameTimer = 10000;
+                                    ++m_uiFlyPhaseCount;
+
+                                    // set achiev criteria as failed
+                                    if (m_uiFlyPhaseCount >= 2 && m_pInstance)
+                                    {
+                                        m_pInstance->SetData(TYPE_ACHIEV_QUICK_SHAVE, uint32(false));
+                                    }
+                                }
+
+                                // make the Trappers evade or move to home position
+                                m_pInstance->SetData(TYPE_DO_TRAPPERS_EVADE, 0);
+                                break;
+                        }
+                        ++m_uiGroundedStep;
+                    }
+                    else
+                    {
+                        m_uiGroundedTimer -= uiDiff;
+                    }
+
+                    // make boss land at 50% hp
+                    if (!m_bIsGrounded && m_creature->GetHealthPercent() < 50.0f)
+                    {
+                        DoScriptText(EMOTE_GROUNDED, m_creature);
                         m_creature->RemoveAurasDueToSpell(SPELL_STUN);
+                        m_uiGroundedStep = 1;
+                        m_uiGroundedTimer = 0;
+                        m_bIsGrounded = true;
+                    }
+
+                    break;
+                case PHASE_ONLY_GROUND:
+
+                    if (m_uiDevouringFlameTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_DEVOURING_FLAME) == CAST_OK)
+                            {
+                                m_uiDevouringFlameTimer = 10000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiDevouringFlameTimer -= uiDiff;
+                    }
+
+                    if (m_uiFuseArmorTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FUSE_ARMOR) == CAST_OK)
+                        {
+                            m_uiFuseArmorTimer = 13000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiFuseArmorTimer -= uiDiff;
+                    }
+
+                    if (m_uiFlameBuffetTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_FLAME_BUFFET : SPELL_FLAME_BUFFET_H) == CAST_OK)
+                        {
+                            m_uiFlameBuffetTimer = 10000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiFlameBuffetTimer -= uiDiff;
+                    }
+
+                    if (m_uiFlameBreathTimer < uiDiff)
+                    {
                         if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_FLAME_BREATH : SPELL_FLAME_BREATH_H) == CAST_OK)
                         {
                             DoScriptText(EMOTE_BREATH, m_creature);
-                            m_uiGroundedTimer = 2500;
+                            m_uiFlameBreathTimer = 15000;
                         }
-                        break;
-                    case 1:
-                        if (DoCastSpellIfCan(m_creature, SPELL_WING_BUFFET) == CAST_OK)
-                        {
-                            m_uiGroundedTimer = 1500;
-                        }
-                        break;
-                    case 2:
-                        if (DoCastSpellIfCan(m_creature, SPELL_FIREBOLT) == CAST_OK)
-                        {
-                            m_uiGroundedTimer = 2000;
-                        }
-                        break;
-                    case 3:
-                        // if fully grounded then go to ground phase
-                        if (m_bIsGrounded)
-                        {
-                            SetCombatMovement(true);
-                            DoResetThreat();
-                            DoStartMovement(m_creature->getVictim());
-                            m_uiPhase = PHASE_ONLY_GROUND;
-                        }
-                        // resume air phase
-                        else
-                        {
-                            m_creature->SetLevitate(true);
-                            m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-
-                            float fX, fY, fZ;
-                            m_creature->GetRespawnCoord(fX, fY, fZ);
-
-                            // use upgraded speed rate for FlyOrLand. This isn't supported by DB but it's confirmed to happen on retail
-                            uint32 uiSpeedRate = m_creature->GetSpeedRate(MOVE_RUN);
-                            m_creature->SetSpeedRate(MOVE_RUN, SPEED_RATE_RAZORSCALE);
-                            m_creature->GetMotionMaster()->MoveFlyOrLand(1, fX, fY, fZ, true);
-                            m_creature->SetSpeedRate(MOVE_RUN, uiSpeedRate);
-
-                            // reset timers
-                            m_uiPhase = PHASE_AIR;
-                            m_pInstance->SetData(TYPE_DATA_CURRENT_HARPOON, 0);
-                            m_uiHarpoonsUsed = 0;
-                            m_uiRepairHarpoonTimer = 20000;
-                            m_uiFireballTimer = 5000;
-                            m_uiDevouringFlameTimer = 10000;
-                            ++m_uiFlyPhaseCount;
-
-                            // set achiev criteria as failed
-                            if (m_uiFlyPhaseCount >= 2 && m_pInstance)
-                            {
-                                m_pInstance->SetData(TYPE_ACHIEV_QUICK_SHAVE, uint32(false));
-                            }
-                        }
-
-                        // make the Trappers evade or move to home position
-                        m_pInstance->SetData(TYPE_DO_TRAPPERS_EVADE, 0);
-                        break;
                     }
-                    ++m_uiGroundedStep;
-                }
-                else
-                {
-                    m_uiGroundedTimer -= uiDiff;
-                }
-
-                // make boss land at 50% hp
-                if (!m_bIsGrounded && m_creature->GetHealthPercent() < 50.0f)
-                {
-                    DoScriptText(EMOTE_GROUNDED, m_creature);
-                    m_creature->RemoveAurasDueToSpell(SPELL_STUN);
-                    m_uiGroundedStep = 1;
-                    m_uiGroundedTimer = 0;
-                    m_bIsGrounded = true;
-                }
-
-                break;
-            case PHASE_ONLY_GROUND:
-
-                if (m_uiDevouringFlameTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    else
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_DEVOURING_FLAME) == CAST_OK)
-                        {
-                            m_uiDevouringFlameTimer = 10000;
-                        }
+                        m_uiFlameBreathTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiDevouringFlameTimer -= uiDiff;
-                }
 
-                if (m_uiFuseArmorTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FUSE_ARMOR) == CAST_OK)
-                    {
-                        m_uiFuseArmorTimer = 13000;
-                    }
-                }
-                else
-                {
-                    m_uiFuseArmorTimer -= uiDiff;
-                }
-
-                if (m_uiFlameBuffetTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_FLAME_BUFFET : SPELL_FLAME_BUFFET_H) == CAST_OK)
-                    {
-                        m_uiFlameBuffetTimer = 10000;
-                    }
-                }
-                else
-                {
-                    m_uiFlameBuffetTimer -= uiDiff;
-                }
-
-                if (m_uiFlameBreathTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_FLAME_BREATH : SPELL_FLAME_BREATH_H) == CAST_OK)
-                    {
-                        DoScriptText(EMOTE_BREATH, m_creature);
-                        m_uiFlameBreathTimer = 15000;
-                    }
-                }
-                else
-                {
-                    m_uiFlameBreathTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-                break;
+                    DoMeleeAttackIfReady();
+                    break;
             }
         }
     };
@@ -675,7 +675,7 @@ struct npc_expedition_commander : public CreatureScript
     struct npc_expedition_commanderAI : public ScriptedAI, private DialogueHelper
     {
         npc_expedition_commanderAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -713,38 +713,38 @@ struct npc_expedition_commander : public CreatureScript
 
             switch (iEntry)
             {
-            case NPC_EXPEDITION_ENGINEER:
-            {
-                if (Creature* pEngineer = GetClosestCreatureWithEntry(m_creature, NPC_EXPEDITION_ENGINEER, 15.0f))
+                case NPC_EXPEDITION_ENGINEER:
                 {
-                    DoScriptText(SAY_INTRO_1, pEngineer);
-                }
-
-                // move the defenders into attack position
-                m_pInstance->SetData(TYPE_DO_MOVE_DEFENDERS, 0);
-                break;
-            }
-            case NPC_RAZORSCALE:
-                if (Creature* pRazorscale = m_pInstance->GetSingleCreatureFromStorage(NPC_RAZORSCALE))
-                {
-                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                    if (Creature* pEngineer = GetClosestCreatureWithEntry(m_creature, NPC_EXPEDITION_ENGINEER, 15.0f))
                     {
-                        pRazorscale->AI()->AttackStart(pPlayer);
+                        DoScriptText(SAY_INTRO_1, pEngineer);
                     }
-                }
-                break;
-            case NPC_EXPEDITION_DEFENDER:
-                if (Creature* pEngineer = GetClosestCreatureWithEntry(m_creature, NPC_EXPEDITION_ENGINEER, 15.0f))
-                {
-                    DoScriptText(SAY_INTRO_3, pEngineer);
-                }
 
-                // inform Razorscale about the start of the harpoon event
-                if (Creature* pRazorscale = m_pInstance->GetSingleCreatureFromStorage(NPC_RAZORSCALE))
-                {
-                    m_creature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pRazorscale);
+                    // move the defenders into attack position
+                    m_pInstance->SetData(TYPE_DO_MOVE_DEFENDERS, 0);
+                    break;
                 }
-                break;
+                case NPC_RAZORSCALE:
+                    if (Creature* pRazorscale = m_pInstance->GetSingleCreatureFromStorage(NPC_RAZORSCALE))
+                    {
+                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                        {
+                            pRazorscale->AI()->AttackStart(pPlayer);
+                        }
+                    }
+                    break;
+                case NPC_EXPEDITION_DEFENDER:
+                    if (Creature* pEngineer = GetClosestCreatureWithEntry(m_creature, NPC_EXPEDITION_ENGINEER, 15.0f))
+                    {
+                        DoScriptText(SAY_INTRO_3, pEngineer);
+                    }
+
+                    // inform Razorscale about the start of the harpoon event
+                    if (Creature* pRazorscale = m_pInstance->GetSingleCreatureFromStorage(NPC_RAZORSCALE))
+                    {
+                        m_creature->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pRazorscale);
+                    }
+                    break;
             }
         }
 

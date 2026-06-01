@@ -117,9 +117,9 @@ struct boss_gruul : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY3, m_creature); break;
             }
         }
 
@@ -143,8 +143,8 @@ struct boss_gruul : public CreatureScript
                 {
                     switch (urand(0, 1))
                     {
-                    case 0: pTarget->CastSpell(pTarget, SPELL_MAGNETIC_PULL, true, nullptr, nullptr, m_creature->GetObjectGuid()); break;
-                    case 1: pTarget->CastSpell(pTarget, SPELL_KNOCK_BACK, true, nullptr, nullptr, m_creature->GetObjectGuid()); break;
+                        case 0: pTarget->CastSpell(pTarget, SPELL_MAGNETIC_PULL, true, nullptr, nullptr, m_creature->GetObjectGuid()); break;
+                        case 1: pTarget->CastSpell(pTarget, SPELL_KNOCK_BACK, true, nullptr, nullptr, m_creature->GetObjectGuid()); break;
                     }
                 }
             }

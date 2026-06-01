@@ -100,10 +100,10 @@ struct boss_coren_direbrew : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_ILSA_DIREBREW:
-            case NPC_URSULA_DIREBREW:
-                pSummoned->CastSpell(m_creature, SPELL_PORT_TO_COREN, true);
-                break;
+                case NPC_ILSA_DIREBREW:
+                case NPC_URSULA_DIREBREW:
+                    pSummoned->CastSpell(m_creature, SPELL_PORT_TO_COREN, true);
+                    break;
             }
 
             if (m_creature->getVictim())

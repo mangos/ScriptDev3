@@ -48,14 +48,14 @@ EndContentData */
 ## go_ulduar_teleporter
 #####*/
 
-/* ****
-* The teleporter spells cannot be used atm, because target-type TARGET_SCRIPT_COORDINATES, NO_TARGET is not yet suitable for needed targeting. (Current core-Design)
-* All teleporters are GO with entry 194569 - on them are npcs of entry 32780 spawned.
-* However for reload case we would need to be able to target these npcs of not yet loaded grids (currently impossible)
-* And in general we would need some "good" way of selecting appropriate target-npcs for each spell, but sorting is nearly impossible, as there are > 50 of these npcs spawned in Ulduar
+/** ****
+ * The teleporter spells cannot be used atm, because target-type TARGET_SCRIPT_COORDINATES, NO_TARGET is not yet suitable for needed targeting. (Current core-Design)
+ * All teleporters are GO with entry 194569 - on them are npcs of entry 32780 spawned.
+ * However for reload case we would need to be able to target these npcs of not yet loaded grids (currently impossible)
+ * And in general we would need some "good" way of selecting appropriate target-npcs for each spell, but sorting is nearly impossible, as there are > 50 of these npcs spawned in Ulduar
 
-* So --  TODO -- remove the TeleportTo Hacks when correct target selection for this spell is working.
-*/
+ * So --  TODO -- remove the TeleportTo Hacks when correct target selection for this spell is working.
+ */
 
 enum TeleporterSpells
 {
@@ -173,52 +173,52 @@ struct go_ulduar_teleporter : public GameObjectScript
         switch (uiAction)
         {
             // Basecamp
-        case GOSSIP_ACTION_INFO_DEF:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_EXPEDITION_BASE_CAMP, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, -706.122f, -92.6024f, 429.876f, 0);
-            break;
+            case GOSSIP_ACTION_INFO_DEF:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_EXPEDITION_BASE_CAMP, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, -706.122f, -92.6024f, 429.876f, 0);
+                break;
             // Formation Grounds
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_FORMATION_GROUNDS, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, 131.248f, -35.3802f, 409.804f, 0);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_FORMATION_GROUNDS, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, 131.248f, -35.3802f, 409.804f, 0);
+                break;
             // Colossal Forge
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_COLOSSAL_FORGE, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, 553.233f, -12.3247f, 409.679f, 0);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_COLOSSAL_FORGE, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, 553.233f, -12.3247f, 409.679f, 0);
+                break;
             // Scrapyard
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_SCRAPYARD, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, 926.292f, -11.4635f, 418.595f, 0);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 3:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_SCRAPYARD, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, 926.292f, -11.4635f, 418.595f, 0);
+                break;
             // Antechamber
-        case GOSSIP_ACTION_INFO_DEF + 4:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_ANTECHAMBER_OF_ULDUAR, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, 1498.09f, -24.246f, 420.967f, 0);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 4:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_ANTECHAMBER_OF_ULDUAR, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, 1498.09f, -24.246f, 420.967f, 0);
+                break;
             // Shattered walkway
-        case GOSSIP_ACTION_INFO_DEF + 5:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_SHATTERED_WALKWAY, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, 1859.45f, -24.1f, 448.9f, 0);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 5:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_SHATTERED_WALKWAY, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, 1859.45f, -24.1f, 448.9f, 0);
+                break;
             // Conservatory of life
-        case GOSSIP_ACTION_INFO_DEF + 6:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_CONSERVATORY_OF_LIFE, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, 2086.27f, -24.3134f, 421.239f, 0);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 6:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_CONSERVATORY_OF_LIFE, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, 2086.27f, -24.3134f, 421.239f, 0);
+                break;
             // Spark of imagination
-        case GOSSIP_ACTION_INFO_DEF + 7:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_SPARK_OF_IMAGINATION, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, 2518.16f, 2569.03f, 412.299f, 0);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 7:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_SPARK_OF_IMAGINATION, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, 2518.16f, 2569.03f, 412.299f, 0);
+                break;
             // Prison of Yogg-Saron
-        case GOSSIP_ACTION_INFO_DEF + 8:
-            // pPlayer->CastSpell(pPlayer, SPELL_TELE_PRISON_OF_YOGG, true, nullptr, nullptr, pGo->GetObjectGuid());
-            pPlayer->TeleportTo(603, 1854.82f, -11.56f, 334.175f, 4.71f);
-            break;
-        default:
-            return true;
+            case GOSSIP_ACTION_INFO_DEF + 8:
+                // pPlayer->CastSpell(pPlayer, SPELL_TELE_PRISON_OF_YOGG, true, nullptr, nullptr, pGo->GetObjectGuid());
+                pPlayer->TeleportTo(603, 1854.82f, -11.56f, 334.175f, 4.71f);
+                break;
+            default:
+                return true;
         }
 
         pPlayer->CLOSE_GOSSIP_MENU();
@@ -313,35 +313,35 @@ struct npc_keeper_norgannon : public CreatureScript
     {
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_CONFIRMED, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_DEFENSES, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
-            {
-                // if hard mode is triggered all towers become active and encounter starts automatically
-                pInstance->SetData(TYPE_TOWER_FREYA, DONE);
-                pInstance->SetData(TYPE_TOWER_HODIR, DONE);
-                pInstance->SetData(TYPE_TOWER_MIMIRON, DONE);
-                pInstance->SetData(TYPE_TOWER_THORIM, DONE);
-
-                // set gauntlet in progress and despawn the Lorekeeper; rest of the event is done by DB scripts
-                pInstance->SetData(TYPE_LEVIATHAN_GAUNTLET, IN_PROGRESS);
-                pCreature->ForcedDespawn(10000);
-
-                if (Creature* pDellorah = pInstance->GetSingleCreatureFromStorage(NPC_EXPLORER_DELLORAH))
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_CONFIRMED, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_DEFENSES, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
                 {
-                    pDellorah->GetMotionMaster()->MoveWaypoint();
-                }
-                if (Creature* pBrann = pInstance->GetSingleCreatureFromStorage(NPC_BRANN_BRONZEBEARD))
-                {
-                    pBrann->GetMotionMaster()->MoveWaypoint();
-                }
-            }
+                    // if hard mode is triggered all towers become active and encounter starts automatically
+                    pInstance->SetData(TYPE_TOWER_FREYA, DONE);
+                    pInstance->SetData(TYPE_TOWER_HODIR, DONE);
+                    pInstance->SetData(TYPE_TOWER_MIMIRON, DONE);
+                    pInstance->SetData(TYPE_TOWER_THORIM, DONE);
 
-            pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_ACTIVATED, pCreature->GetObjectGuid());
-            break;
+                    // set gauntlet in progress and despawn the Lorekeeper; rest of the event is done by DB scripts
+                    pInstance->SetData(TYPE_LEVIATHAN_GAUNTLET, IN_PROGRESS);
+                    pCreature->ForcedDespawn(10000);
+
+                    if (Creature* pDellorah = pInstance->GetSingleCreatureFromStorage(NPC_EXPLORER_DELLORAH))
+                    {
+                        pDellorah->GetMotionMaster()->MoveWaypoint();
+                    }
+                    if (Creature* pBrann = pInstance->GetSingleCreatureFromStorage(NPC_BRANN_BRONZEBEARD))
+                    {
+                        pBrann->GetMotionMaster()->MoveWaypoint();
+                    }
+                }
+
+                pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_ACTIVATED, pCreature->GetObjectGuid());
+                break;
         }
 
         return true;
@@ -369,20 +369,20 @@ struct event_go_ulduar_tower : public MapEventScript
             // Towers can be deactivated by destroying them. Notify instance data in case they get destroyed.
             switch (uiEventId)
             {
-            case EVENT_ID_TOWER_LIFE:
-                pInstance->SetData(TYPE_TOWER_FREYA, FAIL);
-                break;
-            case EVENT_ID_TOWER_FLAME:
-                pInstance->SetData(TYPE_TOWER_MIMIRON, FAIL);
-                break;
-            case EVENT_ID_TOWER_FROST:
-                pInstance->SetData(TYPE_TOWER_HODIR, FAIL);
-                break;
-            case EVENT_ID_TOWER_STORMS:
-                pInstance->SetData(TYPE_TOWER_THORIM, FAIL);
-                break;
-            default:
-                return false;
+                case EVENT_ID_TOWER_LIFE:
+                    pInstance->SetData(TYPE_TOWER_FREYA, FAIL);
+                    break;
+                case EVENT_ID_TOWER_FLAME:
+                    pInstance->SetData(TYPE_TOWER_MIMIRON, FAIL);
+                    break;
+                case EVENT_ID_TOWER_FROST:
+                    pInstance->SetData(TYPE_TOWER_HODIR, FAIL);
+                    break;
+                case EVENT_ID_TOWER_STORMS:
+                    pInstance->SetData(TYPE_TOWER_THORIM, FAIL);
+                    break;
+                default:
+                    return false;
             }
 
             // despawn all generators in range
@@ -633,38 +633,38 @@ struct npc_ulduar_keeper : public CreatureScript
             {
                 switch (pCreature->GetEntry())
                 {
-                case NPC_KEEPER_HODIR:
-                    if (pInstance->GetData(TYPE_KEEPER_HODIR) != DONE)
-                    {
-                        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                    }
+                    case NPC_KEEPER_HODIR:
+                        if (pInstance->GetData(TYPE_KEEPER_HODIR) != DONE)
+                        {
+                            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                        }
 
-                    pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_HODIR, pCreature->GetObjectGuid());
-                    break;
-                case NPC_KEEPER_FREYA:
-                    if (pInstance->GetData(TYPE_KEEPER_FREYA) != DONE)
-                    {
-                        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                    }
+                        pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_HODIR, pCreature->GetObjectGuid());
+                        break;
+                    case NPC_KEEPER_FREYA:
+                        if (pInstance->GetData(TYPE_KEEPER_FREYA) != DONE)
+                        {
+                            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                        }
 
-                    pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_FREYA, pCreature->GetObjectGuid());
-                    break;
-                case NPC_KEEPER_THORIM:
-                    if (pInstance->GetData(TYPE_KEEPER_THORIM) != DONE)
-                    {
-                        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                    }
+                        pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_FREYA, pCreature->GetObjectGuid());
+                        break;
+                    case NPC_KEEPER_THORIM:
+                        if (pInstance->GetData(TYPE_KEEPER_THORIM) != DONE)
+                        {
+                            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                        }
 
-                    pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_THORIM, pCreature->GetObjectGuid());
-                    break;
-                case NPC_KEEPER_MIMIRON:
-                    if (pInstance->GetData(TYPE_KEEPER_MIMIRON) != DONE)
-                    {
-                        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                    }
+                        pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_THORIM, pCreature->GetObjectGuid());
+                        break;
+                    case NPC_KEEPER_MIMIRON:
+                        if (pInstance->GetData(TYPE_KEEPER_MIMIRON) != DONE)
+                        {
+                            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_LEND_AID, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                        }
 
-                    pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_MIMIRON, pCreature->GetObjectGuid());
-                    break;
+                        pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_MIMIRON, pCreature->GetObjectGuid());
+                        break;
                 }
             }
         }
@@ -675,25 +675,25 @@ struct npc_ulduar_keeper : public CreatureScript
     {
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KEEPER_CONFIRM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_KEEPER_CONFIRM, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            DoScriptText(SAY_KEEPER_ACTIVE, pCreature, pPlayer);
-            pPlayer->CLOSE_GOSSIP_MENU();
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KEEPER_CONFIRM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_KEEPER_CONFIRM, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                DoScriptText(SAY_KEEPER_ACTIVE, pCreature, pPlayer);
+                pPlayer->CLOSE_GOSSIP_MENU();
 
-            if (InstanceData* pInstance = pCreature->GetInstanceData())
-            {
-                switch (pCreature->GetEntry())
+                if (InstanceData* pInstance = pCreature->GetInstanceData())
                 {
-                case NPC_KEEPER_HODIR:   pInstance->SetData(TYPE_KEEPER_HODIR, DONE); break;
-                case NPC_KEEPER_FREYA:   pInstance->SetData(TYPE_KEEPER_FREYA, DONE); break;
-                case NPC_KEEPER_THORIM:  pInstance->SetData(TYPE_KEEPER_THORIM, DONE); break;
-                case NPC_KEEPER_MIMIRON: pInstance->SetData(TYPE_KEEPER_MIMIRON, DONE); break;
+                    switch (pCreature->GetEntry())
+                    {
+                        case NPC_KEEPER_HODIR:   pInstance->SetData(TYPE_KEEPER_HODIR, DONE); break;
+                        case NPC_KEEPER_FREYA:   pInstance->SetData(TYPE_KEEPER_FREYA, DONE); break;
+                        case NPC_KEEPER_THORIM:  pInstance->SetData(TYPE_KEEPER_THORIM, DONE); break;
+                        case NPC_KEEPER_MIMIRON: pInstance->SetData(TYPE_KEEPER_MIMIRON, DONE); break;
+                    }
                 }
-            }
-            break;
+                break;
         }
 
         return true;

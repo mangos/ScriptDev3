@@ -161,9 +161,9 @@ struct boss_jedoga : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
             }
         }
 
@@ -191,11 +191,11 @@ struct boss_jedoga : public CreatureScript
             {
                 switch (urand(0, 4))
                 {
-                case 0: DoScriptText(SAY_PREACHING1, m_creature); break;
-                case 1: DoScriptText(SAY_PREACHING2, m_creature); break;
-                case 2: DoScriptText(SAY_PREACHING3, m_creature); break;
-                case 3: DoScriptText(SAY_PREACHING4, m_creature); break;
-                case 4: DoScriptText(SAY_PREACHING5, m_creature); break;
+                    case 0: DoScriptText(SAY_PREACHING1, m_creature); break;
+                    case 1: DoScriptText(SAY_PREACHING2, m_creature); break;
+                    case 2: DoScriptText(SAY_PREACHING3, m_creature); break;
+                    case 3: DoScriptText(SAY_PREACHING4, m_creature); break;
+                    case 4: DoScriptText(SAY_PREACHING5, m_creature); break;
                 }
                 m_bHasDoneIntro = true;
             }
@@ -300,56 +300,56 @@ struct boss_jedoga : public CreatureScript
             switch (uiPointId)
             {
                 // Prepare for combat
-            case POINT_ID_PREPARE:
+                case POINT_ID_PREPARE:
 
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->RemoveAurasDueToSpell(SPELL_LIGHTNING_VISUAL);
-                m_creature->RemoveAurasDueToSpell(SPELL_SPHERE_VISUAL);
-                m_creature->SetLevitate(false);
-                break;
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    m_creature->RemoveAurasDueToSpell(SPELL_LIGHTNING_VISUAL);
+                    m_creature->RemoveAurasDueToSpell(SPELL_SPHERE_VISUAL);
+                    m_creature->SetLevitate(false);
+                    break;
 
                 // Prepare for sacrifice lift off
-            case POINT_ID_SACRIFICE:
-                DoCastSpellIfCan(m_creature, SPELL_HOVER_FALL);
-                m_creature->SetLevitate(true);
-                m_creature->GetMotionMaster()->MovePoint(POINT_ID_LEVITATE, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 10.0f);
-                break;
+                case POINT_ID_SACRIFICE:
+                    DoCastSpellIfCan(m_creature, SPELL_HOVER_FALL);
+                    m_creature->SetLevitate(true);
+                    m_creature->GetMotionMaster()->MovePoint(POINT_ID_LEVITATE, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 10.0f);
+                    break;
 
                 // Call a volunteer to sacrifice
-            case POINT_ID_LEVITATE:
-                if (Creature* pVolunteer = m_creature->GetMap()->GetCreature(SelectRandomVolunteer()))
-                {
-                    DoScriptText(urand(0, 1) ? SAY_CALL_SACRIFICE1 : SAY_CALL_SACRIFICE2, m_creature);
-                    DoScriptText(SAY_VOLUNTEER_CHOOSEN, pVolunteer);
+                case POINT_ID_LEVITATE:
+                    if (Creature* pVolunteer = m_creature->GetMap()->GetCreature(SelectRandomVolunteer()))
+                    {
+                        DoScriptText(urand(0, 1) ? SAY_CALL_SACRIFICE1 : SAY_CALL_SACRIFICE2, m_creature);
+                        DoScriptText(SAY_VOLUNTEER_CHOOSEN, pVolunteer);
 
-                    pVolunteer->RemoveAurasDueToSpell(SPELL_VOLUNTEER_SPHERE);
-                    pVolunteer->SetStandState(UNIT_STAND_STATE_STAND);
-                    pVolunteer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    pVolunteer->CastSpell(pVolunteer, SPELL_PILLAR_LIGHTNING, false);
-                    pVolunteer->SetWalk(true);
-                    pVolunteer->GetMotionMaster()->MovePoint(POINT_ID_SACRIFICE, aJedogaLandingLoc[0], aJedogaLandingLoc[1], aJedogaLandingLoc[2]);
-                }
+                        pVolunteer->RemoveAurasDueToSpell(SPELL_VOLUNTEER_SPHERE);
+                        pVolunteer->SetStandState(UNIT_STAND_STATE_STAND);
+                        pVolunteer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        pVolunteer->CastSpell(pVolunteer, SPELL_PILLAR_LIGHTNING, false);
+                        pVolunteer->SetWalk(true);
+                        pVolunteer->GetMotionMaster()->MovePoint(POINT_ID_SACRIFICE, aJedogaLandingLoc[0], aJedogaLandingLoc[1], aJedogaLandingLoc[2]);
+                    }
 
-                // Set visual aura
-                if (m_pInstance)
-                {
-                    m_pInstance->SetData(TYPE_DO_JEDOGA, 0);
-                }
-                break;
+                    // Set visual aura
+                    if (m_pInstance)
+                    {
+                        m_pInstance->SetData(TYPE_DO_JEDOGA, 0);
+                    }
+                    break;
 
                 // Resume combat
-            case POINT_ID_COMBAT:
-                m_creature->RemoveAurasDueToSpell(SPELL_HOVER_FALL);
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                case POINT_ID_COMBAT:
+                    m_creature->RemoveAurasDueToSpell(SPELL_HOVER_FALL);
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
-                m_bIsSacrificing = false;
-                SetCombatMovement(true);
-                m_creature->SetLevitate(false);
-                if (m_creature->getVictim())
-                {
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                }
-                break;
+                    m_bIsSacrificing = false;
+                    SetCombatMovement(true);
+                    m_creature->SetLevitate(false);
+                    if (m_creature->getVictim())
+                    {
+                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                    }
+                    break;
             }
         }
 

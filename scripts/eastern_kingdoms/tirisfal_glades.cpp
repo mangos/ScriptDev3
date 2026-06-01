@@ -180,23 +180,23 @@ struct npc_calvin_montague : public CreatureScript
 
                 switch (m_uiPhase)
                 {
-                case 1:
-                    DoScriptText(SAY_COMPLETE, m_creature);
-                    ++m_uiPhase;
-                    break;
-                case 2:
-                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                    {
-                        pPlayer->AreaExploredOrEventHappens(QUEST_590);
-                    }
+                    case 1:
+                        DoScriptText(SAY_COMPLETE, m_creature);
+                        ++m_uiPhase;
+                        break;
+                    case 2:
+                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                        {
+                            pPlayer->AreaExploredOrEventHappens(QUEST_590);
+                        }
 
-                    m_creature->CastSpell(m_creature, SPELL_DRINK, true);
-                    ++m_uiPhase;
-                    break;
-                case 3:
-                    m_creature->SetStandState(UNIT_STAND_STATE_STAND); //otherwise he is sitting until server restart
-                    EnterEvadeMode();
-                    break;
+                        m_creature->CastSpell(m_creature, SPELL_DRINK, true);
+                        ++m_uiPhase;
+                        break;
+                    case 3:
+                        m_creature->SetStandState(UNIT_STAND_STATE_STAND); //otherwise he is sitting until server restart
+                        EnterEvadeMode();
+                        break;
                 }
 
                 return;

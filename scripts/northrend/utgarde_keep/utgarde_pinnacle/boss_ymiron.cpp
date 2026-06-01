@@ -193,10 +193,10 @@ struct boss_ymiron : public CreatureScript
         {
             switch (urand(0, 3))
             {
-            case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
-            case 3: DoScriptText(SAY_SLAY_4, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
+                case 3: DoScriptText(SAY_SLAY_4, m_creature); break;
             }
         }
 
@@ -401,69 +401,69 @@ struct boss_ymiron : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_BJORN:
+                case PHASE_BJORN:
 
-                if (m_uiSpiritFountTimer)
-                {
-                    if (m_uiSpiritFountTimer <= uiDiff)
+                    if (m_uiSpiritFountTimer)
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_SPIRIT_FOUNT) == CAST_OK)
+                        if (m_uiSpiritFountTimer <= uiDiff)
                         {
-                            m_uiSpiritFountTimer = 0;
+                            if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_SPIRIT_FOUNT) == CAST_OK)
+                            {
+                                m_uiSpiritFountTimer = 0;
+                            }
+                        }
+                        else
+                        {
+                            m_uiSpiritFountTimer -= uiDiff;
+                        }
+                    }
+
+                    break;
+                case PHASE_HALDOR:
+
+                    if (m_uiSpiritStrikeTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SPIRIT_STRIKE : SPELL_SPIRIT_STRIKE_H) == CAST_OK)
+                        {
+                            m_uiSpiritStrikeTimer = 5000;
                         }
                     }
                     else
                     {
-                        m_uiSpiritFountTimer -= uiDiff;
+                        m_uiSpiritStrikeTimer -= uiDiff;
                     }
-                }
 
-                break;
-            case PHASE_HALDOR:
+                    break;
+                case PHASE_RANULF:
 
-                if (m_uiSpiritStrikeTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SPIRIT_STRIKE : SPELL_SPIRIT_STRIKE_H) == CAST_OK)
+                    if (m_uiSpiritBurstTimer < uiDiff)
                     {
-                        m_uiSpiritStrikeTimer = 5000;
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SPIRIT_BURST : SPELL_SPIRIT_BURST_H) == CAST_OK)
+                        {
+                            m_uiSpiritBurstTimer = 10000;
+                        }
                     }
-                }
-                else
-                {
-                    m_uiSpiritStrikeTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_RANULF:
-
-                if (m_uiSpiritBurstTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SPIRIT_BURST : SPELL_SPIRIT_BURST_H) == CAST_OK)
+                    else
                     {
-                        m_uiSpiritBurstTimer = 10000;
+                        m_uiSpiritBurstTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiSpiritBurstTimer -= uiDiff;
-                }
 
-                break;
-            case PHASE_TORGYN:
+                    break;
+                case PHASE_TORGYN:
 
-                if (m_uiAvengingSpiritsTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_AVENGING_SPIRITS) == CAST_OK)
+                    if (m_uiAvengingSpiritsTimer < uiDiff)
                     {
-                        m_uiAvengingSpiritsTimer = 15000;
+                        if (DoCastSpellIfCan(m_creature, SPELL_AVENGING_SPIRITS) == CAST_OK)
+                        {
+                            m_uiAvengingSpiritsTimer = 15000;
+                        }
                     }
-                }
-                else
-                {
-                    m_uiAvengingSpiritsTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiAvengingSpiritsTimer -= uiDiff;
+                    }
 
-                break;
+                    break;
             }
 
             DoMeleeAttackIfReady();

@@ -40,114 +40,114 @@ struct is_baradin_hold : public InstanceScript
 
     class instance_baradin_hold : public ScriptedInstance
     {
-    public:
-        instance_baradin_hold(Map* pMap) : ScriptedInstance(pMap)
-        {
-            Initialize();
-        }
-
-        ~instance_baradin_hold() {}
-
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        bool IsEncounterInProgress() const override
-        {
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+        public:
+            instance_baradin_hold(Map* pMap) : ScriptedInstance(pMap)
             {
-                if (m_auiEncounter[i] == IN_PROGRESS)
+                Initialize();
+            }
+
+            ~instance_baradin_hold() {}
+
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
+
+            void Initialize() override
+            {
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+            }
+
+            bool IsEncounterInProgress() const override
+            {
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 {
-                    return true;
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            void OnPlayerEnter(Player* pPlayer) override
+            {
+
+            }
+
+            void OnObjectCreate(GameObject* pGo) override
+            {
+
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_ARGALOTH:
+                    case NPC_OCCUTHAR:
+                    case NPC_ALIZABAL:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
                 }
             }
 
-            return false;
-        }
-
-        void OnPlayerEnter(Player* pPlayer) override
-        {
-
-        }
-
-        void OnObjectCreate(GameObject* pGo) override
-        {
-
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+            void OnCreatureDeath(Creature* pCreature) override
             {
-            case NPC_ARGALOTH:
-            case NPC_OCCUTHAR:
-            case NPC_ALIZABAL:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
-            }
-        }
 
-        void OnCreatureDeath(Creature* pCreature) override
-        {
-
-        }
-
-        void OnCreatureEvade(Creature* pCreature)
-        {
-
-        }
-
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType < MAX_ENCOUNTER)
-            {
-                return m_auiEncounter[uiType];
             }
 
-            return 0;
-        }
-
-        void Update(uint32 uiDiff) override
-        {
-            // DialogueUpdate(uiDiff);
-
-        }
-
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* in) override
-        {
-            if (!in)
+            void OnCreatureEvade(Creature* pCreature)
             {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
+
             }
 
-            OUT_LOAD_INST_DATA(in);
-
-            std::istringstream loadStream(in);
-            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2];
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+            void SetData(uint32 uiType, uint32 uiData) override
             {
-                if (m_auiEncounter[i] == IN_PROGRESS)
+
+            }
+
+            uint32 GetData(uint32 uiType) const override
+            {
+                if (uiType < MAX_ENCOUNTER)
                 {
-                    m_auiEncounter[i] = NOT_STARTED;
+                    return m_auiEncounter[uiType];
                 }
+
+                return 0;
             }
 
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
-    protected:
-        bool m_bFirstSpecialDone;
+            void Update(uint32 uiDiff) override
+            {
+                // DialogueUpdate(uiDiff);
+
+            }
+
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* in) override
+            {
+                if (!in)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+
+                OUT_LOAD_INST_DATA(in);
+
+                std::istringstream loadStream(in);
+                loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2];
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        m_auiEncounter[i] = NOT_STARTED;
+                    }
+                }
+
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
+        protected:
+            bool m_bFirstSpecialDone;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

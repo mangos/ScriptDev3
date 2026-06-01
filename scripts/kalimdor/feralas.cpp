@@ -78,35 +78,35 @@ struct npc_oox22fe : public CreatureScript
             switch (i)
             {
                 // First Ambush(3 Yetis)
-            case 11:
-                DoScriptText(SAY_OOX_AMBUSH, m_creature);
-                m_creature->SummonCreature(NPC_YETI, -4841.01f, 1593.91f, 73.42f, 3.98f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                m_creature->SummonCreature(NPC_YETI, -4837.61f, 1568.58f, 78.21f, 3.13f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                m_creature->SummonCreature(NPC_YETI, -4841.89f, 1569.95f, 76.53f, 0.68f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                break;
+                case 11:
+                    DoScriptText(SAY_OOX_AMBUSH, m_creature);
+                    m_creature->SummonCreature(NPC_YETI, -4841.01f, 1593.91f, 73.42f, 3.98f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    m_creature->SummonCreature(NPC_YETI, -4837.61f, 1568.58f, 78.21f, 3.13f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    m_creature->SummonCreature(NPC_YETI, -4841.89f, 1569.95f, 76.53f, 0.68f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    break;
                 // Second Ambush(3 Gorillas)
-            case 21:
-                DoScriptText(SAY_OOX_AMBUSH, m_creature);
-                m_creature->SummonCreature(NPC_GORILLA, -4595.81f, 2005.99f, 53.08f, 3.74f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                m_creature->SummonCreature(NPC_GORILLA, -4597.53f, 2008.31f, 52.70f, 3.78f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                m_creature->SummonCreature(NPC_GORILLA, -4599.37f, 2010.59f, 52.77f, 3.84f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                break;
+                case 21:
+                    DoScriptText(SAY_OOX_AMBUSH, m_creature);
+                    m_creature->SummonCreature(NPC_GORILLA, -4595.81f, 2005.99f, 53.08f, 3.74f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    m_creature->SummonCreature(NPC_GORILLA, -4597.53f, 2008.31f, 52.70f, 3.78f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    m_creature->SummonCreature(NPC_GORILLA, -4599.37f, 2010.59f, 52.77f, 3.84f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    break;
                 // Third Ambush(4 Gnolls)
-            case 30:
-                DoScriptText(SAY_OOX_AMBUSH, m_creature);
-                m_creature->SummonCreature(NPC_WOODPAW_REAVER, -4425.14f, 2075.87f, 47.77f, 3.77f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                m_creature->SummonCreature(NPC_WOODPAW_BRUTE, -4426.68f, 2077.98f, 47.57f, 3.77f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                m_creature->SummonCreature(NPC_WOODPAW_MYSTIC, -4428.33f, 2080.24f, 47.43f, 3.87f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                m_creature->SummonCreature(NPC_WOODPAW_ALPHA, -4430.04f, 2075.54f, 46.83f, 3.81f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                break;
-            case 37:
-                DoScriptText(SAY_OOX_END, m_creature);
-                // Award quest credit
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_RESCUE_OOX22FE, m_creature);
-                }
-                break;
+                case 30:
+                    DoScriptText(SAY_OOX_AMBUSH, m_creature);
+                    m_creature->SummonCreature(NPC_WOODPAW_REAVER, -4425.14f, 2075.87f, 47.77f, 3.77f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    m_creature->SummonCreature(NPC_WOODPAW_BRUTE, -4426.68f, 2077.98f, 47.57f, 3.77f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    m_creature->SummonCreature(NPC_WOODPAW_MYSTIC, -4428.33f, 2080.24f, 47.43f, 3.87f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    m_creature->SummonCreature(NPC_WOODPAW_ALPHA, -4430.04f, 2075.54f, 46.83f, 3.81f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    break;
+                case 37:
+                    DoScriptText(SAY_OOX_END, m_creature);
+                    // Award quest credit
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_RESCUE_OOX22FE, m_creature);
+                    }
+                    break;
             }
         }
 
@@ -123,12 +123,12 @@ struct npc_oox22fe : public CreatureScript
             // For an small probability the npc says something when he get aggro
             switch (urand(0, 9))
             {
-            case 0:
-                DoScriptText(SAY_OOX_AGGRO1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_OOX_AGGRO2, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_OOX_AGGRO1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_OOX_AGGRO2, m_creature);
+                    break;
             }
         }
 
@@ -265,9 +265,9 @@ struct npc_shay_leafrunner : public CreatureScript
 
                 switch (urand(0, 2))
                 {
-                case 0: DoScriptText(SAY_WANDER_DONE_1, m_creature); break;
-                case 1: DoScriptText(SAY_WANDER_DONE_2, m_creature); break;
-                case 2: DoScriptText(SAY_WANDER_DONE_3, m_creature); break;
+                    case 0: DoScriptText(SAY_WANDER_DONE_1, m_creature); break;
+                    case 1: DoScriptText(SAY_WANDER_DONE_2, m_creature); break;
+                    case 2: DoScriptText(SAY_WANDER_DONE_3, m_creature); break;
                 }
             }
         }
@@ -303,10 +303,10 @@ struct npc_shay_leafrunner : public CreatureScript
 
                         switch (urand(0, 3))
                         {
-                        case 0: DoScriptText(SAY_WANDER_1, m_creature); break;
-                        case 1: DoScriptText(SAY_WANDER_2, m_creature); break;
-                        case 2: DoScriptText(SAY_WANDER_3, m_creature); break;
-                        case 3: DoScriptText(SAY_WANDER_4, m_creature); break;
+                            case 0: DoScriptText(SAY_WANDER_1, m_creature); break;
+                            case 1: DoScriptText(SAY_WANDER_2, m_creature); break;
+                            case 2: DoScriptText(SAY_WANDER_3, m_creature); break;
+                            case 3: DoScriptText(SAY_WANDER_4, m_creature); break;
                         }
 
                         float fX, fY, fZ;

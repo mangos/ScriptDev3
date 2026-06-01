@@ -111,9 +111,9 @@ struct boss_warchief_kargath_bladefist : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
             }
 
             if (m_pInstance)
@@ -126,19 +126,19 @@ struct boss_warchief_kargath_bladefist : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_HEARTHEN_GUARD:
-            case NPC_SHARPSHOOTER_GUARD:
-            case NPC_REAVER_GUARD:
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                {
-                    pSummoned->AI()->AttackStart(pTarget);
-                }
+                case NPC_HEARTHEN_GUARD:
+                case NPC_SHARPSHOOTER_GUARD:
+                case NPC_REAVER_GUARD:
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        pSummoned->AI()->AttackStart(pTarget);
+                    }
 
-                m_vAddGuids.push_back(pSummoned->GetObjectGuid());
-                break;
-            case NPC_SHATTERED_ASSASSIN:
-                m_vAssassinGuids.push_back(pSummoned->GetObjectGuid());
-                break;
+                    m_vAddGuids.push_back(pSummoned->GetObjectGuid());
+                    break;
+                case NPC_SHATTERED_ASSASSIN:
+                    m_vAssassinGuids.push_back(pSummoned->GetObjectGuid());
+                    break;
             }
         }
 
@@ -328,9 +328,9 @@ struct boss_warchief_kargath_bladefist : public CreatureScript
                     {
                         switch (urand(0, 2))
                         {
-                        case 0: m_creature->SummonCreature(NPC_HEARTHEN_GUARD, AddsEntrance[0], AddsEntrance[1], AddsEntrance[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000); break;
-                        case 1: m_creature->SummonCreature(NPC_SHARPSHOOTER_GUARD, AddsEntrance[0], AddsEntrance[1], AddsEntrance[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000); break;
-                        case 2: m_creature->SummonCreature(NPC_REAVER_GUARD, AddsEntrance[0], AddsEntrance[1], AddsEntrance[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000); break;
+                            case 0: m_creature->SummonCreature(NPC_HEARTHEN_GUARD, AddsEntrance[0], AddsEntrance[1], AddsEntrance[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000); break;
+                            case 1: m_creature->SummonCreature(NPC_SHARPSHOOTER_GUARD, AddsEntrance[0], AddsEntrance[1], AddsEntrance[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000); break;
+                            case 2: m_creature->SummonCreature(NPC_REAVER_GUARD, AddsEntrance[0], AddsEntrance[1], AddsEntrance[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000); break;
                         }
                     }
 

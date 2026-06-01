@@ -164,14 +164,14 @@ struct boss_muru : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_ENTROPIUS:
-                // Cast the Entropius spawn effect and force despawn
-                pSummoned->CastSpell(pSummoned, SPELL_ENTROPIUS_SPAWN, true);
-                m_creature->ForcedDespawn(1000);
-                // no break here; All other summons should behave the same way
-            default:
-                pSummoned->AI()->AttackStart(m_creature->getVictim());
-                break;
+                case NPC_ENTROPIUS:
+                    // Cast the Entropius spawn effect and force despawn
+                    pSummoned->CastSpell(pSummoned, SPELL_ENTROPIUS_SPAWN, true);
+                    m_creature->ForcedDespawn(1000);
+                    // no break here; All other summons should behave the same way
+                default:
+                    pSummoned->AI()->AttackStart(m_creature->getVictim());
+                    break;
             }
         }
 
@@ -337,7 +337,7 @@ struct boss_entropius : public CreatureScript
                 }
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-            m_creature->SummonCreature(NPC_MURU, afMuruSpawnLoc[0], afMuruSpawnLoc[1], afMuruSpawnLoc[2], afMuruSpawnLoc[3], TEMPSPAWN_DEAD_DESPAWN, 0, true);
+                m_creature->SummonCreature(NPC_MURU, afMuruSpawnLoc[0], afMuruSpawnLoc[1], afMuruSpawnLoc[2], afMuruSpawnLoc[3], TEMPSPAWN_DEAD_DESPAWN, 0, true);
 #endif
             }
 
@@ -439,13 +439,13 @@ struct npc_portal_target : public CreatureScript
             switch (pSpell->Id)
             {
                 // Init sentinel summon timer
-            case SPELL_OPEN_PORTAL:
-                m_uiSentinelTimer = 5000;
-                break;
+                case SPELL_OPEN_PORTAL:
+                    m_uiSentinelTimer = 5000;
+                    break;
                 // Start transition effect
-            case SPELL_OPEN_ALL_PORTALS:
-                m_uiTransformTimer = 2000;
-                break;
+                case SPELL_OPEN_ALL_PORTALS:
+                    m_uiTransformTimer = 2000;
+                    break;
             }
         }
 

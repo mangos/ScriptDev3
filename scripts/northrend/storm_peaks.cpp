@@ -100,18 +100,18 @@ struct spell_blow_hodir_horn : public SpellScript
             uint32 uiSpawnSpell = 0;
             switch (pCreatureTarget->GetEntry())
             {
-            case NPC_NIFFELEM_FOREFATHER:
-                uiCredit = NPC_FROST_GIANT_GHOST_KC;
-                uiSpawnSpell = SPELL_SUMMON_FROST_GIANG_SPIRIT;
-                break;
-            case NPC_FROSTBORN_WARRIOR:
-                uiCredit = NPC_FROST_DWARF_GHOST_KC;
-                uiSpawnSpell = SPELL_SUMMON_FROST_WARRIOR_SPIRIT;
-                break;
-            case NPC_FROSTBORN_GHOST:
-                uiCredit = NPC_FROST_DWARF_GHOST_KC;
-                uiSpawnSpell = SPELL_SUMMON_FROST_GHOST_SPIRIT;
-                break;
+                case NPC_NIFFELEM_FOREFATHER:
+                    uiCredit = NPC_FROST_GIANT_GHOST_KC;
+                    uiSpawnSpell = SPELL_SUMMON_FROST_GIANG_SPIRIT;
+                    break;
+                case NPC_FROSTBORN_WARRIOR:
+                    uiCredit = NPC_FROST_DWARF_GHOST_KC;
+                    uiSpawnSpell = SPELL_SUMMON_FROST_WARRIOR_SPIRIT;
+                    break;
+                case NPC_FROSTBORN_GHOST:
+                    uiCredit = NPC_FROST_DWARF_GHOST_KC;
+                    uiSpawnSpell = SPELL_SUMMON_FROST_GHOST_SPIRIT;
+                    break;
             }
 
             // spawn the spirit and give the credit; spirit animation is handled by the script above
@@ -188,23 +188,23 @@ struct npc_injured_miner : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 33:
-                DoScriptText(SAY_MINER_COMPLETE, m_creature);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_BITTER_DEPARTURE, m_creature);
-                    m_creature->SetFacingToObject(pPlayer);
-                }
-                break;
-            case 34:
-                m_creature->ForcedDespawn();
-                break;
-            case 46:
-                // merge with the other wp path
-                SetEscortPaused(true);
-                SetCurrentWaypoint(13);
-                SetEscortPaused(false);
-                break;
+                case 33:
+                    DoScriptText(SAY_MINER_COMPLETE, m_creature);
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_BITTER_DEPARTURE, m_creature);
+                        m_creature->SetFacingToObject(pPlayer);
+                    }
+                    break;
+                case 34:
+                    m_creature->ForcedDespawn();
+                    break;
+                case 46:
+                    // merge with the other wp path
+                    SetEscortPaused(true);
+                    SetCurrentWaypoint(13);
+                    SetEscortPaused(false);
+                    break;
             }
         }
     };

@@ -210,21 +210,21 @@ struct boss_chromaggus : public CreatureScript
 
                 switch (urand(0, 4))
                 {
-                case 0:
-                    m_uiSpellAfflict = SPELL_BROODAF_BLUE;
-                    break;
-                case 1:
-                    m_uiSpellAfflict = SPELL_BROODAF_BLACK;
-                    break;
-                case 2:
-                    m_uiSpellAfflict = SPELL_BROODAF_RED;
-                    break;
-                case 3:
-                    m_uiSpellAfflict = SPELL_BROODAF_BRONZE;
-                    break;
-                case 4:
-                    m_uiSpellAfflict = SPELL_BROODAF_GREEN;
-                    break;
+                    case 0:
+                        m_uiSpellAfflict = SPELL_BROODAF_BLUE;
+                        break;
+                    case 1:
+                        m_uiSpellAfflict = SPELL_BROODAF_BLACK;
+                        break;
+                    case 2:
+                        m_uiSpellAfflict = SPELL_BROODAF_RED;
+                        break;
+                    case 3:
+                        m_uiSpellAfflict = SPELL_BROODAF_BRONZE;
+                        break;
+                    case 4:
+                        m_uiSpellAfflict = SPELL_BROODAF_GREEN;
+                        break;
                 }
 
                 GuidVector vGuids;
@@ -239,11 +239,11 @@ struct boss_chromaggus : public CreatureScript
                         DoCastSpellIfCan(pUnit, m_uiSpellAfflict, CAST_TRIGGERED);
 
                         // Chromatic mutation if target is effected by all afflictions
-                        if (pUnit->HasAura(SPELL_BROODAF_BLUE, EFFECT_INDEX_0)
-                            && pUnit->HasAura(SPELL_BROODAF_BLACK, EFFECT_INDEX_0)
-                            && pUnit->HasAura(SPELL_BROODAF_RED, EFFECT_INDEX_0)
-                            && pUnit->HasAura(SPELL_BROODAF_BRONZE, EFFECT_INDEX_0)
-                            && pUnit->HasAura(SPELL_BROODAF_GREEN, EFFECT_INDEX_0))
+                        if (pUnit->HasAura(SPELL_BROODAF_BLUE, EFFECT_INDEX_0) &&
+                            pUnit->HasAura(SPELL_BROODAF_BLACK, EFFECT_INDEX_0) &&
+                            pUnit->HasAura(SPELL_BROODAF_RED, EFFECT_INDEX_0) &&
+                            pUnit->HasAura(SPELL_BROODAF_BRONZE, EFFECT_INDEX_0) &&
+                            pUnit->HasAura(SPELL_BROODAF_GREEN, EFFECT_INDEX_0))
                         {
                             // target->RemoveAllAuras();
                             // DoCastSpellIfCan(target,SPELL_CHROMATIC_MUT_1);

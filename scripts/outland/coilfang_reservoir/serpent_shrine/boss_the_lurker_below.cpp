@@ -201,128 +201,128 @@ struct boss_the_lurker_below : public CreatureScript
             switch (m_uiPhase)
             {
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-            case PHASE_EMERGEING:
-                break;
+                case PHASE_EMERGEING:
+                    break;
 #endif
-            case PHASE_SPOUT:
+                case PHASE_SPOUT:
 
-                if (m_uiSpoutEndTimer < uiDiff)
-                {
-                    // Remove rotation auras
-                    m_creature->RemoveAurasDueToSpell(SPELL_SPOUT_LEFT);
-                    m_creature->RemoveAurasDueToSpell(SPELL_SPOUT_RIGHT);
-
-                    m_uiPhase = PHASE_NORMAL;
-                    m_uiSpoutEndTimer = 23000;
-                }
-                else
-                {
-                    m_uiSpoutEndTimer -= uiDiff;
-                }
-
-                // no break;
-            case PHASE_NORMAL:
-
-                // Count the first phase during Spout too
-                if (m_uiPhaseChangeTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUBMERGE) == CAST_OK)
+                    if (m_uiSpoutEndTimer < uiDiff)
                     {
-                        DoSummonCoilfangNaga();
-                        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                        m_uiPhase = PHASE_SUBMERGED;
-                        m_uiPhaseChangeTimer = MINUTE * IN_MILLISECONDS;
+                        // Remove rotation auras
+                        m_creature->RemoveAurasDueToSpell(SPELL_SPOUT_LEFT);
+                        m_creature->RemoveAurasDueToSpell(SPELL_SPOUT_RIGHT);
+
+                        m_uiPhase = PHASE_NORMAL;
+                        m_uiSpoutEndTimer = 23000;
                     }
-                }
-                else
-                {
-                    m_uiPhaseChangeTimer -= uiDiff;
-                }
-
-                // Combat spells are only in normal phase
-                if (m_uiPhase == PHASE_NORMAL)
-                {
-                    if (m_uiSpoutTimer < uiDiff)
+                    else
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SPOUT) == CAST_OK)
+                        m_uiSpoutEndTimer -= uiDiff;
+                    }
+
+                    // no break;
+                case PHASE_NORMAL:
+
+                    // Count the first phase during Spout too
+                    if (m_uiPhaseChangeTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUBMERGE) == CAST_OK)
                         {
-                            DoScriptText(EMOTE_DEEP_BREATH, m_creature);
-
-                            // Remove the target focus but allow the boss to face the current victim
-                            m_creature->SetTargetGuid(ObjectGuid());
-                            m_creature->SetFacingToObject(m_creature->getVictim());
-
-                            m_uiPhase = PHASE_SPOUT;
-                            m_uiSpoutTimer = 30000;
+                            DoSummonCoilfangNaga();
+                            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                            m_uiPhase = PHASE_SUBMERGED;
+                            m_uiPhaseChangeTimer = MINUTE * IN_MILLISECONDS;
                         }
                     }
                     else
                     {
-                        m_uiSpoutTimer -= uiDiff;
+                        m_uiPhaseChangeTimer -= uiDiff;
                     }
 
-                    if (m_uiWhirlTimer < uiDiff)
+                    // Combat spells are only in normal phase
+                    if (m_uiPhase == PHASE_NORMAL)
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_WHIRL) == CAST_OK)
+                        if (m_uiSpoutTimer < uiDiff)
                         {
-                            m_uiWhirlTimer = 18000;
-                        }
-                    }
-                    else
-                    {
-                        m_uiWhirlTimer -= uiDiff;
-                    }
-
-                    if (m_uiGeyserTimer < uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                        {
-                            if (DoCastSpellIfCan(pTarget, SPELL_GEYSER) == CAST_OK)
+                            if (DoCastSpellIfCan(m_creature, SPELL_SPOUT) == CAST_OK)
                             {
-                                m_uiGeyserTimer = urand(50000, 60000);
+                                DoScriptText(EMOTE_DEEP_BREATH, m_creature);
+
+                                // Remove the target focus but allow the boss to face the current victim
+                                m_creature->SetTargetGuid(ObjectGuid());
+                                m_creature->SetFacingToObject(m_creature->getVictim());
+
+                                m_uiPhase = PHASE_SPOUT;
+                                m_uiSpoutTimer = 30000;
                             }
                         }
-                    }
-                    else
-                    {
-                        m_uiGeyserTimer -= uiDiff;
-                    }
+                        else
+                        {
+                            m_uiSpoutTimer -= uiDiff;
+                        }
 
-                    // If we are within range melee the target
-                    if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
-                    {
-                        DoMeleeAttackIfReady();
-                    }
-                    // Spam Waterbolt spell when not tanked
-                    else
-                    {
-                        if (!m_creature->IsNonMeleeSpellCasted(false))
+                        if (m_uiWhirlTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_WHIRL) == CAST_OK)
+                            {
+                                m_uiWhirlTimer = 18000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiWhirlTimer -= uiDiff;
+                        }
+
+                        if (m_uiGeyserTimer < uiDiff)
                         {
                             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                             {
-                                DoCastSpellIfCan(pTarget, SPELL_WATERBOLT);
+                                if (DoCastSpellIfCan(pTarget, SPELL_GEYSER) == CAST_OK)
+                                {
+                                    m_uiGeyserTimer = urand(50000, 60000);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiGeyserTimer -= uiDiff;
+                        }
+
+                        // If we are within range melee the target
+                        if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+                        {
+                            DoMeleeAttackIfReady();
+                        }
+                        // Spam Waterbolt spell when not tanked
+                        else
+                        {
+                            if (!m_creature->IsNonMeleeSpellCasted(false))
+                            {
+                                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                                {
+                                    DoCastSpellIfCan(pTarget, SPELL_WATERBOLT);
+                                }
                             }
                         }
                     }
-                }
 
-                break;
-            case PHASE_SUBMERGED:
+                    break;
+                case PHASE_SUBMERGED:
 
-                if (m_uiPhaseChangeTimer < uiDiff)
-                {
-                    DoResetCombatTimers();
-                    m_uiPhase = PHASE_NORMAL;
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    m_creature->RemoveAurasDueToSpell(SPELL_SUBMERGE);
-                    m_uiPhaseChangeTimer = 2 * MINUTE * IN_MILLISECONDS;
-                }
-                else
-                {
-                    m_uiPhaseChangeTimer -= uiDiff;
-                }
+                    if (m_uiPhaseChangeTimer < uiDiff)
+                    {
+                        DoResetCombatTimers();
+                        m_uiPhase = PHASE_NORMAL;
+                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        m_creature->RemoveAurasDueToSpell(SPELL_SUBMERGE);
+                        m_uiPhaseChangeTimer = 2 * MINUTE * IN_MILLISECONDS;
+                    }
+                    else
+                    {
+                        m_uiPhaseChangeTimer -= uiDiff;
+                    }
 
-                break;
+                    break;
             }
         }
     };
@@ -350,7 +350,7 @@ struct go_strange_pool : public GameObjectScript
 #if defined (CLASSIC) || defined (TBC)
                     pPlayer->SummonCreature(NPC_LURKER_BELOW, afLurkerSpawnPos[0], afLurkerSpawnPos[1], afLurkerSpawnPos[2], afLurkerSpawnPos[3], TEMPSPAWN_DEAD_DESPAWN, 0);
 #else
-                pPlayer->CastSpell(pPlayer, SPELL_LURKER_SPAWN_TRIGGER, true);
+                    pPlayer->CastSpell(pPlayer, SPELL_LURKER_SPAWN_TRIGGER, true);
 #endif
                     pInstance->SetData(TYPE_THELURKER_EVENT, IN_PROGRESS);
                     return true;

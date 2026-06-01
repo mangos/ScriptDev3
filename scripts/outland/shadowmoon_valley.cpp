@@ -391,11 +391,11 @@ struct npc_dragonmaw_peon : public CreatureScript
 
                 switch (urand(0, 4))
                 {
-                case 0: DoScriptText(SAY_PEON_1, m_creature); break;
-                case 1: DoScriptText(SAY_PEON_2, m_creature); break;
-                case 2: DoScriptText(SAY_PEON_3, m_creature); break;
-                case 3: DoScriptText(SAY_PEON_4, m_creature); break;
-                case 4: DoScriptText(SAY_PEON_5, m_creature); break;
+                    case 0: DoScriptText(SAY_PEON_1, m_creature); break;
+                    case 1: DoScriptText(SAY_PEON_2, m_creature); break;
+                    case 2: DoScriptText(SAY_PEON_3, m_creature); break;
+                    case 3: DoScriptText(SAY_PEON_4, m_creature); break;
+                    case 4: DoScriptText(SAY_PEON_5, m_creature); break;
                 }
             }
         }
@@ -566,14 +566,15 @@ struct npc_wilda : public CreatureScript
 
     struct npc_wildaAI : public npc_escortAI
     {
-        npc_wildaAI(Creature* pCreature) : npc_escortAI(pCreature) {
+        npc_wildaAI(Creature* pCreature) : npc_escortAI(pCreature)
+        {
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-        // the creature is floating in a prison; no quest available first;
-        // the floating prison setup and quest flag restore is handled by DB
-        m_creature->SetLevitate(true);
-        m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+            // the creature is floating in a prison; no quest available first;
+            // the floating prison setup and quest flag restore is handled by DB
+            m_creature->SetLevitate(true);
+            m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
 #endif
-    }
+        }
         uint32 m_uiHealingTimer;
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
         uint32 m_uiShockTimer;
@@ -590,24 +591,24 @@ struct npc_wilda : public CreatureScript
         }
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-    void Aggro(Unit* pWho) override
-    {
-        if (roll_chance_i(30))
+        void Aggro(Unit* pWho) override
         {
-            DoCastSpellIfCan(m_creature, SPELL_EARTHBING_TOTEM);
+            if (roll_chance_i(30))
+            {
+                DoCastSpellIfCan(m_creature, SPELL_EARTHBING_TOTEM);
+            }
         }
-    }
 
-    void AttackStart(Unit* pWho) override
-    {
-        if (m_creature->Attack(pWho, true))
+        void AttackStart(Unit* pWho) override
         {
-            m_creature->AddThreat(pWho);
-            m_creature->SetInCombatWith(pWho);
-            pWho->SetInCombatWith(m_creature);
-            DoStartMovement(pWho, 10.0f);
+            if (m_creature->Attack(pWho, true))
+            {
+                m_creature->AddThreat(pWho);
+                m_creature->SetInCombatWith(pWho);
+                pWho->SetInCombatWith(m_creature);
+                DoStartMovement(pWho, 10.0f);
+            }
         }
-    }
 #endif
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
@@ -622,53 +623,53 @@ struct npc_wilda : public CreatureScript
 
             switch (uiPointId)
             {
-            case 13:
-                DoScriptText(SAY_WIL_PROGRESS1, m_creature, pPlayer);
-                DoSpawnAssassin();
-                break;
-            case 14:
-                DoSpawnAssassin();
-                break;
-            case 15:
-                DoScriptText(SAY_WIL_FIND_EXIT, m_creature, pPlayer);
-                break;
-            case 19:
-                DoRandomSay();
-                break;
-            case 20:
-                DoSpawnAssassin();
-                break;
-            case 26:
-                DoRandomSay();
-                break;
-            case 27:
-                DoSpawnAssassin();
-                break;
-            case 33:
-                DoRandomSay();
-                break;
-            case 34:
-                DoSpawnAssassin();
-                break;
-            case 37:
-                DoRandomSay();
-                break;
-            case 38:
-                DoSpawnAssassin();
-                break;
-            case 39:
-                DoScriptText(SAY_WIL_JUST_AHEAD, m_creature, pPlayer);
-                break;
-            case 43:
-                DoRandomSay();
-                break;
-            case 44:
-                DoSpawnAssassin();
-                break;
-            case 50:
-                DoScriptText(SAY_WIL_END, m_creature, pPlayer);
-                pPlayer->GroupEventHappens(QUEST_ESCAPE_COILSCAR, m_creature);
-                break;
+                case 13:
+                    DoScriptText(SAY_WIL_PROGRESS1, m_creature, pPlayer);
+                    DoSpawnAssassin();
+                    break;
+                case 14:
+                    DoSpawnAssassin();
+                    break;
+                case 15:
+                    DoScriptText(SAY_WIL_FIND_EXIT, m_creature, pPlayer);
+                    break;
+                case 19:
+                    DoRandomSay();
+                    break;
+                case 20:
+                    DoSpawnAssassin();
+                    break;
+                case 26:
+                    DoRandomSay();
+                    break;
+                case 27:
+                    DoSpawnAssassin();
+                    break;
+                case 33:
+                    DoRandomSay();
+                    break;
+                case 34:
+                    DoSpawnAssassin();
+                    break;
+                case 37:
+                    DoRandomSay();
+                    break;
+                case 38:
+                    DoSpawnAssassin();
+                    break;
+                case 39:
+                    DoScriptText(SAY_WIL_JUST_AHEAD, m_creature, pPlayer);
+                    break;
+                case 43:
+                    DoRandomSay();
+                    break;
+                case 44:
+                    DoSpawnAssassin();
+                    break;
+                case 50:
+                    DoScriptText(SAY_WIL_END, m_creature, pPlayer);
+                    pPlayer->GroupEventHappens(QUEST_ESCAPE_COILSCAR, m_creature);
+                    break;
             }
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
@@ -730,23 +731,23 @@ struct npc_wilda : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_WIL_PROGRESS2, m_creature); break;
-            case 1: DoScriptText(SAY_WIL_PROGRESS4, m_creature); break;
-            case 2: DoScriptText(SAY_WIL_PROGRESS5, m_creature); break;
+                case 0: DoScriptText(SAY_WIL_PROGRESS2, m_creature); break;
+                case 1: DoScriptText(SAY_WIL_PROGRESS4, m_creature); break;
+                case 2: DoScriptText(SAY_WIL_PROGRESS5, m_creature); break;
             }
         }
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-    void JustSummoned(Creature* pSummoned) override
-    {
-        if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
+        void JustSummoned(Creature* pSummoned) override
         {
-            if (Player* pPlayer = GetPlayerForEscort())
+            if (pSummoned->GetEntry() == NPC_COILSKAR_ASSASSIN)
             {
-                pSummoned->AI()->AttackStart(pPlayer);
+                if (Player* pPlayer = GetPlayerForEscort())
+                {
+                    pSummoned->AI()->AttackStart(pPlayer);
+                }
             }
         }
-    }
 #endif
 #if defined (TBC)
         void DoSpawnAssassin()
@@ -759,35 +760,35 @@ struct npc_wilda : public CreatureScript
         }
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-    // wrapper to spawn assassin and do text
-    void DoSpawnAssassin(uint8 uiCount = 1)
-    {
-        // unknown where they actually appear
-        float fX, fY, fZ;
-        for (uint8 i = 0; i < uiCount; ++i)
+        // wrapper to spawn assassin and do text
+        void DoSpawnAssassin(uint8 uiCount = 1)
         {
-            m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f, fX, fY, fZ);
-            m_creature->SummonCreature(NPC_COILSKAR_ASSASSIN, fX, fY, fZ, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 10000);
-        }
+            // unknown where they actually appear
+            float fX, fY, fZ;
+            for (uint8 i = 0; i < uiCount; ++i)
+            {
+                m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f, fX, fY, fZ);
+                m_creature->SummonCreature(NPC_COILSKAR_ASSASSIN, fX, fY, fZ, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 10000);
+            }
 
-        // random chance to yell
-        if (roll_chance_i(20))
-        {
-            return;
-        }
+            // random chance to yell
+            if (roll_chance_i(20))
+            {
+                return;
+            }
 
-        // random text when assassin is summoned
-        switch (urand(0, 6))
-        {
-            case 0: DoScriptText(SAY_WIL_PROGRESS_1, m_creature); break;
-            case 1: DoScriptText(SAY_WIL_PROGRESS_2, m_creature); break;
-            case 2: DoScriptText(SAY_WIL_PROGRESS_3, m_creature); break;
-            case 3: DoScriptText(SAY_WIL_PROGRESS_4, m_creature); break;
-            case 4: DoScriptText(SAY_WIL_PROGRESS_5, m_creature); break;
-            case 5: DoScriptText(SAY_WIL_AGGRO_1, m_creature); break;
-            case 6: DoScriptText(SAY_WIL_AGGRO_2, m_creature); break;
+            // random text when assassin is summoned
+            switch (urand(0, 6))
+            {
+                case 0: DoScriptText(SAY_WIL_PROGRESS_1, m_creature); break;
+                case 1: DoScriptText(SAY_WIL_PROGRESS_2, m_creature); break;
+                case 2: DoScriptText(SAY_WIL_PROGRESS_3, m_creature); break;
+                case 3: DoScriptText(SAY_WIL_PROGRESS_4, m_creature); break;
+                case 4: DoScriptText(SAY_WIL_PROGRESS_5, m_creature); break;
+                case 5: DoScriptText(SAY_WIL_AGGRO_1, m_creature); break;
+                case 6: DoScriptText(SAY_WIL_AGGRO_2, m_creature); break;
+            }
         }
-    }
 #endif
 
 #if defined (TBC)
@@ -805,50 +806,50 @@ struct npc_wilda : public CreatureScript
                 // appears to be random
                 switch (urand(0, 3))
                 {
-                case 0: DoScriptText(SAY_WIL_AGGRO1, m_creature, pWho); break;
-                case 1: DoScriptText(SAY_WIL_AGGRO2, m_creature, pWho); break;
+                    case 0: DoScriptText(SAY_WIL_AGGRO1, m_creature, pWho); break;
+                    case 1: DoScriptText(SAY_WIL_AGGRO2, m_creature, pWho); break;
                 }
             }
         }
 #endif
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-    // free the water spirits
-    void DoFreeSpirits()
-    {
-        std::list<Creature*> lSpiritsInRange;
-        GetCreatureListWithEntryInGrid(lSpiritsInRange, m_creature, NPC_CAPTURED_WATER_SPIRIT, 50.0f);
-
-        if (lSpiritsInRange.empty())
+        // free the water spirits
+        void DoFreeSpirits()
         {
-            return;
+            std::list<Creature*> lSpiritsInRange;
+            GetCreatureListWithEntryInGrid(lSpiritsInRange, m_creature, NPC_CAPTURED_WATER_SPIRIT, 50.0f);
+
+            if (lSpiritsInRange.empty())
+            {
+                return;
+            }
+
+            // all spirits follow
+            for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
+            {
+                (*itr)->RemoveAurasDueToSpell(SPELL_WATER_BUBBLE);
+                (*itr)->GetMotionMaster()->MoveFollow(m_creature, m_creature->GetDistance(*itr) * 0.25f, M_PI_F/2 + m_creature->GetAngle(*itr));
+                (*itr)->SetLevitate(false);
+            }
         }
 
-        // all spirits follow
-        for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
+        void DoDespawnSpirits()
         {
-            (*itr)->RemoveAurasDueToSpell(SPELL_WATER_BUBBLE);
-            (*itr)->GetMotionMaster()->MoveFollow(m_creature, m_creature->GetDistance(*itr) * 0.25f, M_PI_F/2 + m_creature->GetAngle(*itr));
-            (*itr)->SetLevitate(false);
-        }
-    }
+            std::list<Creature*> lSpiritsInRange;
+            GetCreatureListWithEntryInGrid(lSpiritsInRange, m_creature, NPC_CAPTURED_WATER_SPIRIT, 50.0f);
 
-    void DoDespawnSpirits()
-    {
-        std::list<Creature*> lSpiritsInRange;
-        GetCreatureListWithEntryInGrid(lSpiritsInRange, m_creature, NPC_CAPTURED_WATER_SPIRIT, 50.0f);
+            if (lSpiritsInRange.empty())
+            {
+                return;
+            }
 
-        if (lSpiritsInRange.empty())
-        {
-            return;
+            // all spirits follow
+            for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
+            {
+                (*itr)->ForcedDespawn(6000);
+            }
         }
-
-        // all spirits follow
-        for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
-        {
-            (*itr)->ForcedDespawn(6000);
-        }
-    }
 #endif
 
         void UpdateEscortAI(const uint32 uiDiff) override
@@ -1108,21 +1109,21 @@ struct mob_torloth : public CreatureScript
 
             switch (m_uiAnimationCount)
             {
-            case 0:
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                break;
-            case 3:
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                break;
-            case 5:
-                if (Player* pTarget = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                {
-                    m_creature->AddThreat(pTarget);
-                    m_creature->SetFacingToObject(pTarget);
-                    m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
-                }
-                break;
-            case 6:
+                case 0:
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    break;
+                case 3:
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                    break;
+                case 5:
+                    if (Player* pTarget = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                    {
+                        m_creature->AddThreat(pTarget);
+                        m_creature->SetFacingToObject(pTarget);
+                        m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
+                    }
+                    break;
+                case 6:
                 {
                     if (Player* pTarget = m_creature->GetMap()->GetPlayer(m_playerGuid))
                     {
@@ -1479,9 +1480,9 @@ struct npc_lord_illidan_stormrage : public CreatureScript
     }
 };
 
-/*#####
-# go_crystal_prison : GameObject that begins the event and hands out quest
-######*/
+/** #####
+ *  # go_crystal_prison : GameObject that begins the event and hands out quest
+ *  ######*/
 struct go_crystal_prison : public GameObjectScript
 {
     go_crystal_prison() : GameObjectScript("go_crystal_prison") {}
@@ -1489,12 +1490,15 @@ struct go_crystal_prison : public GameObjectScript
     bool OnQuestAccept(Player* pPlayer, GameObject* /*pGo*/, Quest const* pQuest) override
     {
         if (pQuest->GetQuestId() == QUEST_BATTLE_OF_THE_CRIMSON_WATCH)
-        if (Creature* pLordIllidan = GetClosestCreatureWithEntry(pPlayer, NPC_LORD_ILLIDAN, 50.0))
-        if (CreatureAI* pIllidanAI = pLordIllidan->AI())
         {
-            pIllidanAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, pLordIllidan, pPlayer, 0);
+            if (Creature* pLordIllidan = GetClosestCreatureWithEntry(pPlayer, NPC_LORD_ILLIDAN, 50.0))
+            {
+                if (CreatureAI* pIllidanAI = pLordIllidan->AI())
+                {
+                    pIllidanAI->ReceiveAIEvent(AI_EVENT_CUSTOM_A, pLordIllidan, pPlayer, 0);
+                }
+            }
         }
-
         return true;
     }
 };
@@ -1575,18 +1579,18 @@ struct npc_totem_of_spirits : public CreatureScript
 
                 switch (uiEntry)
                 {
-                case NPC_EARTHEN_SOUL:
-                    pWho->CastSpell(m_creature, SPELL_EARTH_CAPTURED, true);
-                    break;
-                case NPC_FIERY_SOUL:
-                    pWho->CastSpell(m_creature, SPELL_FIERY_CAPTURED, true);
-                    break;
-                case NPC_WATERY_SOUL:
-                    pWho->CastSpell(m_creature, SPELL_WATER_CAPTURED, true);
-                    break;
-                case NPC_AIRY_SOUL:
-                    pWho->CastSpell(m_creature, SPELL_AIR_CAPTURED, true);
-                    break;
+                    case NPC_EARTHEN_SOUL:
+                        pWho->CastSpell(m_creature, SPELL_EARTH_CAPTURED, true);
+                        break;
+                    case NPC_FIERY_SOUL:
+                        pWho->CastSpell(m_creature, SPELL_FIERY_CAPTURED, true);
+                        break;
+                    case NPC_WATERY_SOUL:
+                        pWho->CastSpell(m_creature, SPELL_WATER_CAPTURED, true);
+                        break;
+                    case NPC_AIRY_SOUL:
+                        pWho->CastSpell(m_creature, SPELL_AIR_CAPTURED, true);
+                        break;
                 }
 
                 // Despawn the spirit soul after it's captured
@@ -1639,18 +1643,18 @@ struct spell_totem_of_spirits : public SpellScript
 
         switch (uiSpellId)
         {
-        case SPELL_EARTH_CAPTURED:
-            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_EARTH_CAPTURED_CREDIT, true);
-            return true;
-        case SPELL_FIERY_CAPTURED:
-            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FIERY_CAPTURED_CREDIT, true);
-            return true;
-        case SPELL_WATER_CAPTURED:
-            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_WATER_CAPTURED_CREDIT, true);
-            return true;
-        case SPELL_AIR_CAPTURED:
-            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_AIR_CAPTURED_CREDIT, true);
-            return true;
+            case SPELL_EARTH_CAPTURED:
+                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_EARTH_CAPTURED_CREDIT, true);
+                return true;
+            case SPELL_FIERY_CAPTURED:
+                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_FIERY_CAPTURED_CREDIT, true);
+                return true;
+            case SPELL_WATER_CAPTURED:
+                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_WATER_CAPTURED_CREDIT, true);
+                return true;
+            case SPELL_AIR_CAPTURED:
+                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_AIR_CAPTURED_CREDIT, true);
+                return true;
         }
 
         return false;
@@ -1689,10 +1693,10 @@ struct aura_elemental_sieve : public AuraScript
         uint32 uiSoulEntry = 0;
         switch (pCaster->GetEntry())
         {
-        case NPC_EARTH_SPIRIT: uiSoulEntry = NPC_EARTHEN_SOUL; break;
-        case NPC_FIERY_SPIRIT: uiSoulEntry = NPC_FIERY_SOUL;   break;
-        case NPC_WATER_SPIRIT: uiSoulEntry = NPC_WATERY_SOUL;  break;
-        case NPC_AIR_SPIRIT:   uiSoulEntry = NPC_AIRY_SOUL;    break;
+            case NPC_EARTH_SPIRIT: uiSoulEntry = NPC_EARTHEN_SOUL; break;
+            case NPC_FIERY_SPIRIT: uiSoulEntry = NPC_FIERY_SOUL;   break;
+            case NPC_WATER_SPIRIT: uiSoulEntry = NPC_WATERY_SOUL;  break;
+            case NPC_AIR_SPIRIT:   uiSoulEntry = NPC_AIRY_SOUL;    break;
         }
 
         if (uiSoulEntry)
@@ -1723,18 +1727,18 @@ struct event_spell_soul_captured_credit : public MapEventScript
 
             switch (uiEventId)
             {
-            case EVENT_EARTH:
-                pOwner->KilledMonsterCredit(NPC_CREDIT_MARKER_EARTH);
-                return true;
-            case EVENT_FIERY:
-                pOwner->KilledMonsterCredit(NPC_CREDIT_MARKER_FIERY);
-                return true;
-            case EVENT_WATER:
-                pOwner->KilledMonsterCredit(NPC_CREDIT_MARKER_WATER);
-                return true;
-            case EVENT_AIR:
-                pOwner->KilledMonsterCredit(NPC_CREDIT_MARKER_AIR);
-                return true;
+                case EVENT_EARTH:
+                    pOwner->KilledMonsterCredit(NPC_CREDIT_MARKER_EARTH);
+                    return true;
+                case EVENT_FIERY:
+                    pOwner->KilledMonsterCredit(NPC_CREDIT_MARKER_FIERY);
+                    return true;
+                case EVENT_WATER:
+                    pOwner->KilledMonsterCredit(NPC_CREDIT_MARKER_WATER);
+                    return true;
+                case EVENT_AIR:
+                    pOwner->KilledMonsterCredit(NPC_CREDIT_MARKER_AIR);
+                    return true;
             }
         }
 
@@ -1841,7 +1845,7 @@ struct npc_spawned_oronok_tornheart : public CreatureScript
     struct npc_spawned_oronok_tornheartAI : public ScriptedAI, private DialogueHelper
     {
         npc_spawned_oronok_tornheartAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aOutroDialogue)
+            DialogueHelper(aOutroDialogue)
         {
             StartNextDialogueText(QUEST_CIPHER_OF_DAMNATION);
         }
@@ -1874,57 +1878,57 @@ struct npc_spawned_oronok_tornheart : public CreatureScript
         {
             switch (iEntry)
             {
-            case NPC_CYRUKH_THE_FIRELORD:
-                // Set them in motion
-                m_creature->SetWalk(false);
-                m_creature->GetMotionMaster()->MovePoint(POINT_ID_ATTACK_READY, aDamnationLocations[4].m_fX, aDamnationLocations[4].m_fY, aDamnationLocations[4].m_fZ);
-                if (Creature* pBorak = GetClosestCreatureWithEntry(m_creature, NPC_BORAK_SON_OF_ORONOK, 10.0f))
-                {
-                    m_borakGuid = pBorak->GetObjectGuid();
-                    pBorak->GetMotionMaster()->MoveFollow(m_creature, 5.0f, -M_PI_F / 2);
-                }
-                if (Creature* pGromtor = GetClosestCreatureWithEntry(m_creature, NPC_GROMTOR_SON_OF_ORONOK, 10.0f))
-                {
-                    m_gromtorGuid = pGromtor->GetObjectGuid();
-                    pGromtor->GetMotionMaster()->MoveFollow(m_creature, 5.0f, M_PI_F / 2);
-                }
-                break;
-            case NPC_EARTHMENDER_TORLOK:
-                if (Creature* pTorlok = GetClosestCreatureWithEntry(m_creature, NPC_EARTHMENDER_TORLOK, 25.0f))
-                {
-                    m_torlokGuid = pTorlok->GetObjectGuid();
-                    m_creature->SetFacingToObject(pTorlok);
-                }
-                break;
-            case NPC_REDEEMED_SPIRIT_OF_EARTH:
-                m_creature->SetFacingTo(4.9f);
-                m_creature->SummonCreature(NPC_REDEEMED_SPIRIT_OF_FIRE, aDamnationLocations[0].m_fX, aDamnationLocations[0].m_fY, aDamnationLocations[0].m_fZ, aDamnationLocations[0].m_fO, TEMPSPAWN_TIMED_DESPAWN, 32000);
-                m_creature->SummonCreature(NPC_REDEEMED_SPIRIT_OF_EARTH, aDamnationLocations[1].m_fX, aDamnationLocations[1].m_fY, aDamnationLocations[1].m_fZ, aDamnationLocations[1].m_fO, TEMPSPAWN_TIMED_DESPAWN, 32000);
-                m_creature->SummonCreature(NPC_REDEEMED_SPIRIT_OF_WATER, aDamnationLocations[2].m_fX, aDamnationLocations[2].m_fY, aDamnationLocations[2].m_fZ, aDamnationLocations[2].m_fO, TEMPSPAWN_TIMED_DESPAWN, 32000);
-                m_creature->SummonCreature(NPC_REDEEMED_SPIRIT_OF_AIR, aDamnationLocations[3].m_fX, aDamnationLocations[3].m_fY, aDamnationLocations[3].m_fZ, aDamnationLocations[3].m_fO, TEMPSPAWN_TIMED_DESPAWN, 32000);
-                break;
-            case SAY_ORONOK_EPILOGUE_7:
-                if (Creature* pTorlok = m_creature->GetMap()->GetCreature(m_torlokGuid))
-                {
-                    m_creature->SetFacingToObject(pTorlok);
-                }
-                break;
-            case NPC_ORONOK_TORN_HEART:
-                if (GameObject* pMark = GetClosestGameObjectWithEntry(m_creature, GO_MARK_OF_KAELTHAS, 30.0f))
-                {
-                    pMark->SetRespawnTime(5 * MINUTE);
-                    pMark->Refresh();
-                }
-                if (Creature* pBorak = m_creature->GetMap()->GetCreature(m_borakGuid))
-                {
-                    pBorak->ForcedDespawn();
-                }
-                if (Creature* pGromtor = m_creature->GetMap()->GetCreature(m_gromtorGuid))
-                {
-                    pGromtor->ForcedDespawn();
-                }
-                m_creature->ForcedDespawn();
-                break;
+                case NPC_CYRUKH_THE_FIRELORD:
+                    // Set them in motion
+                    m_creature->SetWalk(false);
+                    m_creature->GetMotionMaster()->MovePoint(POINT_ID_ATTACK_READY, aDamnationLocations[4].m_fX, aDamnationLocations[4].m_fY, aDamnationLocations[4].m_fZ);
+                    if (Creature* pBorak = GetClosestCreatureWithEntry(m_creature, NPC_BORAK_SON_OF_ORONOK, 10.0f))
+                    {
+                        m_borakGuid = pBorak->GetObjectGuid();
+                        pBorak->GetMotionMaster()->MoveFollow(m_creature, 5.0f, -M_PI_F / 2);
+                    }
+                    if (Creature* pGromtor = GetClosestCreatureWithEntry(m_creature, NPC_GROMTOR_SON_OF_ORONOK, 10.0f))
+                    {
+                        m_gromtorGuid = pGromtor->GetObjectGuid();
+                        pGromtor->GetMotionMaster()->MoveFollow(m_creature, 5.0f, M_PI_F / 2);
+                    }
+                    break;
+                case NPC_EARTHMENDER_TORLOK:
+                    if (Creature* pTorlok = GetClosestCreatureWithEntry(m_creature, NPC_EARTHMENDER_TORLOK, 25.0f))
+                    {
+                        m_torlokGuid = pTorlok->GetObjectGuid();
+                        m_creature->SetFacingToObject(pTorlok);
+                    }
+                    break;
+                case NPC_REDEEMED_SPIRIT_OF_EARTH:
+                    m_creature->SetFacingTo(4.9f);
+                    m_creature->SummonCreature(NPC_REDEEMED_SPIRIT_OF_FIRE, aDamnationLocations[0].m_fX, aDamnationLocations[0].m_fY, aDamnationLocations[0].m_fZ, aDamnationLocations[0].m_fO, TEMPSPAWN_TIMED_DESPAWN, 32000);
+                    m_creature->SummonCreature(NPC_REDEEMED_SPIRIT_OF_EARTH, aDamnationLocations[1].m_fX, aDamnationLocations[1].m_fY, aDamnationLocations[1].m_fZ, aDamnationLocations[1].m_fO, TEMPSPAWN_TIMED_DESPAWN, 32000);
+                    m_creature->SummonCreature(NPC_REDEEMED_SPIRIT_OF_WATER, aDamnationLocations[2].m_fX, aDamnationLocations[2].m_fY, aDamnationLocations[2].m_fZ, aDamnationLocations[2].m_fO, TEMPSPAWN_TIMED_DESPAWN, 32000);
+                    m_creature->SummonCreature(NPC_REDEEMED_SPIRIT_OF_AIR, aDamnationLocations[3].m_fX, aDamnationLocations[3].m_fY, aDamnationLocations[3].m_fZ, aDamnationLocations[3].m_fO, TEMPSPAWN_TIMED_DESPAWN, 32000);
+                    break;
+                case SAY_ORONOK_EPILOGUE_7:
+                    if (Creature* pTorlok = m_creature->GetMap()->GetCreature(m_torlokGuid))
+                    {
+                        m_creature->SetFacingToObject(pTorlok);
+                    }
+                    break;
+                case NPC_ORONOK_TORN_HEART:
+                    if (GameObject* pMark = GetClosestGameObjectWithEntry(m_creature, GO_MARK_OF_KAELTHAS, 30.0f))
+                    {
+                        pMark->SetRespawnTime(5 * MINUTE);
+                        pMark->Refresh();
+                    }
+                    if (Creature* pBorak = m_creature->GetMap()->GetCreature(m_borakGuid))
+                    {
+                        pBorak->ForcedDespawn();
+                    }
+                    if (Creature* pGromtor = m_creature->GetMap()->GetCreature(m_gromtorGuid))
+                    {
+                        pGromtor->ForcedDespawn();
+                    }
+                    m_creature->ForcedDespawn();
+                    break;
             }
         }
 
@@ -1932,13 +1936,13 @@ struct npc_spawned_oronok_tornheart : public CreatureScript
         {
             switch (uiEntry)
             {
-            case NPC_ORONOK_TORN_HEART:         return m_creature;
-            case NPC_EARTHMENDER_TORLOK:        return m_creature->GetMap()->GetCreature(m_torlokGuid);
-            case NPC_REDEEMED_SPIRIT_OF_EARTH:  return m_creature->GetMap()->GetCreature(m_earthSpiritGuid);
-            case NPC_REDEEMED_SPIRIT_OF_FIRE:   return m_creature->GetMap()->GetCreature(m_fireSpiritGuid);
+                case NPC_ORONOK_TORN_HEART:         return m_creature;
+                case NPC_EARTHMENDER_TORLOK:        return m_creature->GetMap()->GetCreature(m_torlokGuid);
+                case NPC_REDEEMED_SPIRIT_OF_EARTH:  return m_creature->GetMap()->GetCreature(m_earthSpiritGuid);
+                case NPC_REDEEMED_SPIRIT_OF_FIRE:   return m_creature->GetMap()->GetCreature(m_fireSpiritGuid);
 
-            default:
-                return nullptr;
+                default:
+                    return nullptr;
             }
         }
 
@@ -1961,12 +1965,12 @@ struct npc_spawned_oronok_tornheart : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_REDEEMED_SPIRIT_OF_FIRE:
-                m_fireSpiritGuid = pSummoned->GetObjectGuid();
-                break;
-            case NPC_REDEEMED_SPIRIT_OF_EARTH:
-                m_earthSpiritGuid = pSummoned->GetObjectGuid();
-                break;
+                case NPC_REDEEMED_SPIRIT_OF_FIRE:
+                    m_fireSpiritGuid = pSummoned->GetObjectGuid();
+                    break;
+                case NPC_REDEEMED_SPIRIT_OF_EARTH:
+                    m_earthSpiritGuid = pSummoned->GetObjectGuid();
+                    break;
             }
         }
 
@@ -2009,26 +2013,26 @@ struct npc_spawned_oronok_tornheart : public CreatureScript
 
             switch (uiPointId)
             {
-            case POINT_ID_ATTACK_READY:
-                // Get Cyrukh guid now, because we are at a closer distance
-                if (Creature* pCyrukh = GetClosestCreatureWithEntry(m_creature, NPC_CYRUKH_THE_FIRELORD, 70.0f))
-                {
-                    m_cyrukhGuid = pCyrukh->GetObjectGuid();
-                }
+                case POINT_ID_ATTACK_READY:
+                    // Get Cyrukh guid now, because we are at a closer distance
+                    if (Creature* pCyrukh = GetClosestCreatureWithEntry(m_creature, NPC_CYRUKH_THE_FIRELORD, 70.0f))
+                    {
+                        m_cyrukhGuid = pCyrukh->GetObjectGuid();
+                    }
 
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                DoScriptText(SAY_ORONOK_READY, m_creature);
-                break;
-            case POINT_ID_ELEMENTS:
-                // Attack the closest earth element
-                if (Creature* pElement = GetClosestCreatureWithEntry(m_creature, NPC_EARTH_SPIRIT, 50.0f))
-                {
-                    AttackStart(pElement);
-                }
-                break;
-            case POINT_ID_EPILOGUE:
-                StartNextDialogueText(NPC_EARTHMENDER_TORLOK);
-                break;
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    DoScriptText(SAY_ORONOK_READY, m_creature);
+                    break;
+                case POINT_ID_ELEMENTS:
+                    // Attack the closest earth element
+                    if (Creature* pElement = GetClosestCreatureWithEntry(m_creature, NPC_EARTH_SPIRIT, 50.0f))
+                    {
+                        AttackStart(pElement);
+                    }
+                    break;
+                case POINT_ID_EPILOGUE:
+                    StartNextDialogueText(NPC_EARTHMENDER_TORLOK);
+                    break;
             }
         }
 
@@ -2205,28 +2209,28 @@ struct npc_domesticated_felboar : public CreatureScript
                 {
                     switch (m_uiTuberStage)
                     {
-                    case 0:
-                        if (DoCastSpellIfCan(m_creature, SPELL_SPECIAL_UNARMED) == CAST_OK)
-                        {
-                            m_uiTuberTimer = 2000;
-                        }
-                        break;
-                    case 1:
-                        if (DoCastSpellIfCan(m_creature, SPELL_SHADOWMOON_TUBER) == CAST_OK)
-                        {
-                            // Despawn current tuber
-                            if (GameObject* pTuber = GetClosestGameObjectWithEntry(m_creature, GO_SHADOWMOON_TUBER_MOUND, 3.0f))
+                        case 0:
+                            if (DoCastSpellIfCan(m_creature, SPELL_SPECIAL_UNARMED) == CAST_OK)
                             {
-                                pTuber->SetLootState(GO_JUST_DEACTIVATED);
+                                m_uiTuberTimer = 2000;
                             }
+                            break;
+                        case 1:
+                            if (DoCastSpellIfCan(m_creature, SPELL_SHADOWMOON_TUBER) == CAST_OK)
+                            {
+                                // Despawn current tuber
+                                if (GameObject* pTuber = GetClosestGameObjectWithEntry(m_creature, GO_SHADOWMOON_TUBER_MOUND, 3.0f))
+                                {
+                                    pTuber->SetLootState(GO_JUST_DEACTIVATED);
+                                }
 
-                            DoScriptText(EMOTE_SQUEAL, m_creature);
-                            m_uiTuberTimer = 2000;
-                        }
-                        break;
-                    case 2:
-                        EnterEvadeMode();
-                        break;
+                                DoScriptText(EMOTE_SQUEAL, m_creature);
+                                m_uiTuberTimer = 2000;
+                            }
+                            break;
+                        case 2:
+                            EnterEvadeMode();
+                            break;
                     }
                     ++m_uiTuberStage;
                 }
@@ -2319,9 +2323,6 @@ struct npc_veneratus_spawn_node : public CreatureScript
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         void UpdateAI(const uint32 uiDiff) override {}
 #endif
-//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
-//    void UpdateAI(const uint32 /* uiDiff */) override {}
-//
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

@@ -130,25 +130,25 @@ struct npc_gilthares : public CreatureScript
 
             switch (uiPointId)
             {
-            case 16:
-                DoScriptText(SAY_GIL_AT_LAST, m_creature, pPlayer);
-                break;
-            case 17:
-                DoScriptText(SAY_GIL_PROCEED, m_creature, pPlayer);
-                break;
-            case 18:
-                DoScriptText(SAY_GIL_FREEBOOTERS, m_creature, pPlayer);
-                break;
-            case 37:
-                DoScriptText(SAY_GIL_ALMOST, m_creature, pPlayer);
-                break;
-            case 47:
-                DoScriptText(SAY_GIL_SWEET, m_creature, pPlayer);
-                break;
-            case 53:
-                DoScriptText(SAY_GIL_FREED, m_creature, pPlayer);
-                pPlayer->GroupEventHappens(QUEST_FREE_FROM_HOLD, m_creature);
-                break;
+                case 16:
+                    DoScriptText(SAY_GIL_AT_LAST, m_creature, pPlayer);
+                    break;
+                case 17:
+                    DoScriptText(SAY_GIL_PROCEED, m_creature, pPlayer);
+                    break;
+                case 18:
+                    DoScriptText(SAY_GIL_FREEBOOTERS, m_creature, pPlayer);
+                    break;
+                case 37:
+                    DoScriptText(SAY_GIL_ALMOST, m_creature, pPlayer);
+                    break;
+                case 47:
+                    DoScriptText(SAY_GIL_SWEET, m_creature, pPlayer);
+                    break;
+                case 53:
+                    DoScriptText(SAY_GIL_FREED, m_creature, pPlayer);
+                    pPlayer->GroupEventHappens(QUEST_FREE_FROM_HOLD, m_creature);
+                    break;
             }
         }
 
@@ -166,18 +166,18 @@ struct npc_gilthares : public CreatureScript
                 // appears to be pretty much random (possible only if escorter not in combat with pWho yet?)
                 switch (urand(0, 3))
                 {
-                case 0:
-                    DoScriptText(SAY_GIL_AGGRO_1, m_creature, pWho);
-                    break;
-                case 1:
-                    DoScriptText(SAY_GIL_AGGRO_2, m_creature, pWho);
-                    break;
-                case 2:
-                    DoScriptText(SAY_GIL_AGGRO_3, m_creature, pWho);
-                    break;
-                case 3:
-                    DoScriptText(SAY_GIL_AGGRO_4, m_creature, pWho);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_GIL_AGGRO_1, m_creature, pWho);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_GIL_AGGRO_2, m_creature, pWho);
+                        break;
+                    case 2:
+                        DoScriptText(SAY_GIL_AGGRO_3, m_creature, pWho);
+                        break;
+                    case 3:
+                        DoScriptText(SAY_GIL_AGGRO_4, m_creature, pWho);
+                        break;
                 }
             }
         }
@@ -486,40 +486,40 @@ struct npc_twiggy_flathead : public CreatureScript
 
                 switch (m_uiStep)
                 {
-                case 0:
-                    SetChallengers();
-                    m_uiEventTimer = 5000;
-                    ++m_uiStep;
-                    break;
-                case 1:
-                    DoScriptText(SAY_TWIGGY_FRAY, m_creature);
-                    if (Creature* pChallenger = m_creature->GetMap()->GetCreature(m_vAffrayChallengerGuidsVector[m_uiChallengerCount]))
-                    {
-                        SetChallengerReady(pChallenger);
-                    }
-                    else
-                    {
-                        EnterEvadeMode();
-                    }
-
-                    if (m_uiChallengerCount == MAX_CHALLENGERS)
-                    {
-                        ++m_uiStep;
+                    case 0:
+                        SetChallengers();
                         m_uiEventTimer = 5000;
-                    }
-                    else
-                    {
-                        m_uiEventTimer = 25000;
-                    }
-                    break;
-                case 2:
-                    m_creature->SummonCreature(NPC_BIG_WILL, aAffrayChallengerLoc[6][0], aAffrayChallengerLoc[6][1], aAffrayChallengerLoc[6][2], aAffrayChallengerLoc[6][3], TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
-                    m_uiEventTimer = 15000;
-                    ++m_uiStep;
-                    break;
-                default:
-                    m_uiEventTimer = 5000;
-                    break;
+                        ++m_uiStep;
+                        break;
+                    case 1:
+                        DoScriptText(SAY_TWIGGY_FRAY, m_creature);
+                        if (Creature* pChallenger = m_creature->GetMap()->GetCreature(m_vAffrayChallengerGuidsVector[m_uiChallengerCount]))
+                        {
+                            SetChallengerReady(pChallenger);
+                        }
+                        else
+                        {
+                            EnterEvadeMode();
+                        }
+
+                        if (m_uiChallengerCount == MAX_CHALLENGERS)
+                        {
+                            ++m_uiStep;
+                            m_uiEventTimer = 5000;
+                        }
+                        else
+                        {
+                            m_uiEventTimer = 25000;
+                        }
+                        break;
+                    case 2:
+                        m_creature->SummonCreature(NPC_BIG_WILL, aAffrayChallengerLoc[6][0], aAffrayChallengerLoc[6][1], aAffrayChallengerLoc[6][2], aAffrayChallengerLoc[6][3], TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                        m_uiEventTimer = 15000;
+                        ++m_uiStep;
+                        break;
+                    default:
+                        m_uiEventTimer = 5000;
+                        break;
                 }
             }
             else
@@ -617,25 +617,25 @@ struct npc_wizzlecranks_shredder : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_STARTUP1, m_creature, pPlayer);
-                }
-                break;
-            case 9:
-                SetRun(false);
-                break;
-            case 17:
-                if (Creature* pTemp = m_creature->SummonCreature(NPC_MERCENARY, 1128.489f, -3037.611f, 92.701f, 1.472f, TEMPSPAWN_TIMED_OOC_DESPAWN, 120000))
-                {
-                    DoScriptText(SAY_MERCENARY, pTemp);
-                    m_creature->SummonCreature(NPC_MERCENARY, 1160.172f, -2980.168f, 97.313f, 3.690f, TEMPSPAWN_TIMED_OOC_DESPAWN, 120000);
-                }
-                break;
-            case 24:
-                m_bIsPostEvent = true;
-                break;
+                case 0:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_STARTUP1, m_creature, pPlayer);
+                    }
+                    break;
+                case 9:
+                    SetRun(false);
+                    break;
+                case 17:
+                    if (Creature* pTemp = m_creature->SummonCreature(NPC_MERCENARY, 1128.489f, -3037.611f, 92.701f, 1.472f, TEMPSPAWN_TIMED_OOC_DESPAWN, 120000))
+                    {
+                        DoScriptText(SAY_MERCENARY, pTemp);
+                        m_creature->SummonCreature(NPC_MERCENARY, 1160.172f, -2980.168f, 97.313f, 3.690f, TEMPSPAWN_TIMED_OOC_DESPAWN, 120000);
+                    }
+                    break;
+                case 24:
+                    m_bIsPostEvent = true;
+                    break;
             }
         }
 
@@ -643,19 +643,19 @@ struct npc_wizzlecranks_shredder : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 9:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_STARTUP2, m_creature, pPlayer);
-                }
-                break;
-            case 18:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_PROGRESS_1, m_creature, pPlayer);
-                }
-                SetRun();
-                break;
+                case 9:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_STARTUP2, m_creature, pPlayer);
+                    }
+                    break;
+                case 18:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_PROGRESS_1, m_creature, pPlayer);
+                    }
+                    SetRun();
+                    break;
             }
         }
 
@@ -682,22 +682,22 @@ struct npc_wizzlecranks_shredder : public CreatureScript
                     {
                         switch (m_uiPostEventCount)
                         {
-                        case 0:
-                            DoScriptText(SAY_PROGRESS_2, m_creature);
-                            break;
-                        case 1:
-                            DoScriptText(SAY_PROGRESS_3, m_creature);
-                            break;
-                        case 2:
-                            DoScriptText(SAY_END, m_creature);
-                            break;
-                        case 3:
-                            if (Player* pPlayer = GetPlayerForEscort())
-                            {
-                                pPlayer->GroupEventHappens(QUEST_ESCAPE, m_creature);
-                                m_creature->SummonCreature(NPC_PILOT_WIZZ, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_DESPAWN, 180000);
-                            }
-                            break;
+                            case 0:
+                                DoScriptText(SAY_PROGRESS_2, m_creature);
+                                break;
+                            case 1:
+                                DoScriptText(SAY_PROGRESS_3, m_creature);
+                                break;
+                            case 2:
+                                DoScriptText(SAY_END, m_creature);
+                                break;
+                            case 3:
+                                if (Player* pPlayer = GetPlayerForEscort())
+                                {
+                                    pPlayer->GroupEventHappens(QUEST_ESCAPE, m_creature);
+                                    m_creature->SummonCreature(NPC_PILOT_WIZZ, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_DESPAWN, 180000);
+                                }
+                                break;
                         }
 
                         ++m_uiPostEventCount;
@@ -1077,95 +1077,99 @@ struct npc_regthar_deathgate : public CreatureScript
             if (m_uiPhaseCount <= 2 && m_uiWaitSummonTimerHorde < uiDiff && m_uiSummonCountHorde < 7)
             {
                 if (m_uiPhaseCount == 2)
-                    switch (urand(0, 1))
                 {
-                    case 0:
-                        m_creature->SummonCreature(NPC_HORDE_DEFENDER, SpawnPointsHorde[lSpawnListHorde.front()].fX, SpawnPointsHorde[lSpawnListHorde.front()].fY, SpawnPointsHorde[lSpawnListHorde.front()].fZ, SpawnPointsHorde[lSpawnListHorde.front()].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
-                        ++m_uiSummonCountHorde;
-                        if (m_uiSummonCountHorde <= 4)
-                        {
-                            m_uiWaitSummonTimerHorde = 1000;
-                        }
-                        else
-                        {
-                            m_uiWaitSummonTimerHorde = 12000;
-                        }
-                        break;
-                    case 1:
-                        m_creature->SummonCreature(NPC_HORDE_AXE_THROWER, SpawnPointsHorde[lSpawnListHorde.front()].fX, SpawnPointsHorde[lSpawnListHorde.front()].fY, SpawnPointsHorde[lSpawnListHorde.front()].fZ, SpawnPointsHorde[lSpawnListHorde.front()].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
-                        ++m_uiSummonCountHorde;
-                        if (m_uiSummonCountHorde <= 4)
-                        {
-                            m_uiWaitSummonTimerHorde = 1000;
-                        }
-                        else
-                        {
-                            m_uiWaitSummonTimerHorde = 12000;
-                        }
-                        break;
+                    switch (urand(0, 1))
+                    {
+                        case 0:
+                            m_creature->SummonCreature(NPC_HORDE_DEFENDER, SpawnPointsHorde[lSpawnListHorde.front()].fX, SpawnPointsHorde[lSpawnListHorde.front()].fY, SpawnPointsHorde[lSpawnListHorde.front()].fZ, SpawnPointsHorde[lSpawnListHorde.front()].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
+                            ++m_uiSummonCountHorde;
+                            if (m_uiSummonCountHorde <= 4)
+                            {
+                                m_uiWaitSummonTimerHorde = 1000;
+                            }
+                            else
+                            {
+                                m_uiWaitSummonTimerHorde = 12000;
+                            }
+                            break;
+                        case 1:
+                            m_creature->SummonCreature(NPC_HORDE_AXE_THROWER, SpawnPointsHorde[lSpawnListHorde.front()].fX, SpawnPointsHorde[lSpawnListHorde.front()].fY, SpawnPointsHorde[lSpawnListHorde.front()].fZ, SpawnPointsHorde[lSpawnListHorde.front()].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
+                            ++m_uiSummonCountHorde;
+                            if (m_uiSummonCountHorde <= 4)
+                            {
+                                m_uiWaitSummonTimerHorde = 1000;
+                            }
+                            else
+                            {
+                                m_uiWaitSummonTimerHorde = 12000;
+                            }
+                            break;
+                    }
                 }
 
                 if (m_uiPhaseCount == 1)
+                {
                     switch (urand(0, 1))
-                {
-                    case 0:
-                        m_creature->SummonCreature(NPC_HORDE_DEFENDER, SpawnPointsHorde[m_uiSummonCountHorde].fX, SpawnPointsHorde[m_uiSummonCountHorde].fY, SpawnPointsHorde[m_uiSummonCountHorde].fZ, SpawnPointsHorde[m_uiSummonCountHorde].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
-                        ++m_uiSummonCountHorde;
-                        break;
-                    case 1:
-                        m_creature->SummonCreature(NPC_HORDE_AXE_THROWER, SpawnPointsHorde[m_uiSummonCountHorde].fX, SpawnPointsHorde[m_uiSummonCountHorde].fY, SpawnPointsHorde[m_uiSummonCountHorde].fZ, SpawnPointsHorde[m_uiSummonCountHorde].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
-                        ++m_uiSummonCountHorde;
-                        break;
-                }
-            }
-
-            if (m_uiPhaseCount <= 2 && m_uiWaitSummonTimer < uiDiff && (m_uiSummonCountInvader + m_uiSummonCountStormseer) < 15)
-            {
-
-                if (m_uiSummonCountInvader < 8)
-                {
-                    ++m_uiSummonCountInvader;
-
-                    if (m_uiPhaseCount == 2)
                     {
-                        m_creature->SummonCreature(NPC_KOLKAR_INVADER, SpawnPointsKolkar[lSpawnList.front()].fX, SpawnPointsKolkar[lSpawnList.front()].fY, SpawnPointsKolkar[lSpawnList.front()].fZ, SpawnPointsKolkar[lSpawnList.front()].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
-                        m_uiWaitSummonTimer = 10000;
-                    }
-
-                    if (m_uiPhaseCount == 1)
-                    {
-                        m_creature->SummonCreature(NPC_KOLKAR_INVADER, SpawnPointsKolkar[m_uiCreatureCount].fX, SpawnPointsKolkar[m_uiCreatureCount].fY, SpawnPointsKolkar[m_uiCreatureCount].fZ, SpawnPointsKolkar[m_uiCreatureCount].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
-                        ++m_uiCreatureCount;
+                        case 0:
+                            m_creature->SummonCreature(NPC_HORDE_DEFENDER, SpawnPointsHorde[m_uiSummonCountHorde].fX, SpawnPointsHorde[m_uiSummonCountHorde].fY, SpawnPointsHorde[m_uiSummonCountHorde].fZ, SpawnPointsHorde[m_uiSummonCountHorde].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
+                            ++m_uiSummonCountHorde;
+                            break;
+                        case 1:
+                            m_creature->SummonCreature(NPC_HORDE_AXE_THROWER, SpawnPointsHorde[m_uiSummonCountHorde].fX, SpawnPointsHorde[m_uiSummonCountHorde].fY, SpawnPointsHorde[m_uiSummonCountHorde].fZ, SpawnPointsHorde[m_uiSummonCountHorde].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
+                            ++m_uiSummonCountHorde;
+                            break;
                     }
                 }
 
-                if (m_uiSummonCountStormseer < 7)
+                if (m_uiPhaseCount <= 2 && m_uiWaitSummonTimer < uiDiff && (m_uiSummonCountInvader + m_uiSummonCountStormseer) < 15)
                 {
-                    ++m_uiSummonCountStormseer;
-                    if (m_uiPhaseCount == 2)
+
+                    if (m_uiSummonCountInvader < 8)
                     {
-                        m_creature->SummonCreature(NPC_KOLKAR_STORMSEER, SpawnPointsKolkar[lSpawnList.front()].fX, SpawnPointsKolkar[lSpawnList.front()].fY, SpawnPointsKolkar[lSpawnList.front()].fZ, SpawnPointsKolkar[lSpawnList.front()].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
-                        m_uiWaitSummonTimer = 10000;
+                        ++m_uiSummonCountInvader;
+
+                        if (m_uiPhaseCount == 2)
+                        {
+                            m_creature->SummonCreature(NPC_KOLKAR_INVADER, SpawnPointsKolkar[lSpawnList.front()].fX, SpawnPointsKolkar[lSpawnList.front()].fY, SpawnPointsKolkar[lSpawnList.front()].fZ, SpawnPointsKolkar[lSpawnList.front()].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
+                            m_uiWaitSummonTimer = 10000;
+                        }
+
+                        if (m_uiPhaseCount == 1)
+                        {
+                            m_creature->SummonCreature(NPC_KOLKAR_INVADER, SpawnPointsKolkar[m_uiCreatureCount].fX, SpawnPointsKolkar[m_uiCreatureCount].fY, SpawnPointsKolkar[m_uiCreatureCount].fZ, SpawnPointsKolkar[m_uiCreatureCount].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
+                            ++m_uiCreatureCount;
+                        }
                     }
 
-                    if (m_uiPhaseCount == 1)
+                    if (m_uiSummonCountStormseer < 7)
                     {
-                        m_creature->SummonCreature(NPC_KOLKAR_STORMSEER, SpawnPointsKolkar[m_uiCreatureCount].fX, SpawnPointsKolkar[m_uiCreatureCount].fY, SpawnPointsKolkar[m_uiCreatureCount].fZ, SpawnPointsKolkar[m_uiCreatureCount].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
-                        ++m_uiCreatureCount;
+                        ++m_uiSummonCountStormseer;
+                        if (m_uiPhaseCount == 2)
+                        {
+                            m_creature->SummonCreature(NPC_KOLKAR_STORMSEER, SpawnPointsKolkar[lSpawnList.front()].fX, SpawnPointsKolkar[lSpawnList.front()].fY, SpawnPointsKolkar[lSpawnList.front()].fZ, SpawnPointsKolkar[lSpawnList.front()].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
+                            m_uiWaitSummonTimer = 10000;
+                        }
+
+                        if (m_uiPhaseCount == 1)
+                        {
+                            m_creature->SummonCreature(NPC_KOLKAR_STORMSEER, SpawnPointsKolkar[m_uiCreatureCount].fX, SpawnPointsKolkar[m_uiCreatureCount].fY, SpawnPointsKolkar[m_uiCreatureCount].fZ, SpawnPointsKolkar[m_uiCreatureCount].fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 40000);
+                            ++m_uiCreatureCount;
+                        }
+                    }
+
+                    if (m_uiPhaseCount == 1 && m_uiCreatureCount == 15) //set initial spawn done when 15 enemys spawned
+                    {
+                        m_uiPhaseCount = 2;
                     }
                 }
 
-                if (m_uiPhaseCount == 1 && m_uiCreatureCount == 15) //set initial spawn done when 15 enemys spawned
+                else
                 {
-                    m_uiPhaseCount = 2;
+                    m_uiWaitSummonTimer -= uiDiff;
+                    m_uiWaitSummonTimerHorde -= uiDiff;
+                    m_uiEventTimer -= uiDiff;
                 }
-            }
-
-            else
-            {
-                m_uiWaitSummonTimer -= uiDiff;
-                m_uiWaitSummonTimerHorde -= uiDiff;
-                m_uiEventTimer -= uiDiff;
             }
         }
     };
@@ -1189,7 +1193,7 @@ struct npc_regthar_deathgate : public CreatureScript
             {
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Where is warlord Krom'zar?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
             }
-              //pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "督军克罗姆扎在哪里？", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            //pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "督军克罗姆扎在哪里？", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
         }
         pPlayer->SEND_GOSSIP_MENU(2533, pCreature->GetObjectGuid());
         return true;
@@ -1241,7 +1245,7 @@ struct horde_defender : public CreatureScript
         void EnterEvadeMode() override
         {
             m_creature->RemoveAllAurasOnEvade();
-//            m_creature->DeleteThreatList();
+            //            m_creature->DeleteThreatList();
             m_creature->SetLootRecipient(nullptr);
         }
 
@@ -1258,15 +1262,15 @@ struct horde_defender : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0:
-                DoScriptText(SAY_AGGRO_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_AGGRO_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_AGGRO_3, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_AGGRO_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_AGGRO_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_AGGRO_3, m_creature);
+                    break;
             }
         }
 

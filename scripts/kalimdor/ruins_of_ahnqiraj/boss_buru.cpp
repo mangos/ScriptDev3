@@ -139,75 +139,75 @@ struct boss_buru : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_EGG:
+                case PHASE_EGG:
 
-                if (m_uiDismemberTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DISMEMBER) == CAST_OK)
+                    if (m_uiDismemberTimer < uiDiff)
                     {
-                        m_uiDismemberTimer = 5000;
-                    }
-                }
-                else
-                {
-                    m_uiDismemberTimer -= uiDiff;
-                }
-
-                if (m_uiFullSpeedTimer)
-                {
-                    if (m_uiGatheringSpeedTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_GATHERING_SPEED) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DISMEMBER) == CAST_OK)
                         {
-                            m_uiGatheringSpeedTimer = 9000;
+                            m_uiDismemberTimer = 5000;
                         }
                     }
                     else
                     {
-                        m_uiGatheringSpeedTimer -= uiDiff;
+                        m_uiDismemberTimer -= uiDiff;
                     }
 
-                    if (m_uiFullSpeedTimer <= uiDiff)
+                    if (m_uiFullSpeedTimer)
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_FULL_SPEED) == CAST_OK)
+                        if (m_uiGatheringSpeedTimer < uiDiff)
                         {
-                            m_uiFullSpeedTimer = 0;
+                            if (DoCastSpellIfCan(m_creature, SPELL_GATHERING_SPEED) == CAST_OK)
+                            {
+                                m_uiGatheringSpeedTimer = 9000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiGatheringSpeedTimer -= uiDiff;
+                        }
+
+                        if (m_uiFullSpeedTimer <= uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_FULL_SPEED) == CAST_OK)
+                            {
+                                m_uiFullSpeedTimer = 0;
+                            }
+                        }
+                        else
+                        {
+                            m_uiFullSpeedTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_creature->GetHealthPercent() < 20.0f)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_BURU_TRANSFORM) == CAST_OK)
+                        {
+                            // Not sure of this but the boss should gain full speed in phase II
+                            DoCastSpellIfCan(m_creature, SPELL_FULL_SPEED, CAST_TRIGGERED);
+                            m_creature->RemoveAurasDueToSpell(SPELL_THORNS);
+                            m_creature->FixateTarget(nullptr);
+                            m_uiPhase = PHASE_TRANSFORM;
+                        }
+                    }
+
+                    break;
+                case PHASE_TRANSFORM:
+
+                    if (m_uiCreepingPlagueTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_CREEPING_PLAGUE) == CAST_OK)
+                        {
+                            m_uiCreepingPlagueTimer = 6000;
                         }
                     }
                     else
                     {
-                        m_uiFullSpeedTimer -= uiDiff;
+                        m_uiCreepingPlagueTimer -= uiDiff;
                     }
-                }
 
-                if (m_creature->GetHealthPercent() < 20.0f)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_BURU_TRANSFORM) == CAST_OK)
-                    {
-                        // Not sure of this but the boss should gain full speed in phase II
-                        DoCastSpellIfCan(m_creature, SPELL_FULL_SPEED, CAST_TRIGGERED);
-                        m_creature->RemoveAurasDueToSpell(SPELL_THORNS);
-                        m_creature->FixateTarget(nullptr);
-                        m_uiPhase = PHASE_TRANSFORM;
-                    }
-                }
-
-                break;
-            case PHASE_TRANSFORM:
-
-                if (m_uiCreepingPlagueTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_CREEPING_PLAGUE) == CAST_OK)
-                    {
-                        m_uiCreepingPlagueTimer = 6000;
-                    }
-                }
-                else
-                {
-                    m_uiCreepingPlagueTimer -= uiDiff;
-                }
-
-                break;
+                    break;
             }
 
             DoMeleeAttackIfReady();

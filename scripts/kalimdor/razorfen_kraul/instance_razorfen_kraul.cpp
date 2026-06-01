@@ -42,112 +42,112 @@ struct is_razorfen_kraul : public InstanceScript
 
     class instance_razorfen_kraul : public ScriptedInstance
     {
-    public:
-        instance_razorfen_kraul(Map* pMap) : ScriptedInstance(pMap),
-            m_uiWardKeepersRemaining(0)
-        {
-            Initialize();
-        }
-
-        ~instance_razorfen_kraul() {}
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
+        public:
+            instance_razorfen_kraul(Map* pMap) : ScriptedInstance(pMap),
+                m_uiWardKeepersRemaining(0)
             {
-            case GO_AGATHELOS_WARD:
-                m_mGoEntryGuidStore[GO_AGATHELOS_WARD] = pGo->GetObjectGuid();
-                if (m_auiEncounter[0] == DONE)
+                Initialize();
+            }
+
+            ~instance_razorfen_kraul() {}
+
+            void Initialize() override
+            {
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+            }
+
+            void OnObjectCreate(GameObject* pGo) override
+            {
+                switch (pGo->GetEntry())
                 {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-            }
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
-            {
-            case NPC_WARD_KEEPER:
-                ++m_uiWardKeepersRemaining;
-                break;
-            }
-        }
-
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
-            {
-            case TYPE_AGATHELOS:
-                --m_uiWardKeepersRemaining;
-                if (!m_uiWardKeepersRemaining)
-                {
-                    m_auiEncounter[0] = uiData;
-                    DoUseDoorOrButton(GO_AGATHELOS_WARD);
-                }
-                break;
-            }
-
-            if (uiData == DONE)
-            {
-                OUT_SAVE_INST_DATA;
-
-                std::ostringstream saveStream;
-
-                saveStream << m_auiEncounter[0];
-                m_strInstData = saveStream.str();
-
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
-            }
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            switch (uiType)
-            {
-            case TYPE_AGATHELOS:
-                return m_auiEncounter[0];
-            }
-            return 0;
-        }
-
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
-            {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-            loadStream >> m_auiEncounter[0];
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                {
-                    m_auiEncounter[i] = NOT_STARTED;
+                    case GO_AGATHELOS_WARD:
+                        m_mGoEntryGuidStore[GO_AGATHELOS_WARD] = pGo->GetObjectGuid();
+                        if (m_auiEncounter[0] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
                 }
             }
 
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_WARD_KEEPER:
+                        ++m_uiWardKeepersRemaining;
+                        break;
+                }
+            }
 
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                switch (uiType)
+                {
+                    case TYPE_AGATHELOS:
+                        --m_uiWardKeepersRemaining;
+                        if (!m_uiWardKeepersRemaining)
+                        {
+                            m_auiEncounter[0] = uiData;
+                            DoUseDoorOrButton(GO_AGATHELOS_WARD);
+                        }
+                        break;
+                }
 
-        uint8 m_uiWardKeepersRemaining;
+                if (uiData == DONE)
+                {
+                    OUT_SAVE_INST_DATA;
+
+                    std::ostringstream saveStream;
+
+                    saveStream << m_auiEncounter[0];
+                    m_strInstData = saveStream.str();
+
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
+                }
+            }
+
+            uint32 GetData(uint32 uiType) const override
+            {
+                switch (uiType)
+                {
+                    case TYPE_AGATHELOS:
+                        return m_auiEncounter[0];
+                }
+                return 0;
+            }
+
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* chrIn) override
+            {
+                if (!chrIn)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+                loadStream >> m_auiEncounter[0];
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        m_auiEncounter[i] = NOT_STARTED;
+                    }
+                }
+
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
+
+        private:
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
+
+            uint8 m_uiWardKeepersRemaining;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

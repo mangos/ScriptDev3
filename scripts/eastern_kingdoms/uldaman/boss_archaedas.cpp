@@ -132,31 +132,31 @@ struct boss_archaedas : public CreatureScript
                 {
                     switch (m_uiSubevent)
                     {
-                    case 0:
-                        DoCastSpellIfCan(m_creature, SPELL_ARCHAEDAS_AWAKEN_VISUAL);
-                        m_uiAwakeningTimer = 2000;
-                        break;
-                    case 1:
-                        DoScriptText(EMOTE_BREAKS_FREE, m_creature);
-                        m_uiAwakeningTimer = 3000;
-                        break;
-                    case 2:
-                        DoScriptText(SAY_AGGRO, m_creature);
-                        m_creature->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
-                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        case 0:
+                            DoCastSpellIfCan(m_creature, SPELL_ARCHAEDAS_AWAKEN_VISUAL);
+                            m_uiAwakeningTimer = 2000;
+                            break;
+                        case 1:
+                            DoScriptText(EMOTE_BREAKS_FREE, m_creature);
+                            m_uiAwakeningTimer = 3000;
+                            break;
+                        case 2:
+                            DoScriptText(SAY_AGGRO, m_creature);
+                            m_creature->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
+                            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
-                        // Attack player
-                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_pInstance->GetGuid(DATA_EVENT_STARTER)))
-                        {
-                            AttackStart(pPlayer);
-                        }
-                        else
-                        {
-                            EnterEvadeMode();
-                        }
-                        break;
-                    default:
-                        break;
+                            // Attack player
+                            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_pInstance->GetGuid(DATA_EVENT_STARTER)))
+                            {
+                                AttackStart(pPlayer);
+                            }
+                            else
+                            {
+                                EnterEvadeMode();
+                            }
+                            break;
+                        default:
+                            break;
                     }
 
                     ++m_uiSubevent;

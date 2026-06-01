@@ -113,27 +113,27 @@ struct npc_squad_leader : public CreatureScript
         {
             switch (urand(0, 5))
             {
-            case 0: DoScriptText(SAY_SQUAD_AGGRO_1, m_creature); break;
-            case 1: DoScriptText(SAY_SQUAD_AGGRO_2, m_creature); break;
-            case 2: DoScriptText(m_creature->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER ? SAY_ALLIANCE_SQUAD_AGGRO_1 : SAY_HORDE_SQUAD_AGGRO_1, m_creature); break;
-            case 3: DoScriptText(m_creature->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER ? SAY_ALLIANCE_SQUAD_AGGRO_2 : SAY_HORDE_SQUAD_AGGRO_2, m_creature); break;
-            case 4: DoScriptText(m_creature->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER ? SAY_ALLIANCE_SQUAD_AGGRO_3 : SAY_HORDE_SQUAD_AGGRO_3, m_creature); break;
-            case 5: DoScriptText(m_creature->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER ? SAY_ALLIANCE_SQUAD_AGGRO_4 : SAY_HORDE_SQUAD_AGGRO_4, m_creature); break;
+                case 0: DoScriptText(SAY_SQUAD_AGGRO_1, m_creature); break;
+                case 1: DoScriptText(SAY_SQUAD_AGGRO_2, m_creature); break;
+                case 2: DoScriptText(m_creature->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER ? SAY_ALLIANCE_SQUAD_AGGRO_1 : SAY_HORDE_SQUAD_AGGRO_1, m_creature); break;
+                case 3: DoScriptText(m_creature->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER ? SAY_ALLIANCE_SQUAD_AGGRO_2 : SAY_HORDE_SQUAD_AGGRO_2, m_creature); break;
+                case 4: DoScriptText(m_creature->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER ? SAY_ALLIANCE_SQUAD_AGGRO_3 : SAY_HORDE_SQUAD_AGGRO_3, m_creature); break;
+                case 5: DoScriptText(m_creature->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER ? SAY_ALLIANCE_SQUAD_AGGRO_4 : SAY_HORDE_SQUAD_AGGRO_4, m_creature); break;
             }
 
             if (pWho->GetEntry() == NPC_YMIRHEIM_DEFENDER && urand(0, 1))
             {
                 switch (urand(0, 8))
                 {
-                case 0: DoScriptText(SAY_DEFENDER_AGGRO_1, pWho); break;
-                case 1: DoScriptText(SAY_DEFENDER_AGGRO_2, pWho); break;
-                case 2: DoScriptText(SAY_DEFENDER_AGGRO_3, pWho); break;
-                case 3: DoScriptText(SAY_DEFENDER_AGGRO_4, pWho); break;
-                case 4: DoScriptText(SAY_DEFENDER_AGGRO_5, pWho); break;
-                case 5: DoScriptText(SAY_DEFENDER_AGGRO_6, pWho); break;
-                case 6: DoScriptText(SAY_DEFENDER_AGGRO_7, pWho); break;
-                case 7: DoScriptText(SAY_DEFENDER_AGGRO_8, pWho); break;
-                case 8: DoScriptText(SAY_DEFENDER_AGGRO_9, pWho); break;
+                    case 0: DoScriptText(SAY_DEFENDER_AGGRO_1, pWho); break;
+                    case 1: DoScriptText(SAY_DEFENDER_AGGRO_2, pWho); break;
+                    case 2: DoScriptText(SAY_DEFENDER_AGGRO_3, pWho); break;
+                    case 3: DoScriptText(SAY_DEFENDER_AGGRO_4, pWho); break;
+                    case 4: DoScriptText(SAY_DEFENDER_AGGRO_5, pWho); break;
+                    case 5: DoScriptText(SAY_DEFENDER_AGGRO_6, pWho); break;
+                    case 6: DoScriptText(SAY_DEFENDER_AGGRO_7, pWho); break;
+                    case 7: DoScriptText(SAY_DEFENDER_AGGRO_8, pWho); break;
+                    case 8: DoScriptText(SAY_DEFENDER_AGGRO_9, pWho); break;
                 }
             }
         }
@@ -511,9 +511,9 @@ struct npc_father_kamaros : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_KAMAROS_AGGRO_1, m_creature); break;
-            case 1: DoScriptText(SAY_KAMAROS_AGGRO_2, m_creature); break;
-            case 2: DoScriptText(SAY_KAMAROS_AGGRO_3, m_creature); break;
+                case 0: DoScriptText(SAY_KAMAROS_AGGRO_1, m_creature); break;
+                case 1: DoScriptText(SAY_KAMAROS_AGGRO_2, m_creature); break;
+                case 2: DoScriptText(SAY_KAMAROS_AGGRO_3, m_creature); break;
             }
 
             if (DoCastSpellIfCan(m_creature, SPELL_POWER_WORD_SHIELD) != CAST_OK)
@@ -539,39 +539,39 @@ struct npc_father_kamaros : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_KAMAROS_START_1, m_creature, pPlayer);
-                    DoCastSpellIfCan(pPlayer, SPELL_POWER_WORD_FORTITUDE);
-                }
-                break;
-            case 1:
-                DoScriptText(SAY_KAMAROS_START_2, m_creature);
-                break;
-            case 11:
-            case 13:
-            case 16:
-                if (Creature* pGhoul = GetClosestCreatureWithEntry(m_creature, NPC_SPIKED_GHOUL, 25.0f))
-                {
-                    pGhoul->AI()->AttackStart(m_creature);
-                }
-                break;
-            case 23:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    m_creature->SetFacingToObject(pPlayer);
-                }
-                DoScriptText(SAY_KAMAROS_COMPLETE_1, m_creature);
-                break;
-            case 24:
-                SetRun();
-                DoScriptText(SAY_KAMAROS_COMPLETE_2, m_creature);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(m_uiCurrentQuestId, m_creature);
-                }
-                break;
+                case 0:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_KAMAROS_START_1, m_creature, pPlayer);
+                        DoCastSpellIfCan(pPlayer, SPELL_POWER_WORD_FORTITUDE);
+                    }
+                    break;
+                case 1:
+                    DoScriptText(SAY_KAMAROS_START_2, m_creature);
+                    break;
+                case 11:
+                case 13:
+                case 16:
+                    if (Creature* pGhoul = GetClosestCreatureWithEntry(m_creature, NPC_SPIKED_GHOUL, 25.0f))
+                    {
+                        pGhoul->AI()->AttackStart(m_creature);
+                    }
+                    break;
+                case 23:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        m_creature->SetFacingToObject(pPlayer);
+                    }
+                    DoScriptText(SAY_KAMAROS_COMPLETE_1, m_creature);
+                    break;
+                case 24:
+                    SetRun();
+                    DoScriptText(SAY_KAMAROS_COMPLETE_2, m_creature);
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(m_uiCurrentQuestId, m_creature);
+                    }
+                    break;
             }
         }
 
@@ -685,49 +685,49 @@ struct npc_saronite_mine_slave : public CreatureScript
 
         switch (urand(0, 5))
         {
-        case 0:
-        case 1:
-        case 2:
-            pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-            pPlayer->KilledMonsterCredit(NPC_SARONITE_KILL_CREDIT_BUNNY);
-
-            pCreature->SetWalk(false);
-            pCreature->GetMotionMaster()->MovePoint(0, afPointSlaveSalvation[0], afPointSlaveSalvation[1], afPointSlaveSalvation[2]);
-            pCreature->ForcedDespawn(20000);
-            break;
-        case 3:
-        case 4:
-            pCreature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_REACH_HOME);
-            pCreature->AI()->AttackStart(pPlayer);
-            break;
-        case 5:
-            switch (urand(0, 7))
-            {
-            case 0: DoScriptText(SAY_MINER_SUICIDE_1, pCreature); break;
-            case 1: DoScriptText(SAY_MINER_SUICIDE_2, pCreature); break;
-            case 2: DoScriptText(SAY_MINER_SUICIDE_3, pCreature); break;
-            case 3: DoScriptText(SAY_MINER_SUICIDE_4, pCreature); break;
-            case 4: DoScriptText(SAY_MINER_SUICIDE_5, pCreature); break;
-            case 5: DoScriptText(SAY_MINER_SUICIDE_6, pCreature); break;
-            case 6: DoScriptText(SAY_MINER_SUICIDE_7, pCreature); break;
-            case 7: DoScriptText(SAY_MINER_SUICIDE_8, pCreature); break;
-            }
-
-            pCreature->SetWalk(false);
-            switch (urand(0, 2))
-            {
             case 0:
-                pCreature->GetMotionMaster()->MovePoint(0, afPointSlaveSuicide1[0], afPointSlaveSuicide1[1], afPointSlaveSuicide1[2]);
-                break;
             case 1:
-                pCreature->GetMotionMaster()->MovePoint(0, afPointSlaveSuicide2[0], afPointSlaveSuicide2[1], afPointSlaveSuicide2[2]);
-                break;
             case 2:
-                pCreature->GetMotionMaster()->MovePoint(0, afPointSlaveSuicide3[0], afPointSlaveSuicide3[1], afPointSlaveSuicide3[2]);
+                pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                pPlayer->KilledMonsterCredit(NPC_SARONITE_KILL_CREDIT_BUNNY);
+
+                pCreature->SetWalk(false);
+                pCreature->GetMotionMaster()->MovePoint(0, afPointSlaveSalvation[0], afPointSlaveSalvation[1], afPointSlaveSalvation[2]);
+                pCreature->ForcedDespawn(20000);
                 break;
-            }
-            pCreature->ForcedDespawn(20000);
-            break;
+            case 3:
+            case 4:
+                pCreature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_REACH_HOME);
+                pCreature->AI()->AttackStart(pPlayer);
+                break;
+            case 5:
+                switch (urand(0, 7))
+                {
+                    case 0: DoScriptText(SAY_MINER_SUICIDE_1, pCreature); break;
+                    case 1: DoScriptText(SAY_MINER_SUICIDE_2, pCreature); break;
+                    case 2: DoScriptText(SAY_MINER_SUICIDE_3, pCreature); break;
+                    case 3: DoScriptText(SAY_MINER_SUICIDE_4, pCreature); break;
+                    case 4: DoScriptText(SAY_MINER_SUICIDE_5, pCreature); break;
+                    case 5: DoScriptText(SAY_MINER_SUICIDE_6, pCreature); break;
+                    case 6: DoScriptText(SAY_MINER_SUICIDE_7, pCreature); break;
+                    case 7: DoScriptText(SAY_MINER_SUICIDE_8, pCreature); break;
+                }
+
+                pCreature->SetWalk(false);
+                switch (urand(0, 2))
+                {
+                    case 0:
+                        pCreature->GetMotionMaster()->MovePoint(0, afPointSlaveSuicide1[0], afPointSlaveSuicide1[1], afPointSlaveSuicide1[2]);
+                        break;
+                    case 1:
+                        pCreature->GetMotionMaster()->MovePoint(0, afPointSlaveSuicide2[0], afPointSlaveSuicide2[1], afPointSlaveSuicide2[2]);
+                        break;
+                    case 2:
+                        pCreature->GetMotionMaster()->MovePoint(0, afPointSlaveSuicide3[0], afPointSlaveSuicide3[1], afPointSlaveSuicide3[2]);
+                        break;
+                }
+                pCreature->ForcedDespawn(20000);
+                break;
         }
 
         return true;

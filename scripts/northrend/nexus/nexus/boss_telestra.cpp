@@ -169,43 +169,43 @@ struct boss_telestra : public CreatureScript
             switch (pSpell->Id)
             {
                 // eventAi must make sure clones cast spells when each of them die
-            case SPELL_FIRE_DIES:
-            case SPELL_ARCANE_DIES:
-            case SPELL_FROST_DIES:
-                ++m_uiCloneDeadCount;
+                case SPELL_FIRE_DIES:
+                case SPELL_ARCANE_DIES:
+                case SPELL_FROST_DIES:
+                    ++m_uiCloneDeadCount;
 
-                // After the first clone from each split phase is dead start the achiev timer
-                if (m_uiCloneDeadCount == 1 || m_uiCloneDeadCount == 4)
-                {
-                    m_bCanCheckAchiev = true;
-                    m_uiPersonalityTimer = 0;
-                }
-
-                if (m_uiCloneDeadCount == 3 || m_uiCloneDeadCount == 6)
-                {
-                    m_creature->RemoveAurasDueToSpell(SPELL_SUMMON_CLONES);
-                    m_creature->CastSpell(m_creature, SPELL_SPAWN_BACK_IN, false);
-
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-
-                    DoScriptText(SAY_MERGE, m_creature);
-
-                    // Check if it took longer than 5 sec
-                    if (m_uiPersonalityTimer > 5000)
+                    // After the first clone from each split phase is dead start the achiev timer
+                    if (m_uiCloneDeadCount == 1 || m_uiCloneDeadCount == 4)
                     {
-                        if (m_pInstance)
-                        {
-                            m_pInstance->SetData(TYPE_ACHIEV_SPLIT_PERSONALITY, uint32(false));
-                        }
+                        m_bCanCheckAchiev = true;
+                        m_uiPersonalityTimer = 0;
                     }
-                    m_bCanCheckAchiev = false;
 
-                    m_uiPhase = m_uiCloneDeadCount == 3 ? PHASE_3 : PHASE_4;
-                }
-                break;
-            case SPELL_SUMMON_CLONES:
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                break;
+                    if (m_uiCloneDeadCount == 3 || m_uiCloneDeadCount == 6)
+                    {
+                        m_creature->RemoveAurasDueToSpell(SPELL_SUMMON_CLONES);
+                        m_creature->CastSpell(m_creature, SPELL_SPAWN_BACK_IN, false);
+
+                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+
+                        DoScriptText(SAY_MERGE, m_creature);
+
+                        // Check if it took longer than 5 sec
+                        if (m_uiPersonalityTimer > 5000)
+                        {
+                            if (m_pInstance)
+                            {
+                                m_pInstance->SetData(TYPE_ACHIEV_SPLIT_PERSONALITY, uint32(false));
+                            }
+                        }
+                        m_bCanCheckAchiev = false;
+
+                        m_uiPhase = m_uiCloneDeadCount == 3 ? PHASE_3 : PHASE_4;
+                    }
+                    break;
+                case SPELL_SUMMON_CLONES:
+                    m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    break;
             }
         }
 
@@ -213,9 +213,9 @@ struct boss_telestra : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_TELEST_FIRE: pSummoned->CastSpell(pSummoned, SPELL_FIRE_VISUAL, true); break;
-            case NPC_TELEST_ARCANE: pSummoned->CastSpell(pSummoned, SPELL_ARCANE_VISUAL, true); break;
-            case NPC_TELEST_FROST: pSummoned->CastSpell(pSummoned, SPELL_FROST_VISUAL, true); break;
+                case NPC_TELEST_FIRE: pSummoned->CastSpell(pSummoned, SPELL_FIRE_VISUAL, true); break;
+                case NPC_TELEST_ARCANE: pSummoned->CastSpell(pSummoned, SPELL_ARCANE_VISUAL, true); break;
+                case NPC_TELEST_FROST: pSummoned->CastSpell(pSummoned, SPELL_FROST_VISUAL, true); break;
             }
         }
 
@@ -233,71 +233,71 @@ struct boss_telestra : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_1:
-            case PHASE_3:
-            case PHASE_4:
-                if (!m_creature->GetCurrentSpell(CURRENT_CHANNELED_SPELL))
-                {
-                    if (m_uiFirebombTimer < uiDiff)
+                case PHASE_1:
+                case PHASE_3:
+                case PHASE_4:
+                    if (!m_creature->GetCurrentSpell(CURRENT_CHANNELED_SPELL))
                     {
-                        if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FIREBOMB : SPELL_FIREBOMB_H) == CAST_OK)
+                        if (m_uiFirebombTimer < uiDiff)
                         {
-                            m_uiFirebombTimer = urand(4000, 6000);
+                            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FIREBOMB : SPELL_FIREBOMB_H) == CAST_OK)
+                            {
+                                m_uiFirebombTimer = urand(4000, 6000);
+                            }
+                        }
+                        else
+                        {
+                            m_uiFirebombTimer -= uiDiff;
+                        }
+
+                        if (m_uiIceNovaTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ICE_NOVA : SPELL_ICE_NOVA_H) == CAST_OK)
+                            {
+                                m_uiIceNovaTimer = urand(10000, 15000);
+                            }
+                        }
+                        else
+                        {
+                            m_uiIceNovaTimer -= uiDiff;
+                        }
+
+                        if (m_uiPhase == PHASE_1 && m_creature->GetHealthPercent() < 50.0f)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_CLONES, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                            {
+                                DoScriptText(urand(0, 1) ? SAY_SPLIT_1 : SAY_SPLIT_2, m_creature);
+                                m_uiPhase = PHASE_2;
+                            }
+                        }
+
+                        if (m_uiPhase == PHASE_3 && !m_bIsRegularMode && m_creature->GetHealthPercent() < 15.0f)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_CLONES, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                            {
+                                DoScriptText(urand(0, 1) ? SAY_SPLIT_1 : SAY_SPLIT_2, m_creature);
+                                m_uiPhase = PHASE_2;
+                            }
+                        }
+
+                        DoMeleeAttackIfReady();
+                    }
+
+                    if (m_uiGravityWellTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_WELL) == CAST_OK)
+                        {
+                            m_uiGravityWellTimer = urand(15000, 30000);
                         }
                     }
                     else
                     {
-                        m_uiFirebombTimer -= uiDiff;
+                        m_uiGravityWellTimer -= uiDiff;
                     }
 
-                    if (m_uiIceNovaTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ICE_NOVA : SPELL_ICE_NOVA_H) == CAST_OK)
-                        {
-                            m_uiIceNovaTimer = urand(10000, 15000);
-                        }
-                    }
-                    else
-                    {
-                        m_uiIceNovaTimer -= uiDiff;
-                    }
-
-                    if (m_uiPhase == PHASE_1 && m_creature->GetHealthPercent() < 50.0f)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_CLONES, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                        {
-                            DoScriptText(urand(0, 1) ? SAY_SPLIT_1 : SAY_SPLIT_2, m_creature);
-                            m_uiPhase = PHASE_2;
-                        }
-                    }
-
-                    if (m_uiPhase == PHASE_3 && !m_bIsRegularMode && m_creature->GetHealthPercent() < 15.0f)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_CLONES, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                        {
-                            DoScriptText(urand(0, 1) ? SAY_SPLIT_1 : SAY_SPLIT_2, m_creature);
-                            m_uiPhase = PHASE_2;
-                        }
-                    }
-
-                    DoMeleeAttackIfReady();
-                }
-
-                if (m_uiGravityWellTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_WELL) == CAST_OK)
-                    {
-                        m_uiGravityWellTimer = urand(15000, 30000);
-                    }
-                }
-                else
-                {
-                    m_uiGravityWellTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_2:
-                break;
+                    break;
+                case PHASE_2:
+                    break;
             }
         }
     };

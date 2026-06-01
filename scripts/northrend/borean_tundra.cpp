@@ -140,43 +140,43 @@ struct npc_nesingwary_trapper : public CreatureScript
                 {
                     switch (m_uiPhase)
                     {
-                    case 1:
-                        if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
-                        {
-                            float fX, fY, fZ;
-                            pTrap->GetContactPoint(m_creature, fX, fY, fZ);
-
-                            m_creature->SetWalk(false);
-                            m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
-                        }
-                        m_uiPhaseTimer = 0;
-                        break;
-                    case 2:
-                        switch (urand(0, 3))
-                        {
-                        case 0: DoScriptText(SAY_PHRASE_1, m_creature); break;
-                        case 1: DoScriptText(SAY_PHRASE_2, m_creature); break;
-                        case 2: DoScriptText(SAY_PHRASE_3, m_creature); break;
-                        case 3: DoScriptText(SAY_PHRASE_4, m_creature); break;
-                        }
-                        m_creature->HandleEmote(EMOTE_ONESHOT_LOOT);
-                        m_uiPhaseTimer = 3000;
-                        break;
-                    case 3:
-                        if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
-                        {
-                            pTrap->Use(m_creature);
-
-                            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                        case 1:
+                            if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
                             {
-                                if (pPlayer->IsAlive())
+                                float fX, fY, fZ;
+                                pTrap->GetContactPoint(m_creature, fX, fY, fZ);
+
+                                m_creature->SetWalk(false);
+                                m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                            }
+                            m_uiPhaseTimer = 0;
+                            break;
+                        case 2:
+                            switch (urand(0, 3))
+                            {
+                                case 0: DoScriptText(SAY_PHRASE_1, m_creature); break;
+                                case 1: DoScriptText(SAY_PHRASE_2, m_creature); break;
+                                case 2: DoScriptText(SAY_PHRASE_3, m_creature); break;
+                                case 3: DoScriptText(SAY_PHRASE_4, m_creature); break;
+                            }
+                            m_creature->HandleEmote(EMOTE_ONESHOT_LOOT);
+                            m_uiPhaseTimer = 3000;
+                            break;
+                        case 3:
+                            if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
+                            {
+                                pTrap->Use(m_creature);
+
+                                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                                 {
-                                    pPlayer->KilledMonsterCredit(m_creature->GetEntry());
+                                    if (pPlayer->IsAlive())
+                                    {
+                                        pPlayer->KilledMonsterCredit(m_creature->GetEntry());
+                                    }
                                 }
                             }
-                        }
-                        m_uiPhaseTimer = 0;
-                        break;
+                            m_uiPhaseTimer = 0;
+                            break;
                     }
                     ++m_uiPhase;
                 }
@@ -396,36 +396,36 @@ struct npc_sinkhole_kill_credit : public CreatureScript
                 {
                     switch (m_uiCartPhase)
                     {
-                    case 0:
-                        DoCastSpellIfCan(m_creature, SPELL_SUMMON_EXPLOSIVES_CART_FIRE);
-                        m_uiCartTimer = 4000;
-                        break;
-                    case 1:
-                        // Unclear if these should be in a dummy effect or not.
-                        // The order of spells are correct though.
-                        DoCastSpellIfCan(m_creature, SPELL_COSMETIC_HUGE_EXPLOSION, CAST_TRIGGERED);
-                        DoCastSpellIfCan(m_creature, SPELL_CANNON_FIRE, CAST_TRIGGERED);
-                        break;
-                    case 2:
-                        DoCastSpellIfCan(m_creature, SPELL_SUMMON_SCOURGE_BURROWER);
-                        m_uiCartTimer = 2000;
-                        break;
-                    case 3:
-                        if (Creature* pWorm = m_creature->GetMap()->GetCreature(m_wormGuid))
-                        {
-                            pWorm->SetDeathState(JUST_DIED);
-                            pWorm->SetHealth(0);
-                        }
-                        m_uiCartTimer = 10000;
-                        break;
-                    case 4:
-                        if (Creature* pWorm = m_creature->GetMap()->GetCreature(m_wormGuid))
-                        {
-                            pWorm->RemoveCorpse();
-                        }
+                        case 0:
+                            DoCastSpellIfCan(m_creature, SPELL_SUMMON_EXPLOSIVES_CART_FIRE);
+                            m_uiCartTimer = 4000;
+                            break;
+                        case 1:
+                            // Unclear if these should be in a dummy effect or not.
+                            // The order of spells are correct though.
+                            DoCastSpellIfCan(m_creature, SPELL_COSMETIC_HUGE_EXPLOSION, CAST_TRIGGERED);
+                            DoCastSpellIfCan(m_creature, SPELL_CANNON_FIRE, CAST_TRIGGERED);
+                            break;
+                        case 2:
+                            DoCastSpellIfCan(m_creature, SPELL_SUMMON_SCOURGE_BURROWER);
+                            m_uiCartTimer = 2000;
+                            break;
+                        case 3:
+                            if (Creature* pWorm = m_creature->GetMap()->GetCreature(m_wormGuid))
+                            {
+                                pWorm->SetDeathState(JUST_DIED);
+                                pWorm->SetHealth(0);
+                            }
+                            m_uiCartTimer = 10000;
+                            break;
+                        case 4:
+                            if (Creature* pWorm = m_creature->GetMap()->GetCreature(m_wormGuid))
+                            {
+                                pWorm->RemoveCorpse();
+                            }
 
-                        Reset();
-                        return;
+                            Reset();
+                            return;
                     }
 
                     ++m_uiCartPhase;
@@ -498,15 +498,15 @@ struct npc_lurgglbr : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 1:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_START_2, m_creature, pPlayer);
-                }
+                case 1:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_START_2, m_creature, pPlayer);
+                    }
 
-                // Cage actually closes here, however it's normally determined by GO template and auto close time
+                    // Cage actually closes here, however it's normally determined by GO template and auto close time
 
-                break;
+                    break;
             }
         }
 
@@ -514,20 +514,20 @@ struct npc_lurgglbr : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    m_creature->SetFacingToObject(pPlayer);
-                    DoScriptText(SAY_START_1, m_creature, pPlayer);
-                }
-                break;
-            case 25:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_END_1, m_creature, pPlayer);
-                    m_uiSayTimer = 3000;
-                }
-                break;
+                case 0:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        m_creature->SetFacingToObject(pPlayer);
+                        DoScriptText(SAY_START_1, m_creature, pPlayer);
+                    }
+                    break;
+                case 25:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_END_1, m_creature, pPlayer);
+                        m_uiSayTimer = 3000;
+                    }
+                    break;
             }
         }
 
@@ -551,14 +551,14 @@ struct npc_lurgglbr : public CreatureScript
 
                         switch (m_uiSpeech)
                         {
-                        case 0:
-                            DoScriptText(SAY_END_2, m_creature, pPlayer);
-                            m_uiSayTimer = 3000;
-                            break;
-                        case 1:
-                            pPlayer->GroupEventHappens(QUEST_ESCAPE_FROM_WINTERFIN_CAVERNS, m_creature);
-                            m_uiSayTimer = 0;
-                            break;
+                            case 0:
+                                DoScriptText(SAY_END_2, m_creature, pPlayer);
+                                m_uiSayTimer = 3000;
+                                break;
+                            case 1:
+                                pPlayer->GroupEventHappens(QUEST_ESCAPE_FROM_WINTERFIN_CAVERNS, m_creature);
+                                m_uiSayTimer = 0;
+                                break;
                         }
 
                         ++m_uiSpeech;
@@ -647,9 +647,9 @@ struct aura_arcane_chains : public AuraScript
     }
 };
 
-/*#####
-# npc_captured_beryl_sorcerer
-#####*/
+/** #####
+ *  # npc_captured_beryl_sorcerer
+ *  #####*/
 struct aura_arcane_chains_cancel : public AuraScript
 {
     aura_arcane_chains_cancel() : AuraScript("aura_arcane_chains_cancel") {}
@@ -1196,27 +1196,27 @@ struct npc_bonker_togglevolt : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(SAY_BONKER_START, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_BONKER_GO, m_creature);
-                // WORKAROUND ALERT - temp ignore pathfinding until we pass the pool
-                // creature cannont find a proper swimming path in this area, so ignore pathfinding for the moment
-                m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
-                break;
-            case 3:
-                DoScriptText(SAY_BONKER_LEFT, m_creature);
-                // WORKAROUND END - resume pathfinding
-                m_creature->clearUnitState(UNIT_STAT_IGNORE_PATHFINDING);
-                break;
-            case 32:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_GET_ME_OUTA_HERE, m_creature);
-                    DoScriptText(SAY_BONKER_COMPLETE, m_creature, pPlayer);
-                }
-                break;
+                case 0:
+                    DoScriptText(SAY_BONKER_START, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_BONKER_GO, m_creature);
+                    // WORKAROUND ALERT - temp ignore pathfinding until we pass the pool
+                    // creature cannont find a proper swimming path in this area, so ignore pathfinding for the moment
+                    m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
+                    break;
+                case 3:
+                    DoScriptText(SAY_BONKER_LEFT, m_creature);
+                    // WORKAROUND END - resume pathfinding
+                    m_creature->clearUnitState(UNIT_STAT_IGNORE_PATHFINDING);
+                    break;
+                case 32:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_GET_ME_OUTA_HERE, m_creature);
+                        DoScriptText(SAY_BONKER_COMPLETE, m_creature, pPlayer);
+                    }
+                    break;
             }
         }
     };

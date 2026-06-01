@@ -35,7 +35,7 @@ EndScriptData */
 #include "halls_of_stone.h"
 #include "escort_ai.h"
 
-/* Notes
+/** Notes
  * The timers and handling of texts is not confirmed, but should also not be too far off
  * The spells "of the statues" (handled in instance script), need quite much of core support
  */
@@ -161,9 +161,9 @@ struct npc_brann_hos : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_KILL_1, m_creature); break;
-            case 1: DoScriptText(SAY_KILL_2, m_creature); break;
-            case 2: DoScriptText(SAY_KILL_3, m_creature); break;
+                case 0: DoScriptText(SAY_KILL_1, m_creature); break;
+                case 1: DoScriptText(SAY_KILL_2, m_creature); break;
+                case 2: DoScriptText(SAY_KILL_3, m_creature); break;
             }
         }
 
@@ -240,27 +240,27 @@ struct npc_brann_hos : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 13:                                        // Before Tribunal Event, Continue with Gossip Interaction
-                DoScriptText(SAY_EVENT_INTRO_1, m_creature);
-                SetEscortPaused(true);
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                break;
-            case 17:                                        // Reach Tribunal
-                SetEscortPaused(true);
-                m_uiPhaseTimer = 500;
-                break;
-            case 18:                                        // Reach Floor Event
-                SetEscortPaused(true);
-                if (m_pInstance)
-                {
-                    if (GameObject* pKonsole = m_pInstance->GetSingleGameObjectFromStorage(GO_TRIBUNAL_CONSOLE))
+                case 13:                                        // Before Tribunal Event, Continue with Gossip Interaction
+                    DoScriptText(SAY_EVENT_INTRO_1, m_creature);
+                    SetEscortPaused(true);
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    break;
+                case 17:                                        // Reach Tribunal
+                    SetEscortPaused(true);
+                    m_uiPhaseTimer = 500;
+                    break;
+                case 18:                                        // Reach Floor Event
+                    SetEscortPaused(true);
+                    if (m_pInstance)
                     {
-                        m_creature->SetFacingToObject(pKonsole);
+                        if (GameObject* pKonsole = m_pInstance->GetSingleGameObjectFromStorage(GO_TRIBUNAL_CONSOLE))
+                        {
+                            m_creature->SetFacingToObject(pKonsole);
+                        }
+                        m_pInstance->DoUseDoorOrButton(GO_TRIBUNAL_FLOOR);
                     }
-                    m_pInstance->DoUseDoorOrButton(GO_TRIBUNAL_FLOOR);
-                }
-                m_uiPhaseTimer = 1000;
-                break;
+                    m_uiPhaseTimer = 1000;
+                    break;
             }
         }
 
@@ -287,321 +287,321 @@ struct npc_brann_hos : public CreatureScript
                 switch (m_uiStep)
                 {
                     // Begin Event
-                case 0:
-                    // TODO, this is wrong, must be "using or similar"
-                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                    m_uiPhaseTimer = 1500;
-                    break;
-                case 1:
-                    DoScriptText(SAY_EVENT_INTRO_2, m_creature);
-                    m_uiPhaseTimer = 2500;
-                    break;
-                case 2:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->DoUseDoorOrButton(GO_TRIBUNAL_CONSOLE);
-                    }
-                    m_uiPhaseTimer = 6500;
-                    break;
-                case 3:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_INTRO_3_ABED);
-                    }
-                    m_uiPhaseTimer = 8500;
-                    break;
+                    case 0:
+                        // TODO, this is wrong, must be "using or similar"
+                        m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                        m_uiPhaseTimer = 1500;
+                        break;
+                    case 1:
+                        DoScriptText(SAY_EVENT_INTRO_2, m_creature);
+                        m_uiPhaseTimer = 2500;
+                        break;
+                    case 2:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->DoUseDoorOrButton(GO_TRIBUNAL_CONSOLE);
+                        }
+                        m_uiPhaseTimer = 6500;
+                        break;
+                    case 3:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_INTRO_3_ABED);
+                        }
+                        m_uiPhaseTimer = 8500;
+                        break;
 
                     // Activate Kaddrak
-                case 4:
-                    DoScriptText(SAY_EVENT_A_1, m_creature);
-                    m_uiPhaseTimer = 6500;
-                    break;
-                case 5:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_A_2_KADD);
-                    }
-                    m_uiPhaseTimer = 12500;
-                    break;
-                case 6:
-                    DoScriptText(SAY_EVENT_A_3, m_creature);
-                    m_uiPhaseTimer = 6000;
-                    break;
-                case 7:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_KADDRAK_ACTIVATE, uint32(false));
-                    }
-                    m_uiPhaseTimer = 5000;
-                    break;
-                case 8:
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 20000;
-                    break;
+                    case 4:
+                        DoScriptText(SAY_EVENT_A_1, m_creature);
+                        m_uiPhaseTimer = 6500;
+                        break;
+                    case 5:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_A_2_KADD);
+                        }
+                        m_uiPhaseTimer = 12500;
+                        break;
+                    case 6:
+                        DoScriptText(SAY_EVENT_A_3, m_creature);
+                        m_uiPhaseTimer = 6000;
+                        break;
+                    case 7:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_KADDRAK_ACTIVATE, uint32(false));
+                        }
+                        m_uiPhaseTimer = 5000;
+                        break;
+                    case 8:
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 20000;
+                        break;
 
                     // Activate Marnak
-                case 9:
-                    DoScriptText(SAY_EVENT_B_1, m_creature);
-                    m_uiPhaseTimer = 6000;
-                    break;
-                case 10:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_B_2_MARN);
-                    }
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 20000;
-                    break;
-                case 11:
-                    DoScriptText(SAY_EVENT_B_3, m_creature);
-                    m_uiPhaseTimer = 5000;
-                    break;
-                case 12:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_MARNAK_ACTIVATE, uint32(false));
-                    }
-                    m_uiPhaseTimer = 10000;
-                    break;
-                case 13:
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 10000;
-                    break;
-                case 14:
-                    SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
-                    m_uiPhaseTimer = (20000);
-                    break;
-                case 15:
-                    DoScriptText(SAY_EVENT_C_1, m_creature);
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 10000;
-                    break;
-                case 16:
-                    SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
-                    m_uiPhaseTimer = 20000;
-                    break;
+                    case 9:
+                        DoScriptText(SAY_EVENT_B_1, m_creature);
+                        m_uiPhaseTimer = 6000;
+                        break;
+                    case 10:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_B_2_MARN);
+                        }
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 20000;
+                        break;
+                    case 11:
+                        DoScriptText(SAY_EVENT_B_3, m_creature);
+                        m_uiPhaseTimer = 5000;
+                        break;
+                    case 12:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_MARNAK_ACTIVATE, uint32(false));
+                        }
+                        m_uiPhaseTimer = 10000;
+                        break;
+                    case 13:
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 10000;
+                        break;
+                    case 14:
+                        SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
+                        m_uiPhaseTimer = (20000);
+                        break;
+                    case 15:
+                        DoScriptText(SAY_EVENT_C_1, m_creature);
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 10000;
+                        break;
+                    case 16:
+                        SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
+                        m_uiPhaseTimer = 20000;
+                        break;
 
                     // Activate Abedneum
-                case 17:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_C_2_ABED);
-                    }
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 20000;
-                    break;
-                case 18:
-                    DoScriptText(SAY_EVENT_C_3, m_creature);
-                    m_uiPhaseTimer = 5000;
-                    break;
-                case 19:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_ACTIVATE, uint32(false));
-                    }
-                    m_uiPhaseTimer = 5000;
-                    break;
-                case 20:
-                    SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
-                    m_uiPhaseTimer = 10000;
-                    break;
-                case 21:
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 15000;
-                    break;
+                    case 17:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_C_2_ABED);
+                        }
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 20000;
+                        break;
+                    case 18:
+                        DoScriptText(SAY_EVENT_C_3, m_creature);
+                        m_uiPhaseTimer = 5000;
+                        break;
+                    case 19:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_ACTIVATE, uint32(false));
+                        }
+                        m_uiPhaseTimer = 5000;
+                        break;
+                    case 20:
+                        SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
+                        m_uiPhaseTimer = 10000;
+                        break;
+                    case 21:
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 15000;
+                        break;
 
-                case 22:
-                    DoScriptText(SAY_EVENT_D_1, m_creature);
-                    SpawnDwarf(NPC_IRON_GOLEM_CUSTODIAN);
-                    m_uiPhaseTimer = 20000;
-                    break;
-                case 23:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_D_2_ABED);
-                    }
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 5000;
-                    break;
-                case 24:
-                    SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
-                    m_uiPhaseTimer = 15000;
-                    break;
-                case 25:
-                    DoScriptText(SAY_EVENT_D_3, m_creature);
-                    SpawnDwarf(NPC_IRON_GOLEM_CUSTODIAN);
-                    m_uiPhaseTimer = 5000;
-                    break;
-                case 26:
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 5000;
-                    break;
-                case 27:
-                    SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
-                    m_uiPhaseTimer = 10000;
-                    break;
-                case 28:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_D_4_ABED);
-                    }
-                    SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
-                    m_uiPhaseTimer = 10000;
-                    break;
+                    case 22:
+                        DoScriptText(SAY_EVENT_D_1, m_creature);
+                        SpawnDwarf(NPC_IRON_GOLEM_CUSTODIAN);
+                        m_uiPhaseTimer = 20000;
+                        break;
+                    case 23:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_D_2_ABED);
+                        }
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 5000;
+                        break;
+                    case 24:
+                        SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
+                        m_uiPhaseTimer = 15000;
+                        break;
+                    case 25:
+                        DoScriptText(SAY_EVENT_D_3, m_creature);
+                        SpawnDwarf(NPC_IRON_GOLEM_CUSTODIAN);
+                        m_uiPhaseTimer = 5000;
+                        break;
+                    case 26:
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 5000;
+                        break;
+                    case 27:
+                        SpawnDwarf(NPC_DARK_RUNE_STORMCALLER);
+                        m_uiPhaseTimer = 10000;
+                        break;
+                    case 28:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_D_4_ABED);
+                        }
+                        SpawnDwarf(NPC_DARK_RUNE_PROTECTOR);
+                        m_uiPhaseTimer = 10000;
+                        break;
 
                     // End Event
-                case 29:
-                    DoScriptText(SAY_EVENT_END_01, m_creature);
-                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);// TODO TODO
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_TRIBUNAL, SPECIAL); // Kill remaining npcs
-                    }
+                    case 29:
+                        DoScriptText(SAY_EVENT_END_01, m_creature);
+                        m_creature->SetStandState(UNIT_STAND_STATE_STAND);// TODO TODO
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_TRIBUNAL, SPECIAL); // Kill remaining npcs
+                        }
 
-                    // ToDo: the loot and the achiev should be triggered at this point
-                    // Brann should get the gossip option "There will be plenty of time for this later Brann, we need to get moving!"
-                    // This will allow Brann to continue the escort to the last encounter
-                    // When reaching the last door he has the gossip "We're with you Brann! Open it!"
+                        // ToDo: the loot and the achiev should be triggered at this point
+                        // Brann should get the gossip option "There will be plenty of time for this later Brann, we need to get moving!"
+                        // This will allow Brann to continue the escort to the last encounter
+                        // When reaching the last door he has the gossip "We're with you Brann! Open it!"
 
-                    SetEscortPaused(false);
-                    m_uiPhaseTimer = 3000;
-                    // break;
-                    // case 30:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_ACTIVATE, uint32(true));
-                    }
-                    m_uiPhaseTimer = 0;
-                    break;
-                case 30:
-                    DoScriptText(SAY_EVENT_END_02, m_creature);
-                    m_uiPhaseTimer = 5500;
-                    break;
-                case 31:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_03_ABED);
-                    }
-                    m_uiPhaseTimer = 8500;
-                    break;
-                case 32:
-                    DoScriptText(SAY_EVENT_END_04, m_creature);
-                    m_uiPhaseTimer = 11500;
-                    break;
-                case 33:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_05_ABED);
-                    }
-                    m_uiPhaseTimer = 11500;
-                    break;
-                case 34:
-                    DoScriptText(SAY_EVENT_END_06, m_creature);
-                    m_uiPhaseTimer = 4500;
-                    break;
-                case 35:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_07_ABED);
-                    }
-                    m_uiPhaseTimer = 22500;
-                    break;
-                case 36:
-                    DoScriptText(SAY_EVENT_END_08, m_creature);
-                    m_uiPhaseTimer = 7500;
-                    break;
-                case 37:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_09_KADD);
-                    }
-                    m_uiPhaseTimer = 18500;
-                    break;
-                case 38:
-                    DoScriptText(SAY_EVENT_END_10, m_creature);
-                    m_uiPhaseTimer = 5500;
-                    break;
-                case 39:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_11_KADD);
-                    }
-                    m_uiPhaseTimer = 20500;
-                    break;
-                case 40:
-                    DoScriptText(SAY_EVENT_END_12, m_creature);
-                    m_uiPhaseTimer = 2500;
-                    break;
-                case 41:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_13_KADD);
-                    }
-                    m_uiPhaseTimer = 19500;
-                    break;
-                case 42:
-                    DoScriptText(SAY_EVENT_END_14, m_creature);
-                    m_uiPhaseTimer = 10500;
-                    break;
-                case 43:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_15_MARN);
-                    }
-                    m_uiPhaseTimer = 6500;
-                    break;
-                case 44:
-                    DoScriptText(SAY_EVENT_END_16, m_creature);
-                    m_uiPhaseTimer = 6500;
-                    break;
-                case 45:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_17_MARN);
-                    }
-                    m_uiPhaseTimer = 25500;
-                    break;
-                case 46:
-                    DoScriptText(SAY_EVENT_END_18, m_creature);
-                    m_uiPhaseTimer = 23500;
-                    break;
-                case 47:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_19_MARN);
-                    }
-                    m_uiPhaseTimer = 3500;
-                    break;
-                case 48:
-                    DoScriptText(SAY_EVENT_END_20, m_creature);
-                    m_uiPhaseTimer = 8500;
-                    break;
-                case 49:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_21_ABED);
-                    }
-                    m_uiPhaseTimer = 5500;
-                    break;
-                case 50:
-                    if (m_pInstance)
-                    {
-                        m_pInstance->DoUseDoorOrButton(GO_TRIBUNAL_FLOOR);
-                        m_pInstance->SetData(TYPE_TRIBUNAL, DONE);
-                    }
+                        SetEscortPaused(false);
+                        m_uiPhaseTimer = 3000;
+                        // break;
+                        // case 30:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_ACTIVATE, uint32(true));
+                        }
+                        m_uiPhaseTimer = 0;
+                        break;
+                    case 30:
+                        DoScriptText(SAY_EVENT_END_02, m_creature);
+                        m_uiPhaseTimer = 5500;
+                        break;
+                    case 31:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_03_ABED);
+                        }
+                        m_uiPhaseTimer = 8500;
+                        break;
+                    case 32:
+                        DoScriptText(SAY_EVENT_END_04, m_creature);
+                        m_uiPhaseTimer = 11500;
+                        break;
+                    case 33:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_05_ABED);
+                        }
+                        m_uiPhaseTimer = 11500;
+                        break;
+                    case 34:
+                        DoScriptText(SAY_EVENT_END_06, m_creature);
+                        m_uiPhaseTimer = 4500;
+                        break;
+                    case 35:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_07_ABED);
+                        }
+                        m_uiPhaseTimer = 22500;
+                        break;
+                    case 36:
+                        DoScriptText(SAY_EVENT_END_08, m_creature);
+                        m_uiPhaseTimer = 7500;
+                        break;
+                    case 37:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_09_KADD);
+                        }
+                        m_uiPhaseTimer = 18500;
+                        break;
+                    case 38:
+                        DoScriptText(SAY_EVENT_END_10, m_creature);
+                        m_uiPhaseTimer = 5500;
+                        break;
+                    case 39:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_11_KADD);
+                        }
+                        m_uiPhaseTimer = 20500;
+                        break;
+                    case 40:
+                        DoScriptText(SAY_EVENT_END_12, m_creature);
+                        m_uiPhaseTimer = 2500;
+                        break;
+                    case 41:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_KADDRAK_SPEAK, -SAY_EVENT_END_13_KADD);
+                        }
+                        m_uiPhaseTimer = 19500;
+                        break;
+                    case 42:
+                        DoScriptText(SAY_EVENT_END_14, m_creature);
+                        m_uiPhaseTimer = 10500;
+                        break;
+                    case 43:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_15_MARN);
+                        }
+                        m_uiPhaseTimer = 6500;
+                        break;
+                    case 44:
+                        DoScriptText(SAY_EVENT_END_16, m_creature);
+                        m_uiPhaseTimer = 6500;
+                        break;
+                    case 45:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_17_MARN);
+                        }
+                        m_uiPhaseTimer = 25500;
+                        break;
+                    case 46:
+                        DoScriptText(SAY_EVENT_END_18, m_creature);
+                        m_uiPhaseTimer = 23500;
+                        break;
+                    case 47:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_MARNAK_SPEAK, -SAY_EVENT_END_19_MARN);
+                        }
+                        m_uiPhaseTimer = 3500;
+                        break;
+                    case 48:
+                        DoScriptText(SAY_EVENT_END_20, m_creature);
+                        m_uiPhaseTimer = 8500;
+                        break;
+                    case 49:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->SetData(TYPE_DO_ABEDNEUM_SPEAK, -SAY_EVENT_END_21_ABED);
+                        }
+                        m_uiPhaseTimer = 5500;
+                        break;
+                    case 50:
+                        if (m_pInstance)
+                        {
+                            m_pInstance->DoUseDoorOrButton(GO_TRIBUNAL_FLOOR);
+                            m_pInstance->SetData(TYPE_TRIBUNAL, DONE);
+                        }
 
-                    if (Player* pPlayer = GetPlayerForEscort())
-                    {
-                        pPlayer->GroupEventHappens(QUEST_HALLS_OF_STONE, m_creature);
-                    }
+                        if (Player* pPlayer = GetPlayerForEscort())
+                        {
+                            pPlayer->GroupEventHappens(QUEST_HALLS_OF_STONE, m_creature);
+                        }
 
-                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
+                        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
 
-                    m_uiPhaseTimer = 180000;
-                    break;
-                case 51:
-                    SetEscortPaused(false);
-                    break;
+                        m_uiPhaseTimer = 180000;
+                        break;
+                    case 51:
+                        SetEscortPaused(false);
+                        break;
                 }
                 ++m_uiStep;
             }
@@ -682,18 +682,18 @@ struct npc_brann_hos : public CreatureScript
     {
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*>(pCreature->AI()))
-            {
-                pBrannAi->Start(false, pPlayer);
-            }
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*>(pCreature->AI()))
-            {
-                pBrannAi->ContinueEvent();
-            }
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*>(pCreature->AI()))
+                {
+                    pBrannAi->Start(false, pPlayer);
+                }
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*>(pCreature->AI()))
+                {
+                    pBrannAi->ContinueEvent();
+                }
+                break;
         }
         pPlayer->CLOSE_GOSSIP_MENU();
 

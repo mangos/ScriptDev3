@@ -99,7 +99,7 @@ struct npc_millhouse_manastorm : public CreatureScript
     struct npc_millhouse_manastormAI : public ScriptedAI, private DialogueHelper
     {
         npc_millhouse_manastormAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -179,28 +179,28 @@ struct npc_millhouse_manastorm : public CreatureScript
         {
             switch (iEntry)
             {
-            case TYPE_WARDEN_2:
-                if (m_pInstance)
-                {
-                    m_pInstance->SetData(TYPE_WARDEN_2, DONE);
-                }
-                break;
-            case SAY_WATER:
-                DoCastSpellIfCan(m_creature, SPELL_CONJURE_WATER);
-                break;
-            case SAY_BUFFS:
-                DoCastSpellIfCan(m_creature, SPELL_ARCANE_INTELLECT);
-                break;
-            case SPELL_ICE_ARMOR:
-                DoCastSpellIfCan(m_creature, SPELL_ICE_ARMOR);
-                break;
-            case SAY_DRINK:
-                DoCastSpellIfCan(m_creature, SPELL_DRINK);
-                break;
-            case POINT_ID_CENTER:
-                m_creature->SetWalk(false);
-                m_creature->GetMotionMaster()->MovePoint(1, fRoomCenterCoords[0], fRoomCenterCoords[1], fRoomCenterCoords[2]);
-                break;
+                case TYPE_WARDEN_2:
+                    if (m_pInstance)
+                    {
+                        m_pInstance->SetData(TYPE_WARDEN_2, DONE);
+                    }
+                    break;
+                case SAY_WATER:
+                    DoCastSpellIfCan(m_creature, SPELL_CONJURE_WATER);
+                    break;
+                case SAY_BUFFS:
+                    DoCastSpellIfCan(m_creature, SPELL_ARCANE_INTELLECT);
+                    break;
+                case SPELL_ICE_ARMOR:
+                    DoCastSpellIfCan(m_creature, SPELL_ICE_ARMOR);
+                    break;
+                case SAY_DRINK:
+                    DoCastSpellIfCan(m_creature, SPELL_DRINK);
+                    break;
+                case POINT_ID_CENTER:
+                    m_creature->SetWalk(false);
+                    m_creature->GetMotionMaster()->MovePoint(1, fRoomCenterCoords[0], fRoomCenterCoords[1], fRoomCenterCoords[2]);
+                    break;
             }
         }
 

@@ -56,7 +56,7 @@ enum
 
 static const uint32 aSpiderEntries[MAX_SPIDERS] = {28924, 28925, 29051, 29062, 29063, 29064, 29096, 29097, 29098};
 
-/* ##### Gauntlet description #####
+/** ##### Gauntlet description #####
  * This is the timed gauntlet - waves of non-elite spiders will spawn from the 3 doors located a little above the main room
  * They will make their way down to fight Hadronox but she will head to the main room, fighting the spiders
  * When Hadronox enters the main room, she will web the doors, and no more spiders will spawn.

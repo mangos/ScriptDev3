@@ -41,9 +41,9 @@
 
 #include "precompiled.h"
 
-/*######
-## mob_anubisath_guardian
-######*/
+/** ######
+ *  ## mob_anubisath_guardian
+ *  ######*/
 enum
 {
     SPELL_METEOR                 = 24340,

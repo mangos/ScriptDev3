@@ -319,7 +319,7 @@ struct boss_illidan_stormrage : public CreatureScript
     struct boss_illidan_stormrageAI : public ScriptedAI, private DialogueHelper
     {
         boss_illidan_stormrageAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aEventDialogue)
+            DialogueHelper(aEventDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -458,7 +458,7 @@ struct boss_illidan_stormrage : public CreatureScript
             {
                 uiDamage = 0;
                 return;
-            };
+            }
 
             uiDamage = 0;
             m_creature->InterruptNonMeleeSpells(true);
@@ -487,87 +487,87 @@ struct boss_illidan_stormrage : public CreatureScript
         {
             switch (iEntry)
             {
-            case NPC_AKAMA:
-                if (m_pInstance)
-                {
-                    if (Creature* pAkama = m_pInstance->GetSingleCreatureFromStorage(NPC_AKAMA))
+                case NPC_AKAMA:
+                    if (m_pInstance)
                     {
-                        m_creature->SetFacingToObject(pAkama);
+                        if (Creature* pAkama = m_pInstance->GetSingleCreatureFromStorage(NPC_AKAMA))
+                        {
+                            m_creature->SetFacingToObject(pAkama);
+                        }
                     }
-                }
-                m_creature->RemoveAurasDueToSpell(SPELL_KNEEL_INTRO);
-                break;
-            case EMOTE_ONESHOT_QUESTION:
-            case DUMMY_EMOTE_ID_1:
-            case DUMMY_EMOTE_ID_2:
-            case DUMMY_EMOTE_ID_3:
-                m_creature->HandleEmote(EMOTE_ONESHOT_QUESTION);
-                break;
-            case EQUIP_ID_MAIN_HAND:
-                SetEquipmentSlots(false, EQUIP_ID_MAIN_HAND, EQUIP_ID_OFF_HAND, EQUIP_NO_CHANGE);
-                break;
-            case NPC_ILLIDAN_STORMRAGE:
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
-                m_creature->SetInCombatWithZone();
-                if (m_pInstance)
-                {
-                    if (Creature* pAkama = m_pInstance->GetSingleCreatureFromStorage(NPC_AKAMA))
+                    m_creature->RemoveAurasDueToSpell(SPELL_KNEEL_INTRO);
+                    break;
+                case EMOTE_ONESHOT_QUESTION:
+                case DUMMY_EMOTE_ID_1:
+                case DUMMY_EMOTE_ID_2:
+                case DUMMY_EMOTE_ID_3:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_QUESTION);
+                    break;
+                case EQUIP_ID_MAIN_HAND:
+                    SetEquipmentSlots(false, EQUIP_ID_MAIN_HAND, EQUIP_ID_OFF_HAND, EQUIP_NO_CHANGE);
+                    break;
+                case NPC_ILLIDAN_STORMRAGE:
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
+                    m_creature->SetInCombatWithZone();
+                    if (m_pInstance)
                     {
-                        pAkama->AI()->AttackStart(m_creature);
-                        AttackStart(pAkama);
+                        if (Creature* pAkama = m_pInstance->GetSingleCreatureFromStorage(NPC_AKAMA))
+                        {
+                            pAkama->AI()->AttackStart(m_creature);
+                            AttackStart(pAkama);
+                        }
                     }
-                }
-                break;
-            case SAY_AKAMA_LEAVE:
-                DoResetThreat();
-                if (m_pInstance)
-                {
-                    // Remove Akama from threat list and allow him to fight the Illidari elites
-                    if (Creature* pAkama = m_pInstance->GetSingleCreatureFromStorage(NPC_AKAMA))
+                    break;
+                case SAY_AKAMA_LEAVE:
+                    DoResetThreat();
+                    if (m_pInstance)
                     {
-                        pAkama->AI()->EnterEvadeMode();
-                        m_creature->GetThreatManager().modifyThreatPercent(pAkama, -101);
+                        // Remove Akama from threat list and allow him to fight the Illidari elites
+                        if (Creature* pAkama = m_pInstance->GetSingleCreatureFromStorage(NPC_AKAMA))
+                        {
+                            pAkama->AI()->EnterEvadeMode();
+                            m_creature->GetThreatManager().modifyThreatPercent(pAkama, -101);
+                        }
                     }
-                }
-                break;
-            case SPELL_SUMMMON_MAIEV:
-                DoCastSpellIfCan(m_creature, SPELL_SUMMMON_MAIEV);
-                break;
-            case EMOTE_ONESHOT_EXCLAMATION:
-                if (m_pInstance)
-                {
-                    if (Creature* pMaiev = m_pInstance->GetSingleCreatureFromStorage(NPC_MAIEV_SHADOWSONG))
+                    break;
+                case SPELL_SUMMMON_MAIEV:
+                    DoCastSpellIfCan(m_creature, SPELL_SUMMMON_MAIEV);
+                    break;
+                case EMOTE_ONESHOT_EXCLAMATION:
+                    if (m_pInstance)
                     {
-                        pMaiev->HandleEmote(EMOTE_ONESHOT_EXCLAMATION);
+                        if (Creature* pMaiev = m_pInstance->GetSingleCreatureFromStorage(NPC_MAIEV_SHADOWSONG))
+                        {
+                            pMaiev->HandleEmote(EMOTE_ONESHOT_EXCLAMATION);
+                        }
                     }
-                }
-                break;
-            case EMOTE_ONESHOT_YES:
-                if (m_pInstance)
-                {
-                    if (Creature* pMaiev = m_pInstance->GetSingleCreatureFromStorage(NPC_MAIEV_SHADOWSONG))
+                    break;
+                case EMOTE_ONESHOT_YES:
+                    if (m_pInstance)
                     {
-                        pMaiev->HandleEmote(EMOTE_ONESHOT_YES);
+                        if (Creature* pMaiev = m_pInstance->GetSingleCreatureFromStorage(NPC_MAIEV_SHADOWSONG))
+                        {
+                            pMaiev->HandleEmote(EMOTE_ONESHOT_YES);
+                        }
                     }
-                }
-                break;
-            case NPC_MAIEV_SHADOWSONG:
-                // Resume combat and attack Maiev
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->SetTargetGuid(m_creature->getVictim()->GetObjectGuid());
-                SetCombatMovement(false);
-                m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                if (m_pInstance)
-                {
-                    if (Creature* pMaiev = m_pInstance->GetSingleCreatureFromStorage(NPC_MAIEV_SHADOWSONG))
+                    break;
+                case NPC_MAIEV_SHADOWSONG:
+                    // Resume combat and attack Maiev
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    m_creature->SetTargetGuid(m_creature->getVictim()->GetObjectGuid());
+                    SetCombatMovement(false);
+                    m_creature->GetMotionMaster()->Clear();
+                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                    if (m_pInstance)
                     {
-                        pMaiev->AI()->AttackStart(m_creature);
+                        if (Creature* pMaiev = m_pInstance->GetSingleCreatureFromStorage(NPC_MAIEV_SHADOWSONG))
+                        {
+                            pMaiev->AI()->AttackStart(m_creature);
+                        }
                     }
-                }
-                m_uiPhase = PHASE_MAIEV;
-                m_uiTransformTimer = 60000;
-                break;
+                    m_uiPhase = PHASE_MAIEV;
+                    m_uiTransformTimer = 60000;
+                    break;
             }
         }
 
@@ -575,38 +575,38 @@ struct boss_illidan_stormrage : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_FLAME_CRASH:
-                pSummoned->CastSpell(pSummoned, SPELL_FLAME_CRASH_EFFECT, false);
-                break;
-            case NPC_BLADE_OF_AZZINOTH:
-                pSummoned->CastSpell(pSummoned, SPELL_RANGE_MARKER, true);
-                pSummoned->CastSpell(pSummoned, SPELL_SUMMON_TEAR_AZZINOTH, true);
-                m_lBladesGuidList.push_back(pSummoned->GetObjectGuid());
-                break;
-            case NPC_ILLIDAN_TARGET:
-                pSummoned->SetWalk(false);
-                pSummoned->CastSpell(pSummoned, SPELL_EYE_BLAST_TRIGGER, true);
-                pSummoned->GetMotionMaster()->MovePoint(0, m_fTargetMoveX, m_fTargetMoveY, m_fTargetMoveZ);
-                DoCastSpellIfCan(pSummoned, SPELL_EYE_BLAST_DUMMY, CAST_TRIGGERED);
-                break;
-            case NPC_SHADOW_DEMON:
-                pSummoned->CastSpell(pSummoned, SPELL_SHADOW_DEMON_PASSIVE, true);
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_PARALYZE, SELECT_FLAG_PLAYER))
-                {
-                    // Dummy attack function - used only to set the target
-                    pSummoned->AI()->AttackStart(pTarget);
-                    pSummoned->CastSpell(pTarget, SPELL_PARALYZE, true);
+                case NPC_FLAME_CRASH:
+                    pSummoned->CastSpell(pSummoned, SPELL_FLAME_CRASH_EFFECT, false);
+                    break;
+                case NPC_BLADE_OF_AZZINOTH:
+                    pSummoned->CastSpell(pSummoned, SPELL_RANGE_MARKER, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_SUMMON_TEAR_AZZINOTH, true);
+                    m_lBladesGuidList.push_back(pSummoned->GetObjectGuid());
+                    break;
+                case NPC_ILLIDAN_TARGET:
+                    pSummoned->SetWalk(false);
+                    pSummoned->CastSpell(pSummoned, SPELL_EYE_BLAST_TRIGGER, true);
+                    pSummoned->GetMotionMaster()->MovePoint(0, m_fTargetMoveX, m_fTargetMoveY, m_fTargetMoveZ);
+                    DoCastSpellIfCan(pSummoned, SPELL_EYE_BLAST_DUMMY, CAST_TRIGGERED);
+                    break;
+                case NPC_SHADOW_DEMON:
+                    pSummoned->CastSpell(pSummoned, SPELL_SHADOW_DEMON_PASSIVE, true);
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_PARALYZE, SELECT_FLAG_PLAYER))
+                    {
+                        // Dummy attack function - used only to set the target
+                        pSummoned->AI()->AttackStart(pTarget);
+                        pSummoned->CastSpell(pTarget, SPELL_PARALYZE, true);
 
-                    // Move towards target (which is stunned)
-                    float fX, fY, fZ;
-                    pTarget->GetContactPoint(pSummoned, fX, fY, fZ);
-                    pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
-                }
-                break;
-            case NPC_MAIEV_SHADOWSONG:
-                pSummoned->SetFacingToObject(m_creature);
-                m_creature->SetTargetGuid(pSummoned->GetObjectGuid());
-                break;
+                        // Move towards target (which is stunned)
+                        float fX, fY, fZ;
+                        pTarget->GetContactPoint(pSummoned, fX, fY, fZ);
+                        pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                    }
+                    break;
+                case NPC_MAIEV_SHADOWSONG:
+                    pSummoned->SetFacingToObject(m_creature);
+                    m_creature->SetTargetGuid(pSummoned->GetObjectGuid());
+                    break;
             }
         }
 
@@ -614,20 +614,20 @@ struct boss_illidan_stormrage : public CreatureScript
         {
             switch (eventType)
             {
-            case AI_EVENT_CUSTOM_A:
-                if (pSender->GetEntry() == NPC_AKAMA)
-                {
-                    DoStartCombatEvent();
-                }
-                break;
-            case AI_EVENT_CUSTOM_B:
-                if (pSender->GetEntry() == NPC_BLADE_OF_AZZINOTH)
-                {
-                    DoInformFlameKilled();
-                }
-                break;
-            default:
-                break;
+                case AI_EVENT_CUSTOM_A:
+                    if (pSender->GetEntry() == NPC_AKAMA)
+                    {
+                        DoStartCombatEvent();
+                    }
+                    break;
+                case AI_EVENT_CUSTOM_B:
+                    if (pSender->GetEntry() == NPC_BLADE_OF_AZZINOTH)
+                    {
+                        DoInformFlameKilled();
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -666,10 +666,10 @@ struct boss_illidan_stormrage : public CreatureScript
             uint8 uiTargetLoc = 0;
             switch (uiSpawnLoc)
             {
-            case 0: uiTargetLoc = urand(4, 5); break;
-            case 1: uiTargetLoc = urand(6, 7); break;
-            case 2: uiTargetLoc = urand(0, 1) ? 5 : 8; break;
-            case 3: uiTargetLoc = urand(7, 8); break;
+                case 0: uiTargetLoc = urand(4, 5); break;
+                case 1: uiTargetLoc = urand(6, 7); break;
+                case 2: uiTargetLoc = urand(0, 1) ? 5 : 8; break;
+                case 3: uiTargetLoc = urand(7, 8); break;
             }
 
             m_fTargetMoveX = aEyeBlastPos[uiTargetLoc].fX;
@@ -749,371 +749,371 @@ struct boss_illidan_stormrage : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_MAIEV:
+                case PHASE_MAIEV:
 
-                // Phase 5 spell only
-                if (m_uiEnrageTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FRENZY) == CAST_OK)
+                    // Phase 5 spell only
+                    if (m_uiEnrageTimer < uiDiff)
                     {
-                        DoScriptText(SAY_FRENZY, m_creature);
-                        m_uiEnrageTimer = 40000;
-                    }
-                }
-                else
-                {
-                    m_uiEnrageTimer -= uiDiff;
-                }
-
-                if (m_uiTrapTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_CAGE_TRAP) == CAST_OK)
-                    {
-                        m_uiTrapTimer = urand(40000, 50000);
-                    }
-                }
-                else
-                {
-                    m_uiTrapTimer -= uiDiff;
-                }
-
-                // no break;
-            case PHASE_DUAL_NORMAL:
-
-                // Phase 3 and 5 spells
-                if (m_uiAgonizingFlamesTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_AGONIZING_FLAMES) == CAST_OK)
-                    {
-                        m_uiAgonizingFlamesTimer = 60000;
-                    }
-                }
-                else
-                {
-                    m_uiAgonizingFlamesTimer -= uiDiff;
-                }
-
-                if (m_uiTransformTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_DEMON_TRANSFORM_1) == CAST_OK)
-                    {
-                        DoScriptText(SAY_MORPH, m_creature);
-
-                        m_uiPrevPhase = m_uiPhase;
-                        m_uiPhase = PHASE_TRANSITION;
-                        m_uiTransformTimer = 12500;
-                        m_uiFlameBurstTimer = 10000;
-                        m_uiShadowDemonTimer = 30000;
-
-                        SetCombatMovement(false);
-                        m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MoveIdle();
-                    }
-                }
-                else
-                {
-                    m_uiTransformTimer -= uiDiff;
-                }
-
-                // no break;
-            case PHASE_AKAMA:
-
-                if (m_uiShearTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHEAR) == CAST_OK)
-                    {
-                        m_uiShearTimer = urand(10000, 15000);
-                    }
-                }
-                else
-                {
-                    m_uiShearTimer -= uiDiff;
-                }
-
-                if (m_uiFlameCrashTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FLAME_CRASH) == CAST_OK)
-                    {
-                        m_uiFlameCrashTimer = urand(25000, 35000);
-                    }
-                }
-                else
-                {
-                    m_uiFlameCrashTimer -= uiDiff;
-                }
-
-                if (m_uiShadowFiendTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_PARASITIC_SHADOWFIEND, SELECT_FLAG_PLAYER))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_PARASITIC_SHADOWFIEND) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_FRENZY) == CAST_OK)
                         {
-                            m_uiShadowFiendTimer = 40000;
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiShadowFiendTimer -= uiDiff;
-                }
-
-                if (m_uiDrawSoulTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_DRAW_SOUL) == CAST_OK)
-                    {
-                        m_uiDrawSoulTimer = 35000;
-                    }
-                }
-                else
-                {
-                    m_uiDrawSoulTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_BLADES:
-
-                if (m_uiCenterMoveTimer)
-                {
-                    if (m_uiCenterMoveTimer <= uiDiff)
-                    {
-                        // The movement is not very clear - it may be possible that he is moving around the center during this phase
-                        // ToDo: this requires additional resarch. For now bring him near home position
-                        m_creature->GetMotionMaster()->MovePoint(0, aCenterLoc[0].fX, aCenterLoc[0].fY, aCenterLoc[0].fZ);
-                        m_uiCenterMoveTimer = 0;
-                    }
-                    else
-                    {
-                        m_uiCenterMoveTimer -= uiDiff;
-                    }
-                }
-
-                if (m_uiSummonBladesTimer)
-                {
-                    if (m_uiSummonBladesTimer <= uiDiff)
-                    {
-                        if (m_pInstance)
-                        {
-                            // Need to provide explicit glaive targets
-                            Creature* pGlaive1 = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(TYPE_GLAIVE_1)));
-                            Creature* pGlaive2 = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(TYPE_GLAIVE_2)));
-                            if (!pGlaive1 || !pGlaive2)
-                            {
-                                return;
-                            }
-
-                            // Summon both blades and remove them from equipment
-                            if (DoCastSpellIfCan(pGlaive1, SPELL_THROW_GLAIVE_VISUAL) == CAST_OK)
-                            {
-                                DoCastSpellIfCan(pGlaive2, SPELL_THROW_GLAIVE, CAST_TRIGGERED);
-                                SetEquipmentSlots(false, EQUIP_UNEQUIP, EQUIP_UNEQUIP, EQUIP_NO_CHANGE);
-                                m_uiSummonBladesTimer = 0;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        m_uiSummonBladesTimer -= uiDiff;
-                    }
-
-                    // no other spells during takeoff
-                    return;
-                }
-
-                if (m_uiFireballTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
-                        {
-                            m_uiFireballTimer = urand(2000, 3000);
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiFireballTimer -= uiDiff;
-                }
-
-                if (m_uiDarkBarrageTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_DARK_BARRAGE) == CAST_OK)
-                        {
-                            m_uiDarkBarrageTimer = 45000;
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiDarkBarrageTimer -= uiDiff;
-                }
-
-                if (m_uiEyeBlastTimer < uiDiff)
-                {
-                    if (DoCastEyeBlastIfCan())
-                    {
-                        m_uiEyeBlastTimer = urand(35000, 45000);
-                        m_uiFireballTimer = 15000;
-                    }
-                }
-                else
-                {
-                    m_uiEyeBlastTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_DUAL_DEMON:
-
-                // Handle phase transition at 30%
-                if (m_uiPrevPhase == PHASE_DUAL_NORMAL && m_creature->GetHealthPercent() <= 30.0f)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_DEMON_TRANSFORM_1) == CAST_OK)
-                    {
-                        m_uiTransformTimer = 12500;
-                        m_uiPhase = PHASE_TRANSITION;
-
-                        SetCombatMovement(true);
-                        m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                    }
-                }
-
-                if (m_uiTransformTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_DEMON_TRANSFORM_1) == CAST_OK)
-                    {
-                        m_uiTransformTimer = 12500;
-                        m_uiPhase = PHASE_TRANSITION;
-
-                        SetCombatMovement(true);
-                        m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                    }
-                }
-                else
-                {
-                    m_uiTransformTimer -= uiDiff;
-                }
-
-                if (m_uiShadowDemonTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_SHADOW_DEMONS) == CAST_OK)
-                    {
-                        m_uiShadowDemonTimer = 60000;
-                    }
-                }
-                else
-                {
-                    m_uiShadowDemonTimer -= uiDiff;
-                }
-
-                if (m_uiShadowBlastTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_BLAST) == CAST_OK)
-                        {
-                            m_uiShadowBlastTimer = urand(2000, 3000);
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiShadowBlastTimer -= uiDiff;
-                }
-
-                if (m_uiFlameBurstTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BURST) == CAST_OK)
-                    {
-                        m_uiFlameBurstTimer = 20000;
-                    }
-                }
-                else
-                {
-                    m_uiFlameBurstTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_TRANSITION:
-
-                if (m_uiLandTimer)
-                {
-                    if (m_uiLandTimer <= uiDiff)
-                    {
-                        switch (m_uiLandStage)
-                        {
-                        case 0:
-                            // Despawn the blades
-                            for (GuidList::const_iterator itr = m_lBladesGuidList.begin(); itr != m_lBladesGuidList.end(); ++itr)
-                            {
-                                if (Creature* pBlade = m_creature->GetMap()->GetCreature(*itr))
-                                {
-                                    pBlade->CastSpell(m_creature, SPELL_GLAIVE_RETURNS, true);
-                                    pBlade->ForcedDespawn(500);
-                                }
-                            }
-                            m_uiLandTimer = 5000;
-                            break;
-                        case 1:
-                            // Set the equipment and land
-                            SetEquipmentSlots(false, EQUIP_ID_MAIN_HAND, EQUIP_ID_OFF_HAND, EQUIP_NO_CHANGE);
-
-                            m_creature->SetLevitate(false);
-                            m_creature->HandleEmote(EMOTE_ONESHOT_LAND);
-                            m_uiLandTimer = 2000;
-                            break;
-                        case 2:
-                            // Start phase 3
-                            DoResetThreat();
-                            m_uiPhase = PHASE_DUAL_NORMAL;
-
-                            SetCombatMovement(true);
-                            m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                            m_uiTransformTimer = 64000;
-                            m_uiLandTimer = 0;
-                            break;
-                        }
-                        ++m_uiLandStage;
-                    }
-                    else
-                    {
-                        m_uiLandTimer -= uiDiff;
-                    }
-                }
-
-                if (m_uiTransformTimer)
-                {
-                    if (m_uiTransformTimer <= uiDiff)
-                    {
-                        // Drop the transform time from the spell timers
-                        if (m_creature->HasAura(SPELL_DEMON_FORM))
-                        {
-                            DoResetThreat();
-                            m_uiPhase = PHASE_DUAL_DEMON;
-                            m_uiShadowDemonTimer = 17000;
-                            m_uiFlameBurstTimer = 7000;
-                            m_uiTransformTimer = 47000;
-                        }
-                        else
-                        {
-                            m_uiPhase = m_uiPrevPhase;
+                            DoScriptText(SAY_FRENZY, m_creature);
                             m_uiEnrageTimer = 40000;
-                            m_uiTransformTimer = 60000;
-                            m_uiTrapTimer = urand(30000, 40000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiEnrageTimer -= uiDiff;
+                    }
+
+                    if (m_uiTrapTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_CAGE_TRAP) == CAST_OK)
+                        {
+                            m_uiTrapTimer = urand(40000, 50000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiTrapTimer -= uiDiff;
+                    }
+
+                    // no break;
+                case PHASE_DUAL_NORMAL:
+
+                    // Phase 3 and 5 spells
+                    if (m_uiAgonizingFlamesTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_AGONIZING_FLAMES) == CAST_OK)
+                        {
+                            m_uiAgonizingFlamesTimer = 60000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiAgonizingFlamesTimer -= uiDiff;
+                    }
+
+                    if (m_uiTransformTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_DEMON_TRANSFORM_1) == CAST_OK)
+                        {
+                            DoScriptText(SAY_MORPH, m_creature);
+
+                            m_uiPrevPhase = m_uiPhase;
+                            m_uiPhase = PHASE_TRANSITION;
+                            m_uiTransformTimer = 12500;
+                            m_uiFlameBurstTimer = 10000;
+                            m_uiShadowDemonTimer = 30000;
+
+                            SetCombatMovement(false);
+                            m_creature->GetMotionMaster()->Clear();
+                            m_creature->GetMotionMaster()->MoveIdle();
                         }
                     }
                     else
                     {
                         m_uiTransformTimer -= uiDiff;
                     }
-                }
 
-                break;
+                    // no break;
+                case PHASE_AKAMA:
+
+                    if (m_uiShearTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHEAR) == CAST_OK)
+                        {
+                            m_uiShearTimer = urand(10000, 15000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiShearTimer -= uiDiff;
+                    }
+
+                    if (m_uiFlameCrashTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_CRASH) == CAST_OK)
+                        {
+                            m_uiFlameCrashTimer = urand(25000, 35000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiFlameCrashTimer -= uiDiff;
+                    }
+
+                    if (m_uiShadowFiendTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_PARASITIC_SHADOWFIEND, SELECT_FLAG_PLAYER))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_PARASITIC_SHADOWFIEND) == CAST_OK)
+                            {
+                                m_uiShadowFiendTimer = 40000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiShadowFiendTimer -= uiDiff;
+                    }
+
+                    if (m_uiDrawSoulTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_DRAW_SOUL) == CAST_OK)
+                        {
+                            m_uiDrawSoulTimer = 35000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiDrawSoulTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_BLADES:
+
+                    if (m_uiCenterMoveTimer)
+                    {
+                        if (m_uiCenterMoveTimer <= uiDiff)
+                        {
+                            // The movement is not very clear - it may be possible that he is moving around the center during this phase
+                            // ToDo: this requires additional resarch. For now bring him near home position
+                            m_creature->GetMotionMaster()->MovePoint(0, aCenterLoc[0].fX, aCenterLoc[0].fY, aCenterLoc[0].fZ);
+                            m_uiCenterMoveTimer = 0;
+                        }
+                        else
+                        {
+                            m_uiCenterMoveTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_uiSummonBladesTimer)
+                    {
+                        if (m_uiSummonBladesTimer <= uiDiff)
+                        {
+                            if (m_pInstance)
+                            {
+                                // Need to provide explicit glaive targets
+                                Creature* pGlaive1 = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(TYPE_GLAIVE_1)));
+                                Creature* pGlaive2 = m_pInstance->instance->GetCreature(ObjectGuid(m_pInstance->GetData64(TYPE_GLAIVE_2)));
+                                if (!pGlaive1 || !pGlaive2)
+                                {
+                                    return;
+                                }
+
+                                // Summon both blades and remove them from equipment
+                                if (DoCastSpellIfCan(pGlaive1, SPELL_THROW_GLAIVE_VISUAL) == CAST_OK)
+                                {
+                                    DoCastSpellIfCan(pGlaive2, SPELL_THROW_GLAIVE, CAST_TRIGGERED);
+                                    SetEquipmentSlots(false, EQUIP_UNEQUIP, EQUIP_UNEQUIP, EQUIP_NO_CHANGE);
+                                    m_uiSummonBladesTimer = 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiSummonBladesTimer -= uiDiff;
+                        }
+
+                        // no other spells during takeoff
+                        return;
+                    }
+
+                    if (m_uiFireballTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
+                            {
+                                m_uiFireballTimer = urand(2000, 3000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiFireballTimer -= uiDiff;
+                    }
+
+                    if (m_uiDarkBarrageTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_DARK_BARRAGE) == CAST_OK)
+                            {
+                                m_uiDarkBarrageTimer = 45000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiDarkBarrageTimer -= uiDiff;
+                    }
+
+                    if (m_uiEyeBlastTimer < uiDiff)
+                    {
+                        if (DoCastEyeBlastIfCan())
+                        {
+                            m_uiEyeBlastTimer = urand(35000, 45000);
+                            m_uiFireballTimer = 15000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiEyeBlastTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_DUAL_DEMON:
+
+                    // Handle phase transition at 30%
+                    if (m_uiPrevPhase == PHASE_DUAL_NORMAL && m_creature->GetHealthPercent() <= 30.0f)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_DEMON_TRANSFORM_1) == CAST_OK)
+                        {
+                            m_uiTransformTimer = 12500;
+                            m_uiPhase = PHASE_TRANSITION;
+
+                            SetCombatMovement(true);
+                            m_creature->GetMotionMaster()->Clear();
+                            m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                        }
+                    }
+
+                    if (m_uiTransformTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_DEMON_TRANSFORM_1) == CAST_OK)
+                        {
+                            m_uiTransformTimer = 12500;
+                            m_uiPhase = PHASE_TRANSITION;
+
+                            SetCombatMovement(true);
+                            m_creature->GetMotionMaster()->Clear();
+                            m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                        }
+                    }
+                    else
+                    {
+                        m_uiTransformTimer -= uiDiff;
+                    }
+
+                    if (m_uiShadowDemonTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_SHADOW_DEMONS) == CAST_OK)
+                        {
+                            m_uiShadowDemonTimer = 60000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiShadowDemonTimer -= uiDiff;
+                    }
+
+                    if (m_uiShadowBlastTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_BLAST) == CAST_OK)
+                            {
+                                m_uiShadowBlastTimer = urand(2000, 3000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiShadowBlastTimer -= uiDiff;
+                    }
+
+                    if (m_uiFlameBurstTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BURST) == CAST_OK)
+                        {
+                            m_uiFlameBurstTimer = 20000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiFlameBurstTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_TRANSITION:
+
+                    if (m_uiLandTimer)
+                    {
+                        if (m_uiLandTimer <= uiDiff)
+                        {
+                            switch (m_uiLandStage)
+                            {
+                                case 0:
+                                    // Despawn the blades
+                                    for (GuidList::const_iterator itr = m_lBladesGuidList.begin(); itr != m_lBladesGuidList.end(); ++itr)
+                                    {
+                                        if (Creature* pBlade = m_creature->GetMap()->GetCreature(*itr))
+                                        {
+                                            pBlade->CastSpell(m_creature, SPELL_GLAIVE_RETURNS, true);
+                                            pBlade->ForcedDespawn(500);
+                                        }
+                                    }
+                                    m_uiLandTimer = 5000;
+                                    break;
+                                case 1:
+                                    // Set the equipment and land
+                                    SetEquipmentSlots(false, EQUIP_ID_MAIN_HAND, EQUIP_ID_OFF_HAND, EQUIP_NO_CHANGE);
+
+                                    m_creature->SetLevitate(false);
+                                    m_creature->HandleEmote(EMOTE_ONESHOT_LAND);
+                                    m_uiLandTimer = 2000;
+                                    break;
+                                case 2:
+                                    // Start phase 3
+                                    DoResetThreat();
+                                    m_uiPhase = PHASE_DUAL_NORMAL;
+
+                                    SetCombatMovement(true);
+                                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                                    m_uiTransformTimer = 64000;
+                                    m_uiLandTimer = 0;
+                                    break;
+                            }
+                            ++m_uiLandStage;
+                        }
+                        else
+                        {
+                            m_uiLandTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_uiTransformTimer)
+                    {
+                        if (m_uiTransformTimer <= uiDiff)
+                        {
+                            // Drop the transform time from the spell timers
+                            if (m_creature->HasAura(SPELL_DEMON_FORM))
+                            {
+                                DoResetThreat();
+                                m_uiPhase = PHASE_DUAL_DEMON;
+                                m_uiShadowDemonTimer = 17000;
+                                m_uiFlameBurstTimer = 7000;
+                                m_uiTransformTimer = 47000;
+                            }
+                            else
+                            {
+                                m_uiPhase = m_uiPrevPhase;
+                                m_uiEnrageTimer = 40000;
+                                m_uiTransformTimer = 60000;
+                                m_uiTrapTimer = urand(30000, 40000);
+                            }
+                        }
+                        else
+                        {
+                            m_uiTransformTimer -= uiDiff;
+                        }
+                    }
+
+                    break;
             }
         }
     };
@@ -1135,7 +1135,7 @@ struct npc_akama_illidan : public CreatureScript
     struct npc_akama_illidanAI : public npc_escortAI, private DialogueHelper
     {
         npc_akama_illidanAI(Creature* pCreature) : npc_escortAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -1211,61 +1211,61 @@ struct npc_akama_illidan : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                SetEscortPaused(true);
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                break;
-            case 9:
-                SetEscortPaused(true);
-                if (m_pInstance)
-                {
-                    if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_DOOR_TRIGGER))
+                case 0:
+                    SetEscortPaused(true);
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    break;
+                case 9:
+                    SetEscortPaused(true);
+                    if (m_pInstance)
                     {
-                        m_creature->SetFacingToObject(pTrigger);
+                        if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_DOOR_TRIGGER))
+                        {
+                            m_creature->SetFacingToObject(pTrigger);
+                        }
                     }
-                }
-                StartNextDialogueText(SAY_AKAMA_OPEN_DOOR_1);
-                break;
-            case 16:
-                SetEscortPaused(true);
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                if (m_pInstance)
-                {
-                    if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
+                    StartNextDialogueText(SAY_AKAMA_OPEN_DOOR_1);
+                    break;
+                case 16:
+                    SetEscortPaused(true);
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    if (m_pInstance)
                     {
-                        m_creature->SetFacingToObject(pIllidan);
+                        if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
+                        {
+                            m_creature->SetFacingToObject(pIllidan);
+                        }
                     }
-                }
-                break;
-            case 17:
-                SetEscortPaused(true);
-                if (m_pInstance)
-                {
-                    if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
+                    break;
+                case 17:
+                    SetEscortPaused(true);
+                    if (m_pInstance)
                     {
-                        SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pIllidan);
+                        if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
+                        {
+                            SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pIllidan);
 
-                        m_creature->SetFacingToObject(pIllidan);
+                            m_creature->SetFacingToObject(pIllidan);
+                        }
                     }
-                }
-                break;
-            case 24:
-                SetEscortPaused(true);
-                m_bFightMinions = true;
-                break;
-            case 30:
-                SetEscortPaused(true);
-                if (m_pInstance)
-                {
-                    // Move to a close point to Illidan
-                    if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
+                    break;
+                case 24:
+                    SetEscortPaused(true);
+                    m_bFightMinions = true;
+                    break;
+                case 30:
+                    SetEscortPaused(true);
+                    if (m_pInstance)
                     {
-                        float fX, fY, fZ;
-                        pIllidan->GetContactPoint(m_creature, fX, fY, fZ);
-                        m_creature->GetMotionMaster()->MovePoint(100, fX, fY, fZ);
+                        // Move to a close point to Illidan
+                        if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
+                        {
+                            float fX, fY, fZ;
+                            pIllidan->GetContactPoint(m_creature, fX, fY, fZ);
+                            m_creature->GetMotionMaster()->MovePoint(100, fX, fY, fZ);
+                        }
                     }
-                }
-                break;
+                    break;
             }
         }
 
@@ -1295,36 +1295,36 @@ struct npc_akama_illidan : public CreatureScript
         {
             switch (iEntry)
             {
-            case SPELL_AKAMA_DOOR_FAIL:
-                DoCastSpellIfCan(m_creature, SPELL_AKAMA_DOOR_FAIL);
-                break;
-            case NPC_SPIRIT_OF_OLUM:
-                m_creature->SummonCreature(NPC_SPIRIT_OF_OLUM, 751.64f, 297.22f, 312.21f, 6.03f, TEMPSPAWN_TIMED_DESPAWN, 25000);
-                m_creature->SummonCreature(NPC_SPIRIT_OF_UDALO, 751.47f, 311.01f, 312.19f, 0.0f, TEMPSPAWN_TIMED_DESPAWN, 25000);
-                break;
-            case SPELL_AKAMA_DOOR_CHANNEL:
-                DoCastSpellIfCan(m_creature, SPELL_AKAMA_DOOR_CHANNEL);
-                if (m_pInstance)
-                {
-                    if (Creature* pOlum = m_pInstance->GetSingleCreatureFromStorage(NPC_SPIRIT_OF_OLUM))
+                case SPELL_AKAMA_DOOR_FAIL:
+                    DoCastSpellIfCan(m_creature, SPELL_AKAMA_DOOR_FAIL);
+                    break;
+                case NPC_SPIRIT_OF_OLUM:
+                    m_creature->SummonCreature(NPC_SPIRIT_OF_OLUM, 751.64f, 297.22f, 312.21f, 6.03f, TEMPSPAWN_TIMED_DESPAWN, 25000);
+                    m_creature->SummonCreature(NPC_SPIRIT_OF_UDALO, 751.47f, 311.01f, 312.19f, 0.0f, TEMPSPAWN_TIMED_DESPAWN, 25000);
+                    break;
+                case SPELL_AKAMA_DOOR_CHANNEL:
+                    DoCastSpellIfCan(m_creature, SPELL_AKAMA_DOOR_CHANNEL);
+                    if (m_pInstance)
                     {
-                        pOlum->CastSpell(pOlum, SPELL_DEATHSWORN_DOOR_CHANNEL, true);
+                        if (Creature* pOlum = m_pInstance->GetSingleCreatureFromStorage(NPC_SPIRIT_OF_OLUM))
+                        {
+                            pOlum->CastSpell(pOlum, SPELL_DEATHSWORN_DOOR_CHANNEL, true);
+                        }
+                        if (Creature* pUdalo = m_pInstance->GetSingleCreatureFromStorage(NPC_SPIRIT_OF_UDALO))
+                        {
+                            pUdalo->CastSpell(pUdalo, SPELL_DEATHSWORN_DOOR_CHANNEL, true);
+                        }
                     }
-                    if (Creature* pUdalo = m_pInstance->GetSingleCreatureFromStorage(NPC_SPIRIT_OF_UDALO))
+                    break;
+                case GO_ILLIDAN_GATE:
+                    if (m_pInstance)
                     {
-                        pUdalo->CastSpell(pUdalo, SPELL_DEATHSWORN_DOOR_CHANNEL, true);
+                        m_pInstance->DoUseDoorOrButton(GO_ILLIDAN_GATE);
                     }
-                }
-                break;
-            case GO_ILLIDAN_GATE:
-                if (m_pInstance)
-                {
-                    m_pInstance->DoUseDoorOrButton(GO_ILLIDAN_GATE);
-                }
-                break;
-            case NPC_SPIRIT_OF_UDALO:
-                SetEscortPaused(false);
-                break;
+                    break;
+                case NPC_SPIRIT_OF_UDALO:
+                    SetEscortPaused(false);
+                    break;
             }
         }
 
@@ -1332,13 +1332,13 @@ struct npc_akama_illidan : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_ILLIDARI_ELITE:
-                pSummoned->AI()->AttackStart(m_creature);
-                break;
-            case NPC_SPIRIT_OF_OLUM:
-            case NPC_SPIRIT_OF_UDALO:
-                pSummoned->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                break;
+                case NPC_ILLIDARI_ELITE:
+                    pSummoned->AI()->AttackStart(m_creature);
+                    break;
+                case NPC_SPIRIT_OF_OLUM:
+                case NPC_SPIRIT_OF_UDALO:
+                    pSummoned->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    break;
             }
         }
 
@@ -1465,11 +1465,11 @@ struct boss_maiev : public CreatureScript
     struct boss_maievAI : public ScriptedAI, private DialogueHelper
     {
         boss_maievAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aEpilogueDialogue)
+            DialogueHelper(aEpilogueDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
-        };
+        }
 
         ScriptedInstance* m_pInstance;
 
@@ -1519,21 +1519,21 @@ struct boss_maiev : public CreatureScript
         {
             switch (iEntry)
             {
-            case NPC_ILLIDAN_STORMRAGE:
-                if (m_pInstance)
-                {
-                    if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
+                case NPC_ILLIDAN_STORMRAGE:
+                    if (m_pInstance)
                     {
-                        pIllidan->DealDamage(pIllidan, pIllidan->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                        if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
+                        {
+                            pIllidan->DealDamage(pIllidan, pIllidan->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                        }
                     }
-                }
-                break;
-            case SPELL_TELEPORT_VISUAL:
-                if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT_VISUAL) == CAST_OK)
-                {
-                    m_creature->ForcedDespawn(1000);
-                }
-                break;
+                    break;
+                case SPELL_TELEPORT_VISUAL:
+                    if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT_VISUAL) == CAST_OK)
+                    {
+                        m_creature->ForcedDespawn(1000);
+                    }
+                    break;
             }
         }
 
@@ -1564,9 +1564,9 @@ struct boss_maiev : public CreatureScript
             {
                 switch (urand(0, 2))
                 {
-                case 0: DoScriptText(SAY_MAIEV_TAUNT_1, m_creature); break;
-                case 1: DoScriptText(SAY_MAIEV_TAUNT_2, m_creature); break;
-                case 2: DoScriptText(SAY_MAIEV_TAUNT_3, m_creature); break;
+                    case 0: DoScriptText(SAY_MAIEV_TAUNT_1, m_creature); break;
+                    case 1: DoScriptText(SAY_MAIEV_TAUNT_2, m_creature); break;
+                    case 2: DoScriptText(SAY_MAIEV_TAUNT_3, m_creature); break;
                 }
                 m_uiTauntTimer = urand(40000, 60000);
             }

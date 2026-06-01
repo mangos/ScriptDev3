@@ -198,14 +198,14 @@ struct npc_restless_apparition : public CreatureScript
             {
                 switch (urand(0, 7))
                 {
-                case 0: DoScriptText(SAY_RAND_1, m_creature); break;
-                case 1: DoScriptText(SAY_RAND_2, m_creature); break;
-                case 2: DoScriptText(SAY_RAND_3, m_creature); break;
-                case 3: DoScriptText(SAY_RAND_4, m_creature); break;
-                case 4: DoScriptText(SAY_RAND_5, m_creature); break;
-                case 5: DoScriptText(SAY_RAND_6, m_creature); break;
-                case 6: DoScriptText(SAY_RAND_7, m_creature); break;
-                case 7: DoScriptText(SAY_RAND_8, m_creature); break;
+                    case 0: DoScriptText(SAY_RAND_1, m_creature); break;
+                    case 1: DoScriptText(SAY_RAND_2, m_creature); break;
+                    case 2: DoScriptText(SAY_RAND_3, m_creature); break;
+                    case 3: DoScriptText(SAY_RAND_4, m_creature); break;
+                    case 4: DoScriptText(SAY_RAND_5, m_creature); break;
+                    case 5: DoScriptText(SAY_RAND_6, m_creature); break;
+                    case 6: DoScriptText(SAY_RAND_7, m_creature); break;
+                    case 7: DoScriptText(SAY_RAND_8, m_creature); break;
                 }
 
                 m_uiTalk_Timer = 0;
@@ -258,20 +258,20 @@ struct npc_morokk : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                SetEscortPaused(true);
-                break;
-            case 1:
-                if (m_bIsSuccess)
-                {
-                    DoScriptText(SAY_MOR_SCARED, m_creature);
-                }
-                else
-                {
-                    m_creature->SetDeathState(JUST_DIED);
-                    m_creature->Respawn();
-                }
-                break;
+                case 0:
+                    SetEscortPaused(true);
+                    break;
+                case 1:
+                    if (m_bIsSuccess)
+                    {
+                        DoScriptText(SAY_MOR_SCARED, m_creature);
+                    }
+                    else
+                    {
+                        m_creature->SetDeathState(JUST_DIED);
+                        m_creature->Respawn();
+                    }
+                    break;
             }
         }
 
@@ -470,18 +470,18 @@ struct npc_ogron : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 9:
-                DoScriptText(SAY_OGR_SPOT, m_creature);
-                break;
-            case 10:
-                if (Creature* pReethe = GetCreature(NPC_REETHE))
-                {
-                    DoScriptText(SAY_OGR_RET_WHAT, pReethe);
-                }
-                break;
-            case 11:
-                SetEscortPaused(true);
-                break;
+                case 9:
+                    DoScriptText(SAY_OGR_SPOT, m_creature);
+                    break;
+                case 10:
+                    if (Creature* pReethe = GetCreature(NPC_REETHE))
+                    {
+                        DoScriptText(SAY_OGR_RET_WHAT, pReethe);
+                    }
+                    break;
+                case 11:
+                    SetEscortPaused(true);
+                    break;
             }
         }
 
@@ -542,47 +542,47 @@ struct npc_ogron : public CreatureScript
                             {
                                 switch (m_uiPhaseCounter)
                                 {
-                                case 0:
-                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                    {
-                                        DoScriptText(SAY_OGR_RET_SWEAR, pReethe);
-                                    }
-                                    break;
-                                case 1:
-                                    DoScriptText(SAY_OGR_REPLY_RET, m_creature);
-                                    break;
-                                case 2:
-                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                    {
-                                        DoScriptText(SAY_OGR_RET_TAKEN, pReethe);
-                                    }
-                                    break;
-                                case 3:
-                                    DoScriptText(SAY_OGR_TELL_FIRE, m_creature);
-                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                    {
-                                        DoScriptText(SAY_OGR_RET_NOCLOSER, pReethe);
-                                    }
-                                    break;
-                                case 4:
-                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                    {
-                                        DoScriptText(SAY_OGR_RET_NOFIRE, pReethe);
-                                    }
-                                    break;
-                                case 5:
-                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                    {
-                                        DoScriptText(SAY_OGR_RET_HEAR, pReethe);
-                                    }
+                                    case 0:
+                                        if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                        {
+                                            DoScriptText(SAY_OGR_RET_SWEAR, pReethe);
+                                        }
+                                        break;
+                                    case 1:
+                                        DoScriptText(SAY_OGR_REPLY_RET, m_creature);
+                                        break;
+                                    case 2:
+                                        if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                        {
+                                            DoScriptText(SAY_OGR_RET_TAKEN, pReethe);
+                                        }
+                                        break;
+                                    case 3:
+                                        DoScriptText(SAY_OGR_TELL_FIRE, m_creature);
+                                        if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                        {
+                                            DoScriptText(SAY_OGR_RET_NOCLOSER, pReethe);
+                                        }
+                                        break;
+                                    case 4:
+                                        if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                        {
+                                            DoScriptText(SAY_OGR_RET_NOFIRE, pReethe);
+                                        }
+                                        break;
+                                    case 5:
+                                        if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                        {
+                                            DoScriptText(SAY_OGR_RET_HEAR, pReethe);
+                                        }
 
-                                    m_creature->SummonCreature(NPC_CALDWELL, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
-                                    m_creature->SummonCreature(NPC_HALLAN, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
-                                    m_creature->SummonCreature(NPC_SKIRMISHER, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
-                                    m_creature->SummonCreature(NPC_SKIRMISHER, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                                        m_creature->SummonCreature(NPC_CALDWELL, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                                        m_creature->SummonCreature(NPC_HALLAN, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                                        m_creature->SummonCreature(NPC_SKIRMISHER, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
+                                        m_creature->SummonCreature(NPC_SKIRMISHER, m_afSpawn[0], m_afSpawn[1], m_afSpawn[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
 
-                                    m_uiPhase = PHASE_GUESTS;
-                                    break;
+                                        m_uiPhase = PHASE_GUESTS;
+                                        break;
                                 }
                                 break;
                             }
@@ -590,48 +590,48 @@ struct npc_ogron : public CreatureScript
                             {
                                 switch (m_uiPhaseCounter)
                                 {
-                                case 6:
-                                    if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
-                                    {
-                                        DoScriptText(SAY_OGR_CAL_FOUND, pCaldwell);
-                                    }
-                                    break;
-                                case 7:
-                                    if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
-                                    {
-                                        DoScriptText(SAY_OGR_CAL_MERCY, pCaldwell);
-                                    }
-                                    break;
-                                case 8:
-                                    if (Creature* pHallan = GetCreature(NPC_HALLAN))
-                                    {
-                                        DoScriptText(SAY_OGR_HALL_GLAD, pHallan);
+                                    case 6:
+                                        if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
+                                        {
+                                            DoScriptText(SAY_OGR_CAL_FOUND, pCaldwell);
+                                        }
+                                        break;
+                                    case 7:
+                                        if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
+                                        {
+                                            DoScriptText(SAY_OGR_CAL_MERCY, pCaldwell);
+                                        }
+                                        break;
+                                    case 8:
+                                        if (Creature* pHallan = GetCreature(NPC_HALLAN))
+                                        {
+                                            DoScriptText(SAY_OGR_HALL_GLAD, pHallan);
 
+                                            if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                            {
+                                                pHallan->CastSpell(pReethe, SPELL_FAKE_SHOT, false);
+                                            }
+                                        }
+                                        break;
+                                    case 9:
                                         if (Creature* pReethe = GetCreature(NPC_REETHE))
                                         {
-                                            pHallan->CastSpell(pReethe, SPELL_FAKE_SHOT, false);
+                                            DoScriptText(EMOTE_OGR_RET_ARROW, pReethe);
+                                            DoScriptText(SAY_OGR_RET_ARROW, pReethe);
                                         }
-                                    }
-                                    break;
-                                case 9:
-                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                    {
-                                        DoScriptText(EMOTE_OGR_RET_ARROW, pReethe);
-                                        DoScriptText(SAY_OGR_RET_ARROW, pReethe);
-                                    }
-                                    break;
-                                case 10:
-                                    if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
-                                    {
-                                        DoScriptText(SAY_OGR_CAL_CLEANUP, pCaldwell);
-                                    }
+                                        break;
+                                    case 10:
+                                        if (Creature* pCaldwell = GetCreature(NPC_CALDWELL))
+                                        {
+                                            DoScriptText(SAY_OGR_CAL_CLEANUP, pCaldwell);
+                                        }
 
-                                    DoScriptText(SAY_OGR_NODIE, m_creature);
-                                    break;
-                                case 11:
-                                    DoStartAttackMe();
-                                    m_uiPhase = PHASE_FIGHT;
-                                    break;
+                                        DoScriptText(SAY_OGR_NODIE, m_creature);
+                                        break;
+                                    case 11:
+                                        DoStartAttackMe();
+                                        m_uiPhase = PHASE_FIGHT;
+                                        break;
                                 }
                                 break;
                             }
@@ -639,25 +639,25 @@ struct npc_ogron : public CreatureScript
                             {
                                 switch (m_uiPhaseCounter)
                                 {
-                                case 12:
-                                    if (Player* pPlayer = GetPlayerForEscort())
-                                    {
-                                        pPlayer->GroupEventHappens(QUEST_QUESTIONING, m_creature);
-                                    }
+                                    case 12:
+                                        if (Player* pPlayer = GetPlayerForEscort())
+                                        {
+                                            pPlayer->GroupEventHappens(QUEST_QUESTIONING, m_creature);
+                                        }
 
-                                    DoScriptText(SAY_OGR_SURVIVE, m_creature);
-                                    break;
-                                case 13:
-                                    if (Creature* pReethe = GetCreature(NPC_REETHE))
-                                    {
-                                        DoScriptText(SAY_OGR_RET_LUCKY, pReethe);
-                                    }
-                                    break;
-                                case 14:
-                                    DoScriptText(SAY_OGR_THANKS, m_creature);
-                                    SetRun();
-                                    SetEscortPaused(false);
-                                    break;
+                                        DoScriptText(SAY_OGR_SURVIVE, m_creature);
+                                        break;
+                                    case 13:
+                                        if (Creature* pReethe = GetCreature(NPC_REETHE))
+                                        {
+                                            DoScriptText(SAY_OGR_RET_LUCKY, pReethe);
+                                        }
+                                        break;
+                                    case 14:
+                                        DoScriptText(SAY_OGR_THANKS, m_creature);
+                                        SetRun();
+                                        SetEscortPaused(false);
+                                        break;
                                 }
                                 break;
                             }
@@ -838,10 +838,10 @@ struct npc_stinky_ignatz : public CreatureScript
         {
             switch (urand(0, 3))
             {
-            case 0: DoScriptText(SAY_STINKY_AGGRO_1, m_creature); break;
-            case 1: DoScriptText(SAY_STINKY_AGGRO_2, m_creature); break;
-            case 2: DoScriptText(SAY_STINKY_AGGRO_3, m_creature); break;
-            case 3: DoScriptText(SAY_STINKY_AGGRO_4, m_creature, pWho); break;
+                case 0: DoScriptText(SAY_STINKY_AGGRO_1, m_creature); break;
+                case 1: DoScriptText(SAY_STINKY_AGGRO_2, m_creature); break;
+                case 2: DoScriptText(SAY_STINKY_AGGRO_3, m_creature); break;
+                case 3: DoScriptText(SAY_STINKY_AGGRO_4, m_creature, pWho); break;
             }
         }
 
@@ -860,42 +860,42 @@ struct npc_stinky_ignatz : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 5:
-                DoScriptText(SAY_STINKY_FIRST_STOP, m_creature);
-                break;
-            case 10:
-                DoScriptText(SAY_STINKY_SECOND_STOP, m_creature);
-                break;
-            case 24:
-                DoScriptText(SAY_STINKY_THIRD_STOP_1, m_creature);
-                break;
-            case 25:
-                DoScriptText(SAY_STINKY_THIRD_STOP_2, m_creature);
-                if (GameObject* pBogbeanPlant = GetClosestGameObjectWithEntry(m_creature, GO_BOGBEAN_PLANT, DEFAULT_VISIBILITY_DISTANCE))
-                {
-                    m_bogbeanPlantGuid = pBogbeanPlant->GetObjectGuid();
-                    m_creature->SetFacingToObject(pBogbeanPlant);
-                }
-                break;
-            case 26:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_STINKY_THIRD_STOP_3, m_creature, pPlayer);
-                }
-                break;
-            case 29:
-                m_creature->HandleEmote(EMOTE_STATE_USESTANDING);
-                break;
-            case 30:
-                DoScriptText(SAY_STINKY_PLANT_GATHERED, m_creature);
-                break;
-            case 39:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(pPlayer->GetTeam() == ALLIANCE ? QUEST_ID_STINKYS_ESCAPE_ALLIANCE : QUEST_ID_STINKYS_ESCAPE_HORDE, m_creature);
-                    DoScriptText(SAY_STINKY_END, m_creature, pPlayer);
-                }
-                break;
+                case 5:
+                    DoScriptText(SAY_STINKY_FIRST_STOP, m_creature);
+                    break;
+                case 10:
+                    DoScriptText(SAY_STINKY_SECOND_STOP, m_creature);
+                    break;
+                case 24:
+                    DoScriptText(SAY_STINKY_THIRD_STOP_1, m_creature);
+                    break;
+                case 25:
+                    DoScriptText(SAY_STINKY_THIRD_STOP_2, m_creature);
+                    if (GameObject* pBogbeanPlant = GetClosestGameObjectWithEntry(m_creature, GO_BOGBEAN_PLANT, DEFAULT_VISIBILITY_DISTANCE))
+                    {
+                        m_bogbeanPlantGuid = pBogbeanPlant->GetObjectGuid();
+                        m_creature->SetFacingToObject(pBogbeanPlant);
+                    }
+                    break;
+                case 26:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_STINKY_THIRD_STOP_3, m_creature, pPlayer);
+                    }
+                    break;
+                case 29:
+                    m_creature->HandleEmote(EMOTE_STATE_USESTANDING);
+                    break;
+                case 30:
+                    DoScriptText(SAY_STINKY_PLANT_GATHERED, m_creature);
+                    break;
+                case 39:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(pPlayer->GetTeam() == ALLIANCE ? QUEST_ID_STINKYS_ESCAPE_ALLIANCE : QUEST_ID_STINKYS_ESCAPE_HORDE, m_creature);
+                        DoScriptText(SAY_STINKY_END, m_creature, pPlayer);
+                    }
+                    break;
             }
         }
 
@@ -930,9 +930,9 @@ struct npc_stinky_ignatz : public CreatureScript
 };
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-/*######
-## at_nats_landing
-######*/
+/** ######
+ *  ## at_nats_landing
+ *  ######*/
 enum
 {
     QUEST_NATS_BARGAIN = 11209,

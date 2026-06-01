@@ -284,9 +284,9 @@ struct boss_kaelthas : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY3, m_creature); break;
             }
         }
 
@@ -420,369 +420,369 @@ struct boss_kaelthas : public CreatureScript
             switch (m_uiPhase)
             {
                 // ***** Advisors phase ********
-            case PHASE_1_ADVISOR:
-                if (!m_uiPhaseTimer)
-                {
-                    return;
-                }
-
-                if (m_uiPhaseTimer <= uiDiff)
-                {
-                    if (!m_pInstance)
+                case PHASE_1_ADVISOR:
+                    if (!m_uiPhaseTimer)
                     {
                         return;
                     }
 
-                    switch (m_uiPhaseSubphase)
-                    {
-                    case 0:
-                        DoScriptText(SAY_INTRO_THALADRED, m_creature);
-                        m_uiPhaseTimer = 7000;
-                        break;
-
-                    case 1:
-                        if (Creature* pAdvisor = m_pInstance->GetSingleCreatureFromStorage(NPC_THALADRED))
-                        {
-                            pAdvisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                            pAdvisor->SetInCombatWithZone();
-                        }
-                        m_uiPhaseTimer = 0;
-                        break;
-
-                    case 2:
-                        DoScriptText(SAY_INTRO_SANGUINAR, m_creature);
-                        m_uiPhaseTimer = 12500;
-                        break;
-
-                    case 3:
-                        if (Creature* pAdvisor = m_pInstance->GetSingleCreatureFromStorage(NPC_SANGUINAR))
-                        {
-                            pAdvisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                            pAdvisor->SetInCombatWithZone();
-                        }
-                        m_uiPhaseTimer = 0;
-                        break;
-
-                    case 4:
-                        DoScriptText(SAY_INTRO_CAPERNIAN, m_creature);
-                        m_uiPhaseTimer = 7000;
-                        break;
-
-                    case 5:
-                        if (Creature* pAdvisor = m_pInstance->GetSingleCreatureFromStorage(NPC_CAPERNIAN))
-                        {
-                            pAdvisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                            pAdvisor->SetInCombatWithZone();
-                        }
-                        m_uiPhaseTimer = 0;
-                        break;
-
-                    case 6:
-                        DoScriptText(SAY_INTRO_TELONICUS, m_creature);
-                        m_uiPhaseTimer = 8400;
-                        break;
-
-                    case 7:
-                        if (Creature* pAdvisor = m_pInstance->GetSingleCreatureFromStorage(NPC_TELONICUS))
-                        {
-                            pAdvisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                            pAdvisor->SetInCombatWithZone();
-                        }
-                        m_uiPhaseTimer = 0;
-                        break;
-                    }
-
-                    ++m_uiPhaseSubphase;
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                break;
-
-                // ***** Weapons phase ********
-            case PHASE_2_WEAPON:
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    // Switch to next phase, no matter if the weapons are killed or not
-                    if (DoCastSpellIfCan(m_creature, SPELL_RESURRECTION) == CAST_OK)
-                    {
-                        DoScriptText(SAY_PHASE3_ADVANCE, m_creature);
-                        m_uiPhaseSubphase = 0;
-                        m_uiPhaseTimer = 180000;
-                        m_uiPhase = PHASE_3_ADVISOR_ALL;
-                    }
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                break;
-
-                // ***** All advisors phase ********
-            case PHASE_3_ADVISOR_ALL:
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    DoScriptText(SAY_PHASE4_INTRO2, m_creature);
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    DoResetThreat();
-                    m_creature->SetInCombatWithZone();
-                    m_uiPhase = PHASE_4_SOLO;
-                    m_uiPhaseTimer = 30000;
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                break;
-
-                // ***** Solo phases ********
-            case PHASE_4_SOLO:
-            case PHASE_7_GRAVITY:
-                if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-                {
-                    return;
-                }
-
-                if (m_uiGravityExpireTimer)
-                {
-                    if (m_uiNetherBeamTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_NETHER_BEAM) == CAST_OK)
-                        {
-                            m_uiNetherBeamTimer = urand(2000, 4000);
-                        }
-                    }
-                    else
-                    {
-                        m_uiNetherBeamTimer -= uiDiff;
-                    }
-
-                    // Switch to the other spells after gravity lapse expired
-                    if (m_uiGravityExpireTimer <= uiDiff)
-                    {
-                        m_uiGravityExpireTimer = 0;
-                    }
-                    else
-                    {
-                        m_uiGravityExpireTimer -= uiDiff;
-                    }
-                }
-                else
-                {
-                    if (m_uiFireballTimer < uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                        {
-                            if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
-                            {
-                                m_uiFireballTimer = urand(3000, 5000);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        m_uiFireballTimer -= uiDiff;
-                    }
-
-                    if (m_uiArcaneDisruptionTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_ARCANE_DISRUPTION) == CAST_OK)
-                        {
-                            m_uiArcaneDisruptionTimer = 60000;
-                        }
-                    }
-                    else
-                    {
-                        m_uiArcaneDisruptionTimer -= uiDiff;
-                    }
-
-                    if (m_uiFlameStrikeTimer < uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                        {
-                            if (DoCastSpellIfCan(pTarget, SPELL_FLAME_STRIKE) == CAST_OK)
-                            {
-                                m_uiFlameStrikeTimer = 30000;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        m_uiFlameStrikeTimer -= uiDiff;
-                    }
-
-                    if (m_uiPhoenixTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_PHOENIX_ANIMATION) == CAST_OK)
-                        {
-                            DoScriptText(urand(0, 1) ? SAY_SUMMON_PHOENIX1 : SAY_SUMMON_PHOENIX2, m_creature);
-                            m_uiPhoenixTimer = 60000;
-                        }
-                    }
-                    else
-                    {
-                        m_uiPhoenixTimer -= uiDiff;
-                    }
-                }
-
-                DoMeleeAttackIfReady();
-
-                // ***** Phase 4 specific actions ********
-                if (m_uiPhase == PHASE_4_SOLO)
-                {
-                    if (m_creature->GetHealthPercent() < 50.0f)
-                    {
-                        // ToDo: should he cast something here?
-                        m_creature->InterruptNonMeleeSpells(false);
-                        DoScriptText(SAY_PHASE5_NUTS, m_creature);
-
-                        SetCombatMovement(false);
-                        m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MovePoint(POINT_ID_CENTER, aCenterPos[0], aCenterPos[1], aCenterPos[2]);
-
-                        m_uiPhase = PHASE_5_WAITING;
-                    }
-
-                    if (m_uiShockBarrierTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SHOCK_BARRIER) == CAST_OK)
-                        {
-                            m_uiPyroblastTimer = 1000;
-                            m_uiShockBarrierTimer = 60000;
-                        }
-                    }
-                    else
-                    {
-                        m_uiShockBarrierTimer -= uiDiff;
-                    }
-
-                    if (m_uiPyroblastTimer)
-                    {
-                        if (m_uiPyroblastTimer <= uiDiff)
-                        {
-                            if (DoCastSpellIfCan(m_creature, SPELL_PYROBLAST) == CAST_OK)
-                            {
-                                DoScriptText(EMOTE_PYROBLAST, m_creature);
-                                m_uiPyroblastTimer = 0;
-                            }
-                        }
-                        else
-                        {
-                            m_uiPyroblastTimer -= uiDiff;
-                        }
-                    }
-
-                    if (m_uiMindControlTimer < uiDiff)
-                    {
-                        for (uint8 i = 0; i < MAX_MIND_CONTROL; ++i)
-                        {
-                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_MIND_CONTROL, SELECT_FLAG_PLAYER))
-                            {
-                                DoCastSpellIfCan(pTarget, SPELL_MIND_CONTROL);
-                            }
-                        }
-                        m_uiMindControlTimer = 60000;
-                    }
-                    else
-                    {
-                        m_uiMindControlTimer -= uiDiff;
-                    }
-                }
-
-                // ***** Phase 7 specific actions ********
-                if (m_uiPhase == PHASE_7_GRAVITY)
-                {
-                    if (m_uiGravityLapseTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_LAPSE) == CAST_OK)
-                        {
-                            DoScriptText(urand(0, 1) ? SAY_GRAVITYLAPSE1 : SAY_GRAVITYLAPSE2, m_creature);;
-                            m_uiGravityIndex = 0;
-                            m_uiNetherBeamTimer = 8000;
-                            m_uiNetherVaporTimer = 4000;
-                            m_uiGravityExpireTimer = 30000;
-                            m_uiGravityLapseTimer = 90000;
-                        }
-                    }
-                    else
-                    {
-                        m_uiGravityLapseTimer -= uiDiff;
-                    }
-
-                    if (m_uiShockBarrierTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SHOCK_BARRIER) == CAST_OK)
-                        {
-                            m_uiShockBarrierTimer = 20000;
-                        }
-                    }
-                    else
-                    {
-                        m_uiShockBarrierTimer -= uiDiff;
-                    }
-
-                    if (m_uiNetherVaporTimer)
-                    {
-                        if (m_uiNetherVaporTimer <= uiDiff)
-                        {
-                            if (DoCastSpellIfCan(m_creature, SPELL_NETHER_VAPOR_SUMMON) == CAST_OK)
-                            {
-                                m_uiNetherVaporTimer = 0;
-                            }
-                        }
-                        else
-                        {
-                            m_uiNetherVaporTimer -= uiDiff;
-                        }
-                    }
-                }
-                // ***** Phase 5 - transition ********
-            case PHASE_5_WAITING:
-                // Nothing here; wait for boss to arive at point
-                break;
-                // ***** Phase 6 - explode the bridge ********
-            case PHASE_6_FLYING:
-                if (m_uiExplodeTimer)
-                {
-                    if (m_uiExplodeTimer <= uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_EXPLODE) == CAST_OK)
-                        {
-                            if (m_pInstance)
-                            {
-                                m_pInstance->DoUseDoorOrButton(GO_KAEL_STATUE_LEFT);
-                                m_pInstance->DoUseDoorOrButton(GO_KAEL_STATUE_RIGHT);
-                                m_pInstance->DoUseDoorOrButton(GO_BRIDGE_WINDOW);
-                            }
-                            // Note: also Kael casts some other unk spells here
-                            m_uiPhaseTimer = 5000;
-                            m_uiExplodeTimer = 0;
-                        }
-                    }
-                    else
-                    {
-                        m_uiExplodeTimer -= uiDiff;
-                    }
-                }
-
-                if (m_uiPhaseTimer)
-                {
                     if (m_uiPhaseTimer <= uiDiff)
                     {
-                        m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MovePoint(POINT_ID_CENTER, aCenterPos[0], aCenterPos[1], aCenterPos[2]);
-                        m_uiPhaseTimer = 0;
+                        if (!m_pInstance)
+                        {
+                            return;
+                        }
+
+                        switch (m_uiPhaseSubphase)
+                        {
+                            case 0:
+                                DoScriptText(SAY_INTRO_THALADRED, m_creature);
+                                m_uiPhaseTimer = 7000;
+                                break;
+
+                            case 1:
+                                if (Creature* pAdvisor = m_pInstance->GetSingleCreatureFromStorage(NPC_THALADRED))
+                                {
+                                    pAdvisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                                    pAdvisor->SetInCombatWithZone();
+                                }
+                                m_uiPhaseTimer = 0;
+                                break;
+
+                            case 2:
+                                DoScriptText(SAY_INTRO_SANGUINAR, m_creature);
+                                m_uiPhaseTimer = 12500;
+                                break;
+
+                            case 3:
+                                if (Creature* pAdvisor = m_pInstance->GetSingleCreatureFromStorage(NPC_SANGUINAR))
+                                {
+                                    pAdvisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                                    pAdvisor->SetInCombatWithZone();
+                                }
+                                m_uiPhaseTimer = 0;
+                                break;
+
+                            case 4:
+                                DoScriptText(SAY_INTRO_CAPERNIAN, m_creature);
+                                m_uiPhaseTimer = 7000;
+                                break;
+
+                            case 5:
+                                if (Creature* pAdvisor = m_pInstance->GetSingleCreatureFromStorage(NPC_CAPERNIAN))
+                                {
+                                    pAdvisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                                    pAdvisor->SetInCombatWithZone();
+                                }
+                                m_uiPhaseTimer = 0;
+                                break;
+
+                            case 6:
+                                DoScriptText(SAY_INTRO_TELONICUS, m_creature);
+                                m_uiPhaseTimer = 8400;
+                                break;
+
+                            case 7:
+                                if (Creature* pAdvisor = m_pInstance->GetSingleCreatureFromStorage(NPC_TELONICUS))
+                                {
+                                    pAdvisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                                    pAdvisor->SetInCombatWithZone();
+                                }
+                                m_uiPhaseTimer = 0;
+                                break;
+                        }
+
+                        ++m_uiPhaseSubphase;
                     }
                     else
                     {
                         m_uiPhaseTimer -= uiDiff;
                     }
-                }
-                break;
+
+                    break;
+
+                // ***** Weapons phase ********
+                case PHASE_2_WEAPON:
+                    if (m_uiPhaseTimer < uiDiff)
+                    {
+                        // Switch to next phase, no matter if the weapons are killed or not
+                        if (DoCastSpellIfCan(m_creature, SPELL_RESURRECTION) == CAST_OK)
+                        {
+                            DoScriptText(SAY_PHASE3_ADVANCE, m_creature);
+                            m_uiPhaseSubphase = 0;
+                            m_uiPhaseTimer = 180000;
+                            m_uiPhase = PHASE_3_ADVISOR_ALL;
+                        }
+                    }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
+
+                    break;
+
+                // ***** All advisors phase ********
+                case PHASE_3_ADVISOR_ALL:
+                    if (m_uiPhaseTimer < uiDiff)
+                    {
+                        DoScriptText(SAY_PHASE4_INTRO2, m_creature);
+                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                        DoResetThreat();
+                        m_creature->SetInCombatWithZone();
+                        m_uiPhase = PHASE_4_SOLO;
+                        m_uiPhaseTimer = 30000;
+                    }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
+
+                    break;
+
+                // ***** Solo phases ********
+                case PHASE_4_SOLO:
+                case PHASE_7_GRAVITY:
+                    if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                    {
+                        return;
+                    }
+
+                    if (m_uiGravityExpireTimer)
+                    {
+                        if (m_uiNetherBeamTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_NETHER_BEAM) == CAST_OK)
+                            {
+                                m_uiNetherBeamTimer = urand(2000, 4000);
+                            }
+                        }
+                        else
+                        {
+                            m_uiNetherBeamTimer -= uiDiff;
+                        }
+
+                        // Switch to the other spells after gravity lapse expired
+                        if (m_uiGravityExpireTimer <= uiDiff)
+                        {
+                            m_uiGravityExpireTimer = 0;
+                        }
+                        else
+                        {
+                            m_uiGravityExpireTimer -= uiDiff;
+                        }
+                    }
+                    else
+                    {
+                        if (m_uiFireballTimer < uiDiff)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                            {
+                                if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
+                                {
+                                    m_uiFireballTimer = urand(3000, 5000);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiFireballTimer -= uiDiff;
+                        }
+
+                        if (m_uiArcaneDisruptionTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_ARCANE_DISRUPTION) == CAST_OK)
+                            {
+                                m_uiArcaneDisruptionTimer = 60000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiArcaneDisruptionTimer -= uiDiff;
+                        }
+
+                        if (m_uiFlameStrikeTimer < uiDiff)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                            {
+                                if (DoCastSpellIfCan(pTarget, SPELL_FLAME_STRIKE) == CAST_OK)
+                                {
+                                    m_uiFlameStrikeTimer = 30000;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiFlameStrikeTimer -= uiDiff;
+                        }
+
+                        if (m_uiPhoenixTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_PHOENIX_ANIMATION) == CAST_OK)
+                            {
+                                DoScriptText(urand(0, 1) ? SAY_SUMMON_PHOENIX1 : SAY_SUMMON_PHOENIX2, m_creature);
+                                m_uiPhoenixTimer = 60000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiPhoenixTimer -= uiDiff;
+                        }
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    // ***** Phase 4 specific actions ********
+                    if (m_uiPhase == PHASE_4_SOLO)
+                    {
+                        if (m_creature->GetHealthPercent() < 50.0f)
+                        {
+                            // ToDo: should he cast something here?
+                            m_creature->InterruptNonMeleeSpells(false);
+                            DoScriptText(SAY_PHASE5_NUTS, m_creature);
+
+                            SetCombatMovement(false);
+                            m_creature->GetMotionMaster()->Clear();
+                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_CENTER, aCenterPos[0], aCenterPos[1], aCenterPos[2]);
+
+                            m_uiPhase = PHASE_5_WAITING;
+                        }
+
+                        if (m_uiShockBarrierTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_SHOCK_BARRIER) == CAST_OK)
+                            {
+                                m_uiPyroblastTimer = 1000;
+                                m_uiShockBarrierTimer = 60000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiShockBarrierTimer -= uiDiff;
+                        }
+
+                        if (m_uiPyroblastTimer)
+                        {
+                            if (m_uiPyroblastTimer <= uiDiff)
+                            {
+                                if (DoCastSpellIfCan(m_creature, SPELL_PYROBLAST) == CAST_OK)
+                                {
+                                    DoScriptText(EMOTE_PYROBLAST, m_creature);
+                                    m_uiPyroblastTimer = 0;
+                                }
+                            }
+                            else
+                            {
+                                m_uiPyroblastTimer -= uiDiff;
+                            }
+                        }
+
+                        if (m_uiMindControlTimer < uiDiff)
+                        {
+                            for (uint8 i = 0; i < MAX_MIND_CONTROL; ++i)
+                            {
+                                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_MIND_CONTROL, SELECT_FLAG_PLAYER))
+                                {
+                                    DoCastSpellIfCan(pTarget, SPELL_MIND_CONTROL);
+                                }
+                            }
+                            m_uiMindControlTimer = 60000;
+                        }
+                        else
+                        {
+                            m_uiMindControlTimer -= uiDiff;
+                        }
+                    }
+
+                    // ***** Phase 7 specific actions ********
+                    if (m_uiPhase == PHASE_7_GRAVITY)
+                    {
+                        if (m_uiGravityLapseTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_LAPSE) == CAST_OK)
+                            {
+                                DoScriptText(urand(0, 1) ? SAY_GRAVITYLAPSE1 : SAY_GRAVITYLAPSE2, m_creature);;
+                                m_uiGravityIndex = 0;
+                                m_uiNetherBeamTimer = 8000;
+                                m_uiNetherVaporTimer = 4000;
+                                m_uiGravityExpireTimer = 30000;
+                                m_uiGravityLapseTimer = 90000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiGravityLapseTimer -= uiDiff;
+                        }
+
+                        if (m_uiShockBarrierTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_SHOCK_BARRIER) == CAST_OK)
+                            {
+                                m_uiShockBarrierTimer = 20000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiShockBarrierTimer -= uiDiff;
+                        }
+
+                        if (m_uiNetherVaporTimer)
+                        {
+                            if (m_uiNetherVaporTimer <= uiDiff)
+                            {
+                                if (DoCastSpellIfCan(m_creature, SPELL_NETHER_VAPOR_SUMMON) == CAST_OK)
+                                {
+                                    m_uiNetherVaporTimer = 0;
+                                }
+                            }
+                            else
+                            {
+                                m_uiNetherVaporTimer -= uiDiff;
+                            }
+                        }
+                    }
+                    // ***** Phase 5 - transition ********
+                case PHASE_5_WAITING:
+                    // Nothing here; wait for boss to arive at point
+                    break;
+                // ***** Phase 6 - explode the bridge ********
+                case PHASE_6_FLYING:
+                    if (m_uiExplodeTimer)
+                    {
+                        if (m_uiExplodeTimer <= uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_EXPLODE) == CAST_OK)
+                            {
+                                if (m_pInstance)
+                                {
+                                    m_pInstance->DoUseDoorOrButton(GO_KAEL_STATUE_LEFT);
+                                    m_pInstance->DoUseDoorOrButton(GO_KAEL_STATUE_RIGHT);
+                                    m_pInstance->DoUseDoorOrButton(GO_BRIDGE_WINDOW);
+                                }
+                                // Note: also Kael casts some other unk spells here
+                                m_uiPhaseTimer = 5000;
+                                m_uiExplodeTimer = 0;
+                            }
+                        }
+                        else
+                        {
+                            m_uiExplodeTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_uiPhaseTimer)
+                    {
+                        if (m_uiPhaseTimer <= uiDiff)
+                        {
+                            m_creature->GetMotionMaster()->Clear();
+                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_CENTER, aCenterPos[0], aCenterPos[1], aCenterPos[2]);
+                            m_uiPhaseTimer = 0;
+                        }
+                        else
+                        {
+                            m_uiPhaseTimer -= uiDiff;
+                        }
+                    }
+                    break;
             }
         }
     };

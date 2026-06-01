@@ -144,7 +144,7 @@ struct boss_ahune : public CreatureScript
 #if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
 #else
-    void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
+        void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
 #endif
         {
             // it's not clear whether this should work like this or should be handled by the proc aura
@@ -174,17 +174,17 @@ struct boss_ahune : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_AHUNITE_HAILSTONE:
-            case NPC_AHUNITE_COLDWAVE:
-            case NPC_AHUNITE_FROSTWIND:
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                {
-                    pSummoned->AI()->AttackStart(pTarget);
-                }
-                break;
-            case NPC_FROZEN_CORE:
-                m_frozenCoreGuid = pSummoned->GetObjectGuid();
-                break;
+                case NPC_AHUNITE_HAILSTONE:
+                case NPC_AHUNITE_COLDWAVE:
+                case NPC_AHUNITE_FROSTWIND:
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        pSummoned->AI()->AttackStart(pTarget);
+                    }
+                    break;
+                case NPC_FROZEN_CORE:
+                    m_frozenCoreGuid = pSummoned->GetObjectGuid();
+                    break;
             }
         }
 
@@ -347,7 +347,7 @@ struct npc_frozen_core : public CreatureScript
 #if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
 #else
-    void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
+        void DamageTaken(Unit* /* pDoneBy */, uint32& uiDamage) override
 #endif
         {
             // it's not clear whether this should work like this or should be handled by the proc aura

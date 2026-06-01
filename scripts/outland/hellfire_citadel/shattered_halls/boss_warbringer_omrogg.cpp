@@ -279,15 +279,15 @@ struct boss_warbringer_omrogg : public CreatureScript
 
             switch (m_iKilling)
             {
-            case 0:
-                DoScriptText(Killing[m_iKilling].id, pSource);
-                m_uiDelayTimer = 3500;
-                m_bKillingYell = true;
-                break;
-            case 1:
-                DoScriptText(Killing[m_iKilling].id, pSource);
-                m_bKillingYell = false;
-                break;
+                case 0:
+                    DoScriptText(Killing[m_iKilling].id, pSource);
+                    m_uiDelayTimer = 3500;
+                    m_bKillingYell = true;
+                    break;
+                case 1:
+                    DoScriptText(Killing[m_iKilling].id, pSource);
+                    m_bKillingYell = false;
+                    break;
             }
         }
 

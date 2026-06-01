@@ -36,9 +36,7 @@
 /**
  * ContentData
  * npc_the_scourge_cauldron
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * npc_anchorite_truuen
-#endif
+ * npc_anchorite_truuen (TBC Onwards)
  * npc_taelan_fordring
  * npc_isillien
  * npc_tirion_fordring
@@ -83,38 +81,38 @@ struct npc_the_scourge_cauldron : public CreatureScript
             {
                 switch (m_creature->GetAreaId())
                 {
-                case 199:                                   // felstone
-                    if (((Player*)who)->GetQuestStatus(5216) == QUEST_STATUS_INCOMPLETE ||
-                        ((Player*)who)->GetQuestStatus(5229) == QUEST_STATUS_INCOMPLETE)
-                    {
-                        m_creature->SummonCreature(11075, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600000);
-                        DoDie();
-                    }
-                    break;
-                case 200:                                   // dalson
-                    if (((Player*)who)->GetQuestStatus(5219) == QUEST_STATUS_INCOMPLETE ||
-                        ((Player*)who)->GetQuestStatus(5231) == QUEST_STATUS_INCOMPLETE)
-                    {
-                        m_creature->SummonCreature(11077, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600000);
-                        DoDie();
-                    }
-                    break;
-                case 201:                                   // gahrron
-                    if (((Player*)who)->GetQuestStatus(5225) == QUEST_STATUS_INCOMPLETE ||
-                        ((Player*)who)->GetQuestStatus(5235) == QUEST_STATUS_INCOMPLETE)
-                    {
-                        m_creature->SummonCreature(11078, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600000);
-                        DoDie();
-                    }
-                    break;
-                case 202:                                   // writhing
-                    if (((Player*)who)->GetQuestStatus(5222) == QUEST_STATUS_INCOMPLETE ||
-                        ((Player*)who)->GetQuestStatus(5233) == QUEST_STATUS_INCOMPLETE)
-                    {
-                        m_creature->SummonCreature(11076, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600000);
-                        DoDie();
-                    }
-                    break;
+                    case 199:                                   // felstone
+                        if (((Player*)who)->GetQuestStatus(5216) == QUEST_STATUS_INCOMPLETE ||
+                            ((Player*)who)->GetQuestStatus(5229) == QUEST_STATUS_INCOMPLETE)
+                        {
+                            m_creature->SummonCreature(11075, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600000);
+                            DoDie();
+                        }
+                        break;
+                    case 200:                                   // dalson
+                        if (((Player*)who)->GetQuestStatus(5219) == QUEST_STATUS_INCOMPLETE ||
+                            ((Player*)who)->GetQuestStatus(5231) == QUEST_STATUS_INCOMPLETE)
+                        {
+                            m_creature->SummonCreature(11077, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600000);
+                            DoDie();
+                        }
+                        break;
+                    case 201:                                   // gahrron
+                        if (((Player*)who)->GetQuestStatus(5225) == QUEST_STATUS_INCOMPLETE ||
+                            ((Player*)who)->GetQuestStatus(5235) == QUEST_STATUS_INCOMPLETE)
+                        {
+                            m_creature->SummonCreature(11078, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600000);
+                            DoDie();
+                        }
+                        break;
+                    case 202:                                   // writhing
+                        if (((Player*)who)->GetQuestStatus(5222) == QUEST_STATUS_INCOMPLETE ||
+                            ((Player*)who)->GetQuestStatus(5233) == QUEST_STATUS_INCOMPLETE)
+                        {
+                            m_creature->SummonCreature(11076, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600000);
+                            DoDie();
+                        }
+                        break;
                 }
             }
         }
@@ -176,63 +174,63 @@ struct npc_anchorite_truuen : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 4:
-                DoScriptText(SAY_FIRST_STOP, m_creature);
-                break;
-            case 5:
-                DoScriptText(SAY_CONTINUE, m_creature);
-                break;
-            case 10:
-                DoScriptText(SAY_FIRST_ATTACK, m_creature);
-                // spawn first attacker wave
-                m_creature->SummonCreature(NPC_HAUNDING_VISION, 1045.26f, -1576.50f, 62.42f, 2.82f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_HUNGERING_WRAITH, 1021.74f, -1547.49f, 63.44f, 5.24f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                break;
-            case 11:
-                DoScriptText(SAY_PURITY, m_creature);
-                break;
-            case 21:
-                DoScriptText(SAY_SECOND_ATTACK, m_creature);
-                // spawn second attacker wave
-                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1123.08f, -1738.70f, 61.65f, 3.63f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1117.07f, -1763.47f, 62.72f, 1.83f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1096.79f, -1719.14f, 62.69f, 4.88f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1068.92f, -1739.68f, 62.23f, 6.21f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
-                break;
-            case 22:
-                DoScriptText(SAY_CLEANSE, m_creature);
-                break;
-            case 35:
-                if (Creature* pPriest = GetClosestCreatureWithEntry(m_creature, NPC_PRIEST_THELDANIS, 60.0f))
-                {
-                    DoScriptText(SAY_WELCOME, pPriest);
-                }
-                break;
-            case 38:
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                m_creature->SummonCreature(NPC_GHOST_OF_UTHER, 972.96f, -1824.82f, 82.54f, 0.27f, TEMPSPAWN_TIMED_DESPAWN, 45000);
-                // complete the quest - the event continues with the dialogue
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_TOMB_LIGHTBRINGER, m_creature);
-                }
-                break;
-            case 39:
-                if (Creature* pUther = m_creature->GetMap()->GetCreature(m_utherGhostGuid))
-                {
-                    pUther->SetFacingToObject(m_creature);
-                    DoScriptText(SAY_EPILOGUE_1, pUther);
-                }
-                break;
-            case 40:
-                if (Creature* pUther = m_creature->GetMap()->GetCreature(m_utherGhostGuid))
-                {
-                    DoScriptText(SAY_EPILOGUE_2, pUther);
-                }
-                break;
-            case 41:
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                break;
+                case 4:
+                    DoScriptText(SAY_FIRST_STOP, m_creature);
+                    break;
+                case 5:
+                    DoScriptText(SAY_CONTINUE, m_creature);
+                    break;
+                case 10:
+                    DoScriptText(SAY_FIRST_ATTACK, m_creature);
+                    // spawn first attacker wave
+                    m_creature->SummonCreature(NPC_HAUNDING_VISION, 1045.26f, -1576.50f, 62.42f, 2.82f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_HUNGERING_WRAITH, 1021.74f, -1547.49f, 63.44f, 5.24f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                    break;
+                case 11:
+                    DoScriptText(SAY_PURITY, m_creature);
+                    break;
+                case 21:
+                    DoScriptText(SAY_SECOND_ATTACK, m_creature);
+                    // spawn second attacker wave
+                    m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1123.08f, -1738.70f, 61.65f, 3.63f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1117.07f, -1763.47f, 62.72f, 1.83f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1096.79f, -1719.14f, 62.69f, 4.88f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_BLIGHTED_ZOMBIE, 1068.92f, -1739.68f, 62.23f, 6.21f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                    break;
+                case 22:
+                    DoScriptText(SAY_CLEANSE, m_creature);
+                    break;
+                case 35:
+                    if (Creature* pPriest = GetClosestCreatureWithEntry(m_creature, NPC_PRIEST_THELDANIS, 60.0f))
+                    {
+                        DoScriptText(SAY_WELCOME, pPriest);
+                    }
+                    break;
+                case 38:
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    m_creature->SummonCreature(NPC_GHOST_OF_UTHER, 972.96f, -1824.82f, 82.54f, 0.27f, TEMPSPAWN_TIMED_DESPAWN, 45000);
+                    // complete the quest - the event continues with the dialogue
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_TOMB_LIGHTBRINGER, m_creature);
+                    }
+                    break;
+                case 39:
+                    if (Creature* pUther = m_creature->GetMap()->GetCreature(m_utherGhostGuid))
+                    {
+                        pUther->SetFacingToObject(m_creature);
+                        DoScriptText(SAY_EPILOGUE_1, pUther);
+                    }
+                    break;
+                case 40:
+                    if (Creature* pUther = m_creature->GetMap()->GetCreature(m_utherGhostGuid))
+                    {
+                        DoScriptText(SAY_EPILOGUE_2, pUther);
+                    }
+                    break;
+                case 41:
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                    break;
             }
         }
 
@@ -390,7 +388,7 @@ struct npc_taelan_fordring : public CreatureScript
     struct npc_taelan_fordringAI : public npc_escortAI, private DialogueHelper
     {
         npc_taelan_fordringAI(Creature* pCreature) : npc_escortAI(pCreature),
-        DialogueHelper(aScarletDialogue)
+            DialogueHelper(aScarletDialogue)
         {
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
@@ -456,9 +454,10 @@ struct npc_taelan_fordring : public CreatureScript
                 m_creature->StopMoving();
                 m_creature->ClearComboPointHolders();
                 m_creature->RemoveAllAurasOnDeath();
+#if defined (CLASSIC)
                 m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-            m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
+#else
+                m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
 #endif
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 m_creature->ClearAllReactives();
@@ -511,14 +510,14 @@ struct npc_taelan_fordring : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 25:
-                SetEscortPaused(true);
-                StartNextDialogueText(SAY_EXIT_KEEP);
-                break;
-            case 55:
-                SetEscortPaused(true);
-                StartNextDialogueText(SAY_REACH_TOWER);
-                break;
+                case 25:
+                    SetEscortPaused(true);
+                    StartNextDialogueText(SAY_EXIT_KEEP);
+                    break;
+                case 55:
+                    SetEscortPaused(true);
+                    StartNextDialogueText(SAY_REACH_TOWER);
+                    break;
             }
         }
 
@@ -526,21 +525,21 @@ struct npc_taelan_fordring : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_ISILLIEN:
-                SendAIEvent(AI_EVENT_START_ESCORT, m_creature, pSummoned);
-                m_isillenGuid = pSummoned->GetObjectGuid();
+                case NPC_ISILLIEN:
+                    SendAIEvent(AI_EVENT_START_ESCORT, m_creature, pSummoned);
+                    m_isillenGuid = pSummoned->GetObjectGuid();
 
-                // summon additional crimson elites
-                float fX, fY, fZ;
-                pSummoned->GetNearPoint(pSummoned, fX, fY, fZ, 0, 5.0f, M_PI_F * 1.25f);
-                pSummoned->SummonCreature(NPC_CRIMSON_ELITE, fX, fY, fZ, pSummoned->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
-                pSummoned->GetNearPoint(pSummoned, fX, fY, fZ, 0, 5.0f, 0);
-                pSummoned->SummonCreature(NPC_CRIMSON_ELITE, fX, fY, fZ, pSummoned->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
-                break;
-            case NPC_TIRION_FORDRING:
-                m_tirionGuid = pSummoned->GetObjectGuid();
-                SendAIEvent(AI_EVENT_START_ESCORT, m_creature, pSummoned);
-                break;
+                    // summon additional crimson elites
+                    float fX, fY, fZ;
+                    pSummoned->GetNearPoint(pSummoned, fX, fY, fZ, 0, 5.0f, M_PI_F * 1.25f);
+                    pSummoned->SummonCreature(NPC_CRIMSON_ELITE, fX, fY, fZ, pSummoned->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
+                    pSummoned->GetNearPoint(pSummoned, fX, fY, fZ, 0, 5.0f, 0);
+                    pSummoned->SummonCreature(NPC_CRIMSON_ELITE, fX, fY, fZ, pSummoned->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
+                    break;
+                case NPC_TIRION_FORDRING:
+                    m_tirionGuid = pSummoned->GetObjectGuid();
+                    SendAIEvent(AI_EVENT_START_ESCORT, m_creature, pSummoned);
+                    break;
             }
         }
 
@@ -668,7 +667,7 @@ struct npc_taelan_fordring : public CreatureScript
                         (*itr)->AI()->AttackStart(pPlayer);
                     }
 
-                      // Isillien only attacks Taelan
+                    // Isillien only attacks Taelan
                     if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
                     {
                         pIsillien->AI()->AttackStart(m_creature);
@@ -695,7 +694,7 @@ struct npc_taelan_fordring : public CreatureScript
                         }
                     }
                     break;
-                    // tirion event
+                // tirion event
                 case SAY_TIRION_5:
                     if (Creature* pIsillien = m_creature->GetMap()->GetCreature(m_isillenGuid))
                     {
@@ -706,7 +705,7 @@ struct npc_taelan_fordring : public CreatureScript
                         }
                     }
                     break;
-                    // epilog dialogue
+                // epilog dialogue
                 case EMOTE_HOLD_TAELAN:
                     if (Creature* pTirion = m_creature->GetMap()->GetCreature(m_tirionGuid))
                     {
@@ -740,12 +739,12 @@ struct npc_taelan_fordring : public CreatureScript
         {
             switch (uiEntry)
             {
-            case NPC_TAELAN_FORDRING:   return m_creature;
-            case NPC_ISILLIEN:          return m_creature->GetMap()->GetCreature(m_isillenGuid);
-            case NPC_TIRION_FORDRING:   return m_creature->GetMap()->GetCreature(m_tirionGuid);
+                case NPC_TAELAN_FORDRING:   return m_creature;
+                case NPC_ISILLIEN:          return m_creature->GetMap()->GetCreature(m_isillenGuid);
+                case NPC_TIRION_FORDRING:   return m_creature->GetMap()->GetCreature(m_tirionGuid);
 
-            default:
-                return nullptr;
+                default:
+                    return nullptr;
             }
         }
 
@@ -969,9 +968,9 @@ struct npc_isillien : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 2:
-                SetEscortPaused(true);
-                break;
+                case 2:
+                    SetEscortPaused(true);
+                    break;
             }
         }
 
@@ -1155,18 +1154,18 @@ struct npc_tirion_fordring : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 2:
-                SetEscortPaused(true);
+                case 2:
+                    SetEscortPaused(true);
 
-                // unmount and go to Taelan
-                m_creature->Unmount();
-                if (Creature* pTaelan = m_creature->GetMap()->GetCreature(m_taelanGuid))
-                {
-                    float fX, fY, fZ;
-                    pTaelan->GetContactPoint(m_creature, fX, fY, fZ);
-                    m_creature->GetMotionMaster()->MovePoint(100, fX, fY, fZ);
-                }
-                break;
+                    // unmount and go to Taelan
+                    m_creature->Unmount();
+                    if (Creature* pTaelan = m_creature->GetMap()->GetCreature(m_taelanGuid))
+                    {
+                        float fX, fY, fZ;
+                        pTaelan->GetContactPoint(m_creature, fX, fY, fZ);
+                        m_creature->GetMotionMaster()->MovePoint(100, fX, fY, fZ);
+                    }
+                    break;
             }
         }
 

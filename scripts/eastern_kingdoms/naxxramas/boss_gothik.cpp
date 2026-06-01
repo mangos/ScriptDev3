@@ -217,15 +217,15 @@ struct boss_gothik : public CreatureScript
                     // Wrong caster, it expected to be pSummoned.
                     // Mangos deletes the spell event at caster death, so for delayed spell like this
                     // it's just a workaround. Does not affect other than the visual though (+ spell takes longer to "travel")
-                case NPC_UNREL_TRAINEE:
-                    m_creature->CastSpell(pAnchor, SPELL_A_TO_ANCHOR_1, true, nullptr, nullptr, pSummoned->GetObjectGuid());
-                    break;
-                case NPC_UNREL_DEATH_KNIGHT:
-                    m_creature->CastSpell(pAnchor, SPELL_B_TO_ANCHOR_1, true, nullptr, nullptr, pSummoned->GetObjectGuid());
-                    break;
-                case NPC_UNREL_RIDER:
-                    m_creature->CastSpell(pAnchor, SPELL_C_TO_ANCHOR_1, true, nullptr, nullptr, pSummoned->GetObjectGuid());
-                    break;
+                    case NPC_UNREL_TRAINEE:
+                        m_creature->CastSpell(pAnchor, SPELL_A_TO_ANCHOR_1, true, nullptr, nullptr, pSummoned->GetObjectGuid());
+                        break;
+                    case NPC_UNREL_DEATH_KNIGHT:
+                        m_creature->CastSpell(pAnchor, SPELL_B_TO_ANCHOR_1, true, nullptr, nullptr, pSummoned->GetObjectGuid());
+                        break;
+                    case NPC_UNREL_RIDER:
+                        m_creature->CastSpell(pAnchor, SPELL_C_TO_ANCHOR_1, true, nullptr, nullptr, pSummoned->GetObjectGuid());
+                        break;
                 }
             }
         }
@@ -239,162 +239,162 @@ struct boss_gothik : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_SPEECH:
-                if (m_uiSpeechTimer < uiDiff)
-                {
-                    switch (m_uiSpeech)
+                case PHASE_SPEECH:
+                    if (m_uiSpeechTimer < uiDiff)
                     {
-                    case 1:
-                        DoScriptText(SAY_SPEECH_1, m_creature);
-                        m_uiSpeechTimer = 4 * IN_MILLISECONDS;
-                        break;
-                    case 2:
-                        DoScriptText(SAY_SPEECH_2, m_creature);
-                        m_uiSpeechTimer = 6 * IN_MILLISECONDS;
-                        break;
-                    case 3:
-                        DoScriptText(SAY_SPEECH_3, m_creature);
-                        m_uiSpeechTimer = 5 * IN_MILLISECONDS;
-                        break;
-                    case 4:
-                        DoScriptText(SAY_SPEECH_4, m_creature);
-                        m_uiPhase = PHASE_BALCONY;
-                        break;
-                    }
-                    m_uiSpeech++;
-                }
-                else
-                {
-                    m_uiSpeechTimer -= uiDiff;
-                }
-
-                // No break here
-
-            case PHASE_BALCONY:                            // Do summoning
-                if (m_uiTraineeTimer < uiDiff)
-                {
-                    SummonAdds(NPC_UNREL_TRAINEE);
-                    m_uiTraineeTimer = 20 * IN_MILLISECONDS;
-                }
-                else
-                {
-                    m_uiTraineeTimer -= uiDiff;
-                }
-                if (m_uiDeathKnightTimer < uiDiff)
-                {
-                    SummonAdds(NPC_UNREL_DEATH_KNIGHT);
-                    m_uiDeathKnightTimer = 25 * IN_MILLISECONDS;
-                }
-                else
-                {
-                    m_uiDeathKnightTimer -= uiDiff;
-                }
-                if (m_uiRiderTimer < uiDiff)
-                {
-                    SummonAdds(NPC_UNREL_RIDER);
-                    m_uiRiderTimer = 30 * IN_MILLISECONDS;
-                }
-                else
-                {
-                    m_uiRiderTimer -= uiDiff;
-                }
-
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    m_uiPhase = PHASE_STOP_SUMMONING;
-                    m_uiPhaseTimer = 27 * IN_MILLISECONDS;
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                break;
-
-            case PHASE_STOP_SUMMONING:
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT_RIGHT, CAST_TRIGGERED) == CAST_OK)
-                    {
-                        m_uiPhase = m_pInstance ? PHASE_TELEPORTING : PHASE_STOP_TELEPORTING;
-
-                        DoScriptText(SAY_TELEPORT, m_creature);
-                        DoScriptText(EMOTE_TO_FRAY, m_creature);
-
-                        // Remove Immunity
-                        m_creature->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_ALL, false);
-
-                        DoResetThreat();
-                        m_creature->SetInCombatWithZone();
-                    }
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                break;
-
-            case PHASE_TELEPORTING:                         // Phase is only reached if m_pInstance is valid
-                if (m_uiTeleportTimer < uiDiff)
-                {
-                    m_pInstance->SetData64(TYPE_SIGNAL_7, m_creature->GetObjectGuid().GetRawValue());
-                    uint32 uiTeleportSpell = m_pInstance->GetData(TYPE_SIGNAL_7) ? SPELL_TELEPORT_LEFT : SPELL_TELEPORT_RIGHT;
-                    if (DoCastSpellIfCan(m_creature, uiTeleportSpell) == CAST_OK)
-                    {
-                        m_uiTeleportTimer = 20 * IN_MILLISECONDS;
-                        m_uiShadowboltTimer = 2 * IN_MILLISECONDS;
-                    }
-                }
-                else
-                {
-                    m_uiTeleportTimer -= uiDiff;
-                }
-
-                if (m_creature->GetHealthPercent() <= 30.0f)
-                {
-                    m_uiPhase = PHASE_STOP_TELEPORTING;
-                    ProcessCentralDoor();
-                    // as the doors now open, recheck whether mobs are standing around
-                    m_uiControlZoneTimer = 1;
-                }
-                // no break here
-
-            case PHASE_STOP_TELEPORTING:
-                if (m_uiHarvestSoulTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_HARVESTSOUL) == CAST_OK)
-                    {
-                        m_uiHarvestSoulTimer = 15 * IN_MILLISECONDS;
-                    }
-                }
-                else
-                {
-                    m_uiHarvestSoulTimer -= uiDiff;
-                }
-
-                if (m_uiShadowboltTimer)
-                {
-                    if (m_uiShadowboltTimer <= uiDiff)
-                    {
-                        m_uiShadowboltTimer = 0;
+                        switch (m_uiSpeech)
+                        {
+                            case 1:
+                                DoScriptText(SAY_SPEECH_1, m_creature);
+                                m_uiSpeechTimer = 4 * IN_MILLISECONDS;
+                                break;
+                            case 2:
+                                DoScriptText(SAY_SPEECH_2, m_creature);
+                                m_uiSpeechTimer = 6 * IN_MILLISECONDS;
+                                break;
+                            case 3:
+                                DoScriptText(SAY_SPEECH_3, m_creature);
+                                m_uiSpeechTimer = 5 * IN_MILLISECONDS;
+                                break;
+                            case 4:
+                                DoScriptText(SAY_SPEECH_4, m_creature);
+                                m_uiPhase = PHASE_BALCONY;
+                                break;
+                        }
+                        m_uiSpeech++;
                     }
                     else
                     {
-                        m_uiShadowboltTimer -= uiDiff;
+                        m_uiSpeechTimer -= uiDiff;
                     }
-                }
-                // Shadowbold cooldown finished, cast when ready
-                else if (!m_creature->IsNonMeleeSpellCasted(true))
-                {
-                    // Select valid target
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 0, SPELL_SHADOWBOLT, SELECT_FLAG_IN_LOS))
-                    {
-                        DoCastSpellIfCan(pTarget, SPELL_SHADOWBOLT);
-                    }
-                }
 
-                break;
+                    // No break here
+
+                case PHASE_BALCONY:                            // Do summoning
+                    if (m_uiTraineeTimer < uiDiff)
+                    {
+                        SummonAdds(NPC_UNREL_TRAINEE);
+                        m_uiTraineeTimer = 20 * IN_MILLISECONDS;
+                    }
+                    else
+                    {
+                        m_uiTraineeTimer -= uiDiff;
+                    }
+                    if (m_uiDeathKnightTimer < uiDiff)
+                    {
+                        SummonAdds(NPC_UNREL_DEATH_KNIGHT);
+                        m_uiDeathKnightTimer = 25 * IN_MILLISECONDS;
+                    }
+                    else
+                    {
+                        m_uiDeathKnightTimer -= uiDiff;
+                    }
+                    if (m_uiRiderTimer < uiDiff)
+                    {
+                        SummonAdds(NPC_UNREL_RIDER);
+                        m_uiRiderTimer = 30 * IN_MILLISECONDS;
+                    }
+                    else
+                    {
+                        m_uiRiderTimer -= uiDiff;
+                    }
+
+                    if (m_uiPhaseTimer < uiDiff)
+                    {
+                        m_uiPhase = PHASE_STOP_SUMMONING;
+                        m_uiPhaseTimer = 27 * IN_MILLISECONDS;
+                    }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
+
+                    break;
+
+                case PHASE_STOP_SUMMONING:
+                    if (m_uiPhaseTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT_RIGHT, CAST_TRIGGERED) == CAST_OK)
+                        {
+                            m_uiPhase = m_pInstance ? PHASE_TELEPORTING : PHASE_STOP_TELEPORTING;
+
+                            DoScriptText(SAY_TELEPORT, m_creature);
+                            DoScriptText(EMOTE_TO_FRAY, m_creature);
+
+                            // Remove Immunity
+                            m_creature->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_ALL, false);
+
+                            DoResetThreat();
+                            m_creature->SetInCombatWithZone();
+                        }
+                    }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
+
+                    break;
+
+                case PHASE_TELEPORTING:                         // Phase is only reached if m_pInstance is valid
+                    if (m_uiTeleportTimer < uiDiff)
+                    {
+                        m_pInstance->SetData64(TYPE_SIGNAL_7, m_creature->GetObjectGuid().GetRawValue());
+                        uint32 uiTeleportSpell = m_pInstance->GetData(TYPE_SIGNAL_7) ? SPELL_TELEPORT_LEFT : SPELL_TELEPORT_RIGHT;
+                        if (DoCastSpellIfCan(m_creature, uiTeleportSpell) == CAST_OK)
+                        {
+                            m_uiTeleportTimer = 20 * IN_MILLISECONDS;
+                            m_uiShadowboltTimer = 2 * IN_MILLISECONDS;
+                        }
+                    }
+                    else
+                    {
+                        m_uiTeleportTimer -= uiDiff;
+                    }
+
+                    if (m_creature->GetHealthPercent() <= 30.0f)
+                    {
+                        m_uiPhase = PHASE_STOP_TELEPORTING;
+                        ProcessCentralDoor();
+                        // as the doors now open, recheck whether mobs are standing around
+                        m_uiControlZoneTimer = 1;
+                    }
+                    // no break here
+
+                case PHASE_STOP_TELEPORTING:
+                    if (m_uiHarvestSoulTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_HARVESTSOUL) == CAST_OK)
+                        {
+                            m_uiHarvestSoulTimer = 15 * IN_MILLISECONDS;
+                        }
+                    }
+                    else
+                    {
+                        m_uiHarvestSoulTimer -= uiDiff;
+                    }
+
+                    if (m_uiShadowboltTimer)
+                    {
+                        if (m_uiShadowboltTimer <= uiDiff)
+                        {
+                            m_uiShadowboltTimer = 0;
+                        }
+                        else
+                        {
+                            m_uiShadowboltTimer -= uiDiff;
+                        }
+                    }
+                    // Shadowbold cooldown finished, cast when ready
+                    else if (!m_creature->IsNonMeleeSpellCasted(true))
+                    {
+                        // Select valid target
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 0, SPELL_SHADOWBOLT, SELECT_FLAG_IN_LOS))
+                        {
+                            DoCastSpellIfCan(pTarget, SPELL_SHADOWBOLT);
+                        }
+                    }
+
+                    break;
             }
 
             // Control Check, if Death zone empty

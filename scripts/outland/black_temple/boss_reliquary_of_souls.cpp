@@ -201,15 +201,15 @@ struct boss_reliquary_of_souls : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_ESSENCE_SUFFERING:
-                DoScriptText(SUFF_SAY_FREED, pSummoned);
-                break;
-            case NPC_ESSENCE_DESIRE:
-                DoScriptText(DESI_SAY_FREED, pSummoned);
-                break;
-            case NPC_ESSENCE_ANGER:
-                DoScriptText(ANGER_SAY_FREED, pSummoned);
-                break;
+                case NPC_ESSENCE_SUFFERING:
+                    DoScriptText(SUFF_SAY_FREED, pSummoned);
+                    break;
+                case NPC_ESSENCE_DESIRE:
+                    DoScriptText(DESI_SAY_FREED, pSummoned);
+                    break;
+                case NPC_ESSENCE_ANGER:
+                    DoScriptText(ANGER_SAY_FREED, pSummoned);
+                    break;
             }
 
             // All summons are set in combat
@@ -235,14 +235,14 @@ struct boss_reliquary_of_souls : public CreatureScript
             // Switch to next phase when the essence gets back
             switch (pSummoned->GetEntry())
             {
-            case NPC_ESSENCE_SUFFERING:
-                DoScriptText(SUFF_SAY_AFTER, pSummoned);
-                m_uiPhase = PHASE_2_DESIRE;;
-                break;
-            case NPC_ESSENCE_DESIRE:
-                DoScriptText(DESI_SAY_AFTER, pSummoned);
-                m_uiPhase = PHASE_3_ANGER;
-                break;
+                case NPC_ESSENCE_SUFFERING:
+                    DoScriptText(SUFF_SAY_AFTER, pSummoned);
+                    m_uiPhase = PHASE_2_DESIRE;;
+                    break;
+                case NPC_ESSENCE_DESIRE:
+                    DoScriptText(DESI_SAY_AFTER, pSummoned);
+                    m_uiPhase = PHASE_3_ANGER;
+                    break;
             }
 
             // Despawn and set animation
@@ -255,8 +255,8 @@ struct boss_reliquary_of_souls : public CreatureScript
             // Reset animation - visual effect similar to EMOTE_ONESHOT_EMERGE
             m_creature->RemoveAurasDueToSpell(SPELL_SUBMERGE_VISUAL);
 #else
-        // Reset animation
-        m_creature->HandleEmote(EMOTE_ONESHOT_EMERGE);
+            // Reset animation
+            m_creature->HandleEmote(EMOTE_ONESHOT_EMERGE);
 #endif
         }
 
@@ -290,10 +290,14 @@ struct boss_reliquary_of_souls : public CreatureScript
 #if defined (CLASSIC) || defined (TBC)
                     // Visual effect similar to EMOTE_ONESHOT_SUBMERGE
                     if (DoCastSpellIfCan(m_creature, SPELL_SUBMERGE_VISUAL) == CAST_OK)
+                    {
+                        m_creature->HandleEmote(EMOTE_ONESHOT_SUBMERGE);
+                        m_uiAnimationTimer = 0;
+                    }
 #else
                     m_creature->HandleEmote(EMOTE_ONESHOT_SUBMERGE);
+                    m_uiAnimationTimer = 0;
 #endif
-                        m_uiAnimationTimer = 0;
                 }
                 else
                 {
@@ -324,9 +328,9 @@ struct boss_reliquary_of_souls : public CreatureScript
                     uint32 uiSpellId = 0;
                     switch (m_uiPhase)
                     {
-                    case PHASE_1_SUFFERING: uiSpellId = SPELL_SUMMON_ESSENCE_SUFFERING; break;
-                    case PHASE_2_DESIRE:    uiSpellId = SPELL_SUMMON_ESSENCE_DESIRE;    break;
-                    case PHASE_3_ANGER:     uiSpellId = SPELL_SUMMON_ESSENCE_ANGER;     break;
+                        case PHASE_1_SUFFERING: uiSpellId = SPELL_SUMMON_ESSENCE_SUFFERING; break;
+                        case PHASE_2_DESIRE:    uiSpellId = SPELL_SUMMON_ESSENCE_DESIRE;    break;
+                        case PHASE_3_ANGER:     uiSpellId = SPELL_SUMMON_ESSENCE_ANGER;     break;
                     }
 
                     if (DoCastSpellIfCan(m_creature, uiSpellId) == CAST_OK)
@@ -344,26 +348,26 @@ struct boss_reliquary_of_souls : public CreatureScript
             // Summon Enslaved souls between the essence
             switch (m_uiPhase)
             {
-            case PHASE_2_DESIRE:
-            case PHASE_3_ANGER:
+                case PHASE_2_DESIRE:
+                case PHASE_3_ANGER:
 
-                if (m_uiSoulSummonedCount < MAX_ENSLAVED_SOULS)
-                {
-                    if (m_uiSummonSoulTimer < uiDiff)
+                    if (m_uiSoulSummonedCount < MAX_ENSLAVED_SOULS)
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_ENSLAVED_SOUL) == CAST_OK)
+                        if (m_uiSummonSoulTimer < uiDiff)
                         {
-                            ++m_uiSoulSummonedCount;
-                            m_uiSummonSoulTimer = 500;
+                            if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_ENSLAVED_SOUL) == CAST_OK)
+                            {
+                                ++m_uiSoulSummonedCount;
+                                m_uiSummonSoulTimer = 500;
+                            }
+                        }
+                        else
+                        {
+                            m_uiSummonSoulTimer -= uiDiff;
                         }
                     }
-                    else
-                    {
-                        m_uiSummonSoulTimer -= uiDiff;
-                    }
-                }
 
-                break;
+                    break;
             }
         }
     };
@@ -556,9 +560,9 @@ struct boss_essence_of_desire : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(DESI_SAY_SLAY1, m_creature); break;
-            case 1: DoScriptText(DESI_SAY_SLAY2, m_creature); break;
-            case 2: DoScriptText(DESI_SAY_SLAY3, m_creature); break;
+                case 0: DoScriptText(DESI_SAY_SLAY1, m_creature); break;
+                case 1: DoScriptText(DESI_SAY_SLAY2, m_creature); break;
+                case 2: DoScriptText(DESI_SAY_SLAY3, m_creature); break;
             }
         }
 

@@ -171,10 +171,10 @@ struct boss_lady_vashj : public CreatureScript
         {
             switch (urand(0, 3))
             {
-            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
-            case 3: DoScriptText(SAY_AGGRO4, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
+                case 3: DoScriptText(SAY_AGGRO4, m_creature); break;
             }
 
             if (m_pInstance)
@@ -206,17 +206,17 @@ struct boss_lady_vashj : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_COILFANG_STRIDER:
-            case NPC_COILFANG_ELITE:
-            case NPC_TOXIC_SPOREBAT:
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                {
-                    pSummoned->AI()->AttackStart(pTarget);
-                }
-                break;
-            case NPC_ENCHANTED_ELEMENTAL:
-                pSummoned->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
-                break;
+                case NPC_COILFANG_STRIDER:
+                case NPC_COILFANG_ELITE:
+                case NPC_TOXIC_SPOREBAT:
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        pSummoned->AI()->AttackStart(pTarget);
+                    }
+                    break;
+                case NPC_ENCHANTED_ELEMENTAL:
+                    pSummoned->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
+                    break;
             }
         }
 
@@ -245,9 +245,9 @@ struct boss_lady_vashj : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY3, m_creature); break;
             }
         }
 

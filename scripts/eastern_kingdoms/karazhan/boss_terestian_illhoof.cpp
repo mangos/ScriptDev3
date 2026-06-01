@@ -136,20 +136,20 @@ struct boss_terestian_illhoof : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_PORTAL:
-                if (!m_bSummonedPortals)
-                {
-                    m_bSummonedPortals = true;
-                    DoCastSpellIfCan(m_creature, SPELL_FIENDISH_PORTAL_1, CAST_TRIGGERED);
-                }
-                break;
-            case NPC_KILREK:
-                m_creature->RemoveAurasDueToSpell(SPELL_BROKEN_PACT);
-                pSummoned->SetInCombatWithZone();
-                break;
-            case NPC_DEMONCHAINS:
-                pSummoned->CastSpell(pSummoned, SPELL_DEMON_CHAINS, false);
-                break;
+                case NPC_PORTAL:
+                    if (!m_bSummonedPortals)
+                    {
+                        m_bSummonedPortals = true;
+                        DoCastSpellIfCan(m_creature, SPELL_FIENDISH_PORTAL_1, CAST_TRIGGERED);
+                    }
+                    break;
+                case NPC_KILREK:
+                    m_creature->RemoveAurasDueToSpell(SPELL_BROKEN_PACT);
+                    pSummoned->SetInCombatWithZone();
+                    break;
+                case NPC_DEMONCHAINS:
+                    pSummoned->CastSpell(pSummoned, SPELL_DEMON_CHAINS, false);
+                    break;
             }
         }
 
@@ -157,16 +157,16 @@ struct boss_terestian_illhoof : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_KILREK:
-                pSummoned->CastSpell(m_creature, SPELL_BROKEN_PACT, true);
-                m_uiSummonKilrekTimer = 30000;
-                break;
-            case NPC_DEMONCHAINS:
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_sacrificeGuid))
-                {
-                    pPlayer->RemoveAurasDueToSpell(SPELL_SACRIFICE);
-                }
-                break;
+                case NPC_KILREK:
+                    pSummoned->CastSpell(m_creature, SPELL_BROKEN_PACT, true);
+                    m_uiSummonKilrekTimer = 30000;
+                    break;
+                case NPC_DEMONCHAINS:
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_sacrificeGuid))
+                    {
+                        pPlayer->RemoveAurasDueToSpell(SPELL_SACRIFICE);
+                    }
+                    break;
             }
         }
 

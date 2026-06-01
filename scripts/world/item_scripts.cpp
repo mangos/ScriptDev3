@@ -35,21 +35,18 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * item_arcane_charges                 Prevent use if player is not flying (cannot cast while on ground)
- * item_flying_machine(i34060,i34061)  Engineering crafted flying machines
- * item_gor_dreks_ointment(i30175)     Protecting Our Own(q10488)
- * item_ogre_brew                       Prevent use if player not in 3522 area
-#endif
+ * item_arcane_charges                 Prevent use if player is not flying (cannot cast while on ground) (TBC onwards)
+ * item_flying_machine(i34060,i34061)  Engineering crafted flying machines (TBC onwards)
+ * item_gor_dreks_ointment(i30175)     Protecting Our Own(q10488) (TBC onwards)
+ * item_ogre_brew                      Prevent use if player not in 3522 area (TBC onwards)
  * EndContentData
  */
 
 #include "precompiled.h"
 
-/*
-    In order to work properly you must use a false spell to trigger the OnUse Method => you can assign spell 18282 to the object bound to this script.
-
-*/
+/**
+ * In order to work properly you must use a false spell to trigger the OnUse Method => you can assign spell 18282 to the object bound to this script.
+ */
 struct item_gossip_test : public ItemScript
 {
     item_gossip_test() : ItemScript("item_gossip_test") {}
@@ -82,17 +79,17 @@ struct item_gossip_test : public ItemScript
 #else
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT_13, "Option with GOSSIP_ICON_DOT_13", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
 #endif
-        // Max gossip optiosn seem to be 15
-      /*  pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_14, "Option with GOSSIP_ICON_DOT_14", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_15, "Option with GOSSIP_ICON_DOT_15", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_16, "Option with GOSSIP_ICON_DOT_16", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_17, "Option with GOSSIP_ICON_DOT_17", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_18, "Option with GOSSIP_ICON_DOT_18", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_19, "Option with GOSSIP_ICON_DOT_19", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_20, "Option with GOSSIP_ICON_DOT_20", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-        */
+        // Max gossip options seem to be 15
+        /**  pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_14, "Option with GOSSIP_ICON_DOT_14", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+         * pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_15, "Option with GOSSIP_ICON_DOT_15", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+         * pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_16, "Option with GOSSIP_ICON_DOT_16", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+         * pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_17, "Option with GOSSIP_ICON_DOT_17", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+         * pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_18, "Option with GOSSIP_ICON_DOT_18", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+         * pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_19, "Option with GOSSIP_ICON_DOT_19", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+         * pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_DOT_20, "Option with GOSSIP_ICON_DOT_20", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+         */
 
-       // pPlayer->PlayerTalkClass->GetGossipMenu().AddMenuItem(GOSSIP_ICON_INTERACT_1, "Code test option", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2, true);
+        // pPlayer->PlayerTalkClass->GetGossipMenu().AddMenuItem(GOSSIP_ICON_INTERACT_1, "Code test option", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2, true);
 
         pPlayer->SEND_GOSSIP_MENU(gossip_menu_id, pItem->GetObjectGuid());
 
@@ -113,7 +110,6 @@ struct item_gossip_test : public ItemScript
 
                 break;
             }
-
         }
         return true;
     }
@@ -157,23 +153,23 @@ struct item_ogre_brew : public ItemScript
 
     bool OnUse(Player* pPlayer, Item* pItem, const SpellCastTargets&) override
     {
-    uint32 itemId = pItem->GetEntry();
-    uint32 pZoneId = pPlayer->GetZoneId();
+        uint32 itemId = pItem->GetEntry();
+        uint32 pZoneId = pPlayer->GetZoneId();
 
-    if (itemId == BLUE_OGRE_BREW || itemId == RED_OGRE_BREW)    //an excessive check of DB sanity, may be dropped
-    {
-        if (pZoneId == TRANCHANTES)
+        if (itemId == BLUE_OGRE_BREW || itemId == RED_OGRE_BREW)    //an excessive check of DB sanity, may be dropped
         {
-            return false;   // allowing cast, i.e. this script did not handle it
-        }
+            if (pZoneId == TRANCHANTES)
+            {
+                return false;   // allowing cast, i.e. this script did not handle it
+            }
 
-        debug_log("SD3: Player attempt to use item %u, but did not meet zone requirement : %u", itemId, pZoneId);
-        if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(pItem->GetProto()->Spells[0].SpellId))
-        {
-            Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_HERE);
+            debug_log("SD3: Player attempt to use item %u, but did not meet zone requirement : %u", itemId, pZoneId);
+            if (const SpellEntry* pSpellInfo = GetSpellStore()->LookupEntry(pItem->GetProto()->Spells[0].SpellId))
+            {
+                Spell::SendCastResult(pPlayer, pSpellInfo, 1, SPELL_FAILED_NOT_HERE);
+            }
         }
-    }
-    return true;
+        return true;
     }
 };
 
@@ -220,15 +216,19 @@ struct item_flying_machine : public ItemScript
         uint32 itemId = pItem->GetEntry();
 
         if (itemId == 34060)
-        if (pPlayer->GetBaseSkillValue(SKILL_RIDING) >= 225)
         {
-            return false;
+            if (pPlayer->GetBaseSkillValue(SKILL_RIDING) >= 225)
+            {
+                return false;
+            }
         }
 
         if (itemId == 34061)
-        if (pPlayer->GetBaseSkillValue(SKILL_RIDING) == 300)
         {
-            return false;
+            if (pPlayer->GetBaseSkillValue(SKILL_RIDING) == 300)
+            {
+                return false;
+            }
         }
 
         debug_log("SD3: Player attempt to use item %u, but did not meet riding requirement", itemId);
@@ -346,9 +346,9 @@ void AddSC_item_scripts()
     s = new item_petrov_cluster_bombs();
     s->RegisterSelf();
 
-//    pNewScript = new Script;
-//    pNewScript->Name = "item_petrov_cluster_bombs";
-//    pNewScript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
-//    pNewScript->RegisterSelf();
+    // pNewScript = new Script;
+    // pNewScript->Name = "item_petrov_cluster_bombs";
+    // pNewScript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
+    // pNewScript->RegisterSelf();
 #endif
 }

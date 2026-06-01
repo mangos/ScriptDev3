@@ -201,65 +201,65 @@ struct boss_janalai : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_AMANI_HATCHER_1:
-                m_hatcherOneGuid = pSummoned->GetObjectGuid();
-                // If all the eggs from one side are hatched, move to the other side
-                if (m_uiEggsHatchedRight == MAX_EGGS_ON_SIDE)
-                {
-                    pSummoned->GetMotionMaster()->MovePoint(1, m_aHatcherLeft[0].m_fX, m_aHatcherLeft[0].m_fY, m_aHatcherLeft[0].m_fZ);
-                }
-                else
-                {
-                    pSummoned->GetMotionMaster()->MovePoint(1, m_aHatcherRight[0].m_fX, m_aHatcherRight[0].m_fY, m_aHatcherRight[0].m_fZ);
-                }
-                break;
-            case NPC_AMANI_HATCHER_2:
-                m_hatcherTwoGuid = pSummoned->GetObjectGuid();
-                // If all the eggs from one side are hatched, move to the other side
-                if (m_uiEggsHatchedLeft == MAX_EGGS_ON_SIDE)
-                {
-                    pSummoned->GetMotionMaster()->MovePoint(1, m_aHatcherRight[0].m_fX, m_aHatcherRight[0].m_fY, m_aHatcherRight[0].m_fZ);
-                }
-                else
-                {
-                    pSummoned->GetMotionMaster()->MovePoint(1, m_aHatcherLeft[0].m_fX, m_aHatcherLeft[0].m_fY, m_aHatcherLeft[0].m_fZ);
-                }
-                break;
-            case NPC_FIRE_BOMB:
-                if (!m_bIsFlameWall)
-                {
-                    DoCastSpellIfCan(pSummoned, SPELL_FIRE_BOMB_THROW, CAST_TRIGGERED);
-                }
-                else
-                {
-                    pSummoned->CastSpell(pSummoned, SPELL_FIRE_WALL, true);
-                }
-                break;
-            case NPC_HATCHLING:
-                pSummoned->SetInCombatWithZone();
-                // Count the Hatched eggs
-                pSummoned->GetPositionY() > 1100.0f ? ++m_uiEggsHatchedLeft : ++m_uiEggsHatchedRight;
-                // Notify the script when all the eggs were hatched
-                if (m_uiEggsHatchedRight == MAX_EGGS_ON_SIDE && m_uiEggsHatchedLeft == MAX_EGGS_ON_SIDE)
-                {
-                    m_bHasHatchedEggs = true;
-                }
-                // Change the side of the hatcher if necessary
-                if (m_uiEggsHatchedRight == MAX_EGGS_ON_SIDE && m_uiEggsHatchedLeft < MAX_EGGS_ON_SIDE)
-                {
-                    if (Creature* pHatcer = m_creature->GetMap()->GetCreature(m_hatcherOneGuid))
+                case NPC_AMANI_HATCHER_1:
+                    m_hatcherOneGuid = pSummoned->GetObjectGuid();
+                    // If all the eggs from one side are hatched, move to the other side
+                    if (m_uiEggsHatchedRight == MAX_EGGS_ON_SIDE)
                     {
-                        pHatcer->GetMotionMaster()->MovePoint(1, m_aHatcherLeft[5].m_fX, m_aHatcherLeft[5].m_fY, m_aHatcherLeft[5].m_fZ);
+                        pSummoned->GetMotionMaster()->MovePoint(1, m_aHatcherLeft[0].m_fX, m_aHatcherLeft[0].m_fY, m_aHatcherLeft[0].m_fZ);
                     }
-                }
-                if (m_uiEggsHatchedLeft == MAX_EGGS_ON_SIDE && m_uiEggsHatchedRight < MAX_EGGS_ON_SIDE)
-                {
-                    if (Creature* pHatcer = m_creature->GetMap()->GetCreature(m_hatcherTwoGuid))
+                    else
                     {
-                        pHatcer->GetMotionMaster()->MovePoint(1, m_aHatcherRight[5].m_fX, m_aHatcherRight[5].m_fY, m_aHatcherRight[5].m_fZ);
+                        pSummoned->GetMotionMaster()->MovePoint(1, m_aHatcherRight[0].m_fX, m_aHatcherRight[0].m_fY, m_aHatcherRight[0].m_fZ);
                     }
-                }
-                break;
+                    break;
+                case NPC_AMANI_HATCHER_2:
+                    m_hatcherTwoGuid = pSummoned->GetObjectGuid();
+                    // If all the eggs from one side are hatched, move to the other side
+                    if (m_uiEggsHatchedLeft == MAX_EGGS_ON_SIDE)
+                    {
+                        pSummoned->GetMotionMaster()->MovePoint(1, m_aHatcherRight[0].m_fX, m_aHatcherRight[0].m_fY, m_aHatcherRight[0].m_fZ);
+                    }
+                    else
+                    {
+                        pSummoned->GetMotionMaster()->MovePoint(1, m_aHatcherLeft[0].m_fX, m_aHatcherLeft[0].m_fY, m_aHatcherLeft[0].m_fZ);
+                    }
+                    break;
+                case NPC_FIRE_BOMB:
+                    if (!m_bIsFlameWall)
+                    {
+                        DoCastSpellIfCan(pSummoned, SPELL_FIRE_BOMB_THROW, CAST_TRIGGERED);
+                    }
+                    else
+                    {
+                        pSummoned->CastSpell(pSummoned, SPELL_FIRE_WALL, true);
+                    }
+                    break;
+                case NPC_HATCHLING:
+                    pSummoned->SetInCombatWithZone();
+                    // Count the Hatched eggs
+                    pSummoned->GetPositionY() > 1100.0f ? ++m_uiEggsHatchedLeft : ++m_uiEggsHatchedRight;
+                    // Notify the script when all the eggs were hatched
+                    if (m_uiEggsHatchedRight == MAX_EGGS_ON_SIDE && m_uiEggsHatchedLeft == MAX_EGGS_ON_SIDE)
+                    {
+                        m_bHasHatchedEggs = true;
+                    }
+                    // Change the side of the hatcher if necessary
+                    if (m_uiEggsHatchedRight == MAX_EGGS_ON_SIDE && m_uiEggsHatchedLeft < MAX_EGGS_ON_SIDE)
+                    {
+                        if (Creature* pHatcer = m_creature->GetMap()->GetCreature(m_hatcherOneGuid))
+                        {
+                            pHatcer->GetMotionMaster()->MovePoint(1, m_aHatcherLeft[5].m_fX, m_aHatcherLeft[5].m_fY, m_aHatcherLeft[5].m_fZ);
+                        }
+                    }
+                    if (m_uiEggsHatchedLeft == MAX_EGGS_ON_SIDE && m_uiEggsHatchedRight < MAX_EGGS_ON_SIDE)
+                    {
+                        if (Creature* pHatcer = m_creature->GetMap()->GetCreature(m_hatcherTwoGuid))
+                        {
+                            pHatcer->GetMotionMaster()->MovePoint(1, m_aHatcherRight[5].m_fX, m_aHatcherRight[5].m_fY, m_aHatcherRight[5].m_fZ);
+                        }
+                    }
+                    break;
             }
         }
 

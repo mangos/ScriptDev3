@@ -168,7 +168,10 @@ struct boss_garr : public CreatureScript
                 }
                 m_uiExplodeAddTimer = 15 * IN_MILLISECONDS;
             }
-            else m_uiExplodeAddTimer -= uiDiff;
+            else
+            {
+                m_uiExplodeAddTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }
@@ -228,16 +231,16 @@ struct mob_firesworn : public CreatureScript
         }
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-    void JustDied(Unit* /*pKiller*/) override
-    {
-        if (m_pInstance)
+        void JustDied(Unit* /*pKiller*/) override
         {
-            if (Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR))
+            if (m_pInstance)
             {
-                pGarr->CastSpell(pGarr, SPELL_GARR_ENRAGE, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                if (Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR))
+                {
+                    pGarr->CastSpell(pGarr, SPELL_GARR_ENRAGE, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                }
             }
         }
-    }
 #endif
 
         void JustReachedHome() override
@@ -256,10 +259,10 @@ struct mob_firesworn : public CreatureScript
             if (m_uiSeparationCheckTimer < uiDiff)
             {
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-            if (!m_pInstance)
-            {
-                return;
-            }
+                if (!m_pInstance)
+                {
+                    return;
+                }
 #endif
                 // Distance guesswork, but should be ok
                 Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR);

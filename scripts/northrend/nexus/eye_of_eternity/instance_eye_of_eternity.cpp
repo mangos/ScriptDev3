@@ -53,120 +53,120 @@ struct is_eye_of_eternity : public InstanceScript
 
     class  instance_eye_of_eternity : public ScriptedInstance, private DialogueHelper
     {
-    public:
-        instance_eye_of_eternity(Map* pMap) : ScriptedInstance(pMap),
-            DialogueHelper(aEpilogueDialogue)
-        {
-            Initialize();
-        }
-
-        ~instance_eye_of_eternity() {}
-
-        void Initialize() override
-        {
-            m_uiEncounter = NOT_STARTED;
-            InitializeDialogueHelper(this);
-        }
-
-        bool IsEncounterInProgress() const override
-        {
-            return m_uiEncounter == IN_PROGRESS;
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+        public:
+            instance_eye_of_eternity(Map* pMap) : ScriptedInstance(pMap),
+                DialogueHelper(aEpilogueDialogue)
             {
-            case NPC_MALYGOS:
-            case NPC_ALEXSTRASZA:
-            case NPC_LARGE_TRIGGER:
-            case NPC_ALEXSTRASZAS_GIFT:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
-            }
-        }
-
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
-            {
-            case GO_EXIT_PORTAL:
-            case GO_PLATFORM:
-            case GO_FOCUSING_IRIS:
-            case GO_FOCUSING_IRIS_H:
-            case GO_HEART_OF_MAGIC:
-            case GO_HEART_OF_MAGIC_H:
-            case GO_ALEXSTRASZAS_GIFT:
-            case GO_ALEXSTRASZAS_GIFT_H:
-                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-                break;
-            }
-        }
-
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            if (uiType != TYPE_MALYGOS)
-            {
-                return;
+                Initialize();
             }
 
-            m_uiEncounter = uiData;
-            if (uiData == IN_PROGRESS)
-            {
-                // ToDo: Despawn the exit portal
+            ~instance_eye_of_eternity() {}
 
-                DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_MALYGOS_ID);
+            void Initialize() override
+            {
+                m_uiEncounter = NOT_STARTED;
+                InitializeDialogueHelper(this);
             }
-            else if (uiData == FAIL)
-            {
-                // ToDo: respawn the focus iris and the portal
 
-                if (GameObject* pPlatform = GetSingleGameObjectFromStorage(GO_PLATFORM))
+            bool IsEncounterInProgress() const override
+            {
+                return m_uiEncounter == IN_PROGRESS;
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
                 {
-                    pPlatform->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK_11);
+                    case NPC_MALYGOS:
+                    case NPC_ALEXSTRASZA:
+                    case NPC_LARGE_TRIGGER:
+                    case NPC_ALEXSTRASZAS_GIFT:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
                 }
             }
-            else if (uiData == DONE)
+
+            void OnObjectCreate(GameObject* pGo) override
             {
-                StartNextDialogueText(NPC_ALEXSTRASZA);
+                switch (pGo->GetEntry())
+                {
+                    case GO_EXIT_PORTAL:
+                    case GO_PLATFORM:
+                    case GO_FOCUSING_IRIS:
+                    case GO_FOCUSING_IRIS_H:
+                    case GO_HEART_OF_MAGIC:
+                    case GO_HEART_OF_MAGIC_H:
+                    case GO_ALEXSTRASZAS_GIFT:
+                    case GO_ALEXSTRASZAS_GIFT_H:
+                        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+                        break;
+                }
             }
 
-            // Currently no reason to save anything
-        }
-
-        void Update(uint32 uiDiff) { DialogueUpdate(uiDiff); }
-
-    protected:
-        void JustDidDialogueStep(int32 iEntry) override
-        {
-            switch (iEntry)
+            void SetData(uint32 uiType, uint32 uiData) override
             {
-            case SPELL_ALEXSTRASZAS_GIFT_BEAM:
-                if (Creature* pAlextrasza = GetSingleCreatureFromStorage(NPC_ALEXSTRASZA))
+                if (uiType != TYPE_MALYGOS)
                 {
-                    pAlextrasza->CastSpell(pAlextrasza, SPELL_ALEXSTRASZAS_GIFT_BEAM, false);
+                    return;
                 }
-                break;
-            case NPC_ALEXSTRASZAS_GIFT:
-                if (Creature* pGift = GetSingleCreatureFromStorage(NPC_ALEXSTRASZAS_GIFT))
-                {
-                    pGift->CastSpell(pGift, SPELL_ALEXSTRASZAS_GIFT_VISUAL, false);
-                }
-                DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_ALEXSTRASZAS_GIFT : GO_ALEXSTRASZAS_GIFT_H, 30 * MINUTE);
-                break;
-            case GO_PLATFORM:
-                // ToDo: respawn the portal
-                if (GameObject* pPlatform = GetSingleGameObjectFromStorage(GO_PLATFORM))
-                {
-                    pPlatform->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK_11);
-                }
-                // Spawn the Heart of Malygos
-                DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_HEART_OF_MAGIC : GO_HEART_OF_MAGIC_H, 30 * MINUTE);
-                break;
-            }
-        }
 
-        uint32 m_uiEncounter;
+                m_uiEncounter = uiData;
+                if (uiData == IN_PROGRESS)
+                {
+                    // ToDo: Despawn the exit portal
+
+                    DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_MALYGOS_ID);
+                }
+                else if (uiData == FAIL)
+                {
+                    // ToDo: respawn the focus iris and the portal
+
+                    if (GameObject* pPlatform = GetSingleGameObjectFromStorage(GO_PLATFORM))
+                    {
+                        pPlatform->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK_11);
+                    }
+                }
+                else if (uiData == DONE)
+                {
+                    StartNextDialogueText(NPC_ALEXSTRASZA);
+                }
+
+                // Currently no reason to save anything
+            }
+
+            void Update(uint32 uiDiff) { DialogueUpdate(uiDiff); }
+
+        protected:
+            void JustDidDialogueStep(int32 iEntry) override
+            {
+                switch (iEntry)
+                {
+                    case SPELL_ALEXSTRASZAS_GIFT_BEAM:
+                        if (Creature* pAlextrasza = GetSingleCreatureFromStorage(NPC_ALEXSTRASZA))
+                        {
+                            pAlextrasza->CastSpell(pAlextrasza, SPELL_ALEXSTRASZAS_GIFT_BEAM, false);
+                        }
+                        break;
+                    case NPC_ALEXSTRASZAS_GIFT:
+                        if (Creature* pGift = GetSingleCreatureFromStorage(NPC_ALEXSTRASZAS_GIFT))
+                        {
+                            pGift->CastSpell(pGift, SPELL_ALEXSTRASZAS_GIFT_VISUAL, false);
+                        }
+                        DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_ALEXSTRASZAS_GIFT : GO_ALEXSTRASZAS_GIFT_H, 30 * MINUTE);
+                        break;
+                    case GO_PLATFORM:
+                        // ToDo: respawn the portal
+                        if (GameObject* pPlatform = GetSingleGameObjectFromStorage(GO_PLATFORM))
+                        {
+                            pPlatform->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK_11);
+                        }
+                        // Spawn the Heart of Malygos
+                        DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_HEART_OF_MAGIC : GO_HEART_OF_MAGIC_H, 30 * MINUTE);
+                        break;
+                }
+            }
+
+            uint32 m_uiEncounter;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

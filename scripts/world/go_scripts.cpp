@@ -36,20 +36,14 @@
 /**
  * ContentData
  * go_barov_journal
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * go_ethereum_prison
- * go_ethereum_stasis
-#endif
-#if defined (WOTLK) || defined (CATA) || defined(MISTS)
- * go_mysterious_snow_mound
- * go_tele_to_dalaran_crystal
- * go_tele_to_violet_stand
-#endif
+ * go_ethereum_prison (TBC onwards)
+ * go_ethereum_stasis (TBC onwards)
+ * go_mysterious_snow_mound (WOTLK onwards)
+ * go_tele_to_dalaran_crystal (WOTLK onwards)
+ * go_tele_to_violet_stand (WOTLK onwards)
  * go_andorhal_tower
-#if defined (WOTLK) || defined (CATA) || defined(MISTS)
- * go_scourge_enclosure
- * go_lab_work_reagents
-#endif
+ * go_scourge_enclosure (WOTLK onwards)
+ * go_lab_work_reagents (WOTLK onwards)
  * EndContentData
  */
 
@@ -128,12 +122,12 @@ struct go_ethereum_prison : public GameObjectScript
                 {
                     switch (pFaction->faction)
                     {
-                    case FACTION_LC:   uiSpell = SPELL_REP_LC;   break;
-                    case FACTION_SHAT: uiSpell = SPELL_REP_SHAT; break;
-                    case FACTION_CE:   uiSpell = SPELL_REP_CE;   break;
-                    case FACTION_CON:  uiSpell = SPELL_REP_CON;  break;
-                    case FACTION_KT:   uiSpell = SPELL_REP_KT;   break;
-                    case FACTION_SPOR: uiSpell = SPELL_REP_SPOR; break;
+                        case FACTION_LC:   uiSpell = SPELL_REP_LC;   break;
+                        case FACTION_SHAT: uiSpell = SPELL_REP_SHAT; break;
+                        case FACTION_CE:   uiSpell = SPELL_REP_CE;   break;
+                        case FACTION_CON:  uiSpell = SPELL_REP_CON;  break;
+                        case FACTION_KT:   uiSpell = SPELL_REP_KT;   break;
+                        case FACTION_SPOR: uiSpell = SPELL_REP_SPOR; break;
                     }
 
                     if (uiSpell)
@@ -314,18 +308,18 @@ struct go_andorhal_tower : public GameObjectScript
             uint32 uiKillCredit = 0;
             switch (pGo->GetEntry())
             {
-            case GO_ANDORHAL_TOWER_1:
-                uiKillCredit = NPC_ANDORHAL_TOWER_1;
-                break;
-            case GO_ANDORHAL_TOWER_2:
-                uiKillCredit = NPC_ANDORHAL_TOWER_2;
-                break;
-            case GO_ANDORHAL_TOWER_3:
-                uiKillCredit = NPC_ANDORHAL_TOWER_3;
-                break;
-            case GO_ANDORHAL_TOWER_4:
-                uiKillCredit = NPC_ANDORHAL_TOWER_4;
-                break;
+                case GO_ANDORHAL_TOWER_1:
+                    uiKillCredit = NPC_ANDORHAL_TOWER_1;
+                    break;
+                case GO_ANDORHAL_TOWER_2:
+                    uiKillCredit = NPC_ANDORHAL_TOWER_2;
+                    break;
+                case GO_ANDORHAL_TOWER_3:
+                    uiKillCredit = NPC_ANDORHAL_TOWER_3;
+                    break;
+                case GO_ANDORHAL_TOWER_4:
+                    uiKillCredit = NPC_ANDORHAL_TOWER_4;
+                    break;
             }
             if (uiKillCredit)
             {
@@ -425,10 +419,10 @@ struct go_lab_work_reagents : public GameObjectScript
             uint32 uiCreditSpellId = 0;
             switch (pGo->GetEntry())
             {
-            case GO_AMBERSEED:              uiCreditSpellId = SPELL_AMBERSEED_KILL_CREDIT; break;
-            case GO_CHILLED_SERPENT_MUCUS:  uiCreditSpellId = SPELL_CHILLED_SERPENT_MUCUS_KILL_CREDIT; break;
-            case GO_WITHERED_BATWING:       uiCreditSpellId = SPELL_WIRHERED_BATWING_KILL_CREDIT; break;
-            case GO_MUDDY_MIRE_MAGGOTS:     uiCreditSpellId = SPELL_MUDDY_MIRE_MAGGOT_KILL_CREDIT; break;
+                case GO_AMBERSEED:              uiCreditSpellId = SPELL_AMBERSEED_KILL_CREDIT; break;
+                case GO_CHILLED_SERPENT_MUCUS:  uiCreditSpellId = SPELL_CHILLED_SERPENT_MUCUS_KILL_CREDIT; break;
+                case GO_WITHERED_BATWING:       uiCreditSpellId = SPELL_WIRHERED_BATWING_KILL_CREDIT; break;
+                case GO_MUDDY_MIRE_MAGGOTS:     uiCreditSpellId = SPELL_MUDDY_MIRE_MAGGOT_KILL_CREDIT; break;
             }
 
             if (uiCreditSpellId)
@@ -489,7 +483,7 @@ void AddSC_go_scripts()
     //pNewScript->pGOUse =          &GOUse_go_barov_journal;
     //pNewScript->RegisterSelf();
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
+    // TBC Onwards
     //pNewScript = new Script;
     //pNewScript->Name = "go_ethereum_prison";
     //pNewScript->pGOUse =          &GOUse_go_ethereum_prison;
@@ -504,8 +498,8 @@ void AddSC_go_scripts()
     //pNewScript->Name = "go_jump_a_tron";
     //pNewScript->pGOUse =          &GOUse_go_jump_a_tron;
     //pNewScript->RegisterSelf();
-//#endif
-//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
+    //
+    // WOTLK onwards
     //pNewScript = new Script;
     //pNewScript->Name = "go_mysterious_snow_mound";
     //pNewScript->pGOUse =          &GOUse_go_mysterious_snow_mound;
@@ -520,21 +514,20 @@ void AddSC_go_scripts()
     //pNewScript->Name = "go_tele_to_violet_stand";
     //pNewScript->pGOUse =          &GOUse_go_tele_to_violet_stand;
     //pNewScript->RegisterSelf();
-//#endif
+    // End of exceptions
 
     //pNewScript = new Script;
     //pNewScript->Name = "go_andorhal_tower";
     //pNewScript->pGOUse =          &GOUse_go_andorhal_tower;
     //pNewScript->RegisterSelf();
 
-//#if defined (CLASSIC) || defined (TBC)
+    // CLASSIC and TBC only
     //pNewScript = new Script;
     //pNewScript->Name = "go_table_theka";
     //pNewScript->pGossipHelloGO =  &GossipHelloGO_table_theka;
     //pNewScript->RegisterSelf();
-//#endif
 
-//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
+    // WOTLK onwards
     //pNewScript = new Script;
     //pNewScript->Name = "go_scourge_enclosure";
     //pNewScript->pGOUse =          &GOUse_go_scourge_enclosure;
@@ -544,5 +537,4 @@ void AddSC_go_scripts()
     //pNewScript->Name = "go_lab_work_reagents";
     //pNewScript->pGOUse =          &GOUse_go_lab_work_reagents;
     //pNewScript->RegisterSelf();
-//#endif
 }

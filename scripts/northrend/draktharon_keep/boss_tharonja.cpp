@@ -181,149 +181,155 @@ struct boss_tharonja : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_SKELETAL:
-                // Phase switching at 50% (was in older patch versions multiple times, but from 335 on only once)
-                if (m_creature->GetHealthPercent() < 50)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_DECAY_FLESH, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                case PHASE_SKELETAL:
+                    // Phase switching at 50% (was in older patch versions multiple times, but from 335 on only once)
+                    if (m_creature->GetHealthPercent() < 50)
                     {
-                        DoScriptText(urand(0, 1) ? SAY_FLESH_1 : SAY_FLESH_2, m_creature);
-                        m_uiPhase = PHASE_TAKE_FLESH;
+                        if (DoCastSpellIfCan(m_creature, SPELL_DECAY_FLESH, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                        {
+                            DoScriptText(urand(0, 1) ? SAY_FLESH_1 : SAY_FLESH_2, m_creature);
+                            m_uiPhase = PHASE_TAKE_FLESH;
 
-                        return;                             // return here, as there is nothing more to be done in this phase
-                    }
-                }
-
-                // No break here, the last phase is exactly like the first, but he doesn't change anymore
-            case PHASE_SKELETAL_END:
-                if (m_uiCurseLifeTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_CURSE_OF_LIFE : SPELL_CURSE_OF_LIFE_H) == CAST_OK)
-                    {
-                        m_uiCurseLifeTimer = urand(12000, 18000);
-                    }
-                }
-                else
-                {
-                    m_uiCurseLifeTimer -= uiDiff;
-                }
-
-                if (m_uiRainFireTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_RAIN_OF_FIRE : SPELL_RAIN_OF_FIRE_H) == CAST_OK)
-                    {
-                        m_uiRainFireTimer = urand(22000, 29000);
-                    }
-                }
-                else
-                {
-                    m_uiRainFireTimer -= uiDiff;
-                }
-
-                if (m_uiShadowVolleyTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SHADOW_VOLLEY : SPELL_SHADOW_VOLLEY_H) == CAST_OK)
-                    {
-                        m_uiShadowVolleyTimer = urand(6000, 12000);
-                    }
-                }
-                else
-                {
-                    m_uiShadowVolleyTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-                break;
-
-            case PHASE_FLESH:
-                // This is not entirely clear if this _might_ also be triggered HP-dependend
-                if (m_uiReturnFleshTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_RETURN_FLESH, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                    {
-                        DoScriptText(urand(0, 1) ? SAY_SKELETON_1 : SAY_SKELETON_2, m_creature);
-                        m_uiReturnFleshTimer = 26000;
-                        m_uiPhase = PHASE_RETURN_FLESH;
-
-                        return;                             // return here, as there is nothing more to be done in this phase
-                    }
-                }
-                else
-                {
-                    m_uiReturnFleshTimer -= uiDiff;
-                }
-
-                if (m_uiPoisonCloudTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_POISON_CLOUD : SPELL_POISON_CLOUD_H) == CAST_OK)
-                    {
-                        m_uiPoisonCloudTimer = urand(7000, 12000);
-                    }
-                }
-                else
-                {
-                    m_uiPoisonCloudTimer -= uiDiff;
-                }
-
-                if (m_uiLightningBreathTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_LIGHTNING_BREATH : SPELL_LIGHTNING_BREATH_H) == CAST_OK)
-                    {
-                        m_uiLightningBreathTimer = urand(5000, 8000);
-                    }
-                }
-                else
-                {
-                    m_uiLightningBreathTimer -= uiDiff;
-                }
-
-                if (m_uiEyeBeamTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_EYE_BEAM : SPELL_EYE_BEAM_H) == CAST_OK)
-                    {
-                        m_uiEyeBeamTimer = urand(12000, 15000);
-                    }
-                }
-                else
-                {
-                    m_uiEyeBeamTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-                break;
-
-            case PHASE_TAKE_FLESH:
-                // Turn players into skeletons
-                if (DoCastSpellIfCan(m_creature, SPELL_GIFT_OF_THARONJA) == CAST_OK)
-                {
-                    // Change modell - might be UpdateEntry
-                    if (CreatureInfo const* pCreatureInfo = GetCreatureTemplateStore(NPC_THARONJA_FLESH))
-                    {
-                        uint32 uiDisplayId = Creature::ChooseDisplayId(pCreatureInfo);
-                        m_creature->SetDisplayId(uiDisplayId);
+                            return;                             // return here, as there is nothing more to be done in this phase
+                        }
                     }
 
-                    m_uiPhase = PHASE_FLESH;
-                }
-                break;
-
-            case PHASE_RETURN_FLESH:
-                // Turn players into normal
-                if (DoCastSpellIfCan(m_creature, SPELL_CLEAR_GIFT_OF_THARONJA) == CAST_OK)
-                {
-                    // Change modell - might be UpdateEntry
-                    if (CreatureInfo const* pCreatureInfo = GetCreatureTemplateStore(NPC_THARONJA_SKELETAL))
+                    // No break here, the last phase is exactly like the first, but he doesn't change anymore
+                case PHASE_SKELETAL_END:
+                    if (m_uiCurseLifeTimer < uiDiff)
                     {
-                        uint32 uiDisplayId = Creature::ChooseDisplayId(pCreatureInfo);
-                        m_creature->SetDisplayId(uiDisplayId);
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_CURSE_OF_LIFE : SPELL_CURSE_OF_LIFE_H) == CAST_OK)
+                            {
+                                m_uiCurseLifeTimer = urand(12000, 18000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiCurseLifeTimer -= uiDiff;
                     }
 
-                    m_uiPhase = PHASE_SKELETAL_END;
-                }
-                break;
+                    if (m_uiRainFireTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_RAIN_OF_FIRE : SPELL_RAIN_OF_FIRE_H) == CAST_OK)
+                            {
+                                m_uiRainFireTimer = urand(22000, 29000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiRainFireTimer -= uiDiff;
+                    }
+
+                    if (m_uiShadowVolleyTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SHADOW_VOLLEY : SPELL_SHADOW_VOLLEY_H) == CAST_OK)
+                        {
+                            m_uiShadowVolleyTimer = urand(6000, 12000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiShadowVolleyTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+                    break;
+
+                case PHASE_FLESH:
+                    // This is not entirely clear if this _might_ also be triggered HP-dependend
+                    if (m_uiReturnFleshTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_RETURN_FLESH, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                        {
+                            DoScriptText(urand(0, 1) ? SAY_SKELETON_1 : SAY_SKELETON_2, m_creature);
+                            m_uiReturnFleshTimer = 26000;
+                            m_uiPhase = PHASE_RETURN_FLESH;
+
+                            return;                             // return here, as there is nothing more to be done in this phase
+                        }
+                    }
+                    else
+                    {
+                        m_uiReturnFleshTimer -= uiDiff;
+                    }
+
+                    if (m_uiPoisonCloudTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_POISON_CLOUD : SPELL_POISON_CLOUD_H) == CAST_OK)
+                            {
+                                m_uiPoisonCloudTimer = urand(7000, 12000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiPoisonCloudTimer -= uiDiff;
+                    }
+
+                    if (m_uiLightningBreathTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_LIGHTNING_BREATH : SPELL_LIGHTNING_BREATH_H) == CAST_OK)
+                        {
+                            m_uiLightningBreathTimer = urand(5000, 8000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiLightningBreathTimer -= uiDiff;
+                    }
+
+                    if (m_uiEyeBeamTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_EYE_BEAM : SPELL_EYE_BEAM_H) == CAST_OK)
+                        {
+                            m_uiEyeBeamTimer = urand(12000, 15000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiEyeBeamTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+                    break;
+
+                case PHASE_TAKE_FLESH:
+                    // Turn players into skeletons
+                    if (DoCastSpellIfCan(m_creature, SPELL_GIFT_OF_THARONJA) == CAST_OK)
+                    {
+                        // Change modell - might be UpdateEntry
+                        if (CreatureInfo const* pCreatureInfo = GetCreatureTemplateStore(NPC_THARONJA_FLESH))
+                        {
+                            uint32 uiDisplayId = Creature::ChooseDisplayId(pCreatureInfo);
+                            m_creature->SetDisplayId(uiDisplayId);
+                        }
+
+                        m_uiPhase = PHASE_FLESH;
+                    }
+                    break;
+
+                case PHASE_RETURN_FLESH:
+                    // Turn players into normal
+                    if (DoCastSpellIfCan(m_creature, SPELL_CLEAR_GIFT_OF_THARONJA) == CAST_OK)
+                    {
+                        // Change modell - might be UpdateEntry
+                        if (CreatureInfo const* pCreatureInfo = GetCreatureTemplateStore(NPC_THARONJA_SKELETAL))
+                        {
+                            uint32 uiDisplayId = Creature::ChooseDisplayId(pCreatureInfo);
+                            m_creature->SetDisplayId(uiDisplayId);
+                        }
+
+                        m_uiPhase = PHASE_SKELETAL_END;
+                    }
+                    break;
             }
         }
     };

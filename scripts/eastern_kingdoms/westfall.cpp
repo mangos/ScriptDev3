@@ -81,15 +81,15 @@ struct npc_daphne_stilwell : public CreatureScript
             {
                 switch (m_uiWPHolder)
                 {
-                case 7:
-                    DoScriptText(SAY_DS_DOWN_1, m_creature);
-                    break;
-                case 8:
-                    DoScriptText(SAY_DS_DOWN_2, m_creature);
-                    break;
-                case 9:
-                    DoScriptText(SAY_DS_DOWN_3, m_creature);
-                    break;
+                    case 7:
+                        DoScriptText(SAY_DS_DOWN_1, m_creature);
+                        break;
+                    case 8:
+                        DoScriptText(SAY_DS_DOWN_2, m_creature);
+                        break;
+                    case 9:
+                        DoScriptText(SAY_DS_DOWN_3, m_creature);
+                        break;
                 }
             }
             else
@@ -106,48 +106,48 @@ struct npc_daphne_stilwell : public CreatureScript
 
             switch (uiPointId)
             {
-            case 4:
-                SetEquipmentSlots(false, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE, EQUIP_ID_RIFLE);
-                m_creature->SetSheath(SHEATH_STATE_RANGED);
-                m_creature->HandleEmote(EMOTE_STATE_USESTANDING_NOSHEATHE);
-                break;
-            case 7:
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11450.836f, 1569.755f, 54.267f, 4.230f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11449.697f, 1569.124f, 54.421f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.237f, 1568.307f, 54.620f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                break;
-            case 8:
-                m_creature->SetSheath(SHEATH_STATE_RANGED);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11450.836f, 1569.755f, 54.267f, 4.230f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11449.697f, 1569.124f, 54.421f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.237f, 1568.307f, 54.620f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.037f, 1570.213f, 54.961f, 4.283f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                break;
-            case 9:
-                m_creature->SetSheath(SHEATH_STATE_RANGED);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11450.836f, 1569.755f, 54.267f, 4.230f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11449.697f, 1569.124f, 54.421f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.237f, 1568.307f, 54.620f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.037f, 1570.213f, 54.961f, 4.283f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11449.018f, 1570.738f, 54.828f, 4.220f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                break;
-            case 10:
-                SetRun(false);
-                break;
-            case 11:
-                DoScriptText(SAY_DS_PROLOGUE, m_creature);
-                break;
-            case 13:
-                SetEquipmentSlots(true);
-                m_creature->SetSheath(SHEATH_STATE_UNARMED);
-                m_creature->HandleEmote(EMOTE_STATE_USESTANDING_NOSHEATHE);
-                break;
-            case 17:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_TOME_VALOR, m_creature);
-                }
-                break;
+                case 4:
+                    SetEquipmentSlots(false, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE, EQUIP_ID_RIFLE);
+                    m_creature->SetSheath(SHEATH_STATE_RANGED);
+                    m_creature->HandleEmote(EMOTE_STATE_USESTANDING_NOSHEATHE);
+                    break;
+                case 7:
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11450.836f, 1569.755f, 54.267f, 4.230f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11449.697f, 1569.124f, 54.421f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.237f, 1568.307f, 54.620f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    break;
+                case 8:
+                    m_creature->SetSheath(SHEATH_STATE_RANGED);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11450.836f, 1569.755f, 54.267f, 4.230f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11449.697f, 1569.124f, 54.421f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.237f, 1568.307f, 54.620f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.037f, 1570.213f, 54.961f, 4.283f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    break;
+                case 9:
+                    m_creature->SetSheath(SHEATH_STATE_RANGED);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11450.836f, 1569.755f, 54.267f, 4.230f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11449.697f, 1569.124f, 54.421f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.237f, 1568.307f, 54.620f, 4.206f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11448.037f, 1570.213f, 54.961f, 4.283f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DEFIAS_RAIDER, -11449.018f, 1570.738f, 54.828f, 4.220f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    break;
+                case 10:
+                    SetRun(false);
+                    break;
+                case 11:
+                    DoScriptText(SAY_DS_PROLOGUE, m_creature);
+                    break;
+                case 13:
+                    SetEquipmentSlots(true);
+                    m_creature->SetSheath(SHEATH_STATE_UNARMED);
+                    m_creature->HandleEmote(EMOTE_STATE_USESTANDING_NOSHEATHE);
+                    break;
+                case 17:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_TOME_VALOR, m_creature);
+                    }
+                    break;
             }
         }
 
@@ -246,22 +246,22 @@ struct npc_defias_traitor : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 35:
-                SetRun(false);
-                break;
-            case 36:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_PROGRESS, m_creature, pPlayer);
-                }
-                break;
-            case 44:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_END, m_creature, pPlayer);
-                    pPlayer->GroupEventHappens(QUEST_DEFIAS_BROTHERHOOD, m_creature);
-                }
-                break;
+                case 35:
+                    SetRun(false);
+                    break;
+                case 36:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_PROGRESS, m_creature, pPlayer);
+                    }
+                    break;
+                case 44:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_END, m_creature, pPlayer);
+                        pPlayer->GroupEventHappens(QUEST_DEFIAS_BROTHERHOOD, m_creature);
+                    }
+                    break;
             }
         }
 

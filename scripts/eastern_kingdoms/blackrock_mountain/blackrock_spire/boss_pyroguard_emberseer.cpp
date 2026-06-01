@@ -189,37 +189,37 @@ struct boss_pyroguard_emberseer : public CreatureScript
             DoMeleeAttackIfReady();
         }
 
-    private:
-        // Wrapper to handle the transformation
-        void DoHandleEmberseerGrowing()
-        {
-            ++m_uiGrowingStacks;
-
-            if (m_uiGrowingStacks == MAX_GROWING_STACKS * 0.5f)
+        private:
+            // Wrapper to handle the transformation
+            void DoHandleEmberseerGrowing()
             {
-                DoScriptText(EMOTE_NEAR, m_creature);
-            }
-            else if (m_uiGrowingStacks == MAX_GROWING_STACKS)
-            {
-                DoScriptText(EMOTE_FULL, m_creature);
-                DoScriptText(SAY_FREE, m_creature);
+                ++m_uiGrowingStacks;
 
-                // Note: the spell order needs further research
-                DoCastSpellIfCan(m_creature, SPELL_FULL_STRENGHT, CAST_TRIGGERED);
-                DoCastSpellIfCan(m_creature, SPELL_BONUS_DAMAGE, CAST_TRIGGERED);
-                DoCastSpellIfCan(m_creature, SPELL_TRANSFORM, CAST_TRIGGERED);
-
-                // activate all runes
-                if (m_pInstance)
+                if (m_uiGrowingStacks == MAX_GROWING_STACKS * 0.5f)
                 {
-                    m_pInstance->SetData(MAX_ENCOUNTER, DO_ACTIVATE_RUNES);
-                    // Redundant check: if for some reason the event isn't set in progress until this point - avoid using the altar again when the boss is fully grown
-                    m_pInstance->SetData(TYPE_EMBERSEER, IN_PROGRESS);
+                    DoScriptText(EMOTE_NEAR, m_creature);
                 }
+                else if (m_uiGrowingStacks == MAX_GROWING_STACKS)
+                {
+                    DoScriptText(EMOTE_FULL, m_creature);
+                    DoScriptText(SAY_FREE, m_creature);
 
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    // Note: the spell order needs further research
+                    DoCastSpellIfCan(m_creature, SPELL_FULL_STRENGHT, CAST_TRIGGERED);
+                    DoCastSpellIfCan(m_creature, SPELL_BONUS_DAMAGE, CAST_TRIGGERED);
+                    DoCastSpellIfCan(m_creature, SPELL_TRANSFORM, CAST_TRIGGERED);
+
+                    // activate all runes
+                    if (m_pInstance)
+                    {
+                        m_pInstance->SetData(MAX_ENCOUNTER, DO_ACTIVATE_RUNES);
+                        // Redundant check: if for some reason the event isn't set in progress until this point - avoid using the altar again when the boss is fully grown
+                        m_pInstance->SetData(TYPE_EMBERSEER, IN_PROGRESS);
+                    }
+
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                }
             }
-        }
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

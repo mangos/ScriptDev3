@@ -255,44 +255,44 @@ struct npc_niby_the_almighty : public CreatureScript
                 {
                     switch (m_uiSpeech)
                     {
-                    case 1:
-                        m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MovePoint(0, 5407.19f, -753.00f, 350.82f);
-                        m_uiSummonTimer = 6200;
-                        break;
-                    case 2:
-                        m_creature->SetFacingTo(1.2f);
-                        DoScriptText(SAY_NIBY_1, m_creature);
-                        m_uiSummonTimer = 3000;
-                        break;
-                    case 3:
-                        DoScriptText(SAY_NIBY_2, m_creature);
-                        DoCastSpellIfCan(m_creature, SPELL_SUMMON_POLLO);
-                        m_uiSummonTimer = 2000;
-                        break;
-                    case 4:
-                        if (Creature* pImpsy = GetClosestCreatureWithEntry(m_creature, NPC_IMPSY, 20.0))
-                        {
-                            DoScriptText(EMOTE_IMPSY_1, pImpsy);
-                            DoScriptText(SAY_IMPSY_1, pImpsy);
-                            m_uiSummonTimer = 2500;
-                        }
-                        else
-                        {
-                            // Skip Speech 5
+                        case 1:
+                            m_creature->GetMotionMaster()->Clear();
+                            m_creature->GetMotionMaster()->MovePoint(0, 5407.19f, -753.00f, 350.82f);
+                            m_uiSummonTimer = 6200;
+                            break;
+                        case 2:
+                            m_creature->SetFacingTo(1.2f);
+                            DoScriptText(SAY_NIBY_1, m_creature);
+                            m_uiSummonTimer = 3000;
+                            break;
+                        case 3:
+                            DoScriptText(SAY_NIBY_2, m_creature);
+                            DoCastSpellIfCan(m_creature, SPELL_SUMMON_POLLO);
+                            m_uiSummonTimer = 2000;
+                            break;
+                        case 4:
+                            if (Creature* pImpsy = GetClosestCreatureWithEntry(m_creature, NPC_IMPSY, 20.0))
+                            {
+                                DoScriptText(EMOTE_IMPSY_1, pImpsy);
+                                DoScriptText(SAY_IMPSY_1, pImpsy);
+                                m_uiSummonTimer = 2500;
+                            }
+                            else
+                            {
+                                // Skip Speech 5
+                                m_uiSummonTimer = 40000;
+                                ++m_uiSpeech;
+                            }
+                            break;
+                        case 5:
+                            DoScriptText(SAY_NIBY_3, m_creature);
                             m_uiSummonTimer = 40000;
-                            ++m_uiSpeech;
-                        }
-                        break;
-                    case 5:
-                        DoScriptText(SAY_NIBY_3, m_creature);
-                        m_uiSummonTimer = 40000;
-                        break;
-                    case 6:
-                        m_creature->GetMotionMaster()->MoveTargetedHome();
-                        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                        m_bEventStarted = false;
-                        break;
+                            break;
+                        case 6:
+                            m_creature->GetMotionMaster()->MoveTargetedHome();
+                            m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                            m_bEventStarted = false;
+                            break;
                     }
                     ++m_uiSpeech;
                 }
@@ -404,24 +404,24 @@ struct npc_kroshius : public CreatureScript
                 {
                     switch (m_uiPhase)
                     {
-                    case 1:                                 // Revived
-                        m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                        m_uiPhaseTimer = 1000;
-                        break;
-                    case 2:
-                        DoScriptText(SAY_KROSHIUS_REVIVE, m_creature);
-                        m_uiPhaseTimer = 3500;
-                        break;
-                    case 3:                                 // Attack
-                        m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_COMBAT_STOP | TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_TOGGLE_OOC_NOT_ATTACK | TEMPFACTION_TOGGLE_PASSIVE);
-                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                        {
-                            if (m_creature->IsWithinDistInMap(pPlayer, 30.0f))
+                        case 1:                                 // Revived
+                            m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                            m_uiPhaseTimer = 1000;
+                            break;
+                        case 2:
+                            DoScriptText(SAY_KROSHIUS_REVIVE, m_creature);
+                            m_uiPhaseTimer = 3500;
+                            break;
+                        case 3:                                 // Attack
+                            m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_COMBAT_STOP | TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_TOGGLE_OOC_NOT_ATTACK | TEMPFACTION_TOGGLE_PASSIVE);
+                            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                             {
-                                AttackStart(pPlayer);
+                                if (m_creature->IsWithinDistInMap(pPlayer, 30.0f))
+                                {
+                                    AttackStart(pPlayer);
+                                }
                             }
-                        }
-                        break;
+                            break;
                     }
                     ++m_uiPhase;
                 }
@@ -588,122 +588,122 @@ struct npc_captured_arkonarin : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_ESCORT_START, m_creature, pPlayer);
-                }
-                break;
-            case 14:
-                DoScriptText(SAY_FIRST_STOP, m_creature);
-                break;
+                case 0:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_ESCORT_START, m_creature, pPlayer);
+                    }
+                    break;
+                case 14:
+                    DoScriptText(SAY_FIRST_STOP, m_creature);
+                    break;
 #if defined(TBC)
-            case 34:
+                case 34:
 #endif
 #if defined(CLASSIC)
-            case 36:
+                case 36:
 #endif
-                DoScriptText(SAY_SECOND_STOP, m_creature);
-                SetRun();
-                break;
-            case 38:
-                if (GameObject* pChest = GetClosestGameObjectWithEntry(m_creature, GO_ARKONARIN_CHEST, 5.0f))
-                {
-                    pChest->Use(m_creature);
-                }
-                m_creature->HandleEmote(EMOTE_ONESHOT_KNEEL);
-                break;
-            case 39:
-                DoCastSpellIfCan(m_creature, SPELL_STRENGHT_ARKONARIN);
-                break;
-            case 40:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    m_creature->SetFacingToObject(pPlayer);
-                }
-                m_bCanAttack = true;
-                DoScriptText(SAY_FOUND_EQUIPMENT, m_creature);
-                // ToDo: change equipment!
+                    DoScriptText(SAY_SECOND_STOP, m_creature);
+                    SetRun();
+                    break;
+                case 38:
+                    if (GameObject* pChest = GetClosestGameObjectWithEntry(m_creature, GO_ARKONARIN_CHEST, 5.0f))
+                    {
+                        pChest->Use(m_creature);
+                    }
+                    m_creature->HandleEmote(EMOTE_ONESHOT_KNEEL);
+                    break;
+                case 39:
+                    DoCastSpellIfCan(m_creature, SPELL_STRENGHT_ARKONARIN);
+                    break;
+                case 40:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        m_creature->SetFacingToObject(pPlayer);
+                    }
+                    m_bCanAttack = true;
+                    DoScriptText(SAY_FOUND_EQUIPMENT, m_creature);
+                    // ToDo: change equipment!
 #if defined(CLASSIC)
-                m_creature->UpdateEntry(11018);
+                    m_creature->UpdateEntry(11018);
 #endif
-                break;
-            case 41:
+                    break;
+                case 41:
 #if defined(CLASSIC)
-                SetRun(false);
-                break;
+                    SetRun(false);
+                    break;
 #endif
 #if defined(TBC) || defined(WOTLK)
-                DoScriptText(SAY_ESCAPE_DEMONS, m_creature);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5082.068f, -490.084f, 296.856f, 5.15f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5084.135f, -489.187f, 296.832f, 5.15f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5085.676f, -488.518f, 296.824f, 5.15f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    DoScriptText(SAY_ESCAPE_DEMONS, m_creature);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5082.068f, -490.084f, 296.856f, 5.15f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5084.135f, -489.187f, 296.832f, 5.15f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5085.676f, -488.518f, 296.824f, 5.15f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
 #endif
-                break;
+                    break;
 #if defined(CLASSIC)
-            case 42:
-                DoScriptText(SAY_ESCAPE_DEMONS, m_creature);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5083.989f, -495.566f, 296.677f, 5.43f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5087.030f, -492.886f, 296.677f, 5.43f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5082.929f, -492.193f, 296.677f, 5.43f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                break;
+                case 42:
+                    DoScriptText(SAY_ESCAPE_DEMONS, m_creature);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5083.989f, -495.566f, 296.677f, 5.43f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5087.030f, -492.886f, 296.677f, 5.43f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5082.929f, -492.193f, 296.677f, 5.43f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    break;
 #endif
 #if defined(TBC) || defined(WOTLK)
-            case 43:
-                SetRun(false);
-                break;
+                case 43:
+                    SetRun(false);
+                    break;
 #endif
 #if defined(CLASSIC)
-            case 50:
-                DoScriptText(SAY_ESCAPE_DEMONS, m_creature);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5042.718f, -543.696f, 297.801f, 0.84f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5037.962f, -539.510f, 297.801f, 0.84f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5038.018f, -545.729f, 297.801f, 0.84f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                break;
+                case 50:
+                    DoScriptText(SAY_ESCAPE_DEMONS, m_creature);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5042.718f, -543.696f, 297.801f, 0.84f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5037.962f, -539.510f, 297.801f, 0.84f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_JAEDENAR_LEGIONNAIRE, 5038.018f, -545.729f, 297.801f, 0.84f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    break;
 #endif
-            case 104:
+                case 104:
 #if defined(CLASSIC)
-                m_creature->SetFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_creature->SetFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
-                m_creature->SummonCreature(NPC_SPIRT_TREY, 4844.839f, -395.763f, 350.603f, 6.25f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SetFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    m_creature->SetFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
+                    m_creature->SummonCreature(NPC_SPIRT_TREY, 4844.839f, -395.763f, 350.603f, 6.25f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
 #endif
-                DoScriptText(SAY_FRESH_AIR, m_creature);
-                break;
-            case 105:
+                    DoScriptText(SAY_FRESH_AIR, m_creature);
+                    break;
+                case 105:
 #if defined(TBC) || defined(WOTLK)
-                m_creature->SummonCreature(NPC_SPIRT_TREY, 4844.839f, -395.763f, 350.603f, 6.25f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_SPIRT_TREY, 4844.839f, -395.763f, 350.603f, 6.25f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
 #endif
 #if defined(CLASSIC)
-                DoScriptText(SAY_TREY_BETRAYER, m_creature->GetMap()->GetCreature(m_treyGuid));
+                    DoScriptText(SAY_TREY_BETRAYER, m_creature->GetMap()->GetCreature(m_treyGuid));
 #endif
-                break;
-            case 106:
-                DoScriptText(SAY_TREY, m_creature);
+                    break;
+                case 106:
+                    DoScriptText(SAY_TREY, m_creature);
 #if defined(CLASSIC)
-                m_creature->RemoveFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_creature->RemoveFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
+                    m_creature->RemoveFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    m_creature->RemoveFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
 #endif
-                break;
-            case 107:
-                if (Creature* pTrey = m_creature->GetMap()->GetCreature(m_treyGuid))
-                {
-                    AttackStart(pTrey);
-                }
-                break;
-            case 108:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    m_creature->SetFacingToObject(pPlayer);
-                }
-                DoScriptText(SAY_ESCORT_COMPLETE, m_creature);
-                break;
-            case 109:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_RESCUE_JAEDENAR, m_creature);
-                }
-                SetRun();
-                break;
+                    break;
+                case 107:
+                    if (Creature* pTrey = m_creature->GetMap()->GetCreature(m_treyGuid))
+                    {
+                        AttackStart(pTrey);
+                    }
+                    break;
+                case 108:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        m_creature->SetFacingToObject(pPlayer);
+                    }
+                    DoScriptText(SAY_ESCORT_COMPLETE, m_creature);
+                    break;
+                case 109:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_RESCUE_JAEDENAR, m_creature);
+                    }
+                    SetRun();
+                    break;
             }
         }
 
@@ -804,7 +804,7 @@ struct npc_arei : public CreatureScript
     struct npc_areiAI : public npc_escortAI, private DialogueHelper
     {
         npc_areiAI(Creature* pCreature) : npc_escortAI(pCreature),
-        DialogueHelper(aEpilogDialogue)
+            DialogueHelper(aEpilogDialogue)
         {
             m_bAggroIrontree = false;   //TODO check this
             m_bAggroHorror = false;
@@ -843,13 +843,13 @@ struct npc_arei : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_IRONTREE_STOMPER:
-                DoScriptText(SAY_EXIT_WOODS, m_creature, pSummoned);
-                // no break;
-            case NPC_IRONTREE_WANDERER:
-                pSummoned->AI()->AttackStart(m_creature);
-                m_lSummonsGuids.push_back(pSummoned->GetObjectGuid());
-                break;
+                case NPC_IRONTREE_STOMPER:
+                    DoScriptText(SAY_EXIT_WOODS, m_creature, pSummoned);
+                    // no break;
+                case NPC_IRONTREE_WANDERER:
+                    pSummoned->AI()->AttackStart(m_creature);
+                    m_lSummonsGuids.push_back(pSummoned->GetObjectGuid());
+                    break;
             }
         }
 
@@ -903,27 +903,27 @@ struct npc_arei : public CreatureScript
         {
             switch (iEntry)
             {
-            case SPELL_WITHER_STRIKE:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_ASHENVALE, m_creature, pPlayer);
-                }
-                break;
-            case SPELL_AREI_TRANSFORM:
-                DoCastSpellIfCan(m_creature, SPELL_AREI_TRANSFORM);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_LIFT_CURSE, m_creature, pPlayer);
-                }
-                break;
-            case QUEST_ID_ANCIENT_SPIRIT:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_AREI_ESCORT_COMPLETE, m_creature, pPlayer);
-                    pPlayer->GroupEventHappens(QUEST_ID_ANCIENT_SPIRIT, m_creature);
-                    m_creature->ForcedDespawn(10000);
-                }
-                break;
+                case SPELL_WITHER_STRIKE:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_ASHENVALE, m_creature, pPlayer);
+                    }
+                    break;
+                case SPELL_AREI_TRANSFORM:
+                    DoCastSpellIfCan(m_creature, SPELL_AREI_TRANSFORM);
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_LIFT_CURSE, m_creature, pPlayer);
+                    }
+                    break;
+                case QUEST_ID_ANCIENT_SPIRIT:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_AREI_ESCORT_COMPLETE, m_creature, pPlayer);
+                        pPlayer->GroupEventHappens(QUEST_ID_ANCIENT_SPIRIT, m_creature);
+                        m_creature->ForcedDespawn(10000);
+                    }
+                    break;
             }
         }
 

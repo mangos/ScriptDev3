@@ -187,10 +187,10 @@ struct boss_lady_deathwhisper : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_CULT_ADHERENT:
-            case NPC_CULT_FANATIC:
-                m_lCultistSpawnedGuidList.push_back(pSummoned->GetObjectGuid());
-                break;
+                case NPC_CULT_ADHERENT:
+                case NPC_CULT_FANATIC:
+                    m_lCultistSpawnedGuidList.push_back(pSummoned->GetObjectGuid());
+                    break;
             }
 
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))

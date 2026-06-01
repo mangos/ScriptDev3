@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ScriptDev3 is an extension for mangos providing enhanced features for
  * area triggers, creatures, game objects, instances, items, and spells beyond
  * the default database scripting in mangos.
@@ -26,13 +26,13 @@
 
 #ifndef DEF_GUNDRAK_H
 #define DEF_GUNDRAK_H
-/* Encounters
+/** Encounters
  * Slad'ran          = 0
  * Moorabi           = 1
  * Drakkari Colossus = 2
  * Gal'darah         = 3
  * Eck the Ferocious = 4
-*/
+ */
 enum
 {
     MAX_ENCOUNTER          = 5,

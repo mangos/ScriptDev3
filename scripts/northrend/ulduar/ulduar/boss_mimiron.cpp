@@ -282,7 +282,7 @@ struct boss_mimiron : public CreatureScript
     struct boss_mimironAI : public ScriptedAI, private DialogueHelper
     {
         boss_mimironAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aMimironDialogue)
+            DialogueHelper(aMimironDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -357,239 +357,239 @@ struct boss_mimiron : public CreatureScript
             switch (iEntry)
             {
                 // Encounter intro (normal and hard mode)
-            case NPC_MIMIRON:
-            case NPC_LEVIATHAN_MK_TURRET:
-                // jump on the top of the robot for intro / phase end text
-                m_creature->RemoveAurasDueToSpell(SPELL_WELD);
-                if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
-                {
-                    pLeviathan->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
-                    DoCastSpellIfCan(pLeviathan, SPELL_RIDE_VEHICLE_MIMIRON_5, CAST_TRIGGERED);
-                }
-                break;
-            case PHASE_LEVIATHAN:
-            case SAY_HARD_MODE:
-                // mount inside the robot
-                m_creature->RemoveAurasDueToSpell(SPELL_WELD);
-                if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
-                {
-                    pLeviathan->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
-                    DoCastSpellIfCan(pLeviathan, SPELL_RIDE_VEHICLE_MIMIRON_6, CAST_TRIGGERED);
-
-                    // hard mode aura
-                    if (m_pInstance->GetData(TYPE_MIMIRON_HARD) == DONE)
+                case NPC_MIMIRON:
+                case NPC_LEVIATHAN_MK_TURRET:
+                    // jump on the top of the robot for intro / phase end text
+                    m_creature->RemoveAurasDueToSpell(SPELL_WELD);
+                    if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
                     {
-                        pLeviathan->CastSpell(pLeviathan, SPELL_EMERGENCY_MODE, true);
-                        pLeviathan->CastSpell(pLeviathan, SPELL_EMERGENCY_MODE_LEVIATHAN, true);
+                        pLeviathan->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
+                        DoCastSpellIfCan(pLeviathan, SPELL_RIDE_VEHICLE_MIMIRON_5, CAST_TRIGGERED);
                     }
+                    break;
+                case PHASE_LEVIATHAN:
+                case SAY_HARD_MODE:
+                    // mount inside the robot
+                    m_creature->RemoveAurasDueToSpell(SPELL_WELD);
+                    if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
+                    {
+                        pLeviathan->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
+                        DoCastSpellIfCan(pLeviathan, SPELL_RIDE_VEHICLE_MIMIRON_6, CAST_TRIGGERED);
 
-                    m_uiBerserkTimer = 15 * MINUTE * IN_MILLISECONDS;
-                }
-                break;
-            case NPC_LEVIATHAN_MK:
-                if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
-                {
-                    pLeviathan->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
-                    pLeviathan->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    pLeviathan->SetInCombatWithZone();
-                }
-                // Note: maybe the flags are handled by the vehicle seats. Set them manually for the moment.
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
-                break;
+                        // hard mode aura
+                        if (m_pInstance->GetData(TYPE_MIMIRON_HARD) == DONE)
+                        {
+                            pLeviathan->CastSpell(pLeviathan, SPELL_EMERGENCY_MODE, true);
+                            pLeviathan->CastSpell(pLeviathan, SPELL_EMERGENCY_MODE_LEVIATHAN, true);
+                        }
+
+                        m_uiBerserkTimer = 15 * MINUTE * IN_MILLISECONDS;
+                    }
+                    break;
+                case NPC_LEVIATHAN_MK:
+                    if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
+                    {
+                        pLeviathan->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
+                        pLeviathan->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        pLeviathan->SetInCombatWithZone();
+                    }
+                    // Note: maybe the flags are handled by the vehicle seats. Set them manually for the moment.
+                    m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                    break;
 
                 // Start phase 2 transition
-            case GO_MIMIRON_ELEVATOR:
-                m_pInstance->DoUseDoorOrButton(GO_MIMIRON_ELEVATOR);
-                break;
-            case NPC_VX001:
-                if (GameObject* pElevator = m_pInstance->GetSingleGameObjectFromStorage(GO_MIMIRON_ELEVATOR))
-                {
-                    pElevator->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
-                }
-                m_creature->SummonCreature(NPC_VX001, afRobotSpawnPos[0], afRobotSpawnPos[1], afRobotSpawnPos[2], afRobotSpawnPos[3], TEMPSPAWN_DEAD_DESPAWN, 0);
-                break;
-            case SPELL_JET_PACK_VISUAL:
-                DoCastSpellIfCan(m_creature, SPELL_JET_PACK_VISUAL);
-                break;
-            case SPELL_JET_PACK:
-                // fly from the Leviathan to VX001
-                if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
-                {
-                    pLeviathan->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
-                }
-                if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
-                {
-                    DoCastSpellIfCan(pVx001, SPELL_RIDE_VEHICLE_MIMIRON_0, CAST_TRIGGERED);
-                }
-                break;
-            case SAY_TORSO_ACTIVE:
-                m_creature->RemoveAurasDueToSpell(SPELL_JET_PACK_VISUAL);
-                break;
-            case PHASE_VX001:
-                // mount inside the robot
-                if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
-                {
-                    pVx001->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
-                    DoCastSpellIfCan(pVx001, SPELL_RIDE_VEHICLE_MIMIRON_1, CAST_TRIGGERED);
-
-                    // hard mode aura
-                    if (m_pInstance->GetData(TYPE_MIMIRON_HARD) == DONE)
+                case GO_MIMIRON_ELEVATOR:
+                    m_pInstance->DoUseDoorOrButton(GO_MIMIRON_ELEVATOR);
+                    break;
+                case NPC_VX001:
+                    if (GameObject* pElevator = m_pInstance->GetSingleGameObjectFromStorage(GO_MIMIRON_ELEVATOR))
                     {
-                        pVx001->CastSpell(pVx001, SPELL_EMERGENCY_MODE, true);
+                        pElevator->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
                     }
-                }
-                break;
-            case SEAT_ID_TURRET:
-                if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
-                {
-                    pVx001->SetHealth(pVx001->GetMaxHealth());
-                    pVx001->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
-                    pVx001->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    pVx001->SetInCombatWithZone();
-                }
-                break;
+                    m_creature->SummonCreature(NPC_VX001, afRobotSpawnPos[0], afRobotSpawnPos[1], afRobotSpawnPos[2], afRobotSpawnPos[3], TEMPSPAWN_DEAD_DESPAWN, 0);
+                    break;
+                case SPELL_JET_PACK_VISUAL:
+                    DoCastSpellIfCan(m_creature, SPELL_JET_PACK_VISUAL);
+                    break;
+                case SPELL_JET_PACK:
+                    // fly from the Leviathan to VX001
+                    if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
+                    {
+                        pLeviathan->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
+                    }
+                    if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
+                    {
+                        DoCastSpellIfCan(pVx001, SPELL_RIDE_VEHICLE_MIMIRON_0, CAST_TRIGGERED);
+                    }
+                    break;
+                case SAY_TORSO_ACTIVE:
+                    m_creature->RemoveAurasDueToSpell(SPELL_JET_PACK_VISUAL);
+                    break;
+                case PHASE_VX001:
+                    // mount inside the robot
+                    if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
+                    {
+                        pVx001->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
+                        DoCastSpellIfCan(pVx001, SPELL_RIDE_VEHICLE_MIMIRON_1, CAST_TRIGGERED);
+
+                        // hard mode aura
+                        if (m_pInstance->GetData(TYPE_MIMIRON_HARD) == DONE)
+                        {
+                            pVx001->CastSpell(pVx001, SPELL_EMERGENCY_MODE, true);
+                        }
+                    }
+                    break;
+                case SEAT_ID_TURRET:
+                    if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
+                    {
+                        pVx001->SetHealth(pVx001->GetMaxHealth());
+                        pVx001->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
+                        pVx001->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        pVx001->SetInCombatWithZone();
+                    }
+                    break;
 
                 // Start phase 3 transition
-            case NPC_ROCKET_STRIKE:
-                // mount on the top of the robot for phase end text
-                if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
-                {
-                    pVx001->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
-                    DoCastSpellIfCan(pVx001, SPELL_RIDE_VEHICLE_MIMIRON_4, CAST_TRIGGERED);
-                }
-                break;
-            case NPC_AERIAL_UNIT:
-                m_creature->SummonCreature(NPC_AERIAL_UNIT, afAerialSpawnPos[0], afAerialSpawnPos[1], afAerialSpawnPos[2], afAerialSpawnPos[3], TEMPSPAWN_DEAD_DESPAWN, 0);
-                break;
-            case PHASE_TRANSITION:
-                DoCastSpellIfCan(m_creature, SPELL_JET_PACK_VISUAL);
-                break;
-            case PHASE_AERIAL_UNIT:
-                // mount inside the flying robot
-                if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
-                {
-                    pVx001->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
-                }
-                if (Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT))
-                {
-                    DoCastSpellIfCan(pAerial, SPELL_RIDE_VEHICLE_MIMIRON_0, CAST_TRIGGERED);
-
-                    // hard mode aura
-                    if (m_pInstance->GetData(TYPE_MIMIRON_HARD) == DONE)
+                case NPC_ROCKET_STRIKE:
+                    // mount on the top of the robot for phase end text
+                    if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
                     {
-                        pAerial->CastSpell(pAerial, SPELL_EMERGENCY_MODE, true);
+                        pVx001->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
+                        DoCastSpellIfCan(pVx001, SPELL_RIDE_VEHICLE_MIMIRON_4, CAST_TRIGGERED);
                     }
-                }
-                break;
-            case SAY_HEAD_ACTIVE:
-                m_creature->RemoveAurasDueToSpell(SPELL_JET_PACK_VISUAL);
-                break;
-            case NPC_MAGNETIC_CORE:
-                if (Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT))
-                {
-                    pAerial->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    pAerial->SetInCombatWithZone();
-                }
-                break;
+                    break;
+                case NPC_AERIAL_UNIT:
+                    m_creature->SummonCreature(NPC_AERIAL_UNIT, afAerialSpawnPos[0], afAerialSpawnPos[1], afAerialSpawnPos[2], afAerialSpawnPos[3], TEMPSPAWN_DEAD_DESPAWN, 0);
+                    break;
+                case PHASE_TRANSITION:
+                    DoCastSpellIfCan(m_creature, SPELL_JET_PACK_VISUAL);
+                    break;
+                case PHASE_AERIAL_UNIT:
+                    // mount inside the flying robot
+                    if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
+                    {
+                        pVx001->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
+                    }
+                    if (Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT))
+                    {
+                        DoCastSpellIfCan(pAerial, SPELL_RIDE_VEHICLE_MIMIRON_0, CAST_TRIGGERED);
+
+                        // hard mode aura
+                        if (m_pInstance->GetData(TYPE_MIMIRON_HARD) == DONE)
+                        {
+                            pAerial->CastSpell(pAerial, SPELL_EMERGENCY_MODE, true);
+                        }
+                    }
+                    break;
+                case SAY_HEAD_ACTIVE:
+                    m_creature->RemoveAurasDueToSpell(SPELL_JET_PACK_VISUAL);
+                    break;
+                case NPC_MAGNETIC_CORE:
+                    if (Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT))
+                    {
+                        pAerial->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        pAerial->SetInCombatWithZone();
+                    }
+                    break;
 
                 // Start phase 4 transition
-            case NPC_COMPUTER:
-                // get the tank into combat position
-                if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
+                case NPC_COMPUTER:
+                    // get the tank into combat position
+                    if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
+                    {
+                        pLeviathan->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM_DEFEATED);
+                        pLeviathan->GetMotionMaster()->MovePoint(POINT_ID_CENTER, afTankMovePos[0], afTankMovePos[1], afTankMovePos[2]);
+                    }
+                    break;
+                case SPELL_HALF_HEAL:
                 {
-                    pLeviathan->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM_DEFEATED);
-                    pLeviathan->GetMotionMaster()->MovePoint(POINT_ID_CENTER, afTankMovePos[0], afTankMovePos[1], afTankMovePos[2]);
-                }
-                break;
-            case SPELL_HALF_HEAL:
-            {
-                // mount the torso on top of the tank
-                Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK);
-                Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001);
-                if (!pLeviathan || !pVx001)
-                {
-                    return;
-                }
+                    // mount the torso on top of the tank
+                    Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK);
+                    Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001);
+                    if (!pLeviathan || !pVx001)
+                    {
+                        return;
+                    }
 
-                pVx001->RemoveAurasDueToSpell(SPELL_TORSO_DISABLED);
-                pVx001->CastSpell(pLeviathan, SPELL_RIDE_VEHICLE_ROBOT_1, true);
-                break;
-            }
-            case NPC_BOMB_BOT:
-                if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
-                {
-                    pLeviathan->GetMotionMaster()->MovePoint(POINT_ID_CENTER, afCenterMovePos[0], afCenterMovePos[1], afCenterMovePos[2]);
+                    pVx001->RemoveAurasDueToSpell(SPELL_TORSO_DISABLED);
+                    pVx001->CastSpell(pLeviathan, SPELL_RIDE_VEHICLE_ROBOT_1, true);
+                    break;
                 }
-                break;
-            case NPC_BURST_TARGET:
-            {
-                // mount the head on top of the torso
-                Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT);
-                Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001);
-                if (!pAerial || !pVx001)
+                case NPC_BOMB_BOT:
+                    if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
+                    {
+                        pLeviathan->GetMotionMaster()->MovePoint(POINT_ID_CENTER, afCenterMovePos[0], afCenterMovePos[1], afCenterMovePos[2]);
+                    }
+                    break;
+                case NPC_BURST_TARGET:
                 {
-                    return;
-                }
+                    // mount the head on top of the torso
+                    Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT);
+                    Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001);
+                    if (!pAerial || !pVx001)
+                    {
+                        return;
+                    }
 
-                pAerial->CastSpell(pVx001, SPELL_RIDE_VEHICLE_ROBOT_2, true);
-                break;
-            }
-            case NPC_ROCKET_VISUAL:
-                // switch from the head to inside the torso
-                if (Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT))
-                {
-                    pAerial->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
+                    pAerial->CastSpell(pVx001, SPELL_RIDE_VEHICLE_ROBOT_2, true);
+                    break;
                 }
-                if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
-                {
-                    DoCastSpellIfCan(pVx001, SPELL_RIDE_VEHICLE_MIMIRON_1, CAST_TRIGGERED);
-                }
-                break;
-            case NPC_PROXIMITY_MINE:
-                // set the whole robot in combat and inform about phase 4
-                if (Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT))
-                {
-                    SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pAerial);
-                    pAerial->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                }
-                if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
-                {
-                    SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pVx001);
-                    pVx001->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    pVx001->SetInCombatWithZone();
-                }
-                if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
-                {
-                    SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pLeviathan);
-                    pLeviathan->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                }
-                break;
+                case NPC_ROCKET_VISUAL:
+                    // switch from the head to inside the torso
+                    if (Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT))
+                    {
+                        pAerial->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE, m_creature->GetObjectGuid());
+                    }
+                    if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
+                    {
+                        DoCastSpellIfCan(pVx001, SPELL_RIDE_VEHICLE_MIMIRON_1, CAST_TRIGGERED);
+                    }
+                    break;
+                case NPC_PROXIMITY_MINE:
+                    // set the whole robot in combat and inform about phase 4
+                    if (Creature* pAerial = m_pInstance->GetSingleCreatureFromStorage(NPC_AERIAL_UNIT))
+                    {
+                        SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pAerial);
+                        pAerial->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    }
+                    if (Creature* pVx001 = m_pInstance->GetSingleCreatureFromStorage(NPC_VX001))
+                    {
+                        SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pVx001);
+                        pVx001->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        pVx001->SetInCombatWithZone();
+                    }
+                    if (Creature* pLeviathan = m_pInstance->GetSingleCreatureFromStorage(NPC_LEVIATHAN_MK))
+                    {
+                        SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pLeviathan);
+                        pLeviathan->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    }
+                    break;
 
                 // Start encounter epilogue
-            case SPELL_SLEEP_VISUAL:
-                DoCastSpellIfCan(m_creature, SPELL_SLEEP_VISUAL);
-                if (m_pInstance->GetData(TYPE_MIMIRON_HARD) == DONE)
-                {
-                    if (Creature* pComputer = m_pInstance->GetSingleCreatureFromStorage(NPC_COMPUTER))
+                case SPELL_SLEEP_VISUAL:
+                    DoCastSpellIfCan(m_creature, SPELL_SLEEP_VISUAL);
+                    if (m_pInstance->GetData(TYPE_MIMIRON_HARD) == DONE)
                     {
-                        DoScriptText(SAY_SELF_DESTRUCT_END, pComputer);
-                        m_uiFlamesTimer = 0;
-                        m_uiDestructTimer = 0;
+                        if (Creature* pComputer = m_pInstance->GetSingleCreatureFromStorage(NPC_COMPUTER))
+                        {
+                            DoScriptText(SAY_SELF_DESTRUCT_END, pComputer);
+                            m_uiFlamesTimer = 0;
+                            m_uiDestructTimer = 0;
+                        }
                     }
-                }
-                break;
-            case SPELL_SLEEP_WAKE:
-                if (DoCastSpellIfCan(m_creature, SPELL_SLEEP_WAKE) == CAST_OK)
-                {
-                    m_creature->RemoveAurasDueToSpell(SPELL_SLEEP_VISUAL);
-                }
-                break;
-            case SPELL_TELEPORT_VISUAL:
-                if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT_VISUAL) == CAST_OK)
-                {
-                    m_creature->ForcedDespawn(2000);
-                }
-                break;
+                    break;
+                case SPELL_SLEEP_WAKE:
+                    if (DoCastSpellIfCan(m_creature, SPELL_SLEEP_WAKE) == CAST_OK)
+                    {
+                        m_creature->RemoveAurasDueToSpell(SPELL_SLEEP_VISUAL);
+                    }
+                    break;
+                case SPELL_TELEPORT_VISUAL:
+                    if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT_VISUAL) == CAST_OK)
+                    {
+                        m_creature->ForcedDespawn(2000);
+                    }
+                    break;
             }
         }
 
@@ -606,38 +606,38 @@ struct boss_mimiron : public CreatureScript
             switch (eventType)
             {
                 // Red button pressed
-            case AI_EVENT_CUSTOM_A:
-                StartNextDialogueText(SAY_SELF_DESTRUCT);
-                m_uiPhase = PHASE_LEVIATHAN;
+                case AI_EVENT_CUSTOM_A:
+                    StartNextDialogueText(SAY_SELF_DESTRUCT);
+                    m_uiPhase = PHASE_LEVIATHAN;
 
-                if (m_pInstance)
-                {
-                    m_pInstance->SetData(TYPE_MIMIRON, IN_PROGRESS);
-                }
-                m_uiDestructTimer = MINUTE * IN_MILLISECONDS;
-                m_uiFlamesTimer = 7000;
-                break;
+                    if (m_pInstance)
+                    {
+                        m_pInstance->SetData(TYPE_MIMIRON, IN_PROGRESS);
+                    }
+                    m_uiDestructTimer = MINUTE * IN_MILLISECONDS;
+                    m_uiFlamesTimer = 7000;
+                    break;
                 // Leviathan phase finished
-            case AI_EVENT_CUSTOM_B:
-                StartNextDialogueText(NPC_LEVIATHAN_MK_TURRET);
-                break;
+                case AI_EVENT_CUSTOM_B:
+                    StartNextDialogueText(NPC_LEVIATHAN_MK_TURRET);
+                    break;
                 // VX001 phase finished
-            case AI_EVENT_CUSTOM_C:
-                StartNextDialogueText(SPELL_TORSO_DISABLED);
-                break;
+                case AI_EVENT_CUSTOM_C:
+                    StartNextDialogueText(SPELL_TORSO_DISABLED);
+                    break;
                 // Aerial unit phase finished
-            case AI_EVENT_CUSTOM_D:
-                StartNextDialogueText(NPC_COMPUTER);
-                break;
+                case AI_EVENT_CUSTOM_D:
+                    StartNextDialogueText(NPC_COMPUTER);
+                    break;
                 // Robot piece destroyed
-            case AI_EVENT_CUSTOM_E:
-                if (!m_uiWakeUpTimer)
-                {
-                    m_uiWakeUpTimer = 10000;
-                }
-                break;
-            default:
-                break;
+                case AI_EVENT_CUSTOM_E:
+                    if (!m_uiWakeUpTimer)
+                    {
+                        m_uiWakeUpTimer = 10000;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -661,7 +661,9 @@ struct boss_mimiron : public CreatureScript
             uint32 uiNextAuraId = aRandomAnimationSpells[urand(0, countof(aRandomAnimationSpells) - 1)];
 
             while (uiNextAuraId == m_uiCurrentSeatAura)
+            {
                 uiNextAuraId = aRandomAnimationSpells[urand(0, countof(aRandomAnimationSpells) - 1)];
+            }
 
             m_uiCurrentSeatAura = uiNextAuraId;
             DoCastSpellIfCan(pLeviathan, m_uiCurrentSeatAura, CAST_TRIGGERED);
@@ -833,21 +835,21 @@ struct boss_mimiron : public CreatureScript
 
                     switch (m_uiDestructStage)
                     {
-                    case 1: DoScriptText(SAY_DESTRUCT_9_MIN, pComputer); break;
-                    case 2: DoScriptText(SAY_DESTRUCT_8_MIN, pComputer); break;
-                    case 3: DoScriptText(SAY_DESTRUCT_7_MIN, pComputer); break;
-                    case 4: DoScriptText(SAY_DESTRUCT_6_MIN, pComputer); break;
-                    case 5: DoScriptText(SAY_DESTRUCT_5_MIN, pComputer); break;
-                    case 6: DoScriptText(SAY_DESTRUCT_4_MIN, pComputer); break;
-                    case 7: DoScriptText(SAY_DESTRUCT_3_MIN, pComputer); break;
-                    case 8: DoScriptText(SAY_DESTRUCT_2_MIN, pComputer); break;
-                    case 9: DoScriptText(SAY_DESTRUCT_1_MIN, pComputer); break;
-                    case 10:
-                        DoScriptText(SAY_DESTRUCT_0_MIN, pComputer);
-                        pComputer->CastSpell(pComputer, SPELL_SELF_DESTRUCTION, true);
-                        pComputer->CastSpell(pComputer, SPELL_SELF_DESTRUCTION_DAMAGE, true);
-                        m_uiDestructTimer = 0;
-                        break;
+                        case 1: DoScriptText(SAY_DESTRUCT_9_MIN, pComputer); break;
+                        case 2: DoScriptText(SAY_DESTRUCT_8_MIN, pComputer); break;
+                        case 3: DoScriptText(SAY_DESTRUCT_7_MIN, pComputer); break;
+                        case 4: DoScriptText(SAY_DESTRUCT_6_MIN, pComputer); break;
+                        case 5: DoScriptText(SAY_DESTRUCT_5_MIN, pComputer); break;
+                        case 6: DoScriptText(SAY_DESTRUCT_4_MIN, pComputer); break;
+                        case 7: DoScriptText(SAY_DESTRUCT_3_MIN, pComputer); break;
+                        case 8: DoScriptText(SAY_DESTRUCT_2_MIN, pComputer); break;
+                        case 9: DoScriptText(SAY_DESTRUCT_1_MIN, pComputer); break;
+                        case 10:
+                            DoScriptText(SAY_DESTRUCT_0_MIN, pComputer);
+                            pComputer->CastSpell(pComputer, SPELL_SELF_DESTRUCTION, true);
+                            pComputer->CastSpell(pComputer, SPELL_SELF_DESTRUCTION_DAMAGE, true);
+                            m_uiDestructTimer = 0;
+                            break;
                     }
                 }
                 else
@@ -1368,17 +1370,17 @@ struct boss_vx001 : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_BURST_TARGET:
-                pSummoned->CastSpell(m_creature, SPELL_RAPID_BURST_EFFECT, true);
-                m_uiBurstEndTimer = 3000;
+                case NPC_BURST_TARGET:
+                    pSummoned->CastSpell(m_creature, SPELL_RAPID_BURST_EFFECT, true);
+                    m_uiBurstEndTimer = 3000;
 
-                // Remove the target focus but allow the boss to face the burst target
-                m_creature->SetTargetGuid(ObjectGuid());
-                m_creature->SetFacingToObject(pSummoned);
-                break;
-            case NPC_FROST_BOMB:
-                pSummoned->CastSpell(pSummoned, SPELL_FROST_BOMB_VISUAL, true);
-                break;
+                    // Remove the target focus but allow the boss to face the burst target
+                    m_creature->SetTargetGuid(ObjectGuid());
+                    m_creature->SetFacingToObject(pSummoned);
+                    break;
+                case NPC_FROST_BOMB:
+                    pSummoned->CastSpell(pSummoned, SPELL_FROST_BOMB_VISUAL, true);
+                    break;
             }
         }
 
@@ -2020,18 +2022,18 @@ struct spell_summon_any_bot_trigger : public SpellScript
 
             switch (uiSpellId)
             {
-            case SPELL_SUMMON_SCRAP_BOT_TRIGGER:
-                uiVisualSpell = SPELL_SUMMON_ASSAULT_BOT_VISUAL;
-                uiSummonSpell = SPELL_SUMMON_ASSAULT_BOT;
-                break;
-            case SPELL_SUMMON_ASSAULT_BOT_TRIGGER:
-                uiVisualSpell = SPELL_SUMMON_SCRAP_BOT_VISUAL;
-                uiSummonSpell = SPELL_SUMMON_SCRAP_BOT;
-                break;
-            case SPELL_SUMMON_FIRE_BOT_TRIGGER:
-                uiVisualSpell = SPELL_SUMMON_FIRE_BOT_VISUAL;
-                uiSummonSpell = SPELL_SUMMON_FIRE_BOT;
-                break;
+                case SPELL_SUMMON_SCRAP_BOT_TRIGGER:
+                    uiVisualSpell = SPELL_SUMMON_ASSAULT_BOT_VISUAL;
+                    uiSummonSpell = SPELL_SUMMON_ASSAULT_BOT;
+                    break;
+                case SPELL_SUMMON_ASSAULT_BOT_TRIGGER:
+                    uiVisualSpell = SPELL_SUMMON_SCRAP_BOT_VISUAL;
+                    uiSummonSpell = SPELL_SUMMON_SCRAP_BOT;
+                    break;
+                case SPELL_SUMMON_FIRE_BOT_TRIGGER:
+                    uiVisualSpell = SPELL_SUMMON_FIRE_BOT_VISUAL;
+                    uiSummonSpell = SPELL_SUMMON_FIRE_BOT;
+                    break;
             }
 
             pCreatureTarget->CastSpell(pCreatureTarget, uiVisualSpell, true);

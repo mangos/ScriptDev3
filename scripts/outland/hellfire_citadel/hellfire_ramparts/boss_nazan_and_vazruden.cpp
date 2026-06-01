@@ -185,35 +185,35 @@ struct boss_vazruden_herald : public CreatureScript
             {
                 switch (uiPointId)
                 {
-                case POINT_ID_CENTER:
-                    DoSplit();
-                    break;
-                case POINT_ID_COMBAT:
+                    case POINT_ID_CENTER:
+                        DoSplit();
+                        break;
+                    case POINT_ID_COMBAT:
                     {
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    m_pInstance->SetData(TYPE_NAZAN, IN_PROGRESS);
+                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                        m_pInstance->SetData(TYPE_NAZAN, IN_PROGRESS);
 
-                    // Landing
-                    // undo flying
-                    m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, 0);
-                    m_creature->SetLevitate(false);
+                        // Landing
+                        // undo flying
+                        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, 0);
+                        m_creature->SetLevitate(false);
 
-                    Player* pPlayer = m_creature->GetMap()->GetPlayer(m_lastSeenPlayerGuid);
-                    if (pPlayer && pPlayer->IsAlive())
-                    {
-                        AttackStart(pPlayer);
-                    }
+                        Player* pPlayer = m_creature->GetMap()->GetPlayer(m_lastSeenPlayerGuid);
+                        if (pPlayer && pPlayer->IsAlive())
+                        {
+                            AttackStart(pPlayer);
+                        }
 
-                    // Initialize for combat
-                    m_uiFireballTimer = urand(5200, 16500);
-                    }
-                    break;
-                case POINT_ID_FLYING:
-                    if (m_bIsEventInProgress)               // Additional check for wipe case, while nazan is flying to this point
-                    {
-                        m_uiFireballTimer = 1;
+                        // Initialize for combat
+                        m_uiFireballTimer = urand(5200, 16500);
                     }
                     break;
+                    case POINT_ID_FLYING:
+                        if (m_bIsEventInProgress)               // Additional check for wipe case, while nazan is flying to this point
+                        {
+                            m_uiFireballTimer = 1;
+                        }
+                        break;
                 }
             }
         }
@@ -464,9 +464,9 @@ struct boss_vazruden : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
             }
         }
 

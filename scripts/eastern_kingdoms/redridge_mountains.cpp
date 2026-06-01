@@ -83,7 +83,7 @@ struct npc_corporal_keeshan_escort : public CreatureScript
             {
                 DoScriptText(SAY_CORPORAL_KEESHAN_1, m_creature);
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-            m_creature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
+                m_creature->SetFactionTemporary(FACTION_ESCORT_A_NEUTRAL_ACTIVE, TEMPFACTION_RESTORE_RESPAWN);
 #endif
                 Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue));
             }
@@ -93,13 +93,13 @@ struct npc_corporal_keeshan_escort : public CreatureScript
         {
             switch (uiWP)
             {
-            case 27:                                        // break outside
-                DoScriptText(SAY_CORPORAL_KEESHAN_3, m_creature);
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                break;
-            case 54:                                        // say goodbye
-                DoScriptText(SAY_CORPORAL_KEESHAN_5, m_creature);
-                break;
+                case 27:                                        // break outside
+                    DoScriptText(SAY_CORPORAL_KEESHAN_3, m_creature);
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                    break;
+                case 54:                                        // say goodbye
+                    DoScriptText(SAY_CORPORAL_KEESHAN_5, m_creature);
+                    break;
             }
         }
 
@@ -107,17 +107,17 @@ struct npc_corporal_keeshan_escort : public CreatureScript
         {
             switch (uiWP)
             {
-            case 26:                                        // break outside
-                m_creature->SetStandState(UNIT_STAND_STATE_SIT);
-                DoScriptText(SAY_CORPORAL_KEESHAN_2, m_creature);
-                break;
-            case 53:                                        // quest_complete
-                DoScriptText(SAY_CORPORAL_KEESHAN_4, m_creature);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_MISSING_IN_ACTION, m_creature);
-                }
-                break;
+                case 26:                                        // break outside
+                    m_creature->SetStandState(UNIT_STAND_STATE_SIT);
+                    DoScriptText(SAY_CORPORAL_KEESHAN_2, m_creature);
+                    break;
+                case 53:                                        // quest_complete
+                    DoScriptText(SAY_CORPORAL_KEESHAN_4, m_creature);
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_MISSING_IN_ACTION, m_creature);
+                    }
+                    break;
             }
         }
 

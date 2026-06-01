@@ -110,7 +110,7 @@ struct boss_alythess : public CreatureScript
     struct boss_alythessAI : public ScriptedAI
     {
         boss_alythessAI(Creature* pCreature) : ScriptedAI(pCreature),
-        m_introDialogue(aIntroDialogue)
+            m_introDialogue(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             m_introDialogue.InitializeDialogueHelper(m_pInstance);
@@ -682,44 +682,44 @@ struct npc_shadow_image : public CreatureScript
                 // Do chosen ability
                 switch (m_uiChosenAbility)
                 {
-                case SPELL_SHADOWFURY:
-                    if (m_uiAbilityTimer < uiDiff)
-                    {
-                        if (m_creature->IsWithinDistInMap(m_creature->getVictim(), INTERACTION_DISTANCE))
+                    case SPELL_SHADOWFURY:
+                        if (m_uiAbilityTimer < uiDiff)
                         {
-                            if (DoCastSpellIfCan(m_creature, SPELL_SHADOWFURY) == CAST_OK)
+                            if (m_creature->IsWithinDistInMap(m_creature->getVictim(), INTERACTION_DISTANCE))
                             {
-                                m_uiSuicideTimer = 1000;
+                                if (DoCastSpellIfCan(m_creature, SPELL_SHADOWFURY) == CAST_OK)
+                                {
+                                    m_uiSuicideTimer = 1000;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        m_uiAbilityTimer -= uiDiff;
-                    }
-                    break;
-                case SPELL_DARK_STRIKE:
-                    if (m_uiAbilityTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DARK_STRIKE) == CAST_OK)
+                        else
                         {
-                            ++m_uiDarkStrikes;
-                            // kill itself after 2 strikes
-                            if (m_uiDarkStrikes == 2)
+                            m_uiAbilityTimer -= uiDiff;
+                        }
+                        break;
+                    case SPELL_DARK_STRIKE:
+                        if (m_uiAbilityTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DARK_STRIKE) == CAST_OK)
                             {
-                                m_uiSuicideTimer = 1000;
-                            }
-                            else
-                            {
-                                m_uiAbilityTimer = 1000;
+                                ++m_uiDarkStrikes;
+                                // kill itself after 2 strikes
+                                if (m_uiDarkStrikes == 2)
+                                {
+                                    m_uiSuicideTimer = 1000;
+                                }
+                                else
+                                {
+                                    m_uiAbilityTimer = 1000;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        m_uiAbilityTimer -= uiDiff;
-                    }
-                    break;
+                        else
+                        {
+                            m_uiAbilityTimer -= uiDiff;
+                        }
+                        break;
                 }
             }
         }

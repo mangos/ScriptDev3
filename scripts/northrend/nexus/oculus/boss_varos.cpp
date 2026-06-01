@@ -222,19 +222,19 @@ struct boss_varos : public CreatureScript
                 uint32 uiSpellId = 0;
                 switch (urand(0, 3))
                 {
-                case 0: uiSpellId = SPELL_CALL_CAPTAIN_1; break;
-                case 1: uiSpellId = SPELL_CALL_CAPTAIN_2; break;
-                case 2: uiSpellId = SPELL_CALL_CAPTAIN_3; break;
-                case 3: uiSpellId = SPELL_CALL_CAPTAIN_4; break;
+                    case 0: uiSpellId = SPELL_CALL_CAPTAIN_1; break;
+                    case 1: uiSpellId = SPELL_CALL_CAPTAIN_2; break;
+                    case 2: uiSpellId = SPELL_CALL_CAPTAIN_3; break;
+                    case 3: uiSpellId = SPELL_CALL_CAPTAIN_4; break;
                 }
 
                 if (DoCastSpellIfCan(m_creature, uiSpellId) == CAST_OK)
                 {
                     switch (urand(0, 2))
                     {
-                    case 0: DoScriptText(SAY_CALL_CAPTAIN_1, m_creature); break;
-                    case 1: DoScriptText(SAY_CALL_CAPTAIN_2, m_creature); break;
-                    case 2: DoScriptText(SAY_CALL_CAPTAIN_3, m_creature); break;
+                        case 0: DoScriptText(SAY_CALL_CAPTAIN_1, m_creature); break;
+                        case 1: DoScriptText(SAY_CALL_CAPTAIN_2, m_creature); break;
+                        case 2: DoScriptText(SAY_CALL_CAPTAIN_3, m_creature); break;
                     }
 
                     DoScriptText(EMOTE_CAPTAIN, m_creature);

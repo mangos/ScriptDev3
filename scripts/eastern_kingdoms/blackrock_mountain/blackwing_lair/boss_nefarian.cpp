@@ -245,42 +245,42 @@ struct boss_nefarian : public CreatureScript
 
                 switch (urand(0, 8))
                 {
-                case 0:
-                    DoScriptText(SAY_MAGE, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_MAGE);
-                    break;
-                case 1:
-                    DoScriptText(SAY_WARRIOR, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_WARRIOR);
-                    break;
-                case 2:
-                    DoScriptText(SAY_DRUID, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_DRUID);
-                    break;
-                case 3:
-                    DoScriptText(SAY_PRIEST, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_PRIEST);
-                    break;
-                case 4:
-                    DoScriptText(SAY_PALADIN, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_PALADIN);
-                    break;
-                case 5:
-                    DoScriptText(SAY_SHAMAN, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_SHAMAN);
-                    break;
-                case 6:
-                    DoScriptText(SAY_WARLOCK, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_WARLOCK);
-                    break;
-                case 7:
-                    DoScriptText(SAY_HUNTER, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_HUNTER);
-                    break;
-                case 8:
-                    DoScriptText(SAY_ROGUE, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_ROGUE);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_MAGE, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_MAGE);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_WARRIOR, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_WARRIOR);
+                        break;
+                    case 2:
+                        DoScriptText(SAY_DRUID, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_DRUID);
+                        break;
+                    case 3:
+                        DoScriptText(SAY_PRIEST, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_PRIEST);
+                        break;
+                    case 4:
+                        DoScriptText(SAY_PALADIN, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_PALADIN);
+                        break;
+                    case 5:
+                        DoScriptText(SAY_SHAMAN, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_SHAMAN);
+                        break;
+                    case 6:
+                        DoScriptText(SAY_WARLOCK, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_WARLOCK);
+                        break;
+                    case 7:
+                        DoScriptText(SAY_HUNTER, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_HUNTER);
+                        break;
+                    case 8:
+                        DoScriptText(SAY_ROGUE, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_ROGUE);
+                        break;
                 }
 
                 m_uiClassCallTimer = urand(35000, 40000);

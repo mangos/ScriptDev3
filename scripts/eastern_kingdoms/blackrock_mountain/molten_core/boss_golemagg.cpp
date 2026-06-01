@@ -59,7 +59,7 @@ struct boss_golemagg : public CreatureScript
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-        DoCastSpellIfCan(m_creature, SPELL_MAGMA_SPLASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
+            DoCastSpellIfCan(m_creature, SPELL_MAGMA_SPLASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
 #endif
         }
 
@@ -103,7 +103,7 @@ struct boss_golemagg : public CreatureScript
                 m_pInstance->SetData(TYPE_GOLEMAGG, FAIL);
             }
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-        DoCastSpellIfCan(m_creature, SPELL_MAGMA_SPLASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
+            DoCastSpellIfCan(m_creature, SPELL_MAGMA_SPLASH, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
 #endif
         }
 

@@ -48,11 +48,11 @@ enum
     SAY_ADD_DIED3               = -1568054,
     SAY_DEATH                   = -1568055,
 
-    /* Notes about the event:
-     * The boss casts siphon soul right after he finishes the spirit bolts channel, which takes 10 sec
-     * The siphon soul is a channeled spell for 30 sec during which the boss uses some class abilities of the target
-     * Basically the boss casts a dummy spell which chooses a random target on which it casts the actuall channel spell
-     * The drain power spell acts as a enrage timer. It's cast each 30 seconds after the boss' health is below 80%
+    /** Notes about the event:
+     *  The boss casts siphon soul right after he finishes the spirit bolts channel, which takes 10 sec
+     *  The siphon soul is a channeled spell for 30 sec during which the boss uses some class abilities of the target
+     *  Basically the boss casts a dummy spell which chooses a random target on which it casts the actuall channel spell
+     *  The drain power spell acts as a enrage timer. It's cast each 30 seconds after the boss' health is below 80%
      */
     SPELL_SPIRIT_BOLTS          = 43383,
     SPELL_SIPHON_SOUL_DUMMY     = 43498,
@@ -343,9 +343,9 @@ struct boss_malacrass : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_ADD_DIED1, m_creature); break;
-            case 1: DoScriptText(SAY_ADD_DIED2, m_creature); break;
-            case 2: DoScriptText(SAY_ADD_DIED3, m_creature); break;
+                case 0: DoScriptText(SAY_ADD_DIED1, m_creature); break;
+                case 1: DoScriptText(SAY_ADD_DIED2, m_creature); break;
+                case 2: DoScriptText(SAY_ADD_DIED3, m_creature); break;
             }
         }
 
@@ -381,18 +381,18 @@ struct boss_malacrass : public CreatureScript
 
             switch (m_aMalacrassStolenAbility[m_uiPlayerClass][uiSpellIndex].m_uiTargetType)
             {
-            case TARGET_TYPE_SELF:
-                pTarget = m_creature;
-                break;
-            case TARGET_TYPE_VICTIM:
-                pTarget = m_creature->getVictim();
-                break;
-            case TARGET_TYPE_RANDOM:
-                pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
-                break;
-            case TARGET_TYPE_FRIENDLY:
-                pTarget = DoSelectLowestHpFriendly(50.0f);
-                break;
+                case TARGET_TYPE_SELF:
+                    pTarget = m_creature;
+                    break;
+                case TARGET_TYPE_VICTIM:
+                    pTarget = m_creature->getVictim();
+                    break;
+                case TARGET_TYPE_RANDOM:
+                    pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+                    break;
+                case TARGET_TYPE_FRIENDLY:
+                    pTarget = DoSelectLowestHpFriendly(50.0f);
+                    break;
             }
 
             if (pTarget)

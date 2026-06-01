@@ -269,18 +269,18 @@ struct boss_veknilash : public CreatureScript
 
             switch (urand(0, 3))
             {
-            case 0:
-                DoScriptText(SAY_VEKNILASH_AGGRO_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_VEKNILASH_AGGRO_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_VEKNILASH_AGGRO_3, m_creature);
-                break;
-            case 3:
-                DoScriptText(SAY_VEKNILASH_AGGRO_4, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_VEKNILASH_AGGRO_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_VEKNILASH_AGGRO_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_VEKNILASH_AGGRO_3, m_creature);
+                    break;
+                case 3:
+                    DoScriptText(SAY_VEKNILASH_AGGRO_4, m_creature);
+                    break;
             }
         }
 
@@ -413,18 +413,18 @@ struct boss_veklor : public CreatureScript
 
             switch (urand(0, 3))
             {
-            case 0:
-                DoScriptText(SAY_VEKLOR_AGGRO_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_VEKLOR_AGGRO_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_VEKLOR_AGGRO_3, m_creature);
-                break;
-            case 3:
-                DoScriptText(SAY_VEKLOR_AGGRO_4, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_VEKLOR_AGGRO_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_VEKLOR_AGGRO_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_VEKLOR_AGGRO_3, m_creature);
+                    break;
+                case 3:
+                    DoScriptText(SAY_VEKLOR_AGGRO_4, m_creature);
+                    break;
             }
         }
 

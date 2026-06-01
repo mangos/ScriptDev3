@@ -213,54 +213,54 @@ struct boss_alar : public CreatureScript
 
             switch (uiPointId)
             {
-            case POINT_ID_QUILLS:
-                if (m_uiPhase == PHASE_ONE)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FLAME_QUILLS) == CAST_OK)
+                case POINT_ID_QUILLS:
+                    if (m_uiPhase == PHASE_ONE)
                     {
-                        // Set the platform id so the boss will move to the last or the first platform
-                        m_uiCurrentPlatformId = urand(0, 1) ? 2 : 3;
-                        m_uiPlatformMoveTimer = 10000;
+                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_QUILLS) == CAST_OK)
+                        {
+                            // Set the platform id so the boss will move to the last or the first platform
+                            m_uiCurrentPlatformId = urand(0, 1) ? 2 : 3;
+                            m_uiPlatformMoveTimer = 10000;
+                        }
                     }
-                }
-                else if (m_uiPhase == PHASE_DIVE_BOMB)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_DIVE_BOMB_VISUAL) == CAST_OK)
+                    else if (m_uiPhase == PHASE_DIVE_BOMB)
                     {
-                        m_uiDiveBombTimer = 5000;
+                        if (DoCastSpellIfCan(m_creature, SPELL_DIVE_BOMB_VISUAL) == CAST_OK)
+                        {
+                            m_uiDiveBombTimer = 5000;
+                        }
                     }
-                }
-                break;
-            case POINT_ID_PLATFORM:
-                // When we reach the platform we start the range check and we can summon the embers
-                m_bCanSummonEmber = true;
-                m_uiRangeCheckTimer = 2000;
-                break;
-            case POINT_ID_RESSURRECT:
-                // remove the invisibility aura
-                if (m_creature->HasAura(SPELL_EMBER_BLAST))
-                {
-                    m_creature->RemoveAurasDueToSpell(SPELL_EMBER_BLAST);
-                }
-
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-
-                // cast rebirth and remove fake death
-                if (DoCastSpellIfCan(m_creature, SPELL_REBIRTH) == CAST_OK)
-                {
-                    DoResetThreat();
-
-                    // start following target
-                    SetCombatMovement(true);
-                    if (m_creature->getVictim())
+                    break;
+                case POINT_ID_PLATFORM:
+                    // When we reach the platform we start the range check and we can summon the embers
+                    m_bCanSummonEmber = true;
+                    m_uiRangeCheckTimer = 2000;
+                    break;
+                case POINT_ID_RESSURRECT:
+                    // remove the invisibility aura
+                    if (m_creature->HasAura(SPELL_EMBER_BLAST))
                     {
-                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                        m_creature->RemoveAurasDueToSpell(SPELL_EMBER_BLAST);
                     }
 
-                    m_uiPhase = PHASE_TWO;
-                }
-                break;
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+
+                    // cast rebirth and remove fake death
+                    if (DoCastSpellIfCan(m_creature, SPELL_REBIRTH) == CAST_OK)
+                    {
+                        DoResetThreat();
+
+                        // start following target
+                        SetCombatMovement(true);
+                        if (m_creature->getVictim())
+                        {
+                            m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                        }
+
+                        m_uiPhase = PHASE_TWO;
+                    }
+                    break;
             }
         }
 

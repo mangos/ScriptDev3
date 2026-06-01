@@ -54,14 +54,14 @@ enum
     NPC_STALKER                     = 23095,
 };
 
-/* Non existed spells that were used in 3.2
+/** Non existed spells that were used in 3.2
  * Stalker:  40257 41930
  * Supremus: 33420 41582 41925 41951
  */
 
 const float RANGE_MOLTEN_PUNCH      = 40.0;
 
-/* These floats are related to the speed-hack near end of script;
+/** These floats are related to the speed-hack near end of script;
  * Statet at wowwiki: "If the gaze target is further away than 40 yards, he dashes at about five times the normal run speed until the range is about 20 yards."
  * TODO But this is currently not confirmed otherwise to be actually happening
  * const float RANGE_MIN_DASHING       = 20.0;
@@ -354,7 +354,7 @@ struct boss_supremus : public CreatureScript
                     m_uiMoltenPunchTimer -= uiDiff;
                 }
 
-                /* Not understood how this really must work
+                /** Not understood how this really must work
                  * if (m_creature->GetSpeedRate(MOVE_RUN) > SPEED_CHASE && m_creature->GetCombatDistance(m_creature->getVictim()) < RANGE_MIN_DASHING)
                  *     m_creature->SetSpeedRate(MOVE_RUN, SPEED_CHASE);
                  * else if (m_creature->GetCombatDistance(m_creature->getVictim()) > RANGE_MOLTEN_PUNCH)

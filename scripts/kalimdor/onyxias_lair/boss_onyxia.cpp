@@ -394,7 +394,7 @@ struct boss_onyxia : public CreatureScript
                     {
                         m_uiBellowingRoarTimer -= uiDiff;
                     }
-                // no break, phase 3 will use same abilities as in 1
+                    // no break, phase 3 will use same abilities as in 1
                 case PHASE_START:
                 {
                     if (m_uiFlameBreathTimer < uiDiff)
@@ -529,7 +529,7 @@ struct boss_onyxia : public CreatureScript
 
                     if (m_uiMovementTimer < uiDiff)
                     {
-                         // 3 possible actions
+                        // 3 possible actions
                         switch (urand(0, 2))
                         {
                             case 0:                             // breath
@@ -541,7 +541,7 @@ struct boss_onyxia : public CreatureScript
                                 return;
                             case 1:                             // a point on the left side
                             {
-                                  // C++ is stupid, so add -1 with +7
+                                // C++ is stupid, so add -1 with +7
                                 m_uiMovePoint += NUM_MOVE_POINT - 1;
                                 m_uiMovePoint %= NUM_MOVE_POINT;
                                 break;
@@ -658,35 +658,35 @@ struct boss_onyxia : public CreatureScript
         }
 
 #if defined (WOTLK) || defined (CATA)
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
-    {
-        // Check if players are hit by Onyxia's Deep Breath
-        if (pTarget->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+        void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            return;
-        }
+            // Check if players are hit by Onyxia's Deep Breath
+            if (pTarget->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+            {
+                return;
+            }
 
-        // All and only the Onyxia Deep Breath Spells have these visuals
-        if (pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_A || pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_B)
-        {
-            m_pInstance->SetData(TYPE_ONYXIA, DATA_PLAYER_TOASTED);
+            // All and only the Onyxia Deep Breath Spells have these visuals
+            if (pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_A || pSpell->SpellVisual[0] == SPELL_VISUAL_BREATH_B)
+            {
+                m_pInstance->SetData(TYPE_ONYXIA, DATA_PLAYER_TOASTED);
+            }
         }
-    }
 #elif defined (MISTS)
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
-    {
-        // Check if players are hit by Onyxia's Deep Breath
-        if (pTarget->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+        void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            return;
-        }
+            // Check if players are hit by Onyxia's Deep Breath
+            if (pTarget->GetTypeId() != TYPEID_PLAYER || !m_pInstance)
+            {
+                return;
+            }
 
-        // All and only the Onyxia Deep Breath Spells have these visuals
-        if (pSpell->GetSpellVisual(0) == SPELL_VISUAL_BREATH_A || pSpell->GetSpellVisual(0) == SPELL_VISUAL_BREATH_B)
-        {
-            m_pInstance->SetData(TYPE_ONYXIA, DATA_PLAYER_TOASTED);
+            // All and only the Onyxia Deep Breath Spells have these visuals
+            if (pSpell->GetSpellVisual(0) == SPELL_VISUAL_BREATH_A || pSpell->GetSpellVisual(0) == SPELL_VISUAL_BREATH_B)
+            {
+                m_pInstance->SetData(TYPE_ONYXIA, DATA_PLAYER_TOASTED);
+            }
         }
-    }
 #endif
     };
 

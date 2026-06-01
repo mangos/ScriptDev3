@@ -141,12 +141,12 @@ enum
     MAX_KALDOREI                        = 20,
 };
 
-/* Known event issues:
- * The Kaldorei and Qiraji soldiers don't have the correct flags and factions in DB
- * The Ahn'Qiraj gate gameobjects are missing from DB
- * The spells used by the dragons upon the Qiraji need core support
- * The script events sent by the spells which close the AQ gate needs DB support
- * Can't make Fandral equip the Scepter when Anachronos handles it to him
+/** Known event issues:
+ *  The Kaldorei and Qiraji soldiers don't have the correct flags and factions in DB
+ *  The Ahn'Qiraj gate gameobjects are missing from DB
+ *  The spells used by the dragons upon the Qiraji need core support
+ *  The script events sent by the spells which close the AQ gate needs DB support
+ *  Can't make Fandral equip the Scepter when Anachronos hands it to him
  */
 
 static const DialogueEntry aEventDialogue[] =
@@ -240,7 +240,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
     struct npc_anachronos_the_ancientAI : public ScriptedAI, private DialogueHelper
     {
         npc_anachronos_the_ancientAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aEventDialogue)
+            DialogueHelper(aEventDialogue)
         {
         }
 
@@ -268,228 +268,228 @@ struct npc_anachronos_the_ancient : public CreatureScript
         {
             switch (iEntry)
             {
-            case NPC_ANACHRONOS_THE_ANCIENT:
-                // Call the other dragons
-                DoSummonDragons();
-                break;
-            case EMOTE_ONESHOT_SHOUT:
-                // Summon warriors
-                DoSummonWarriors();
-                m_creature->HandleEmote(EMOTE_ONESHOT_SHOUT);
-                break;
-            case SAY_FANDRAL_INTRO_2:
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->SetFacingToObject(m_creature);
-                }
-                break;
-            case EMOTE_MERITHRA_GLANCE:
-                if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
-                {
+                case NPC_ANACHRONOS_THE_ANCIENT:
+                    // Call the other dragons
+                    DoSummonDragons();
+                    break;
+                case EMOTE_ONESHOT_SHOUT:
+                    // Summon warriors
+                    DoSummonWarriors();
+                    m_creature->HandleEmote(EMOTE_ONESHOT_SHOUT);
+                    break;
+                case SAY_FANDRAL_INTRO_2:
                     if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
                     {
-                        pFandral->SetFacingToObject(pMerithra);
+                        pFandral->SetFacingToObject(m_creature);
                     }
-                }
-                break;
-            case NPC_ANACHRONOS_QUEST_TRIGGER:
-                // Move Merithra to attack
-                if (Creature* pTrigger = GetClosestCreatureWithEntry(m_creature, NPC_ANACHRONOS_QUEST_TRIGGER, 35.0f))
-                {
-                    m_triggerGuid = pTrigger->GetObjectGuid();
+                    break;
+                case EMOTE_MERITHRA_GLANCE:
                     if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
                     {
-                        pMerithra->SetWalk(false);
-                        pMerithra->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                        if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                        {
+                            pFandral->SetFacingToObject(pMerithra);
+                        }
                     }
-                }
-                break;
-            case SPELL_GREEN_DRAGON_TRANSFORM:
-                if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
-                {
-                    pMerithra->CastSpell(pMerithra, SPELL_GREEN_DRAGON_TRANSFORM, false);
-                }
-                break;
-            case SAY_ARYGOS_ATTACK_2:
-                if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
-                {
-                    pMerithra->CastSpell(pMerithra, SPELL_MERITHRA_WAKE, false);
-                }
-                break;
-            case NPC_ARYGOS:
-                // Move Arygos to attack
-                if (Creature* pTrigger = m_creature->GetMap()->GetCreature(m_triggerGuid))
-                {
+                    break;
+                case NPC_ANACHRONOS_QUEST_TRIGGER:
+                    // Move Merithra to attack
+                    if (Creature* pTrigger = GetClosestCreatureWithEntry(m_creature, NPC_ANACHRONOS_QUEST_TRIGGER, 35.0f))
+                    {
+                        m_triggerGuid = pTrigger->GetObjectGuid();
+                        if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
+                        {
+                            pMerithra->SetWalk(false);
+                            pMerithra->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                        }
+                    }
+                    break;
+                case SPELL_GREEN_DRAGON_TRANSFORM:
+                    if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
+                    {
+                        pMerithra->CastSpell(pMerithra, SPELL_GREEN_DRAGON_TRANSFORM, false);
+                    }
+                    break;
+                case SAY_ARYGOS_ATTACK_2:
+                    if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
+                    {
+                        pMerithra->CastSpell(pMerithra, SPELL_MERITHRA_WAKE, false);
+                    }
+                    break;
+                case NPC_ARYGOS:
+                    // Move Arygos to attack
+                    if (Creature* pTrigger = m_creature->GetMap()->GetCreature(m_triggerGuid))
+                    {
+                        if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
+                        {
+                            pArygos->SetWalk(false);
+                            pArygos->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                        }
+                    }
+                    break;
+                case POINT_ID_EXIT:
+                    // Move Merithra to the exit point
+                    if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
+                    {
+#if defined (CLASSIC)
+                        pMerithra->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
+#else
+                        pMerithra->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+#endif
+                        pMerithra->SetLevitate(true);
+                        pMerithra->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
+                        pMerithra->ForcedDespawn(9000);
+                    }
+                    break;
+                case SPELL_BLUE_DRAGON_TRANSFORM:
                     if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
                     {
-                        pArygos->SetWalk(false);
-                        pArygos->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                        pArygos->CastSpell(pArygos, SPELL_BLUE_DRAGON_TRANSFORM, false);
                     }
-                }
-                break;
-            case POINT_ID_EXIT:
-                // Move Merithra to the exit point
-                if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
-                {
+                    break;
+                case SPELL_ARYGOS_VENGEANCE:
+                    if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
+                    {
+                        pArygos->CastSpell(pArygos, SPELL_ARYGOS_VENGEANCE, false);
+                    }
+                    break;
+                case POINT_ID_DRAGON_ATTACK:
+                    // Move Arygos to the exit point
+                    if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
+                    {
 #if defined (CLASSIC)
-                    pMerithra->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
+                        pArygos->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
-                    pMerithra->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                        pArygos->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
 #endif
-                    pMerithra->SetLevitate(true);
-                    pMerithra->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
-                    pMerithra->ForcedDespawn(9000);
-                }
-                break;
-            case SPELL_BLUE_DRAGON_TRANSFORM:
-                if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
-                {
-                    pArygos->CastSpell(pArygos, SPELL_BLUE_DRAGON_TRANSFORM, false);
-                }
-                break;
-            case SPELL_ARYGOS_VENGEANCE:
-                if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
-                {
-                    pArygos->CastSpell(pArygos, SPELL_ARYGOS_VENGEANCE, false);
-                }
-                break;
-            case POINT_ID_DRAGON_ATTACK:
-                // Move Arygos to the exit point
-                if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
-                {
-#if defined (CLASSIC)
-                    pArygos->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
-#else
-                    pArygos->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-#endif
-                    pArygos->SetLevitate(true);
-                    pArygos->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
-                    pArygos->ForcedDespawn(9000);
-                }
-                break;
-            case NPC_CAELESTRASZ:
-                // Move Caelestrasz to attack
-                if (Creature* pTrigger = m_creature->GetMap()->GetCreature(m_triggerGuid))
-                {
+                        pArygos->SetLevitate(true);
+                        pArygos->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
+                        pArygos->ForcedDespawn(9000);
+                    }
+                    break;
+                case NPC_CAELESTRASZ:
+                    // Move Caelestrasz to attack
+                    if (Creature* pTrigger = m_creature->GetMap()->GetCreature(m_triggerGuid))
+                    {
+                        if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
+                        {
+                            pCaelestrasz->SetWalk(false);
+                            pCaelestrasz->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                        }
+                    }
+                    break;
+                case SPELL_RED_DRAGON_TRANSFORM:
                     if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
                     {
-                        pCaelestrasz->SetWalk(false);
-                        pCaelestrasz->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                        pCaelestrasz->CastSpell(pCaelestrasz, SPELL_RED_DRAGON_TRANSFORM, false);
                     }
-                }
-                break;
-            case SPELL_RED_DRAGON_TRANSFORM:
-                if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
-                {
-                    pCaelestrasz->CastSpell(pCaelestrasz, SPELL_RED_DRAGON_TRANSFORM, false);
-                }
-                break;
-            case SPELL_CAELESTRASZ_MOLTEN_RAIN:
-                if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
-                {
-                    pCaelestrasz->CastSpell(pCaelestrasz, SPELL_CAELESTRASZ_MOLTEN_RAIN, false);
-                }
-                break;
-            case SAY_ANACHRONOS_SEAL_1:
-                // Send Caelestrasz on flight
-                if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
-                {
+                    break;
+                case SPELL_CAELESTRASZ_MOLTEN_RAIN:
+                    if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
+                    {
+                        pCaelestrasz->CastSpell(pCaelestrasz, SPELL_CAELESTRASZ_MOLTEN_RAIN, false);
+                    }
+                    break;
+                case SAY_ANACHRONOS_SEAL_1:
+                    // Send Caelestrasz on flight
+                    if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
+                    {
 #if defined (CLASSIC)
-                    pCaelestrasz->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
+                        pCaelestrasz->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
-                    pCaelestrasz->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                        pCaelestrasz->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
 #endif
-                    pCaelestrasz->SetLevitate(true);
-                    pCaelestrasz->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
-                    pCaelestrasz->ForcedDespawn(9000);
-                }
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    m_creature->SetFacingToObject(pFandral);
-                }
-                break;
-            case SAY_FANDRAL_SEAL_2:
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->SetFacingToObject(m_creature);
-                }
-                break;
-            case POINT_ID_GATE:
-                // Send Anachronos to the gate
-                m_creature->SetWalk(false);
-                m_creature->GetMotionMaster()->MovePoint(POINT_ID_GATE, aEternalBoardMovement[1].m_fX, aEternalBoardMovement[1].m_fY, aEternalBoardMovement[1].m_fZ);
-                break;
-            case NPC_FANDRAL_STAGHELM:
-                // Send Fandral to the gate
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->SetWalk(false);
-                    pFandral->GetMotionMaster()->MovePoint(POINT_ID_GATE, aEternalBoardMovement[2].m_fX, aEternalBoardMovement[2].m_fY, aEternalBoardMovement[2].m_fZ);
-                }
-                break;
-            case SPELL_PRISMATIC_BARRIER:
-                DoCastSpellIfCan(m_creature, SPELL_PRISMATIC_BARRIER);
-                break;
-            case SPELL_GLYPH_OF_WARDING:
-                DoCastSpellIfCan(m_creature, SPELL_GLYPH_OF_WARDING);
-                break;
-            case SAY_FANDRAL_SEAL_6:
-                // Here Anachronos should continue to cast something
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->CastSpell(pFandral, SPELL_CALL_ANCIENTS, false);
-                }
-                break;
-            case EMOTE_FANDRAL_EXHAUSTED:
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->SetStandState(UNIT_STAND_STATE_KNEEL);
-                    m_creature->SetFacingToObject(pFandral);
-                }
-                break;
-            case DATA_HANDLE_SCEPTER:
-                // Give the scepter to Fandral (it should equip it somehow)
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    DoScriptText(EMOTE_ANACHRONOS_SCEPTER, m_creature, pFandral);
-                }
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                break;
-            case SAY_FANDRAL_EPILOGUE_4:
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->SetStandState(UNIT_STAND_STATE_STAND);
-                }
-                break;
-            case POINT_ID_SCEPTER_2:
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                break;
-            case EMOTE_FANDRAL_SHATTER:
-                // Shatter the scepter
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->CastSpell(pFandral, SPELL_SHATTER_HAMMER, false);
-                }
-                break;
-            case SAY_ANACHRONOS_EPILOGUE_6:
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->SetWalk(true);
-                    pFandral->GetMotionMaster()->MovePoint(POINT_ID_SCEPTER_1, aEternalBoardMovement[3].m_fX, aEternalBoardMovement[3].m_fY, aEternalBoardMovement[3].m_fZ);
-                }
-                break;
-            case POINT_ID_EPILOGUE:
-                // Make Fandral leave
-                if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
-                {
-                    pFandral->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[7].m_fX, aEternalBoardMovement[7].m_fY, aEternalBoardMovement[7].m_fZ);
-                }
-                break;
-            case POINT_ID_SCEPTER_1:
-                // Anachronos collects the pieces
-                m_creature->SetWalk(true);
-                m_creature->GetMotionMaster()->MovePoint(POINT_ID_SCEPTER_1, aEternalBoardMovement[5].m_fX, aEternalBoardMovement[5].m_fY, aEternalBoardMovement[5].m_fZ);
-                break;
+                        pCaelestrasz->SetLevitate(true);
+                        pCaelestrasz->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[0].m_fX, aEternalBoardMovement[0].m_fY, aEternalBoardMovement[0].m_fZ);
+                        pCaelestrasz->ForcedDespawn(9000);
+                    }
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        m_creature->SetFacingToObject(pFandral);
+                    }
+                    break;
+                case SAY_FANDRAL_SEAL_2:
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        pFandral->SetFacingToObject(m_creature);
+                    }
+                    break;
+                case POINT_ID_GATE:
+                    // Send Anachronos to the gate
+                    m_creature->SetWalk(false);
+                    m_creature->GetMotionMaster()->MovePoint(POINT_ID_GATE, aEternalBoardMovement[1].m_fX, aEternalBoardMovement[1].m_fY, aEternalBoardMovement[1].m_fZ);
+                    break;
+                case NPC_FANDRAL_STAGHELM:
+                    // Send Fandral to the gate
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        pFandral->SetWalk(false);
+                        pFandral->GetMotionMaster()->MovePoint(POINT_ID_GATE, aEternalBoardMovement[2].m_fX, aEternalBoardMovement[2].m_fY, aEternalBoardMovement[2].m_fZ);
+                    }
+                    break;
+                case SPELL_PRISMATIC_BARRIER:
+                    DoCastSpellIfCan(m_creature, SPELL_PRISMATIC_BARRIER);
+                    break;
+                case SPELL_GLYPH_OF_WARDING:
+                    DoCastSpellIfCan(m_creature, SPELL_GLYPH_OF_WARDING);
+                    break;
+                case SAY_FANDRAL_SEAL_6:
+                    // Here Anachronos should continue to cast something
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        pFandral->CastSpell(pFandral, SPELL_CALL_ANCIENTS, false);
+                    }
+                    break;
+                case EMOTE_FANDRAL_EXHAUSTED:
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        pFandral->SetStandState(UNIT_STAND_STATE_KNEEL);
+                        m_creature->SetFacingToObject(pFandral);
+                    }
+                    break;
+                case DATA_HANDLE_SCEPTER:
+                    // Give the scepter to Fandral (it should equip it somehow)
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        DoScriptText(EMOTE_ANACHRONOS_SCEPTER, m_creature, pFandral);
+                    }
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    break;
+                case SAY_FANDRAL_EPILOGUE_4:
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        pFandral->SetStandState(UNIT_STAND_STATE_STAND);
+                    }
+                    break;
+                case POINT_ID_SCEPTER_2:
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                    break;
+                case EMOTE_FANDRAL_SHATTER:
+                    // Shatter the scepter
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        pFandral->CastSpell(pFandral, SPELL_SHATTER_HAMMER, false);
+                    }
+                    break;
+                case SAY_ANACHRONOS_EPILOGUE_6:
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        pFandral->SetWalk(true);
+                        pFandral->GetMotionMaster()->MovePoint(POINT_ID_SCEPTER_1, aEternalBoardMovement[3].m_fX, aEternalBoardMovement[3].m_fY, aEternalBoardMovement[3].m_fZ);
+                    }
+                    break;
+                case POINT_ID_EPILOGUE:
+                    // Make Fandral leave
+                    if (Creature* pFandral = m_creature->GetMap()->GetCreature(m_fandralGuid))
+                    {
+                        pFandral->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[7].m_fX, aEternalBoardMovement[7].m_fY, aEternalBoardMovement[7].m_fZ);
+                    }
+                    break;
+                case POINT_ID_SCEPTER_1:
+                    // Anachronos collects the pieces
+                    m_creature->SetWalk(true);
+                    m_creature->GetMotionMaster()->MovePoint(POINT_ID_SCEPTER_1, aEternalBoardMovement[5].m_fX, aEternalBoardMovement[5].m_fY, aEternalBoardMovement[5].m_fZ);
+                    break;
             }
         }
 
@@ -497,19 +497,19 @@ struct npc_anachronos_the_ancient : public CreatureScript
         {
             switch (uiEntry)
             {
-            case NPC_ANACHRONOS_THE_ANCIENT:
-                return m_creature;
-            case NPC_ARYGOS:
-                return m_creature->GetMap()->GetCreature(m_arygosGuid);
-            case NPC_CAELESTRASZ:
-                return m_creature->GetMap()->GetCreature(m_CaelestraszGuid);
-            case NPC_MERITHRA_OF_THE_DREAM:
-                return m_creature->GetMap()->GetCreature(m_merithraGuid);
-            case NPC_FANDRAL_STAGHELM:
-                return m_creature->GetMap()->GetCreature(m_fandralGuid);
+                case NPC_ANACHRONOS_THE_ANCIENT:
+                    return m_creature;
+                case NPC_ARYGOS:
+                    return m_creature->GetMap()->GetCreature(m_arygosGuid);
+                case NPC_CAELESTRASZ:
+                    return m_creature->GetMap()->GetCreature(m_CaelestraszGuid);
+                case NPC_MERITHRA_OF_THE_DREAM:
+                    return m_creature->GetMap()->GetCreature(m_merithraGuid);
+                case NPC_FANDRAL_STAGHELM:
+                    return m_creature->GetMap()->GetCreature(m_fandralGuid);
 
-            default:
-                return nullptr;
+                default:
+                    return nullptr;
             }
         }
 
@@ -569,28 +569,28 @@ struct npc_anachronos_the_ancient : public CreatureScript
             // Also remove npc flags where needed
             switch (pSummoned->GetEntry())
             {
-            case NPC_FANDRAL_STAGHELM:
-                m_fandralGuid = pSummoned->GetObjectGuid();
-                break;
-            case NPC_MERITHRA_OF_THE_DREAM:
-                m_merithraGuid = pSummoned->GetObjectGuid();
-                pSummoned->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
-                break;
-            case NPC_CAELESTRASZ:
-                m_CaelestraszGuid = pSummoned->GetObjectGuid();
-                pSummoned->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
-                break;
-            case NPC_ARYGOS:
-                m_arygosGuid = pSummoned->GetObjectGuid();
-                pSummoned->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
-                break;
-            case NPC_ANUBISATH_CONQUEROR:
-            case NPC_QIRAJI_WASP:
-            case NPC_QIRAJI_DRONE:
-            case NPC_QIRAJI_TANK:
-            case NPC_KALDOREI_INFANTRY:
-                m_lQirajiWarriorsList.push_back(pSummoned->GetObjectGuid());
-                break;
+                case NPC_FANDRAL_STAGHELM:
+                    m_fandralGuid = pSummoned->GetObjectGuid();
+                    break;
+                case NPC_MERITHRA_OF_THE_DREAM:
+                    m_merithraGuid = pSummoned->GetObjectGuid();
+                    pSummoned->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
+                    break;
+                case NPC_CAELESTRASZ:
+                    m_CaelestraszGuid = pSummoned->GetObjectGuid();
+                    pSummoned->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
+                    break;
+                case NPC_ARYGOS:
+                    m_arygosGuid = pSummoned->GetObjectGuid();
+                    pSummoned->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
+                    break;
+                case NPC_ANUBISATH_CONQUEROR:
+                case NPC_QIRAJI_WASP:
+                case NPC_QIRAJI_DRONE:
+                case NPC_QIRAJI_TANK:
+                case NPC_KALDOREI_INFANTRY:
+                    m_lQirajiWarriorsList.push_back(pSummoned->GetObjectGuid());
+                    break;
             }
         }
 
@@ -603,32 +603,32 @@ struct npc_anachronos_the_ancient : public CreatureScript
 
             switch (uiPointId)
             {
-            case POINT_ID_GATE:
-                // Cast time stop when he reaches the gate
-                DoCastSpellIfCan(m_creature, SPELL_TIME_STOP);
-                StartNextDialogueText(SPELL_TIME_STOP);
-                break;
-            case POINT_ID_SCEPTER_1:
-                // Pickup the pieces
-                DoScriptText(EMOTE_ANACHRONOS_PICKUP, m_creature);
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                m_uiEventTimer = 2000;
-                break;
-            case POINT_ID_SCEPTER_2:
-                // Pickup the pieces
-                DoScriptText(SAY_ANACHRONOS_EPILOGUE_8, m_creature);
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                m_uiEventTimer = 4000;
-                break;
-            case POINT_ID_EXIT:
+                case POINT_ID_GATE:
+                    // Cast time stop when he reaches the gate
+                    DoCastSpellIfCan(m_creature, SPELL_TIME_STOP);
+                    StartNextDialogueText(SPELL_TIME_STOP);
+                    break;
+                case POINT_ID_SCEPTER_1:
+                    // Pickup the pieces
+                    DoScriptText(EMOTE_ANACHRONOS_PICKUP, m_creature);
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    m_uiEventTimer = 2000;
+                    break;
+                case POINT_ID_SCEPTER_2:
+                    // Pickup the pieces
+                    DoScriptText(SAY_ANACHRONOS_EPILOGUE_8, m_creature);
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    m_uiEventTimer = 4000;
+                    break;
+                case POINT_ID_EXIT:
 #if defined (CLASSIC)
-                DoCastSpellIfCan(m_creature, SPELL_BRONZE_DRAGON_TRANSFORM);
+                    DoCastSpellIfCan(m_creature, SPELL_BRONZE_DRAGON_TRANSFORM);
 #else
-                // Spell was removed, manually change the display
-                m_creature->SetDisplayId(DISPLAY_ID_BRONZE_DRAGON);
+                    // Spell was removed, manually change the display
+                    m_creature->SetDisplayId(DISPLAY_ID_BRONZE_DRAGON);
 #endif
-                m_uiEventTimer = 4000;
-                break;
+                    m_uiEventTimer = 4000;
+                    break;
             }
         }
 
@@ -643,30 +643,30 @@ struct npc_anachronos_the_ancient : public CreatureScript
             {
                 switch (uiPointId)
                 {
-                case POINT_ID_EPILOGUE:
-                    // Face Anachronos and restart the dialogue
-                    pSummoned->SetFacingToObject(m_creature);
-                    StartNextDialogueText(SAY_FANDRAL_EPILOGUE_7);
-                    DoUnsummonArmy();
-                    break;
-                case POINT_ID_SCEPTER_1:
-                    pSummoned->GetMotionMaster()->MovePoint(POINT_ID_EPILOGUE, aEternalBoardMovement[4].m_fX, aEternalBoardMovement[4].m_fY, aEternalBoardMovement[4].m_fZ);
-                    break;
-                case POINT_ID_EXIT:
-                    pSummoned->ForcedDespawn();
-                    break;
+                    case POINT_ID_EPILOGUE:
+                        // Face Anachronos and restart the dialogue
+                        pSummoned->SetFacingToObject(m_creature);
+                        StartNextDialogueText(SAY_FANDRAL_EPILOGUE_7);
+                        DoUnsummonArmy();
+                        break;
+                    case POINT_ID_SCEPTER_1:
+                        pSummoned->GetMotionMaster()->MovePoint(POINT_ID_EPILOGUE, aEternalBoardMovement[4].m_fX, aEternalBoardMovement[4].m_fY, aEternalBoardMovement[4].m_fZ);
+                        break;
+                    case POINT_ID_EXIT:
+                        pSummoned->ForcedDespawn();
+                        break;
                 }
             }
             else if (uiPointId == POINT_ID_DRAGON_ATTACK)
             {
                 switch (pSummoned->GetEntry())
                 {
-                case NPC_MERITHRA_OF_THE_DREAM:
-                    StartNextDialogueText(DATA_MERITHRA_ATTACK);
-                    break;
-                case NPC_CAELESTRASZ:
-                    StartNextDialogueText(DATA_CAELASTRASZ_ATTACK);
-                    break;
+                    case NPC_MERITHRA_OF_THE_DREAM:
+                        StartNextDialogueText(DATA_MERITHRA_ATTACK);
+                        break;
+                    case NPC_CAELESTRASZ:
+                        StartNextDialogueText(DATA_CAELASTRASZ_ATTACK);
+                        break;
                 }
             }
         }
@@ -689,44 +689,44 @@ struct npc_anachronos_the_ancient : public CreatureScript
                 {
                     switch (m_uiEventStage)
                     {
-                    case 0:
-                        // Start the dialogue
-                        StartNextDialogueText(NPC_ANACHRONOS_THE_ANCIENT);
-                        m_uiEventTimer = 0;
-                        break;
-                    case 1:
-                        // Do the epilogue movement
-                        m_creature->GetMotionMaster()->MovePoint(POINT_ID_SCEPTER_2, aEternalBoardMovement[6].m_fX, aEternalBoardMovement[6].m_fY, aEternalBoardMovement[6].m_fZ);
-                        m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                        m_uiEventTimer = 0;
-                        break;
-                    case 2:
-                        // Complete quest and despawn gate
-                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                        {
-                            pPlayer->GroupEventHappens(QUEST_A_PAWN_ON_THE_ETERNAL_BOARD, m_creature);
-                        }
-                        m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                        m_uiEventTimer = 4000;
-                        break;
-                    case 3:
-                        // Move to exit
-                        m_creature->SetWalk(false);
-                        m_creature->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[8].m_fX, aEternalBoardMovement[8].m_fY, aEternalBoardMovement[8].m_fZ);
-                        m_uiEventTimer = 0;
-                        break;
-                    case 4:
-                        // Take off and fly
+                        case 0:
+                            // Start the dialogue
+                            StartNextDialogueText(NPC_ANACHRONOS_THE_ANCIENT);
+                            m_uiEventTimer = 0;
+                            break;
+                        case 1:
+                            // Do the epilogue movement
+                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_SCEPTER_2, aEternalBoardMovement[6].m_fX, aEternalBoardMovement[6].m_fY, aEternalBoardMovement[6].m_fZ);
+                            m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                            m_uiEventTimer = 0;
+                            break;
+                        case 2:
+                            // Complete quest and despawn gate
+                            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                            {
+                                pPlayer->GroupEventHappens(QUEST_A_PAWN_ON_THE_ETERNAL_BOARD, m_creature);
+                            }
+                            m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                            m_uiEventTimer = 4000;
+                            break;
+                        case 3:
+                            // Move to exit
+                            m_creature->SetWalk(false);
+                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_EXIT, aEternalBoardMovement[8].m_fX, aEternalBoardMovement[8].m_fY, aEternalBoardMovement[8].m_fZ);
+                            m_uiEventTimer = 0;
+                            break;
+                        case 4:
+                            // Take off and fly
 #if defined (CLASSIC)
-                        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
+                            m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND);
 #else
-                        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                            m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
 #endif
-                        m_creature->SetLevitate(true);
-                        m_creature->GetMotionMaster()->MovePoint(0, aEternalBoardMovement[9].m_fX, aEternalBoardMovement[9].m_fY, aEternalBoardMovement[9].m_fZ);
-                        m_creature->ForcedDespawn(10000);
-                        m_uiEventTimer = 0;
-                        break;
+                            m_creature->SetLevitate(true);
+                            m_creature->GetMotionMaster()->MovePoint(0, aEternalBoardMovement[9].m_fX, aEternalBoardMovement[9].m_fY, aEternalBoardMovement[9].m_fZ);
+                            m_creature->ForcedDespawn(10000);
+                            m_uiEventTimer = 0;
+                            break;
                     }
                     ++m_uiEventStage;
                 }

@@ -42,287 +42,285 @@ struct is_shadowfang_keep : public InstanceScript
 
     class instance_shadowfang_keep : public ScriptedInstance
     {
-    public:
+        public:
 #if defined (CLASSIC) || defined (TBC)
-        instance_shadowfang_keep(Map* pMap) : ScriptedInstance(pMap)
+            instance_shadowfang_keep(Map* pMap) : ScriptedInstance(pMap)
 #endif
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
-        instance_shadowfang_keep(Map* pMap) : ScriptedInstance(pMap), m_uiApothecaryDead(0)
+            instance_shadowfang_keep(Map* pMap) : ScriptedInstance(pMap), m_uiApothecaryDead(0)
 #endif
-        {
-            Initialize();
-        }
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
             {
-            case NPC_ASH:
-            case NPC_ADA:
-            case NPC_FENRUS:
+                Initialize();
+            }
+
+            void Initialize() override
+            {
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_ASH:
+                    case NPC_ADA:
+                    case NPC_FENRUS:
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
-        case NPC_HUMMEL:
-        case NPC_FRYE:
-        case NPC_BAXTER:
-        case NPC_APOTHECARY_GENERATOR:
-        case NPC_VALENTINE_BOSS_MGR:
+                    case NPC_HUMMEL:
+                    case NPC_FRYE:
+                    case NPC_BAXTER:
+                    case NPC_APOTHECARY_GENERATOR:
+                    case NPC_VALENTINE_BOSS_MGR:
 #endif
-                break;
-            case NPC_VINCENT:
-                // If Arugal has done the intro, make Vincent dead!
-                if (m_auiEncounter[4] == DONE)
-                {
-                    pCreature->SetStandState(UNIT_STAND_STATE_DEAD);
-                }
-                break;
+                        break;
+                    case NPC_VINCENT:
+                        // If Arugal has done the intro, make Vincent dead!
+                        if (m_auiEncounter[4] == DONE)
+                        {
+                            pCreature->SetStandState(UNIT_STAND_STATE_DEAD);
+                        }
+                        break;
 
-            default:
-                return;
+                    default:
+                        return;
+                }
+                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             }
-            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-        }
 
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
+            void OnObjectCreate(GameObject* pGo) override
             {
-            case GO_COURTYARD_DOOR:
-                if (m_auiEncounter[0] == DONE)
+                switch (pGo->GetEntry())
                 {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-                // For this we ignore voidwalkers, because if the server restarts
-                // They won't be there, but Fenrus is dead so the door can't be opened!
-            case GO_SORCERER_DOOR:
-                if (m_auiEncounter[2] == DONE)
-                {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-            case GO_ARUGAL_DOOR:
-                if (m_auiEncounter[3] == DONE)
-                {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-            case GO_ARUGAL_FOCUS:
+                    case GO_COURTYARD_DOOR:
+                        if (m_auiEncounter[0] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    // For this we ignore voidwalkers, because if the server restarts
+                    // They won't be there, but Fenrus is dead so the door can't be opened!
+                    case GO_SORCERER_DOOR:
+                        if (m_auiEncounter[2] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    case GO_ARUGAL_DOOR:
+                        if (m_auiEncounter[3] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    case GO_ARUGAL_FOCUS:
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-            case GO_APOTHECARE_VIALS:
-            case GO_CHEMISTRY_SET:
+                    case GO_APOTHECARE_VIALS:
+                    case GO_CHEMISTRY_SET:
 #endif
-                break;
+                        break;
 
-            default:
-                return;
+                    default:
+                        return;
+                }
+                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             }
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-        }
 
-        void DoSpeech()
-        {
-            Creature* pAda = GetSingleCreatureFromStorage(NPC_ADA);
-            Creature* pAsh = GetSingleCreatureFromStorage(NPC_ASH);
-
-            if (pAda && pAda->IsAlive() && pAsh && pAsh->IsAlive())
+            void DoSpeech()
             {
-                DoScriptText(SAY_BOSS_DIE_AD, pAda);
-                DoScriptText(SAY_BOSS_DIE_AS, pAsh);
+                Creature* pAda = GetSingleCreatureFromStorage(NPC_ADA);
+                Creature* pAsh = GetSingleCreatureFromStorage(NPC_ASH);
+
+                if (pAda && pAda->IsAlive() && pAsh && pAsh->IsAlive())
+                {
+                    DoScriptText(SAY_BOSS_DIE_AD, pAda);
+                    DoScriptText(SAY_BOSS_DIE_AS, pAsh);
+                }
             }
-        }
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-        void OnCreatureDeath(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+            void OnCreatureDeath(Creature* pCreature) override
             {
-                // Remove lootable flag from Hummel
-                // Instance data is set to SPECIAL because the encounter depends on multiple bosses
-            case NPC_HUMMEL:
-                pCreature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
-                DoScriptText(SAY_HUMMEL_DEATH, pCreature);
-                // no break;
-            case NPC_FRYE:
-            case NPC_BAXTER:
-                SetData(TYPE_APOTHECARY, SPECIAL);
-                break;
+                switch (pCreature->GetEntry())
+                {
+                    // Remove lootable flag from Hummel
+                    // Instance data is set to SPECIAL because the encounter depends on multiple bosses
+                    case NPC_HUMMEL:
+                        pCreature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+                        DoScriptText(SAY_HUMMEL_DEATH, pCreature);
+                        // no break;
+                    case NPC_FRYE:
+                    case NPC_BAXTER:
+                        SetData(TYPE_APOTHECARY, SPECIAL);
+                        break;
+                }
             }
-        }
 
-        void OnCreatureEvade(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+            void OnCreatureEvade(Creature* pCreature) override
             {
-            case NPC_HUMMEL:
-            case NPC_FRYE:
-            case NPC_BAXTER:
-                SetData(TYPE_APOTHECARY, FAIL);
-                break;
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_HUMMEL:
+                    case NPC_FRYE:
+                    case NPC_BAXTER:
+                        SetData(TYPE_APOTHECARY, FAIL);
+                        break;
+                }
             }
-        }
 #endif
 
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
+            void SetData(uint32 uiType, uint32 uiData) override
             {
-            case TYPE_FREE_NPC:
-                if (uiData == DONE)
+                switch (uiType)
                 {
-                    DoUseDoorOrButton(GO_COURTYARD_DOOR);
-                }
-                m_auiEncounter[0] = uiData;
-                break;
-            case TYPE_RETHILGORE:
-                if (uiData == DONE)
-                {
-                    DoSpeech();
-                }
-                m_auiEncounter[1] = uiData;
-                break;
-            case TYPE_FENRUS:
-                if (uiData == DONE)
-                {
-                    if (Creature* pFenrus = GetSingleCreatureFromStorage(NPC_FENRUS))
-                    {
-                        pFenrus->SummonCreature(NPC_ARCHMAGE_ARUGAL, -136.89f, 2169.17f, 136.58f, 2.794f, TEMPSPAWN_TIMED_DESPAWN, 30000);
-                    }
-                }
-                m_auiEncounter[2] = uiData;
-                break;
-            case TYPE_NANDOS:
-                if (uiData == DONE)
-                {
-                    DoUseDoorOrButton(GO_ARUGAL_DOOR);
-                }
-                m_auiEncounter[3] = uiData;
-                break;
-            case TYPE_INTRO:
-                m_auiEncounter[4] = uiData;
-                break;
-            case TYPE_VOIDWALKER:
-                if (uiData == DONE)
-                {
-                    m_auiEncounter[5]++;
-                    if (m_auiEncounter[5] > 3)
-                    {
-                        DoUseDoorOrButton(GO_SORCERER_DOOR);
-                    }
-                }
-                break;
+                    case TYPE_FREE_NPC:
+                        if (uiData == DONE)
+                        {
+                            DoUseDoorOrButton(GO_COURTYARD_DOOR);
+                        }
+                        m_auiEncounter[0] = uiData;
+                        break;
+                    case TYPE_RETHILGORE:
+                        if (uiData == DONE)
+                        {
+                            DoSpeech();
+                        }
+                        m_auiEncounter[1] = uiData;
+                        break;
+                    case TYPE_FENRUS:
+                        if (uiData == DONE)
+                        {
+                            if (Creature* pFenrus = GetSingleCreatureFromStorage(NPC_FENRUS))
+                            {
+                                pFenrus->SummonCreature(NPC_ARCHMAGE_ARUGAL, -136.89f, 2169.17f, 136.58f, 2.794f, TEMPSPAWN_TIMED_DESPAWN, 30000);
+                            }
+                        }
+                        m_auiEncounter[2] = uiData;
+                        break;
+                    case TYPE_NANDOS:
+                        if (uiData == DONE)
+                        {
+                            DoUseDoorOrButton(GO_ARUGAL_DOOR);
+                        }
+                        m_auiEncounter[3] = uiData;
+                        break;
+                    case TYPE_INTRO:
+                        m_auiEncounter[4] = uiData;
+                        break;
+                    case TYPE_VOIDWALKER:
+                        if (uiData == DONE)
+                        {
+                            m_auiEncounter[5]++;
+                            if (m_auiEncounter[5] > 3)
+                            {
+                                DoUseDoorOrButton(GO_SORCERER_DOOR);
+                            }
+                        }
+                        break;
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-        case TYPE_APOTHECARY:
-            // Reset apothecary counter on fail
-            if (uiData == IN_PROGRESS)
-            {
-                m_uiApothecaryDead = 0;
-            }
-            if (uiData == SPECIAL)
-            {
-                ++m_uiApothecaryDead;
+                    case TYPE_APOTHECARY:
+                        // Reset apothecary counter on fail
+                        if (uiData == IN_PROGRESS)
+                        {
+                            m_uiApothecaryDead = 0;
+                        }
+                        if (uiData == SPECIAL)
+                        {
+                            ++m_uiApothecaryDead;
 
-                // Set Hummel as lootable only when the others are dead
-                if (m_uiApothecaryDead == MAX_APOTHECARY)
-                {
-                    if (Creature* pHummel = GetSingleCreatureFromStorage(NPC_HUMMEL))
-                    {
-                        pHummel->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
-                    }
+                            // Set Hummel as lootable only when the others are dead
+                            if (m_uiApothecaryDead == MAX_APOTHECARY)
+                            {
+                                if (Creature* pHummel = GetSingleCreatureFromStorage(NPC_HUMMEL))
+                                {
+                                    pHummel->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+                                }
 
-                    SetData(TYPE_APOTHECARY, DONE);
-                }
-            }
-            // We don't want to store the SPECIAL data
-            else
-            {
-                m_auiEncounter[6] = uiData;
-            }
-            break;
+                                SetData(TYPE_APOTHECARY, DONE);
+                            }
+                        }
+                        // We don't want to store the SPECIAL data
+                        else
+                        {
+                            m_auiEncounter[6] = uiData;
+                        }
+                        break;
 #endif
-    }
+                }
 
-            if (uiData == DONE)
-            {
-                OUT_SAVE_INST_DATA;
+                if (uiData == DONE)
+                {
+                    OUT_SAVE_INST_DATA;
 
-                std::ostringstream saveStream;
-                saveStream  << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3]
+                    std::ostringstream saveStream;
+                    saveStream  << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3]
 #if defined (CLASSIC) || defined (TBC)
-                            << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
+                                << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
+#else
+                                << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6];
 #endif
-#if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                            << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6];
-#endif
-                m_strInstData = saveStream.str();
+                    m_strInstData = saveStream.str();
 
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
-            }
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            switch (uiType)
-            {
-            case TYPE_FREE_NPC:
-                return m_auiEncounter[0];
-            case TYPE_RETHILGORE:
-                return m_auiEncounter[1];
-            case TYPE_FENRUS:
-                return m_auiEncounter[2];
-            case TYPE_NANDOS:
-                return m_auiEncounter[3];
-            case TYPE_INTRO:
-                return m_auiEncounter[4];
-#if defined (WOTLK) || defined (CATA) || defined(MISTS)
-            case TYPE_APOTHECARY:
-                return m_auiEncounter[6];
-#endif
-            default:
-                return 0;
-            }
-        }
-
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
-            {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-            loadStream  >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
-#if defined (CLASSIC) || defined (TBC)
-                        >> m_auiEncounter[4] >> m_auiEncounter[5];
-#endif
-#if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                        >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6];
-#endif
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                {
-                    m_auiEncounter[i] = NOT_STARTED;
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
                 }
             }
 
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
+            uint32 GetData(uint32 uiType) const override
+            {
+                switch (uiType)
+                {
+                    case TYPE_FREE_NPC:
+                        return m_auiEncounter[0];
+                    case TYPE_RETHILGORE:
+                        return m_auiEncounter[1];
+                    case TYPE_FENRUS:
+                        return m_auiEncounter[2];
+                    case TYPE_NANDOS:
+                        return m_auiEncounter[3];
+                    case TYPE_INTRO:
+                        return m_auiEncounter[4];
+#if defined (WOTLK) || defined (CATA) || defined(MISTS)
+                    case TYPE_APOTHECARY:
+                        return m_auiEncounter[6];
+#endif
+                    default:
+                        return 0;
+                }
+            }
 
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* chrIn) override
+            {
+                if (!chrIn)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
 
-        uint8 m_uiApothecaryDead;
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+                loadStream  >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
+#if defined (CLASSIC) || defined (TBC)
+                            >> m_auiEncounter[4] >> m_auiEncounter[5];
+#else
+                            >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6];
+#endif
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        m_auiEncounter[i] = NOT_STARTED;
+                    }
+                }
+
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
+
+        private:
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
+
+            uint8 m_uiApothecaryDead;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

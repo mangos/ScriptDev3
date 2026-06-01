@@ -99,8 +99,8 @@ enum
 };
 
 /************
-** boss_thaddius
-************/
+ ** boss_thaddius
+ ************/
 
 // Actually this boss behaves like a NoMovement Boss (SPELL_BALL_LIGHTNING) - but there are some movement packages used, unknown what this means!
 struct boss_thaddius : public CreatureScript
@@ -135,15 +135,15 @@ struct boss_thaddius : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0:
-                DoScriptText(SAY_AGGRO_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_AGGRO_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_AGGRO_3, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_AGGRO_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_AGGRO_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_AGGRO_3, m_creature);
+                    break;
             }
 
             // Make Attackable
@@ -296,39 +296,39 @@ struct spell_thaddius_encounter : public SpellScript
     {
         switch (uiSpellId)
         {
-        case SPELL_SHOCK_OVERLOAD:
-            if (uiEffIndex == EFFECT_INDEX_0)
-            {
-                // Only do something to Thaddius, and on the first hit.
-                if (pCreatureTarget->GetEntry() != NPC_THADDIUS || !pCreatureTarget->ToCreature()->HasAura(SPELL_THADIUS_SPAWN))
+            case SPELL_SHOCK_OVERLOAD:
+                if (uiEffIndex == EFFECT_INDEX_0)
                 {
-                    return true;
-                }
-                // remove Stun and then Cast
-                pCreatureTarget->ToCreature()->RemoveAurasDueToSpell(SPELL_THADIUS_SPAWN);
-                pCreatureTarget->ToCreature()->CastSpell(pCreatureTarget->ToCreature(), SPELL_THADIUS_LIGHTNING_VISUAL, false);
-            }
-            return true;
-        case SPELL_THADIUS_LIGHTNING_VISUAL:
-            if (uiEffIndex == EFFECT_INDEX_0 && pCreatureTarget->GetEntry() == NPC_THADDIUS)
-            {
-                if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreatureTarget->ToCreature()->GetInstanceData())
-                {
-                    if (Player* pPlayer = pInstance->GetPlayerInMap(true, false))
+                    // Only do something to Thaddius, and on the first hit.
+                    if (pCreatureTarget->GetEntry() != NPC_THADDIUS || !pCreatureTarget->ToCreature()->HasAura(SPELL_THADIUS_SPAWN))
                     {
-                        pCreatureTarget->ToCreature()->AI()->AttackStart(pPlayer);
+                        return true;
+                    }
+                    // remove Stun and then Cast
+                    pCreatureTarget->ToCreature()->RemoveAurasDueToSpell(SPELL_THADIUS_SPAWN);
+                    pCreatureTarget->ToCreature()->CastSpell(pCreatureTarget->ToCreature(), SPELL_THADIUS_LIGHTNING_VISUAL, false);
+                }
+                return true;
+            case SPELL_THADIUS_LIGHTNING_VISUAL:
+                if (uiEffIndex == EFFECT_INDEX_0 && pCreatureTarget->GetEntry() == NPC_THADDIUS)
+                {
+                    if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreatureTarget->ToCreature()->GetInstanceData())
+                    {
+                        if (Player* pPlayer = pInstance->GetPlayerInMap(true, false))
+                        {
+                            pCreatureTarget->ToCreature()->AI()->AttackStart(pPlayer);
+                        }
                     }
                 }
-            }
-            return true;
+                return true;
         }
         return false;
     }
 };
 
 /************
-** npc_tesla_coil
-************/
+ ** npc_tesla_coil
+ ************/
 
 struct npc_tesla_coil : public CreatureScript
 {
@@ -373,14 +373,14 @@ struct npc_tesla_coil : public CreatureScript
             {
                 switch (eventType)
                 {
-                case AI_EVENT_CUSTOM_A:
-                    ReApplyChain(uiMiscValue);
-                    break;
-                case AI_EVENT_CUSTOM_B:
-                    SetOverloading();
-                    break;
-                default:
-                    break;
+                    case AI_EVENT_CUSTOM_A:
+                        ReApplyChain(uiMiscValue);
+                        break;
+                    case AI_EVENT_CUSTOM_B:
+                        SetOverloading();
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -502,8 +502,8 @@ struct npc_tesla_coil : public CreatureScript
 };
 
 /************
-** boss_thaddiusAddsAI - Superclass for Feugen & Stalagg
-************/
+ ** boss_thaddiusAddsAI - Superclass for Feugen & Stalagg
+ ************/
 
 struct boss_thaddiusAddsAI : public ScriptedAI
 {
@@ -738,8 +738,8 @@ struct boss_thaddiusAddsAI : public ScriptedAI
 };
 
 /************
-** boss_stalagg
-************/
+ ** boss_stalagg
+ ************/
 
 struct boss_stalagg : public CreatureScript
 {
@@ -800,8 +800,8 @@ struct boss_stalagg : public CreatureScript
 };
 
 /************
-** boss_feugen
-************/
+ ** boss_feugen
+ ************/
 
 struct boss_feugen : public CreatureScript
 {

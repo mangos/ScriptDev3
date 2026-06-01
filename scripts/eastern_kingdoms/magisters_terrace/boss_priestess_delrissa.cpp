@@ -1359,9 +1359,9 @@ struct npc_apoko : public CreatureScript
                 // It's not very clear how exactly these spells should be cast
                 switch (urand(0, 2))
                 {
-                case 0: DoCastSpellIfCan(m_creature, SPELL_WINDFURY_TOTEM);  break;
-                case 1: DoCastSpellIfCan(m_creature, SPELL_FIRE_NOVA_TOTEM); break;
-                case 2: DoCastSpellIfCan(m_creature, SPELL_EARTHBIND_TOTEM); break;
+                    case 0: DoCastSpellIfCan(m_creature, SPELL_WINDFURY_TOTEM);  break;
+                    case 1: DoCastSpellIfCan(m_creature, SPELL_FIRE_NOVA_TOTEM); break;
+                    case 2: DoCastSpellIfCan(m_creature, SPELL_EARTHBIND_TOTEM); break;
                 }
                 m_uiTotemTimer = urand(2000, 6000);
             }

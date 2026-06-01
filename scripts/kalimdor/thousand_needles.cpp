@@ -71,25 +71,27 @@ struct npc_kanati : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(SAY_KAN_START, m_creature);
-                DoSpawnGalak();
-                break;
-            case 1:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_PROTECT_KANATI, m_creature);
-                }
-                break;
+                case 0:
+                    DoScriptText(SAY_KAN_START, m_creature);
+                    DoSpawnGalak();
+                    break;
+                case 1:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_PROTECT_KANATI, m_creature);
+                    }
+                    break;
             }
         }
 
         void DoSpawnGalak()
         {
             for (int i = 0; i < 3; ++i)
+            {
                 m_creature->SummonCreature(NPC_GALAK_ASS,
-                m_afGalakLoc[0], m_afGalakLoc[1], m_afGalakLoc[2], 0.0f,
-                TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    m_afGalakLoc[0], m_afGalakLoc[1], m_afGalakLoc[2], 0.0f,
+                    TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+            }
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -158,33 +160,35 @@ struct npc_lakota_windsong : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 8:
-                DoScriptText(SAY_LAKO_LOOK_OUT, m_creature);
-                DoSpawnBandits(ID_AMBUSH_1);
-                break;
-            case 14:
-                DoScriptText(SAY_LAKO_HERE_COME, m_creature);
-                DoSpawnBandits(ID_AMBUSH_2);
-                break;
-            case 21:
-                DoScriptText(SAY_LAKO_MORE, m_creature);
-                DoSpawnBandits(ID_AMBUSH_3);
-                break;
-            case 45:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_FREE_AT_LAST, m_creature);
-                }
-                break;
+                case 8:
+                    DoScriptText(SAY_LAKO_LOOK_OUT, m_creature);
+                    DoSpawnBandits(ID_AMBUSH_1);
+                    break;
+                case 14:
+                    DoScriptText(SAY_LAKO_HERE_COME, m_creature);
+                    DoSpawnBandits(ID_AMBUSH_2);
+                    break;
+                case 21:
+                    DoScriptText(SAY_LAKO_MORE, m_creature);
+                    DoSpawnBandits(ID_AMBUSH_3);
+                    break;
+                case 45:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_FREE_AT_LAST, m_creature);
+                    }
+                    break;
             }
         }
 
         void DoSpawnBandits(int uiAmbushId)
         {
             for (int i = 0; i < 2; ++i)
+            {
                 m_creature->SummonCreature(NPC_GRIM_BANDIT,
-                m_afBanditLoc[i + uiAmbushId][0], m_afBanditLoc[i + uiAmbushId][1], m_afBanditLoc[i + uiAmbushId][2], 0.0f,
-                TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_afBanditLoc[i + uiAmbushId][0], m_afBanditLoc[i + uiAmbushId][1], m_afBanditLoc[i + uiAmbushId][2], 0.0f,
+                    TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+            }
         }
     };
 
@@ -243,28 +247,30 @@ struct npc_paoka_swiftmountain : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 15:
-                DoScriptText(SAY_WYVERN, m_creature);
-                DoSpawnWyvern();
-                break;
-            case 26:
-                DoScriptText(SAY_COMPLETE, m_creature);
-                break;
-            case 27:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_HOMEWARD, m_creature);
-                }
-                break;
+                case 15:
+                    DoScriptText(SAY_WYVERN, m_creature);
+                    DoSpawnWyvern();
+                    break;
+                case 26:
+                    DoScriptText(SAY_COMPLETE, m_creature);
+                    break;
+                case 27:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_HOMEWARD, m_creature);
+                    }
+                    break;
             }
         }
 
         void DoSpawnWyvern()
         {
             for (int i = 0; i < 3; ++i)
+            {
                 m_creature->SummonCreature(NPC_WYVERN,
-                m_afWyvernLoc[i][0], m_afWyvernLoc[i][1], m_afWyvernLoc[i][2], 0.0f,
-                TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_afWyvernLoc[i][0], m_afWyvernLoc[i][1], m_afWyvernLoc[i][2], 0.0f,
+                    TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+            }
         }
     };
 

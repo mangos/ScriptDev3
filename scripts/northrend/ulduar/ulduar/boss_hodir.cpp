@@ -247,23 +247,23 @@ struct boss_hodir : public CreatureScript
                 {
                     switch (m_uiEpilogueStage)
                     {
-                    case 0:
-                        if (m_pInstance)
-                        {
-                            m_pInstance->SetData(TYPE_HODIR, DONE);
-                        }
+                        case 0:
+                            if (m_pInstance)
+                            {
+                                m_pInstance->SetData(TYPE_HODIR, DONE);
+                            }
 
-                        DoScriptText(SAY_EPILOGUE, m_creature);
-                        m_creature->CastSpell(m_creature, SPELL_HODIR_CREDIT, true);
-                        m_uiEpilogueTimer = 10000;
-                        break;
-                    case 1:
-                        if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT) == CAST_OK)
-                        {
-                            m_creature->ForcedDespawn(2000);
-                            m_uiEpilogueTimer = 0;
-                        }
-                        break;
+                            DoScriptText(SAY_EPILOGUE, m_creature);
+                            m_creature->CastSpell(m_creature, SPELL_HODIR_CREDIT, true);
+                            m_uiEpilogueTimer = 10000;
+                            break;
+                        case 1:
+                            if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT) == CAST_OK)
+                            {
+                                m_creature->ForcedDespawn(2000);
+                                m_uiEpilogueTimer = 0;
+                            }
+                            break;
                     }
                     ++m_uiEpilogueStage;
                 }

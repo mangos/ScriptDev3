@@ -123,21 +123,21 @@ struct npc_jaina_proudmoore : public CreatureScript
         {
             switch (uiAction)
             {
-            case GOSSIP_ACTION_INFO_DEF + 1:
-                pJainaAI->StartEvent();
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 2:
-                pJainaAI->m_bIsFirstBossDead = true;
-                pJainaAI->m_uiWaveCount = 9;
-                pJainaAI->StartEvent();
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 3:
-                pJainaAI->Retreat();
-                break;
-            case GOSSIP_ACTION_INFO_DEF:
-                pJainaAI->m_bDebugMode = !pJainaAI->m_bDebugMode;
-                debug_log("SD3: HyjalAI - Debug mode has been toggled %s", pJainaAI->m_bDebugMode ? "on" : "off");
-                break;
+                case GOSSIP_ACTION_INFO_DEF + 1:
+                    pJainaAI->StartEvent();
+                    break;
+                case GOSSIP_ACTION_INFO_DEF + 2:
+                    pJainaAI->m_bIsFirstBossDead = true;
+                    pJainaAI->m_uiWaveCount = 9;
+                    pJainaAI->StartEvent();
+                    break;
+                case GOSSIP_ACTION_INFO_DEF + 3:
+                    pJainaAI->Retreat();
+                    break;
+                case GOSSIP_ACTION_INFO_DEF:
+                    pJainaAI->m_bDebugMode = !pJainaAI->m_bDebugMode;
+                    debug_log("SD3: HyjalAI - Debug mode has been toggled %s", pJainaAI->m_bDebugMode ? "on" : "off");
+                    break;
             }
         }
 
@@ -209,21 +209,21 @@ struct npc_thrall : public CreatureScript
         {
             switch (uiAction)
             {
-            case GOSSIP_ACTION_INFO_DEF + 1:
-                pThrallAI->StartEvent();
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 2:
-                pThrallAI->m_bIsFirstBossDead = true;
-                pThrallAI->m_uiWaveCount = 9;
-                pThrallAI->StartEvent();
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 3:
-                pThrallAI->Retreat();
-                break;
-            case GOSSIP_ACTION_INFO_DEF:
-                pThrallAI->m_bDebugMode = !pThrallAI->m_bDebugMode;
-                debug_log("SD3: HyjalAI - Debug mode has been toggled %s", pThrallAI->m_bDebugMode ? "on" : "off");
-                break;
+                case GOSSIP_ACTION_INFO_DEF + 1:
+                    pThrallAI->StartEvent();
+                    break;
+                case GOSSIP_ACTION_INFO_DEF + 2:
+                    pThrallAI->m_bIsFirstBossDead = true;
+                    pThrallAI->m_uiWaveCount = 9;
+                    pThrallAI->StartEvent();
+                    break;
+                case GOSSIP_ACTION_INFO_DEF + 3:
+                    pThrallAI->Retreat();
+                    break;
+                case GOSSIP_ACTION_INFO_DEF:
+                    pThrallAI->m_bDebugMode = !pThrallAI->m_bDebugMode;
+                    debug_log("SD3: HyjalAI - Debug mode has been toggled %s", pThrallAI->m_bDebugMode ? "on" : "off");
+                    break;
             }
         }
 

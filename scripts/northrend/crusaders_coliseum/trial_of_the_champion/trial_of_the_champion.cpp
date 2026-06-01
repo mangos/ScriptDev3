@@ -91,18 +91,18 @@ struct npc_toc_herald : public CreatureScript
 
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pInstance->SetData(TYPE_DO_PREPARE_CHAMPIONS, uint32(false));
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pInstance->SetData(TYPE_DO_PREPARE_CHAMPIONS, uint32(true));
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            pInstance->SetData(TYPE_ARGENT_CHAMPION, SPECIAL);
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 4:
-            pInstance->SetData(TYPE_BLACK_KNIGHT, SPECIAL);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pInstance->SetData(TYPE_DO_PREPARE_CHAMPIONS, uint32(false));
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pInstance->SetData(TYPE_DO_PREPARE_CHAMPIONS, uint32(true));
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 3:
+                pInstance->SetData(TYPE_ARGENT_CHAMPION, SPECIAL);
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 4:
+                pInstance->SetData(TYPE_BLACK_KNIGHT, SPECIAL);
+                break;
         }
 
         pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);

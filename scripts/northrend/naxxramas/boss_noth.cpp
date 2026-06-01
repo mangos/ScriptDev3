@@ -132,9 +132,9 @@ struct boss_noth : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
             }
 
             if (m_pInstance)
@@ -211,9 +211,9 @@ struct boss_noth : public CreatureScript
 
                             switch (m_uiPhaseSub)               // Set Duration of Skeleton phase
                             {
-                            case PHASE_SKELETON_1: m_uiPhaseTimer = 70000;  break;
-                            case PHASE_SKELETON_2: m_uiPhaseTimer = 97000;  break;
-                            case PHASE_SKELETON_3: m_uiPhaseTimer = 120000; break;
+                                case PHASE_SKELETON_1: m_uiPhaseTimer = 70000;  break;
+                                case PHASE_SKELETON_2: m_uiPhaseTimer = 97000;  break;
+                                case PHASE_SKELETON_3: m_uiPhaseTimer = 120000; break;
                             }
                             return;
                         }
@@ -296,13 +296,13 @@ struct boss_noth : public CreatureScript
                         m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
                         switch (m_uiPhaseSub)
                         {
-                        case PHASE_SKELETON_1: m_uiPhaseTimer = 110000; break;
-                        case PHASE_SKELETON_2: m_uiPhaseTimer = 180000; break;
-                        case PHASE_SKELETON_3:
-                            m_uiPhaseTimer = 0;
-                            // Go Berserk after third Balcony Phase
-                            DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED);
-                            break;
+                            case PHASE_SKELETON_1: m_uiPhaseTimer = 110000; break;
+                            case PHASE_SKELETON_2: m_uiPhaseTimer = 180000; break;
+                            case PHASE_SKELETON_3:
+                                m_uiPhaseTimer = 0;
+                                // Go Berserk after third Balcony Phase
+                                DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED);
+                                break;
                         }
                         m_uiPhase = PHASE_GROUND;
 
@@ -331,27 +331,27 @@ struct boss_noth : public CreatureScript
                     // A bit unclear how many in each sub phase
                     switch (m_uiPhaseSub)
                     {
-                    case PHASE_SKELETON_1:
-                        for (uint8 i = 0; i < (m_bIsRegularMode ? 2 : 4); ++i)
-                        {
-                            DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedChampion[urand(0, 9)], CAST_TRIGGERED);
-                        }
+                        case PHASE_SKELETON_1:
+                            for (uint8 i = 0; i < (m_bIsRegularMode ? 2 : 4); ++i)
+                            {
+                                DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedChampion[urand(0, 9)], CAST_TRIGGERED);
+                            }
 
-                        break;
-                    case PHASE_SKELETON_2:
-                        for (uint8 i = 0; i < (m_bIsRegularMode ? 1 : 2); ++i)
-                        {
-                            DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedChampion[urand(0, 9)], CAST_TRIGGERED);
-                            DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedGuardian[urand(0, 3)], CAST_TRIGGERED);
-                        }
-                        break;
-                    case PHASE_SKELETON_3:
-                        for (uint8 i = 0; i < (m_bIsRegularMode ? 2 : 4); ++i)
-                        {
-                            DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedGuardian[urand(0, 3)], CAST_TRIGGERED);
-                        }
+                            break;
+                        case PHASE_SKELETON_2:
+                            for (uint8 i = 0; i < (m_bIsRegularMode ? 1 : 2); ++i)
+                            {
+                                DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedChampion[urand(0, 9)], CAST_TRIGGERED);
+                                DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedGuardian[urand(0, 3)], CAST_TRIGGERED);
+                            }
+                            break;
+                        case PHASE_SKELETON_3:
+                            for (uint8 i = 0; i < (m_bIsRegularMode ? 2 : 4); ++i)
+                            {
+                                DoCastSpellIfCan(m_creature, auiSpellSummonPlaguedGuardian[urand(0, 3)], CAST_TRIGGERED);
+                            }
 
-                        break;
+                            break;
                     }
 
                     m_uiSummonTimer = 30000;

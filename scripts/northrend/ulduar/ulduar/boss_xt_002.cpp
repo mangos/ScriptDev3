@@ -290,114 +290,114 @@ struct boss_xt_002 : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_NORMAL:
+                case PHASE_NORMAL:
 
-                if (m_uiLightBombTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SEARING_LIGHT : SPELL_SEARING_LIGHT_H) == CAST_OK)
+                    if (m_uiLightBombTimer < uiDiff)
                     {
-                        m_uiLightBombTimer = 20000;
-                    }
-                }
-                else
-                {
-                    m_uiLightBombTimer -= uiDiff;
-                }
-
-                if (m_uiGravityBombTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_GRAVITY_BOMB : SPELL_GRAVITY_BOMB_H) == CAST_OK)
-                    {
-                        m_uiGravityBombTimer = 20000;
-                    }
-                }
-                else
-                {
-                    m_uiGravityBombTimer -= uiDiff;
-                }
-
-                if (m_uiTanctrumTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TYMPANIC_TANTRUM) == CAST_OK)
-                    {
-                        DoScriptText(SAY_TANCTRUM, m_creature);
-                        DoScriptText(EMOTE_EARTH_QUAKE, m_creature);
-                        m_uiTanctrumTimer = 60000;
-                    }
-                }
-                else
-                {
-                    m_uiTanctrumTimer -= uiDiff;
-                }
-
-                // start heart stage transition
-                if (m_creature->GetHealthPercent() < float(100 - 25 * m_uiHeartStage))
-                {
-                    DoScriptText(SAY_HEART_OPEN, m_creature);
-
-                    ++m_uiHeartStage;
-                    m_uiHeartTimer = 5000;
-                    m_uiPhase = PHASE_TRANSITION;
-
-                    // stop all movement
-                    m_creature->GetMotionMaster()->MoveIdle();
-                }
-
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_TRANSITION:
-
-                if (m_uiHeartTimer < uiDiff)
-                {
-                    // inform the heart about the phase switch
-                    if (Creature* pHeart = m_pInstance->GetSingleCreatureFromStorage(NPC_HEART_DECONSTRUCTOR))
-                    {
-                        SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pHeart);
-                    }
-
-                    DoScriptText(EMOTE_HEART, m_creature);
-
-                    m_creature->SetStandState(UNIT_STAND_STATE_CUSTOM);
-                    m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-
-                    m_uiHeartTimer = 30000;
-                    m_uiPhase = PHASE_HEART;
-                }
-                else
-                {
-                    m_uiHeartTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_HEART:
-
-                // reset to normal phase when timer expires
-                if (m_uiHeartTimer < uiDiff)
-                {
-                    DoResetToNormalPhase();
-                    m_uiHeartTimer = 0;
-
-                    // mount the heart back inside if not already killed
-                    if (m_pInstance && m_pInstance->GetData(TYPE_XT002_HARD) != DONE)
-                    {
-                        if (Creature* pHeart = m_pInstance->GetSingleCreatureFromStorage(NPC_HEART_DECONSTRUCTOR))
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SEARING_LIGHT : SPELL_SEARING_LIGHT_H) == CAST_OK)
                         {
-                            pHeart->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                            m_creature->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE);
-                            pHeart->CastSpell(m_creature, SPELL_HEART_RIDE_VEHICLE, true);
-
-                            // no spell found for this
-                            pHeart->SetHealth(pHeart->GetMaxHealth());
+                            m_uiLightBombTimer = 20000;
                         }
                     }
-                }
-                else
-                {
-                    m_uiHeartTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiLightBombTimer -= uiDiff;
+                    }
 
-                break;
+                    if (m_uiGravityBombTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_GRAVITY_BOMB : SPELL_GRAVITY_BOMB_H) == CAST_OK)
+                        {
+                            m_uiGravityBombTimer = 20000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiGravityBombTimer -= uiDiff;
+                    }
+
+                    if (m_uiTanctrumTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_TYMPANIC_TANTRUM) == CAST_OK)
+                        {
+                            DoScriptText(SAY_TANCTRUM, m_creature);
+                            DoScriptText(EMOTE_EARTH_QUAKE, m_creature);
+                            m_uiTanctrumTimer = 60000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiTanctrumTimer -= uiDiff;
+                    }
+
+                    // start heart stage transition
+                    if (m_creature->GetHealthPercent() < float(100 - 25 * m_uiHeartStage))
+                    {
+                        DoScriptText(SAY_HEART_OPEN, m_creature);
+
+                        ++m_uiHeartStage;
+                        m_uiHeartTimer = 5000;
+                        m_uiPhase = PHASE_TRANSITION;
+
+                        // stop all movement
+                        m_creature->GetMotionMaster()->MoveIdle();
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_TRANSITION:
+
+                    if (m_uiHeartTimer < uiDiff)
+                    {
+                        // inform the heart about the phase switch
+                        if (Creature* pHeart = m_pInstance->GetSingleCreatureFromStorage(NPC_HEART_DECONSTRUCTOR))
+                        {
+                            SendAIEvent(AI_EVENT_CUSTOM_A, m_creature, pHeart);
+                        }
+
+                        DoScriptText(EMOTE_HEART, m_creature);
+
+                        m_creature->SetStandState(UNIT_STAND_STATE_CUSTOM);
+                        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+
+                        m_uiHeartTimer = 30000;
+                        m_uiPhase = PHASE_HEART;
+                    }
+                    else
+                    {
+                        m_uiHeartTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_HEART:
+
+                    // reset to normal phase when timer expires
+                    if (m_uiHeartTimer < uiDiff)
+                    {
+                        DoResetToNormalPhase();
+                        m_uiHeartTimer = 0;
+
+                        // mount the heart back inside if not already killed
+                        if (m_pInstance && m_pInstance->GetData(TYPE_XT002_HARD) != DONE)
+                        {
+                            if (Creature* pHeart = m_pInstance->GetSingleCreatureFromStorage(NPC_HEART_DECONSTRUCTOR))
+                            {
+                                pHeart->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                                m_creature->RemoveSpellsCausingAura(SPELL_AURA_CONTROL_VEHICLE);
+                                pHeart->CastSpell(m_creature, SPELL_HEART_RIDE_VEHICLE, true);
+
+                                // no spell found for this
+                                pHeart->SetHealth(pHeart->GetMaxHealth());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiHeartTimer -= uiDiff;
+                    }
+
+                    break;
             }
         }
     };
@@ -505,10 +505,12 @@ struct boss_heart_deconstructor : public CreatureScript
 
                     // cast the enerby orb on each pile one by one
                     if (m_pInstance)
+                    {
                         if (Creature* pToyPile = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_XT_TOY_PILE))))
                         {
                             DoCastSpellIfCan(pToyPile, SPELL_ENERGY_ORB, CAST_TRIGGERED);
                         }
+                    }
 
                     // reset timer after the overload aura expires
                     if (m_creature->HasAura(SPELL_EXPOSED_HEART))

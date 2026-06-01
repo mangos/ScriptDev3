@@ -54,314 +54,313 @@ struct is_temple_of_ahnqiraj : public InstanceScript
 
     class instance_temple_of_ahnqiraj : public ScriptedInstance
     {
-    public:
-        instance_temple_of_ahnqiraj(Map* pMap) : ScriptedInstance(pMap),
-            m_uiBugTrioDeathCount(0),
-            m_uiCthunWhisperTimer(90000),
-            m_bIsEmperorsIntroDone(false),
-            m_dialogueHelper(aIntroDialogue)
-        {
-            Initialize();
-        };
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-
-            m_dialogueHelper.InitializeDialogueHelper(this);
-        }
-
-        bool IsEncounterInProgress() const override
-        {
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+        public:
+            instance_temple_of_ahnqiraj(Map* pMap) : ScriptedInstance(pMap),
+                m_uiBugTrioDeathCount(0),
+                m_uiCthunWhisperTimer(90000),
+                m_bIsEmperorsIntroDone(false),
+                m_dialogueHelper(aIntroDialogue)
             {
-                if (m_auiEncounter[i] == IN_PROGRESS)
+                Initialize();
+            }
+
+            void Initialize() override
+            {
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+
+                m_dialogueHelper.InitializeDialogueHelper(this);
+            }
+
+            bool IsEncounterInProgress() const override
+            {
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 {
-                    return true;
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_SKERAM:
+                        // Don't store the summoned images guid
+                        if (GetData(TYPE_SKERAM) == IN_PROGRESS)
+                        {
+                            break;
+                        }
+                    case NPC_KRI:
+                    case NPC_VEM:
+                    case NPC_YAUJ:
+                    case NPC_SARTURA:
+                    case NPC_VEKLOR:
+                    case NPC_VEKNILASH:
+                    case NPC_MASTERS_EYE:
+                    case NPC_OURO_SPAWNER:
+                    case NPC_CTHUN:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
                 }
             }
 
-            return false;
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+            void OnObjectCreate(GameObject* pGo) override
             {
-            case NPC_SKERAM:
-                // Don't store the summoned images guid
-                if (GetData(TYPE_SKERAM) == IN_PROGRESS)
+                switch (pGo->GetEntry())
                 {
-                    break;
-                }
-            case NPC_KRI:
-            case NPC_VEM:
-            case NPC_YAUJ:
-            case NPC_SARTURA:
-            case NPC_VEKLOR:
-            case NPC_VEKNILASH:
-            case NPC_MASTERS_EYE:
-            case NPC_OURO_SPAWNER:
-            case NPC_CTHUN:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
-            }
-        }
+                    case GO_SKERAM_GATE:
+                        if (m_auiEncounter[TYPE_SKERAM] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    case GO_TWINS_ENTER_DOOR:
+                        break;
+                    case GO_TWINS_EXIT_DOOR:
+                        if (m_auiEncounter[TYPE_TWINS] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    case GO_SANDWORM_BASE:
+                        break;
 
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
-            {
-            case GO_SKERAM_GATE:
-                if (m_auiEncounter[TYPE_SKERAM] == DONE)
-                {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
+                    default:
+                        return;
                 }
-                break;
-            case GO_TWINS_ENTER_DOOR:
-                break;
-            case GO_TWINS_EXIT_DOOR:
-                if (m_auiEncounter[TYPE_TWINS] == DONE)
-                {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-            case GO_SANDWORM_BASE:
-                break;
 
-            default:
-                return;
+                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             }
 
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-        }
-
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
+            void SetData(uint32 uiType, uint32 uiData) override
             {
-            case TYPE_SKERAM:
-                m_auiEncounter[uiType] = uiData;
+                switch (uiType)
+                {
+                    case TYPE_SKERAM:
+                        m_auiEncounter[uiType] = uiData;
+                        if (uiData == DONE)
+                        {
+                            DoUseDoorOrButton(GO_SKERAM_GATE);
+                        }
+                        break;
+                    case TYPE_BUG_TRIO:
+                        if (uiData == SPECIAL)
+                        {
+                            ++m_uiBugTrioDeathCount;
+                            if (m_uiBugTrioDeathCount == 2)
+                            {
+                                SetData(TYPE_BUG_TRIO, DONE);
+                            }
+
+                            // don't store any special data
+                            break;
+                        }
+                        if (uiData == FAIL)
+                        {
+                            m_uiBugTrioDeathCount = 0;
+                        }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_SARTURA:
+                    case TYPE_FANKRISS:
+                    case TYPE_VISCIDUS:
+                    case TYPE_HUHURAN:
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_TWINS:
+                        // Either of the twins can set data, so return to avoid double changing
+                        if (m_auiEncounter[uiType] == uiData)
+                        {
+                            return;
+                        }
+
+                        m_auiEncounter[uiType] = uiData;
+                        DoUseDoorOrButton(GO_TWINS_ENTER_DOOR);
+                        if (uiData == DONE)
+                        {
+                            DoUseDoorOrButton(GO_TWINS_EXIT_DOOR);
+                        }
+                        break;
+                    case TYPE_OURO:
+                        switch (uiData)
+                        {
+                            case FAIL:
+                                // Respawn the Ouro spawner on fail
+                                if (Creature* pSpawner = GetSingleCreatureFromStorage(NPC_OURO_SPAWNER))
+                                {
+                                    pSpawner->Respawn();
+                                }
+                                // no break;
+                            case DONE:
+                                // Despawn the sandworm base on Done or Fail
+                                if (GameObject* pBase = GetSingleGameObjectFromStorage(GO_SANDWORM_BASE))
+                                {
+                                    pBase->SetLootState(GO_JUST_DEACTIVATED);
+                                }
+                                break;
+                        }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_CTHUN:
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_SIGNAL:
+                        DoHandleTempleAreaTrigger(uiData);
+                        return;
+                }
+
                 if (uiData == DONE)
                 {
-                    DoUseDoorOrButton(GO_SKERAM_GATE);
-                }
-                break;
-            case TYPE_BUG_TRIO:
-                if (uiData == SPECIAL)
-                {
-                    ++m_uiBugTrioDeathCount;
-                    if (m_uiBugTrioDeathCount == 2)
-                    {
-                        SetData(TYPE_BUG_TRIO, DONE);
-                    }
+                    OUT_SAVE_INST_DATA;
 
-                    // don't store any special data
-                    break;
+                    std::ostringstream saveStream;
+                    saveStream  << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3] << " "
+                                << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6] << " " << m_auiEncounter[7] << " "
+#if defined (CLASSIC)
+                                << m_auiEncounter[8] << " " << m_auiEncounter[9];
+#else
+                                << m_auiEncounter[8];
+#endif
+
+                    m_strInstData = saveStream.str();
+
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
                 }
-                if (uiData == FAIL)
+            }
+
+            uint32 GetData(uint32 uiType) const override
+            {
+                if (uiType < MAX_ENCOUNTER)
                 {
-                    m_uiBugTrioDeathCount = 0;
+                    return m_auiEncounter[uiType];
                 }
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_SARTURA:
-            case TYPE_FANKRISS:
-            case TYPE_VISCIDUS:
-            case TYPE_HUHURAN:
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_TWINS:
-                // Either of the twins can set data, so return to avoid double changing
-                if (m_auiEncounter[uiType] == uiData)
+
+                return 0;
+            }
+
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* chrIn) override
+            {
+                if (!chrIn)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+                loadStream  >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
+                            >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6] >> m_auiEncounter[7]
+#if defined (CLASSIC)
+                            >> m_auiEncounter[8] >> m_auiEncounter[9];
+#else
+                            >> m_auiEncounter[8];
+#endif
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        m_auiEncounter[i] = NOT_STARTED;
+                    }
+                }
+
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
+
+            void Update(uint32 uiDiff) override
+            {
+                m_dialogueHelper.DialogueUpdate(uiDiff);
+
+                if (GetData(TYPE_CTHUN) == IN_PROGRESS || GetData(TYPE_CTHUN) == DONE)
                 {
                     return;
                 }
 
-                m_auiEncounter[uiType] = uiData;
-                DoUseDoorOrButton(GO_TWINS_ENTER_DOOR);
-                if (uiData == DONE)
+                if (m_uiCthunWhisperTimer < uiDiff)
                 {
-                    DoUseDoorOrButton(GO_TWINS_EXIT_DOOR);
-                }
-                break;
-            case TYPE_OURO:
-                switch (uiData)
-                {
-                case FAIL:
-                    // Respawn the Ouro spawner on fail
-                    if (Creature* pSpawner = GetSingleCreatureFromStorage(NPC_OURO_SPAWNER))
+                    if (Player* pPlayer = GetPlayerInMap())
                     {
-                        pSpawner->Respawn();
-                    }
-                    // no break;
-                case DONE:
-                    // Despawn the sandworm base on Done or Fail
-                    if (GameObject* pBase = GetSingleGameObjectFromStorage(GO_SANDWORM_BASE))
-                    {
-                        pBase->SetLootState(GO_JUST_DEACTIVATED);
-                    }
-                    break;
-                }
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_CTHUN:
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_SIGNAL:
-                DoHandleTempleAreaTrigger(uiData);
-                return;
-            }
-
-            if (uiData == DONE)
-            {
-                OUT_SAVE_INST_DATA;
-
-                std::ostringstream saveStream;
-                saveStream  << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3] << " "
-                            << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << m_auiEncounter[6] << " " << m_auiEncounter[7] << " "
-#if defined (CLASSIC)
-                            << m_auiEncounter[8] << " " << m_auiEncounter[9];
-#endif
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-                            << m_auiEncounter[8];
-#endif
-
-                m_strInstData = saveStream.str();
-
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
-            }
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType < MAX_ENCOUNTER)
-            {
-                return m_auiEncounter[uiType];
-            }
-
-            return 0;
-        }
-
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
-            {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-            loadStream  >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
-                        >> m_auiEncounter[4] >> m_auiEncounter[5] >> m_auiEncounter[6] >> m_auiEncounter[7]
-#if defined (CLASSIC)
-                        >> m_auiEncounter[8] >> m_auiEncounter[9];
-#else
-                        >> m_auiEncounter[8];
-#endif
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                {
-                    m_auiEncounter[i] = NOT_STARTED;
-                }
-            }
-
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
-
-        void Update(uint32 uiDiff) override
-        {
-            m_dialogueHelper.DialogueUpdate(uiDiff);
-
-            if (GetData(TYPE_CTHUN) == IN_PROGRESS || GetData(TYPE_CTHUN) == DONE)
-            {
-                return;
-            }
-
-            if (m_uiCthunWhisperTimer < uiDiff)
-            {
-                if (Player* pPlayer = GetPlayerInMap())
-                {
-                    if (Creature* pCthun = GetSingleCreatureFromStorage(NPC_CTHUN))
-                    {
-                        // ToDo: also cast the C'thun Whispering charm spell - requires additional research
-                        switch (urand(0, 7))
+                        if (Creature* pCthun = GetSingleCreatureFromStorage(NPC_CTHUN))
                         {
-                        case 0:
-                            DoScriptText(SAY_CTHUN_WHISPER_1, pCthun, pPlayer);
-                            break;
-                        case 1:
-                            DoScriptText(SAY_CTHUN_WHISPER_2, pCthun, pPlayer);
-                            break;
-                        case 2:
-                            DoScriptText(SAY_CTHUN_WHISPER_3, pCthun, pPlayer);
-                            break;
-                        case 3:
-                            DoScriptText(SAY_CTHUN_WHISPER_4, pCthun, pPlayer);
-                            break;
-                        case 4:
-                            DoScriptText(SAY_CTHUN_WHISPER_5, pCthun, pPlayer);
-                            break;
-                        case 5:
-                            DoScriptText(SAY_CTHUN_WHISPER_6, pCthun, pPlayer);
-                            break;
-                        case 6:
-                            DoScriptText(SAY_CTHUN_WHISPER_7, pCthun, pPlayer);
-                            break;
-                        case 7:
-                            DoScriptText(SAY_CTHUN_WHISPER_8, pCthun, pPlayer);
-                            break;
+                            // ToDo: also cast the C'thun Whispering charm spell - requires additional research
+                            switch (urand(0, 7))
+                            {
+                                case 0:
+                                    DoScriptText(SAY_CTHUN_WHISPER_1, pCthun, pPlayer);
+                                    break;
+                                case 1:
+                                    DoScriptText(SAY_CTHUN_WHISPER_2, pCthun, pPlayer);
+                                    break;
+                                case 2:
+                                    DoScriptText(SAY_CTHUN_WHISPER_3, pCthun, pPlayer);
+                                    break;
+                                case 3:
+                                    DoScriptText(SAY_CTHUN_WHISPER_4, pCthun, pPlayer);
+                                    break;
+                                case 4:
+                                    DoScriptText(SAY_CTHUN_WHISPER_5, pCthun, pPlayer);
+                                    break;
+                                case 5:
+                                    DoScriptText(SAY_CTHUN_WHISPER_6, pCthun, pPlayer);
+                                    break;
+                                case 6:
+                                    DoScriptText(SAY_CTHUN_WHISPER_7, pCthun, pPlayer);
+                                    break;
+                                case 7:
+                                    DoScriptText(SAY_CTHUN_WHISPER_8, pCthun, pPlayer);
+                                    break;
+                            }
+                        }
+                    }
+                    m_uiCthunWhisperTimer = urand(1.5 * MINUTE * IN_MILLISECONDS, 5 * MINUTE * IN_MILLISECONDS);
+                }
+                else
+                {
+                    m_uiCthunWhisperTimer -= uiDiff;
+                }
+            }
+
+        private:
+            void DoHandleTempleAreaTrigger(uint32 uiTriggerId)
+            {
+                if (uiTriggerId == AREATRIGGER_TWIN_EMPERORS && !m_bIsEmperorsIntroDone)
+                {
+                    m_dialogueHelper.StartNextDialogueText(EMOTE_EYE_INTRO);
+                    // Note: there may be more related to this; The emperors should kneel before the Eye and they stand up after it despawns
+                    if (Creature* pEye = GetSingleCreatureFromStorage(NPC_MASTERS_EYE))
+                    {
+                        pEye->ForcedDespawn(1000);
+                    }
+                    m_bIsEmperorsIntroDone = true;
+                }
+                else if (uiTriggerId == AREATRIGGER_SARTURA)
+                {
+                    if (GetData(TYPE_SARTURA) == NOT_STARTED || GetData(TYPE_SARTURA) == FAIL)
+                    {
+                        if (Creature* pSartura = GetSingleCreatureFromStorage(NPC_SARTURA))
+                        {
+                            pSartura->SetInCombatWithZone();
                         }
                     }
                 }
-                m_uiCthunWhisperTimer = urand(1.5 * MINUTE * IN_MILLISECONDS, 5 * MINUTE * IN_MILLISECONDS);
             }
-            else
-            {
-                m_uiCthunWhisperTimer -= uiDiff;
-            }
-        }
 
-    private:
-        void DoHandleTempleAreaTrigger(uint32 uiTriggerId)
-        {
-            if (uiTriggerId == AREATRIGGER_TWIN_EMPERORS && !m_bIsEmperorsIntroDone)
-            {
-                m_dialogueHelper.StartNextDialogueText(EMOTE_EYE_INTRO);
-                // Note: there may be more related to this; The emperors should kneel before the Eye and they stand up after it despawns
-                if (Creature* pEye = GetSingleCreatureFromStorage(NPC_MASTERS_EYE))
-                {
-                    pEye->ForcedDespawn(1000);
-                }
-                m_bIsEmperorsIntroDone = true;
-            }
-            else if (uiTriggerId == AREATRIGGER_SARTURA)
-            {
-                if (GetData(TYPE_SARTURA) == NOT_STARTED || GetData(TYPE_SARTURA) == FAIL)
-                {
-                    if (Creature* pSartura = GetSingleCreatureFromStorage(NPC_SARTURA))
-                    {
-                        pSartura->SetInCombatWithZone();
-                    }
-                }
-            }
-        }
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
 
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+            uint8 m_uiBugTrioDeathCount;
+            uint32 m_uiCthunWhisperTimer;
 
-        uint8 m_uiBugTrioDeathCount;
-        uint32 m_uiCthunWhisperTimer;
+            bool m_bIsEmperorsIntroDone;
 
-        bool m_bIsEmperorsIntroDone;
-
-        DialogueHelper m_dialogueHelper;
+            DialogueHelper m_dialogueHelper;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override
@@ -394,12 +393,16 @@ struct at_temple_ahnqiraj : public AreaTriggerScript
         {
 
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
-            if (Creature* pSartura = pInstance->GetSingleCreatureFromStorage(NPC_SARTURA))
-            if (pSartura->IsAlive() && !pSartura->IsInCombat())
             {
-                pInstance->SetData(TYPE_SARTURA, IN_PROGRESS);
+                if (Creature* pSartura = pInstance->GetSingleCreatureFromStorage(NPC_SARTURA))
+                {
+                    if (pSartura->IsAlive() && !pSartura->IsInCombat())
+                    {
+                        pInstance->SetData(TYPE_SARTURA, IN_PROGRESS);
 
-                pSartura->SetInCombatWithZone();
+                        pSartura->SetInCombatWithZone();
+                    }
+                }
             }
         }
 

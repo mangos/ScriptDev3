@@ -165,19 +165,19 @@ struct boss_loatheb : public CreatureScript
             {
                 switch (m_uiNecroticAuraCount % 3)
                 {
-                case 0:
-                    DoCastSpellIfCan(m_creature, SPELL_NECROTIC_AURA);
-                    DoScriptText(EMOTE_AURA_BLOCKING, m_creature);
-                    m_uiNecroticAuraTimer = 14000;
-                    break;
-                case 1:
-                    DoScriptText(EMOTE_AURA_WANE, m_creature);
-                    m_uiNecroticAuraTimer = 3000;
-                    break;
-                case 2:
-                    DoScriptText(EMOTE_AURA_FADING, m_creature);
-                    m_uiNecroticAuraTimer = 3000;
-                    break;
+                    case 0:
+                        DoCastSpellIfCan(m_creature, SPELL_NECROTIC_AURA);
+                        DoScriptText(EMOTE_AURA_BLOCKING, m_creature);
+                        m_uiNecroticAuraTimer = 14000;
+                        break;
+                    case 1:
+                        DoScriptText(EMOTE_AURA_WANE, m_creature);
+                        m_uiNecroticAuraTimer = 3000;
+                        break;
+                    case 2:
+                        DoScriptText(EMOTE_AURA_FADING, m_creature);
+                        m_uiNecroticAuraTimer = 3000;
+                        break;
                 }
                 ++m_uiNecroticAuraCount;
             }

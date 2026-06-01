@@ -170,7 +170,7 @@ struct boss_thorim : public CreatureScript
     struct boss_thorimAI : public ScriptedAI, private DialogueHelper
     {
         boss_thorimAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aThorimDialogue)
+            DialogueHelper(aThorimDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
@@ -380,20 +380,20 @@ struct boss_thorim : public CreatureScript
             switch (pSummoned->GetEntry())
             {
                 // the lightning orb should clean out the whole hallway on arena berserk
-            case NPC_LIGHTNING_ORB:
-                pSummoned->CastSpell(pSummoned, SPELL_LIGHTNING_DESTRUCTION, true);
-                break;
-            case NPC_DARK_RUNE_CHAMPION:
-            case NPC_DARK_RUNE_WARBRINGER:
-            case NPC_DARK_RUNE_EVOKER:
-            case NPC_DARK_RUNE_COMMONER:
-            case NPC_DARK_RUNE_ACOLYTE:
-                if (Creature* pTarget = GetClosestLowerBunny(pSummoned))
-                {
-                    pSummoned->CastSpell(pTarget, SPELL_LEAP, true);
-                }
-                pSummoned->SetInCombatWithZone();
-                break;
+                case NPC_LIGHTNING_ORB:
+                    pSummoned->CastSpell(pSummoned, SPELL_LIGHTNING_DESTRUCTION, true);
+                    break;
+                case NPC_DARK_RUNE_CHAMPION:
+                case NPC_DARK_RUNE_WARBRINGER:
+                case NPC_DARK_RUNE_EVOKER:
+                case NPC_DARK_RUNE_COMMONER:
+                case NPC_DARK_RUNE_ACOLYTE:
+                    if (Creature* pTarget = GetClosestLowerBunny(pSummoned))
+                    {
+                        pSummoned->CastSpell(pTarget, SPELL_LEAP, true);
+                    }
+                    pSummoned->SetInCombatWithZone();
+                    break;
             }
         }
 
@@ -406,40 +406,40 @@ struct boss_thorim : public CreatureScript
 
             switch (iEntry)
             {
-            case NPC_SIF:
-                DoCastSpellIfCan(m_creature, SPELL_SHEAT_OF_LIGHTNING, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
-                if (Creature* pSif = m_creature->SummonCreature(NPC_SIF, afSifSpawnLoc[0], afSifSpawnLoc[1], afSifSpawnLoc[2], afSifSpawnLoc[3], TEMPSPAWN_CORPSE_DESPAWN, 0))
-                {
-                    DoScriptText(SAY_SIF_BEGIN, pSif);
-                }
-                break;
-            case SPELL_TOUCH_OF_DOMINION:
-                if (Creature* pSif = m_pInstance->GetSingleCreatureFromStorage(NPC_SIF))
-                {
-                    pSif->CastSpell(m_creature, SPELL_TOUCH_OF_DOMINION, false);
-                }
-                break;
-            case PHASE_SOLO:
-                m_creature->GetMotionMaster()->MoveJump(afArenaCenterLoc[0], afArenaCenterLoc[1], afArenaCenterLoc[2], 45.55969f, 5.0f, 1);
-                break;
-            case SPELL_STORMHAMMER_OUTRO:
-                DoScriptText(SAY_DEFEATED, m_creature);
-                break;
-            case SAY_OUTRO_HARD_1:
-                DoCastSpellIfCan(m_creature, SPELL_STORMHAMMER_OUTRO);
-                break;
-            case SPELL_TELEPORT:
-            case SPELL_THORIM_CREDIT:
-                if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT) == CAST_OK)
-                {
-                    m_creature->ForcedDespawn(2000);
-                }
-                // despawn Sif if not despawned by accident
-                if (Creature* pSif = m_pInstance->GetSingleCreatureFromStorage(NPC_SIF))
-                {
-                    pSif->ForcedDespawn();
-                }
-                break;
+                case NPC_SIF:
+                    DoCastSpellIfCan(m_creature, SPELL_SHEAT_OF_LIGHTNING, CAST_TRIGGERED | CAST_AURA_NOT_PRESENT);
+                    if (Creature* pSif = m_creature->SummonCreature(NPC_SIF, afSifSpawnLoc[0], afSifSpawnLoc[1], afSifSpawnLoc[2], afSifSpawnLoc[3], TEMPSPAWN_CORPSE_DESPAWN, 0))
+                    {
+                        DoScriptText(SAY_SIF_BEGIN, pSif);
+                    }
+                    break;
+                case SPELL_TOUCH_OF_DOMINION:
+                    if (Creature* pSif = m_pInstance->GetSingleCreatureFromStorage(NPC_SIF))
+                    {
+                        pSif->CastSpell(m_creature, SPELL_TOUCH_OF_DOMINION, false);
+                    }
+                    break;
+                case PHASE_SOLO:
+                    m_creature->GetMotionMaster()->MoveJump(afArenaCenterLoc[0], afArenaCenterLoc[1], afArenaCenterLoc[2], 45.55969f, 5.0f, 1);
+                    break;
+                case SPELL_STORMHAMMER_OUTRO:
+                    DoScriptText(SAY_DEFEATED, m_creature);
+                    break;
+                case SAY_OUTRO_HARD_1:
+                    DoCastSpellIfCan(m_creature, SPELL_STORMHAMMER_OUTRO);
+                    break;
+                case SPELL_TELEPORT:
+                case SPELL_THORIM_CREDIT:
+                    if (DoCastSpellIfCan(m_creature, SPELL_TELEPORT) == CAST_OK)
+                    {
+                        m_creature->ForcedDespawn(2000);
+                    }
+                    // despawn Sif if not despawned by accident
+                    if (Creature* pSif = m_pInstance->GetSingleCreatureFromStorage(NPC_SIF))
+                    {
+                        pSif->ForcedDespawn();
+                    }
+                    break;
             }
         }
 
@@ -533,32 +533,32 @@ struct boss_thorim : public CreatureScript
         {
             switch (m_uiDwarfIndex)
             {
-            case 0:                     // commoners (always in groups of 6-7)
-                if (m_pInstance)
-                {
-                    m_pInstance->SetData(TYPE_DO_THORIM_SPAWN_PACK, 0);
-                }
-                break;
-            case 1:                     // warbringers (along with champions or evokers)
-                if (Creature* pBunny = SelectRandomUpperBunny())
-                {
-                    m_creature->SummonCreature(NPC_DARK_RUNE_WARBRINGER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
-                }
-                // warbringers can have another buddy summoned at the same time
-                if (roll_chance_i(75))
-                {
+                case 0:                     // commoners (always in groups of 6-7)
+                    if (m_pInstance)
+                    {
+                        m_pInstance->SetData(TYPE_DO_THORIM_SPAWN_PACK, 0);
+                    }
+                    break;
+                case 1:                     // warbringers (along with champions or evokers)
                     if (Creature* pBunny = SelectRandomUpperBunny())
                     {
-                        m_creature->SummonCreature(roll_chance_i(70) ? NPC_DARK_RUNE_CHAMPION : NPC_DARK_RUNE_EVOKER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                        m_creature->SummonCreature(NPC_DARK_RUNE_WARBRINGER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
-                }
-                break;
-            case 2:                     // evokers alone
-                if (Creature* pBunny = SelectRandomUpperBunny())
-                {
-                    m_creature->SummonCreature(NPC_DARK_RUNE_EVOKER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
-                }
-                break;
+                    // warbringers can have another buddy summoned at the same time
+                    if (roll_chance_i(75))
+                    {
+                        if (Creature* pBunny = SelectRandomUpperBunny())
+                        {
+                            m_creature->SummonCreature(roll_chance_i(70) ? NPC_DARK_RUNE_CHAMPION : NPC_DARK_RUNE_EVOKER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                        }
+                    }
+                    break;
+                case 2:                     // evokers alone
+                    if (Creature* pBunny = SelectRandomUpperBunny())
+                    {
+                        m_creature->SummonCreature(NPC_DARK_RUNE_EVOKER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                    }
+                    break;
             }
 
             // get a new index which will be different from the first one
@@ -578,155 +578,155 @@ struct boss_thorim : public CreatureScript
             switch (m_uiPhase)
             {
                 // arena phase abilities
-            case PHASE_ARENA:
+                case PHASE_ARENA:
 
-                if (m_uiBerserkTimer)
-                {
-                    if (m_uiBerserkTimer <= uiDiff)
+                    if (m_uiBerserkTimer)
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_BERSERK_1) == CAST_OK)
+                        if (m_uiBerserkTimer <= uiDiff)
                         {
-                            DoCastSpellIfCan(m_creature, SPELL_SUMMON_LIGHTNING_ORB, CAST_TRIGGERED);
-                            DoScriptText(SAY_ARENA_WIPE, m_creature);
-                            m_uiBerserkTimer = 0;
+                            if (DoCastSpellIfCan(m_creature, SPELL_BERSERK_1) == CAST_OK)
+                            {
+                                DoCastSpellIfCan(m_creature, SPELL_SUMMON_LIGHTNING_ORB, CAST_TRIGGERED);
+                                DoScriptText(SAY_ARENA_WIPE, m_creature);
+                                m_uiBerserkTimer = 0;
+                            }
+                        }
+                        else
+                        {
+                            m_uiBerserkTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_uiArenaDwarfTimer < uiDiff)
+                    {
+                        DoSpawnArenaDwarf();
+                        m_uiArenaDwarfTimer = 10000;
+                    }
+                    else
+                    {
+                        m_uiArenaDwarfTimer -= uiDiff;
+                    }
+
+                    if (m_uiChargeOrbTimer < uiDiff)
+                    {
+                        // this spell has AoE target, but we need to be very specific with the selected targets
+                        if (Creature* pTarget = m_creature->GetMap()->GetCreature(SelectRandomOrbGuid()))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_CHARGE_ORB) == CAST_OK)
+                            {
+                                m_uiChargeOrbTimer = 20000;
+                            }
                         }
                     }
                     else
                     {
-                        m_uiBerserkTimer -= uiDiff;
+                        m_uiChargeOrbTimer -= uiDiff;
                     }
-                }
 
-                if (m_uiArenaDwarfTimer < uiDiff)
-                {
-                    DoSpawnArenaDwarf();
-                    m_uiArenaDwarfTimer = 10000;
-                }
-                else
-                {
-                    m_uiArenaDwarfTimer -= uiDiff;
-                }
-
-                if (m_uiChargeOrbTimer < uiDiff)
-                {
-                    // this spell has AoE target, but we need to be very specific with the selected targets
-                    if (Creature* pTarget = m_creature->GetMap()->GetCreature(SelectRandomOrbGuid()))
+                    if (m_uiStormHammerTimer < uiDiff)
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_CHARGE_ORB) == CAST_OK)
+                        if (Unit* pTarget = GetRandomArenaPlayer())
                         {
+                            if (DoCastSpellIfCan(pTarget, SPELL_STORMHAMMER) == CAST_OK)
+                            {
+                                m_uiStormHammerTimer = 15000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiStormHammerTimer -= uiDiff;
+                    }
+
+                    break;
+                // solo phase abilities
+                case PHASE_SOLO:
+
+                    if (m_uiBerserkTimer)
+                    {
+                        if (m_uiBerserkTimer <= uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_BERSERK_2) == CAST_OK)
+                            {
+                                DoScriptText(SAY_BERSERK, m_creature);
+                                m_uiBerserkTimer = 0;
+                            }
+                        }
+                        else
+                        {
+                            m_uiBerserkTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_uiAttackTimer)
+                    {
+                        if (m_uiAttackTimer <= uiDiff)
+                        {
+                            // Add some small delay to combat movement because Jump triggers before it's actually finished
+                            DoResetThreat();
+                            SetCombatMovement(true);
+                            DoStartMovement(m_creature->getVictim());
+                            m_uiAttackTimer = 0;
+                        }
+                        else
+                        {
+                            m_uiAttackTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_uiChargeOrbTimer < uiDiff)
+                    {
+                        // this spell requires very specific targets
+                        if (Creature* pTarget = m_creature->GetMap()->GetCreature(SelectRandomOrbGuid()))
+                        {
+                            pTarget->CastSpell(pTarget, SPELL_LIGHTNING_ORG_CHARGED, true);
+
+                            // charge the lower orb as well
+                            if (Unit* pOrb = GetClosestCreatureWithEntry(pTarget, NPC_THUNDER_ORB, 25.0f, true, false, true))
+                            {
+                                pTarget->CastSpell(pOrb, SPELL_LIGHTNING_PILLAR, true);
+                            }
+
                             m_uiChargeOrbTimer = 20000;
                         }
                     }
-                }
-                else
-                {
-                    m_uiChargeOrbTimer -= uiDiff;
-                }
-
-                if (m_uiStormHammerTimer < uiDiff)
-                {
-                    if (Unit* pTarget = GetRandomArenaPlayer())
+                    else
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_STORMHAMMER) == CAST_OK)
-                        {
-                            m_uiStormHammerTimer = 15000;
-                        }
+                        m_uiChargeOrbTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiStormHammerTimer -= uiDiff;
-                }
 
-                break;
-                // solo phase abilities
-            case PHASE_SOLO:
-
-                if (m_uiBerserkTimer)
-                {
-                    if (m_uiBerserkTimer <= uiDiff)
+                    if (m_uiChainLightningTimer < uiDiff)
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_BERSERK_2) == CAST_OK)
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         {
-                            DoScriptText(SAY_BERSERK, m_creature);
-                            m_uiBerserkTimer = 0;
+                            if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_CHAIN_LIGHTNING : SPELL_CHAIN_LIGHTNING_H) == CAST_OK)
+                            {
+                                m_uiChainLightningTimer = urand(10000, 15000);
+                            }
                         }
                     }
                     else
                     {
-                        m_uiBerserkTimer -= uiDiff;
+                        m_uiChainLightningTimer -= uiDiff;
                     }
-                }
 
-                if (m_uiAttackTimer)
-                {
-                    if (m_uiAttackTimer <= uiDiff)
+                    if (m_uiUnbalancingStrikeTimer < uiDiff)
                     {
-                        // Add some small delay to combat movement because Jump triggers before it's actually finished
-                        DoResetThreat();
-                        SetCombatMovement(true);
-                        DoStartMovement(m_creature->getVictim());
-                        m_uiAttackTimer = 0;
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_UNBALANCING_STRIKE) == CAST_OK)
+                        {
+                            m_uiUnbalancingStrikeTimer = 25000;
+                        }
                     }
                     else
                     {
-                        m_uiAttackTimer -= uiDiff;
+                        m_uiUnbalancingStrikeTimer -= uiDiff;
                     }
-                }
 
-                if (m_uiChargeOrbTimer < uiDiff)
-                {
-                    // this spell requires very specific targets
-                    if (Creature* pTarget = m_creature->GetMap()->GetCreature(SelectRandomOrbGuid()))
-                    {
-                        pTarget->CastSpell(pTarget, SPELL_LIGHTNING_ORG_CHARGED, true);
-
-                        // charge the lower orb as well
-                        if (Unit* pOrb = GetClosestCreatureWithEntry(pTarget, NPC_THUNDER_ORB, 25.0f, true, false, true))
-                        {
-                            pTarget->CastSpell(pOrb, SPELL_LIGHTNING_PILLAR, true);
-                        }
-
-                        m_uiChargeOrbTimer = 20000;
-                    }
-                }
-                else
-                {
-                    m_uiChargeOrbTimer -= uiDiff;
-                }
-
-                if (m_uiChainLightningTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_CHAIN_LIGHTNING : SPELL_CHAIN_LIGHTNING_H) == CAST_OK)
-                        {
-                            m_uiChainLightningTimer = urand(10000, 15000);
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiChainLightningTimer -= uiDiff;
-                }
-
-                if (m_uiUnbalancingStrikeTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_UNBALANCING_STRIKE) == CAST_OK)
-                    {
-                        m_uiUnbalancingStrikeTimer = 25000;
-                    }
-                }
-                else
-                {
-                    m_uiUnbalancingStrikeTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-                break;
+                    DoMeleeAttackIfReady();
+                    break;
                 // transition phase; nothing here, wait for transition to finish
-            case PHASE_TRANSITION:
-                break;
+                case PHASE_TRANSITION:
+                    break;
             }
         }
     };

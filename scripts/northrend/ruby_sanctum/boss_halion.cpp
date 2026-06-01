@@ -201,8 +201,8 @@ struct boss_halion_real : public CreatureScript
             {
                 switch (urand(0, 1))
                 {
-                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-                case 1: DoPlaySoundToSet(m_creature, SOUND_SLAY_2); break;
+                    case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                    case 1: DoPlaySoundToSet(m_creature, SOUND_SLAY_2); break;
                 }
             }
         }
@@ -229,14 +229,14 @@ struct boss_halion_real : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_COMBUSTION:
-                pSummoned->CastSpell(pSummoned, SPELL_COMBUSTION_PERIODIC, true);
-                break;
-            case NPC_METEOR_STRIKE_MAIN:
-                // ToDo: summon the other meteor strikes around this one
-                pSummoned->CastSpell(pSummoned, SPELL_BIRTH, true);
-                pSummoned->CastSpell(pSummoned, SPELL_METEOR_VISUAL, true);
-                break;
+                case NPC_COMBUSTION:
+                    pSummoned->CastSpell(pSummoned, SPELL_COMBUSTION_PERIODIC, true);
+                    break;
+                case NPC_METEOR_STRIKE_MAIN:
+                    // ToDo: summon the other meteor strikes around this one
+                    pSummoned->CastSpell(pSummoned, SPELL_BIRTH, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_METEOR_VISUAL, true);
+                    break;
             }
         }
 
@@ -300,102 +300,102 @@ struct boss_halion_real : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_BOTH_REALMS:
-                // ToDo: handle corporeality
-                // no break;
-            case PHASE_PHISYCAL_REALM:
+                case PHASE_BOTH_REALMS:
+                    // ToDo: handle corporeality
+                    // no break;
+                case PHASE_PHISYCAL_REALM:
 
-                if (m_uiTailLashTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TAIL_LASH) == CAST_OK)
+                    if (m_uiTailLashTimer < uiDiff)
                     {
-                        m_uiTailLashTimer = urand(15000, 25000);
-                    }
-                }
-                else
-                {
-                    m_uiTailLashTimer -= uiDiff;
-                }
-
-                if (m_uiCleaveTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
-                    {
-                        m_uiCleaveTimer = urand(10000, 15000);
-                    }
-                }
-                else
-                {
-                    m_uiCleaveTimer -= uiDiff;
-                }
-
-                if (m_uiFlameBreathTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BREATH) == CAST_OK)
-                    {
-                        m_uiFlameBreathTimer = urand(15000, 20000);
-                    }
-                }
-                else
-                {
-                    m_uiFlameBreathTimer -= uiDiff;
-                }
-
-                if (m_uiFieryCombustionTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_FIERY_COMBUSTION, SELECT_FLAG_PLAYER))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_FIERY_COMBUSTION) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_TAIL_LASH) == CAST_OK)
                         {
-                            m_uiFieryCombustionTimer = 25000;
+                            m_uiTailLashTimer = urand(15000, 25000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiFieryCombustionTimer -= uiDiff;
-                }
-
-                if (m_uiMeteorTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                    else
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_METEOR_SUMMON) == CAST_OK)
+                        m_uiTailLashTimer -= uiDiff;
+                    }
+
+                    if (m_uiCleaveTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
                         {
-                            DoScriptText(SAY_FIREBALL, m_creature);
-                            m_uiMeteorTimer = 40000;
+                            m_uiCleaveTimer = urand(10000, 15000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiMeteorTimer -= uiDiff;
-                }
-
-                // Switch to phase 2
-                if (m_creature->GetHealthPercent() < 75.0f && m_uiPhase == PHASE_PHISYCAL_REALM)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TWILIGHT_PHASING, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                    else
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_SUMMON_PORTAL, CAST_TRIGGERED);
-                        DoScriptText(SAY_PHASE_2, m_creature);
-                        DoPrepareTwilightPhase();
-                        m_uiPhase = PHASE_TWILIGHT_REALM;
+                        m_uiCleaveTimer -= uiDiff;
                     }
-                }
 
-                break;
-            case PHASE_TWILIGHT_REALM:
+                    if (m_uiFlameBreathTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BREATH) == CAST_OK)
+                        {
+                            m_uiFlameBreathTimer = urand(15000, 20000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiFlameBreathTimer -= uiDiff;
+                    }
 
-                // Switch to phase 3
-                if (m_creature->GetHealthPercent() < 50.0f)
-                {
-                    m_creature->RemoveAurasDueToSpell(SPELL_TWILIGHT_PHASING);
-                    DoScriptText(SAY_PHASE_3, m_creature);
-                    m_uiPhase = PHASE_BOTH_REALMS;
-                }
+                    if (m_uiFieryCombustionTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_FIERY_COMBUSTION, SELECT_FLAG_PLAYER))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_FIERY_COMBUSTION) == CAST_OK)
+                            {
+                                m_uiFieryCombustionTimer = 25000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiFieryCombustionTimer -= uiDiff;
+                    }
 
-                break;
+                    if (m_uiMeteorTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_METEOR_SUMMON) == CAST_OK)
+                            {
+                                DoScriptText(SAY_FIREBALL, m_creature);
+                                m_uiMeteorTimer = 40000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiMeteorTimer -= uiDiff;
+                    }
+
+                    // Switch to phase 2
+                    if (m_creature->GetHealthPercent() < 75.0f && m_uiPhase == PHASE_PHISYCAL_REALM)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_TWILIGHT_PHASING, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_SUMMON_PORTAL, CAST_TRIGGERED);
+                            DoScriptText(SAY_PHASE_2, m_creature);
+                            DoPrepareTwilightPhase();
+                            m_uiPhase = PHASE_TWILIGHT_REALM;
+                        }
+                    }
+
+                    break;
+                case PHASE_TWILIGHT_REALM:
+
+                    // Switch to phase 3
+                    if (m_creature->GetHealthPercent() < 50.0f)
+                    {
+                        m_creature->RemoveAurasDueToSpell(SPELL_TWILIGHT_PHASING);
+                        DoScriptText(SAY_PHASE_3, m_creature);
+                        m_uiPhase = PHASE_BOTH_REALMS;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();
@@ -471,8 +471,8 @@ struct boss_halion_twilight : public CreatureScript
             {
                 switch (urand(0, 1))
                 {
-                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-                case 1: DoPlaySoundToSet(m_creature, SOUND_SLAY_2); break;
+                    case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                    case 1: DoPlaySoundToSet(m_creature, SOUND_SLAY_2); break;
                 }
             }
         }
@@ -481,21 +481,21 @@ struct boss_halion_twilight : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_CONSUMPTION:
-                pSummoned->CastSpell(pSummoned, SPELL_CONSUMPTION_PERIODIC, true);
-                break;
-            case NPC_SHADOW_ORB_1:
-            case NPC_SHADOW_ORB_2:
-            case NPC_SHADOW_ORB_3:
-            case NPC_SHADOW_ORB_4:
-                if (Creature* pCarrier = GetClosestCreatureWithEntry(pSummoned, NPC_ORB_CARRIER, 5.0f))
-                {
-                    pSummoned->CastSpell(pCarrier, SPELL_RIDE_VEHICLE_HARDCODED, true);
-                }
-                break;
-            case NPC_ORB_CARRIER:
-                pSummoned->CastSpell(pSummoned, SPELL_TRACK_ROTATION, true);
-                break;
+                case NPC_CONSUMPTION:
+                    pSummoned->CastSpell(pSummoned, SPELL_CONSUMPTION_PERIODIC, true);
+                    break;
+                case NPC_SHADOW_ORB_1:
+                case NPC_SHADOW_ORB_2:
+                case NPC_SHADOW_ORB_3:
+                case NPC_SHADOW_ORB_4:
+                    if (Creature* pCarrier = GetClosestCreatureWithEntry(pSummoned, NPC_ORB_CARRIER, 5.0f))
+                    {
+                        pSummoned->CastSpell(pCarrier, SPELL_RIDE_VEHICLE_HARDCODED, true);
+                    }
+                    break;
+                case NPC_ORB_CARRIER:
+                    pSummoned->CastSpell(pSummoned, SPELL_TRACK_ROTATION, true);
+                    break;
             }
         }
 
@@ -508,87 +508,87 @@ struct boss_halion_twilight : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_PHISYCAL_REALM:
-                // nothing here - phase not handled by this npc
-                break;
-            case PHASE_BOTH_REALMS:
-                // ToDo: handle corporeality
-                // no break;
-            case PHASE_TWILIGHT_REALM:
+                case PHASE_PHISYCAL_REALM:
+                    // nothing here - phase not handled by this npc
+                    break;
+                case PHASE_BOTH_REALMS:
+                    // ToDo: handle corporeality
+                    // no break;
+                case PHASE_TWILIGHT_REALM:
 
-                if (m_uiTailLashTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TAIL_LASH) == CAST_OK)
+                    if (m_uiTailLashTimer < uiDiff)
                     {
-                        m_uiTailLashTimer = urand(15000, 25000);
-                    }
-                }
-                else
-                {
-                    m_uiTailLashTimer -= uiDiff;
-                }
-
-                if (m_uiCleaveTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
-                    {
-                        m_uiCleaveTimer = urand(10000, 15000);
-                    }
-                }
-                else
-                {
-                    m_uiCleaveTimer -= uiDiff;
-                }
-
-                if (m_uiDarkBreathTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DARK_BREATH) == CAST_OK)
-                    {
-                        m_uiDarkBreathTimer = urand(15000, 20000);
-                    }
-                }
-                else
-                {
-                    m_uiDarkBreathTimer -= uiDiff;
-                }
-
-                if (m_uiSoulConsumptionTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SOUL_CONSUMPTION, SELECT_FLAG_PLAYER))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_SOUL_CONSUMPTION) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_TAIL_LASH) == CAST_OK)
                         {
-                            m_uiSoulConsumptionTimer = 25000;
+                            m_uiTailLashTimer = urand(15000, 25000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiSoulConsumptionTimer -= uiDiff;
-                }
-
-                // Switch to phase 3
-                if (m_creature->GetHealthPercent() < 50.0f && m_uiPhase == PHASE_TWILIGHT_REALM)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TWILIGHT_DIVISION, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                    else
                     {
-                        if (m_pInstance)
-                        {
-                            // ToDo: Update world states and spawn the exit portals
+                        m_uiTailLashTimer -= uiDiff;
+                    }
 
-                            // Set the real Halion health, so it can also begin phase 3
-                            if (Creature* pHalion = m_pInstance->GetSingleCreatureFromStorage(NPC_HALION_REAL))
+                    if (m_uiCleaveTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                        {
+                            m_uiCleaveTimer = urand(10000, 15000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiCleaveTimer -= uiDiff;
+                    }
+
+                    if (m_uiDarkBreathTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DARK_BREATH) == CAST_OK)
+                        {
+                            m_uiDarkBreathTimer = urand(15000, 20000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiDarkBreathTimer -= uiDiff;
+                    }
+
+                    if (m_uiSoulConsumptionTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SOUL_CONSUMPTION, SELECT_FLAG_PLAYER))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_SOUL_CONSUMPTION) == CAST_OK)
                             {
-                                pHalion->SetHealth(m_creature->GetHealth());
+                                m_uiSoulConsumptionTimer = 25000;
                             }
                         }
-
-                        DoScriptText(SAY_PHASE_3, m_creature);
-                        m_uiPhase = PHASE_BOTH_REALMS;
                     }
-                }
+                    else
+                    {
+                        m_uiSoulConsumptionTimer -= uiDiff;
+                    }
 
-                break;
+                    // Switch to phase 3
+                    if (m_creature->GetHealthPercent() < 50.0f && m_uiPhase == PHASE_TWILIGHT_REALM)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_TWILIGHT_DIVISION, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                        {
+                            if (m_pInstance)
+                            {
+                                // ToDo: Update world states and spawn the exit portals
+
+                                // Set the real Halion health, so it can also begin phase 3
+                                if (Creature* pHalion = m_pInstance->GetSingleCreatureFromStorage(NPC_HALION_REAL))
+                                {
+                                    pHalion->SetHealth(m_creature->GetHealth());
+                                }
+                            }
+
+                            DoScriptText(SAY_PHASE_3, m_creature);
+                            m_uiPhase = PHASE_BOTH_REALMS;
+                        }
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();

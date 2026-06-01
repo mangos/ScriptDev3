@@ -171,8 +171,10 @@ struct boss_grobbulus : public CreatureScript
                 if (!m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_SLIME_STREAM) == CAST_OK)
+                    {
                         // Give some time, to re-reach grobbulus
                         m_uiSlimeStreamTimer = 3 * IN_MILLISECONDS;
+                    }
                 }
             }
             else

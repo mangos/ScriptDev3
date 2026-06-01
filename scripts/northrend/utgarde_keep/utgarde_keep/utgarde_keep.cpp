@@ -85,9 +85,9 @@ struct mob_dragonflayer_forge_master : public CreatureScript
             {
                 switch (i)
                 {
-                case 0: uiGOBellow = GO_BELLOW_1; break;
-                case 1: uiGOBellow = GO_BELLOW_2; break;
-                case 2: uiGOBellow = GO_BELLOW_3; break;
+                    case 0: uiGOBellow = GO_BELLOW_1; break;
+                    case 1: uiGOBellow = GO_BELLOW_2; break;
+                    case 2: uiGOBellow = GO_BELLOW_3; break;
                 }
 
                 if (GameObject* pGOTemp = m_pInstance->GetSingleGameObjectFromStorage(uiGOBellow))
@@ -116,9 +116,9 @@ struct mob_dragonflayer_forge_master : public CreatureScript
 
                 switch (lGOList.front()->GetEntry())
                 {
-                case GO_BELLOW_1: uiGOFire = GO_FORGEFIRE_1; m_uiForgeEncounterId = TYPE_BELLOW_1; break;
-                case GO_BELLOW_2: uiGOFire = GO_FORGEFIRE_2; m_uiForgeEncounterId = TYPE_BELLOW_2; break;
-                case GO_BELLOW_3: uiGOFire = GO_FORGEFIRE_3; m_uiForgeEncounterId = TYPE_BELLOW_3; break;
+                    case GO_BELLOW_1: uiGOFire = GO_FORGEFIRE_1; m_uiForgeEncounterId = TYPE_BELLOW_1; break;
+                    case GO_BELLOW_2: uiGOFire = GO_FORGEFIRE_2; m_uiForgeEncounterId = TYPE_BELLOW_2; break;
+                    case GO_BELLOW_3: uiGOFire = GO_FORGEFIRE_3; m_uiForgeEncounterId = TYPE_BELLOW_3; break;
                 }
 
                 if (GameObject* pGOTemp = m_pInstance->GetSingleGameObjectFromStorage(uiGOFire))
@@ -165,7 +165,10 @@ struct mob_dragonflayer_forge_master : public CreatureScript
                 DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_BURNING_BRAND : SPELL_BURNING_BRAND_H);
                 m_uiBurningBrandTimer = 15000;
             }
-            else m_uiBurningBrandTimer -= uiDiff;
+            else
+            {
+                m_uiBurningBrandTimer -= uiDiff;
+            }
 
             DoMeleeAttackIfReady();
         }

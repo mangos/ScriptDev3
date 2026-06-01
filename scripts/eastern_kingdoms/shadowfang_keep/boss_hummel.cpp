@@ -72,7 +72,7 @@ struct npc_valentine_boss_manager : public CreatureScript
     struct  npc_valentine_boss_managerAI : public ScriptedAI, private DialogueHelper
     {
         npc_valentine_boss_managerAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -99,59 +99,59 @@ struct npc_valentine_boss_manager : public CreatureScript
             Creature* pHummel = m_pInstance->GetSingleCreatureFromStorage(NPC_HUMMEL);
             switch (iEntry)
             {
-            case NPC_HUMMEL:
-                if (pHummel)
-                {
-                    // WARNING: workaround -> faction should be set on event start
-                    pHummel->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
-                    pHummel->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_NON_ATTACKABLE);
-
-                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_EventStarterGuid))
+                case NPC_HUMMEL:
+                    if (pHummel)
                     {
-                        pHummel->AI()->AttackStart(pPlayer);
+                        // WARNING: workaround -> faction should be set on event start
+                        pHummel->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
+                        pHummel->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_NON_ATTACKABLE);
+
+                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_EventStarterGuid))
+                        {
+                            pHummel->AI()->AttackStart(pPlayer);
+                        }
                     }
-                }
 
-                m_pInstance->SetData(TYPE_APOTHECARY, IN_PROGRESS);
-                break;
-            case NPC_BAXTER:
-                if (!pHummel)
-                {
-                    return;
-                }
-
-                if (Creature* pBaxter = m_pInstance->GetSingleCreatureFromStorage(NPC_BAXTER))
-                {
-                    DoScriptText(SAY_CALL_BAXTER, pHummel);
-
-                    // WARNING: workaround -> faction should be set on event start
-                    pBaxter->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
-                    pBaxter->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_NON_ATTACKABLE);
-                    if (pHummel->getVictim())
+                    m_pInstance->SetData(TYPE_APOTHECARY, IN_PROGRESS);
+                    break;
+                case NPC_BAXTER:
+                    if (!pHummel)
                     {
-                        pBaxter->AI()->AttackStart(pHummel->getVictim());
+                        return;
                     }
-                break;
-            }
-            case NPC_FRYE:
-                if (!pHummel)
-                {
-                    return;
-                }
 
-                if (Creature* pFrye = m_pInstance->GetSingleCreatureFromStorage(NPC_FRYE))
-                {
-                    DoScriptText(SAY_CALL_FRYE, pHummel);
-
-                    // WARNING: workaround -> faction should be set on event start
-                    pFrye->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
-                    pFrye->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_NON_ATTACKABLE);
-                    if (pHummel->getVictim())
+                    if (Creature* pBaxter = m_pInstance->GetSingleCreatureFromStorage(NPC_BAXTER))
                     {
-                        pFrye->AI()->AttackStart(pHummel->getVictim());
+                        DoScriptText(SAY_CALL_BAXTER, pHummel);
+
+                        // WARNING: workaround -> faction should be set on event start
+                        pBaxter->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
+                        pBaxter->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_NON_ATTACKABLE);
+                        if (pHummel->getVictim())
+                        {
+                            pBaxter->AI()->AttackStart(pHummel->getVictim());
+                        }
                     }
-                }
-                break;
+                    break;
+                case NPC_FRYE:
+                    if (!pHummel)
+                    {
+                        return;
+                    }
+
+                    if (Creature* pFrye = m_pInstance->GetSingleCreatureFromStorage(NPC_FRYE))
+                    {
+                        DoScriptText(SAY_CALL_FRYE, pHummel);
+
+                        // WARNING: workaround -> faction should be set on event start
+                        pFrye->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
+                        pFrye->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_NON_ATTACKABLE);
+                        if (pHummel->getVictim())
+                        {
+                            pFrye->AI()->AttackStart(pHummel->getVictim());
+                        }
+                    }
+                    break;
             }
         }
 

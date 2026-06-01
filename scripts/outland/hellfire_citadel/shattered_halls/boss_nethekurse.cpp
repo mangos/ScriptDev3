@@ -186,9 +186,9 @@ struct boss_grand_warlock_nethekurse : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_TAUNT_1, m_creature); break;
-            case 1: DoScriptText(SAY_TAUNT_2, m_creature); break;
-            case 2: DoScriptText(SAY_TAUNT_3, m_creature); break;
+                case 0: DoScriptText(SAY_TAUNT_1, m_creature); break;
+                case 1: DoScriptText(SAY_TAUNT_2, m_creature); break;
+                case 2: DoScriptText(SAY_TAUNT_3, m_creature); break;
             }
 
             std::list<Creature*> lFelConverts;
@@ -262,9 +262,9 @@ struct boss_grand_warlock_nethekurse : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
             }
         }
 
@@ -318,14 +318,14 @@ struct boss_grand_warlock_nethekurse : public CreatureScript
             {
                 switch (eventType)
                 {
-                case AI_EVENT_CUSTOM_A:
-                    DoYellForPeonAggro(pInvoker);
-                    break;
-                case AI_EVENT_CUSTOM_B:
-                    DoYellForPeonDeath(pInvoker);
-                    break;
-                default:
-                    break;
+                    case AI_EVENT_CUSTOM_A:
+                        DoYellForPeonAggro(pInvoker);
+                        break;
+                    case AI_EVENT_CUSTOM_B:
+                        DoYellForPeonDeath(pInvoker);
+                        break;
+                    default:
+                        break;
                 }
             }
         }

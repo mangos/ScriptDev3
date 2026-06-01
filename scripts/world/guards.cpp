@@ -35,28 +35,22 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * guard_azuremyst
-#endif
+ * guard_azuremyst (TBC onwards)
  * guard_bluffwatcher
  * guard_contested
  * guard_darnassus
  * guard_dunmorogh
  * guard_durotar
  * guard_elwynnforest
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * guard_eversong
- * guard_exodar
-#endif
+ * guard_eversong (TBC onwards)
+ * guard_exodar (TBC onwards)
  * guard_ironforge
  * guard_mulgore
  * guard_orgrimmar
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * guard_shattrath
- * guard_shattrath_aldor
- * guard_shattrath_scryer
- * guard_silvermoon
-#endif
+ * guard_shattrath (TBC onwards)
+ * guard_shattrath_aldor (TBC onwards)
+ * guard_shattrath_scryer (TBC onwards)
+ * guard_silvermoon (TBC onwards)
  * guard_stormwind
  * guard_teldrassil
  * guard_tirisfal

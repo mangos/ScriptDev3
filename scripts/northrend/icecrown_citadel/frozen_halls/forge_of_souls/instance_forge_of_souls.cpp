@@ -90,206 +90,206 @@ struct is_forge_of_souls : public InstanceScript
 
     class  instance_forge_of_souls : public ScriptedInstance
     {
-    public:
-        instance_forge_of_souls(Map* pMap) : ScriptedInstance(pMap),
-            m_bCriteriaPhantomBlastFailed(false),
-            m_uiTeam(0)
-        {
-            Initialize();
-        }
-
-        ~instance_forge_of_souls() {}
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+        public:
+            instance_forge_of_souls(Map* pMap) : ScriptedInstance(pMap),
+                m_bCriteriaPhantomBlastFailed(false),
+                m_uiTeam(0)
             {
-            case NPC_BRONJAHM:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
-
-            case NPC_CORRUPTED_SOUL_FRAGMENT:
-                m_luiSoulFragmentAliveGUIDs.push_back(pCreature->GetObjectGuid());
-                break;
+                Initialize();
             }
-        }
 
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
+            ~instance_forge_of_souls() {}
+
+            void Initialize() override
             {
-            case TYPE_BRONJAHM:
-                m_auiEncounter[0] = uiData;
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+            }
 
-                // Despawn remaining adds and clear list
-                for (GuidList::const_iterator itr = m_luiSoulFragmentAliveGUIDs.begin(); itr != m_luiSoulFragmentAliveGUIDs.end(); ++itr)
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
                 {
-                    if (Creature* pFragment = instance->GetCreature(*itr))
-                    {
-                        pFragment->ForcedDespawn();
-                    }
+                    case NPC_BRONJAHM:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
+
+                    case NPC_CORRUPTED_SOUL_FRAGMENT:
+                        m_luiSoulFragmentAliveGUIDs.push_back(pCreature->GetObjectGuid());
+                        break;
                 }
-                m_luiSoulFragmentAliveGUIDs.clear();
-                break;
-            case TYPE_DEVOURER_OF_SOULS:
-                m_auiEncounter[1] = uiData;
+            }
+
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                switch (uiType)
+                {
+                    case TYPE_BRONJAHM:
+                        m_auiEncounter[0] = uiData;
+
+                        // Despawn remaining adds and clear list
+                        for (GuidList::const_iterator itr = m_luiSoulFragmentAliveGUIDs.begin(); itr != m_luiSoulFragmentAliveGUIDs.end(); ++itr)
+                        {
+                            if (Creature* pFragment = instance->GetCreature(*itr))
+                            {
+                                pFragment->ForcedDespawn();
+                            }
+                        }
+                        m_luiSoulFragmentAliveGUIDs.clear();
+                        break;
+                    case TYPE_DEVOURER_OF_SOULS:
+                        m_auiEncounter[1] = uiData;
+                        if (uiData == DONE)
+                        {
+                            ProcessEventNpcs(GetPlayerInMap(), true);
+                        }
+                        break;
+                    case TYPE_ACHIEV_PHANTOM_BLAST:
+                        m_bCriteriaPhantomBlastFailed = (uiData == FAIL);
+                        return;
+                }
+
                 if (uiData == DONE)
                 {
-                    ProcessEventNpcs(GetPlayerInMap(), true);
-                }
-                break;
-            case TYPE_ACHIEV_PHANTOM_BLAST:
-                m_bCriteriaPhantomBlastFailed = (uiData == FAIL);
-                return;
-            }
+                    OUT_SAVE_INST_DATA;
 
-            if (uiData == DONE)
-            {
-                OUT_SAVE_INST_DATA;
+                    std::ostringstream saveStream;
+                    saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1];
 
-                std::ostringstream saveStream;
-                saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1];
+                    m_strInstData = saveStream.str();
 
-                m_strInstData = saveStream.str();
-
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
-            }
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            switch (uiType)
-            {
-            case TYPE_BRONJAHM:
-                return m_auiEncounter[0];
-            case TYPE_DEVOURER_OF_SOULS:
-                return m_auiEncounter[1];
-            default:
-                return 0;
-            }
-        }
-
-        void SetData64(uint32 uiType, uint64 uiData) override
-        {
-            if (uiType == DATA_SOULFRAGMENT_REMOVE)
-            {
-                m_luiSoulFragmentAliveGUIDs.remove(ObjectGuid(uiData));
-            }
-        }
-
-        void OnPlayerEnter(Player* pPlayer) override
-        {
-            if (!m_uiTeam)                                          // very first player to enter
-            {
-                m_uiTeam = pPlayer->GetTeam();
-                ProcessEventNpcs(pPlayer, false);
-            }
-        }
-
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override
-        {
-            switch (uiCriteriaId)
-            {
-            case ACHIEV_CRIT_SOUL_POWER:
-                return m_luiSoulFragmentAliveGUIDs.size() >= 4;
-            case ACHIEV_CRIT_PHANTOM_BLAST:
-                return !m_bCriteriaPhantomBlastFailed;
-            default:
-                return 0;
-            }
-        }
-
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
-            {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1];
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                {
-                    m_auiEncounter[i] = NOT_STARTED;
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
                 }
             }
 
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
-
-    private:
-        void ProcessEventNpcs(Player* pPlayer, bool bChanged)
-        {
-            if (!pPlayer)
+            uint32 GetData(uint32 uiType) const override
             {
-                return;
-            }
-
-            if (m_auiEncounter[0] != DONE || m_auiEncounter[1] != DONE)
-            {
-                // Spawn Begin Mobs
-                for (uint8 i = 0; i < countof(aEventBeginLocations); ++i)
+                switch (uiType)
                 {
-                    if (Creature* pSummon = pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventBeginLocations[i].uiEntryHorde : aEventBeginLocations[i].uiEntryAlliance,
-                        aEventBeginLocations[i].fSpawnX, aEventBeginLocations[i].fSpawnY, aEventBeginLocations[i].fSpawnZ, aEventBeginLocations[i].fSpawnO, TEMPSPAWN_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS))
-                        m_lEventMobGUIDs.push_back(pSummon->GetObjectGuid());
+                    case TYPE_BRONJAHM:
+                        return m_auiEncounter[0];
+                    case TYPE_DEVOURER_OF_SOULS:
+                        return m_auiEncounter[1];
+                    default:
+                        return 0;
                 }
             }
-            else
+
+            void SetData64(uint32 uiType, uint64 uiData) override
             {
-                // if bChanged, despawn Begin Mobs, spawn End Mobs at Spawn, else spawn EndMobs at End
-                if (bChanged)
+                if (uiType == DATA_SOULFRAGMENT_REMOVE)
                 {
-                    for (GuidList::const_iterator itr = m_lEventMobGUIDs.begin(); itr != m_lEventMobGUIDs.end(); ++itr)
+                    m_luiSoulFragmentAliveGUIDs.remove(ObjectGuid(uiData));
+                }
+            }
+
+            void OnPlayerEnter(Player* pPlayer) override
+            {
+                if (!m_uiTeam)                                          // very first player to enter
+                {
+                    m_uiTeam = pPlayer->GetTeam();
+                    ProcessEventNpcs(pPlayer, false);
+                }
+            }
+
+            bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override
+            {
+                switch (uiCriteriaId)
+                {
+                    case ACHIEV_CRIT_SOUL_POWER:
+                        return m_luiSoulFragmentAliveGUIDs.size() >= 4;
+                    case ACHIEV_CRIT_PHANTOM_BLAST:
+                        return !m_bCriteriaPhantomBlastFailed;
+                    default:
+                        return 0;
+                }
+            }
+
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* chrIn) override
+            {
+                if (!chrIn)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+                loadStream >> m_auiEncounter[0] >> m_auiEncounter[1];
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
                     {
-                        if (Creature* pSummoned = instance->GetCreature(*itr))
-                        {
-                            pSummoned->ForcedDespawn();
-                        }
+                        m_auiEncounter[i] = NOT_STARTED;
                     }
+                }
 
-                    for (uint8 i = 0; i < countof(aEventEndLocations); ++i)
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
+
+        private:
+            void ProcessEventNpcs(Player* pPlayer, bool bChanged)
+            {
+                if (!pPlayer)
+                {
+                    return;
+                }
+
+                if (m_auiEncounter[0] != DONE || m_auiEncounter[1] != DONE)
+                {
+                    // Spawn Begin Mobs
+                    for (uint8 i = 0; i < countof(aEventBeginLocations); ++i)
                     {
-                        pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventEndLocations[i].uiEntryHorde : aEventEndLocations[i].uiEntryAlliance,
-                            aEventEndLocations[i].fSpawnX, aEventEndLocations[i].fSpawnY, aEventEndLocations[i].fSpawnZ, aEventEndLocations[i].fStartO, TEMPSPAWN_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS);
-
-                        // TODO: Let the NPCs Move along their paths
+                        if (Creature* pSummon = pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventBeginLocations[i].uiEntryHorde : aEventBeginLocations[i].uiEntryAlliance,
+                            aEventBeginLocations[i].fSpawnX, aEventBeginLocations[i].fSpawnY, aEventBeginLocations[i].fSpawnZ, aEventBeginLocations[i].fSpawnO, TEMPSPAWN_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS))
+                            m_lEventMobGUIDs.push_back(pSummon->GetObjectGuid());
                     }
                 }
                 else
                 {
-                    // Summon at end, without event
-                    for (uint8 i = 0; i < countof(aEventEndLocations); ++i)
+                    // if bChanged, despawn Begin Mobs, spawn End Mobs at Spawn, else spawn EndMobs at End
+                    if (bChanged)
                     {
-                        pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventEndLocations[i].uiEntryHorde : aEventEndLocations[i].uiEntryAlliance,
-                            aEventEndLocations[i].fEndX, aEventEndLocations[i].fEndY, aEventEndLocations[i].fEndZ, aEventEndLocations[i].fEndO, TEMPSPAWN_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS);
+                        for (GuidList::const_iterator itr = m_lEventMobGUIDs.begin(); itr != m_lEventMobGUIDs.end(); ++itr)
+                        {
+                            if (Creature* pSummoned = instance->GetCreature(*itr))
+                            {
+                                pSummoned->ForcedDespawn();
+                            }
+                        }
+
+                        for (uint8 i = 0; i < countof(aEventEndLocations); ++i)
+                        {
+                            pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventEndLocations[i].uiEntryHorde : aEventEndLocations[i].uiEntryAlliance,
+                                aEventEndLocations[i].fSpawnX, aEventEndLocations[i].fSpawnY, aEventEndLocations[i].fSpawnZ, aEventEndLocations[i].fStartO, TEMPSPAWN_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS);
+
+                            // TODO: Let the NPCs Move along their paths
+                        }
+                    }
+                    else
+                    {
+                        // Summon at end, without event
+                        for (uint8 i = 0; i < countof(aEventEndLocations); ++i)
+                        {
+                            pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventEndLocations[i].uiEntryHorde : aEventEndLocations[i].uiEntryAlliance,
+                                aEventEndLocations[i].fEndX, aEventEndLocations[i].fEndY, aEventEndLocations[i].fEndZ, aEventEndLocations[i].fEndO, TEMPSPAWN_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS);
+                        }
                     }
                 }
             }
-        }
 
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
 
-        bool m_bCriteriaPhantomBlastFailed;
+            bool m_bCriteriaPhantomBlastFailed;
 
-        uint32 m_uiTeam;                                    // Team of first entered player, used to set if Jaina or Silvana to spawn
+            uint32 m_uiTeam;                                    // Team of first entered player, used to set if Jaina or Silvana to spawn
 
-        GuidList m_luiSoulFragmentAliveGUIDs;
-        GuidList m_lEventMobGUIDs;
+            GuidList m_luiSoulFragmentAliveGUIDs;
+            GuidList m_lEventMobGUIDs;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

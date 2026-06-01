@@ -249,14 +249,14 @@ struct npc_echo_of_medivh : public CreatureScript
 
             if (m_uiCheatTimer < uiDiff)
             {
-                DoCastSpellIfCan(m_creature, urand(0, 1) ? (m_pInstance->GetData(TYPE_PLAYER_TEAM) == ALLIANCE ? SPELL_HAND_OF_MEDIVH_HORDE : SPELL_HAND_OF_MEDIVH_ALLIANCE) :
-                    (m_pInstance->GetData(TYPE_PLAYER_TEAM) == ALLIANCE ? SPELL_FURY_OF_MEDIVH_ALLIANCE : SPELL_FURY_OF_MEDIVH_HORDE));
+                DoCastSpellIfCan(m_creature, urand(0, 1) ? (m_pInstance->GetData(TYPE_PLAYER_TEAM) == ALLIANCE ? SPELL_HAND_OF_MEDIVH_HORDE : SPELL_HAND_OF_MEDIVH_ALLIANCE)
+                    : (m_pInstance->GetData(TYPE_PLAYER_TEAM) == ALLIANCE ? SPELL_FURY_OF_MEDIVH_ALLIANCE : SPELL_FURY_OF_MEDIVH_HORDE));
 
                 switch (urand(0, 2))
                 {
-                case 0: DoPlaySoundToSet(m_creature, SOUND_ID_CHEAT_1); break;
-                case 1: DoPlaySoundToSet(m_creature, SOUND_ID_CHEAT_2); break;
-                case 2: DoPlaySoundToSet(m_creature, SOUND_ID_CHEAT_3); break;
+                    case 0: DoPlaySoundToSet(m_creature, SOUND_ID_CHEAT_1); break;
+                    case 1: DoPlaySoundToSet(m_creature, SOUND_ID_CHEAT_2); break;
+                    case 2: DoPlaySoundToSet(m_creature, SOUND_ID_CHEAT_3); break;
                 }
 
                 DoScriptText(EMOTE_CHEAT, m_creature);
@@ -529,19 +529,19 @@ struct npc_chess_piece_genericAI : public ScriptedAI
                     // the npc doesn't have a 100% chance to move; also there should be some GCD check in core for this part
                     if (roll_chance_i(15))
                     {
-                        // Note: in a normal case the target would be chosen using the spells above
-                        // However, because the core doesn't support special targeting, we'll provide explicit target
-                        //uint32 uiMoveSpell = SPELL_MOVE_1;
-                        //switch (m_creature->GetEntry())
-                        //{
-                        //    case NPC_HUMAN_CONJURER:
-                        //    case NPC_ORC_WARLOCK:
-                        //    case NPC_HUMAN_CHARGER:
-                        //    case NPC_ORC_WOLF:
-                        //        uiMoveSpell = SPELL_MOVE_2;
-                        //        break;
-                        //}
-                        //DoCastSpellIfCan(m_creature, uiMoveSpell, CAST_TRIGGERED);
+                        /** Note: in a normal case the target would be chosen using the spells above
+                         *  However, because the core doesn't support special targeting, we'll provide explicit target
+                         *  uint32 uiMoveSpell = SPELL_MOVE_1;
+                         *  switch (m_creature->GetEntry())
+                         *  {
+                         *      case NPC_HUMAN_CONJURER:
+                         *      case NPC_ORC_WARLOCK:
+                         *      case NPC_HUMAN_CHARGER:
+                         *      case NPC_ORC_WOLF:
+                         *          uiMoveSpell = SPELL_MOVE_2;
+                         *          break;
+                         *  }
+                         *  DoCastSpellIfCan(m_creature, uiMoveSpell, CAST_TRIGGERED); */
 
                         // workaround which provides specific move target
                         if (Unit* pTarget = GetMovementSquare())
@@ -1207,18 +1207,18 @@ struct npc_human_footman : public ChessPieceScript
             {
                 switch (urand(0, 2))
                 {
-                case 0: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_1); break;
-                case 1: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_2); break;
-                case 2: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_3); break;
+                    case 0: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_1); break;
+                    case 1: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_2); break;
+                    case 2: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_3); break;
                 }
             }
             else
             {
                 switch (urand(0, 2))
                 {
-                case 0: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_1); break;
-                case 1: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_2); break;
-                case 2: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_3); break;
+                    case 0: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_1); break;
+                    case 1: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_2); break;
+                    case 2: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_3); break;
                 }
             }
 
@@ -1318,18 +1318,18 @@ struct npc_orc_grunt : public ChessPieceScript
             {
                 switch (urand(0, 2))
                 {
-                case 0: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_1); break;
-                case 1: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_2); break;
-                case 2: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_3); break;
+                    case 0: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_1); break;
+                    case 1: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_2); break;
+                    case 2: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_PLAYER_3); break;
                 }
             }
             else
             {
                 switch (urand(0, 2))
                 {
-                case 0: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_1); break;
-                case 1: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_2); break;
-                case 2: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_3); break;
+                    case 0: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_1); break;
+                    case 1: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_2); break;
+                    case 2: DoPlaySoundToSet(pMedivh, SOUND_ID_LOSE_PAWN_MEDIVH_3); break;
                 }
             }
 

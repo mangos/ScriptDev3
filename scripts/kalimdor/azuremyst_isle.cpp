@@ -108,10 +108,10 @@ struct npc_draenei_survivor : public CreatureScript
                 // Random switch between 4 texts
                 switch (urand(0, 3))
                 {
-                case 0: DoScriptText(SAY_HELP1, m_creature, pWho); break;
-                case 1: DoScriptText(SAY_HELP2, m_creature, pWho); break;
-                case 2: DoScriptText(SAY_HELP3, m_creature, pWho); break;
-                case 3: DoScriptText(SAY_HELP4, m_creature, pWho); break;
+                    case 0: DoScriptText(SAY_HELP1, m_creature, pWho); break;
+                    case 1: DoScriptText(SAY_HELP2, m_creature, pWho); break;
+                    case 2: DoScriptText(SAY_HELP3, m_creature, pWho); break;
+                    case 3: DoScriptText(SAY_HELP4, m_creature, pWho); break;
                 }
 
                 m_uiSayHelpTimer = 20000;
@@ -161,10 +161,10 @@ struct npc_draenei_survivor : public CreatureScript
 
                         switch (urand(0, 3))
                         {
-                        case 0: DoScriptText(SAY_HEAL1, m_creature, pPlayer); break;
-                        case 1: DoScriptText(SAY_HEAL2, m_creature, pPlayer); break;
-                        case 2: DoScriptText(SAY_HEAL3, m_creature, pPlayer); break;
-                        case 3: DoScriptText(SAY_HEAL4, m_creature, pPlayer); break;
+                            case 0: DoScriptText(SAY_HEAL1, m_creature, pPlayer); break;
+                            case 1: DoScriptText(SAY_HEAL2, m_creature, pPlayer); break;
+                            case 2: DoScriptText(SAY_HEAL3, m_creature, pPlayer); break;
+                            case 3: DoScriptText(SAY_HEAL4, m_creature, pPlayer); break;
                         }
 
                         pPlayer->TalkedToCreature(m_creature->GetEntry(), m_creature->GetObjectGuid());
@@ -341,8 +341,8 @@ struct npc_injured_draenei : public CreatureScript
             m_creature->SetHealth(int(m_creature->GetMaxHealth()*.15));
             switch (urand(0, 1))
             {
-            case 0: m_creature->SetStandState(UNIT_STAND_STATE_SIT); break;
-            case 1: m_creature->SetStandState(UNIT_STAND_STATE_SLEEP); break;
+                case 0: m_creature->SetStandState(UNIT_STAND_STATE_SIT); break;
+                case 1: m_creature->SetStandState(UNIT_STAND_STATE_SLEEP); break;
             }
         }
 
@@ -392,20 +392,20 @@ struct npc_magwin : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(SAY_START, m_creature, pPlayer);
-                break;
-            case 17:
-                DoScriptText(SAY_PROGRESS, m_creature, pPlayer);
-                break;
-            case 28:
-                DoScriptText(SAY_END1, m_creature, pPlayer);
-                break;
-            case 29:
-                DoScriptText(EMOTE_HUG, m_creature, pPlayer);
-                DoScriptText(SAY_END2, m_creature, pPlayer);
-                pPlayer->GroupEventHappens(QUEST_A_CRY_FOR_HELP, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_START, m_creature, pPlayer);
+                    break;
+                case 17:
+                    DoScriptText(SAY_PROGRESS, m_creature, pPlayer);
+                    break;
+                case 28:
+                    DoScriptText(SAY_END1, m_creature, pPlayer);
+                    break;
+                case 29:
+                    DoScriptText(EMOTE_HUG, m_creature, pPlayer);
+                    DoScriptText(SAY_END2, m_creature, pPlayer);
+                    pPlayer->GroupEventHappens(QUEST_A_CRY_FOR_HELP, m_creature);
+                    break;
             }
         }
 

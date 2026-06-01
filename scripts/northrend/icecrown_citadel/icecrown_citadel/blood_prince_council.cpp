@@ -146,7 +146,7 @@ struct npc_queen_lanathel_intro : public CreatureScript
     struct npc_queen_lanathel_introAI : public ScriptedAI, private DialogueHelper
     {
         npc_queen_lanathel_introAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -178,32 +178,32 @@ struct npc_queen_lanathel_intro : public CreatureScript
         {
             switch (iEntry)
             {
-            case SAY_COUNCIL_INTRO_2:
-                m_creature->GetMotionMaster()->MovePoint(1, aLanathelFlyPos[0], aLanathelFlyPos[1], aLanathelFlyPos[2]);
-                break;
-            case NPC_BLOOD_ORB_CONTROL:
-                if (m_pInstance)
-                {
-                    if (Creature* pTaldaram = m_pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM))
+                case SAY_COUNCIL_INTRO_2:
+                    m_creature->GetMotionMaster()->MovePoint(1, aLanathelFlyPos[0], aLanathelFlyPos[1], aLanathelFlyPos[2]);
+                    break;
+                case NPC_BLOOD_ORB_CONTROL:
+                    if (m_pInstance)
                     {
-                        pTaldaram->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-                        pTaldaram->RemoveAurasDueToSpell(SPELL_FEIGN_DEATH);
-                        pTaldaram->SetHealth(1);
+                        if (Creature* pTaldaram = m_pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM))
+                        {
+                            pTaldaram->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                            pTaldaram->RemoveAurasDueToSpell(SPELL_FEIGN_DEATH);
+                            pTaldaram->SetHealth(1);
+                        }
+                        if (Creature* pKeleseth = m_pInstance->GetSingleCreatureFromStorage(NPC_KELESETH))
+                        {
+                            pKeleseth->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                            pKeleseth->RemoveAurasDueToSpell(SPELL_FEIGN_DEATH);
+                            pKeleseth->SetHealth(1);
+                        }
+                        if (Creature* pValanar = m_pInstance->GetSingleCreatureFromStorage(NPC_VALANAR))
+                        {
+                            pValanar->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                            pValanar->RemoveAurasDueToSpell(SPELL_FEIGN_DEATH);
+                            pValanar->SetHealth(1);
+                        }
                     }
-                    if (Creature* pKeleseth = m_pInstance->GetSingleCreatureFromStorage(NPC_KELESETH))
-                    {
-                        pKeleseth->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-                        pKeleseth->RemoveAurasDueToSpell(SPELL_FEIGN_DEATH);
-                        pKeleseth->SetHealth(1);
-                    }
-                    if (Creature* pValanar = m_pInstance->GetSingleCreatureFromStorage(NPC_VALANAR))
-                    {
-                        pValanar->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-                        pValanar->RemoveAurasDueToSpell(SPELL_FEIGN_DEATH);
-                        pValanar->SetHealth(1);
-                    }
-                }
-                break;
+                    break;
             }
         }
 
@@ -513,18 +513,18 @@ struct npc_blood_orb_control : public CreatureScript
 
                 switch (uiResult)
                 {
-                case 0:
-                    DoCastSpellIfCan(m_creature, SPELL_INVOCATION_V_MOVE, CAST_TRIGGERED);
-                    DoCastSpellIfCan(m_creature, SPELL_INVOCATION_VALANAR, CAST_TRIGGERED);
-                    break;
-                case 1:
-                    DoCastSpellIfCan(m_creature, SPELL_INVOCATION_K_MOVE, CAST_TRIGGERED);
-                    DoCastSpellIfCan(m_creature, SPELL_INVOCATION_KELESETH, CAST_TRIGGERED);
-                    break;
-                case 2:
-                    DoCastSpellIfCan(m_creature, SPELL_INVOCATION_T_MOVE, CAST_TRIGGERED);
-                    DoCastSpellIfCan(m_creature, SPELL_INVOCATION_TALDARAM, CAST_TRIGGERED);
-                    break;
+                    case 0:
+                        DoCastSpellIfCan(m_creature, SPELL_INVOCATION_V_MOVE, CAST_TRIGGERED);
+                        DoCastSpellIfCan(m_creature, SPELL_INVOCATION_VALANAR, CAST_TRIGGERED);
+                        break;
+                    case 1:
+                        DoCastSpellIfCan(m_creature, SPELL_INVOCATION_K_MOVE, CAST_TRIGGERED);
+                        DoCastSpellIfCan(m_creature, SPELL_INVOCATION_KELESETH, CAST_TRIGGERED);
+                        break;
+                    case 2:
+                        DoCastSpellIfCan(m_creature, SPELL_INVOCATION_T_MOVE, CAST_TRIGGERED);
+                        DoCastSpellIfCan(m_creature, SPELL_INVOCATION_TALDARAM, CAST_TRIGGERED);
+                        break;
                 }
 
                 m_uiInvocationTimer = 47000;

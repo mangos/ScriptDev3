@@ -264,20 +264,20 @@ struct boss_zuljin : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_FEATHER_VORTEX:
-                pSummoned->CastSpell(pSummoned, SPELL_CYCLONE_VISUAL, true);
-                pSummoned->CastSpell(pSummoned, SPELL_CYCLONE_PASSIVE, true);
-                m_lSummonsList.push_back(pSummoned->GetObjectGuid());
+                case NPC_FEATHER_VORTEX:
+                    pSummoned->CastSpell(pSummoned, SPELL_CYCLONE_VISUAL, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_CYCLONE_PASSIVE, true);
+                    m_lSummonsList.push_back(pSummoned->GetObjectGuid());
 
-                // Attack random target
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                {
-                    pSummoned->GetMotionMaster()->MoveFollow(pTarget, 0, 0);
-                }
-                break;
-            case NPC_COLUMN_OF_FIRE:
-                pSummoned->CastSpell(pSummoned, SPELL_PILLAR_TRIGGER, true);
-                break;
+                    // Attack random target
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        pSummoned->GetMotionMaster()->MoveFollow(pTarget, 0, 0);
+                    }
+                    break;
+                case NPC_COLUMN_OF_FIRE:
+                    pSummoned->CastSpell(pSummoned, SPELL_PILLAR_TRIGGER, true);
+                    break;
             }
         }
 
@@ -390,158 +390,158 @@ struct boss_zuljin : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_TROLL:
+                case PHASE_TROLL:
 
-                if (m_uiWhirlwindTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_WHIRLWIND) == CAST_OK)
+                    if (m_uiWhirlwindTimer < uiDiff)
                     {
-                        m_uiWhirlwindTimer = urand(15000, 20000);
-                    }
-                }
-                else
-                {
-                    m_uiWhirlwindTimer -= uiDiff;
-                }
-
-                if (m_uiGrievousThrowTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_GRIEVOUS_THROW) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_WHIRLWIND) == CAST_OK)
                         {
-                            m_uiGrievousThrowTimer = 10000;
+                            m_uiWhirlwindTimer = urand(15000, 20000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiGrievousThrowTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_BEAR:
-
-                if (m_uiParalysisTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_CREEPING_PARALYSIS) == CAST_OK)
+                    else
                     {
-                        m_uiParalysisTimer = 27000;
+                        m_uiWhirlwindTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiParalysisTimer -= uiDiff;
-                }
 
-                if (m_uiOverpowerTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_OVERPOWER) == CAST_OK)
+                    if (m_uiGrievousThrowTimer < uiDiff)
                     {
-                        m_uiOverpowerTimer = urand(12000, 16000);
-                    }
-                }
-                else
-                {
-                    m_uiOverpowerTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_EAGLE:
-                // Nothing here; Spells casted just once at the beginning of the phase;
-                break;
-            case PHASE_LYNX:
-
-                // Don't apply Claw Rage during Lynx Rush
-                if (!m_uiLynxRushCount)
-                {
-                    if (m_uiClawRageTimer < uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_CLAW_RAGE, SELECT_FLAG_PLAYER))
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         {
-                            if (DoCastSpellIfCan(pTarget, SPELL_CLAW_RAGE) == CAST_OK)
+                            if (DoCastSpellIfCan(pTarget, SPELL_GRIEVOUS_THROW) == CAST_OK)
                             {
-                                m_uiClawRageTimer = urand(15000, 20000);
+                                m_uiGrievousThrowTimer = 10000;
                             }
                         }
                     }
                     else
                     {
-                        m_uiClawRageTimer -= uiDiff;
+                        m_uiGrievousThrowTimer -= uiDiff;
                     }
-                }
 
-                if (m_uiLynxRushTimer < uiDiff)
-                {
-                    if (!m_uiLynxRushCount)
+                    break;
+                case PHASE_BEAR:
+
+                    if (m_uiParalysisTimer < uiDiff)
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_LYNX_RUSH);
+                        if (DoCastSpellIfCan(m_creature, SPELL_CREEPING_PARALYSIS) == CAST_OK)
+                        {
+                            m_uiParalysisTimer = 27000;
+                        }
                     }
                     else
                     {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        m_uiParalysisTimer -= uiDiff;
+                    }
+
+                    if (m_uiOverpowerTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_OVERPOWER) == CAST_OK)
                         {
-                            DoCastSpellIfCan(pTarget, SPELL_LYNX_RUSH_CHARGE);
+                            m_uiOverpowerTimer = urand(12000, 16000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiOverpowerTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_EAGLE:
+                    // Nothing here; Spells casted just once at the beginning of the phase;
+                    break;
+                case PHASE_LYNX:
+
+                    // Don't apply Claw Rage during Lynx Rush
+                    if (!m_uiLynxRushCount)
+                    {
+                        if (m_uiClawRageTimer < uiDiff)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_CLAW_RAGE, SELECT_FLAG_PLAYER))
+                            {
+                                if (DoCastSpellIfCan(pTarget, SPELL_CLAW_RAGE) == CAST_OK)
+                                {
+                                    m_uiClawRageTimer = urand(15000, 20000);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiClawRageTimer -= uiDiff;
                         }
                     }
 
-                    ++m_uiLynxRushCount;
-
-                    if (m_uiLynxRushCount == MAX_LYNX_RUSH)
+                    if (m_uiLynxRushTimer < uiDiff)
                     {
-                        m_uiLynxRushTimer = urand(20000, 25000);
-                        m_uiLynxRushCount = 0;
+                        if (!m_uiLynxRushCount)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_LYNX_RUSH);
+                        }
+                        else
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                            {
+                                DoCastSpellIfCan(pTarget, SPELL_LYNX_RUSH_CHARGE);
+                            }
+                        }
+
+                        ++m_uiLynxRushCount;
+
+                        if (m_uiLynxRushCount == MAX_LYNX_RUSH)
+                        {
+                            m_uiLynxRushTimer = urand(20000, 25000);
+                            m_uiLynxRushCount = 0;
+                        }
+                        else
+                        {
+                            m_uiLynxRushTimer = 400;
+                        }
                     }
                     else
                     {
-                        m_uiLynxRushTimer = 400;
+                        m_uiLynxRushTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiLynxRushTimer -= uiDiff;
-                }
 
-                break;
-            case PHASE_DRAGONHAWK:
+                    break;
+                case PHASE_DRAGONHAWK:
 
-                if (m_uiFlameWhirlTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FLAME_WHIRL) == CAST_OK)
+                    if (m_uiFlameWhirlTimer < uiDiff)
                     {
-                        m_uiFlameWhirlTimer = 15000;
+                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_WHIRL) == CAST_OK)
+                        {
+                            m_uiFlameWhirlTimer = 15000;
+                        }
                     }
-                }
-                else
-                {
-                    m_uiFlameWhirlTimer -= uiDiff;
-                }
-
-                if (m_uiPillarOfFireTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_PILLAR) == CAST_OK)
+                    else
                     {
-                        m_uiPillarOfFireTimer = urand(17000, 22000);
+                        m_uiFlameWhirlTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiPillarOfFireTimer -= uiDiff;
-                }
 
-                if (m_uiFlameBreathTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BREATH) == CAST_OK)
+                    if (m_uiPillarOfFireTimer < uiDiff)
                     {
-                        m_uiFlameBreathTimer = 15000;
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_PILLAR) == CAST_OK)
+                        {
+                            m_uiPillarOfFireTimer = urand(17000, 22000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiFlameBreathTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiPillarOfFireTimer -= uiDiff;
+                    }
 
-                break;
+                    if (m_uiFlameBreathTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BREATH) == CAST_OK)
+                        {
+                            m_uiFlameBreathTimer = 15000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiFlameBreathTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();

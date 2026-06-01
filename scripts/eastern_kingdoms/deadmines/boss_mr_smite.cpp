@@ -217,15 +217,15 @@ struct boss_mr_smite : public CreatureScript
 
                 switch (m_uiPhase)
                 {
-                case PHASE_EQUIP_START:
-                    PhaseEquipStart();
-                    break;
-                case PHASE_EQUIP_PROCESS:
-                    PhaseEquipProcess();
-                    break;
-                case PHASE_EQUIP_END:
-                    PhaseEquipEnd();
-                    break;
+                    case PHASE_EQUIP_START:
+                        PhaseEquipStart();
+                        break;
+                    case PHASE_EQUIP_PROCESS:
+                        PhaseEquipProcess();
+                        break;
+                    case PHASE_EQUIP_END:
+                        PhaseEquipEnd();
+                        break;
                 }
 
                 return;
@@ -234,51 +234,51 @@ struct boss_mr_smite : public CreatureScript
             // the normal combat phases
             switch (m_uiPhase)
             {
-            case PHASE_1:
-                if (m_creature->GetHealthPercent() < 66.0f)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SMITE_STOMP) == CAST_OK)
+                case PHASE_1:
+                    if (m_creature->GetHealthPercent() < 66.0f)
                     {
-                        DoScriptText(m_creature->GetHealthPercent() < 33.0f ? SAY_PHASE_3 : SAY_PHASE_2, m_creature);
-                        m_uiPhase = PHASE_EQUIP_START;
-                        m_uiEquipTimer = 2500;
+                        if (DoCastSpellIfCan(m_creature, SPELL_SMITE_STOMP) == CAST_OK)
+                        {
+                            DoScriptText(m_creature->GetHealthPercent() < 33.0f ? SAY_PHASE_3 : SAY_PHASE_2, m_creature);
+                            m_uiPhase = PHASE_EQUIP_START;
+                            m_uiEquipTimer = 2500;
 
-                        // will clear getVictim (m_attacking)
-                        m_creature->AttackStop(true);
-                        m_creature->RemoveAurasDueToSpell(SPELL_NIBLE_REFLEXES);
+                            // will clear getVictim (m_attacking)
+                            m_creature->AttackStop(true);
+                            m_creature->RemoveAurasDueToSpell(SPELL_NIBLE_REFLEXES);
+                        }
+                        return;
                     }
-                    return;
-                }
-                break;
-            case PHASE_2:
-                if (m_creature->GetHealthPercent() < 33.0f)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SMITE_STOMP) == CAST_OK)
+                    break;
+                case PHASE_2:
+                    if (m_creature->GetHealthPercent() < 33.0f)
                     {
-                        DoScriptText(SAY_PHASE_3, m_creature);
-                        m_uiPhase = PHASE_EQUIP_START;
-                        m_uiEquipTimer = 2500;
+                        if (DoCastSpellIfCan(m_creature, SPELL_SMITE_STOMP) == CAST_OK)
+                        {
+                            DoScriptText(SAY_PHASE_3, m_creature);
+                            m_uiPhase = PHASE_EQUIP_START;
+                            m_uiEquipTimer = 2500;
 
-                        // will clear getVictim (m_attacking)
-                        m_creature->AttackStop(true);
-                        m_creature->RemoveAurasDueToSpell(SPELL_THRASH);
+                            // will clear getVictim (m_attacking)
+                            m_creature->AttackStop(true);
+                            m_creature->RemoveAurasDueToSpell(SPELL_THRASH);
+                        }
+                        return;
                     }
-                    return;
-                }
-                break;
-            case PHASE_3:
-                if (m_uiSlamTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SMITE_SLAM) == CAST_OK)
+                    break;
+                case PHASE_3:
+                    if (m_uiSlamTimer < uiDiff)
                     {
-                        m_uiSlamTimer = 11000;
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SMITE_SLAM) == CAST_OK)
+                        {
+                            m_uiSlamTimer = 11000;
+                        }
                     }
-                }
-                else
-                {
-                    m_uiSlamTimer -= uiDiff;
-                }
-                break;
+                    else
+                    {
+                        m_uiSlamTimer -= uiDiff;
+                    }
+                    break;
             }
 
             DoMeleeAttackIfReady();

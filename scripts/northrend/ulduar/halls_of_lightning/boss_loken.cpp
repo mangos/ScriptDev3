@@ -121,9 +121,9 @@ struct boss_loken : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
             }
         }
 
@@ -164,9 +164,9 @@ struct boss_loken : public CreatureScript
                 {
                     switch (urand(0, 2))
                     {
-                    case 0: DoScriptText(SAY_NOVA_1, m_creature); break;
-                    case 1: DoScriptText(SAY_NOVA_2, m_creature); break;
-                    case 2: DoScriptText(SAY_NOVA_3, m_creature); break;
+                        case 0: DoScriptText(SAY_NOVA_1, m_creature); break;
+                        case 1: DoScriptText(SAY_NOVA_2, m_creature); break;
+                        case 2: DoScriptText(SAY_NOVA_3, m_creature); break;
                     }
                     m_uiLightningNovaTimer = urand(20000, 21000);
                 }
@@ -181,9 +181,9 @@ struct boss_loken : public CreatureScript
             {
                 switch (m_uiHealthAmountModifier)
                 {
-                case 1: DoScriptText(SAY_75HEALTH, m_creature); break;
-                case 2: DoScriptText(SAY_50HEALTH, m_creature); break;
-                case 3: DoScriptText(SAY_25HEALTH, m_creature); break;
+                    case 1: DoScriptText(SAY_75HEALTH, m_creature); break;
+                    case 2: DoScriptText(SAY_50HEALTH, m_creature); break;
+                    case 3: DoScriptText(SAY_25HEALTH, m_creature); break;
                 }
 
                 ++m_uiHealthAmountModifier;

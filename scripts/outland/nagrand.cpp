@@ -268,43 +268,43 @@ struct npc_nagrand_captive : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 7:
-                if (m_creature->GetEntry() == NPC_MAGHAR_CAPTIVE)
-                {
-                    DoScriptText(SAY_MAG_MORE, m_creature);
-                }
-                else if (m_creature->GetEntry() == NPC_KURENAI_CAPTIVE)
-                {
-                    DoScriptText(urand(0, 1) ? SAY_KUR_AMBUSH_1 : SAY_KUR_AMBUSH_2, m_creature);
-                }
+                case 7:
+                    if (m_creature->GetEntry() == NPC_MAGHAR_CAPTIVE)
+                    {
+                        DoScriptText(SAY_MAG_MORE, m_creature);
+                    }
+                    else if (m_creature->GetEntry() == NPC_KURENAI_CAPTIVE)
+                    {
+                        DoScriptText(urand(0, 1) ? SAY_KUR_AMBUSH_1 : SAY_KUR_AMBUSH_2, m_creature);
+                    }
 
-                if (Creature* pTemp = m_creature->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushB[0], m_afAmbushB[1], m_afAmbushB[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000))
-                {
-                    DoScriptText(SAY_MAG_MORE_REPLY, pTemp);
-                }
+                    if (Creature* pTemp = m_creature->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushB[0], m_afAmbushB[1], m_afAmbushB[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000))
+                    {
+                        DoScriptText(SAY_MAG_MORE_REPLY, pTemp);
+                    }
 
-                m_creature->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushB[0] - 2.5f, m_afAmbushB[1] - 2.5f, m_afAmbushB[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    m_creature->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushB[0] - 2.5f, m_afAmbushB[1] - 2.5f, m_afAmbushB[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
 
-                m_creature->SummonCreature(NPC_MURK_SCAVENGER, m_afAmbushB[0] + 2.5f, m_afAmbushB[1] + 2.5f, m_afAmbushB[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
-                m_creature->SummonCreature(NPC_MURK_SCAVENGER, m_afAmbushB[0] + 2.5f, m_afAmbushB[1] - 2.5f, m_afAmbushB[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
-                break;
-            case 16:
-                if (m_creature->GetEntry() == NPC_MAGHAR_CAPTIVE)
-                {
-                    DoScriptText(SAY_MAG_COMPLETE, m_creature);
-                }
-                else if (m_creature->GetEntry() == NPC_KURENAI_CAPTIVE)
-                {
-                    DoScriptText(urand(0, 1) ? SAY_KUR_COMPLETE_1 : SAY_KUR_COMPLETE_2, m_creature);
-                }
+                    m_creature->SummonCreature(NPC_MURK_SCAVENGER, m_afAmbushB[0] + 2.5f, m_afAmbushB[1] + 2.5f, m_afAmbushB[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    m_creature->SummonCreature(NPC_MURK_SCAVENGER, m_afAmbushB[0] + 2.5f, m_afAmbushB[1] - 2.5f, m_afAmbushB[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    break;
+                case 16:
+                    if (m_creature->GetEntry() == NPC_MAGHAR_CAPTIVE)
+                    {
+                        DoScriptText(SAY_MAG_COMPLETE, m_creature);
+                    }
+                    else if (m_creature->GetEntry() == NPC_KURENAI_CAPTIVE)
+                    {
+                        DoScriptText(urand(0, 1) ? SAY_KUR_COMPLETE_1 : SAY_KUR_COMPLETE_2, m_creature);
+                    }
 
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(m_creature->GetEntry() == NPC_MAGHAR_CAPTIVE ? QUEST_TOTEM_KARDASH_H : QUEST_TOTEM_KARDASH_A, m_creature);
-                }
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(m_creature->GetEntry() == NPC_MAGHAR_CAPTIVE ? QUEST_TOTEM_KARDASH_H : QUEST_TOTEM_KARDASH_A, m_creature);
+                    }
 
-                SetRun();
-                break;
+                    SetRun();
+                    break;
             }
         }
 

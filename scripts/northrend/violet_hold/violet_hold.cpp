@@ -136,29 +136,29 @@ struct npc_sinclari : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0:
-                m_pInstance->SetData64(DATA64_CRYSTAL_ACTIVATOR_INT, m_creature->GetObjectGuid().GetRawValue());
-                break;
-            case 1:
-                DoScriptText(SAY_BEGIN, m_creature);
-                m_pInstance->SetData(TYPE_DO_SINCLARI_BEGIN, 0);
-                break;
-            case 2:
-                DoScriptText(SAY_LOCK_DOOR, m_creature);
-                m_creature->SetFacingTo(0.05f);
-                break;
-            case 3:
-                m_pInstance->SetData(TYPE_MAIN, IN_PROGRESS);
-                break;
-            case 4:
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                SetEscortPaused(true);
-                break;
-            case 5:
-                m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                DoScriptText(SAY_VICTORY, m_creature);
-                SetEscortPaused(true);
-                break;
+                case 0:
+                    m_pInstance->SetData64(DATA64_CRYSTAL_ACTIVATOR_INT, m_creature->GetObjectGuid().GetRawValue());
+                    break;
+                case 1:
+                    DoScriptText(SAY_BEGIN, m_creature);
+                    m_pInstance->SetData(TYPE_DO_SINCLARI_BEGIN, 0);
+                    break;
+                case 2:
+                    DoScriptText(SAY_LOCK_DOOR, m_creature);
+                    m_creature->SetFacingTo(0.05f);
+                    break;
+                case 3:
+                    m_pInstance->SetData(TYPE_MAIN, IN_PROGRESS);
+                    break;
+                case 4:
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    SetEscortPaused(true);
+                    break;
+                case 5:
+                    m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    DoScriptText(SAY_VICTORY, m_creature);
+                    SetEscortPaused(true);
+                    break;
             }
         }
 
@@ -305,30 +305,30 @@ struct npc_prison_event_controller : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_AZURE_CAPTAIN:
-                DoScriptText(EMOTE_DRAGONFLIGHT_PORTAL, pSummoned);
-                // no break
-            case NPC_AZURE_RAIDER:
-            case NPC_AZURE_SORCEROR:
-            case NPC_AZURE_STALKER:
-                m_sTrashPackSet.insert(pSummoned->GetObjectGuid());
-                // no break
-            case NPC_AZURE_INVADER:
-            case NPC_MAGE_HUNTER:
-            case NPC_AZURE_SPELLBREAKER:
-            case NPC_AZURE_BINDER:
-            case NPC_AZURE_MAGE_SLAYER:
-                pSummoned->SetWalk(false);
-                pSummoned->GetMotionMaster()->MovePoint(1, fSealAttackLoc[0], fSealAttackLoc[1], fSealAttackLoc[2]);
-                break;
-            case NPC_AZURE_SABOTEUR:
-                if (!m_pInstance)
-                {
-                    return;
-                }
-                m_currentSaboteurGuid = pSummoned->GetObjectGuid();
-                m_pInstance->SetData64(DATA64_SABOTEUR, pSummoned->GetObjectGuid().GetRawValue());
-                break;
+                case NPC_AZURE_CAPTAIN:
+                    DoScriptText(EMOTE_DRAGONFLIGHT_PORTAL, pSummoned);
+                    // no break
+                case NPC_AZURE_RAIDER:
+                case NPC_AZURE_SORCEROR:
+                case NPC_AZURE_STALKER:
+                    m_sTrashPackSet.insert(pSummoned->GetObjectGuid());
+                    // no break
+                case NPC_AZURE_INVADER:
+                case NPC_MAGE_HUNTER:
+                case NPC_AZURE_SPELLBREAKER:
+                case NPC_AZURE_BINDER:
+                case NPC_AZURE_MAGE_SLAYER:
+                    pSummoned->SetWalk(false);
+                    pSummoned->GetMotionMaster()->MovePoint(1, fSealAttackLoc[0], fSealAttackLoc[1], fSealAttackLoc[2]);
+                    break;
+                case NPC_AZURE_SABOTEUR:
+                    if (!m_pInstance)
+                    {
+                        return;
+                    }
+                    m_currentSaboteurGuid = pSummoned->GetObjectGuid();
+                    m_pInstance->SetData64(DATA64_SABOTEUR, pSummoned->GetObjectGuid().GetRawValue());
+                    break;
             }
         }
 
@@ -357,24 +357,24 @@ struct npc_prison_event_controller : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_AZURE_CAPTAIN:
-            case NPC_AZURE_RAIDER:
-            case NPC_AZURE_SORCEROR:
-            case NPC_AZURE_STALKER:
-                if (m_sTrashPackSet.find(pSummoned->GetObjectGuid()) != m_sTrashPackSet.end())
-                {
-                    m_sTrashPackSet.erase(pSummoned->GetObjectGuid());
-                }
-
-                if (m_sTrashPackSet.empty())
-                {
-                    // no need if a new portal was made while this was in progress
-                    if (m_uiCurrentTrashPortalId == m_pInstance->GetData(TYPE_DATA_PORTAL_NUMBER))
+                case NPC_AZURE_CAPTAIN:
+                case NPC_AZURE_RAIDER:
+                case NPC_AZURE_SORCEROR:
+                case NPC_AZURE_STALKER:
+                    if (m_sTrashPackSet.find(pSummoned->GetObjectGuid()) != m_sTrashPackSet.end())
                     {
-                        m_pInstance->SetData(TYPE_PORTAL, DONE);
+                        m_sTrashPackSet.erase(pSummoned->GetObjectGuid());
                     }
-                }
-                break;
+
+                    if (m_sTrashPackSet.empty())
+                    {
+                        // no need if a new portal was made while this was in progress
+                        if (m_uiCurrentTrashPortalId == m_pInstance->GetData(TYPE_DATA_PORTAL_NUMBER))
+                        {
+                            m_pInstance->SetData(TYPE_PORTAL, DONE);
+                        }
+                    }
+                    break;
             }
         }
 
@@ -392,23 +392,23 @@ struct npc_prison_event_controller : public CreatureScript
 
                     switch (m_uiSaboteurPhase)
                     {
-                    case 0:
-                        pSaboteur->CastSpell(pSaboteur, SPELL_SHIELD_DISRUPTION, false);
-                        m_uiSaboteurTimer = 1000;
-                        break;
-                    case 1:
-                        pSaboteur->CastSpell(pSaboteur, SPELL_SHIELD_DISRUPTION, false);
-                        m_uiSaboteurTimer = 1000;
-                        break;
-                    case 2:
-                        if (m_pInstance)
-                        {
-                            m_pInstance->SetData(TYPE_DO_RELEASE_BOSS, 1);
-                        }
-                        pSaboteur->CastSpell(pSaboteur, SPELL_SIMPLE_TELEPORT, false);
-                        pSaboteur->ForcedDespawn(1000);
-                        m_uiSaboteurTimer = 0;
-                        break;
+                        case 0:
+                            pSaboteur->CastSpell(pSaboteur, SPELL_SHIELD_DISRUPTION, false);
+                            m_uiSaboteurTimer = 1000;
+                            break;
+                        case 1:
+                            pSaboteur->CastSpell(pSaboteur, SPELL_SHIELD_DISRUPTION, false);
+                            m_uiSaboteurTimer = 1000;
+                            break;
+                        case 2:
+                            if (m_pInstance)
+                            {
+                                m_pInstance->SetData(TYPE_DO_RELEASE_BOSS, 1);
+                            }
+                            pSaboteur->CastSpell(pSaboteur, SPELL_SIMPLE_TELEPORT, false);
+                            pSaboteur->ForcedDespawn(1000);
+                            m_uiSaboteurTimer = 0;
+                            break;
                     }
                     ++m_uiSaboteurPhase;
                 }
@@ -553,27 +553,27 @@ struct npc_teleportation_portal : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_CYANIGOSA:
-                m_cyanigosaGuid = pSummoned->GetObjectGuid();
-                m_uiCyanigosaMoveTimer = 5000;
-                m_creature->ForcedDespawn(5000);
-                break;
-            case NPC_PORTAL_GUARDIAN:
-                DoScriptText(EMOTE_GUARDIAN_PORTAL, pSummoned);
-                DoCastSpellIfCan(pSummoned, SPELL_PORTAL_CHANNEL);
-                break;
-            case NPC_PORTAL_KEEPER:
-                DoScriptText(EMOTE_KEEPER_PORTAL, pSummoned);
-                DoCastSpellIfCan(pSummoned, SPELL_PORTAL_CHANNEL);
-                break;
-            case NPC_AZURE_BINDER_INTRO:
-            case NPC_AZURE_INVADER_INTRO:
-            case NPC_AZURE_SPELLBREAKER_INTRO:
-            case NPC_AZURE_MAGE_SLAYER_INTRO:
-                // Move them to the entrance. They will attack the guards automatically
-                pSummoned->SetWalk(false);
-                pSummoned->GetMotionMaster()->MovePoint(1, fSealAttackLoc[0], fSealAttackLoc[1], fSealAttackLoc[2]);
-                break;
+                case NPC_CYANIGOSA:
+                    m_cyanigosaGuid = pSummoned->GetObjectGuid();
+                    m_uiCyanigosaMoveTimer = 5000;
+                    m_creature->ForcedDespawn(5000);
+                    break;
+                case NPC_PORTAL_GUARDIAN:
+                    DoScriptText(EMOTE_GUARDIAN_PORTAL, pSummoned);
+                    DoCastSpellIfCan(pSummoned, SPELL_PORTAL_CHANNEL);
+                    break;
+                case NPC_PORTAL_KEEPER:
+                    DoScriptText(EMOTE_KEEPER_PORTAL, pSummoned);
+                    DoCastSpellIfCan(pSummoned, SPELL_PORTAL_CHANNEL);
+                    break;
+                case NPC_AZURE_BINDER_INTRO:
+                case NPC_AZURE_INVADER_INTRO:
+                case NPC_AZURE_SPELLBREAKER_INTRO:
+                case NPC_AZURE_MAGE_SLAYER_INTRO:
+                    // Move them to the entrance. They will attack the guards automatically
+                    pSummoned->SetWalk(false);
+                    pSummoned->GetMotionMaster()->MovePoint(1, fSealAttackLoc[0], fSealAttackLoc[1], fSealAttackLoc[2]);
+                    break;
             }
         }
 
@@ -581,15 +581,15 @@ struct npc_teleportation_portal : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_PORTAL_GUARDIAN:
-            case NPC_PORTAL_KEEPER:
-                m_creature->ForcedDespawn(3000);
-                // no need if a new portal was made while this was in progress
-                if (m_pInstance && m_uiMyPortalNumber == m_pInstance->GetData(TYPE_DATA_PORTAL_NUMBER))
-                {
-                    m_pInstance->SetData(TYPE_PORTAL, DONE);
-                }
-                break;
+                case NPC_PORTAL_GUARDIAN:
+                case NPC_PORTAL_KEEPER:
+                    m_creature->ForcedDespawn(3000);
+                    // no need if a new portal was made while this was in progress
+                    if (m_pInstance && m_uiMyPortalNumber == m_pInstance->GetData(TYPE_DATA_PORTAL_NUMBER))
+                    {
+                        m_pInstance->SetData(TYPE_PORTAL, DONE);
+                    }
+                    break;
             }
         }
 
@@ -597,11 +597,11 @@ struct npc_teleportation_portal : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_PORTAL_GUARDIAN:
-            case NPC_PORTAL_KEEPER:
-                // Despawn in case of event reset
-                m_creature->ForcedDespawn();
-                break;
+                case NPC_PORTAL_GUARDIAN:
+                case NPC_PORTAL_KEEPER:
+                    // Despawn in case of event reset
+                    m_creature->ForcedDespawn();
+                    break;
             }
         }
 

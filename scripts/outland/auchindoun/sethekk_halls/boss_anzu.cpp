@@ -229,9 +229,9 @@ struct boss_anzu : public CreatureScript
                     {
                         switch (urand(0, 2))
                         {
-                        case 0: DoScriptText(SAY_WHISPER_MAGIC_1, m_creature, pTarget); break;
-                        case 1: DoScriptText(SAY_WHISPER_MAGIC_2, m_creature, pTarget); break;
-                        case 2: DoScriptText(SAY_WHISPER_MAGIC_3, m_creature, pTarget); break;
+                            case 0: DoScriptText(SAY_WHISPER_MAGIC_1, m_creature, pTarget); break;
+                            case 1: DoScriptText(SAY_WHISPER_MAGIC_2, m_creature, pTarget); break;
+                            case 2: DoScriptText(SAY_WHISPER_MAGIC_3, m_creature, pTarget); break;
                         }
                         m_uiSpellBombTimer = urand(24000, 40000);
                     }

@@ -291,9 +291,9 @@ struct go_harbinger_second_trial : public GameObjectScript
     }
 };
 
-/*######
-## npc_prospector_anvilward
-######*/
+/** ######
+ *  ## npc_prospector_anvilward
+ *  ######*/
 enum
 {
     SAY_ANVIL1            = -1000209,
@@ -331,16 +331,16 @@ struct npc_prospector_anvilward : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(SAY_ANVIL1, m_creature, pPlayer);
-                break;
-            case 5:
-                DoScriptText(SAY_ANVIL2, m_creature, pPlayer);
-                break;
-            case 6:
-                m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
-                AttackStart(pPlayer);
-                break;
+                case 0:
+                    DoScriptText(SAY_ANVIL1, m_creature, pPlayer);
+                    break;
+                case 5:
+                    DoScriptText(SAY_ANVIL2, m_creature, pPlayer);
+                    break;
+                case 6:
+                    m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_REACH_HOME | TEMPFACTION_RESTORE_RESPAWN);
+                    AttackStart(pPlayer);
+                    break;
             }
         }
     };
@@ -366,19 +366,19 @@ struct npc_prospector_anvilward : public CreatureScript
         pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SHOW, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_SHOW, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->CLOSE_GOSSIP_MENU();
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SHOW, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_SHOW, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pPlayer->CLOSE_GOSSIP_MENU();
 
-            if (npc_prospector_anvilwardAI* pEscortAI = dynamic_cast<npc_prospector_anvilwardAI*>(pCreature->AI()))
-            {
-                pEscortAI->Start(false, pPlayer);
-            }
+                if (npc_prospector_anvilwardAI* pEscortAI = dynamic_cast<npc_prospector_anvilwardAI*>(pCreature->AI()))
+                {
+                    pEscortAI->Start(false, pPlayer);
+                }
 
-            break;
+                break;
         }
         return true;
     }
@@ -490,10 +490,12 @@ struct npc_apprentice_mirveda : public CreatureScript
     bool OnQuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest) override
     {
         if (pQuest->GetQuestId() == QUEST_UNEXPECTED_RESULT)
+        {
             if (npc_apprentice_mirvedaAI* pMirvedaAI = dynamic_cast<npc_apprentice_mirvedaAI*>(pCreature->AI()))
             {
                 pMirvedaAI->StartEvent(pPlayer);
             }
+        }
         return true;
     }
 

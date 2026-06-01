@@ -72,7 +72,7 @@ struct at_shade_of_eranikus : public AreaTriggerScript
                     pPlayer->SummonCreature(NPC_MALFURION, aSunkenTempleLocation[2].m_fX, aSunkenTempleLocation[2].m_fY, aSunkenTempleLocation[2].m_fZ, aSunkenTempleLocation[2].m_fO, TEMPSPAWN_DEAD_DESPAWN, 0);
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                pPlayer->SummonCreature(NPC_MALFURION, aSunkenTempleLocation[2].m_fX, aSunkenTempleLocation[2].m_fY, aSunkenTempleLocation[2].m_fZ, aSunkenTempleLocation[2].m_Orientation, TEMPSPAWN_DEAD_DESPAWN, 0);
+                    pPlayer->SummonCreature(NPC_MALFURION, aSunkenTempleLocation[2].m_fX, aSunkenTempleLocation[2].m_fY, aSunkenTempleLocation[2].m_fZ, aSunkenTempleLocation[2].m_Orientation, TEMPSPAWN_DEAD_DESPAWN, 0);
 #endif
                     pInstance->SetData(TYPE_MALFURION, DONE);
                 }
@@ -130,31 +130,31 @@ struct npc_malfurion : public CreatureScript
                     {
                         switch (m_uiSpeech)
                         {
-                        case 0:
-                            m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
-                            m_uiSayTimer = 2000;
-                            break;
-                        case 1:
-                            DoScriptText(SAY_MALFURION1, m_creature);
-                            m_creature->HandleEmote(EMOTE_STATE_TALK);
-                            m_uiSayTimer = 12000;
-                            break;
-                        case 2:
-                            DoScriptText(SAY_MALFURION2, m_creature);
-                            m_uiSayTimer = 12000;
-                            break;
-                        case 3:
-                            DoScriptText(SAY_MALFURION3, m_creature);
-                            m_uiSayTimer = 11000;
-                            break;
-                        case 4:
-                            DoScriptText(SAY_MALFURION4, m_creature);
-                            m_uiSayTimer = 4000;
-                            break;
-                        case 5:
-                            m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                            m_creature->HandleEmote(EMOTE_STATE_NONE);
-                            break;
+                            case 0:
+                                m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
+                                m_uiSayTimer = 2000;
+                                break;
+                            case 1:
+                                DoScriptText(SAY_MALFURION1, m_creature);
+                                m_creature->HandleEmote(EMOTE_STATE_TALK);
+                                m_uiSayTimer = 12000;
+                                break;
+                            case 2:
+                                DoScriptText(SAY_MALFURION2, m_creature);
+                                m_uiSayTimer = 12000;
+                                break;
+                            case 3:
+                                DoScriptText(SAY_MALFURION3, m_creature);
+                                m_uiSayTimer = 11000;
+                                break;
+                            case 4:
+                                DoScriptText(SAY_MALFURION4, m_creature);
+                                m_uiSayTimer = 4000;
+                                break;
+                            case 5:
+                                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                                m_creature->HandleEmote(EMOTE_STATE_NONE);
+                                break;
                         }
 
                         ++m_uiSpeech;
@@ -229,9 +229,9 @@ struct event_antalarion_statue_activation : public MapEventScript
     }
 };
 
-/*######
-## event_avatar_of_hakkar
-######*/
+/** ######
+ *  ## event_avatar_of_hakkar
+ *  ######*/
 struct event_avatar_of_hakkar : public MapEventScript
 {
     event_avatar_of_hakkar() : MapEventScript("event_avatar_of_hakkar") {}
@@ -255,9 +255,9 @@ struct event_avatar_of_hakkar : public MapEventScript
     }
 };
 
-/*######
-## go_eternal_flame
-######*/
+/** ######
+ *  ## go_eternal_flame
+ *  ######*/
 struct go_eternal_flame : public GameObjectScript
 {
     go_eternal_flame() : GameObjectScript("go_eternal_flame") {}
@@ -284,9 +284,9 @@ struct go_eternal_flame : public GameObjectScript
     }
 };
 
-/*######
-## effectDummy_summon_hakkar
-######*/
+/** ######
+ *  ## effectDummy_summon_hakkar
+ *  ######*/
 struct spell_summon_hakkar : public SpellScript
 {
     spell_summon_hakkar() : SpellScript("spell_summon_hakkar") {}

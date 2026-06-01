@@ -47,7 +47,7 @@ struct is_onyxias_lair : public InstanceScript
 #endif
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
         instance_onyxias_lair(Map* pMap) : ScriptedInstance(pMap),
-        m_uiAchievWhelpsCount(0)
+            m_uiAchievWhelpsCount(0)
 #endif
         {
             Initialize();
@@ -68,16 +68,16 @@ struct is_onyxias_lair : public InstanceScript
         {
             switch (pCreature->GetEntry())
             {
-            case NPC_ONYXIA_TRIGGER:
-                m_mNpcEntryGuidStore[NPC_ONYXIA_TRIGGER] = pCreature->GetObjectGuid();
-                break;
+                case NPC_ONYXIA_TRIGGER:
+                    m_mNpcEntryGuidStore[NPC_ONYXIA_TRIGGER] = pCreature->GetObjectGuid();
+                    break;
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
-            case NPC_ONYXIA_WHELP:
-                if (m_uiEncounter >= DATA_LIFTOFF && time_t(m_tPhaseTwoStart + TIME_LIMIT_MANY_WHELPS) >= time(nullptr))
-                {
-                    ++m_uiAchievWhelpsCount;
-                }
-                break;
+                case NPC_ONYXIA_WHELP:
+                    if (m_uiEncounter >= DATA_LIFTOFF && time_t(m_tPhaseTwoStart + TIME_LIMIT_MANY_WHELPS) >= time(nullptr))
+                    {
+                        ++m_uiAchievWhelpsCount;
+                    }
+                    break;
 #endif
             }
         }
@@ -110,22 +110,22 @@ struct is_onyxias_lair : public InstanceScript
         {
             switch (uiCriteriaId)
             {
-            case ACHIEV_CRIT_MANY_WHELPS_N:
-            case ACHIEV_CRIT_MANY_WHELPS_H:
-                return m_uiAchievWhelpsCount >= ACHIEV_CRIT_REQ_MANY_WHELPS;
-            case ACHIEV_CRIT_NO_BREATH_N:
-            case ACHIEV_CRIT_NO_BREATH_H:
-                return m_uiEncounter != DATA_PLAYER_TOASTED;
-            default:
-                return false;
+                case ACHIEV_CRIT_MANY_WHELPS_N:
+                case ACHIEV_CRIT_MANY_WHELPS_H:
+                    return m_uiAchievWhelpsCount >= ACHIEV_CRIT_REQ_MANY_WHELPS;
+                case ACHIEV_CRIT_NO_BREATH_N:
+                case ACHIEV_CRIT_NO_BREATH_H:
+                    return m_uiEncounter != DATA_PLAYER_TOASTED;
+                default:
+                    return false;
             }
         }
 #endif
-    protected:
-        uint32 m_uiEncounter;
-        uint32 m_uiAchievWhelpsCount;
+        protected:
+            uint32 m_uiEncounter;
+            uint32 m_uiAchievWhelpsCount;
 
-        time_t m_tPhaseTwoStart;
+            time_t m_tPhaseTwoStart;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

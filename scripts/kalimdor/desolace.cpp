@@ -315,7 +315,7 @@ struct npc_melizza_brimbuzzle : public CreatureScript
     struct npc_melizza_brimbuzzleAI : public npc_escortAI, private DialogueHelper
     {
         npc_melizza_brimbuzzleAI(Creature* m_creature) : npc_escortAI(m_creature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
         }
 
@@ -341,43 +341,43 @@ struct npc_melizza_brimbuzzle : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 1:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_MELIZZA_START, m_creature, pPlayer);
-                }
-
-                m_creature->SetFactionTemporary(FACTION_ESCORT_N_NEUTRAL_PASSIVE, TEMPFACTION_RESTORE_RESPAWN);
-                break;
-            case 4:
-                for (uint8 i = 0; i < MAX_MARAUDERS; ++i)
-                {
-                    for (uint8 j = 0; j < MAX_MARAUDERS; ++j)
+                case 1:
+                    if (Player* pPlayer = GetPlayerForEscort())
                     {
-                        // Summon 2 Marauders on each point
-                        float fX, fY, fZ;
-                        m_creature->GetRandomPoint(aMarauderSpawn[i].m_fX, aMarauderSpawn[i].m_fY, aMarauderSpawn[i].m_fZ, 7.0f, fX, fY, fZ);
-                        m_creature->SummonCreature(NPC_MARAUDINE_MARAUDER, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
+                        DoScriptText(SAY_MELIZZA_START, m_creature, pPlayer);
                     }
-                }
-                break;
-            case 9:
-                for (uint8 i = 0; i < MAX_WRANGLERS; ++i)
-                {
-                    float fX, fY, fZ;
-                    m_creature->GetRandomPoint(wranglerSpawn.m_fX, wranglerSpawn.m_fY, wranglerSpawn.m_fZ, 10.0f, fX, fY, fZ);
-                    m_creature->SummonCreature(NPC_MARAUDINE_BONEPAW, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
 
-                    m_creature->GetRandomPoint(wranglerSpawn.m_fX, wranglerSpawn.m_fY, wranglerSpawn.m_fZ, 10.0f, fX, fY, fZ);
-                    m_creature->SummonCreature(NPC_MARAUDINE_WRANGLER, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
-                }
-                break;
-            case 12:
-                StartNextDialogueText(POINT_ID_QUEST_COMPLETE);
-                break;
-            case 19:
-                StartNextDialogueText(POINT_ID_EVENT_COMPLETE);
-                break;
+                    m_creature->SetFactionTemporary(FACTION_ESCORT_N_NEUTRAL_PASSIVE, TEMPFACTION_RESTORE_RESPAWN);
+                    break;
+                case 4:
+                    for (uint8 i = 0; i < MAX_MARAUDERS; ++i)
+                    {
+                        for (uint8 j = 0; j < MAX_MARAUDERS; ++j)
+                        {
+                            // Summon 2 Marauders on each point
+                            float fX, fY, fZ;
+                            m_creature->GetRandomPoint(aMarauderSpawn[i].m_fX, aMarauderSpawn[i].m_fY, aMarauderSpawn[i].m_fZ, 7.0f, fX, fY, fZ);
+                            m_creature->SummonCreature(NPC_MARAUDINE_MARAUDER, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
+                        }
+                    }
+                    break;
+                case 9:
+                    for (uint8 i = 0; i < MAX_WRANGLERS; ++i)
+                    {
+                        float fX, fY, fZ;
+                        m_creature->GetRandomPoint(wranglerSpawn.m_fX, wranglerSpawn.m_fY, wranglerSpawn.m_fZ, 10.0f, fX, fY, fZ);
+                        m_creature->SummonCreature(NPC_MARAUDINE_BONEPAW, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
+
+                        m_creature->GetRandomPoint(wranglerSpawn.m_fX, wranglerSpawn.m_fY, wranglerSpawn.m_fZ, 10.0f, fX, fY, fZ);
+                        m_creature->SummonCreature(NPC_MARAUDINE_WRANGLER, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
+                    }
+                    break;
+                case 12:
+                    StartNextDialogueText(POINT_ID_QUEST_COMPLETE);
+                    break;
+                case 19:
+                    StartNextDialogueText(POINT_ID_EVENT_COMPLETE);
+                    break;
             }
         }
 
@@ -385,27 +385,27 @@ struct npc_melizza_brimbuzzle : public CreatureScript
         {
             switch (iEntry)
             {
-            case POINT_ID_QUEST_COMPLETE:
-                SetEscortPaused(true);
-                break;
-            case QUEST_GET_ME_OUT_OF_HERE:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_MELIZZA_FINISH, m_creature, pPlayer);
-                    pPlayer->GroupEventHappens(QUEST_GET_ME_OUT_OF_HERE, m_creature);
-                }
+                case POINT_ID_QUEST_COMPLETE:
+                    SetEscortPaused(true);
+                    break;
+                case QUEST_GET_ME_OUT_OF_HERE:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_MELIZZA_FINISH, m_creature, pPlayer);
+                        pPlayer->GroupEventHappens(QUEST_GET_ME_OUT_OF_HERE, m_creature);
+                    }
 
-                m_creature->ClearTemporaryFaction();
-                SetRun(true);
-                SetEscortPaused(false);
-                break;
-            case POINT_ID_EVENT_COMPLETE:
-                SetEscortPaused(true);
-                m_creature->SetFacingTo(4.71f);
-                break;
-            case NPC_MELIZZA:
-                SetEscortPaused(false);
-                break;
+                    m_creature->ClearTemporaryFaction();
+                    SetRun(true);
+                    SetEscortPaused(false);
+                    break;
+                case POINT_ID_EVENT_COMPLETE:
+                    SetEscortPaused(true);
+                    m_creature->SetFacingTo(4.71f);
+                    break;
+                case NPC_MELIZZA:
+                    SetEscortPaused(false);
+                    break;
             }
         }
 
@@ -580,6 +580,7 @@ struct npc_cork_gizelton : public CreatureScript
                 {
                     case 77:
                         uiQuestStatus = 1;
+                        break;
                     // First Ambush
                     case 96:
                         DoScriptText(SAY_CORK_AMBUSH1, m_creature);
@@ -623,7 +624,7 @@ struct npc_cork_gizelton : public CreatureScript
                         }
                         DoAmbush(QUEST_GIZELTON_CARAVAN, 1);
                         break;
-                        // Second Ambush
+                    // Second Ambush
                     case 225:
                         if (Creature* pRigger = GetClosestCreatureWithEntry(m_creature, NPC_RIGGER_GIZELTON, 100.0f))
                         {
@@ -631,7 +632,7 @@ struct npc_cork_gizelton : public CreatureScript
                         }
                         DoAmbush(QUEST_GIZELTON_CARAVAN, 2);
                         break;
-                        // Third Ambush
+                    // Third Ambush
                     case 235:
                         if (Creature* pRigger = GetClosestCreatureWithEntry(m_creature, NPC_RIGGER_GIZELTON, 100.0f))
                         {

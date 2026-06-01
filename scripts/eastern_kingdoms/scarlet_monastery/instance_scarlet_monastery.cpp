@@ -42,78 +42,78 @@ struct is_scarlet_monastery : public InstanceScript
 
     class instance_scarlet_monastery : public ScriptedInstance
     {
-    public:
-        instance_scarlet_monastery(Map* pMap) : ScriptedInstance(pMap)
-        {
-            Initialize();
-        }
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+        public:
+            instance_scarlet_monastery(Map* pMap) : ScriptedInstance(pMap)
             {
-            case NPC_MOGRAINE:
-            case NPC_WHITEMANE:
-            case NPC_VORREL:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
+                Initialize();
             }
-        }
 
-        void OnCreatureDeath(Creature* pCreature) override
-        {
-            if (pCreature->GetEntry() == NPC_INTERROGATOR_VISHAS)
+            void Initialize() override
             {
-                // Any other actions to do with Vorrel? setStandState?
-                if (Creature* pVorrel = GetSingleCreatureFromStorage(NPC_VORREL))
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
                 {
-                    DoScriptText(SAY_TRIGGER_VORREL, pVorrel);
+                    case NPC_MOGRAINE:
+                    case NPC_WHITEMANE:
+                    case NPC_VORREL:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
                 }
             }
-        }
 
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            if (pGo->GetEntry() == GO_WHITEMANE_DOOR)
+            void OnCreatureDeath(Creature* pCreature) override
             {
-                m_mGoEntryGuidStore[GO_WHITEMANE_DOOR] = pGo->GetObjectGuid();
-            }
-        }
-
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            if (uiType == TYPE_MOGRAINE_AND_WHITE_EVENT)
-            {
-                if (uiData == IN_PROGRESS)
+                if (pCreature->GetEntry() == NPC_INTERROGATOR_VISHAS)
                 {
-                    DoUseDoorOrButton(GO_WHITEMANE_DOOR);
+                    // Any other actions to do with Vorrel? setStandState?
+                    if (Creature* pVorrel = GetSingleCreatureFromStorage(NPC_VORREL))
+                    {
+                        DoScriptText(SAY_TRIGGER_VORREL, pVorrel);
+                    }
                 }
-                if (uiData == FAIL)
-                {
-                    DoUseDoorOrButton(GO_WHITEMANE_DOOR);
-                }
-
-                m_auiEncounter[0] = uiData;
             }
-        }
 
-        uint32 GetData(uint32 uiData) const override
-        {
-            if (uiData == TYPE_MOGRAINE_AND_WHITE_EVENT)
+            void OnObjectCreate(GameObject* pGo) override
             {
-                return m_auiEncounter[0];
+                if (pGo->GetEntry() == GO_WHITEMANE_DOOR)
+                {
+                    m_mGoEntryGuidStore[GO_WHITEMANE_DOOR] = pGo->GetObjectGuid();
+                }
             }
 
-            return 0;
-        }
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                if (uiType == TYPE_MOGRAINE_AND_WHITE_EVENT)
+                {
+                    if (uiData == IN_PROGRESS)
+                    {
+                        DoUseDoorOrButton(GO_WHITEMANE_DOOR);
+                    }
+                    if (uiData == FAIL)
+                    {
+                        DoUseDoorOrButton(GO_WHITEMANE_DOOR);
+                    }
 
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
+                    m_auiEncounter[0] = uiData;
+                }
+            }
+
+            uint32 GetData(uint32 uiData) const override
+            {
+                if (uiData == TYPE_MOGRAINE_AND_WHITE_EVENT)
+                {
+                    return m_auiEncounter[0];
+                }
+
+                return 0;
+            }
+
+        private:
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

@@ -166,25 +166,25 @@ struct mobs_nether_drake : public CreatureScript
                 {
                     switch (m_uiNihilSpeechPhase)
                     {
-                    case 0:
-                        DoScriptText(SAY_NIHIL_1, m_creature);
-                        break;
-                    case 1:
-                        DoScriptText(SAY_NIHIL_2, m_creature);
-                        break;
-                    case 2:
-                        DoScriptText(SAY_NIHIL_3, m_creature);
-                        break;
-                    case 3:
-                        DoScriptText(SAY_NIHIL_4, m_creature);
-                        break;
-                    case 4:
-                        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                        // take off to location above
-                        m_creature->SetLevitate(true);
-                        m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-                        m_creature->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX() + 50.0f, m_creature->GetPositionY(), m_creature->GetPositionZ() + 50.0f);
-                        break;
+                        case 0:
+                            DoScriptText(SAY_NIHIL_1, m_creature);
+                            break;
+                        case 1:
+                            DoScriptText(SAY_NIHIL_2, m_creature);
+                            break;
+                        case 2:
+                            DoScriptText(SAY_NIHIL_3, m_creature);
+                            break;
+                        case 3:
+                            DoScriptText(SAY_NIHIL_4, m_creature);
+                            break;
+                        case 4:
+                            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                            // take off to location above
+                            m_creature->SetLevitate(true);
+                            m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                            m_creature->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX() + 50.0f, m_creature->GetPositionY(), m_creature->GetPositionZ() + 50.0f);
+                            break;
                     }
                     ++m_uiNihilSpeechPhase;
                     m_uiNihilSpeechTimer = 5000;
@@ -406,9 +406,9 @@ struct npc_bloodmaul_stout_trigger : public CreatureScript
 
                     switch (urand(0, 2))
                     {
-                    case 0: DoScriptText(SAY_BREW_1, pOgre); break;
-                    case 1: DoScriptText(SAY_BREW_2, pOgre); break;
-                    case 2: DoScriptText(SAY_BREW_3, pOgre); break;
+                        case 0: DoScriptText(SAY_BREW_1, pOgre); break;
+                        case 1: DoScriptText(SAY_BREW_2, pOgre); break;
+                        case 2: DoScriptText(SAY_BREW_3, pOgre); break;
                     }
 
                     m_selectedOgreGuid = pOgre->GetObjectGuid();
@@ -728,101 +728,101 @@ struct npc_simon_game_bunny : public CreatureScript
         {
             switch (m_uiGamePhase)
             {
-            case PHASE_LEVEL_PREPARE:
-                // delay before each level - handled by big timer aura
-                if (eventType == AI_EVENT_CUSTOM_A)
-                {
-                    m_uiGamePhase = PHASE_AI_GAME;
-                }
-                break;
-            case PHASE_AI_GAME:
-                // AI game - handled by small timer aura
-                if (eventType == AI_EVENT_CUSTOM_B)
-                {
-                    // Move to next phase if the level is setup
-                    if (m_uiLevelStage == m_uiLevelCount)
+                case PHASE_LEVEL_PREPARE:
+                    // delay before each level - handled by big timer aura
+                    if (eventType == AI_EVENT_CUSTOM_A)
                     {
-                        m_uiGamePhase = PHASE_PLAYER_PREPARE;
-                        m_uiLevelStage = 0;
-                        return;
+                        m_uiGamePhase = PHASE_AI_GAME;
                     }
-
-                    DoSetupLevel();
-                    ++m_uiLevelStage;
-                }
-                break;
-            case PHASE_PLAYER_PREPARE:
-                // Player prepare - handled by small timer aura
-                if (eventType == AI_EVENT_CUSTOM_B)
-                {
-                    DoCastSpellIfCan(m_creature, SPELL_VISUAL_LEVEL_START, CAST_TRIGGERED);
-                    DoSetupPlayerLevel();
-
-                    m_uiGamePhase = PHASE_PLAYER_GAME;
-                    m_uiPlayerStage = 0;
-                }
-                break;
-            case PHASE_PLAYER_GAME:
-                // Player game - listen to the player moves
-                if (eventType == AI_EVENT_CUSTOM_C)
-                {
-                    // good button pressed
-                    if (uiMiscValue == aApexisGameData[m_vColors[m_uiLevelStage]].m_uiIntrospection)
+                    break;
+                case PHASE_AI_GAME:
+                    // AI game - handled by small timer aura
+                    if (eventType == AI_EVENT_CUSTOM_B)
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_GOOD_PRESS, CAST_TRIGGERED);
-                        DoCastSpellIfCan(m_creature, aApexisGameData[m_vColors[m_uiLevelStage]].m_uiVisual, CAST_TRIGGERED);
-
-                        DoPlaySoundToSet(m_creature, aApexisGameData[m_vColors[m_uiLevelStage]].m_uiSoundId);
-
-                        // increase the level stage and reset the event counter
-                        ++m_uiLevelStage;
-                        m_uiPlayerStage = 0;
-
-                        // if all buttons were pressed succesfully, then move to next level
-                        if (m_uiLevelStage == m_vColors.size())
+                        // Move to next phase if the level is setup
+                        if (m_uiLevelStage == m_uiLevelCount)
                         {
-                            DoCompleteLevel();
-
+                            m_uiGamePhase = PHASE_PLAYER_PREPARE;
                             m_uiLevelStage = 0;
-                            m_uiGamePhase = PHASE_LEVEL_FINISHED;
+                            return;
                         }
-                        // cast tick sound
+
+                        DoSetupLevel();
+                        ++m_uiLevelStage;
+                    }
+                    break;
+                case PHASE_PLAYER_PREPARE:
+                    // Player prepare - handled by small timer aura
+                    if (eventType == AI_EVENT_CUSTOM_B)
+                    {
+                        DoCastSpellIfCan(m_creature, SPELL_VISUAL_LEVEL_START, CAST_TRIGGERED);
+                        DoSetupPlayerLevel();
+
+                        m_uiGamePhase = PHASE_PLAYER_GAME;
+                        m_uiPlayerStage = 0;
+                    }
+                    break;
+                case PHASE_PLAYER_GAME:
+                    // Player game - listen to the player moves
+                    if (eventType == AI_EVENT_CUSTOM_C)
+                    {
+                        // good button pressed
+                        if (uiMiscValue == aApexisGameData[m_vColors[m_uiLevelStage]].m_uiIntrospection)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_GOOD_PRESS, CAST_TRIGGERED);
+                            DoCastSpellIfCan(m_creature, aApexisGameData[m_vColors[m_uiLevelStage]].m_uiVisual, CAST_TRIGGERED);
+
+                            DoPlaySoundToSet(m_creature, aApexisGameData[m_vColors[m_uiLevelStage]].m_uiSoundId);
+
+                            // increase the level stage and reset the event counter
+                            ++m_uiLevelStage;
+                            m_uiPlayerStage = 0;
+
+                            // if all buttons were pressed succesfully, then move to next level
+                            if (m_uiLevelStage == m_vColors.size())
+                            {
+                                DoCompleteLevel();
+
+                                m_uiLevelStage = 0;
+                                m_uiGamePhase = PHASE_LEVEL_FINISHED;
+                            }
+                            // cast tick sound
+                            else
+                            {
+                                DoCastSpellIfCan(pInvoker, m_bIsLargeEvent ? SPELL_VISUAL_GAME_TICK_LARGE : SPELL_VISUAL_GAME_TICK, CAST_TRIGGERED);
+                            }
+                        }
+                        // bad button pressed
                         else
                         {
-                            DoCastSpellIfCan(pInvoker, m_bIsLargeEvent ? SPELL_VISUAL_GAME_TICK_LARGE : SPELL_VISUAL_GAME_TICK, CAST_TRIGGERED);
+                            DoCastSpellIfCan(pInvoker, m_bIsLargeEvent ? SPELL_SIMON_GROUP_REWARD : SPELL_BAD_PRESS, CAST_TRIGGERED);
+                            DoCastSpellIfCan(m_creature, SPELL_VISUAL_GAME_FAILED, CAST_TRIGGERED);
+                            DoCleanupGame();
                         }
                     }
-                    // bad button pressed
-                    else
+                    // AI ticks which handle the player timeout
+                    else if (eventType == AI_EVENT_CUSTOM_B)
                     {
-                        DoCastSpellIfCan(pInvoker, m_bIsLargeEvent ? SPELL_SIMON_GROUP_REWARD : SPELL_BAD_PRESS, CAST_TRIGGERED);
-                        DoCastSpellIfCan(m_creature, SPELL_VISUAL_GAME_FAILED, CAST_TRIGGERED);
-                        DoCleanupGame();
-                    }
-                }
-                // AI ticks which handle the player timeout
-                else if (eventType == AI_EVENT_CUSTOM_B)
-                {
-                    // if it takes too much time, the event will fail
-                    if (m_uiPlayerStage == MAX_SIMON_FAIL_TIMER)
-                    {
-                        DoCastSpellIfCan(m_creature, SPELL_VISUAL_GAME_FAILED, CAST_TRIGGERED);
-                        DoCleanupGame();
-                    }
+                        // if it takes too much time, the event will fail
+                        if (m_uiPlayerStage == MAX_SIMON_FAIL_TIMER)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_VISUAL_GAME_FAILED, CAST_TRIGGERED);
+                            DoCleanupGame();
+                        }
 
-                    // Not sure if this is right, but we need to keep the buttons unlocked on every tick
-                    DoSetupPlayerLevel();
-                    ++m_uiPlayerStage;
-                }
-                break;
-            case PHASE_LEVEL_FINISHED:
-                // small delay until the next level
-                if (eventType == AI_EVENT_CUSTOM_A)
-                {
-                    DoPrepareLevel();
-                    m_uiGamePhase = PHASE_LEVEL_PREPARE;
-                }
-                break;
+                        // Not sure if this is right, but we need to keep the buttons unlocked on every tick
+                        DoSetupPlayerLevel();
+                        ++m_uiPlayerStage;
+                    }
+                    break;
+                case PHASE_LEVEL_FINISHED:
+                    // small delay until the next level
+                    if (eventType == AI_EVENT_CUSTOM_A)
+                    {
+                        DoPrepareLevel();
+                        m_uiGamePhase = PHASE_LEVEL_PREPARE;
+                    }
+                    break;
             }
         }
 
@@ -859,16 +859,17 @@ struct spell_simon_game_start : public SpellScript
         Creature *pCreatureTarget = pTarget->ToCreature();
         pCreatureTarget->AI()->SendAIEvent(uiSpellId == SPELL_SIMON_GAME_START ? AI_EVENT_CUSTOM_A : AI_EVENT_CUSTOM_B, pCaster, pCreatureTarget);
 
-        //if (uiSpellId == SPELL_SIMON_GAME_START && uiEffIndex == EFFECT_INDEX_0)
-        //{
-        //    pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget);
-        //    return true;
-        //}
-        //else if (uiSpellId == SPELL_PRE_EVENT_TIMER && uiEffIndex == EFFECT_INDEX_0)
-        //{
-        //    pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_B, pCaster, pCreatureTarget);
-        //    return true;
-        //}
+        /** if (uiSpellId == SPELL_SIMON_GAME_START && uiEffIndex == EFFECT_INDEX_0)
+         *  {
+         *      pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget);
+         *      return true;
+         *  }
+         *  else if (uiSpellId == SPELL_PRE_EVENT_TIMER && uiEffIndex == EFFECT_INDEX_0)
+         *  {
+         *      pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_B, pCaster, pCreatureTarget);
+         *      return true;
+         *  }
+         */
 
         return false;
     }

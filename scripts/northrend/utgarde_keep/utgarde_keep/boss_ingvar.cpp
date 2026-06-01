@@ -191,23 +191,23 @@ struct boss_ingvar : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_THROW_DUMMY:
-                // ToDo: should this move to the target?
-                pSummoned->CastSpell(pSummoned, m_bIsRegularMode ? SPELL_SHADOW_AXE_PROC : SPELL_SHADOW_AXE_PROC_H, true);
-                break;
+                case NPC_THROW_DUMMY:
+                    // ToDo: should this move to the target?
+                    pSummoned->CastSpell(pSummoned, m_bIsRegularMode ? SPELL_SHADOW_AXE_PROC : SPELL_SHADOW_AXE_PROC_H, true);
+                    break;
 
-            case NPC_ANNHYLDE:
-                // This is not blizzlike - npc should be summoned above the boss and should move slower
-                pSummoned->CastSpell(pSummoned, SPELL_ASTRAL_TELEPORT, false);
-                pSummoned->SetLevitate(true);
-                pSummoned->GetMotionMaster()->MovePoint(POINT_ID_ANNHYLDE, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() + 15.0f);
-                break;
+                case NPC_ANNHYLDE:
+                    // This is not blizzlike - npc should be summoned above the boss and should move slower
+                    pSummoned->CastSpell(pSummoned, SPELL_ASTRAL_TELEPORT, false);
+                    pSummoned->SetLevitate(true);
+                    pSummoned->GetMotionMaster()->MovePoint(POINT_ID_ANNHYLDE, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() + 15.0f);
+                    break;
 
-            case NPC_GROUND_VISUAL:
-                pSummoned->CastSpell(pSummoned, SPELL_SCOURGE_RES_BUBBLE, false);
-                // npc doesn't despawn on time
-                pSummoned->ForcedDespawn(8000);
-                break;
+                case NPC_GROUND_VISUAL:
+                    pSummoned->CastSpell(pSummoned, SPELL_SCOURGE_RES_BUBBLE, false);
+                    // npc doesn't despawn on time
+                    pSummoned->ForcedDespawn(8000);
+                    break;
             }
         }
 
@@ -413,43 +413,43 @@ struct npc_annhylde : public CreatureScript
 
                     switch (m_uiResurrectPhase)
                     {
-                    case 0:
-                        DoCastSpellIfCan(m_creature, SPELL_SCOURGE_RES_CHANNEL);
-                        if (Creature* pIngvar = m_pInstance->GetSingleCreatureFromStorage(NPC_INGVAR))
-                        {
-                            if (pIngvar->HasAura(SPELL_SUMMON_BANSHEE))
+                        case 0:
+                            DoCastSpellIfCan(m_creature, SPELL_SCOURGE_RES_CHANNEL);
+                            if (Creature* pIngvar = m_pInstance->GetSingleCreatureFromStorage(NPC_INGVAR))
                             {
-                                pIngvar->RemoveAurasDueToSpell(SPELL_SUMMON_BANSHEE);
+                                if (pIngvar->HasAura(SPELL_SUMMON_BANSHEE))
+                                {
+                                    pIngvar->RemoveAurasDueToSpell(SPELL_SUMMON_BANSHEE);
+                                }
                             }
-                        }
-                        m_uiResurrectTimer = 3000;
-                        break;
-                    case 1:
-                        if (Creature* pIngvar = m_pInstance->GetSingleCreatureFromStorage(NPC_INGVAR))
-                        {
-                            pIngvar->CastSpell(pIngvar, SPELL_SCOURGE_RES_SUMMON, true);
-                            // Workaround - set Feign death again because it's removed by the previous casted spell
-                            pIngvar->CastSpell(pIngvar, SPELL_FEIGN_DEATH, true);
-                        }
-                        m_uiResurrectTimer = 5000;
-                        break;
-                    case 2:
-                        if (Creature* pIngvar = m_pInstance->GetSingleCreatureFromStorage(NPC_INGVAR))
-                        {
-                            pIngvar->CastSpell(pIngvar, SPELL_SCOURGE_RES_HEAL, false);
-                        }
-                        m_uiResurrectTimer = 3000;
-                        break;
-                    case 3:
-                        if (Creature* pIngvar = m_pInstance->GetSingleCreatureFromStorage(NPC_INGVAR))
-                        {
-                            pIngvar->CastSpell(pIngvar, SPELL_TRANSFORM, false);
-                        }
-                        // despawn the creature
-                        m_creature->GetMotionMaster()->MovePoint(2, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 50);
-                        m_creature->ForcedDespawn(5000);
-                        m_uiResurrectTimer = 0;
-                        break;
+                            m_uiResurrectTimer = 3000;
+                            break;
+                        case 1:
+                            if (Creature* pIngvar = m_pInstance->GetSingleCreatureFromStorage(NPC_INGVAR))
+                            {
+                                pIngvar->CastSpell(pIngvar, SPELL_SCOURGE_RES_SUMMON, true);
+                                // Workaround - set Feign death again because it's removed by the previous casted spell
+                                pIngvar->CastSpell(pIngvar, SPELL_FEIGN_DEATH, true);
+                            }
+                            m_uiResurrectTimer = 5000;
+                            break;
+                        case 2:
+                            if (Creature* pIngvar = m_pInstance->GetSingleCreatureFromStorage(NPC_INGVAR))
+                            {
+                                pIngvar->CastSpell(pIngvar, SPELL_SCOURGE_RES_HEAL, false);
+                            }
+                            m_uiResurrectTimer = 3000;
+                            break;
+                        case 3:
+                            if (Creature* pIngvar = m_pInstance->GetSingleCreatureFromStorage(NPC_INGVAR))
+                            {
+                                pIngvar->CastSpell(pIngvar, SPELL_TRANSFORM, false);
+                            }
+                            // despawn the creature
+                            m_creature->GetMotionMaster()->MovePoint(2, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 50);
+                            m_creature->ForcedDespawn(5000);
+                            m_uiResurrectTimer = 0;
+                            break;
                     }
 
                     ++m_uiResurrectPhase;

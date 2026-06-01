@@ -106,7 +106,7 @@ struct boss_felblood_kaelthas : public CreatureScript
     struct boss_felblood_kaelthasAI : public ScriptedAI, private DialogueHelper
     {
         boss_felblood_kaelthasAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
@@ -233,26 +233,26 @@ struct boss_felblood_kaelthas : public CreatureScript
         {
             switch (iEntry)
             {
-            case EMOTE_ONESHOT_LAUGH:
-                m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH);
-                break;
-            case EMOTE_STATE_TALK:
-                m_creature->HandleEmote(EMOTE_STATE_TALK);
-                break;
-            case NPC_PHOENIX:
-                m_creature->HandleEmote(EMOTE_STATE_NONE);
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                break;
-            case EMOTE_ONESHOT_POINT:
-                m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
-                break;
-            case EMOTE_ONESHOT_ROAR:
-                m_creature->HandleEmote(EMOTE_ONESHOT_ROAR);
-                break;
-            case NPC_PHOENIX_EGG:
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
-                break;
+                case EMOTE_ONESHOT_LAUGH:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_LAUGH);
+                    break;
+                case EMOTE_STATE_TALK:
+                    m_creature->HandleEmote(EMOTE_STATE_TALK);
+                    break;
+                case NPC_PHOENIX:
+                    m_creature->HandleEmote(EMOTE_STATE_NONE);
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    break;
+                case EMOTE_ONESHOT_POINT:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
+                    break;
+                case EMOTE_ONESHOT_ROAR:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_ROAR);
+                    break;
+                case NPC_PHOENIX_EGG:
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
+                    break;
             }
         }
 
@@ -434,48 +434,48 @@ struct boss_felblood_kaelthas : public CreatureScript
                 {
                     switch (m_uiGravityLapseStage)
                     {
-                    case 0:
-                        // Cast Gravity Lapse on Players
-                        if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_LAPSE) == CAST_OK)
-                        {
-                            if (m_bFirstGravityLapse)
+                        case 0:
+                            // Cast Gravity Lapse on Players
+                            if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_LAPSE) == CAST_OK)
                             {
-                                DoScriptText(SAY_GRAVITY_LAPSE, m_creature);
-                                m_bFirstGravityLapse = false;
-                            }
-                            else
-                            {
-                                DoScriptText(SAY_RECAST_GRAVITY, m_creature);
-                            }
+                                if (m_bFirstGravityLapse)
+                                {
+                                    DoScriptText(SAY_GRAVITY_LAPSE, m_creature);
+                                    m_bFirstGravityLapse = false;
+                                }
+                                else
+                                {
+                                    DoScriptText(SAY_RECAST_GRAVITY, m_creature);
+                                }
 
-                            m_uiGravityLapseTimer = 2000;
-                            m_uiGravityIndex = 0;
-                            ++m_uiGravityLapseStage;
-                        }
-                        break;
-                    case 1:
-                        // Summon spheres and apply the Gravity Lapse visual - upon visual expire, the gravity lapse is removed
-                        if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_LAPSE_VISUAL) == CAST_OK)
-                        {
-                            for (uint8 i = 0; i < MAX_ARCANE_SPHERES; ++i)
-                            {
-                                DoCastSpellIfCan(m_creature, SPELL_ARCANE_SPHERE_SUMMON, CAST_TRIGGERED);
+                                m_uiGravityLapseTimer = 2000;
+                                m_uiGravityIndex = 0;
+                                ++m_uiGravityLapseStage;
                             }
+                            break;
+                        case 1:
+                            // Summon spheres and apply the Gravity Lapse visual - upon visual expire, the gravity lapse is removed
+                            if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_LAPSE_VISUAL) == CAST_OK)
+                            {
+                                for (uint8 i = 0; i < MAX_ARCANE_SPHERES; ++i)
+                                {
+                                    DoCastSpellIfCan(m_creature, SPELL_ARCANE_SPHERE_SUMMON, CAST_TRIGGERED);
+                                }
 
-                            m_uiGravityLapseTimer = 30000;
-                            ++m_uiGravityLapseStage;
-                        }
-                        break;
-                    case 2:
-                        // Cast Power Feedback and stay stunned for 10 secs - also break the statues if they are not broken
-                        if (DoCastSpellIfCan(m_creature, SPELL_POWER_FEEDBACK) == CAST_OK)
-                        {
-                            DoScriptText(SAY_TIRED, m_creature);
-                            RemoveGravityLapse();
-                            m_uiGravityLapseTimer = 10000;
-                            m_uiGravityLapseStage = 0;
-                        }
-                        break;
+                                m_uiGravityLapseTimer = 30000;
+                                ++m_uiGravityLapseStage;
+                            }
+                            break;
+                        case 2:
+                            // Cast Power Feedback and stay stunned for 10 secs - also break the statues if they are not broken
+                            if (DoCastSpellIfCan(m_creature, SPELL_POWER_FEEDBACK) == CAST_OK)
+                            {
+                                DoScriptText(SAY_TIRED, m_creature);
+                                RemoveGravityLapse();
+                                m_uiGravityLapseTimer = 10000;
+                                m_uiGravityLapseStage = 0;
+                            }
+                            break;
                     }
                 }
                 else
@@ -492,9 +492,9 @@ struct boss_felblood_kaelthas : public CreatureScript
     }
 };
 
-/*######
-## mob_felkael_phoenix
-######*/
+/** ######
+ *  ## mob_felkael_phoenix
+ *  ######*/
 struct mob_felkael_phoenix : public CreatureScript
 {
     mob_felkael_phoenix() : CreatureScript("mob_felkael_phoenix") {}

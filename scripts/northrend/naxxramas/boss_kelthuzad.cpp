@@ -255,13 +255,13 @@ struct boss_kelthuzad : public CreatureScript
         {
             switch (uiId)
             {
-            case 1: return M_PI_F - M_F_ANGLE;              // south
-            case 2: return M_PI_F / 2 * 3 - M_F_ANGLE;      // east
-            case 3: return M_PI_F / 2 - M_F_ANGLE;          // west
-            case 4: return M_PI_F / 4 - M_F_ANGLE;          // north-west
-            case 5: return M_PI_F / 4 * 7 - M_F_ANGLE;      // north-east
-            case 6: return M_PI_F / 4 * 5 - M_F_ANGLE;      // south-east
-            case 7: return M_PI_F / 4 * 3 - M_F_ANGLE;      // south-west
+                case 1: return M_PI_F - M_F_ANGLE;              // south
+                case 2: return M_PI_F / 2 * 3 - M_F_ANGLE;      // east
+                case 3: return M_PI_F / 2 - M_F_ANGLE;          // west
+                case 4: return M_PI_F / 4 - M_F_ANGLE;          // north-west
+                case 5: return M_PI_F / 4 * 7 - M_F_ANGLE;      // north-east
+                case 6: return M_PI_F / 4 * 5 - M_F_ANGLE;      // south-east
+                case 7: return M_PI_F / 4 * 3 - M_F_ANGLE;      // south-west
             }
 
             return M_F_ANGLE;
@@ -335,34 +335,34 @@ struct boss_kelthuzad : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_GUARDIAN:
-                DoScriptText(EMOTE_GUARDIAN, m_creature);
+                case NPC_GUARDIAN:
+                    DoScriptText(EMOTE_GUARDIAN, m_creature);
 
-                m_lAddsSet.insert(pSummoned->GetObjectGuid());
-                ++m_uiGuardiansCount;
-
-                pSummoned->SetInCombatWithZone();
-                break;
-            case NPC_SOLDIER_FROZEN:
-            case NPC_UNSTOPPABLE_ABOM:
-            case NPC_SOUL_WEAVER:
-                if (m_uiIntroPackCount < 7)
-                {
-                    m_lIntroMobsSet.insert(pSummoned->GetObjectGuid());
-                }
-                else
-                {
                     m_lAddsSet.insert(pSummoned->GetObjectGuid());
+                    ++m_uiGuardiansCount;
 
-                    if (m_pInstance)
+                    pSummoned->SetInCombatWithZone();
+                    break;
+                case NPC_SOLDIER_FROZEN:
+                case NPC_UNSTOPPABLE_ABOM:
+                case NPC_SOUL_WEAVER:
+                    if (m_uiIntroPackCount < 7)
                     {
-                        float fX, fY, fZ;
-                        GetChamberCenterCoords(fX, fY, fZ);
-                        pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                        m_lIntroMobsSet.insert(pSummoned->GetObjectGuid());
                     }
-                }
+                    else
+                    {
+                        m_lAddsSet.insert(pSummoned->GetObjectGuid());
 
-                break;
+                        if (m_pInstance)
+                        {
+                            float fX, fY, fZ;
+                            GetChamberCenterCoords(fX, fY, fZ);
+                            pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                        }
+                    }
+
+                    break;
             }
         }
 
@@ -370,21 +370,21 @@ struct boss_kelthuzad : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_GUARDIAN:
-            case NPC_SOLDIER_FROZEN:
-            case NPC_SOUL_WEAVER:
-                m_lAddsSet.erase(pSummoned->GetObjectGuid());
-                break;
-            case NPC_UNSTOPPABLE_ABOM:
-                m_lAddsSet.erase(pSummoned->GetObjectGuid());
+                case NPC_GUARDIAN:
+                case NPC_SOLDIER_FROZEN:
+                case NPC_SOUL_WEAVER:
+                    m_lAddsSet.erase(pSummoned->GetObjectGuid());
+                    break;
+                case NPC_UNSTOPPABLE_ABOM:
+                    m_lAddsSet.erase(pSummoned->GetObjectGuid());
 
-                ++m_uiKilledAbomination;
-                if (m_uiKilledAbomination >= ACHIEV_REQ_KILLED_ABOMINATIONS)
-                {
-                    m_pInstance->SetData(TYPE_ACHIEV_GET_ENOUGH, uint32(true));
-                }
+                    ++m_uiKilledAbomination;
+                    if (m_uiKilledAbomination >= ACHIEV_REQ_KILLED_ABOMINATIONS)
+                    {
+                        m_pInstance->SetData(TYPE_ACHIEV_GET_ENOUGH, uint32(true));
+                    }
 
-                break;
+                    break;
             }
         }
 
@@ -443,10 +443,10 @@ struct boss_kelthuzad : public CreatureScript
 
                         switch (urand(0, 2))
                         {
-                        case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-                        case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-                        case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
-                        };
+                            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
+                            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
+                            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
+                        }
                     }
                     else
                     {
@@ -636,7 +636,8 @@ struct boss_kelthuzad : public CreatureScript
 
                 DoMeleeAttackIfReady();
             }
-        }
+    };
+
     private:
         void GetChamberCenterCoords(float &x, float &y, float &z)
         {
@@ -647,12 +648,12 @@ struct boss_kelthuzad : public CreatureScript
                 z = at->z;
             }
         }
-    };
+};
 
-    CreatureAI* GetAI(Creature* pCreature) override
-    {
-        return new boss_kelthuzadAI(pCreature);
-    }
+CreatureAI* GetAI(Creature* pCreature) override
+{
+    return new boss_kelthuzadAI(pCreature);
+}
 };
 
 void AddSC_boss_kelthuzad()

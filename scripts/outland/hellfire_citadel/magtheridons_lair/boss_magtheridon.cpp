@@ -207,24 +207,24 @@ struct boss_magtheridon : public CreatureScript
                 {
                     switch (m_uiTransitionCount)
                     {
-                    case 0:
-                        // Shake the room
-                        if (DoCastSpellIfCan(m_creature, SPELL_CAMERA_SHAKE) == CAST_OK)
-                        {
-                            if (m_pInstance)
+                        case 0:
+                            // Shake the room
+                            if (DoCastSpellIfCan(m_creature, SPELL_CAMERA_SHAKE) == CAST_OK)
                             {
-                                m_pInstance->SetData(TYPE_MAGTHERIDON_EVENT, SPECIAL);
-                            }
+                                if (m_pInstance)
+                                {
+                                    m_pInstance->SetData(TYPE_MAGTHERIDON_EVENT, SPECIAL);
+                                }
 
-                            m_uiTransitionTimer = 8000;
-                        }
-                        break;
-                    case 1:
-                        if (DoCastSpellIfCan(m_creature, SPELL_DEBRIS_KNOCKDOWN) == CAST_OK)
-                        {
-                            m_uiTransitionTimer = 0;
-                        }
-                        break;
+                                m_uiTransitionTimer = 8000;
+                            }
+                            break;
+                        case 1:
+                            if (DoCastSpellIfCan(m_creature, SPELL_DEBRIS_KNOCKDOWN) == CAST_OK)
+                            {
+                                m_uiTransitionTimer = 0;
+                            }
+                            break;
                     }
 
                     ++m_uiTransitionCount;

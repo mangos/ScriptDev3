@@ -210,27 +210,27 @@ struct npc_custodian_of_time : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0: DoScriptText(WHISPER_CUSTODIAN_1, m_creature, pPlayer); break;
-            case 1: DoScriptText(WHISPER_CUSTODIAN_2, m_creature, pPlayer); break;
-            case 2: DoScriptText(WHISPER_CUSTODIAN_3, m_creature, pPlayer); break;
-            case 3: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 5: DoScriptText(WHISPER_CUSTODIAN_5, m_creature, pPlayer); break;
-            case 6: DoScriptText(WHISPER_CUSTODIAN_6, m_creature, pPlayer); break;
-            case 7: DoScriptText(WHISPER_CUSTODIAN_7, m_creature, pPlayer); break;
-            case 8: DoScriptText(WHISPER_CUSTODIAN_8, m_creature, pPlayer); break;
-            case 9: DoScriptText(WHISPER_CUSTODIAN_9, m_creature, pPlayer); break;
-            case 10: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 13: DoScriptText(WHISPER_CUSTODIAN_10, m_creature, pPlayer); break;
-            case 14: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 16: DoScriptText(WHISPER_CUSTODIAN_11, m_creature, pPlayer); break;
-            case 17: DoScriptText(WHISPER_CUSTODIAN_12, m_creature, pPlayer); break;
-            case 18: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 22: DoScriptText(WHISPER_CUSTODIAN_13, m_creature, pPlayer); break;
-            case 23: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
-            case 24:
-                DoScriptText(WHISPER_CUSTODIAN_14, m_creature, pPlayer);
-                DoCastSpellIfCan(pPlayer, SPELL_QID_10277);
-                break;
+                case 0: DoScriptText(WHISPER_CUSTODIAN_1, m_creature, pPlayer); break;
+                case 1: DoScriptText(WHISPER_CUSTODIAN_2, m_creature, pPlayer); break;
+                case 2: DoScriptText(WHISPER_CUSTODIAN_3, m_creature, pPlayer); break;
+                case 3: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
+                case 5: DoScriptText(WHISPER_CUSTODIAN_5, m_creature, pPlayer); break;
+                case 6: DoScriptText(WHISPER_CUSTODIAN_6, m_creature, pPlayer); break;
+                case 7: DoScriptText(WHISPER_CUSTODIAN_7, m_creature, pPlayer); break;
+                case 8: DoScriptText(WHISPER_CUSTODIAN_8, m_creature, pPlayer); break;
+                case 9: DoScriptText(WHISPER_CUSTODIAN_9, m_creature, pPlayer); break;
+                case 10: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
+                case 13: DoScriptText(WHISPER_CUSTODIAN_10, m_creature, pPlayer); break;
+                case 14: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
+                case 16: DoScriptText(WHISPER_CUSTODIAN_11, m_creature, pPlayer); break;
+                case 17: DoScriptText(WHISPER_CUSTODIAN_12, m_creature, pPlayer); break;
+                case 18: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
+                case 22: DoScriptText(WHISPER_CUSTODIAN_13, m_creature, pPlayer); break;
+                case 23: DoScriptText(WHISPER_CUSTODIAN_4, m_creature, pPlayer); break;
+                case 24:
+                    DoScriptText(WHISPER_CUSTODIAN_14, m_creature, pPlayer);
+                    DoCastSpellIfCan(pPlayer, SPELL_QID_10277);
+                    break;
             }
         }
 
@@ -303,30 +303,30 @@ struct npc_oox17tn : public CreatureScript
             switch (i)
             {
                 // 1. Ambush: 3 scorpions
-            case 22:
-                DoScriptText(SAY_OOX_AMBUSH, m_creature);
-                m_creature->SummonCreature(NPC_SCORPION, -8340.70f, -4448.17f, 9.17f, 3.10f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_SCORPION, -8343.18f, -4444.35f, 9.44f, 2.35f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_SCORPION, -8348.70f, -4457.80f, 9.58f, 2.02f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000);
-                break;
+                case 22:
+                    DoScriptText(SAY_OOX_AMBUSH, m_creature);
+                    m_creature->SummonCreature(NPC_SCORPION, -8340.70f, -4448.17f, 9.17f, 3.10f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_SCORPION, -8343.18f, -4444.35f, 9.44f, 2.35f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_SCORPION, -8348.70f, -4457.80f, 9.58f, 2.02f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000);
+                    break;
                 // 2. Ambush: 2 Rogues & 1 Shadow Mage
-            case 28:
-                DoScriptText(SAY_OOX_AMBUSH, m_creature);
+                case 28:
+                    DoScriptText(SAY_OOX_AMBUSH, m_creature);
 
-                m_creature->SummonCreature(NPC_SCOFFLAW, -7488.02f, -4786.56f, 10.67f, 3.74f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
-                m_creature->SummonCreature(NPC_SHADOW_MAGE, -7486.41f, -4791.55f, 10.54f, 3.26f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_SCOFFLAW, -7488.02f, -4786.56f, 10.67f, 3.74f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000);
+                    m_creature->SummonCreature(NPC_SHADOW_MAGE, -7486.41f, -4791.55f, 10.54f, 3.26f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000);
 
-                if (Creature* pCreature = m_creature->SummonCreature(NPC_SCOFFLAW, -7488.47f, -4800.77f, 9.77f, 2.50f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000))
-                {
-                    DoScriptText(SAY_OOX17_AMBUSH_REPLY, pCreature);
-                }
+                    if (Creature* pCreature = m_creature->SummonCreature(NPC_SCOFFLAW, -7488.47f, -4800.77f, 9.77f, 2.50f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 30000))
+                    {
+                        DoScriptText(SAY_OOX17_AMBUSH_REPLY, pCreature);
+                    }
 
-                break;
-            case 34:
-                DoScriptText(SAY_OOX_END, m_creature);
-                // Award quest credit
-                pPlayer->GroupEventHappens(QUEST_RESCUE_OOX_17TN, m_creature);
-                break;
+                    break;
+                case 34:
+                    DoScriptText(SAY_OOX_END, m_creature);
+                    // Award quest credit
+                    pPlayer->GroupEventHappens(QUEST_RESCUE_OOX_17TN, m_creature);
+                    break;
             }
         }
 
@@ -335,12 +335,12 @@ struct npc_oox17tn : public CreatureScript
             // For an small probability he say something when it aggros
             switch (urand(0, 9))
             {
-            case 0:
-                DoScriptText(SAY_OOX_AGGRO1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_OOX_AGGRO2, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_OOX_AGGRO1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_OOX_AGGRO2, m_creature);
+                    break;
             }
         }
 
@@ -382,9 +382,9 @@ struct npc_oox17tn : public CreatureScript
     }
 };
 
-/*######
-## npc_stone_watcher_of_norgannon
-######*/
+/** ######
+ *  ## npc_stone_watcher_of_norgannon
+ *  ######*/
 //TODO localise
 #define GOSSIP_ITEM_NORGANNON_1     "What function do you serve?"
 #define GOSSIP_ITEM_NORGANNON_2     "What are the Plates of Uldum?"
@@ -419,30 +419,30 @@ struct npc_stone_watcher_of_norgannon : public CreatureScript
         pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            pPlayer->SEND_GOSSIP_MENU(1675, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(1676, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            pPlayer->SEND_GOSSIP_MENU(1677, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
-            pPlayer->SEND_GOSSIP_MENU(1678, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 4:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
-            pPlayer->SEND_GOSSIP_MENU(1679, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 5:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->AreaExploredOrEventHappens(2954);
-            break;
+            case GOSSIP_ACTION_INFO_DEF:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                pPlayer->SEND_GOSSIP_MENU(1675, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(1676, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+                pPlayer->SEND_GOSSIP_MENU(1677, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 3:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+                pPlayer->SEND_GOSSIP_MENU(1678, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 4:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+                pPlayer->SEND_GOSSIP_MENU(1679, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 5:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                pPlayer->AreaExploredOrEventHappens(2954);
+                break;
         }
         return true;
     }
@@ -551,25 +551,25 @@ struct npc_tooga : public CreatureScript
 
                         switch (m_uiPhasePostEvent)
                         {
-                        case 1:
-                            DoScriptText(SAY_TOOG_POST_1, m_creature);
-                            break;
-                        case 2:
-                            DoScriptText(SAY_TORT_POST_2, pTorta);
-                            break;
-                        case 3:
-                            DoScriptText(SAY_TOOG_POST_3, m_creature);
-                            break;
-                        case 4:
-                            DoScriptText(SAY_TORT_POST_4, pTorta);
-                            break;
-                        case 5:
-                            DoScriptText(SAY_TOOG_POST_5, m_creature);
-                            break;
-                        case 6:
-                            DoScriptText(SAY_TORT_POST_6, pTorta);
-                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_TO_WATER, m_afToWaterLoc[0], m_afToWaterLoc[1], m_afToWaterLoc[2]);
-                            break;
+                            case 1:
+                                DoScriptText(SAY_TOOG_POST_1, m_creature);
+                                break;
+                            case 2:
+                                DoScriptText(SAY_TORT_POST_2, pTorta);
+                                break;
+                            case 3:
+                                DoScriptText(SAY_TOOG_POST_3, m_creature);
+                                break;
+                            case 4:
+                                DoScriptText(SAY_TORT_POST_4, pTorta);
+                                break;
+                            case 5:
+                                DoScriptText(SAY_TOOG_POST_5, m_creature);
+                                break;
+                            case 6:
+                                DoScriptText(SAY_TORT_POST_6, pTorta);
+                                m_creature->GetMotionMaster()->MovePoint(POINT_ID_TO_WATER, m_afToWaterLoc[0], m_afToWaterLoc[1], m_afToWaterLoc[2]);
+                                break;
                         }
 
                         ++m_uiPhasePostEvent;
@@ -588,12 +588,12 @@ struct npc_tooga : public CreatureScript
 
                         switch (urand(0, 50))
                         {
-                        case 10:
-                            DoScriptText(SAY_TOOG_THIRST, m_creature);
-                            break;
-                        case 25:
-                            DoScriptText(SAY_TOOG_WORRIED, m_creature);
-                            break;
+                            case 10:
+                                DoScriptText(SAY_TOOG_THIRST, m_creature);
+                                break;
+                            case 25:
+                                DoScriptText(SAY_TOOG_WORRIED, m_creature);
+                                break;
                         }
                     }
                     else
@@ -675,15 +675,15 @@ struct go_inconspicuous_landmark : public GameObjectScript
             // spawn 4 or 5 sailor boys
             switch (rand() % 3)
             {
-            case 0: // spawn treasure hunting pirate
-                pCreature = pPlayer->SummonCreature(NPC_TREASURE_HUNTING_PIRATE, fX, fY, fPlayerZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, SPAWN_DURATION);
-                break;
-            case 1: // spawn treasure hunting swashbuckler
-                pCreature = pPlayer->SummonCreature(NPC_TREASURE_HUNTING_SWASHBUCKLER, fX, fY, fPlayerZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, SPAWN_DURATION);
-                break;
-            default: // spawn treasure hunting buccaneer
-                pCreature = pPlayer->SummonCreature(NPC_TREASURE_HUNTING_BUCCANEER, fX, fY, fPlayerZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, SPAWN_DURATION);
-                break;
+                case 0: // spawn treasure hunting pirate
+                    pCreature = pPlayer->SummonCreature(NPC_TREASURE_HUNTING_PIRATE, fX, fY, fPlayerZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, SPAWN_DURATION);
+                    break;
+                case 1: // spawn treasure hunting swashbuckler
+                    pCreature = pPlayer->SummonCreature(NPC_TREASURE_HUNTING_SWASHBUCKLER, fX, fY, fPlayerZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, SPAWN_DURATION);
+                    break;
+                default: // spawn treasure hunting buccaneer
+                    pCreature = pPlayer->SummonCreature(NPC_TREASURE_HUNTING_BUCCANEER, fX, fY, fPlayerZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, SPAWN_DURATION);
+                    break;
             }
             pCreature->SetWalk(false, true); // run, fat boy, RUN!!!!
             pCreature->GetMotionMaster()->MovePoint(0, fPlayerX, fPlayerY, fPlayerZ);

@@ -218,15 +218,15 @@ struct boss_ossirian : public CreatureScript
             {
                 switch (urand(0, 2))
                 {
-                case 0:
-                    DoScriptText(SAY_RAND_INTRO_1, m_creature);
-                    break;
-                case 1:
-                    DoScriptText(SAY_RAND_INTRO_2, m_creature);
-                    break;
-                case 2:
-                    DoScriptText(SAY_RAND_INTRO_3, m_creature);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_RAND_INTRO_1, m_creature);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_RAND_INTRO_2, m_creature);
+                        break;
+                    case 2:
+                        DoScriptText(SAY_RAND_INTRO_3, m_creature);
+                        break;
                 }
                 m_bSaidIntro = true;
             }
@@ -246,15 +246,15 @@ struct boss_ossirian : public CreatureScript
                 {
                     switch (urand(0, 2))
                     {
-                    case 0:
-                        DoScriptText(SAY_SUPREME_1, m_creature);
-                        break;
-                    case 1:
-                        DoScriptText(SAY_SUPREME_2, m_creature);
-                        break;
-                    case 2:
-                        DoScriptText(SAY_SUPREME_3, m_creature);
-                        break;
+                        case 0:
+                            DoScriptText(SAY_SUPREME_1, m_creature);
+                            break;
+                        case 1:
+                            DoScriptText(SAY_SUPREME_2, m_creature);
+                            break;
+                        case 2:
+                            DoScriptText(SAY_SUPREME_3, m_creature);
+                            break;
                     }
                     m_uiSupremeTimer = 45000;
                 }

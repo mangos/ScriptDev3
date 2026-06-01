@@ -287,9 +287,9 @@ struct boss_sartharion : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SARTHARION_SLAY_1, m_creature); break;
-            case 1: DoScriptText(SAY_SARTHARION_SLAY_2, m_creature); break;
-            case 2: DoScriptText(SAY_SARTHARION_SLAY_3, m_creature); break;
+                case 0: DoScriptText(SAY_SARTHARION_SLAY_1, m_creature); break;
+                case 1: DoScriptText(SAY_SARTHARION_SLAY_2, m_creature); break;
+                case 2: DoScriptText(SAY_SARTHARION_SLAY_3, m_creature); break;
             }
         }
 
@@ -380,18 +380,18 @@ struct boss_sartharion : public CreatureScript
 
                     switch (uiEntry)
                     {
-                    case NPC_TENEBRON:
-                        iTextId = SAY_SARTHARION_CALL_TENEBRON;
-                        pTemp->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_aTene[1].m_fX, m_aTene[1].m_fY, m_aTene[1].m_fZ);
-                        break;
-                    case NPC_SHADRON:
-                        iTextId = SAY_SARTHARION_CALL_SHADRON;
-                        pTemp->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_aShad[1].m_fX, m_aShad[1].m_fY, m_aShad[1].m_fZ);
-                        break;
-                    case NPC_VESPERON:
-                        iTextId = SAY_SARTHARION_CALL_VESPERON;
-                        pTemp->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_aVesp[1].m_fX, m_aVesp[1].m_fY, m_aVesp[1].m_fZ);
-                        break;
+                        case NPC_TENEBRON:
+                            iTextId = SAY_SARTHARION_CALL_TENEBRON;
+                            pTemp->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_aTene[1].m_fX, m_aTene[1].m_fY, m_aTene[1].m_fZ);
+                            break;
+                        case NPC_SHADRON:
+                            iTextId = SAY_SARTHARION_CALL_SHADRON;
+                            pTemp->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_aShad[1].m_fX, m_aShad[1].m_fY, m_aShad[1].m_fZ);
+                            break;
+                        case NPC_VESPERON:
+                            iTextId = SAY_SARTHARION_CALL_VESPERON;
+                            pTemp->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_aVesp[1].m_fX, m_aVesp[1].m_fY, m_aVesp[1].m_fZ);
+                            break;
                     }
 
                     DoScriptText(iTextId, m_creature);
@@ -521,10 +521,10 @@ struct boss_sartharion : public CreatureScript
 
                     switch (urand(0, 5))
                     {
-                    case 0: DoScriptText(SAY_SARTHARION_SPECIAL_1, m_creature); break;
-                    case 1: DoScriptText(SAY_SARTHARION_SPECIAL_2, m_creature); break;
-                    case 2: DoScriptText(SAY_SARTHARION_SPECIAL_3, m_creature); break;
-                    case 3: DoScriptText(SAY_SARTHARION_SPECIAL_4, m_creature); break;
+                        case 0: DoScriptText(SAY_SARTHARION_SPECIAL_1, m_creature); break;
+                        case 1: DoScriptText(SAY_SARTHARION_SPECIAL_2, m_creature); break;
+                        case 2: DoScriptText(SAY_SARTHARION_SPECIAL_3, m_creature); break;
+                        case 3: DoScriptText(SAY_SARTHARION_SPECIAL_4, m_creature); break;
                     }
                 }
                 m_uiLavaStrikeTimer = 30000;
@@ -821,7 +821,7 @@ struct dummy_dragonAI : public ScriptedAI
             if (m_uiMoveNextTimer <= uiDiff)
             {
                 m_creature->GetMotionMaster()->MovePoint(m_uiWaypointId,
-                        m_aDragonCommon[m_uiWaypointId].m_fX, m_aDragonCommon[m_uiWaypointId].m_fY, m_aDragonCommon[m_uiWaypointId].m_fZ);
+                    m_aDragonCommon[m_uiWaypointId].m_fX, m_aDragonCommon[m_uiWaypointId].m_fY, m_aDragonCommon[m_uiWaypointId].m_fZ);
 
                 debug_log("dummy_dragonAI: %s moving to point %u", m_creature->GetName(), m_uiWaypointId);
                 m_uiMoveNextTimer = 0;
@@ -1325,8 +1325,8 @@ struct mob_twilight_eggs : public CreatureScript
                 uint32 uiSpellEntry = 0;
                 switch (m_creature->GetEntry())
                 {
-                case NPC_TWILIGHT_EGG: uiSpellEntry = SPELL_SUMMON_TWILIGHT_WHELP; break;
-                case NPC_SARTHARION_TWILIGHT_EGG: uiSpellEntry = SPELL_SUMMON_SARTHARION_TWILIGHT_WHELP; break;
+                    case NPC_TWILIGHT_EGG: uiSpellEntry = SPELL_SUMMON_TWILIGHT_WHELP; break;
+                    case NPC_SARTHARION_TWILIGHT_EGG: uiSpellEntry = SPELL_SUMMON_SARTHARION_TWILIGHT_WHELP; break;
                 }
 
                 m_creature->SetPhaseMask(PHASEMASK_NORMAL, true);

@@ -252,20 +252,20 @@ struct boss_kelthuzad : public CreatureScript
         {
             switch (uiId)
             {
-            case 1:
-                return M_PI_F - M_F_ANGLE;              // south
-            case 2:
-                return M_PI_F / 2 * 3 - M_F_ANGLE;      // east
-            case 3:
-                return M_PI_F / 2 - M_F_ANGLE;          // west
-            case 4:
-                return M_PI_F / 4 - M_F_ANGLE;          // north-west
-            case 5:
-                return M_PI_F / 4 * 7 - M_F_ANGLE;      // north-east
-            case 6:
-                return M_PI_F / 4 * 5 - M_F_ANGLE;      // south-east
-            case 7:
-                return M_PI_F / 4 * 3 - M_F_ANGLE;      // south-west
+                case 1:
+                    return M_PI_F - M_F_ANGLE;              // south
+                case 2:
+                    return M_PI_F / 2 * 3 - M_F_ANGLE;      // east
+                case 3:
+                    return M_PI_F / 2 - M_F_ANGLE;          // west
+                case 4:
+                    return M_PI_F / 4 - M_F_ANGLE;          // north-west
+                case 5:
+                    return M_PI_F / 4 * 7 - M_F_ANGLE;      // north-east
+                case 6:
+                    return M_PI_F / 4 * 5 - M_F_ANGLE;      // south-east
+                case 7:
+                    return M_PI_F / 4 * 3 - M_F_ANGLE;      // south-west
             }
 
             return M_F_ANGLE;
@@ -349,36 +349,36 @@ struct boss_kelthuzad : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_GUARDIAN:
-                DoScriptText(EMOTE_GUARDIAN, m_creature);
+                case NPC_GUARDIAN:
+                    DoScriptText(EMOTE_GUARDIAN, m_creature);
 
-                m_lAddsSet.insert(pSummoned->GetObjectGuid());
-                ++m_uiGuardiansCount;
-
-                pSummoned->SetInCombatWithZone();
-                break;
-            case NPC_SOLDIER_FROZEN:
-            case NPC_UNSTOPPABLE_ABOM:
-            case NPC_SOUL_WEAVER:
-                if (m_uiIntroPackCount < 7)
-                {
-                    m_lIntroMobsSet.insert(pSummoned->GetObjectGuid());
-                }
-                else
-                {
                     m_lAddsSet.insert(pSummoned->GetObjectGuid());
+                    ++m_uiGuardiansCount;
 
-                    if (m_pInstance)
+                    pSummoned->SetInCombatWithZone();
+                    break;
+                case NPC_SOLDIER_FROZEN:
+                case NPC_UNSTOPPABLE_ABOM:
+                case NPC_SOUL_WEAVER:
+                    if (m_uiIntroPackCount < 7)
                     {
-                        uint32 atID = m_pInstance->GetData(TYPE_SIGNAL_1);
-                        if (AreaTriggerEntry const *at = sAreaTriggerStore.LookupEntry(atID))
+                        m_lIntroMobsSet.insert(pSummoned->GetObjectGuid());
+                    }
+                    else
+                    {
+                        m_lAddsSet.insert(pSummoned->GetObjectGuid());
+
+                        if (m_pInstance)
                         {
-                            pSummoned->GetMotionMaster()->MovePoint(0, at->x, at->y, at->z);
+                            uint32 atID = m_pInstance->GetData(TYPE_SIGNAL_1);
+                            if (AreaTriggerEntry const *at = sAreaTriggerStore.LookupEntry(atID))
+                            {
+                                pSummoned->GetMotionMaster()->MovePoint(0, at->x, at->y, at->z);
+                            }
                         }
                     }
-                }
 
-                break;
+                    break;
             }
         }
 
@@ -386,14 +386,14 @@ struct boss_kelthuzad : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_GUARDIAN:
-            case NPC_SOLDIER_FROZEN:
-            case NPC_SOUL_WEAVER:
-                m_lAddsSet.erase(pSummoned->GetObjectGuid());
-                break;
-            case NPC_UNSTOPPABLE_ABOM:
-                m_lAddsSet.erase(pSummoned->GetObjectGuid());
-                break;
+                case NPC_GUARDIAN:
+                case NPC_SOLDIER_FROZEN:
+                case NPC_SOUL_WEAVER:
+                    m_lAddsSet.erase(pSummoned->GetObjectGuid());
+                    break;
+                case NPC_UNSTOPPABLE_ABOM:
+                    m_lAddsSet.erase(pSummoned->GetObjectGuid());
+                    break;
             }
         }
 
@@ -452,16 +452,16 @@ struct boss_kelthuzad : public CreatureScript
 
                         switch (urand(0, 2))
                         {
-                        case 0:
-                            DoScriptText(SAY_AGGRO1, m_creature);
-                            break;
-                        case 1:
-                            DoScriptText(SAY_AGGRO2, m_creature);
-                            break;
-                        case 2:
-                            DoScriptText(SAY_AGGRO3, m_creature);
-                            break;
-                        };
+                            case 0:
+                                DoScriptText(SAY_AGGRO1, m_creature);
+                                break;
+                            case 1:
+                                DoScriptText(SAY_AGGRO2, m_creature);
+                                break;
+                            case 2:
+                                DoScriptText(SAY_AGGRO3, m_creature);
+                                break;
+                        }
                     }
                     else
                     {

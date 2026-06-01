@@ -35,11 +35,9 @@
 
 /**
  * ContentData
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * npc_rizzle_sprysprocket
- * npc_depth_charge
- * go_southfury_moonstone
-#endif
+ * npc_rizzle_sprysprocket (TBC Onwards)
+ * npc_depth_charge (TBC Onwards)
+ * go_southfury_moonstone (TBC Onwards)
  * mobs_spitelashes
  * npc_loramus_thalipedes
  * EndContentData
@@ -128,9 +126,9 @@ struct npc_rizzle_sprysprocket : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                m_creature->CastSpell(m_creature, SPELL_PERIODIC_CHECK, true);
-                break;
+                case 0:
+                    m_creature->CastSpell(m_creature, SPELL_PERIODIC_CHECK, true);
+                    break;
             }
         }
 
@@ -175,19 +173,19 @@ struct npc_rizzle_sprysprocket : public CreatureScript
 
                 switch (m_uiIntroPhase)
                 {
-                case 0:
-                    DoScriptText(SAY_START, m_creature);
-                    DoScriptText(EMOTE_START, m_creature);
-                    break;
-                case 1:
-                    // teleports to water _before_ we Start()
-                    m_creature->CastSpell(m_creature, SPELL_ESCAPE, false);
-                    break;
-                case 2:
-                    m_creature->CastSpell(m_creature, SPELL_SWIM_SPEED, false);
-                    m_bIsIntro = false;
-                    Start(true);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_START, m_creature);
+                        DoScriptText(EMOTE_START, m_creature);
+                        break;
+                    case 1:
+                        // teleports to water _before_ we Start()
+                        m_creature->CastSpell(m_creature, SPELL_ESCAPE, false);
+                        break;
+                    case 2:
+                        m_creature->CastSpell(m_creature, SPELL_SWIM_SPEED, false);
+                        m_bIsIntro = false;
+                        Start(true);
+                        break;
                 }
 
                 ++m_uiIntroPhase;
@@ -290,9 +288,9 @@ struct go_southfury_moonstone : public GameObjectScript
 };
 #endif
 
-/*######
-## mobs_spitelashes
-######*/
+/** ######
+ *  ## mobs_spitelashes
+ *  ######*/
 enum
 {
     // quest related
@@ -394,18 +392,18 @@ struct mobs_spitelashes : public CreatureScript
 
             switch (m_aSpitelashAbility[uiIndex].m_uiTargetType)
             {
-            case TARGET_TYPE_SELF:
-                pTarget = m_creature;
-                break;
-            case TARGET_TYPE_VICTIM:
-                pTarget = m_creature->getVictim();
-                break;
-            case TARGET_TYPE_RANDOM:
-                pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, m_aSpitelashAbility[uiIndex].m_uiSpellId, SELECT_FLAG_IN_LOS);
-                break;
-            case TARGET_TYPE_FRIENDLY:
-                pTarget = DoSelectLowestHpFriendly(10.0f);
-                break;
+                case TARGET_TYPE_SELF:
+                    pTarget = m_creature;
+                    break;
+                case TARGET_TYPE_VICTIM:
+                    pTarget = m_creature->getVictim();
+                    break;
+                case TARGET_TYPE_RANDOM:
+                    pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, m_aSpitelashAbility[uiIndex].m_uiSpellId, SELECT_FLAG_IN_LOS);
+                    break;
+                case TARGET_TYPE_FRIENDLY:
+                    pTarget = DoSelectLowestHpFriendly(10.0f);
+                    break;
             }
 
             if (pTarget)
@@ -503,35 +501,35 @@ struct npc_loramus_thalipedes : public CreatureScript
         pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->AreaExploredOrEventHappens(2744);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                pPlayer->AreaExploredOrEventHappens(2744);
+                break;
 
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Please continue", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 21);
-            pPlayer->SEND_GOSSIP_MENU(1813, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 21:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I do not understand", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 22);
-            pPlayer->SEND_GOSSIP_MENU(1814, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 22:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Indeed", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 23);
-            pPlayer->SEND_GOSSIP_MENU(1815, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 23:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I will do this with or your help, Loramus", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 24);
-            pPlayer->SEND_GOSSIP_MENU(1816, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 24:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Yes", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 25);
-            pPlayer->SEND_GOSSIP_MENU(1817, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 25:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->AreaExploredOrEventHappens(3141);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Please continue", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 21);
+                pPlayer->SEND_GOSSIP_MENU(1813, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 21:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I do not understand", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 22);
+                pPlayer->SEND_GOSSIP_MENU(1814, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 22:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Indeed", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 23);
+                pPlayer->SEND_GOSSIP_MENU(1815, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 23:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "I will do this with or your help, Loramus", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 24);
+                pPlayer->SEND_GOSSIP_MENU(1816, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 24:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Yes", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 25);
+                pPlayer->SEND_GOSSIP_MENU(1817, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 25:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                pPlayer->AreaExploredOrEventHappens(3141);
+                break;
         }
         return true;
     }
@@ -554,25 +552,23 @@ void AddSC_azshara()
     s->RegisterSelf();
 
     //pNewScript = new Script;
-//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-    //pNewScript->Name = "npc_rizzle_sprysprocket";
-    //pNewScript->GetAI = &GetAI_npc_rizzle_sprysprocket;
-    //pNewScript->pGossipHello = &GossipHello_npc_rizzle_sprysprocket;
-    //pNewScript->pGossipSelect = &GossipSelect_npc_rizzle_sprysprocket;
+    //pNewScript->Name = "npc_rizzle_sprysprocket"; (TBC Onwards)
+    //pNewScript->GetAI = &GetAI_npc_rizzle_sprysprocket; (TBC Onwards)
+    //pNewScript->pGossipHello = &GossipHello_npc_rizzle_sprysprocket; (TBC Onwards)
+    //pNewScript->pGossipSelect = &GossipSelect_npc_rizzle_sprysprocket; (TBC Onwards)
     //pNewScript->RegisterSelf();
 
     //pNewScript = new Script;
-    //pNewScript->Name = "npc_depth_charge";
-    //pNewScript->GetAI = &GetAI_npc_depth_charge;
+    //pNewScript->Name = "npc_depth_charge"; (TBC Onwards)
+    //pNewScript->GetAI = &GetAI_npc_depth_charge; (TBC Onwards)
     //pNewScript->RegisterSelf();
 
     //pNewScript = new Script;
-    //pNewScript->Name = "go_southfury_moonstone";
-    //pNewScript->pGOUse = &GOUse_go_southfury_moonstone;
+    //pNewScript->Name = "go_southfury_moonstone"; (TBC Onwards)
+    //pNewScript->pGOUse = &GOUse_go_southfury_moonstone; (TBC Onwards)
     //pNewScript->RegisterSelf();
 
     //pNewScript = new Script;
-//#endif
     //pNewScript->Name = "mobs_spitelashes";
     //pNewScript->GetAI = &GetAI_mobs_spitelashes;
     //pNewScript->RegisterSelf();

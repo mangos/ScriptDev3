@@ -239,127 +239,127 @@ struct boss_blood_queen_lanathel : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_GROUND:
-                // Air phase change timer
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    SetCombatMovement(false);
-                    m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_GROUND, aQueenPosition[0][0], aQueenPosition[0][1], aQueenPosition[0][2]);
-
-                    m_uiPhase = PHASE_RUNNING;
-                    m_uiPhaseTimer = 0;
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                // Only one bite per fight
-                if (m_uiVampiricBiteTimer)
-                {
-                    if (m_uiVampiricBiteTimer <= uiDiff)
+                case PHASE_GROUND:
+                    // Air phase change timer
+                    if (m_uiPhaseTimer < uiDiff)
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_VAMPIRIC_BITE) == CAST_OK)
+                        SetCombatMovement(false);
+                        m_creature->GetMotionMaster()->Clear();
+                        m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_GROUND, aQueenPosition[0][0], aQueenPosition[0][1], aQueenPosition[0][2]);
+
+                        m_uiPhase = PHASE_RUNNING;
+                        m_uiPhaseTimer = 0;
+                    }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
+
+                    // Only one bite per fight
+                    if (m_uiVampiricBiteTimer)
+                    {
+                        if (m_uiVampiricBiteTimer <= uiDiff)
                         {
-                            DoScriptText(urand(0, 1) ? SAY_BITE_1 : SAY_BITE_2, m_creature);
-                            m_uiVampiricBiteTimer = 0;
+                            if (DoCastSpellIfCan(m_creature, SPELL_VAMPIRIC_BITE) == CAST_OK)
+                            {
+                                DoScriptText(urand(0, 1) ? SAY_BITE_1 : SAY_BITE_2, m_creature);
+                                m_uiVampiricBiteTimer = 0;
+                            }
+                        }
+                        else
+                        {
+                            m_uiVampiricBiteTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_uiBloodMirrorTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_BLOOD_MIRROR) == CAST_OK)
+                        {
+                            m_uiBloodMirrorTimer = 5000;
                         }
                     }
                     else
                     {
-                        m_uiVampiricBiteTimer -= uiDiff;
+                        m_uiBloodMirrorTimer -= uiDiff;
                     }
-                }
 
-                if (m_uiBloodMirrorTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_BLOOD_MIRROR) == CAST_OK)
+                    if (m_uiBloodboltTimer < uiDiff)
                     {
-                        m_uiBloodMirrorTimer = 5000;
-                    }
-                }
-                else
-                {
-                    m_uiBloodMirrorTimer -= uiDiff;
-                }
-
-                if (m_uiBloodboltTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TWILIGHT_BLOODBOLT) == CAST_OK)
-                    {
-                        m_uiBloodboltTimer = urand(15000, 20000);
-                    }
-                }
-                else
-                {
-                    m_uiBloodboltTimer -= uiDiff;
-                }
-
-                if (m_uiPactDarkfallenTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_PACT_OF_THE_DARKFALLEN) == CAST_OK)
-                    {
-                        DoScriptText(SAY_PACT, m_creature);
-                        m_uiPactDarkfallenTimer = urand(20000, 25000);
-                    }
-                }
-                else
-                {
-                    m_uiPactDarkfallenTimer -= uiDiff;
-                }
-
-                if (m_uiSwarmingShadowsTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SWARMING_SHADOWS) == CAST_OK)
-                    {
-                        DoScriptText(SAY_SHADOWS, m_creature);
-                        m_uiSwarmingShadowsTimer = urand(30000, 35000);
-                    }
-                }
-                else
-                {
-                    m_uiSwarmingShadowsTimer -= uiDiff;
-                }
-
-                // Heroic spells
-                if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
-                {
-                    if (m_uiDeliriousSlashTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_DELIRIOUS_SLASH) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_TWILIGHT_BLOODBOLT) == CAST_OK)
                         {
-                            m_uiDeliriousSlashTimer = 15000;
+                            m_uiBloodboltTimer = urand(15000, 20000);
                         }
                     }
                     else
                     {
-                        m_uiDeliriousSlashTimer -= uiDiff;
+                        m_uiBloodboltTimer -= uiDiff;
                     }
-                }
 
-                DoMeleeAttackIfReady();
+                    if (m_uiPactDarkfallenTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_PACT_OF_THE_DARKFALLEN) == CAST_OK)
+                        {
+                            DoScriptText(SAY_PACT, m_creature);
+                            m_uiPactDarkfallenTimer = urand(20000, 25000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiPactDarkfallenTimer -= uiDiff;
+                    }
 
-                break;
-            case PHASE_RUNNING:
-            case PHASE_FLYING:
-                // Nothing here. Wait for arriving at the point
-                break;
-            case PHASE_AIR:
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    m_uiPhase = PHASE_FLYING;
-                    m_uiPhaseTimer = 0;
+                    if (m_uiSwarmingShadowsTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SWARMING_SHADOWS) == CAST_OK)
+                        {
+                            DoScriptText(SAY_SHADOWS, m_creature);
+                            m_uiSwarmingShadowsTimer = urand(30000, 35000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiSwarmingShadowsTimer -= uiDiff;
+                    }
 
-                    m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_GROUND, aQueenPosition[0][0], aQueenPosition[0][1], aQueenPosition[0][2]);
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
+                    // Heroic spells
+                    if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
+                    {
+                        if (m_uiDeliriousSlashTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_DELIRIOUS_SLASH) == CAST_OK)
+                            {
+                                m_uiDeliriousSlashTimer = 15000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiDeliriousSlashTimer -= uiDiff;
+                        }
+                    }
 
-                break;
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_RUNNING:
+                case PHASE_FLYING:
+                    // Nothing here. Wait for arriving at the point
+                    break;
+                case PHASE_AIR:
+                    if (m_uiPhaseTimer < uiDiff)
+                    {
+                        m_uiPhase = PHASE_FLYING;
+                        m_uiPhaseTimer = 0;
+
+                        m_creature->GetMotionMaster()->Clear();
+                        m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_GROUND, aQueenPosition[0][0], aQueenPosition[0][1], aQueenPosition[0][2]);
+                    }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
+
+                    break;
             }
         }
     };

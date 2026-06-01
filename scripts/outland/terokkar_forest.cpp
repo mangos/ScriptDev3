@@ -168,7 +168,7 @@ enum
 {
     NPC_FREED_WARRIOR       = 22459,
     QUEST_TAKEN_IN_NIGHT    = 10873
-                              // SPELL_FREE_WEBBED       = 38950
+    // SPELL_FREE_WEBBED    = 38950
 };
 
 const uint32 netherwebVictims[6] =
@@ -255,32 +255,32 @@ struct npc_akuno : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 5:
-                DoScriptText(SAY_AKU_AMBUSH_A, m_creature);
-                m_creature->SummonCreature(NPC_CABAL_SKIRMISHER, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
-                break;
-            case 14:
-                DoScriptText(SAY_AKU_AMBUSH_B, m_creature);
+                case 5:
+                    DoScriptText(SAY_AKU_AMBUSH_A, m_creature);
+                    m_creature->SummonCreature(NPC_CABAL_SKIRMISHER, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    break;
+                case 14:
+                    DoScriptText(SAY_AKU_AMBUSH_B, m_creature);
 
-                if (Creature* pTemp = m_creature->SummonCreature(NPC_CABAL_SKIRMISHER, m_afAmbushB1[0], m_afAmbushB1[1], m_afAmbushB1[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000))
-                {
-                    DoScriptText(SAY_AKU_AMBUSH_B_REPLY, pTemp);
-                }
+                    if (Creature* pTemp = m_creature->SummonCreature(NPC_CABAL_SKIRMISHER, m_afAmbushB1[0], m_afAmbushB1[1], m_afAmbushB1[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000))
+                    {
+                        DoScriptText(SAY_AKU_AMBUSH_B_REPLY, pTemp);
+                    }
 
-                m_creature->SummonCreature(NPC_CABAL_SKIRMISHER, m_afAmbushB2[0], m_afAmbushB2[1], m_afAmbushB2[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
-                break;
-            case 15:
-                SetRun();
-                break;
-            case 18:
-                DoScriptText(SAY_AKU_COMPLETE, m_creature);
+                    m_creature->SummonCreature(NPC_CABAL_SKIRMISHER, m_afAmbushB2[0], m_afAmbushB2[1], m_afAmbushB2[2], 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    break;
+                case 15:
+                    SetRun();
+                    break;
+                case 18:
+                    DoScriptText(SAY_AKU_COMPLETE, m_creature);
 
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ESCAPING_TOMB, m_creature);
-                }
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ESCAPING_TOMB, m_creature);
+                    }
 
-                break;
+                    break;
             }
         }
 
@@ -486,25 +486,25 @@ struct npc_letoll : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    DoScriptText(SAY_LE_KEEP_SAFE, m_creature, pPlayer);
-                }
-                break;
-            case 1:
-                DoScriptText(SAY_LE_NORTH, m_creature);
-                break;
-            case 10:
-                DoScriptText(SAY_LE_ARRIVE, m_creature);
-                break;
-            case 12:
-                DoScriptText(SAY_LE_BURIED, m_creature);
-                SetEscortPaused(true);
-                break;
-            case 13:
-                SetRun();
-                break;
+                case 0:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        DoScriptText(SAY_LE_KEEP_SAFE, m_creature, pPlayer);
+                    }
+                    break;
+                case 1:
+                    DoScriptText(SAY_LE_NORTH, m_creature);
+                    break;
+                case 10:
+                    DoScriptText(SAY_LE_ARRIVE, m_creature);
+                    break;
+                case 12:
+                    DoScriptText(SAY_LE_BURIED, m_creature);
+                    SetEscortPaused(true);
+                    break;
+                case 13:
+                    SetRun();
+                    break;
             }
         }
 
@@ -542,78 +542,78 @@ struct npc_letoll : public CreatureScript
 
                         switch (m_uiEventCount)
                         {
-                        case 0:
-                            DoScriptText(SAY_LE_ALMOST, m_creature);
-                            break;
-                        case 1:
-                            DoScriptText(SAY_LE_DRUM, m_creature);
-                            break;
-                        case 2:
-                            if (Creature* pResearcher = GetAvailableResearcher(0))
-                            {
-                                DoScriptText(SAY_LE_DRUM_REPLY, pResearcher);
-                            }
-                            break;
-                        case 3:
-                            DoScriptText(SAY_LE_DISCOVERY, m_creature);
-                            break;
-                        case 4:
-                            if (Creature* pResearcher = GetAvailableResearcher(0))
-                            {
-                                DoScriptText(SAY_LE_DISCOVERY_REPLY, pResearcher);
-                            }
-                            break;
-                        case 5:
-                            DoScriptText(SAY_LE_NO_LEAVE, m_creature);
-                            break;
-                        case 6:
-                            if (Creature* pResearcher = GetAvailableResearcher(1))
-                            {
-                                DoScriptText(SAY_LE_NO_LEAVE_REPLY1, pResearcher);
-                            }
-                            break;
-                        case 7:
-                            if (Creature* pResearcher = GetAvailableResearcher(2))
-                            {
-                                DoScriptText(SAY_LE_NO_LEAVE_REPLY2, pResearcher);
-                            }
-                            break;
-                        case 8:
-                            if (Creature* pResearcher = GetAvailableResearcher(3))
-                            {
-                                DoScriptText(SAY_LE_NO_LEAVE_REPLY3, pResearcher);
-                            }
-                            break;
-                        case 9:
-                            if (Creature* pResearcher = GetAvailableResearcher(4))
-                            {
-                                DoScriptText(SAY_LE_NO_LEAVE_REPLY4, pResearcher);
-                            }
-                            break;
-                        case 10:
-                            DoScriptText(SAY_LE_SHUT, m_creature);
-                            break;
-                        case 11:
-                            if (Creature* pResearcher = GetAvailableResearcher(0))
-                            {
-                                DoScriptText(SAY_LE_REPLY_HEAR, pResearcher);
-                            }
-                            break;
-                        case 12:
-                            DoScriptText(SAY_LE_IN_YOUR_FACE, m_creature);
-                            m_creature->SummonCreature(NPC_BONE_SIFTER, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                            break;
-                        case 13:
-                            DoScriptText(EMOTE_LE_PICK_UP, m_creature);
+                            case 0:
+                                DoScriptText(SAY_LE_ALMOST, m_creature);
+                                break;
+                            case 1:
+                                DoScriptText(SAY_LE_DRUM, m_creature);
+                                break;
+                            case 2:
+                                if (Creature* pResearcher = GetAvailableResearcher(0))
+                                {
+                                    DoScriptText(SAY_LE_DRUM_REPLY, pResearcher);
+                                }
+                                break;
+                            case 3:
+                                DoScriptText(SAY_LE_DISCOVERY, m_creature);
+                                break;
+                            case 4:
+                                if (Creature* pResearcher = GetAvailableResearcher(0))
+                                {
+                                    DoScriptText(SAY_LE_DISCOVERY_REPLY, pResearcher);
+                                }
+                                break;
+                            case 5:
+                                DoScriptText(SAY_LE_NO_LEAVE, m_creature);
+                                break;
+                            case 6:
+                                if (Creature* pResearcher = GetAvailableResearcher(1))
+                                {
+                                    DoScriptText(SAY_LE_NO_LEAVE_REPLY1, pResearcher);
+                                }
+                                break;
+                            case 7:
+                                if (Creature* pResearcher = GetAvailableResearcher(2))
+                                {
+                                    DoScriptText(SAY_LE_NO_LEAVE_REPLY2, pResearcher);
+                                }
+                                break;
+                            case 8:
+                                if (Creature* pResearcher = GetAvailableResearcher(3))
+                                {
+                                    DoScriptText(SAY_LE_NO_LEAVE_REPLY3, pResearcher);
+                                }
+                                break;
+                            case 9:
+                                if (Creature* pResearcher = GetAvailableResearcher(4))
+                                {
+                                    DoScriptText(SAY_LE_NO_LEAVE_REPLY4, pResearcher);
+                                }
+                                break;
+                            case 10:
+                                DoScriptText(SAY_LE_SHUT, m_creature);
+                                break;
+                            case 11:
+                                if (Creature* pResearcher = GetAvailableResearcher(0))
+                                {
+                                    DoScriptText(SAY_LE_REPLY_HEAR, pResearcher);
+                                }
+                                break;
+                            case 12:
+                                DoScriptText(SAY_LE_IN_YOUR_FACE, m_creature);
+                                m_creature->SummonCreature(NPC_BONE_SIFTER, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                                break;
+                            case 13:
+                                DoScriptText(EMOTE_LE_PICK_UP, m_creature);
 
-                            if (Player* pPlayer = GetPlayerForEscort())
-                            {
-                                DoScriptText(SAY_LE_THANKS, m_creature, pPlayer);
-                                pPlayer->GroupEventHappens(QUEST_DIGGING_BONES, m_creature);
-                            }
+                                if (Player* pPlayer = GetPlayerForEscort())
+                                {
+                                    DoScriptText(SAY_LE_THANKS, m_creature, pPlayer);
+                                    pPlayer->GroupEventHappens(QUEST_DIGGING_BONES, m_creature);
+                                }
 
-                            SetEscortPaused(false);
-                            break;
+                                SetEscortPaused(false);
+                                break;
                         }
 
                         ++m_uiEventCount;
@@ -733,37 +733,37 @@ struct npc_mana_bomb_exp_trigger : public CreatureScript
 
                 switch (m_uiEventCounter)
                 {
-                case 5:
-                    if (pManaBomb)
-                    {
-                        pManaBomb->SetGoState(GO_STATE_ACTIVE);
-                    }
+                    case 5:
+                        if (pManaBomb)
+                        {
+                            pManaBomb->SetGoState(GO_STATE_ACTIVE);
+                        }
 
-                    DoScriptText(SAY_COUNT_1, m_creature);
-                    break;
-                case 6:
-                    DoScriptText(SAY_COUNT_2, m_creature);
-                    break;
-                case 7:
-                    DoScriptText(SAY_COUNT_3, m_creature);
-                    break;
-                case 8:
-                    DoScriptText(SAY_COUNT_4, m_creature);
-                    break;
-                case 9:
-                    DoScriptText(SAY_COUNT_5, m_creature);
-                    break;
-                case 10:
-                    m_creature->CastSpell(m_creature, SPELL_MANA_BOMB_EXPL, false);
-                    break;
-                case 30:
-                    if (pManaBomb)
-                    {
-                        pManaBomb->SetGoState(GO_STATE_READY);
-                    }
+                        DoScriptText(SAY_COUNT_1, m_creature);
+                        break;
+                    case 6:
+                        DoScriptText(SAY_COUNT_2, m_creature);
+                        break;
+                    case 7:
+                        DoScriptText(SAY_COUNT_3, m_creature);
+                        break;
+                    case 8:
+                        DoScriptText(SAY_COUNT_4, m_creature);
+                        break;
+                    case 9:
+                        DoScriptText(SAY_COUNT_5, m_creature);
+                        break;
+                    case 10:
+                        m_creature->CastSpell(m_creature, SPELL_MANA_BOMB_EXPL, false);
+                        break;
+                    case 30:
+                        if (pManaBomb)
+                        {
+                            pManaBomb->SetGoState(GO_STATE_READY);
+                        }
 
-                    Reset();
-                    break;
+                        Reset();
+                        break;
                 }
 
                 ++m_uiEventCounter;
@@ -833,10 +833,10 @@ struct go_veil_skith_cage : public GameObjectScript
                 pPlayer->KilledMonsterCredit(NPC_CAPTIVE_CHILD, (*itr)->GetObjectGuid());
                 switch (urand(0, 3))
                 {
-                case 0: DoScriptText(SAY_THANKS_1, *itr); break;
-                case 1: DoScriptText(SAY_THANKS_2, *itr); break;
-                case 2: DoScriptText(SAY_THANKS_3, *itr); break;
-                case 3: DoScriptText(SAY_THANKS_4, *itr); break;
+                    case 0: DoScriptText(SAY_THANKS_1, *itr); break;
+                    case 1: DoScriptText(SAY_THANKS_2, *itr); break;
+                    case 2: DoScriptText(SAY_THANKS_3, *itr); break;
+                    case 3: DoScriptText(SAY_THANKS_4, *itr); break;
                 }
 
                 (*itr)->GetMotionMaster()->Clear();
@@ -938,8 +938,8 @@ struct npc_isla_starmane : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 7:  DoScriptText(SAY_ISLA_LEAVE_BUILDING, m_creature); break;
-            case 68: DoCastSpellIfCan(m_creature, SPELL_TRAVELFORM);    break;
+                case 7:  DoScriptText(SAY_ISLA_LEAVE_BUILDING, m_creature); break;
+                case 68: DoCastSpellIfCan(m_creature, SPELL_TRAVELFORM);    break;
             }
         }
 
@@ -947,22 +947,22 @@ struct npc_isla_starmane : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 6:
-                DoScriptText(SAY_ISLA_WAITING, m_creature);
-                break;
-            case 61:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(pPlayer->GetTeam() == ALLIANCE ? QUEST_ESCAPE_FROM_FIREWING_POINT_A : QUEST_ESCAPE_FROM_FIREWING_POINT_H, m_creature);
-                }
-                break;
-            case 67:
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    m_creature->SetFacingToObject(pPlayer);
-                }
-                m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);
-                break;
+                case 6:
+                    DoScriptText(SAY_ISLA_WAITING, m_creature);
+                    break;
+                case 61:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(pPlayer->GetTeam() == ALLIANCE ? QUEST_ESCAPE_FROM_FIREWING_POINT_A : QUEST_ESCAPE_FROM_FIREWING_POINT_H, m_creature);
+                    }
+                    break;
+                case 67:
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        m_creature->SetFacingToObject(pPlayer);
+                    }
+                    m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);
+                    break;
             }
         }
 
@@ -975,9 +975,9 @@ struct npc_isla_starmane : public CreatureScript
                     m_uiPeriodicTalkTimer = urand(30000, 60000);
                     switch (urand(0, 2))
                     {
-                    case 0: DoScriptText(SAY_ISLA_PERIODIC_1, m_creature); break;
-                    case 1: DoScriptText(SAY_ISLA_PERIODIC_2, m_creature); break;
-                    case 2: DoScriptText(SAY_ISLA_PERIODIC_3, m_creature); break;
+                        case 0: DoScriptText(SAY_ISLA_PERIODIC_1, m_creature); break;
+                        case 1: DoScriptText(SAY_ISLA_PERIODIC_2, m_creature); break;
+                        case 2: DoScriptText(SAY_ISLA_PERIODIC_3, m_creature); break;
                     }
                 }
                 else
@@ -1097,34 +1097,34 @@ struct npc_skywing : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 6:
-                DoScriptText(SAY_SKYWING_TREE_DOWN, m_creature);
-                break;
-            case 36:
-                DoScriptText(SAY_SKYWING_TREE_UP, m_creature);
-                break;
-            case 60:
-                DoScriptText(SAY_SKYWING_JUMP, m_creature);
-                m_creature->SetLevitate(true);
-                break;
-            case 61:
-                m_creature->SetLevitate(false);
-                break;
-            case 80:
-                DoScriptText(SAY_SKYWING_SUMMON, m_creature);
-                m_creature->SummonCreature(NPC_LUANGA_THE_IMPRISONER, aLuangaSpawnCoords[0], aLuangaSpawnCoords[1], aLuangaSpawnCoords[2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
-                break;
-            case 81:
-                // Start transformation
-                m_uiCycloneTimer = 100;
-                break;
-            case 82:
-                DoScriptText(SAY_SKYWING_END, m_creature);
+                case 6:
+                    DoScriptText(SAY_SKYWING_TREE_DOWN, m_creature);
+                    break;
+                case 36:
+                    DoScriptText(SAY_SKYWING_TREE_UP, m_creature);
+                    break;
+                case 60:
+                    DoScriptText(SAY_SKYWING_JUMP, m_creature);
+                    m_creature->SetLevitate(true);
+                    break;
+                case 61:
+                    m_creature->SetLevitate(false);
+                    break;
+                case 80:
+                    DoScriptText(SAY_SKYWING_SUMMON, m_creature);
+                    m_creature->SummonCreature(NPC_LUANGA_THE_IMPRISONER, aLuangaSpawnCoords[0], aLuangaSpawnCoords[1], aLuangaSpawnCoords[2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
+                    break;
+                case 81:
+                    // Start transformation
+                    m_uiCycloneTimer = 100;
+                    break;
+                case 82:
+                    DoScriptText(SAY_SKYWING_END, m_creature);
 
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_SKYWING, m_creature);
-                }
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_SKYWING, m_creature);
+                    }
             }
         }
 
@@ -1365,10 +1365,10 @@ struct npc_skyguard_prisoner : public CreatureScript
 
                 switch (urand(0, 3))
                 {
-                case 0: DoScriptText(SAY_AMBUSH_1, pSummoned); break;
-                case 1: DoScriptText(SAY_AMBUSH_2, pSummoned); break;
-                case 2: DoScriptText(SAY_AMBUSH_3, pSummoned); break;
-                case 3: DoScriptText(SAY_AMBUSH_4, pSummoned); break;
+                    case 0: DoScriptText(SAY_AMBUSH_1, pSummoned); break;
+                    case 1: DoScriptText(SAY_AMBUSH_2, pSummoned); break;
+                    case 2: DoScriptText(SAY_AMBUSH_3, pSummoned); break;
+                    case 3: DoScriptText(SAY_AMBUSH_4, pSummoned); break;
                 }
             }
         }
@@ -1377,25 +1377,25 @@ struct npc_skyguard_prisoner : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(SAY_ESCORT_START, m_creature);
-                break;
-            case 13:
-                m_creature->SummonCreature(NPC_WING_GUARD, -4179.043f, 3081.007f, 328.28f, 4.51f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_WING_GUARD, -4181.610f, 3081.289f, 328.32f, 4.52f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                break;
-            case 14:
-                DoScriptText(SAY_AMBUSH_END, m_creature);
-                break;
-            case 18:
-                DoScriptText(SAY_ESCORT_COMPLETE, m_creature);
-                SetRun();
+                case 0:
+                    DoScriptText(SAY_ESCORT_START, m_creature);
+                    break;
+                case 13:
+                    m_creature->SummonCreature(NPC_WING_GUARD, -4179.043f, 3081.007f, 328.28f, 4.51f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_WING_GUARD, -4181.610f, 3081.289f, 328.32f, 4.52f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    break;
+                case 14:
+                    DoScriptText(SAY_AMBUSH_END, m_creature);
+                    break;
+                case 18:
+                    DoScriptText(SAY_ESCORT_COMPLETE, m_creature);
+                    SetRun();
 
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_ESCAPE_SKETTIS, m_creature);
-                }
-                break;
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_ESCAPE_SKETTIS, m_creature);
+                    }
+                    break;
             }
         }
     };

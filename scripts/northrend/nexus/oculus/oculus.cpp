@@ -69,9 +69,9 @@ struct npc_oculus_drake : public CreatureScript
                 uint32 uiMountSpell = 0;
                 switch (m_creature->GetEntry())
                 {
-                case NPC_RUBY_DRAKE:    uiMountSpell = SPELL_RIDE_RUBY_DRAKE_QUE;   break;
-                case NPC_AMBER_DRAKE:   uiMountSpell = SPELL_RIDE_AMBER_DRAKE_QUE;  break;
-                case NPC_EMERALD_DRAKE: uiMountSpell = SPELL_RIDE_EMERAL_DRAKE_QUE; break;
+                    case NPC_RUBY_DRAKE:    uiMountSpell = SPELL_RIDE_RUBY_DRAKE_QUE;   break;
+                    case NPC_AMBER_DRAKE:   uiMountSpell = SPELL_RIDE_AMBER_DRAKE_QUE;  break;
+                    case NPC_EMERALD_DRAKE: uiMountSpell = SPELL_RIDE_EMERAL_DRAKE_QUE; break;
                 }
 
                 // Force player to mount
@@ -129,35 +129,35 @@ struct npc_oculus_drake : public CreatureScript
         }
 
         // TODO: Enable the wrappers below, when they will be properly supported by the core
-        /*
-        void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
-        {
-        if (pPassenger->GetTypeId() != TYPEID_PLAYER)
-        {
-            return;
-        }
+        /**
+         *  void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
+         *  {
+         *      if (pPassenger->GetTypeId() != TYPEID_PLAYER)
+         *      {
+         *          return;
+         *      }
 
-        // Set vehicle auras
-        DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
+         *      // Set vehicle auras
+         *      DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
 
-        // Set passenger auras
-        pPassenger->CastSpell(pPassenger, SPELL_DRAKE_FLAG_VISUAL, true);
-        }
-
-        void PassengerUnBoarded(Unit* pPassenger) override
-        {
-        pPassenger->RemoveAurasDueToSpell(SPELL_DRAKE_FLAG_VISUAL);
-        pPassenger->CastSpell(pPassenger, SPELL_PARACHUTE, true);
-
-        DoScriptText(EMOTE_FLY_AWAY, m_creature);
-
-        // The dragon runs away and despawns
-        float fX, fY, fZ;
-        m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 20, frand(0, 2 * M_PI_F));
-        m_creature->GetMotionMaster()->MovePoint(0, fX, fY, fZ + 20.0f);
-        m_creature->ForcedDespawn(5000);
-        }
-        */
+         *      // Set passenger auras
+         *      pPassenger->CastSpell(pPassenger, SPELL_DRAKE_FLAG_VISUAL, true);
+         *  }
+         *
+         *  void PassengerUnBoarded(Unit* pPassenger) override
+         *  {
+         *      pPassenger->RemoveAurasDueToSpell(SPELL_DRAKE_FLAG_VISUAL);
+         *      pPassenger->CastSpell(pPassenger, SPELL_PARACHUTE, true);
+         *
+         *      DoScriptText(EMOTE_FLY_AWAY, m_creature);
+         *
+         *      // The dragon runs away and despawns
+         *      float fX, fY, fZ;
+         *      m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 20, frand(0, 2 * M_PI_F));
+         *      m_creature->GetMotionMaster()->MovePoint(0, fX, fY, fZ + 20.0f);
+         *      m_creature->ForcedDespawn(5000);
+         *  }
+         */
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

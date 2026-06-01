@@ -87,7 +87,7 @@ struct boss_baltharus : public CreatureScript
     struct boss_baltharusAI : public ScriptedAI
     {
         boss_baltharusAI(Creature* pCreature) : ScriptedAI(pCreature),
-        m_introDialogue(aIntroDialogue)
+            m_introDialogue(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             m_introDialogue.InitializeDialogueHelper(m_pInstance);
@@ -98,7 +98,9 @@ struct boss_baltharus : public CreatureScript
                 m_fHealthPercentCheck = m_pInstance->GetData(TYPE_DATA_IS_25MAN) ? 33.3f : 50.0f;
             }
             else
+            {
                 script_error_log("Instance Ruby Sanctum: ERROR Failed to load instance data for this instace.");
+            }
 
             m_bHasDoneIntro = false;
         }

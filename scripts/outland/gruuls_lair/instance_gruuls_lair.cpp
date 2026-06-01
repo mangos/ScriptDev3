@@ -45,141 +45,143 @@ struct is_gruuls_lair : public InstanceScript
 
     class instance_gruuls_lair : public ScriptedInstance
     {
-    public:
-        instance_gruuls_lair(Map* pMap) : ScriptedInstance(pMap),
-            m_uiCouncilMembersDied(0)
-        {
-            Initialize();
-        }
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        bool IsEncounterInProgress() const override
-        {
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            if (m_auiEncounter[i] == IN_PROGRESS)
+        public:
+            instance_gruuls_lair(Map* pMap) : ScriptedInstance(pMap),
+                m_uiCouncilMembersDied(0)
             {
-                return true;
+                Initialize();
             }
 
-            return false;
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            if (pCreature->GetEntry() == NPC_MAULGAR)
+            void Initialize() override
             {
-                m_mNpcEntryGuidStore[NPC_MAULGAR] = pCreature->GetObjectGuid();
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
             }
-        }
 
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
+            bool IsEncounterInProgress() const override
             {
-            case GO_PORT_GRONN_1:
-                if (m_auiEncounter[TYPE_MAULGAR_EVENT] == DONE)
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-            case GO_PORT_GRONN_2:
-                break;
-
-            default:
-                return;
-            }
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-        }
-
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
-            {
-            case TYPE_MAULGAR_EVENT:
-                if (uiData == SPECIAL)
-                {
-                    ++m_uiCouncilMembersDied;
-
-                    if (m_uiCouncilMembersDied == MAX_COUNCIL)
+                    if (m_auiEncounter[i] == IN_PROGRESS)
                     {
-                        SetData(TYPE_MAULGAR_EVENT, DONE);
+                        return true;
                     }
-                    // Don't store special data
-                    break;
                 }
-                if (uiData == FAIL)
+                return false;
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                if (pCreature->GetEntry() == NPC_MAULGAR)
                 {
-                    m_uiCouncilMembersDied = 0;
+                    m_mNpcEntryGuidStore[NPC_MAULGAR] = pCreature->GetObjectGuid();
                 }
+            }
+
+            void OnObjectCreate(GameObject* pGo) override
+            {
+                switch (pGo->GetEntry())
+                {
+                    case GO_PORT_GRONN_1:
+                        if (m_auiEncounter[TYPE_MAULGAR_EVENT] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    case GO_PORT_GRONN_2:
+                        break;
+
+                    default:
+                        return;
+                }
+                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+            }
+
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                switch (uiType)
+                {
+                    case TYPE_MAULGAR_EVENT:
+                        if (uiData == SPECIAL)
+                        {
+                            ++m_uiCouncilMembersDied;
+
+                            if (m_uiCouncilMembersDied == MAX_COUNCIL)
+                            {
+                                SetData(TYPE_MAULGAR_EVENT, DONE);
+                            }
+                            // Don't store special data
+                            break;
+                        }
+                        if (uiData == FAIL)
+                        {
+                            m_uiCouncilMembersDied = 0;
+                        }
+                        if (uiData == DONE)
+                        {
+                            DoUseDoorOrButton(GO_PORT_GRONN_1);
+                        }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_GRUUL_EVENT:
+                        DoUseDoorOrButton(GO_PORT_GRONN_2);
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                }
+
                 if (uiData == DONE)
                 {
-                    DoUseDoorOrButton(GO_PORT_GRONN_1);
+                    OUT_SAVE_INST_DATA;
+
+                    std::ostringstream saveStream;
+                    saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1];
+
+                    m_strSaveData = saveStream.str();
+
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
                 }
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_GRUUL_EVENT:
-                DoUseDoorOrButton(GO_PORT_GRONN_2);
-                m_auiEncounter[uiType] = uiData;
-                break;
             }
 
-            if (uiData == DONE)
+            uint32 GetData(uint32 uiType) const override
             {
-                OUT_SAVE_INST_DATA;
+                if (uiType < MAX_ENCOUNTER)
+                {
+                    return m_auiEncounter[uiType];
+                }
 
-                std::ostringstream saveStream;
-                saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1];
-
-                m_strSaveData = saveStream.str();
-
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
+                return 0;
             }
-        }
 
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType < MAX_ENCOUNTER)
+            const char* Save() const override { return m_strSaveData.c_str(); }
+            void Load(const char* chrIn) override
             {
-                return m_auiEncounter[uiType];
+                if (!chrIn)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+
+                loadStream >> m_auiEncounter[0] >> m_auiEncounter[1];
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        m_auiEncounter[i] = NOT_STARTED;
+                    }
+                }
+                OUT_LOAD_INST_DATA_COMPLETE;
             }
 
-            return 0;
-        }
+        private:
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strSaveData;
 
-        const char* Save() const override { return m_strSaveData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
-            {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-
-            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1];
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            if (m_auiEncounter[i] == IN_PROGRESS)
-            {
-                m_auiEncounter[i] = NOT_STARTED;
-            }
-
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
-
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strSaveData;
-
-        uint8 m_uiCouncilMembersDied;
+            uint8 m_uiCouncilMembersDied;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

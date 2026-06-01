@@ -310,73 +310,73 @@ struct boss_headless_horseman : public CreatureScript
 
             switch (m_fightPhase)
             {
-            case PHASE_PUMPKINS:
+                case PHASE_PUMPKINS:
 
-                if (m_uiPumpkinTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_PUMPKIN) == CAST_OK)
+                    if (m_uiPumpkinTimer < uiDiff)
                     {
-                        m_uiPumpkinTimer = urand(35000, 40000);
-                    }
-                }
-                else
-                {
-                    m_uiPumpkinTimer -= uiDiff;
-                }
-
-                // no break;
-            case PHASE_CONFLAGRATION:
-
-                // conflagration not happening during pumpkin phase
-                if (m_fightPhase != PHASE_PUMPKINS)
-                {
-                    if (m_uiConflagrationTimer < uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_PUMPKIN) == CAST_OK)
                         {
-                            if (DoCastSpellIfCan(pTarget, SPELL_CONFLAGRATION) == CAST_OK)
-                            {
-                                DoScriptText(SAY_CONFLAGRATION, m_creature);
-                                m_uiConflagrationTimer = urand(15000, 20000);
-                            }
+                            m_uiPumpkinTimer = urand(35000, 40000);
                         }
                     }
                     else
                     {
-                        m_uiConflagrationTimer -= uiDiff;
+                        m_uiPumpkinTimer -= uiDiff;
                     }
-                }
 
-                // no break;
-            case PHASE_HORSEMAN:
+                    // no break;
+                case PHASE_CONFLAGRATION:
 
-                // cleave - all phases
-                if (m_uiCleaveTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_HORSEMAN_CLEAVE) == CAST_OK)
+                    // conflagration not happening during pumpkin phase
+                    if (m_fightPhase != PHASE_PUMPKINS)
                     {
-                        m_uiCleaveTimer = 5000;
+                        if (m_uiConflagrationTimer < uiDiff)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                            {
+                                if (DoCastSpellIfCan(pTarget, SPELL_CONFLAGRATION) == CAST_OK)
+                                {
+                                    DoScriptText(SAY_CONFLAGRATION, m_creature);
+                                    m_uiConflagrationTimer = urand(15000, 20000);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiConflagrationTimer -= uiDiff;
+                        }
                     }
-                }
-                else
-                {
-                    m_uiCleaveTimer -= uiDiff;
-                }
 
-                DoMeleeAttackIfReady();
-                break;
-            case PHASE_HEAD_TOSS:
-                // rejoin head by force at 100% hp
-                if (!m_bHeadRequested && m_creature->GetHealthPercent() == 100.0f)
-                {
-                    if (Creature* pHead = m_creature->GetMap()->GetCreature(m_headGuid))
+                    // no break;
+                case PHASE_HORSEMAN:
+
+                    // cleave - all phases
+                    if (m_uiCleaveTimer < uiDiff)
                     {
-                        SendAIEvent(AI_EVENT_CUSTOM_B, m_creature, pHead);
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_HORSEMAN_CLEAVE) == CAST_OK)
+                        {
+                            m_uiCleaveTimer = 5000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiCleaveTimer -= uiDiff;
                     }
 
-                    m_bHeadRequested = true;
-                }
-                break;
+                    DoMeleeAttackIfReady();
+                    break;
+                case PHASE_HEAD_TOSS:
+                    // rejoin head by force at 100% hp
+                    if (!m_bHeadRequested && m_creature->GetHealthPercent() == 100.0f)
+                    {
+                        if (Creature* pHead = m_creature->GetMap()->GetCreature(m_headGuid))
+                        {
+                            SendAIEvent(AI_EVENT_CUSTOM_B, m_creature, pHead);
+                        }
+
+                        m_bHeadRequested = true;
+                    }
+                    break;
             }
         }
     };

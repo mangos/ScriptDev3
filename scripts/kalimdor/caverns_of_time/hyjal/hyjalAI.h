@@ -79,56 +79,56 @@ enum YellType
 
 struct hyjalAI : public ScriptedAI
 {
-        hyjalAI(Creature* pCreature) : ScriptedAI(pCreature)
-        {
-            memset(m_aSpells, 0, sizeof(m_aSpells));
-            m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-            Reset();
-        }
+    hyjalAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        memset(m_aSpells, 0, sizeof(m_aSpells));
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        Reset();
+    }
 
-        // Generically used to reset our variables. Do *not* call in EnterEvadeMode as this may make problems if the raid is still in combat
-        void Reset() override;
+    // Generically used to reset our variables. Do *not* call in EnterEvadeMode as this may make problems if the raid is still in combat
+    void Reset() override;
 
-        // Send creature back to spawn location and evade.
-        void EnterEvadeMode() override;
+    // Send creature back to spawn location and evade.
+    void EnterEvadeMode() override;
 
-        // Called when creature reached home location after evade.
-        void JustReachedHome() override;
+    // Called when creature reached home location after evade.
+    void JustReachedHome() override;
 
-        // Used to reset cooldowns for our spells and to inform the raid that we're under attack
-        void Aggro(Unit* pWho) override;
+    // Used to reset cooldowns for our spells and to inform the raid that we're under attack
+    void Aggro(Unit* pWho) override;
 
-        // Called to summon waves, check for boss deaths and to cast our spells.
-        void UpdateAI(const uint32 uiDiff) override;
+    // Called to summon waves, check for boss deaths and to cast our spells.
+    void UpdateAI(const uint32 uiDiff) override;
 
-        // Called on death, informs the raid that they have failed.
-        void JustDied(Unit* /*pKiller*/) override;
+    // Called on death, informs the raid that they have failed.
+    void JustDied(Unit* /*pKiller*/) override;
 
-        void JustRespawned() override;
+    void JustRespawned() override;
 
-        // "Teleport" all friendly creatures away from the base.
-        void Retreat();
+    // "Teleport" all friendly creatures away from the base.
+    void Retreat();
 
-        // Summons a creature for that wave in that base
-        void SpawnCreatureForWave(uint32 uiMobEntry);
+    // Summons a creature for that wave in that base
+    void SpawnCreatureForWave(uint32 uiMobEntry);
 
-        void JustSummoned(Creature*) override;
+    void JustSummoned(Creature*) override;
 
-        void SummonedCreatureJustDied(Creature* pSummoned) override;
+    void SummonedCreatureJustDied(Creature* pSummoned) override;
 
-        // Summons the next wave, calls SummonCreature
-        void SummonNextWave();
+    // Summons the next wave, calls SummonCreature
+    void SummonNextWave();
 
-        // Begins the event by gossip click
-        void StartEvent();
+    // Begins the event by gossip click
+    void StartEvent();
 
-        // Searches for the appropriate yell and sound and uses it to inform the raid of various things
-        void DoTalk(YellType pYellType);
+    // Searches for the appropriate yell and sound and uses it to inform the raid of various things
+    void DoTalk(YellType pYellType);
 
-        // Used to filter who to despawn after mass teleport
-        void SpellHitTarget(Unit*, const SpellEntry*) override;
+    // Used to filter who to despawn after mass teleport
+    void SpellHitTarget(Unit*, const SpellEntry*) override;
 
-        bool IsEventInProgress() const;
+    bool IsEventInProgress() const;
 
     public:
         ScriptedInstance* m_pInstance;

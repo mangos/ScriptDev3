@@ -168,9 +168,9 @@ struct boss_shade_of_aran : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
             }
 
             if (m_pInstance)
@@ -214,10 +214,10 @@ struct boss_shade_of_aran : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_WATER_ELEMENTAL:
-            case NPC_SHADOW_OF_ARAN:
-                pSummoned->SetInCombatWithZone();
-                break;
+                case NPC_WATER_ELEMENTAL:
+                case NPC_SHADOW_OF_ARAN:
+                    pSummoned->SetInCombatWithZone();
+                    break;
             }
         }
 
@@ -252,30 +252,30 @@ struct boss_shade_of_aran : public CreatureScript
                 {
                     switch (m_uiManaRecoveryStage)
                     {
-                    case 0:
-                        if (DoCastSpellIfCan(m_creature, SPELL_CONJURE_WATER) == CAST_OK)
-                        {
-                            m_uiManaRecoveryTimer = 2000;
-                        }
-                        break;
-                    case 1:
-                        if (DoCastSpellIfCan(m_creature, SPELL_DRINK) == CAST_OK)
-                        {
-                            m_creature->SetStandState(UNIT_STAND_STATE_SIT);
-                            m_uiManaRecoveryTimer = 5000;
-                        }
-                        break;
-                    case 2:
-                        if (DoCastSpellIfCan(m_creature, SPELL_PYROBLAST) == CAST_OK)
-                        {
-                            SetCombatMovement(true);
-                            DoStartMovement(m_creature->getVictim());
-                            m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                        case 0:
+                            if (DoCastSpellIfCan(m_creature, SPELL_CONJURE_WATER) == CAST_OK)
+                            {
+                                m_uiManaRecoveryTimer = 2000;
+                            }
+                            break;
+                        case 1:
+                            if (DoCastSpellIfCan(m_creature, SPELL_DRINK) == CAST_OK)
+                            {
+                                m_creature->SetStandState(UNIT_STAND_STATE_SIT);
+                                m_uiManaRecoveryTimer = 5000;
+                            }
+                            break;
+                        case 2:
+                            if (DoCastSpellIfCan(m_creature, SPELL_PYROBLAST) == CAST_OK)
+                            {
+                                SetCombatMovement(true);
+                                DoStartMovement(m_creature->getVictim());
+                                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
 
-                            m_uiManaRecoveryTimer = 2000;
-                            m_bIsDrinking = false;
-                        }
-                        break;
+                                m_uiManaRecoveryTimer = 2000;
+                                m_bIsDrinking = false;
+                            }
+                            break;
                     }
                     ++m_uiManaRecoveryStage;
                 }
@@ -312,18 +312,18 @@ struct boss_shade_of_aran : public CreatureScript
 
                     switch (uiCurrentSpell)
                     {
-                    case 0:
-                        uiCurrentSpellId = SPELL_ARCANE_MISSILES;
-                        m_uiNormalCastTimer = urand(6000, 7000);
-                        break;
-                    case 1:
-                        uiCurrentSpellId = SPELL_FIREBALL;
-                        m_uiNormalCastTimer = urand(2000, 3000);
-                        break;
-                    case 2:
-                        uiCurrentSpellId = SPELL_FROSTBOLT;
-                        m_uiNormalCastTimer = urand(2000, 3000);
-                        break;
+                        case 0:
+                            uiCurrentSpellId = SPELL_ARCANE_MISSILES;
+                            m_uiNormalCastTimer = urand(6000, 7000);
+                            break;
+                        case 1:
+                            uiCurrentSpellId = SPELL_FIREBALL;
+                            m_uiNormalCastTimer = urand(2000, 3000);
+                            break;
+                        case 2:
+                            uiCurrentSpellId = SPELL_FROSTBOLT;
+                            m_uiNormalCastTimer = urand(2000, 3000);
+                            break;
                     }
 
                     if (uiCurrentSpellId)
@@ -344,15 +344,15 @@ struct boss_shade_of_aran : public CreatureScript
 
                 switch (urand(0, 1))
                 {
-                case 0:
-                    spellResult = DoCastSpellIfCan(m_creature, SPELL_COUNTERSPELL);
-                    break;
-                case 1:
-                    if (Unit* pUnit = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        spellResult = DoCastSpellIfCan(pUnit, SPELL_CHAINS_OF_ICE);
-                    }
-                    break;
+                    case 0:
+                        spellResult = DoCastSpellIfCan(m_creature, SPELL_COUNTERSPELL);
+                        break;
+                    case 1:
+                        if (Unit* pUnit = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            spellResult = DoCastSpellIfCan(pUnit, SPELL_CHAINS_OF_ICE);
+                        }
+                        break;
                 }
                 if (spellResult == CAST_OK)
                 {
@@ -380,28 +380,28 @@ struct boss_shade_of_aran : public CreatureScript
 
                     switch (m_uiLastSuperSpell)
                     {
-                    case SUPER_ARCANE_EXPL:
-                        if (DoCastSpellIfCan(m_creature, SPELL_ARCANE_EXPLOSION) == CAST_OK)
-                        {
-                            DoCastSpellIfCan(m_creature, SPELL_BLINK_CENTER, CAST_TRIGGERED);
-                            DoCastSpellIfCan(m_creature, SPELL_MASSIVE_MAGNETIC_PULL, CAST_TRIGGERED);
-                            DoCastSpellIfCan(m_creature, SPELL_MASS_SLOW, CAST_TRIGGERED);
+                        case SUPER_ARCANE_EXPL:
+                            if (DoCastSpellIfCan(m_creature, SPELL_ARCANE_EXPLOSION) == CAST_OK)
+                            {
+                                DoCastSpellIfCan(m_creature, SPELL_BLINK_CENTER, CAST_TRIGGERED);
+                                DoCastSpellIfCan(m_creature, SPELL_MASSIVE_MAGNETIC_PULL, CAST_TRIGGERED);
+                                DoCastSpellIfCan(m_creature, SPELL_MASS_SLOW, CAST_TRIGGERED);
 
-                            DoScriptText(urand(0, 1) ? SAY_EXPLOSION1 : SAY_EXPLOSION2, m_creature);
-                        }
-                        break;
-                    case SUPER_FLAME_WREATH:
-                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_WREATH) == CAST_OK)
-                        {
-                            DoScriptText(urand(0, 1) ? SAY_FLAMEWREATH1 : SAY_FLAMEWREATH2, m_creature);
-                        }
-                        break;
-                    case SUPER_BLIZZARD:
-                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_BLIZZARD) == CAST_OK)
-                        {
-                            DoScriptText(urand(0, 1) ? SAY_BLIZZARD1 : SAY_BLIZZARD2, m_creature);
-                        }
-                        break;
+                                DoScriptText(urand(0, 1) ? SAY_EXPLOSION1 : SAY_EXPLOSION2, m_creature);
+                            }
+                            break;
+                        case SUPER_FLAME_WREATH:
+                            if (DoCastSpellIfCan(m_creature, SPELL_FLAME_WREATH) == CAST_OK)
+                            {
+                                DoScriptText(urand(0, 1) ? SAY_FLAMEWREATH1 : SAY_FLAMEWREATH2, m_creature);
+                            }
+                            break;
+                        case SUPER_BLIZZARD:
+                            if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_BLIZZARD) == CAST_OK)
+                            {
+                                DoScriptText(urand(0, 1) ? SAY_BLIZZARD1 : SAY_BLIZZARD2, m_creature);
+                            }
+                            break;
                     }
                     m_uiSuperCastTimer = 30000;
                 }

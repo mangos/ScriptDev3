@@ -91,7 +91,7 @@ struct npc_general_andorov : public CreatureScript
     struct npc_general_andorovAI : public ScriptedAI, private DialogueHelper
     {
         npc_general_andorovAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -164,25 +164,25 @@ struct npc_general_andorov : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0:
-            case 1:
-            case 3:
-                ++m_uiPointId;
-                m_creature->GetMotionMaster()->MovePoint(m_uiPointId, aAndorovMoveLocs[m_uiPointId].m_fX, aAndorovMoveLocs[m_uiPointId].m_fY, aAndorovMoveLocs[m_uiPointId].m_fZ);
-                break;
-            case POINT_ID_MOVE_INTRO:
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                m_creature->SetFacingTo(aAndorovMoveLocs[3].m_fO);
-                ++m_uiPointId;
-                break;
-            case POINT_ID_MOVE_ATTACK:
-                // Start dialogue only the first time it reaches the point
-                if (m_uiPointId == 4)
-                {
-                    StartNextDialogueText(SAY_ANDOROV_INTRO_3);
+                case 0:
+                case 1:
+                case 3:
                     ++m_uiPointId;
-                }
-                break;
+                    m_creature->GetMotionMaster()->MovePoint(m_uiPointId, aAndorovMoveLocs[m_uiPointId].m_fX, aAndorovMoveLocs[m_uiPointId].m_fY, aAndorovMoveLocs[m_uiPointId].m_fZ);
+                    break;
+                case POINT_ID_MOVE_INTRO:
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    m_creature->SetFacingTo(aAndorovMoveLocs[3].m_fO);
+                    ++m_uiPointId;
+                    break;
+                case POINT_ID_MOVE_ATTACK:
+                    // Start dialogue only the first time it reaches the point
+                    if (m_uiPointId == 4)
+                    {
+                        StartNextDialogueText(SAY_ANDOROV_INTRO_3);
+                        ++m_uiPointId;
+                    }
+                    break;
             }
         }
 

@@ -164,7 +164,7 @@ struct npc_ranshalla : public CreatureScript
     struct npc_ranshallaAI : public npc_escortAI, private DialogueHelper
     {
         npc_ranshallaAI(Creature* pCreature) : npc_escortAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
         }
 
@@ -192,12 +192,12 @@ struct npc_ranshalla : public CreatureScript
             {
                 switch (urand(0, 1))
                 {
-                case 0:
-                    DoScriptText(SAY_AFTER_TORCH_1, m_creature);
-                    break;
-                case 1:
-                    DoScriptText(SAY_AFTER_TORCH_2, m_creature);
-                    break;
+                    case 0:
+                        DoScriptText(SAY_AFTER_TORCH_1, m_creature);
+                        break;
+                    case 1:
+                        DoScriptText(SAY_AFTER_TORCH_2, m_creature);
+                        break;
                 }
             }
 
@@ -228,15 +228,15 @@ struct npc_ranshalla : public CreatureScript
             // Yell and set escort to pause
             switch (urand(0, 2))
             {
-            case 0:
-                DoScriptText(SAY_REACH_TORCH_1, m_creature);
-                break;
-            case 1:
-                DoScriptText(SAY_REACH_TORCH_2, m_creature);
-                break;
-            case 2:
-                DoScriptText(SAY_REACH_TORCH_3, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_REACH_TORCH_1, m_creature);
+                    break;
+                case 1:
+                    DoScriptText(SAY_REACH_TORCH_2, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(SAY_REACH_TORCH_3, m_creature);
+                    break;
             }
 
             DoScriptText(EMOTE_CHANT_SPELL, m_creature);
@@ -332,101 +332,101 @@ struct npc_ranshalla : public CreatureScript
         {
             switch (iEntry)
             {
-            case NPC_RANSHALLA:
-                // Start the altar channeling
-                DoChannelTorchSpell(true);
-                break;
-            case SAY_RANSHALLA_ALTAR_6:
-                SetEscortPaused(false);
-                break;
-            case SAY_PRIESTESS_ALTAR_8:
-                // make the gem respawn
-                if (GameObject* pGem = GetClosestGameObjectWithEntry(m_creature, GO_ELUNE_GEM, 10.0f))
-                {
-                    if (pGem->isSpawned())
+                case NPC_RANSHALLA:
+                    // Start the altar channeling
+                    DoChannelTorchSpell(true);
+                    break;
+                case SAY_RANSHALLA_ALTAR_6:
+                    SetEscortPaused(false);
+                    break;
+                case SAY_PRIESTESS_ALTAR_8:
+                    // make the gem respawn
+                    if (GameObject* pGem = GetClosestGameObjectWithEntry(m_creature, GO_ELUNE_GEM, 10.0f))
                     {
-                        break;
-                    }
+                        if (pGem->isSpawned())
+                        {
+                            break;
+                        }
 
-                    pGem->SetRespawnTime(90);
-                    pGem->Refresh();
-                }
-                break;
-            case SAY_PRIESTESS_ALTAR_9:
-                // move near the escort npc
-                if (Creature* pPriestess = m_creature->GetMap()->GetCreature(m_firstPriestessGuid))
-                {
-                    pPriestess->GetMotionMaster()->MovePoint(0, aWingThicketLocations[6].m_fX, aWingThicketLocations[6].m_fY, aWingThicketLocations[6].m_fZ);
-                }
-                break;
-            case SAY_PRIESTESS_ALTAR_13:
-                // summon the Guardian of Elune
-                if (Creature* pGuard = m_creature->SummonCreature(NPC_GUARDIAN_ELUNE, aWingThicketLocations[2].m_fX, aWingThicketLocations[2].m_fY, aWingThicketLocations[2].m_fZ, aWingThicketLocations[2].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0))
-                {
-                    pGuard->GetMotionMaster()->MovePoint(0, aWingThicketLocations[5].m_fX, aWingThicketLocations[5].m_fY, aWingThicketLocations[5].m_fZ);
-                    m_guardEluneGuid = pGuard->GetObjectGuid();
-                }
-                // summon the Voice of Elune
-                if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
-                {
-                    if (Creature* pVoice = m_creature->SummonCreature(NPC_VOICE_ELUNE, pAltar->GetPositionX(), pAltar->GetPositionY(), pAltar->GetPositionZ(), 0, TEMPSPAWN_TIMED_DESPAWN, 30000))
-                    {
-                        m_voiceEluneGuid = pVoice->GetObjectGuid();
+                        pGem->SetRespawnTime(90);
+                        pGem->Refresh();
                     }
-                }
-                break;
-            case SAY_VOICE_ALTAR_15:
-                // move near the escort npc and continue dialogue
-                if (Creature* pPriestess = m_creature->GetMap()->GetCreature(m_secondPriestessGuid))
-                {
-                    DoScriptText(SAY_PRIESTESS_ALTAR_14, pPriestess);
-                    pPriestess->GetMotionMaster()->MovePoint(0, aWingThicketLocations[7].m_fX, aWingThicketLocations[7].m_fY, aWingThicketLocations[7].m_fZ);
-                }
-                break;
-            case SAY_PRIESTESS_ALTAR_19:
-                // make the voice of elune leave
-                if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardEluneGuid))
-                {
-                    pGuard->GetMotionMaster()->MovePoint(0, aWingThicketLocations[2].m_fX, aWingThicketLocations[2].m_fY, aWingThicketLocations[2].m_fZ);
-                    pGuard->ForcedDespawn(4000);
-                }
-                break;
-            case SAY_PRIESTESS_ALTAR_20:
-                // make the first priestess leave
-                if (Creature* pPriestess = m_creature->GetMap()->GetCreature(m_firstPriestessGuid))
-                {
-                    pPriestess->GetMotionMaster()->MovePoint(0, aWingThicketLocations[0].m_fX, aWingThicketLocations[0].m_fY, aWingThicketLocations[0].m_fZ);
-                    pPriestess->ForcedDespawn(4000);
-                }
-                break;
-            case SAY_PRIESTESS_ALTAR_21:
-                // make the second priestess leave
-                if (Creature* pPriestess = m_creature->GetMap()->GetCreature(m_secondPriestessGuid))
-                {
-                    pPriestess->GetMotionMaster()->MovePoint(0, aWingThicketLocations[1].m_fX, aWingThicketLocations[1].m_fY, aWingThicketLocations[1].m_fZ);
-                    pPriestess->ForcedDespawn(4000);
-                }
-                break;
-            case DATA_EVENT_END:
-                // Turn towards the player
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    m_creature->SetFacingToObject(pPlayer);
-                    DoScriptText(SAY_QUEST_END_1, m_creature, pPlayer);
-                }
-                break;
-            case SAY_QUEST_END_2:
-                // Turn towards the altar and kneel - quest complete
-                if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
-                {
-                    m_creature->SetFacingToObject(pAltar);
-                }
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_GUARDIANS_ALTAR, m_creature);
-                }
-                break;
+                    break;
+                case SAY_PRIESTESS_ALTAR_9:
+                    // move near the escort npc
+                    if (Creature* pPriestess = m_creature->GetMap()->GetCreature(m_firstPriestessGuid))
+                    {
+                        pPriestess->GetMotionMaster()->MovePoint(0, aWingThicketLocations[6].m_fX, aWingThicketLocations[6].m_fY, aWingThicketLocations[6].m_fZ);
+                    }
+                    break;
+                case SAY_PRIESTESS_ALTAR_13:
+                    // summon the Guardian of Elune
+                    if (Creature* pGuard = m_creature->SummonCreature(NPC_GUARDIAN_ELUNE, aWingThicketLocations[2].m_fX, aWingThicketLocations[2].m_fY, aWingThicketLocations[2].m_fZ, aWingThicketLocations[2].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0))
+                    {
+                        pGuard->GetMotionMaster()->MovePoint(0, aWingThicketLocations[5].m_fX, aWingThicketLocations[5].m_fY, aWingThicketLocations[5].m_fZ);
+                        m_guardEluneGuid = pGuard->GetObjectGuid();
+                    }
+                    // summon the Voice of Elune
+                    if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
+                    {
+                        if (Creature* pVoice = m_creature->SummonCreature(NPC_VOICE_ELUNE, pAltar->GetPositionX(), pAltar->GetPositionY(), pAltar->GetPositionZ(), 0, TEMPSPAWN_TIMED_DESPAWN, 30000))
+                        {
+                            m_voiceEluneGuid = pVoice->GetObjectGuid();
+                        }
+                    }
+                    break;
+                case SAY_VOICE_ALTAR_15:
+                    // move near the escort npc and continue dialogue
+                    if (Creature* pPriestess = m_creature->GetMap()->GetCreature(m_secondPriestessGuid))
+                    {
+                        DoScriptText(SAY_PRIESTESS_ALTAR_14, pPriestess);
+                        pPriestess->GetMotionMaster()->MovePoint(0, aWingThicketLocations[7].m_fX, aWingThicketLocations[7].m_fY, aWingThicketLocations[7].m_fZ);
+                    }
+                    break;
+                case SAY_PRIESTESS_ALTAR_19:
+                    // make the voice of elune leave
+                    if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardEluneGuid))
+                    {
+                        pGuard->GetMotionMaster()->MovePoint(0, aWingThicketLocations[2].m_fX, aWingThicketLocations[2].m_fY, aWingThicketLocations[2].m_fZ);
+                        pGuard->ForcedDespawn(4000);
+                    }
+                    break;
+                case SAY_PRIESTESS_ALTAR_20:
+                    // make the first priestess leave
+                    if (Creature* pPriestess = m_creature->GetMap()->GetCreature(m_firstPriestessGuid))
+                    {
+                        pPriestess->GetMotionMaster()->MovePoint(0, aWingThicketLocations[0].m_fX, aWingThicketLocations[0].m_fY, aWingThicketLocations[0].m_fZ);
+                        pPriestess->ForcedDespawn(4000);
+                    }
+                    break;
+                case SAY_PRIESTESS_ALTAR_21:
+                    // make the second priestess leave
+                    if (Creature* pPriestess = m_creature->GetMap()->GetCreature(m_secondPriestessGuid))
+                    {
+                        pPriestess->GetMotionMaster()->MovePoint(0, aWingThicketLocations[1].m_fX, aWingThicketLocations[1].m_fY, aWingThicketLocations[1].m_fZ);
+                        pPriestess->ForcedDespawn(4000);
+                    }
+                    break;
+                case DATA_EVENT_END:
+                    // Turn towards the player
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        m_creature->SetFacingToObject(pPlayer);
+                        DoScriptText(SAY_QUEST_END_1, m_creature, pPlayer);
+                    }
+                    break;
+                case SAY_QUEST_END_2:
+                    // Turn towards the altar and kneel - quest complete
+                    if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
+                    {
+                        m_creature->SetFacingToObject(pAltar);
+                    }
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_GUARDIANS_ALTAR, m_creature);
+                    }
+                    break;
             }
         }
 
@@ -434,17 +434,17 @@ struct npc_ranshalla : public CreatureScript
         {
             switch (uiEntry)
             {
-            case NPC_RANSHALLA:
-                return m_creature;
-            case NPC_VOICE_ELUNE:
-                return m_creature->GetMap()->GetCreature(m_voiceEluneGuid);
-            case NPC_PRIESTESS_DATA_1:
-                return m_creature->GetMap()->GetCreature(m_firstPriestessGuid);
-            case NPC_PRIESTESS_DATA_2:
-                return m_creature->GetMap()->GetCreature(m_secondPriestessGuid);
+                case NPC_RANSHALLA:
+                    return m_creature;
+                case NPC_VOICE_ELUNE:
+                    return m_creature->GetMap()->GetCreature(m_voiceEluneGuid);
+                case NPC_PRIESTESS_DATA_1:
+                    return m_creature->GetMap()->GetCreature(m_firstPriestessGuid);
+                case NPC_PRIESTESS_DATA_2:
+                    return m_creature->GetMap()->GetCreature(m_secondPriestessGuid);
 
-            default:
-                return nullptr;
+                default:
+                    return nullptr;
             }
         }
 
@@ -605,33 +605,33 @@ struct npc_artorius_the_doombringer : public CreatureScript
         {
             switch (m_creature->GetEntry())
             {
-            case NPC_ARTORIUS_THE_AMIABLE:
-                m_creature->SetRespawnDelay(35 * MINUTE);
-                m_creature->SetRespawnTime(35 * MINUTE);
-                m_creature->NearTeleportTo(7909.71f, -4598.67f, 710.008f, 0.606013f);
-                if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() != WAYPOINT_MOTION_TYPE)
-                {
-                    m_creature->SetDefaultMovementType(WAYPOINT_MOTION_TYPE);
-                    m_creature->GetMotionMaster()->Initialize();
-                }
+                case NPC_ARTORIUS_THE_AMIABLE:
+                    m_creature->SetRespawnDelay(35 * MINUTE);
+                    m_creature->SetRespawnTime(35 * MINUTE);
+                    m_creature->NearTeleportTo(7909.71f, -4598.67f, 710.008f, 0.606013f);
+                    if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() != WAYPOINT_MOTION_TYPE)
+                    {
+                        m_creature->SetDefaultMovementType(WAYPOINT_MOTION_TYPE);
+                        m_creature->GetMotionMaster()->Initialize();
+                    }
 
-                m_creature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    m_creature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
 
-                m_uiTransform_Timer = 10000;
-                m_uiTransformEmote_Timer = 5000;
-                m_bTransform = false;
-                m_uiDespawn_Timer = 0;
-                break;
-            case NPC_ARTORIUS_THE_DOOMBRINGER:
-                if (!m_uiDespawn_Timer)
-                {
-                    m_uiDespawn_Timer = 20 * MINUTE * IN_MILLISECONDS;
-                }
+                    m_uiTransform_Timer = 10000;
+                    m_uiTransformEmote_Timer = 5000;
+                    m_bTransform = false;
+                    m_uiDespawn_Timer = 0;
+                    break;
+                case NPC_ARTORIUS_THE_DOOMBRINGER:
+                    if (!m_uiDespawn_Timer)
+                    {
+                        m_uiDespawn_Timer = 20 * MINUTE * IN_MILLISECONDS;
+                    }
 
-                m_hunterGuid.Clear();
-                m_uiDemonic_Doom_Timer = 7500;
-                m_uiDemonic_Frenzy_Timer = urand(5000, 8000);
-                break;
+                    m_hunterGuid.Clear();
+                    m_uiDemonic_Doom_Timer = 7500;
+                    m_uiDemonic_Frenzy_Timer = urand(5000, 8000);
+                    break;
             }
         }
 

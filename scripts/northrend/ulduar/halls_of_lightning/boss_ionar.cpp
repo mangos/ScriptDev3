@@ -178,9 +178,9 @@ struct boss_ionar : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
             }
         }
 
@@ -407,7 +407,7 @@ struct spell_ionar_spark_despawn : public SpellScript
 
             return true;
         }
-    return false;
+        return false;
     }
 };
 

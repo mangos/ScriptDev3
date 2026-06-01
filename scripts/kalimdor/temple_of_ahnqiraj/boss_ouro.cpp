@@ -153,12 +153,12 @@ struct boss_ouro : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_OURO_TRIGGER:
-                m_ouroTriggerGuid = pSummoned->GetObjectGuid();
-                // no break;
-            case NPC_DIRT_MOUND:
-                pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 40.0f);
-                break;
+                case NPC_OURO_TRIGGER:
+                    m_ouroTriggerGuid = pSummoned->GetObjectGuid();
+                    // no break;
+                case NPC_DIRT_MOUND:
+                    pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 40.0f);
+                    break;
             }
         }
 
@@ -256,12 +256,14 @@ struct boss_ouro : public CreatureScript
 
 #if defined (CLASSIC)
                         if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_OURO_MOUND) == CAST_OK)
-#else
-                    DoSpawnCreature(NPC_DIRT_MOUND, 0, 0, 0, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
-#endif
                         {
+                            DoSpawnCreature(NPC_DIRT_MOUND, 0, 0, 0, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
                             m_uiSummonMoundTimer = 10000;
                         }
+#else
+                        DoSpawnCreature(NPC_DIRT_MOUND, 0, 0, 0, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                        m_uiSummonMoundTimer = 10000;
+#endif
                     }
                     else
                     {
@@ -330,7 +332,7 @@ struct npc_ouro_spawner : public CreatureScript
         npc_ouro_spawnerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-    uint32 m_uiQuakeTimer;
+        uint32 m_uiQuakeTimer;
 #endif
         bool m_bHasSummoned;
 
@@ -338,7 +340,7 @@ struct npc_ouro_spawner : public CreatureScript
         {
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-        m_uiQuakeTimer = 1000;
+            m_uiQuakeTimer = 1000;
 #endif
             m_bHasSummoned = false;
         }
@@ -376,25 +378,25 @@ struct npc_ouro_spawner : public CreatureScript
             }
         }
 
-    void UpdateAI(const uint32 uiDiff) override
-    {
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-        if (m_bHasSummoned)
+        void UpdateAI(const uint32 uiDiff) override
         {
-            if (m_uiQuakeTimer < uiDiff)
+#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
+            if (m_bHasSummoned)
             {
-                if (DoCastSpellIfCan(m_creature, SPELL_QUAKE) == CAST_OK)
+                if (m_uiQuakeTimer < uiDiff)
                 {
-                    m_uiQuakeTimer = 1000;
+                    if (DoCastSpellIfCan(m_creature, SPELL_QUAKE) == CAST_OK)
+                    {
+                        m_uiQuakeTimer = 1000;
+                    }
+                }
+                else
+                {
+                    m_uiQuakeTimer -= uiDiff;
                 }
             }
-            else
-            {
-                m_uiQuakeTimer -= uiDiff;
-            }
-        }
 #endif
-    }
+        }
     };
 
     CreatureAI* GetAI(Creature* pCreature) override

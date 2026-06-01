@@ -173,7 +173,7 @@ struct boss_malygos : public CreatureScript
     struct boss_malygosAI : public ScriptedAI, private DialogueHelper
     {
         boss_malygosAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
@@ -259,24 +259,24 @@ struct boss_malygos : public CreatureScript
             uint8 uiTextId = 0;
             switch (m_uiPhase)
             {
-            case PHASE_FLOOR:   uiTextId = urand(0, 2); break;
-            case PHASE_DISCS:   uiTextId = urand(3, 5); break;
-            case PHASE_DRAGONS: uiTextId = urand(6, 8); break;
+                case PHASE_FLOOR:   uiTextId = urand(0, 2); break;
+                case PHASE_DISCS:   uiTextId = urand(3, 5); break;
+                case PHASE_DRAGONS: uiTextId = urand(6, 8); break;
             }
 
             switch (uiTextId)
             {
-            case 0: DoScriptText(SAY_SLAY_1_A, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY_1_B, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY_1_C, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY_1_A, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY_1_B, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY_1_C, m_creature); break;
 
-            case 3: DoScriptText(SAY_SLAY_2_A, m_creature); break;
-            case 4: DoScriptText(SAY_SLAY_2_B, m_creature); break;
-            case 5: DoScriptText(SAY_SLAY_2_C, m_creature); break;
+                case 3: DoScriptText(SAY_SLAY_2_A, m_creature); break;
+                case 4: DoScriptText(SAY_SLAY_2_B, m_creature); break;
+                case 5: DoScriptText(SAY_SLAY_2_C, m_creature); break;
 
-            case 6: DoScriptText(SAY_SLAY_3_A, m_creature); break;
-            case 7: DoScriptText(SAY_SLAY_3_B, m_creature); break;
-            case 8: DoScriptText(SAY_SLAY_3_C, m_creature); break;
+                case 6: DoScriptText(SAY_SLAY_3_A, m_creature); break;
+                case 7: DoScriptText(SAY_SLAY_3_B, m_creature); break;
+                case 8: DoScriptText(SAY_SLAY_3_C, m_creature); break;
             }
         }
 
@@ -319,30 +319,30 @@ struct boss_malygos : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_ALEXSTRASZA:
-                pSummoned->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-                pSummoned->GetMotionMaster()->MovePoint(0, aAlextraszaMovePos[0], aAlextraszaMovePos[1], aAlextraszaMovePos[2]);
-                break;
-            case NPC_POWER_SPARK:
-                pSummoned->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
-                break;
-            case NPC_ARCANE_OVERLOAD:
-                DoCastSpellIfCan(pSummoned, SPELL_ARCANE_BOMB, CAST_TRIGGERED);
-                break;
-            case NPC_STATIC_FIELD:
-                pSummoned->CastSpell(pSummoned, SPELL_STATIC_FIELD, false);
-                break;
-            case NPC_NEXUS_LORD:
-            case NPC_SCION_OF_ETERNITY:
-                if (Creature* pDisk = GetClosestCreatureWithEntry(pSummoned, NPC_HOVER_DISK, 10.0f))
-                {
-                    pSummoned->CastSpell(pDisk, SPELL_RIDE_VEHICLE_HARDCODED, true);
-                }
-                pSummoned->SetInCombatWithZone();
-                break;
-            case NPC_HOVER_DISK:
-                pSummoned->CastSpell(pSummoned, SPELL_FLIGHT, true);
-                break;
+                case NPC_ALEXSTRASZA:
+                    pSummoned->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                    pSummoned->GetMotionMaster()->MovePoint(0, aAlextraszaMovePos[0], aAlextraszaMovePos[1], aAlextraszaMovePos[2]);
+                    break;
+                case NPC_POWER_SPARK:
+                    pSummoned->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
+                    break;
+                case NPC_ARCANE_OVERLOAD:
+                    DoCastSpellIfCan(pSummoned, SPELL_ARCANE_BOMB, CAST_TRIGGERED);
+                    break;
+                case NPC_STATIC_FIELD:
+                    pSummoned->CastSpell(pSummoned, SPELL_STATIC_FIELD, false);
+                    break;
+                case NPC_NEXUS_LORD:
+                case NPC_SCION_OF_ETERNITY:
+                    if (Creature* pDisk = GetClosestCreatureWithEntry(pSummoned, NPC_HOVER_DISK, 10.0f))
+                    {
+                        pSummoned->CastSpell(pDisk, SPELL_RIDE_VEHICLE_HARDCODED, true);
+                    }
+                    pSummoned->SetInCombatWithZone();
+                    break;
+                case NPC_HOVER_DISK:
+                    pSummoned->CastSpell(pSummoned, SPELL_FLIGHT, true);
+                    break;
             }
         }
 
@@ -384,37 +384,37 @@ struct boss_malygos : public CreatureScript
         {
             switch (iEntry)
             {
-            case PHASE_DISCS:
-                // ToDo: start some movement over the platform
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_uiPhase = PHASE_DISCS;
-                DoSpawnAdds();
-                break;
-            case SPELL_DESTROY_PLATFORM_BOOM:
-                if (m_pInstance)
-                {
-                    if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_LARGE_TRIGGER))
+                case PHASE_DISCS:
+                    // ToDo: start some movement over the platform
+                    m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    m_uiPhase = PHASE_DISCS;
+                    DoSpawnAdds();
+                    break;
+                case SPELL_DESTROY_PLATFORM_BOOM:
+                    if (m_pInstance)
                     {
-                        pTrigger->CastSpell(pTrigger, SPELL_DESTROY_PLATFORM_BOOM, false);
+                        if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_LARGE_TRIGGER))
+                        {
+                            pTrigger->CastSpell(pTrigger, SPELL_DESTROY_PLATFORM_BOOM, false);
+                        }
                     }
-                }
-                break;
-            case SPELL_SUMMON_RED_DRAGON:
-                if (m_pInstance)
-                {
-                    // Destroy the platform
-                    if (GameObject* pPlatform = m_pInstance->GetSingleGameObjectFromStorage(GO_PLATFORM))
+                    break;
+                case SPELL_SUMMON_RED_DRAGON:
+                    if (m_pInstance)
                     {
-                        pPlatform->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK_11);
+                        // Destroy the platform
+                        if (GameObject* pPlatform = m_pInstance->GetSingleGameObjectFromStorage(GO_PLATFORM))
+                        {
+                            pPlatform->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK_11);
+                        }
                     }
-                }
 
-                DoCastSpellIfCan(m_creature, SPELL_SUMMON_RED_DRAGON);
-                break;
-            case SAY_INTRO_PHASE_3:
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_uiPhase = PHASE_DRAGONS;
-                break;
+                    DoCastSpellIfCan(m_creature, SPELL_SUMMON_RED_DRAGON);
+                    break;
+                case SAY_INTRO_PHASE_3:
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    m_uiPhase = PHASE_DRAGONS;
+                    break;
             }
         }
 
@@ -463,163 +463,163 @@ struct boss_malygos : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_FLOOR:
+                case PHASE_FLOOR:
 
-                /* ToDo: Enable this when the spells are properly supported in core
-                if (m_uiVortexTimer < uiDiff)
-                {
-                if (DoCastSpellIfCan(m_creature, SPELL_VORTEX) == CAST_OK)
-                {
-                DoScriptText(SAY_VORTEX, m_creature);
-                m_uiVortexTimer = 60000;
-                }
-                }
-                else
-                {
-                    m_uiVortexTimer -= uiDiff;
-                }
-                */
-
-                if (m_uiArcaneBreathTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ARCANE_BREATH : SPELL_ARCANE_BREATH_H) == CAST_OK)
+                    /* ToDo: Enable this when the spells are properly supported in core
+                    if (m_uiVortexTimer < uiDiff)
                     {
-                        m_uiArcaneBreathTimer = urand(13000, 16000);
-                    }
-                }
-                else
-                {
-                    m_uiArcaneBreathTimer -= uiDiff;
-                }
-
-                if (m_uiPowerSparkTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_SPARK) == CAST_OK)
-                    {
-                        DoScriptText(SAY_EMOTE_SPARK, m_creature);
-                        m_uiPowerSparkTimer = 30000;
-                    }
-                }
-                else
-                {
-                    m_uiPowerSparkTimer -= uiDiff;
-                }
-
-                if (m_creature->GetHealthPercent() < 50.0f)
-                {
-                    SetCombatMovement(false);
-                    m_creature->SetLevitate(true);
-                    m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-                    // Move idle first, so we can avoid evading, because of the waypoint movement
-                    m_creature->GetMotionMaster()->MoveIdle();
-                    m_creature->GetMotionMaster()->MovePoint(0, aCenterMovePos[0], aCenterMovePos[1], aCenterMovePos[2] + 30.0f);
-
-                    StartNextDialogueText(SAY_END_PHASE_1);
-                    m_uiPhase = PHASE_TRANSITION_1;
-                }
-
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_DISCS:
-
-                if (m_uiOverloadTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_ARCANE_BOMB) == CAST_OK)
-                    {
-                        if (!urand(0, 3))
+                        if (DoCastSpellIfCan(m_creature, SPELL_VORTEX) == CAST_OK)
                         {
-                            DoScriptText(SAY_SHELL, m_creature);
-                        }
-
-                        m_uiOverloadTimer = urand(16000, 19000);
-                    }
-                }
-                else
-                {
-                    m_uiOverloadTimer -= uiDiff;
-                }
-
-                // Note: the boss should move in certain points before he does the breath ability
-                if (m_uiArcanePulseTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SURGE_OF_POWER_PULSE) == CAST_OK)
-                    {
-                        DoScriptText(SAY_DEEP_BREATH, m_creature);
-                        DoScriptText(SAY_EMOTE_BREATH, m_creature);
-                        m_uiArcanePulseTimer = 60000;
-                    }
-                }
-                else
-                {
-                    m_uiArcanePulseTimer -= uiDiff;
-                }
-
-                if (m_uiArcaneStormTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ARCANE_STORM : SPELL_ARCANE_STORM_H) == CAST_OK)
-                    {
-                        m_uiArcaneStormTimer = urand(15000, 17000);
-                    }
-                }
-                else
-                {
-                    m_uiArcaneStormTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_DRAGONS:
-
-                if (m_uiStaticFieldTimer < uiDiff)
-                {
-                    // Cast Static Field spell on a number of targets, based on difficulty
-                    for (uint8 i = 0; i < m_uiMaxStaticFieldTargets; ++i)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                        {
-                            if (DoCastSpellIfCan(pTarget, SPELL_STATIC_FIELD_SUMMON, CAST_TRIGGERED) == CAST_OK)
-                            {
-                                switch (urand(0, 2))
-                                {
-                                case 0: DoScriptText(SAY_SPELL_1, m_creature); break;
-                                case 1: DoScriptText(SAY_SPELL_2, m_creature); break;
-                                case 2: DoScriptText(SAY_SPELL_3, m_creature); break;
-                                }
-                                m_uiStaticFieldTimer = urand(10000, 17000);
-                            }
+                            DoScriptText(SAY_VORTEX, m_creature);
+                            m_uiVortexTimer = 60000;
                         }
                     }
-                }
-                else
-                {
-                    m_uiStaticFieldTimer -= uiDiff;
-                }
-
-                if (m_uiSurgeOfPowerTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    else
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_SURGE_OF_POWER) == CAST_OK)
+                        m_uiVortexTimer -= uiDiff;
+                    }
+                    */
+
+                    if (m_uiArcaneBreathTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ARCANE_BREATH : SPELL_ARCANE_BREATH_H) == CAST_OK)
+                        {
+                            m_uiArcaneBreathTimer = urand(13000, 16000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiArcaneBreathTimer -= uiDiff;
+                    }
+
+                    if (m_uiPowerSparkTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_SPARK) == CAST_OK)
+                        {
+                            DoScriptText(SAY_EMOTE_SPARK, m_creature);
+                            m_uiPowerSparkTimer = 30000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiPowerSparkTimer -= uiDiff;
+                    }
+
+                    if (m_creature->GetHealthPercent() < 50.0f)
+                    {
+                        SetCombatMovement(false);
+                        m_creature->SetLevitate(true);
+                        m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                        // Move idle first, so we can avoid evading, because of the waypoint movement
+                        m_creature->GetMotionMaster()->MoveIdle();
+                        m_creature->GetMotionMaster()->MovePoint(0, aCenterMovePos[0], aCenterMovePos[1], aCenterMovePos[2] + 30.0f);
+
+                        StartNextDialogueText(SAY_END_PHASE_1);
+                        m_uiPhase = PHASE_TRANSITION_1;
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_DISCS:
+
+                    if (m_uiOverloadTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_ARCANE_BOMB) == CAST_OK)
                         {
                             if (!urand(0, 3))
                             {
-                                DoScriptText(SAY_SURGE, m_creature);
+                                DoScriptText(SAY_SHELL, m_creature);
                             }
 
-                            m_uiSurgeOfPowerTimer = urand(5000, 15000);
+                            m_uiOverloadTimer = urand(16000, 19000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiSurgeOfPowerTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiOverloadTimer -= uiDiff;
+                    }
 
-                break;
-            case PHASE_TRANSITION_1:
-            case PHASE_TRANSITION_2:
-                // Nothing here - wait for transition to finish
-                break;
+                    // Note: the boss should move in certain points before he does the breath ability
+                    if (m_uiArcanePulseTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SURGE_OF_POWER_PULSE) == CAST_OK)
+                        {
+                            DoScriptText(SAY_DEEP_BREATH, m_creature);
+                            DoScriptText(SAY_EMOTE_BREATH, m_creature);
+                            m_uiArcanePulseTimer = 60000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiArcanePulseTimer -= uiDiff;
+                    }
+
+                    if (m_uiArcaneStormTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ARCANE_STORM : SPELL_ARCANE_STORM_H) == CAST_OK)
+                        {
+                            m_uiArcaneStormTimer = urand(15000, 17000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiArcaneStormTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_DRAGONS:
+
+                    if (m_uiStaticFieldTimer < uiDiff)
+                    {
+                        // Cast Static Field spell on a number of targets, based on difficulty
+                        for (uint8 i = 0; i < m_uiMaxStaticFieldTargets; ++i)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                            {
+                                if (DoCastSpellIfCan(pTarget, SPELL_STATIC_FIELD_SUMMON, CAST_TRIGGERED) == CAST_OK)
+                                {
+                                    switch (urand(0, 2))
+                                    {
+                                        case 0: DoScriptText(SAY_SPELL_1, m_creature); break;
+                                        case 1: DoScriptText(SAY_SPELL_2, m_creature); break;
+                                        case 2: DoScriptText(SAY_SPELL_3, m_creature); break;
+                                    }
+                                    m_uiStaticFieldTimer = urand(10000, 17000);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiStaticFieldTimer -= uiDiff;
+                    }
+
+                    if (m_uiSurgeOfPowerTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_SURGE_OF_POWER) == CAST_OK)
+                            {
+                                if (!urand(0, 3))
+                                {
+                                    DoScriptText(SAY_SURGE, m_creature);
+                                }
+
+                                m_uiSurgeOfPowerTimer = urand(5000, 15000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiSurgeOfPowerTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_TRANSITION_1:
+                case PHASE_TRANSITION_2:
+                    // Nothing here - wait for transition to finish
+                    break;
             }
         }
     };
@@ -707,18 +707,18 @@ struct npc_wyrmrest_skytalon : public CreatureScript
         }
 
         // TODO: Enable the wrappers below, when they will be properly supported by the core
-        /*
-        void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
-        {
-        if (pPassenger->GetTypeId() != TYPEID_PLAYER)
-        {
-            return;
-        }
-
-        // Set vehicle auras
-        DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
-        }
-        */
+        /**
+         *  void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
+         *  {
+         *      if (pPassenger->GetTypeId() != TYPEID_PLAYER)
+         *      {
+         *          return;
+         *      }
+         *
+         *      // Set vehicle auras
+         *      DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
+         *  }
+         */
 
         void UpdateAI(const uint32 /*uiDiff*/) override
         {

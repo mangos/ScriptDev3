@@ -99,9 +99,9 @@ enum
     SPELL_SHOCK                     = 28099,
 };
 
-/************
-** boss_thaddius
-************/
+/** ***********
+ *  ** boss_thaddius
+ *  ***********/
 
 // Actually this boss behaves like a NoMovement Boss (SPELL_BALL_LIGHTNING) - but there are some movement packages used, unknown what this means!
 struct boss_thaddius : public CreatureScript
@@ -138,9 +138,9 @@ struct boss_thaddius : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
             }
 
             // Make Attackable
@@ -332,9 +332,9 @@ struct spell_thad_lightning_visual : public SpellScript
     }
 };
 
-/************
-** npc_tesla_coil
-************/
+/** ************
+ *  ** npc_tesla_coil
+ *  ************/
 
 struct npc_tesla_coil : public CreatureScript
 {
@@ -405,14 +405,14 @@ struct npc_tesla_coil : public CreatureScript
         {
             switch (eventType)
             {
-            case AI_EVENT_CUSTOM_A:
-                SetOverloading();
-                break;
-            case AI_EVENT_CUSTOM_B:
-                ReApplyChain(data);
-                break;
-            default:
-                break;
+                case AI_EVENT_CUSTOM_A:
+                    SetOverloading();
+                    break;
+                case AI_EVENT_CUSTOM_B:
+                    ReApplyChain(data);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -506,8 +506,8 @@ struct npc_tesla_coil : public CreatureScript
 };
 
 /************
-** boss_thaddiusAddsAI - Superclass for Feugen & Stalagg
-************/
+ ** boss_thaddiusAddsAI - Superclass for Feugen & Stalagg
+ ************/
 
 struct boss_thaddiusAddsAI : public ScriptedAI
 {
@@ -739,9 +739,9 @@ struct boss_thaddiusAddsAI : public ScriptedAI
     }
 };
 
-/************
-** boss_stalagg
-************/
+/** ***********
+ *  ** boss_stalagg
+ *  ************/
 
 struct boss_stalagg : public CreatureScript
 {
@@ -801,9 +801,9 @@ struct boss_stalagg : public CreatureScript
     }
 };
 
-/************
-** boss_feugen
-************/
+/** ***********
+ *  ** boss_feugen
+ *  ************/
 
 struct boss_feugen : public CreatureScript
 {

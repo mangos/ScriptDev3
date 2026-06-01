@@ -232,7 +232,7 @@ struct npc_kiljaeden_controller : public CreatureScript
     struct npc_kiljaeden_controllerAI : public Scripted_NoMovementAI, private DialogueHelper
     {
         npc_kiljaeden_controllerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature),
-        DialogueHelper(aOutroDialogue)
+            DialogueHelper(aOutroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -258,63 +258,63 @@ struct npc_kiljaeden_controller : public CreatureScript
 
             switch (iEntry)
             {
-            case NPC_KALECGOS:
-                if (Creature* pKalec = m_pInstance->GetSingleCreatureFromStorage(NPC_KALECGOS))
-                {
-                    pKalec->GetMotionMaster()->Clear();
-                    pKalec->GetMotionMaster()->MoveIdle();
-                    pKalec->CastSpell(pKalec, SPELL_KALEC_TELEPORT, true);
-                    pKalec->SetLevitate(false);
-                }
-                m_creature->SummonCreature(NPC_CORE_ENTROPIUS, aOutroLocations[5].m_fX, aOutroLocations[5].m_fY, aOutroLocations[5].m_fZ, aOutroLocations[5].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0);
-                break;
-            case NPC_INERT_PORTAL:
-                // ToDo: summon soldiers to the right
-                m_creature->SummonCreature(NPC_INERT_PORTAL, aOutroLocations[0].m_fX, aOutroLocations[0].m_fY, aOutroLocations[0].m_fZ, aOutroLocations[0].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0);
-                break;
-            case POINT_SUMMON_SOLDIERS:
-                // ToDo: summon soldiers to the left
-                break;
-            case NPC_VELEN:
-                m_creature->SummonCreature(NPC_VELEN, aOutroLocations[1].m_fX, aOutroLocations[1].m_fY, aOutroLocations[1].m_fZ, aOutroLocations[1].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0);
-                break;
-            case NPC_LIADRIN:
-                m_creature->SummonCreature(NPC_LIADRIN, aOutroLocations[2].m_fX, aOutroLocations[2].m_fY, aOutroLocations[2].m_fZ, aOutroLocations[2].m_fO, TEMPSPAWN_TIMED_DESPAWN, 4 * MINUTE * IN_MILLISECONDS);
-                break;
-            case SPELL_CALL_ENTROPIUS:
-                if (Creature* pVelen = m_pInstance->GetSingleCreatureFromStorage(NPC_VELEN))
-                {
-                    pVelen->CastSpell(pVelen, SPELL_CALL_ENTROPIUS, false);
-                }
-                // Set point id = 1 for movement event
-                if (Creature* pEntropius = m_creature->GetMap()->GetCreature(m_EntropiusGuid))
-                {
-                    pEntropius->SetWalk(false);
-                    pEntropius->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX(), m_creature->GetPositionY(), 35.0f);
-                }
-                break;
-            case POINT_MOVE_LIADRIN:
-                if (Creature* pLiadrin = m_pInstance->GetSingleCreatureFromStorage(NPC_LIADRIN))
-                {
-                    pLiadrin->GetMotionMaster()->MovePoint(0, aOutroLocations[4].m_fX, aOutroLocations[4].m_fY, aOutroLocations[4].m_fZ);
-                }
-                break;
-            case SPELL_BLAZE_TO_LIGHT:
-                if (Creature* pEntropius = m_creature->GetMap()->GetCreature(m_EntropiusGuid))
-                {
-                    pEntropius->CastSpell(pEntropius, SPELL_BLAZE_TO_LIGHT, true);
-                    pEntropius->RemoveAurasDueToSpell(SPELL_ENTROPIUS_BODY);
-                    pEntropius->SetWalk(true);
-                    pEntropius->GetMotionMaster()->MovePoint(2, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
-                }
-                break;
-            case POINT_EVENT_EXIT:
-                // Set point id = 1 for the despawn event
-                if (Creature* pVelen = m_pInstance->GetSingleCreatureFromStorage(NPC_VELEN))
-                {
-                    pVelen->GetMotionMaster()->MovePoint(1, aOutroLocations[1].m_fX, aOutroLocations[1].m_fY, aOutroLocations[1].m_fZ);
-                }
-                break;
+                case NPC_KALECGOS:
+                    if (Creature* pKalec = m_pInstance->GetSingleCreatureFromStorage(NPC_KALECGOS))
+                    {
+                        pKalec->GetMotionMaster()->Clear();
+                        pKalec->GetMotionMaster()->MoveIdle();
+                        pKalec->CastSpell(pKalec, SPELL_KALEC_TELEPORT, true);
+                        pKalec->SetLevitate(false);
+                    }
+                    m_creature->SummonCreature(NPC_CORE_ENTROPIUS, aOutroLocations[5].m_fX, aOutroLocations[5].m_fY, aOutroLocations[5].m_fZ, aOutroLocations[5].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                    break;
+                case NPC_INERT_PORTAL:
+                    // ToDo: summon soldiers to the right
+                    m_creature->SummonCreature(NPC_INERT_PORTAL, aOutroLocations[0].m_fX, aOutroLocations[0].m_fY, aOutroLocations[0].m_fZ, aOutroLocations[0].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                    break;
+                case POINT_SUMMON_SOLDIERS:
+                    // ToDo: summon soldiers to the left
+                    break;
+                case NPC_VELEN:
+                    m_creature->SummonCreature(NPC_VELEN, aOutroLocations[1].m_fX, aOutroLocations[1].m_fY, aOutroLocations[1].m_fZ, aOutroLocations[1].m_fO, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                    break;
+                case NPC_LIADRIN:
+                    m_creature->SummonCreature(NPC_LIADRIN, aOutroLocations[2].m_fX, aOutroLocations[2].m_fY, aOutroLocations[2].m_fZ, aOutroLocations[2].m_fO, TEMPSPAWN_TIMED_DESPAWN, 4 * MINUTE * IN_MILLISECONDS);
+                    break;
+                case SPELL_CALL_ENTROPIUS:
+                    if (Creature* pVelen = m_pInstance->GetSingleCreatureFromStorage(NPC_VELEN))
+                    {
+                        pVelen->CastSpell(pVelen, SPELL_CALL_ENTROPIUS, false);
+                    }
+                    // Set point id = 1 for movement event
+                    if (Creature* pEntropius = m_creature->GetMap()->GetCreature(m_EntropiusGuid))
+                    {
+                        pEntropius->SetWalk(false);
+                        pEntropius->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX(), m_creature->GetPositionY(), 35.0f);
+                    }
+                    break;
+                case POINT_MOVE_LIADRIN:
+                    if (Creature* pLiadrin = m_pInstance->GetSingleCreatureFromStorage(NPC_LIADRIN))
+                    {
+                        pLiadrin->GetMotionMaster()->MovePoint(0, aOutroLocations[4].m_fX, aOutroLocations[4].m_fY, aOutroLocations[4].m_fZ);
+                    }
+                    break;
+                case SPELL_BLAZE_TO_LIGHT:
+                    if (Creature* pEntropius = m_creature->GetMap()->GetCreature(m_EntropiusGuid))
+                    {
+                        pEntropius->CastSpell(pEntropius, SPELL_BLAZE_TO_LIGHT, true);
+                        pEntropius->RemoveAurasDueToSpell(SPELL_ENTROPIUS_BODY);
+                        pEntropius->SetWalk(true);
+                        pEntropius->GetMotionMaster()->MovePoint(2, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                    }
+                    break;
+                case POINT_EVENT_EXIT:
+                    // Set point id = 1 for the despawn event
+                    if (Creature* pVelen = m_pInstance->GetSingleCreatureFromStorage(NPC_VELEN))
+                    {
+                        pVelen->GetMotionMaster()->MovePoint(1, aOutroLocations[1].m_fX, aOutroLocations[1].m_fY, aOutroLocations[1].m_fZ);
+                    }
+                    break;
             }
         }
 
@@ -322,21 +322,21 @@ struct npc_kiljaeden_controller : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_VELEN:
-                pSummoned->GetMotionMaster()->MovePoint(0, aOutroLocations[3].m_fX, aOutroLocations[3].m_fY, aOutroLocations[3].m_fZ);
-                // no break here
-            case NPC_LIADRIN:
-                pSummoned->CastSpell(pSummoned, SPELL_TELEPORT_VISUAL, true);
-                break;
-            case NPC_CORE_ENTROPIUS:
-                pSummoned->CastSpell(pSummoned, SPELL_ENTROPIUS_BODY, true);
-                pSummoned->SetLevitate(true);
-                m_EntropiusGuid = pSummoned->GetObjectGuid();
-                break;
-            case NPC_INERT_PORTAL:
-                m_PortalGuid = pSummoned->GetObjectGuid();
-                pSummoned->CastSpell(pSummoned, SPELL_ARCANE_PORTAL, true);
-                break;
+                case NPC_VELEN:
+                    pSummoned->GetMotionMaster()->MovePoint(0, aOutroLocations[3].m_fX, aOutroLocations[3].m_fY, aOutroLocations[3].m_fZ);
+                    // no break here
+                case NPC_LIADRIN:
+                    pSummoned->CastSpell(pSummoned, SPELL_TELEPORT_VISUAL, true);
+                    break;
+                case NPC_CORE_ENTROPIUS:
+                    pSummoned->CastSpell(pSummoned, SPELL_ENTROPIUS_BODY, true);
+                    pSummoned->SetLevitate(true);
+                    m_EntropiusGuid = pSummoned->GetObjectGuid();
+                    break;
+                case NPC_INERT_PORTAL:
+                    m_PortalGuid = pSummoned->GetObjectGuid();
+                    pSummoned->CastSpell(pSummoned, SPELL_ARCANE_PORTAL, true);
+                    break;
             }
         }
 
@@ -421,7 +421,7 @@ struct boss_kiljaeden : public CreatureScript
     struct boss_kiljaedenAI : public Scripted_NoMovementAI, private DialogueHelper
     {
         boss_kiljaedenAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature),
-        DialogueHelper(aPhaseDialogue)
+            DialogueHelper(aPhaseDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -574,64 +574,64 @@ struct boss_kiljaeden : public CreatureScript
 
             switch (iEntry)
             {
-            case PHASE_DARKNESS:
-            case PHASE_ARMAGEDDON:
-            case PHASE_SACRIFICE:
-                if (DoCastSpellIfCan(m_creature, SPELL_SINISTER_REFLECTION, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                {
-                    DoScriptText(irand(0, 1) ? SAY_REFLECTION_1 : SAY_REFLECTION_2, m_creature);
-
-                    // In the 2nd and 3rd transition kill all drakes
-                    if (iEntry == PHASE_ARMAGEDDON || iEntry == PHASE_SACRIFICE)
+                case PHASE_DARKNESS:
+                case PHASE_ARMAGEDDON:
+                case PHASE_SACRIFICE:
+                    if (DoCastSpellIfCan(m_creature, SPELL_SINISTER_REFLECTION, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_DESTROY_DRAKES, CAST_TRIGGERED);
-                    }
+                        DoScriptText(irand(0, 1) ? SAY_REFLECTION_1 : SAY_REFLECTION_2, m_creature);
 
-                    m_uiPhase = PHASE_TRANSITION;
-                    // Darkness of Souls needs the timer reseted
-                    m_uiDarknessOfSoulsTimer = iEntry == PHASE_SACRIFICE ? 30000 : 45000;
-                }
-                break;
-            case EVENT_SWITCH_PHASE_2:
-            case EVENT_SWITCH_PHASE_3:
-            case EVENT_SWITCH_PHASE_4:
-                DoCastSpellIfCan(m_creature, SPELL_SHADOW_SPIKE);
-                break;
-            case EVENT_DRAGON_ORB:
-                // Activate blue orbs
-                if (Creature* pKalec = m_pInstance->GetSingleCreatureFromStorage(NPC_KALECGOS))
-                {
-                    DoScriptText(irand(0, 1) ? SAY_KALECGOS_ORB_2 : SAY_KALECGOS_ORB_3, pKalec);
-                }
-                DoActivateDragonOrb(GO_ORB_BLUE_FLIGHT_2);
-                break;
-            case SAY_KALECGOS_ORB_1:
-                DoActivateDragonOrb(GO_ORB_BLUE_FLIGHT_1);
-                break;
-            case SAY_KALECGOS_ORB_4:
-                DoActivateDragonOrb(GO_ORB_BLUE_FLIGHT_3);
-                DoActivateDragonOrb(GO_ORB_BLUE_FLIGHT_4);
-                break;
-            case SAY_PHASE_3:
-                // Set next phase and increase the max shield orbs
-                m_uiPhase = PHASE_DARKNESS;
-                ++m_uiMaxShieldOrbs;
-                break;
-            case SAY_PHASE_4:
-                // Set next phase and increase the max shield orbs
-                m_uiPhase = PHASE_ARMAGEDDON;
-                ++m_uiMaxShieldOrbs;
-                break;
-            case SAY_PHASE_5:
-                // Set next phase and sacrifice Anveena
-                if (Creature* pAnveena = m_pInstance->GetSingleCreatureFromStorage(NPC_ANVEENA))
-                {
-                    pAnveena->RemoveAurasDueToSpell(SPELL_ANVEENA_PRISON);
-                    pAnveena->CastSpell(pAnveena, SPELL_SACRIFICE_ANVEENA, true);
-                    pAnveena->ForcedDespawn(3000);
-                }
-                m_uiPhase = PHASE_SACRIFICE;
-                break;
+                        // In the 2nd and 3rd transition kill all drakes
+                        if (iEntry == PHASE_ARMAGEDDON || iEntry == PHASE_SACRIFICE)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_DESTROY_DRAKES, CAST_TRIGGERED);
+                        }
+
+                        m_uiPhase = PHASE_TRANSITION;
+                        // Darkness of Souls needs the timer reseted
+                        m_uiDarknessOfSoulsTimer = iEntry == PHASE_SACRIFICE ? 30000 : 45000;
+                    }
+                    break;
+                case EVENT_SWITCH_PHASE_2:
+                case EVENT_SWITCH_PHASE_3:
+                case EVENT_SWITCH_PHASE_4:
+                    DoCastSpellIfCan(m_creature, SPELL_SHADOW_SPIKE);
+                    break;
+                case EVENT_DRAGON_ORB:
+                    // Activate blue orbs
+                    if (Creature* pKalec = m_pInstance->GetSingleCreatureFromStorage(NPC_KALECGOS))
+                    {
+                        DoScriptText(irand(0, 1) ? SAY_KALECGOS_ORB_2 : SAY_KALECGOS_ORB_3, pKalec);
+                    }
+                    DoActivateDragonOrb(GO_ORB_BLUE_FLIGHT_2);
+                    break;
+                case SAY_KALECGOS_ORB_1:
+                    DoActivateDragonOrb(GO_ORB_BLUE_FLIGHT_1);
+                    break;
+                case SAY_KALECGOS_ORB_4:
+                    DoActivateDragonOrb(GO_ORB_BLUE_FLIGHT_3);
+                    DoActivateDragonOrb(GO_ORB_BLUE_FLIGHT_4);
+                    break;
+                case SAY_PHASE_3:
+                    // Set next phase and increase the max shield orbs
+                    m_uiPhase = PHASE_DARKNESS;
+                    ++m_uiMaxShieldOrbs;
+                    break;
+                case SAY_PHASE_4:
+                    // Set next phase and increase the max shield orbs
+                    m_uiPhase = PHASE_ARMAGEDDON;
+                    ++m_uiMaxShieldOrbs;
+                    break;
+                case SAY_PHASE_5:
+                    // Set next phase and sacrifice Anveena
+                    if (Creature* pAnveena = m_pInstance->GetSingleCreatureFromStorage(NPC_ANVEENA))
+                    {
+                        pAnveena->RemoveAurasDueToSpell(SPELL_ANVEENA_PRISON);
+                        pAnveena->CastSpell(pAnveena, SPELL_SACRIFICE_ANVEENA, true);
+                        pAnveena->ForcedDespawn(3000);
+                    }
+                    m_uiPhase = PHASE_SACRIFICE;
+                    break;
             }
         }
 
@@ -667,151 +667,151 @@ struct boss_kiljaeden : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_TRANSITION:
-                // Transition phase is handled in the dialogue helper; however we don't want the spell timers to be decreased so we use a specific phase
-                break;
-            case PHASE_SACRIFICE:
-                // Final phase - use the same spells
-                // no break;
-            case PHASE_ARMAGEDDON:
+                case PHASE_TRANSITION:
+                    // Transition phase is handled in the dialogue helper; however we don't want the spell timers to be decreased so we use a specific phase
+                    break;
+                case PHASE_SACRIFICE:
+                    // Final phase - use the same spells
+                    // no break;
+                case PHASE_ARMAGEDDON:
 
-                // In the last phase he uses Armageddon continuously
-                if (m_uiArmageddonTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_ARMAGEDDON) == CAST_OK)
+                    // In the last phase he uses Armageddon continuously
+                    if (m_uiArmageddonTimer < uiDiff)
                     {
-                        m_uiArmageddonTimer = m_uiPhase == PHASE_SACRIFICE ? 20000 : 30000;
-                    }
-                }
-                else
-                {
-                    m_uiArmageddonTimer -= uiDiff;
-                }
-
-                // Go to next phase and start transition dialogue
-                if (m_uiPhase == PHASE_ARMAGEDDON && m_creature->GetHealthPercent() < 25.0f)
-                {
-                    StartNextDialogueText(PHASE_SACRIFICE);
-                }
-
-                // no break - use the spells from the phases below;
-            case PHASE_DARKNESS:
-
-                // In the last phase he uses this spell more often
-                if (m_uiDarknessOfSoulsTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_DARKNESS_OF_SOULS) == CAST_OK)
-                    {
-                        m_uiDarknessOfSoulsTimer = m_uiPhase == PHASE_SACRIFICE ? 30000 : 45000;
-                    }
-                }
-                else
-                {
-                    m_uiDarknessOfSoulsTimer -= uiDiff;
-                }
-
-                if (m_uiFlameDartTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FLAME_DART) == CAST_OK)
-                    {
-                        m_uiFlameDartTimer = urand(25000, 30000);
-                    }
-                }
-                else
-                {
-                    m_uiFlameDartTimer -= uiDiff;
-                }
-
-                // Go to next phase and start transition dialogue
-                if (m_uiPhase == PHASE_DARKNESS && m_creature->GetHealthPercent() < 55.0f)
-                {
-                    StartNextDialogueText(PHASE_ARMAGEDDON);
-                }
-
-                // no break - use the spells from the phase below;
-            case PHASE_INFERNO:
-
-                if (m_uiKalecSummonTimer)
-                {
-                    if (m_uiKalecSummonTimer <= uiDiff)
-                    {
-                        m_creature->SummonCreature(NPC_KALECGOS, aKalegSpawnLoc[0], aKalegSpawnLoc[1], aKalegSpawnLoc[2], aKalegSpawnLoc[3], TEMPSPAWN_CORPSE_DESPAWN, 0);
-                        m_uiKalecSummonTimer = 0;
-                    }
-                    else
-                    {
-                        m_uiKalecSummonTimer -= uiDiff;
-                    }
-                }
-
-                if (m_uiLegionLightingTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_LEGION_LIGHTING) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_ARMAGEDDON) == CAST_OK)
                         {
-                            m_uiLegionLightingTimer = urand(10000, 15000);
+                            m_uiArmageddonTimer = m_uiPhase == PHASE_SACRIFICE ? 20000 : 30000;
                         }
                     }
-                }
-                else
-                {
-                    m_uiLegionLightingTimer -= uiDiff;
-                }
-
-                if (m_uiFireBloomTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FIRE_BLOOM) == CAST_OK)
+                    else
                     {
-                        m_uiFireBloomTimer = 20000;
+                        m_uiArmageddonTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiFireBloomTimer -= uiDiff;
-                }
 
-                if (m_uiSoulFlyTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SOUL_FLY) == CAST_OK)
+                    // Go to next phase and start transition dialogue
+                    if (m_uiPhase == PHASE_ARMAGEDDON && m_creature->GetHealthPercent() < 25.0f)
                     {
-                        m_uiSoulFlyTimer = urand(3000, 10000);
+                        StartNextDialogueText(PHASE_SACRIFICE);
                     }
-                }
-                else
-                {
-                    m_uiSoulFlyTimer -= uiDiff;
-                }
 
-                // Only spawn a Shadow orb when necessary
-                if (m_uiShieldOrbCount < m_uiMaxShieldOrbs)
-                {
-                    if (m_uiShieldOrbTimer < uiDiff)
+                    // no break - use the spells from the phases below;
+                case PHASE_DARKNESS:
+
+                    // In the last phase he uses this spell more often
+                    if (m_uiDarknessOfSoulsTimer < uiDiff)
                     {
-                        // Get some random coords for the Orb
-                        float fX, fY, fZ;
-                        m_creature->GetNearPoint2D(fX, fY, 25.0f, frand(0, 2 * M_PI_F));
-                        fZ = frand(35.0f, 45.0f);
-
-                        m_creature->SummonCreature(NPC_SHIELD_ORB, fX, fY, fZ, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
-                        ++m_uiShieldOrbCount;
-                        m_uiShieldOrbTimer = 30000;
+                        if (DoCastSpellIfCan(m_creature, SPELL_DARKNESS_OF_SOULS) == CAST_OK)
+                        {
+                            m_uiDarknessOfSoulsTimer = m_uiPhase == PHASE_SACRIFICE ? 30000 : 45000;
+                        }
                     }
                     else
                     {
-                        m_uiShieldOrbTimer -= uiDiff;
+                        m_uiDarknessOfSoulsTimer -= uiDiff;
                     }
-                }
 
-                // Go to next phase and start transition dialogue
-                if (m_uiPhase == PHASE_INFERNO && m_creature->GetHealthPercent() < 85.0f)
-                {
-                    StartNextDialogueText(PHASE_DARKNESS);
-                }
+                    if (m_uiFlameDartTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_DART) == CAST_OK)
+                        {
+                            m_uiFlameDartTimer = urand(25000, 30000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiFlameDartTimer -= uiDiff;
+                    }
 
-                DoMeleeAttackIfReady();
+                    // Go to next phase and start transition dialogue
+                    if (m_uiPhase == PHASE_DARKNESS && m_creature->GetHealthPercent() < 55.0f)
+                    {
+                        StartNextDialogueText(PHASE_ARMAGEDDON);
+                    }
 
-                break;
+                    // no break - use the spells from the phase below;
+                case PHASE_INFERNO:
+
+                    if (m_uiKalecSummonTimer)
+                    {
+                        if (m_uiKalecSummonTimer <= uiDiff)
+                        {
+                            m_creature->SummonCreature(NPC_KALECGOS, aKalegSpawnLoc[0], aKalegSpawnLoc[1], aKalegSpawnLoc[2], aKalegSpawnLoc[3], TEMPSPAWN_CORPSE_DESPAWN, 0);
+                            m_uiKalecSummonTimer = 0;
+                        }
+                        else
+                        {
+                            m_uiKalecSummonTimer -= uiDiff;
+                        }
+                    }
+
+                    if (m_uiLegionLightingTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_LEGION_LIGHTING) == CAST_OK)
+                            {
+                                m_uiLegionLightingTimer = urand(10000, 15000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiLegionLightingTimer -= uiDiff;
+                    }
+
+                    if (m_uiFireBloomTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FIRE_BLOOM) == CAST_OK)
+                        {
+                            m_uiFireBloomTimer = 20000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiFireBloomTimer -= uiDiff;
+                    }
+
+                    if (m_uiSoulFlyTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SOUL_FLY) == CAST_OK)
+                        {
+                            m_uiSoulFlyTimer = urand(3000, 10000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiSoulFlyTimer -= uiDiff;
+                    }
+
+                    // Only spawn a Shadow orb when necessary
+                    if (m_uiShieldOrbCount < m_uiMaxShieldOrbs)
+                    {
+                        if (m_uiShieldOrbTimer < uiDiff)
+                        {
+                            // Get some random coords for the Orb
+                            float fX, fY, fZ;
+                            m_creature->GetNearPoint2D(fX, fY, 25.0f, frand(0, 2 * M_PI_F));
+                            fZ = frand(35.0f, 45.0f);
+
+                            m_creature->SummonCreature(NPC_SHIELD_ORB, fX, fY, fZ, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                            ++m_uiShieldOrbCount;
+                            m_uiShieldOrbTimer = 30000;
+                        }
+                        else
+                        {
+                            m_uiShieldOrbTimer -= uiDiff;
+                        }
+                    }
+
+                    // Go to next phase and start transition dialogue
+                    if (m_uiPhase == PHASE_INFERNO && m_creature->GetHealthPercent() < 85.0f)
+                    {
+                        StartNextDialogueText(PHASE_DARKNESS);
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
             }
         }
     };
@@ -838,9 +838,9 @@ struct aura_dummy_darkness_of_souls : public AuraScript
 
                 switch (urand(0, 2))
                 {
-                case 0: DoScriptText(SAY_DARKNESS_1, pTarget); break;
-                case 1: DoScriptText(SAY_DARKNESS_2, pTarget); break;
-                case 2: DoScriptText(SAY_DARKNESS_3, pTarget); break;
+                    case 0: DoScriptText(SAY_DARKNESS_1, pTarget); break;
+                    case 1: DoScriptText(SAY_DARKNESS_2, pTarget); break;
+                    case 2: DoScriptText(SAY_DARKNESS_3, pTarget); break;
                 }
             }
         }

@@ -114,7 +114,7 @@ struct npc_akama : public CreatureScript
     struct npc_akamaAI : public ScriptedAI, private DialogueHelper
     {
         npc_akamaAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aOutroDialogue)
+            DialogueHelper(aOutroDialogue)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
             InitializeDialogueHelper(m_pInstance);
@@ -188,34 +188,34 @@ struct npc_akama : public CreatureScript
             // If the function is changed in the future, please review this.
             switch (pVictim->GetEntry())
             {
-            case NPC_SHADE_OF_AKAMA:
-                m_uiPhase = PHASE_EPILOGUE;
+                case NPC_SHADE_OF_AKAMA:
+                    m_uiPhase = PHASE_EPILOGUE;
 
-                m_creature->GetMotionMaster()->MovePoint(PHASE_EPILOGUE, afAkamaWP[1].m_fX, afAkamaWP[1].m_fY, afAkamaWP[1].m_fZ);
-                break;
-            case NPC_ASH_SORCERER:
-                // Decrease the sorcerer counter
-                m_lSorcerersGUIDList.remove(pVictim->GetObjectGuid());
-                break;
-            case NPC_ASH_CHANNELER:
+                    m_creature->GetMotionMaster()->MovePoint(PHASE_EPILOGUE, afAkamaWP[1].m_fX, afAkamaWP[1].m_fY, afAkamaWP[1].m_fZ);
+                    break;
+                case NPC_ASH_SORCERER:
+                    // Decrease the sorcerer counter
+                    m_lSorcerersGUIDList.remove(pVictim->GetObjectGuid());
+                    break;
+                case NPC_ASH_CHANNELER:
 
-                ++m_uiChannelersDead;
+                    ++m_uiChannelersDead;
 
-                // Move the shade to Akama when all channelers are dead
-                // Note: the boss should be already slowly moving, but this isn't possible because of the missing stack for the speed debuff
-                if (m_uiChannelersDead == MAX_CHANNELERS)
-                {
-                    if (m_pInstance)
+                    // Move the shade to Akama when all channelers are dead
+                    // Note: the boss should be already slowly moving, but this isn't possible because of the missing stack for the speed debuff
+                    if (m_uiChannelersDead == MAX_CHANNELERS)
                     {
-                        if (Creature* pShade = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADE_OF_AKAMA))
+                        if (m_pInstance)
                         {
-                            float fX, fY, fZ;
-                            m_creature->GetContactPoint(pShade, fX, fY, fZ);
-                            pShade->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                            if (Creature* pShade = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADE_OF_AKAMA))
+                            {
+                                float fX, fY, fZ;
+                                m_creature->GetContactPoint(pShade, fX, fY, fZ);
+                                pShade->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                            }
                         }
                     }
-                }
-                break;
+                    break;
             }
         }
 
@@ -244,8 +244,8 @@ struct npc_akama : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_ASH_SORCERER:
-            {
+                case NPC_ASH_SORCERER:
+                {
                     pSummoned->SetWalk(false);
                     m_lSorcerersGUIDList.push_back(pSummoned->GetObjectGuid());
 
@@ -259,22 +259,22 @@ struct npc_akama : public CreatureScript
                         }
                     }
                     break;
-            }
-            case NPC_ASH_BROKEN:
-            {
+                }
+                case NPC_ASH_BROKEN:
+                {
                     float fX, fY, fZ;
                     m_lBrokenGUIDList.push_back(pSummoned->GetObjectGuid());
 
                     m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 30.0f, m_creature->GetAngle(pSummoned));
                     pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                     break;
-            }
-            case NPC_ASH_DEFENDER:
-                pSummoned->AI()->AttackStart(m_creature);
-                break;
-            default:
-                pSummoned->SetInCombatWithZone();
-                break;
+                }
+                case NPC_ASH_DEFENDER:
+                    pSummoned->AI()->AttackStart(m_creature);
+                    break;
+                default:
+                    pSummoned->SetInCombatWithZone();
+                    break;
             }
         }
 
@@ -287,24 +287,24 @@ struct npc_akama : public CreatureScript
 
             switch (uiPointId)
             {
-            case PHASE_CHANNEL:
-                if (DoCastSpellIfCan(m_creature, SPELL_AKAMA_SOUL_CHANNEL) == CAST_OK)
-                {
-                    m_uiPhase = PHASE_CHANNEL;
+                case PHASE_CHANNEL:
+                    if (DoCastSpellIfCan(m_creature, SPELL_AKAMA_SOUL_CHANNEL) == CAST_OK)
+                    {
+                        m_uiPhase = PHASE_CHANNEL;
 
-                    m_pInstance->SetData(TYPE_CHANNELERS, 0);
+                        m_pInstance->SetData(TYPE_CHANNELERS, 0);
 
-                }
-                break;
-            case PHASE_EPILOGUE:
-                // Start epilogue here
-                if (Creature* pShade = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADE_OF_AKAMA))
-                {
-                    m_creature->SetFacingToObject(pShade);
-                }
+                    }
+                    break;
+                case PHASE_EPILOGUE:
+                    // Start epilogue here
+                    if (Creature* pShade = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADE_OF_AKAMA))
+                    {
+                        m_creature->SetFacingToObject(pShade);
+                    }
 
-                StartNextDialogueText(SPELL_AKAMA_SOUL_RETRIEVE);
-                break;
+                    StartNextDialogueText(SPELL_AKAMA_SOUL_RETRIEVE);
+                    break;
             }
         }
 
@@ -312,39 +312,39 @@ struct npc_akama : public CreatureScript
         {
             switch (iEntry)
             {
-            case SPELL_AKAMA_SOUL_RETRIEVE:
-                DoCastSpellIfCan(m_creature, SPELL_AKAMA_SOUL_RETRIEVE);
-                break;
-            case EMOTE_ONESHOT_ROAR:
-                m_creature->HandleEmote(EMOTE_ONESHOT_ROAR);
-                break;
-            case SAY_FREE_1:
-                DoSummonBrokenAshtongue();
-                break;
-            case SAY_BROKEN_FREE_01:
-                if (Creature* pBroken = GetClosestCreatureWithEntry(m_creature, NPC_ASH_BROKEN, 35.0f))
-                {
-                    DoScriptText(SAY_BROKEN_FREE_01, pBroken);
-                }
-                break;
-            case EMOTE_STATE_KNEEL:
-                for (GuidList::const_iterator itr = m_lBrokenGUIDList.begin(); itr != m_lBrokenGUIDList.end(); ++itr)
-                {
-                    if (Creature* pBroken = m_creature->GetMap()->GetCreature(*itr))
+                case SPELL_AKAMA_SOUL_RETRIEVE:
+                    DoCastSpellIfCan(m_creature, SPELL_AKAMA_SOUL_RETRIEVE);
+                    break;
+                case EMOTE_ONESHOT_ROAR:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_ROAR);
+                    break;
+                case SAY_FREE_1:
+                    DoSummonBrokenAshtongue();
+                    break;
+                case SAY_BROKEN_FREE_01:
+                    if (Creature* pBroken = GetClosestCreatureWithEntry(m_creature, NPC_ASH_BROKEN, 35.0f))
                     {
-                        pBroken->HandleEmote(EMOTE_STATE_KNEEL);
+                        DoScriptText(SAY_BROKEN_FREE_01, pBroken);
                     }
-                }
-                break;
-            case SAY_BROKEN_FREE_02:
-                for (GuidList::const_iterator itr = m_lBrokenGUIDList.begin(); itr != m_lBrokenGUIDList.end(); ++itr)
-                {
-                    if (Creature* pBroken = m_creature->GetMap()->GetCreature(*itr))
+                    break;
+                case EMOTE_STATE_KNEEL:
+                    for (GuidList::const_iterator itr = m_lBrokenGUIDList.begin(); itr != m_lBrokenGUIDList.end(); ++itr)
                     {
-                        DoScriptText(SAY_BROKEN_FREE_02, pBroken);
+                        if (Creature* pBroken = m_creature->GetMap()->GetCreature(*itr))
+                        {
+                            pBroken->HandleEmote(EMOTE_STATE_KNEEL);
+                        }
                     }
-                }
-                break;
+                    break;
+                case SAY_BROKEN_FREE_02:
+                    for (GuidList::const_iterator itr = m_lBrokenGUIDList.begin(); itr != m_lBrokenGUIDList.end(); ++itr)
+                    {
+                        if (Creature* pBroken = m_creature->GetMap()->GetCreature(*itr))
+                        {
+                            DoScriptText(SAY_BROKEN_FREE_02, pBroken);
+                        }
+                    }
+                    break;
             }
         }
 
@@ -423,85 +423,85 @@ struct npc_akama : public CreatureScript
         {
             switch (m_uiPhase)
             {
-            case PHASE_CHANNEL:
+                case PHASE_CHANNEL:
 
-                if (m_uiSummonDefenderTimer < uiDiff)
-                {
-                    DoSummonAshtongue(SPELL_SUMMON_DEFENDER);
-                    m_uiSummonDefenderTimer = 15000;
-                }
-                else
-                {
-                    m_uiSummonDefenderTimer -= uiDiff;
-                }
-
-                if (m_lSorcerersGUIDList.size() <= m_uiChannelersDead)
-                {
-                    if (m_uiSummonSorcererTimer < uiDiff)
+                    if (m_uiSummonDefenderTimer < uiDiff)
                     {
-                        DoSummonAshtongue(SPELL_SUMMON_SORCERER);
-                        m_uiSummonSorcererTimer = urand(20000, 30000);
+                        DoSummonAshtongue(SPELL_SUMMON_DEFENDER);
+                        m_uiSummonDefenderTimer = 15000;
                     }
                     else
                     {
-                        m_uiSummonSorcererTimer -= uiDiff;
+                        m_uiSummonDefenderTimer -= uiDiff;
                     }
-                }
 
-                if (m_uiSummonPackTimer < uiDiff)
-                {
-                    DoSummonAshtongue();
-                    m_uiSummonPackTimer = 35000;
-                }
-                else
-                {
-                    m_uiSummonPackTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_COMBAT:
-
-                if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-                {
-                    return;
-                }
-
-                if (!m_bHasYelledOnce && m_creature->GetHealthPercent() < 15.0f)
-                {
-                    DoScriptText(SAY_LOW_HEALTH, m_creature);
-                    m_bHasYelledOnce = true;
-                }
-
-                if (m_uiDestructivePoisonTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DESTRUCTIVE_POISON) == CAST_OK)
+                    if (m_lSorcerersGUIDList.size() <= m_uiChannelersDead)
                     {
-                        m_uiDestructivePoisonTimer = 15000;
+                        if (m_uiSummonSorcererTimer < uiDiff)
+                        {
+                            DoSummonAshtongue(SPELL_SUMMON_SORCERER);
+                            m_uiSummonSorcererTimer = urand(20000, 30000);
+                        }
+                        else
+                        {
+                            m_uiSummonSorcererTimer -= uiDiff;
+                        }
                     }
-                }
-                else
-                {
-                    m_uiDestructivePoisonTimer -= uiDiff;
-                }
 
-                if (m_uiLightningBoltTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHAIN_LIGHTNING) == CAST_OK)
+                    if (m_uiSummonPackTimer < uiDiff)
                     {
-                        m_uiLightningBoltTimer = 10000;
+                        DoSummonAshtongue();
+                        m_uiSummonPackTimer = 35000;
                     }
-                }
-                else
-                {
-                    m_uiLightningBoltTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiSummonPackTimer -= uiDiff;
+                    }
 
-                DoMeleeAttackIfReady();
+                    break;
+                case PHASE_COMBAT:
 
-                break;
-            case PHASE_EPILOGUE:
-                DialogueUpdate(uiDiff);
-                break;
+                    if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                    {
+                        return;
+                    }
+
+                    if (!m_bHasYelledOnce && m_creature->GetHealthPercent() < 15.0f)
+                    {
+                        DoScriptText(SAY_LOW_HEALTH, m_creature);
+                        m_bHasYelledOnce = true;
+                    }
+
+                    if (m_uiDestructivePoisonTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DESTRUCTIVE_POISON) == CAST_OK)
+                        {
+                            m_uiDestructivePoisonTimer = 15000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiDestructivePoisonTimer -= uiDiff;
+                    }
+
+                    if (m_uiLightningBoltTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHAIN_LIGHTNING) == CAST_OK)
+                        {
+                            m_uiLightningBoltTimer = 10000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiLightningBoltTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_EPILOGUE:
+                    DialogueUpdate(uiDiff);
+                    break;
             }
         }
     };

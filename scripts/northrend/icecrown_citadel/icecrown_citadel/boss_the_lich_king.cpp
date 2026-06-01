@@ -345,38 +345,38 @@ struct boss_the_lich_king_icc : public CreatureScript
 
             switch (uiData)
             {
-            case POINT_CENTER_LAND:
-                if (m_uiPhase == PHASE_RUNNING_WINTER_ONE)
-                {
-                    DoScriptText(SAY_REMORSELESS_WINTER, m_creature);
+                case POINT_CENTER_LAND:
+                    if (m_uiPhase == PHASE_RUNNING_WINTER_ONE)
+                    {
+                        DoScriptText(SAY_REMORSELESS_WINTER, m_creature);
 
-                    // TODO: not sure which spell in which phase
-                    // DoCastSpellIfCan(m_creature, SPELL_REMORSELESS_WINTER_1);
+                        // TODO: not sure which spell in which phase
+                        // DoCastSpellIfCan(m_creature, SPELL_REMORSELESS_WINTER_1);
 
-                    m_uiPhase = PHASE_TRANSITION_ONE;
-                    m_uiPhaseTimer = 62000;
+                        m_uiPhase = PHASE_TRANSITION_ONE;
+                        m_uiPhaseTimer = 62000;
 
-                    // TODO: set phase initial timers
-                    // TODO: on heroic despawn Shadow Traps
-                }
-                else if (m_uiPhase == PHASE_RUNNING_WINTER_TWO)
-                {
-                    DoScriptText(SAY_REMORSELESS_WINTER, m_creature);
+                        // TODO: set phase initial timers
+                        // TODO: on heroic despawn Shadow Traps
+                    }
+                    else if (m_uiPhase == PHASE_RUNNING_WINTER_TWO)
+                    {
+                        DoScriptText(SAY_REMORSELESS_WINTER, m_creature);
 
-                    // TODO: not sure which spell in which phase
-                    // DoCastSpellIfCan(m_creature, SPELL_REMORSELESS_WINTER_2);
+                        // TODO: not sure which spell in which phase
+                        // DoCastSpellIfCan(m_creature, SPELL_REMORSELESS_WINTER_2);
 
-                    m_uiPhase = PHASE_TRANSITION_TWO;
-                    m_uiPhaseTimer = 62000;
+                        m_uiPhase = PHASE_TRANSITION_TWO;
+                        m_uiPhaseTimer = 62000;
 
-                    // TODO: set phase initial timers
-                }
-                else if (m_uiPhase == PHASE_DEATH_AWAITS)
-                {
-                    DoCastSpellIfCan(m_creature, SPELL_RAISE_DEAD);
-                }
+                        // TODO: set phase initial timers
+                    }
+                    else if (m_uiPhase == PHASE_DEATH_AWAITS)
+                    {
+                        DoCastSpellIfCan(m_creature, SPELL_RAISE_DEAD);
+                    }
 
-                break;
+                    break;
             }
         }
 
@@ -410,375 +410,375 @@ struct boss_the_lich_king_icc : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_INTRO:
-                // wait until set in combat
-                return;
-            case PHASE_ONE:
-                // check HP
-                if (m_creature->GetHealthPercent() <= 70.0f)
-                {
-                    // phase transition
-                    m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_LAND, fLichKingPosition[1][0], fLichKingPosition[1][1], fLichKingPosition[1][2]);
-                    m_uiPhase = PHASE_RUNNING_WINTER_ONE;
+                case PHASE_INTRO:
+                    // wait until set in combat
                     return;
-                }
-
-                // Necrotic Plague
-                if (m_uiNecroticPlagueTimer < uiDiff)
-                {
-                    // shouldn't be targeting players who already have Necrotic Plague on them
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_NECROTIC_PLAGUE, SELECT_FLAG_PLAYER))
+                case PHASE_ONE:
+                    // check HP
+                    if (m_creature->GetHealthPercent() <= 70.0f)
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_NECROTIC_PLAGUE) == CAST_OK)
-                        {
-                            m_uiNecroticPlagueTimer = 30000;
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiNecroticPlagueTimer -= uiDiff;
-                }
-
-                // Infest
-                if (m_uiInfestTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_INFEST) == CAST_OK)
-                    {
-                        m_uiInfestTimer = urand(20000, 25000);
-                    }
-                }
-                else
-                {
-                    m_uiInfestTimer -= uiDiff;
-                }
-
-                // Summon Ghouls
-                if (m_uiGhoulsTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_GHOULS) == CAST_OK)
-                    {
-                        m_uiGhoulsTimer = 32000;
-                    }
-                }
-                else
-                {
-                    m_uiGhoulsTimer -= uiDiff;
-                }
-
-                // Summon Shambling Horror
-                if (m_uiHorrorTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_HORROR) == CAST_OK)
-                    {
-                        m_uiHorrorTimer = 60000;
-                    }
-                }
-                else
-                {
-                    m_uiHorrorTimer -= uiDiff;
-                }
-
-                // Shadow Trap (heroic)
-                if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
-                {
-                    if (m_uiShadowTrapTimer < uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_SHADOW_TRAP, SELECT_FLAG_PLAYER))
-                        {
-                            if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_TRAP) == CAST_OK)
-                            {
-                                m_uiShadowTrapTimer = 15000;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        m_uiShadowTrapTimer -= uiDiff;
-                    }
-                }
-
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_RUNNING_WINTER_ONE:
-            case PHASE_RUNNING_WINTER_TWO:
-                // wait for waypoint arrival
-                break;
-            case PHASE_TRANSITION_ONE:
-            case PHASE_TRANSITION_TWO:
-                // phase end timer
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_QUAKE) == CAST_OK)
-                    {
-                        DoScriptText(SAY_SHATTER_ARENA, m_creature);
-                        m_uiPhase = (m_uiPhase == PHASE_TRANSITION_ONE ? PHASE_QUAKE_ONE : PHASE_QUAKE_TWO);
-                        m_uiPhaseTimer = 6500;
-                    }
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                // Pain and Suffering
-                if (m_uiPainSufferingTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_PAIN_AND_SUFFERING, SELECT_FLAG_PLAYER))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_PAIN_AND_SUFFERING) == CAST_OK)
-                        {
-                            m_uiPainSufferingTimer = urand(1500, 3000);
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiPainSufferingTimer -= uiDiff;
-                }
-
-                // Summon Ice Sphere
-                if (m_uiIceSphereTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_ICE_SPHERE) == CAST_OK)
-                    {
-                        m_uiIceSphereTimer = 6000;
-                    }
-                }
-                else
-                {
-                    m_uiIceSphereTimer -= uiDiff;
-                }
-
-                // Summon Raging Spirit
-                if (m_uiRagingSpiritTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_RAGING_SPIRIT, SELECT_FLAG_PLAYER))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_RAGING_SPIRIT, CAST_TRIGGERED) == CAST_OK)
-                        {
-                            m_uiRagingSpiritTimer = (m_uiPhase == PHASE_TRANSITION_ONE ? 20000 : 15000);
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiRagingSpiritTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_QUAKE_ONE:
-            case PHASE_QUAKE_TWO:
-                // Casting Quake spell - phase end timer
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    // TODO: destroy platform
-
-                    m_uiPhase = (m_uiPhase == PHASE_QUAKE_ONE ? PHASE_TWO : PHASE_THREE);
-                    m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                    return;
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_TWO:
-                // check HP
-                if (m_creature->GetHealthPercent() <= 40.0f)
-                {
-                    // phase transition
-                    m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_LAND, fLichKingPosition[1][0], fLichKingPosition[1][1], fLichKingPosition[1][2]);
-                    m_uiPhaseTimer = 60000;
-                    m_uiPhase = PHASE_RUNNING_WINTER_TWO;
-                }
-
-                // Soul Reaper
-                if (m_uiSoulReaperTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SOUL_REAPER) == CAST_OK)
-                    {
-                        m_uiSoulReaperTimer = 30000;
-                    }
-                }
-                else
-                {
-                    m_uiSoulReaperTimer -= uiDiff;
-                }
-
-                // Infest
-                if (m_uiInfestTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_INFEST) == CAST_OK)
-                    {
-                        m_uiInfestTimer = urand(20000, 25000);
-                    }
-                }
-                else
-                {
-                    m_uiInfestTimer -= uiDiff;
-                }
-
-                // Defile
-                if (m_uiDefileTimer < uiDiff)
-                {
-                    // shouldn't be targeting players in vehicles
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_DEFILE, SELECT_FLAG_PLAYER))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_DEFILE) == CAST_OK)
-                        {
-                            m_uiDefileTimer = 30000;
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiDefileTimer -= uiDiff;
-                }
-
-                // Summon Val'kyr
-                if (m_uiValkyrTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_VALKYR) == CAST_OK)
-                    {
-                        DoScriptText(SAY_SUMMON_VALKYR, m_creature);
-                        m_uiValkyrTimer = 50000;
-                    }
-                }
-                else
-                {
-                    m_uiValkyrTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_THREE:
-                // check HP
-                if (m_creature->GetHealthPercent() <= 10.0f)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FURY_OF_FROSTMOURNE) == CAST_OK)
-                    {
-                        DoScriptText(SAY_LAST_PHASE, m_creature);
-                        m_uiPhase = PHASE_DEATH_AWAITS;
-
-                        // TODO: start ending event
-
+                        // phase transition
+                        m_creature->GetMotionMaster()->Clear();
+                        m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_LAND, fLichKingPosition[1][0], fLichKingPosition[1][1], fLichKingPosition[1][2]);
+                        m_uiPhase = PHASE_RUNNING_WINTER_ONE;
                         return;
                     }
-                }
 
-                // Soul Reaper
-                if (m_uiSoulReaperTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SOUL_REAPER) == CAST_OK)
+                    // Necrotic Plague
+                    if (m_uiNecroticPlagueTimer < uiDiff)
                     {
-                        m_uiSoulReaperTimer = 30000;
-                    }
-                }
-                else
-                {
-                    m_uiSoulReaperTimer -= uiDiff;
-                }
-
-                // Defile
-                if (m_uiDefileTimer < uiDiff)
-                {
-                    // shouldn't be targeting players in vehicles
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_DEFILE, SELECT_FLAG_PLAYER))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_DEFILE) == CAST_OK)
+                        // shouldn't be targeting players who already have Necrotic Plague on them
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_NECROTIC_PLAGUE, SELECT_FLAG_PLAYER))
                         {
-                            m_uiDefileTimer = 30000;
-                        }
-                    }
-                }
-                else
-                {
-                    m_uiDefileTimer -= uiDiff;
-                }
-
-                // Harvest Soul
-                if (m_uiHarvestSoulTimer < uiDiff)
-                {
-                    Unit* pTarget = nullptr;
-                    bool m_bIsHeroic = m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC);
-                    if (m_bIsHeroic)
-                    {
-                        pTarget = m_creature;
-                    }
-                    else
-                    {
-                        pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_HARVEST_SOUL, SELECT_FLAG_PLAYER);
-                    }
-
-                    if (pTarget)
-                    {
-                        if (DoCastSpellIfCan(pTarget, m_bIsHeroic ? SPELL_HARVEST_SOULS : SPELL_HARVEST_SOUL) == CAST_OK)
-                        {
-                            DoScriptText(SAY_HARVEST_SOUL, m_creature);
-                            m_uiHarvestSoulTimer = m_bIsHeroic ? 120000 : 70000;
-
-                            // TODO: prepare Frostmourne room - summon bombs and Tirion, or Tirion and the "bad spirit-guy"
-
-                            if (m_bIsHeroic)
+                            if (DoCastSpellIfCan(pTarget, SPELL_NECROTIC_PLAGUE) == CAST_OK)
                             {
-                                m_uiPhase = PHASE_IN_FROSTMOURNE;
-                                SetCombatMovement(false);
-                                m_creature->StopMoving();
-                                m_uiFrostmournePhaseTimer = 47000;
-                                m_uiDefileTimer = 1000;
+                                m_uiNecroticPlagueTimer = 30000;
                             }
                         }
                     }
-                }
-                else
-                {
-                    m_uiHarvestSoulTimer -= uiDiff;
-                }
-
-                // Vile Spirits
-                if (m_uiVileSpiritsTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_VILE_SPIRITS) == CAST_OK)
+                    else
                     {
-                        m_uiVileSpiritsTimer = 30000;
+                        m_uiNecroticPlagueTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiVileSpiritsTimer -= uiDiff;
-                }
 
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_IN_FROSTMOURNE:
-                // check if players are alive before entering evade mode?
-                // wait until they leave Frostmourne
-                if (m_uiFrostmournePhaseTimer < uiDiff)
-                {
-                    m_uiPhase = PHASE_THREE;
-                    if (m_creature->getVictim())
+                    // Infest
+                    if (m_uiInfestTimer < uiDiff)
                     {
+                        if (DoCastSpellIfCan(m_creature, SPELL_INFEST) == CAST_OK)
+                        {
+                            m_uiInfestTimer = urand(20000, 25000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiInfestTimer -= uiDiff;
+                    }
+
+                    // Summon Ghouls
+                    if (m_uiGhoulsTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_GHOULS) == CAST_OK)
+                        {
+                            m_uiGhoulsTimer = 32000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiGhoulsTimer -= uiDiff;
+                    }
+
+                    // Summon Shambling Horror
+                    if (m_uiHorrorTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_HORROR) == CAST_OK)
+                        {
+                            m_uiHorrorTimer = 60000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiHorrorTimer -= uiDiff;
+                    }
+
+                    // Shadow Trap (heroic)
+                    if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
+                    {
+                        if (m_uiShadowTrapTimer < uiDiff)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_SHADOW_TRAP, SELECT_FLAG_PLAYER))
+                            {
+                                if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_TRAP) == CAST_OK)
+                                {
+                                    m_uiShadowTrapTimer = 15000;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiShadowTrapTimer -= uiDiff;
+                        }
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_RUNNING_WINTER_ONE:
+                case PHASE_RUNNING_WINTER_TWO:
+                    // wait for waypoint arrival
+                    break;
+                case PHASE_TRANSITION_ONE:
+                case PHASE_TRANSITION_TWO:
+                    // phase end timer
+                    if (m_uiPhaseTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_QUAKE) == CAST_OK)
+                        {
+                            DoScriptText(SAY_SHATTER_ARENA, m_creature);
+                            m_uiPhase = (m_uiPhase == PHASE_TRANSITION_ONE ? PHASE_QUAKE_ONE : PHASE_QUAKE_TWO);
+                            m_uiPhaseTimer = 6500;
+                        }
+                    }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
+
+                    // Pain and Suffering
+                    if (m_uiPainSufferingTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_PAIN_AND_SUFFERING, SELECT_FLAG_PLAYER))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_PAIN_AND_SUFFERING) == CAST_OK)
+                            {
+                                m_uiPainSufferingTimer = urand(1500, 3000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiPainSufferingTimer -= uiDiff;
+                    }
+
+                    // Summon Ice Sphere
+                    if (m_uiIceSphereTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_ICE_SPHERE) == CAST_OK)
+                        {
+                            m_uiIceSphereTimer = 6000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiIceSphereTimer -= uiDiff;
+                    }
+
+                    // Summon Raging Spirit
+                    if (m_uiRagingSpiritTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_RAGING_SPIRIT, SELECT_FLAG_PLAYER))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_RAGING_SPIRIT, CAST_TRIGGERED) == CAST_OK)
+                            {
+                                m_uiRagingSpiritTimer = (m_uiPhase == PHASE_TRANSITION_ONE ? 20000 : 15000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiRagingSpiritTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_QUAKE_ONE:
+                case PHASE_QUAKE_TWO:
+                    // Casting Quake spell - phase end timer
+                    if (m_uiPhaseTimer < uiDiff)
+                    {
+                        // TODO: destroy platform
+
+                        m_uiPhase = (m_uiPhase == PHASE_QUAKE_ONE ? PHASE_TWO : PHASE_THREE);
+                        m_creature->GetMotionMaster()->Clear();
                         m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                        return;
                     }
-                    return;
-                }
-                else
-                {
-                    m_uiFrostmournePhaseTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
 
-                break;
-            case PHASE_DEATH_AWAITS:
-                // wait for swift death
-                break;
+                    break;
+                case PHASE_TWO:
+                    // check HP
+                    if (m_creature->GetHealthPercent() <= 40.0f)
+                    {
+                        // phase transition
+                        m_creature->GetMotionMaster()->Clear();
+                        m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_LAND, fLichKingPosition[1][0], fLichKingPosition[1][1], fLichKingPosition[1][2]);
+                        m_uiPhaseTimer = 60000;
+                        m_uiPhase = PHASE_RUNNING_WINTER_TWO;
+                    }
+
+                    // Soul Reaper
+                    if (m_uiSoulReaperTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SOUL_REAPER) == CAST_OK)
+                        {
+                            m_uiSoulReaperTimer = 30000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiSoulReaperTimer -= uiDiff;
+                    }
+
+                    // Infest
+                    if (m_uiInfestTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_INFEST) == CAST_OK)
+                        {
+                            m_uiInfestTimer = urand(20000, 25000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiInfestTimer -= uiDiff;
+                    }
+
+                    // Defile
+                    if (m_uiDefileTimer < uiDiff)
+                    {
+                        // shouldn't be targeting players in vehicles
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_DEFILE, SELECT_FLAG_PLAYER))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_DEFILE) == CAST_OK)
+                            {
+                                m_uiDefileTimer = 30000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiDefileTimer -= uiDiff;
+                    }
+
+                    // Summon Val'kyr
+                    if (m_uiValkyrTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_VALKYR) == CAST_OK)
+                        {
+                            DoScriptText(SAY_SUMMON_VALKYR, m_creature);
+                            m_uiValkyrTimer = 50000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiValkyrTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_THREE:
+                    // check HP
+                    if (m_creature->GetHealthPercent() <= 10.0f)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FURY_OF_FROSTMOURNE) == CAST_OK)
+                        {
+                            DoScriptText(SAY_LAST_PHASE, m_creature);
+                            m_uiPhase = PHASE_DEATH_AWAITS;
+
+                            // TODO: start ending event
+
+                            return;
+                        }
+                    }
+
+                    // Soul Reaper
+                    if (m_uiSoulReaperTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SOUL_REAPER) == CAST_OK)
+                        {
+                            m_uiSoulReaperTimer = 30000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiSoulReaperTimer -= uiDiff;
+                    }
+
+                    // Defile
+                    if (m_uiDefileTimer < uiDiff)
+                    {
+                        // shouldn't be targeting players in vehicles
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_DEFILE, SELECT_FLAG_PLAYER))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_DEFILE) == CAST_OK)
+                            {
+                                m_uiDefileTimer = 30000;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiDefileTimer -= uiDiff;
+                    }
+
+                    // Harvest Soul
+                    if (m_uiHarvestSoulTimer < uiDiff)
+                    {
+                        Unit* pTarget = nullptr;
+                        bool m_bIsHeroic = m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC);
+                        if (m_bIsHeroic)
+                        {
+                            pTarget = m_creature;
+                        }
+                        else
+                        {
+                            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_HARVEST_SOUL, SELECT_FLAG_PLAYER);
+                        }
+
+                        if (pTarget)
+                        {
+                            if (DoCastSpellIfCan(pTarget, m_bIsHeroic ? SPELL_HARVEST_SOULS : SPELL_HARVEST_SOUL) == CAST_OK)
+                            {
+                                DoScriptText(SAY_HARVEST_SOUL, m_creature);
+                                m_uiHarvestSoulTimer = m_bIsHeroic ? 120000 : 70000;
+
+                                // TODO: prepare Frostmourne room - summon bombs and Tirion, or Tirion and the "bad spirit-guy"
+
+                                if (m_bIsHeroic)
+                                {
+                                    m_uiPhase = PHASE_IN_FROSTMOURNE;
+                                    SetCombatMovement(false);
+                                    m_creature->StopMoving();
+                                    m_uiFrostmournePhaseTimer = 47000;
+                                    m_uiDefileTimer = 1000;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiHarvestSoulTimer -= uiDiff;
+                    }
+
+                    // Vile Spirits
+                    if (m_uiVileSpiritsTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_VILE_SPIRITS) == CAST_OK)
+                        {
+                            m_uiVileSpiritsTimer = 30000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiVileSpiritsTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_IN_FROSTMOURNE:
+                    // check if players are alive before entering evade mode?
+                    // wait until they leave Frostmourne
+                    if (m_uiFrostmournePhaseTimer < uiDiff)
+                    {
+                        m_uiPhase = PHASE_THREE;
+                        if (m_creature->getVictim())
+                        {
+                            m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        m_uiFrostmournePhaseTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_DEATH_AWAITS:
+                    // wait for swift death
+                    break;
             }
         }
     };

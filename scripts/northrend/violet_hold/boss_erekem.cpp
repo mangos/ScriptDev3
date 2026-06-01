@@ -107,9 +107,9 @@ struct boss_erekem : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoPlaySoundToSet(m_creature, SOUND_ID_SLAY_1); break;
-            case 1: DoPlaySoundToSet(m_creature, SOUND_ID_SLAY_2); break;
-            case 2: DoPlaySoundToSet(m_creature, SOUND_ID_SLAY_3); break;
+                case 0: DoPlaySoundToSet(m_creature, SOUND_ID_SLAY_1); break;
+                case 1: DoPlaySoundToSet(m_creature, SOUND_ID_SLAY_2); break;
+                case 2: DoPlaySoundToSet(m_creature, SOUND_ID_SLAY_3); break;
             }
         }
 

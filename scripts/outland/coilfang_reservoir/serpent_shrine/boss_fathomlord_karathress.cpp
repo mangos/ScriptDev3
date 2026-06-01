@@ -124,15 +124,15 @@ struct boss_fathomlord_karathress : public CreatureScript
         {
             switch (pSpell->Id)
             {
-            case SPELL_POWER_OF_SHARKKIS:
-                DoScriptText(SAY_GAIN_ABILITY1, m_creature);
-                break;
-            case SPELL_POWER_OF_TIDALVESS:
-                DoScriptText(SAY_GAIN_ABILITY1, m_creature);
-                break;
-            case SPELL_POWER_OF_CARIBDIS:
-                DoScriptText(SAY_GAIN_ABILITY3, m_creature);
-                break;
+                case SPELL_POWER_OF_SHARKKIS:
+                    DoScriptText(SAY_GAIN_ABILITY1, m_creature);
+                    break;
+                case SPELL_POWER_OF_TIDALVESS:
+                    DoScriptText(SAY_GAIN_ABILITY1, m_creature);
+                    break;
+                case SPELL_POWER_OF_CARIBDIS:
+                    DoScriptText(SAY_GAIN_ABILITY3, m_creature);
+                    break;
             }
         }
 
@@ -150,9 +150,9 @@ struct boss_fathomlord_karathress : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY3, m_creature); break;
             }
         }
 
@@ -472,9 +472,9 @@ struct boss_fathomguard_tidalvess : public CreatureScript
                 {
                     switch (urand(0, 2))
                     {
-                    case 0: DoCastSpellIfCan(m_creature, SPELL_SPITFIRE_TOTEM);
-                    case 1: DoCastSpellIfCan(m_creature, SPELL_POISON_CLEANSING_TOTEM);
-                    case 2: DoCastSpellIfCan(m_creature, SPELL_EARTHBIND_TOTEM);
+                        case 0: DoCastSpellIfCan(m_creature, SPELL_SPITFIRE_TOTEM);
+                        case 1: DoCastSpellIfCan(m_creature, SPELL_POISON_CLEANSING_TOTEM);
+                        case 2: DoCastSpellIfCan(m_creature, SPELL_EARTHBIND_TOTEM);
                     }
                     m_uiTotemTimer = urand(30000, 60000);
                 }

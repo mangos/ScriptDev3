@@ -186,19 +186,19 @@ struct npc_ancestral_wolf : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(EMOTE_WOLF_LIFT_HEAD, m_creature);
-                break;
-            case 2:
-                DoScriptText(EMOTE_WOLF_HOWL, m_creature);
-                break;
-            case 50:
-                Creature* pRyga = GetClosestCreatureWithEntry(m_creature, NPC_RYGA, 30.0f);
-                if (pRyga && pRyga->IsAlive() && !pRyga->IsInCombat())
-                {
-                    DoScriptText(SAY_WOLF_WELCOME, pRyga);
-                }
-                break;
+                case 0:
+                    DoScriptText(EMOTE_WOLF_LIFT_HEAD, m_creature);
+                    break;
+                case 2:
+                    DoScriptText(EMOTE_WOLF_HOWL, m_creature);
+                    break;
+                case 50:
+                    Creature* pRyga = GetClosestCreatureWithEntry(m_creature, NPC_RYGA, 30.0f);
+                    if (pRyga && pRyga->IsAlive() && !pRyga->IsInCombat())
+                    {
+                        DoScriptText(SAY_WOLF_WELCOME, pRyga);
+                    }
+                    break;
             }
         }
     };
@@ -209,9 +209,9 @@ struct npc_ancestral_wolf : public CreatureScript
     }
 };
 
-/*######
-## npc_demoniac_scryer
-######*/
+/** ######
+ *  ## npc_demoniac_scryer
+ *  ######*/
 //TODO prepare localisation
 #define GOSSIP_ITEM_ATTUNE          "Yes, Scryer. You may possess me."
 
@@ -269,10 +269,10 @@ struct npc_demoniac_scryer : public CreatureScript
 
             switch (m_uiButtressCount)
             {
-            case 1: fAngle = 0.0f; break;
-            case 2: fAngle = M_PI_F + M_PI_F / 2; break;
-            case 3: fAngle = M_PI_F / 2; break;
-            case 4: fAngle = M_PI_F; break;
+                case 1: fAngle = 0.0f; break;
+                case 2: fAngle = M_PI_F + M_PI_F / 2; break;
+                case 3: fAngle = M_PI_F / 2; break;
+                case 4: fAngle = M_PI_F; break;
             }
 
             float fX, fY, fZ;
@@ -434,29 +434,29 @@ struct npc_wounded_blood_elf : public CreatureScript
 
             switch (uiPointId)
             {
-            case 0:
-                DoScriptText(SAY_ELF_START, m_creature, pPlayer);
-                break;
-            case 9:
-                DoScriptText(SAY_ELF_SUMMON1, m_creature, pPlayer);
-                // Spawn two Haal'eshi Talonguard
-                DoSpawnCreature(NPC_WINDWALKER, -15, -15, 0, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
-                DoSpawnCreature(NPC_WINDWALKER, -17, -17, 0, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
-                break;
-            case 13:
-                DoScriptText(SAY_ELF_RESTING, m_creature, pPlayer);
-                break;
-            case 14:
-                DoScriptText(SAY_ELF_SUMMON2, m_creature, pPlayer);
-                // Spawn two Haal'eshi Windwalker
-                DoSpawnCreature(NPC_WINDWALKER, -15, -15, 0, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
-                DoSpawnCreature(NPC_WINDWALKER, -17, -17, 0, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
-                break;
-            case 27:
-                DoScriptText(SAY_ELF_COMPLETE, m_creature, pPlayer);
-                // Award quest credit
-                pPlayer->GroupEventHappens(QUEST_ROAD_TO_FALCON_WATCH, m_creature);
-                break;
+                case 0:
+                    DoScriptText(SAY_ELF_START, m_creature, pPlayer);
+                    break;
+                case 9:
+                    DoScriptText(SAY_ELF_SUMMON1, m_creature, pPlayer);
+                    // Spawn two Haal'eshi Talonguard
+                    DoSpawnCreature(NPC_WINDWALKER, -15, -15, 0, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
+                    DoSpawnCreature(NPC_WINDWALKER, -17, -17, 0, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
+                    break;
+                case 13:
+                    DoScriptText(SAY_ELF_RESTING, m_creature, pPlayer);
+                    break;
+                case 14:
+                    DoScriptText(SAY_ELF_SUMMON2, m_creature, pPlayer);
+                    // Spawn two Haal'eshi Windwalker
+                    DoSpawnCreature(NPC_WINDWALKER, -15, -15, 0, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
+                    DoSpawnCreature(NPC_WINDWALKER, -17, -17, 0, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
+                    break;
+                case 27:
+                    DoScriptText(SAY_ELF_COMPLETE, m_creature, pPlayer);
+                    // Award quest credit
+                    pPlayer->GroupEventHappens(QUEST_ROAD_TO_FALCON_WATCH, m_creature);
+                    break;
             }
         }
 
@@ -689,7 +689,7 @@ struct npc_anchorite_barada : public CreatureScript
     struct npc_anchorite_baradaAI : public ScriptedAI, private DialogueHelper
     {
         npc_anchorite_baradaAI(Creature* pCreature) : ScriptedAI(pCreature),
-        DialogueHelper(aExorcismDialogue)
+            DialogueHelper(aExorcismDialogue)
         {
         }
 
@@ -737,33 +737,33 @@ struct npc_anchorite_barada : public CreatureScript
             {
                 switch (eventType)
                 {
-                case AI_EVENT_START_EVENT:  // start the actuall exorcism
-                    if (Creature* pColonel = GetClosestCreatureWithEntry(m_creature, NPC_COLONEL_JULES, 15.0f))
-                    {
-                        m_colonelGuid = pColonel->GetObjectGuid();
-                    }
+                    case AI_EVENT_START_EVENT:  // start the actuall exorcism
+                        if (Creature* pColonel = GetClosestCreatureWithEntry(m_creature, NPC_COLONEL_JULES, 15.0f))
+                        {
+                            m_colonelGuid = pColonel->GetObjectGuid();
+                        }
 
-                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                    m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                        m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                        m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
 
-                    StartNextDialogueText(SAY_EXORCISM_1);
-                    break;
-                case AI_EVENT_CUSTOM_A: // event complete - give credit and reset, TODO rethink code distribution between this and the caller
-                    if (IsExorcismComplete())
-                    {
-                        // kill credit
-                        ((Player*)pInvoker)->RewardPlayerAndGroupAtEvent(pSender->GetEntry(), pSender);
+                        StartNextDialogueText(SAY_EXORCISM_1);
+                        break;
+                    case AI_EVENT_CUSTOM_A: // event complete - give credit and reset, TODO rethink code distribution between this and the caller
+                        if (IsExorcismComplete())
+                        {
+                            // kill credit
+                            ((Player*)pInvoker)->RewardPlayerAndGroupAtEvent(pSender->GetEntry(), pSender);
 
-                        // reset Anchorite and Colonel
-                        pSender->AI()->EnterEvadeMode();
+                            // reset Anchorite and Colonel
+                            pSender->AI()->EnterEvadeMode();
 
-                        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                        ((Player*)pInvoker)->SEND_GOSSIP_MENU(TEXT_ID_CLEANSED, pSender->GetObjectGuid());
-                        EnterEvadeMode();
-                    }
-                    break;
-                default:
-                    break;
+                            m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                            ((Player*)pInvoker)->SEND_GOSSIP_MENU(TEXT_ID_CLEANSED, pSender->GetObjectGuid());
+                            EnterEvadeMode();
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -777,30 +777,30 @@ struct npc_anchorite_barada : public CreatureScript
 
             switch (uiPointId)
             {
-            case 3:
-                // pause wp and resume dialogue
-                m_creature->addUnitState(UNIT_STAT_WAYPOINT_PAUSED);
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                m_bEventInProgress = true;
+                case 3:
+                    // pause wp and resume dialogue
+                    m_creature->addUnitState(UNIT_STAT_WAYPOINT_PAUSED);
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    m_bEventInProgress = true;
 
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    m_creature->SetFacingToObject(pColonel);
-                    pColonel->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                }
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        m_creature->SetFacingToObject(pColonel);
+                        pColonel->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    }
 
-                StartNextDialogueText(SAY_EXORCISM_3);
-                break;
-            case 6:
-                // event completed - wait for player to get quest credit by gossip
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    m_creature->SetFacingToObject(pColonel);
-                }
-                m_creature->GetMotionMaster()->Clear();
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                m_bEventComplete = true;
-                break;
+                    StartNextDialogueText(SAY_EXORCISM_3);
+                    break;
+                case 6:
+                    // event completed - wait for player to get quest credit by gossip
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        m_creature->SetFacingToObject(pColonel);
+                    }
+                    m_creature->GetMotionMaster()->Clear();
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    m_bEventComplete = true;
+                    break;
             }
         }
 
@@ -808,73 +808,73 @@ struct npc_anchorite_barada : public CreatureScript
         {
             switch (iEntry)
             {
-            case QUEST_ID_EXORCISM:
-                m_creature->GetMotionMaster()->MoveWaypoint();
-                break;
-            case SPELL_BARADA_COMMANDS:
-                DoCastSpellIfCan(m_creature, SPELL_BARADA_COMMANDS);
-                break;
-            case SPELL_BARADA_FALTERS:
-                DoCastSpellIfCan(m_creature, SPELL_BARADA_FALTERS);
-                // start levitating
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    pColonel->SetLevitate(true);
-                    pColonel->GetMotionMaster()->MovePoint(0, pColonel->GetPositionX(), pColonel->GetPositionY(), pColonel->GetPositionZ() + 2.0f);
-                }
-                break;
-            case SPELL_JULES_THREATENS:
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    pColonel->CastSpell(pColonel, SPELL_JULES_THREATENS, true);
-                    pColonel->CastSpell(pColonel, SPELL_JULES_RELEASE_DARKNESS, true);
-                    pColonel->SetFacingTo(0);
-                }
-                break;
-            case SPELL_JULES_GOES_UPRIGHT:
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    pColonel->InterruptNonMeleeSpells(false);
-                    pColonel->CastSpell(pColonel, SPELL_JULES_GOES_UPRIGHT, false);
-                }
-                break;
-            case SPELL_JULES_VOMITS:
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    pColonel->CastSpell(pColonel, SPELL_JULES_VOMITS, true);
-                    pColonel->GetMotionMaster()->MoveRandomAroundPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 3.0f, 5.0f);
-                }
-                break;
-            case NPC_COLONEL_JULES:
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    DoScriptText(aColonelTexts[urand(0, 2)], pColonel);
-                }
-                break;
-            case NPC_ANCHORITE_BARADA:
-                DoScriptText(aAnchoriteTexts[urand(0, 2)], m_creature);
-                break;
-            case NPC_DARKNESS_RELEASED:
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    pColonel->RemoveAurasDueToSpell(SPELL_JULES_THREATENS);
-                    pColonel->RemoveAurasDueToSpell(SPELL_JULES_RELEASE_DARKNESS);
-                    pColonel->RemoveAurasDueToSpell(SPELL_JULES_VOMITS);
-                    pColonel->GetMotionMaster()->MoveTargetedHome();
-                    pColonel->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                }
-                break;
-            case TEXT_ID_CLEANSED:
-                if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
-                {
-                    pColonel->RemoveAurasDueToSpell(SPELL_JULES_GOES_UPRIGHT);
-                    pColonel->SetLevitate(false);
-                }
-                // resume wp movemnet
-                m_creature->RemoveAllAuras();
-                m_creature->clearUnitState(UNIT_STAT_WAYPOINT_PAUSED);
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                break;
+                case QUEST_ID_EXORCISM:
+                    m_creature->GetMotionMaster()->MoveWaypoint();
+                    break;
+                case SPELL_BARADA_COMMANDS:
+                    DoCastSpellIfCan(m_creature, SPELL_BARADA_COMMANDS);
+                    break;
+                case SPELL_BARADA_FALTERS:
+                    DoCastSpellIfCan(m_creature, SPELL_BARADA_FALTERS);
+                    // start levitating
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        pColonel->SetLevitate(true);
+                        pColonel->GetMotionMaster()->MovePoint(0, pColonel->GetPositionX(), pColonel->GetPositionY(), pColonel->GetPositionZ() + 2.0f);
+                    }
+                    break;
+                case SPELL_JULES_THREATENS:
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        pColonel->CastSpell(pColonel, SPELL_JULES_THREATENS, true);
+                        pColonel->CastSpell(pColonel, SPELL_JULES_RELEASE_DARKNESS, true);
+                        pColonel->SetFacingTo(0);
+                    }
+                    break;
+                case SPELL_JULES_GOES_UPRIGHT:
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        pColonel->InterruptNonMeleeSpells(false);
+                        pColonel->CastSpell(pColonel, SPELL_JULES_GOES_UPRIGHT, false);
+                    }
+                    break;
+                case SPELL_JULES_VOMITS:
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        pColonel->CastSpell(pColonel, SPELL_JULES_VOMITS, true);
+                        pColonel->GetMotionMaster()->MoveRandomAroundPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 3.0f, 5.0f);
+                    }
+                    break;
+                case NPC_COLONEL_JULES:
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        DoScriptText(aColonelTexts[urand(0, 2)], pColonel);
+                    }
+                    break;
+                case NPC_ANCHORITE_BARADA:
+                    DoScriptText(aAnchoriteTexts[urand(0, 2)], m_creature);
+                    break;
+                case NPC_DARKNESS_RELEASED:
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        pColonel->RemoveAurasDueToSpell(SPELL_JULES_THREATENS);
+                        pColonel->RemoveAurasDueToSpell(SPELL_JULES_RELEASE_DARKNESS);
+                        pColonel->RemoveAurasDueToSpell(SPELL_JULES_VOMITS);
+                        pColonel->GetMotionMaster()->MoveTargetedHome();
+                        pColonel->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    }
+                    break;
+                case TEXT_ID_CLEANSED:
+                    if (Creature* pColonel = m_creature->GetMap()->GetCreature(m_colonelGuid))
+                    {
+                        pColonel->RemoveAurasDueToSpell(SPELL_JULES_GOES_UPRIGHT);
+                        pColonel->SetLevitate(false);
+                    }
+                    // resume wp movemnet
+                    m_creature->RemoveAllAuras();
+                    m_creature->clearUnitState(UNIT_STAT_WAYPOINT_PAUSED);
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                    break;
             }
         }
 
@@ -882,11 +882,11 @@ struct npc_anchorite_barada : public CreatureScript
         {
             switch (uiEntry)
             {
-            case NPC_ANCHORITE_BARADA:      return m_creature;
-            case NPC_COLONEL_JULES:         return m_creature->GetMap()->GetCreature(m_colonelGuid);
+                case NPC_ANCHORITE_BARADA:      return m_creature;
+                case NPC_COLONEL_JULES:         return m_creature->GetMap()->GetCreature(m_colonelGuid);
 
-            default:
-                return nullptr;
+                default:
+                    return nullptr;
             }
         }
 
@@ -1067,10 +1067,11 @@ struct npc_caretaker_dilandrus : public CreatureScript
                         m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
                         uVisitGraveTimer = 5000;
                     }
-                    else uVisitGraveTimer = 0;
+                    else
                     {
-                        uCurrentStage = 4;
+                        uVisitGraveTimer = 0;
                     }
+                    uCurrentStage = 4;
                 }
                 else if (uCurrentStage == 4)
                 {
@@ -1090,10 +1091,11 @@ struct npc_caretaker_dilandrus : public CreatureScript
                     {
                         m_creature->HandleEmote(EMOTE_ONESHOT_CRY);
                     }
-                    else uVisitGraveTimer = 5000;
+                    else
                     {
-                        uCurrentStage = 6;
+                        uVisitGraveTimer = 5000;
                     }
+                    uCurrentStage = 6;
                 }
                 else if (uCurrentStage == 6) // go back to start
                 {
@@ -1136,132 +1138,132 @@ struct npc_magister_aledis : public CreatureScript
 {
     npc_magister_aledis() : CreatureScript("npc_magister_aledis") {}
 
-struct  npc_magister_aledisAI : public ScriptedAI
-{
-    npc_magister_aledisAI(Creature* pCreature) : ScriptedAI(pCreature)
+    struct  npc_magister_aledisAI : public ScriptedAI
     {
-        m_bIsDefeated = false;
-        Reset();
-    }
-
-    uint32 m_uiPyroblastTimer;
-    uint32 m_uiFrostNovaTimer;
-    uint32 m_uiFireballTimer;
-
-    bool m_bIsDefeated;
-
-    void Reset() override
-    {
-        m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-
-        m_uiPyroblastTimer      = urand(10000, 14000);
-        m_uiFrostNovaTimer      = 0;
-        m_uiFireballTimer       = 1000;
-    }
-
-    void AttackStart(Unit* pWho) override
-    {
-        if (m_creature->Attack(pWho, false))
+        npc_magister_aledisAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            m_creature->AddThreat(pWho);
-            m_creature->SetInCombatWith(pWho);
-            pWho->SetInCombatWith(m_creature);
-            DoStartMovement(pWho, 10.0f);
-        }
-    }
-
-    void EnterEvadeMode() override
-    {
-        m_creature->RemoveAllAurasOnEvade();
-        m_creature->DeleteThreatList();
-        m_creature->CombatStop(true);
-
-        if (!m_bIsDefeated)
-        {
-            m_creature->LoadCreatureAddon(true);
+            m_bIsDefeated = false;
+            Reset();
         }
 
-        if (m_creature->IsAlive())
+        uint32 m_uiPyroblastTimer;
+        uint32 m_uiFrostNovaTimer;
+        uint32 m_uiFireballTimer;
+
+        bool m_bIsDefeated;
+
+        void Reset() override
         {
+            m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+
+            m_uiPyroblastTimer      = urand(10000, 14000);
+            m_uiFrostNovaTimer      = 0;
+            m_uiFireballTimer       = 1000;
+        }
+
+        void AttackStart(Unit* pWho) override
+        {
+            if (m_creature->Attack(pWho, false))
+            {
+                m_creature->AddThreat(pWho);
+                m_creature->SetInCombatWith(pWho);
+                pWho->SetInCombatWith(m_creature);
+                DoStartMovement(pWho, 10.0f);
+            }
+        }
+
+        void EnterEvadeMode() override
+        {
+            m_creature->RemoveAllAurasOnEvade();
+            m_creature->DeleteThreatList();
+            m_creature->CombatStop(true);
+
             if (!m_bIsDefeated)
             {
-                m_creature->SetWalk(true);
-                m_creature->GetMotionMaster()->MoveWaypoint();
+                m_creature->LoadCreatureAddon(true);
+            }
+
+            if (m_creature->IsAlive())
+            {
+                if (!m_bIsDefeated)
+                {
+                    m_creature->SetWalk(true);
+                    m_creature->GetMotionMaster()->MoveWaypoint();
+                }
+                else
+                {
+                    m_creature->GetMotionMaster()->MoveIdle();
+                }
+            }
+
+            m_creature->SetLootRecipient(nullptr);
+
+            Reset();
+        }
+
+        void UpdateAI(const uint32 uiDiff) override
+        {
+            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            {
+                return;
+            }
+
+            if (!m_bIsDefeated && m_creature->GetHealthPercent() < 25.0f)
+            {
+                // evade when defeated; faction is reset automatically
+                m_bIsDefeated = true;
+                EnterEvadeMode();
+
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                DoScriptText(SAY_ALEDIS_DEFEAT, m_creature);
+                m_creature->ForcedDespawn(60000);
+                return;
+            }
+
+            if (m_uiPyroblastTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PYROBLAST) == CAST_OK)
+                {
+                    m_uiPyroblastTimer = urand(18000, 21000);
+                }
             }
             else
             {
-                m_creature->GetMotionMaster()->MoveIdle();
+                m_uiPyroblastTimer -= uiDiff;
             }
+
+            if (m_uiFireballTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIREBALL) == CAST_OK)
+                {
+                    m_uiFireballTimer = urand(3000, 4000);
+                }
+            }
+            else
+            {
+                m_uiFireballTimer -= uiDiff;
+            }
+
+            if (m_uiFrostNovaTimer < uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_FROST_NOVA) == CAST_OK)
+                {
+                    m_uiFrostNovaTimer = urand(12000, 16000);
+                }
+            }
+            else
+            {
+                m_uiFrostNovaTimer -= uiDiff;
+            }
+
+            DoMeleeAttackIfReady();
         }
+    };
 
-        m_creature->SetLootRecipient(nullptr);
-
-        Reset();
-    }
-
-    void UpdateAI(const uint32 uiDiff) override
+    CreatureAI* GetAI_npc_magister_aledis(Creature* pCreature)
     {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-        {
-            return;
-        }
-
-        if (!m_bIsDefeated && m_creature->GetHealthPercent() < 25.0f)
-        {
-            // evade when defeated; faction is reset automatically
-            m_bIsDefeated = true;
-            EnterEvadeMode();
-
-            m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-            DoScriptText(SAY_ALEDIS_DEFEAT, m_creature);
-            m_creature->ForcedDespawn(60000);
-            return;
-        }
-
-        if (m_uiPyroblastTimer < uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PYROBLAST) == CAST_OK)
-            {
-                m_uiPyroblastTimer = urand(18000, 21000);
-            }
-        }
-        else
-        {
-            m_uiPyroblastTimer -= uiDiff;
-        }
-
-        if (m_uiFireballTimer < uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIREBALL) == CAST_OK)
-            {
-                m_uiFireballTimer = urand(3000, 4000);
-            }
-        }
-        else
-        {
-            m_uiFireballTimer -= uiDiff;
-        }
-
-        if (m_uiFrostNovaTimer < uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature, SPELL_FROST_NOVA) == CAST_OK)
-            {
-                m_uiFrostNovaTimer = urand(12000, 16000);
-            }
-        }
-        else
-        {
-            m_uiFrostNovaTimer -= uiDiff;
-        }
-
-        DoMeleeAttackIfReady();
+        return new npc_magister_aledisAI(pCreature);
     }
-};
-
-CreatureAI* GetAI_npc_magister_aledis(Creature* pCreature)
-{
-    return new npc_magister_aledisAI(pCreature);
-}
 };
 #endif
 

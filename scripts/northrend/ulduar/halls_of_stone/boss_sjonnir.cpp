@@ -199,9 +199,9 @@ struct boss_sjonnir : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
             }
         }
 
@@ -234,25 +234,25 @@ struct boss_sjonnir : public CreatureScript
             {
                 switch (m_uiHpCheck)
                 {
-                case 75:
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_IRON_TROGG : SPELL_SUMMON_IRON_TROGG_H, CAST_TRIGGERED) == CAST_OK)
-                    {
-                        m_uiHpCheck = 50;
-                    }
-                    break;
-                case 50:
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_MALFORMED_OOZE : SPELL_SUMMON_MALFORMED_OOZE_H, CAST_TRIGGERED) == CAST_OK)
-                    {
-                        m_uiHpCheck = 15;
-                    }
-                    break;
-                case 15:
-                    if (DoFrenzyIfCan())
-                    {
-                        m_uiHpCheck = 0;
-                    }
+                    case 75:
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_IRON_TROGG : SPELL_SUMMON_IRON_TROGG_H, CAST_TRIGGERED) == CAST_OK)
+                        {
+                            m_uiHpCheck = 50;
+                        }
+                        break;
+                    case 50:
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_MALFORMED_OOZE : SPELL_SUMMON_MALFORMED_OOZE_H, CAST_TRIGGERED) == CAST_OK)
+                        {
+                            m_uiHpCheck = 15;
+                        }
+                        break;
+                    case 15:
+                        if (DoFrenzyIfCan())
+                        {
+                            m_uiHpCheck = 0;
+                        }
 
-                    break;
+                        break;
                 }
             }
 

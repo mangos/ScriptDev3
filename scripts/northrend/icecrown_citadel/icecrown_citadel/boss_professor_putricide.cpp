@@ -24,13 +24,13 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-/* ScriptData
-SDName: boss_professor_putricide
-SD%Complete: 70%
-SDComment: NYI: Abomination and table handling, Malleable Goo,
-           possibly Green Ooze and Orange Gas scripts require handling in SD3, but need further research on their spells
-SDCategory: Icecrown Citadel
-EndScriptData */
+/** ScriptData
+ *  SDName: boss_professor_putricide
+ *  SD%Complete: 70%
+ *  SDComment: NYI: Abomination and table handling, Malleable Goo,
+ *  possibly Green Ooze and Orange Gas scripts require handling in SD3, but need further research on their spells
+ *  SDCategory: Icecrown Citadel
+ *  EndScriptData */
 
 #include "precompiled.h"
 #include "icecrown_citadel.h"
@@ -81,8 +81,8 @@ enum
     SPELL_SLIME_PUDDLE              = 70341,
     SPELL_SLIME_PUDDLE_SUMMON       = 70342,
     SPELL_SLIME_PUDDLE_AURA         = 70343,
-// SPELL_SLIME_PUDDLE_TRIGGER      = 71424, // trigger summon spell from target?
-// SPELL_SLIME_PUDDLE_SUMMON_TRIG  = 71425,
+    // SPELL_SLIME_PUDDLE_TRIGGER      = 71424, // trigger summon spell from target?
+    // SPELL_SLIME_PUDDLE_SUMMON_TRIG  = 71425,
     SPELL_GROW_STACKER              = 70345,
     SPELL_GROW_STACKER_GROW_AURA    = 70347,
 
@@ -271,278 +271,278 @@ struct boss_professor_putricide : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_ONE:
-                // health check
-                if (m_uiHealthCheckTimer <= uiDiff)
-                {
-                    if (m_creature->GetHealthPercent() <= 80.0f)
+                case PHASE_ONE:
+                    // health check
+                    if (m_uiHealthCheckTimer <= uiDiff)
                     {
-                        uint32 spellId = (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC) ? SPELL_VOLATILE_EXPERIMENT : SPELL_TEAR_GAS);
-
-                        if (DoCastSpellIfCan(m_creature, spellId) == CAST_OK)
+                        if (m_creature->GetHealthPercent() <= 80.0f)
                         {
-                            m_creature->GetMotionMaster()->Clear();
-                            SetCombatMovement(false);
-                            m_creature->GetMotionMaster()->MovePoint(POINT_PUTRICIDE_SPAWN, fPutricidePosition[0][0], fPutricidePosition[0][1], fPutricidePosition[0][2]);
-                            m_uiPhase = PHASE_RUNNING_ONE;
-                            return;
-                        }
-                    }
-                    m_uiHealthCheckTimer = 1000;
-                }
-                else
-                {
-                    m_uiHealthCheckTimer -= uiDiff;
-                }
+                            uint32 spellId = (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC) ? SPELL_VOLATILE_EXPERIMENT : SPELL_TEAR_GAS);
 
-                // Unbound Plague
-                if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
-                {
-                    if (m_uiUnboundPlagueTimer <= uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_UNBOUND_PLAGUE, SELECT_FLAG_PLAYER))
-                        {
-                            if (DoCastSpellIfCan(pTarget, SPELL_UNBOUND_PLAGUE) == CAST_OK)
+                            if (DoCastSpellIfCan(m_creature, spellId) == CAST_OK)
                             {
-                                m_uiUnboundPlagueTimer = 70000;
+                                m_creature->GetMotionMaster()->Clear();
+                                SetCombatMovement(false);
+                                m_creature->GetMotionMaster()->MovePoint(POINT_PUTRICIDE_SPAWN, fPutricidePosition[0][0], fPutricidePosition[0][1], fPutricidePosition[0][2]);
+                                m_uiPhase = PHASE_RUNNING_ONE;
+                                return;
                             }
                         }
+                        m_uiHealthCheckTimer = 1000;
                     }
                     else
                     {
-                        m_uiUnboundPlagueTimer -= uiDiff;
+                        m_uiHealthCheckTimer -= uiDiff;
                     }
-                }
 
-                // Slime Puddle
-                if (m_uiPuddleTimer <= uiDiff)
-                {
-                    for (int i = 0; i < 2; ++i)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SLIME_PUDDLE_SUMMON, SELECT_FLAG_PLAYER))
-                        {
-                            DoCastSpellIfCan(pTarget, SPELL_SLIME_PUDDLE, CAST_TRIGGERED);
-                        }
-                    }
-                    m_uiPuddleTimer = 30000;
-                }
-                else
-                {
-                    m_uiPuddleTimer -= uiDiff;
-                }
-
-                // Unstable Experiment
-                if (m_uiUnstableExperimentTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_UNSTABLE_EXPERIMENT) == CAST_OK)
-                    {
-                        m_uiUnstableExperimentTimer = 30000;
-                    }
-                }
-                else
-                {
-                    m_uiUnstableExperimentTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_TRANSITION_ONE:
-                if (m_uiTransitionTimer <= uiDiff)
-                {
-                    m_creature->GetMotionMaster()->Clear();
-                    SetCombatMovement(true);
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                    m_uiPhase = PHASE_TWO;
-
+                    // Unbound Plague
                     if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_CREATE_CONCOCTION);
-                        DoScriptText(SAY_TRANSFORM_1, m_creature);
-                    }
-                    else
-                    {
-                        DoCastSpellIfCan(m_creature, SPELL_TEAR_GAS_CANCEL, CAST_INTERRUPT_PREVIOUS);
-                    }
-                }
-                else
-                {
-                    m_uiTransitionTimer -= uiDiff;
-                }
-
-                return;
-            case PHASE_TWO:
-                // health check
-                if (m_uiHealthCheckTimer <= uiDiff)
-                {
-                    if (m_creature->GetHealthPercent() <= 35.0f)
-                    {
-                        uint32 spellId = (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC) ? SPELL_VOLATILE_EXPERIMENT : SPELL_TEAR_GAS);
-
-                        if (DoCastSpellIfCan(m_creature, spellId) == CAST_OK)
+                        if (m_uiUnboundPlagueTimer <= uiDiff)
                         {
-                            m_creature->GetMotionMaster()->Clear();
-                            SetCombatMovement(false);
-                            m_creature->GetMotionMaster()->MovePoint(POINT_PUTRICIDE_SPAWN, fPutricidePosition[0][0], fPutricidePosition[0][1], fPutricidePosition[0][2]);
-                            m_uiPhase = PHASE_RUNNING_TWO;
-
-                            // TODO: remove Mutated Abomination
-
-                            return;
-                        }
-                    }
-                    m_uiHealthCheckTimer = 1000;
-                }
-                else
-                {
-                    m_uiHealthCheckTimer -= uiDiff;
-                }
-
-                // Unbound Plague
-                if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
-                {
-                    if (m_uiUnboundPlagueTimer <= uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_UNBOUND_PLAGUE, SELECT_FLAG_PLAYER))
-                        {
-                            if (DoCastSpellIfCan(pTarget, SPELL_UNBOUND_PLAGUE) == CAST_OK)
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_UNBOUND_PLAGUE, SELECT_FLAG_PLAYER))
                             {
-                                m_uiUnboundPlagueTimer = 70000;
+                                if (DoCastSpellIfCan(pTarget, SPELL_UNBOUND_PLAGUE) == CAST_OK)
+                                {
+                                    m_uiUnboundPlagueTimer = 70000;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        m_uiUnboundPlagueTimer -= uiDiff;
-                    }
-                }
-
-                // Slime Puddle
-                if (m_uiPuddleTimer <= uiDiff)
-                {
-                    for (int i = 0; i < 2; ++i)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SLIME_PUDDLE_SUMMON, SELECT_FLAG_PLAYER))
+                        else
                         {
-                            DoCastSpellIfCan(pTarget, SPELL_SLIME_PUDDLE, CAST_TRIGGERED);
+                            m_uiUnboundPlagueTimer -= uiDiff;
                         }
                     }
 
-                    m_uiPuddleTimer = 30000;
-                }
-                else
-                {
-                    m_uiPuddleTimer -= uiDiff;
-                }
-
-                // Unstable Experiment
-                if (m_uiUnstableExperimentTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_UNSTABLE_EXPERIMENT) == CAST_OK)
+                    // Slime Puddle
+                    if (m_uiPuddleTimer <= uiDiff)
                     {
-                        m_uiUnstableExperimentTimer = 30000;
+                        for (int i = 0; i < 2; ++i)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SLIME_PUDDLE_SUMMON, SELECT_FLAG_PLAYER))
+                            {
+                                DoCastSpellIfCan(pTarget, SPELL_SLIME_PUDDLE, CAST_TRIGGERED);
+                            }
+                        }
+                        m_uiPuddleTimer = 30000;
                     }
-                }
-                else
-                {
-                    m_uiUnstableExperimentTimer -= uiDiff;
-                }
-
-                // Choking Gas
-                if (m_uiChokingGasBombTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_CHOKING_GAS_BOMB) == CAST_OK)
+                    else
                     {
-                        m_uiChokingGasBombTimer = urand(25000, 30000);
+                        m_uiPuddleTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiChokingGasBombTimer -= uiDiff;
-                }
 
-                // TODO: Malleable Goo
+                    // Unstable Experiment
+                    if (m_uiUnstableExperimentTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_UNSTABLE_EXPERIMENT) == CAST_OK)
+                        {
+                            m_uiUnstableExperimentTimer = 30000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiUnstableExperimentTimer -= uiDiff;
+                    }
 
-                break;
-            case PHASE_TRANSITION_TWO:
-                if (m_uiTransitionTimer <= uiDiff)
-                {
-                    m_creature->GetMotionMaster()->Clear();
-                    SetCombatMovement(true);
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                    m_uiPhase = PHASE_THREE;
+                    break;
+                case PHASE_TRANSITION_ONE:
+                    if (m_uiTransitionTimer <= uiDiff)
+                    {
+                        m_creature->GetMotionMaster()->Clear();
+                        SetCombatMovement(true);
+                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                        m_uiPhase = PHASE_TWO;
 
+                        if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_CREATE_CONCOCTION);
+                            DoScriptText(SAY_TRANSFORM_1, m_creature);
+                        }
+                        else
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_TEAR_GAS_CANCEL, CAST_INTERRUPT_PREVIOUS);
+                        }
+                    }
+                    else
+                    {
+                        m_uiTransitionTimer -= uiDiff;
+                    }
+
+                    return;
+                case PHASE_TWO:
+                    // health check
+                    if (m_uiHealthCheckTimer <= uiDiff)
+                    {
+                        if (m_creature->GetHealthPercent() <= 35.0f)
+                        {
+                            uint32 spellId = (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC) ? SPELL_VOLATILE_EXPERIMENT : SPELL_TEAR_GAS);
+
+                            if (DoCastSpellIfCan(m_creature, spellId) == CAST_OK)
+                            {
+                                m_creature->GetMotionMaster()->Clear();
+                                SetCombatMovement(false);
+                                m_creature->GetMotionMaster()->MovePoint(POINT_PUTRICIDE_SPAWN, fPutricidePosition[0][0], fPutricidePosition[0][1], fPutricidePosition[0][2]);
+                                m_uiPhase = PHASE_RUNNING_TWO;
+
+                                // TODO: remove Mutated Abomination
+
+                                return;
+                            }
+                        }
+                        m_uiHealthCheckTimer = 1000;
+                    }
+                    else
+                    {
+                        m_uiHealthCheckTimer -= uiDiff;
+                    }
+
+                    // Unbound Plague
                     if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_GUZZLE_POTIONS);
-                        DoScriptText(SAY_TRANSFORM_2, m_creature);
-                    }
-                    else
-                    {
-                        DoCastSpellIfCan(m_creature, SPELL_TEAR_GAS_CANCEL, CAST_INTERRUPT_PREVIOUS);
-                    }
-                }
-                else
-                {
-                    m_uiTransitionTimer -= uiDiff;
-                }
-
-                return;
-            case PHASE_THREE:
-                // Unbound Plague
-                if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
-                {
-                    if (m_uiUnboundPlagueTimer <= uiDiff)
-                    {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_UNBOUND_PLAGUE, SELECT_FLAG_PLAYER))
+                        if (m_uiUnboundPlagueTimer <= uiDiff)
                         {
-                            if (DoCastSpellIfCan(pTarget, SPELL_UNBOUND_PLAGUE) == CAST_OK)
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_UNBOUND_PLAGUE, SELECT_FLAG_PLAYER))
                             {
-                                m_uiUnboundPlagueTimer = 70000;
+                                if (DoCastSpellIfCan(pTarget, SPELL_UNBOUND_PLAGUE) == CAST_OK)
+                                {
+                                    m_uiUnboundPlagueTimer = 70000;
+                                }
                             }
                         }
+                        else
+                        {
+                            m_uiUnboundPlagueTimer -= uiDiff;
+                        }
+                    }
+
+                    // Slime Puddle
+                    if (m_uiPuddleTimer <= uiDiff)
+                    {
+                        for (int i = 0; i < 2; ++i)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SLIME_PUDDLE_SUMMON, SELECT_FLAG_PLAYER))
+                            {
+                                DoCastSpellIfCan(pTarget, SPELL_SLIME_PUDDLE, CAST_TRIGGERED);
+                            }
+                        }
+
+                        m_uiPuddleTimer = 30000;
                     }
                     else
                     {
-                        m_uiUnboundPlagueTimer -= uiDiff;
+                        m_uiPuddleTimer -= uiDiff;
                     }
-                }
 
-                // Slime Puddle
-                if (m_uiPuddleTimer <= uiDiff)
-                {
-                    for (int i = 0; i < 2; ++i)
+                    // Unstable Experiment
+                    if (m_uiUnstableExperimentTimer <= uiDiff)
                     {
-                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_SLIME_PUDDLE_SUMMON, SELECT_FLAG_PLAYER))
+                        if (DoCastSpellIfCan(m_creature, SPELL_UNSTABLE_EXPERIMENT) == CAST_OK)
                         {
-                            DoCastSpellIfCan(pTarget, SPELL_SLIME_PUDDLE, CAST_TRIGGERED);
+                            m_uiUnstableExperimentTimer = 30000;
                         }
                     }
-                    m_uiPuddleTimer = 30000;
-                }
-                else
-                {
-                    m_uiPuddleTimer -= uiDiff;
-                }
-
-                // Choking Gas
-                if (m_uiChokingGasBombTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_CHOKING_GAS_BOMB) == CAST_OK)
+                    else
                     {
-                        m_uiChokingGasBombTimer = urand(25000, 30000);
+                        m_uiUnstableExperimentTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiChokingGasBombTimer -= uiDiff;
-                }
 
-                // TODO: Malleable Goo
+                    // Choking Gas
+                    if (m_uiChokingGasBombTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_CHOKING_GAS_BOMB) == CAST_OK)
+                        {
+                            m_uiChokingGasBombTimer = urand(25000, 30000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiChokingGasBombTimer -= uiDiff;
+                    }
 
-                break;
-            case PHASE_RUNNING_ONE:
-            case PHASE_RUNNING_TWO:
-                // wait for arriving at the table (during phase transition)
-                break;
+                    // TODO: Malleable Goo
+
+                    break;
+                case PHASE_TRANSITION_TWO:
+                    if (m_uiTransitionTimer <= uiDiff)
+                    {
+                        m_creature->GetMotionMaster()->Clear();
+                        SetCombatMovement(true);
+                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                        m_uiPhase = PHASE_THREE;
+
+                        if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_GUZZLE_POTIONS);
+                            DoScriptText(SAY_TRANSFORM_2, m_creature);
+                        }
+                        else
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_TEAR_GAS_CANCEL, CAST_INTERRUPT_PREVIOUS);
+                        }
+                    }
+                    else
+                    {
+                        m_uiTransitionTimer -= uiDiff;
+                    }
+
+                    return;
+                case PHASE_THREE:
+                    // Unbound Plague
+                    if (m_pInstance && m_pInstance->GetData(TYPE_DATA_IS_HEROIC))
+                    {
+                        if (m_uiUnboundPlagueTimer <= uiDiff)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_UNBOUND_PLAGUE, SELECT_FLAG_PLAYER))
+                            {
+                                if (DoCastSpellIfCan(pTarget, SPELL_UNBOUND_PLAGUE) == CAST_OK)
+                                {
+                                    m_uiUnboundPlagueTimer = 70000;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_uiUnboundPlagueTimer -= uiDiff;
+                        }
+                    }
+
+                    // Slime Puddle
+                    if (m_uiPuddleTimer <= uiDiff)
+                    {
+                        for (int i = 0; i < 2; ++i)
+                        {
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_SLIME_PUDDLE_SUMMON, SELECT_FLAG_PLAYER))
+                            {
+                                DoCastSpellIfCan(pTarget, SPELL_SLIME_PUDDLE, CAST_TRIGGERED);
+                            }
+                        }
+                        m_uiPuddleTimer = 30000;
+                    }
+                    else
+                    {
+                        m_uiPuddleTimer -= uiDiff;
+                    }
+
+                    // Choking Gas
+                    if (m_uiChokingGasBombTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_CHOKING_GAS_BOMB) == CAST_OK)
+                        {
+                            m_uiChokingGasBombTimer = urand(25000, 30000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiChokingGasBombTimer -= uiDiff;
+                    }
+
+                    // TODO: Malleable Goo
+
+                    break;
+                case PHASE_RUNNING_ONE:
+                case PHASE_RUNNING_TWO:
+                    // wait for arriving at the table (during phase transition)
+                    break;
             }
 
             DoMeleeAttackIfReady();

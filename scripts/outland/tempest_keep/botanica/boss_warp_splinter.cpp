@@ -183,9 +183,9 @@ struct boss_warp_splinter : public CreatureScript
     }
 };
 
-/*#####
-# mob_treant (Sapling)
-#####*/
+/** #####
+ *  # mob_treant (Sapling)
+ *  #####*/
 struct npc_sapling : public CreatureScript
 {
     npc_sapling() : CreatureScript("mob_warp_splinter_treant") {}

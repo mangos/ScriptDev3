@@ -308,126 +308,126 @@ struct boss_thekal : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_FAKE_DEATH:
-                if (m_uiResurrectTimer < uiDiff)
-                {
-                    // resurrect him in any case
-                    DoCastSpellIfCan(m_creature, SPELL_RESURRECT);
-
-                    m_uiPhase = PHASE_WAITING;
-                    if (m_pInstance)
+                case PHASE_FAKE_DEATH:
+                    if (m_uiResurrectTimer < uiDiff)
                     {
-                        CanPreventAddsResurrect();
-                        m_pInstance->SetData(TYPE_THEKAL, IN_PROGRESS);
-                    }
-                }
-                else
-                {
-                    m_uiResurrectTimer -= uiDiff;
-                }
+                        // resurrect him in any case
+                        DoCastSpellIfCan(m_creature, SPELL_RESURRECT);
 
-                // No break needed here
-            case PHASE_WAITING:
-                return;
-
-            case PHASE_NORMAL:
-                if (m_uiMortalCleaveTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTAL_CLEAVE) == CAST_OK)
-                    {
-                        m_uiMortalCleaveTimer = urand(15000, 20000);
-                    }
-                }
-                else
-                {
-                    m_uiMortalCleaveTimer -= uiDiff;
-                }
-
-                if (m_uiSilenceTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, SPELL_SILENCE) == CAST_OK)
+                        m_uiPhase = PHASE_WAITING;
+                        if (m_pInstance)
                         {
-                            m_uiSilenceTimer = urand(20000, 25000);
+                            CanPreventAddsResurrect();
+                            m_pInstance->SetData(TYPE_THEKAL, IN_PROGRESS);
                         }
                     }
-                }
-                else
-                {
-                    m_uiSilenceTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_TIGER:
-                if (m_uiChargeTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    else
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_CHARGE) == CAST_OK)
+                        m_uiResurrectTimer -= uiDiff;
+                    }
+
+                    // No break needed here
+                case PHASE_WAITING:
+                    return;
+
+                case PHASE_NORMAL:
+                    if (m_uiMortalCleaveTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTAL_CLEAVE) == CAST_OK)
                         {
-                            DoResetThreat();
-                            AttackStart(pTarget);
-                            m_uiChargeTimer = urand(15000, 22000);
+                            m_uiMortalCleaveTimer = urand(15000, 20000);
                         }
                     }
-                }
-                else
-                {
-                    m_uiChargeTimer -= uiDiff;
-                }
-
-                if (m_uiFrenzyTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FRENZY) == CAST_OK)
+                    else
                     {
-                        m_uiFrenzyTimer = 30000;
+                        m_uiMortalCleaveTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiFrenzyTimer -= uiDiff;
-                }
 
-                if (m_uiForcePunchTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FORCE_PUNCH) == CAST_OK)
+                    if (m_uiSilenceTimer < uiDiff)
                     {
-                        m_uiForcePunchTimer = urand(16000, 21000);
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_SILENCE) == CAST_OK)
+                            {
+                                m_uiSilenceTimer = urand(20000, 25000);
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    m_uiForcePunchTimer -= uiDiff;
-                }
-
-                if (m_uiSummonTigersTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_TIGERS) == CAST_OK)
+                    else
                     {
+                        m_uiSilenceTimer -= uiDiff;
+                    }
+
+                    break;
+                case PHASE_TIGER:
+                    if (m_uiChargeTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, SPELL_CHARGE) == CAST_OK)
+                            {
+                                DoResetThreat();
+                                AttackStart(pTarget);
+                                m_uiChargeTimer = urand(15000, 22000);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_uiChargeTimer -= uiDiff;
+                    }
+
+                    if (m_uiFrenzyTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FRENZY) == CAST_OK)
+                        {
+                            m_uiFrenzyTimer = 30000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiFrenzyTimer -= uiDiff;
+                    }
+
+                    if (m_uiForcePunchTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_FORCE_PUNCH) == CAST_OK)
+                        {
+                            m_uiForcePunchTimer = urand(16000, 21000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiForcePunchTimer -= uiDiff;
+                    }
+
+                    if (m_uiSummonTigersTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_TIGERS) == CAST_OK)
+                        {
 
 #if defined (CLASSIC) || defined (WOTLK)
-                        m_uiSummonTigersTimer = 50000;
+                            m_uiSummonTigersTimer = 50000;
 #endif
 #if defined (TBC)
-                        m_uiSummonTigersTimer = urand(10000, 14000);
+                            m_uiSummonTigersTimer = urand(10000, 14000);
 #endif
+                        }
                     }
-                }
-                else
-                {
-                    m_uiSummonTigersTimer -= uiDiff;
-                }
-
-                if (!m_bEnraged && m_creature->GetHealthPercent() < 11.0f)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
+                    else
                     {
-                        m_bEnraged = true;
+                        m_uiSummonTigersTimer -= uiDiff;
                     }
-                }
 
-                break;
+                    if (!m_bEnraged && m_creature->GetHealthPercent() < 11.0f)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
+                        {
+                            m_bEnraged = true;
+                        }
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();
@@ -506,106 +506,106 @@ struct mob_zealot_lorkhan : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_FAKE_DEATH:
-                if (m_uiResurrectTimer < uiDiff)
-                {
-                    if (!m_pInstance)
+                case PHASE_FAKE_DEATH:
+                    if (m_uiResurrectTimer < uiDiff)
                     {
-                        return;
-                    }
-
-                    if (m_pInstance->GetData(TYPE_THEKAL) != SPECIAL || m_pInstance->GetData(TYPE_ZATH) != SPECIAL)
-                    {
-                        DoCastSpellIfCan(m_creature, SPELL_RESURRECT);
-                        m_pInstance->SetData(TYPE_LORKHAN, IN_PROGRESS);
-                    }
-
-                    m_uiPhase = PHASE_WAITING;
-                }
-                else
-                {
-                    m_uiResurrectTimer -= uiDiff;
-                }
-
-                // no break needed here
-            case PHASE_WAITING:
-                return;
-
-            case PHASE_NORMAL:
-                // Shield_Timer
-                if (m_uiShieldTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SHIELD) == CAST_OK)
-                    {
-                        m_uiShieldTimer = 61000;
-                    }
-                }
-                else
-                {
-                    m_uiShieldTimer -= uiDiff;
-                }
-
-                // BloodLust_Timer
-                if (m_uiBloodLustTimer < uiDiff)
-                {
-                    // ToDo: research if this should be cast on Thekal or Zath
-                    if (DoCastSpellIfCan(m_creature, SPELL_BLOODLUST) == CAST_OK)
-                    {
-                        m_uiBloodLustTimer = urand(20000, 28000);
-                    }
-                }
-                else
-                {
-                    m_uiBloodLustTimer -= uiDiff;
-                }
-
-                // Casting Greaterheal to Thekal or Zath if they are in meele range.
-                // TODO - why this range check?
-                if (m_uiGreaterHealTimer < uiDiff)
-                {
-                    if (m_pInstance)
-                    {
-                        Creature* pThekal = m_pInstance->GetSingleCreatureFromStorage(NPC_THEKAL);
-                        Creature* pZath = m_pInstance->GetSingleCreatureFromStorage(NPC_ZATH);
-
-                        switch (urand(0, 1))
+                        if (!m_pInstance)
                         {
-                        case 0:
-                            if (pThekal && m_creature->IsWithinDistInMap(pThekal, 3 * ATTACK_DISTANCE))
-                            {
-                                DoCastSpellIfCan(pThekal, SPELL_GREATER_HEAL);
-                            }
-                            break;
-                        case 1:
-                            if (pZath && m_creature->IsWithinDistInMap(pZath, 3 * ATTACK_DISTANCE))
-                            {
-                                DoCastSpellIfCan(pZath, SPELL_GREATER_HEAL);
-                            }
-                            break;
+                            return;
+                        }
+
+                        if (m_pInstance->GetData(TYPE_THEKAL) != SPECIAL || m_pInstance->GetData(TYPE_ZATH) != SPECIAL)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_RESURRECT);
+                            m_pInstance->SetData(TYPE_LORKHAN, IN_PROGRESS);
+                        }
+
+                        m_uiPhase = PHASE_WAITING;
+                    }
+                    else
+                    {
+                        m_uiResurrectTimer -= uiDiff;
+                    }
+
+                    // no break needed here
+                case PHASE_WAITING:
+                    return;
+
+                case PHASE_NORMAL:
+                    // Shield_Timer
+                    if (m_uiShieldTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SHIELD) == CAST_OK)
+                        {
+                            m_uiShieldTimer = 61000;
                         }
                     }
-
-                    m_uiGreaterHealTimer = urand(15000, 20000);
-                }
-                else
-                {
-                    m_uiGreaterHealTimer -= uiDiff;
-                }
-
-                // Disarm_Timer
-                if (m_uiDisarmTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DISARM) == CAST_OK)
+                    else
                     {
-                        m_uiDisarmTimer = urand(15000, 25000);
+                        m_uiShieldTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiDisarmTimer -= uiDiff;
-                }
 
-                break;
+                    // BloodLust_Timer
+                    if (m_uiBloodLustTimer < uiDiff)
+                    {
+                        // ToDo: research if this should be cast on Thekal or Zath
+                        if (DoCastSpellIfCan(m_creature, SPELL_BLOODLUST) == CAST_OK)
+                        {
+                            m_uiBloodLustTimer = urand(20000, 28000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiBloodLustTimer -= uiDiff;
+                    }
+
+                    // Casting Greaterheal to Thekal or Zath if they are in meele range.
+                    // TODO - why this range check?
+                    if (m_uiGreaterHealTimer < uiDiff)
+                    {
+                        if (m_pInstance)
+                        {
+                            Creature* pThekal = m_pInstance->GetSingleCreatureFromStorage(NPC_THEKAL);
+                            Creature* pZath = m_pInstance->GetSingleCreatureFromStorage(NPC_ZATH);
+
+                            switch (urand(0, 1))
+                            {
+                                case 0:
+                                    if (pThekal && m_creature->IsWithinDistInMap(pThekal, 3 * ATTACK_DISTANCE))
+                                    {
+                                        DoCastSpellIfCan(pThekal, SPELL_GREATER_HEAL);
+                                    }
+                                    break;
+                                case 1:
+                                    if (pZath && m_creature->IsWithinDistInMap(pZath, 3 * ATTACK_DISTANCE))
+                                    {
+                                        DoCastSpellIfCan(pZath, SPELL_GREATER_HEAL);
+                                    }
+                                    break;
+                            }
+                        }
+
+                        m_uiGreaterHealTimer = urand(15000, 20000);
+                    }
+                    else
+                    {
+                        m_uiGreaterHealTimer -= uiDiff;
+                    }
+
+                    // Disarm_Timer
+                    if (m_uiDisarmTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DISARM) == CAST_OK)
+                        {
+                            m_uiDisarmTimer = urand(15000, 25000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiDisarmTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();
@@ -618,9 +618,9 @@ struct mob_zealot_lorkhan : public CreatureScript
     }
 };
 
-/*######
-## npc_zealot_zath
-######*/
+/** ######
+ *  ## npc_zealot_zath
+ *  ######*/
 struct mob_zealot_zath : public CreatureScript
 {
     mob_zealot_zath() : CreatureScript("mob_zealot_zath") {}
@@ -685,103 +685,103 @@ struct mob_zealot_zath : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_FAKE_DEATH:
-                if (m_uiResurrectTimer < uiDiff)
-                {
-                    if (!m_pInstance)
+                case PHASE_FAKE_DEATH:
+                    if (m_uiResurrectTimer < uiDiff)
                     {
-                        return;
-                    }
-
-                    if (m_pInstance->GetData(TYPE_THEKAL) != SPECIAL || m_pInstance->GetData(TYPE_LORKHAN) != SPECIAL)
-                    {
-                        DoCastSpellIfCan(m_creature, SPELL_RESURRECT);
-                        m_pInstance->SetData(TYPE_ZATH, IN_PROGRESS);
-                    }
-
-                    m_uiPhase = PHASE_WAITING;
-                }
-                else
-                {
-                    m_uiResurrectTimer -= uiDiff;
-                }
-
-                // no break needed here
-            case PHASE_WAITING:
-                return;
-
-            case PHASE_NORMAL:
-                // SweepingStrikes_Timer
-                if (m_uiSweepingStrikesTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SWEEPING_STRIKES) == CAST_OK)
-                    {
-                        m_uiSweepingStrikesTimer = urand(22000, 26000);
-                    }
-                }
-                else
-                {
-                    m_uiSweepingStrikesTimer -= uiDiff;
-                }
-
-                // SinisterStrike_Timer
-                if (m_uiSinisterStrikeTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SINISTER_STRIKE) == CAST_OK)
-                    {
-                        m_uiSinisterStrikeTimer = urand(8000, 16000);
-                    }
-                }
-                else
-                {
-                    m_uiSinisterStrikeTimer -= uiDiff;
-                }
-
-                // Gouge_Timer
-                if (m_uiGougeTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_GOUGE) == CAST_OK)
-                    {
-                        if (m_creature->GetThreatManager().getThreat(m_creature->getVictim()))
+                        if (!m_pInstance)
                         {
-                            m_creature->GetThreatManager().modifyThreatPercent(m_creature->getVictim(), -100);
+                            return;
                         }
 
-                        m_uiGougeTimer = urand(17000, 27000);
-                    }
-                }
-                else
-                {
-                    m_uiGougeTimer -= uiDiff;
-                }
+                        if (m_pInstance->GetData(TYPE_THEKAL) != SPECIAL || m_pInstance->GetData(TYPE_LORKHAN) != SPECIAL)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_RESURRECT);
+                            m_pInstance->SetData(TYPE_ZATH, IN_PROGRESS);
+                        }
 
-                // Kick_Timer
-                if (m_uiKickTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_KICK) == CAST_OK)
+                        m_uiPhase = PHASE_WAITING;
+                    }
+                    else
                     {
-                        m_uiKickTimer = urand(15000, 25000);
+                        m_uiResurrectTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiKickTimer -= uiDiff;
-                }
 
-                // Blind_Timer
-                if (m_uiBlindTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_BLIND) == CAST_OK)
+                    // no break needed here
+                case PHASE_WAITING:
+                    return;
+
+                case PHASE_NORMAL:
+                    // SweepingStrikes_Timer
+                    if (m_uiSweepingStrikesTimer < uiDiff)
                     {
-                        m_uiBlindTimer = urand(10000, 20000);
+                        if (DoCastSpellIfCan(m_creature, SPELL_SWEEPING_STRIKES) == CAST_OK)
+                        {
+                            m_uiSweepingStrikesTimer = urand(22000, 26000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiBlindTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiSweepingStrikesTimer -= uiDiff;
+                    }
 
-                break;
+                    // SinisterStrike_Timer
+                    if (m_uiSinisterStrikeTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SINISTER_STRIKE) == CAST_OK)
+                        {
+                            m_uiSinisterStrikeTimer = urand(8000, 16000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiSinisterStrikeTimer -= uiDiff;
+                    }
+
+                    // Gouge_Timer
+                    if (m_uiGougeTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_GOUGE) == CAST_OK)
+                        {
+                            if (m_creature->GetThreatManager().getThreat(m_creature->getVictim()))
+                            {
+                                m_creature->GetThreatManager().modifyThreatPercent(m_creature->getVictim(), -100);
+                            }
+
+                            m_uiGougeTimer = urand(17000, 27000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiGougeTimer -= uiDiff;
+                    }
+
+                    // Kick_Timer
+                    if (m_uiKickTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_KICK) == CAST_OK)
+                        {
+                            m_uiKickTimer = urand(15000, 25000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiKickTimer -= uiDiff;
+                    }
+
+                    // Blind_Timer
+                    if (m_uiBlindTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_BLIND) == CAST_OK)
+                        {
+                            m_uiBlindTimer = urand(10000, 20000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiBlindTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();

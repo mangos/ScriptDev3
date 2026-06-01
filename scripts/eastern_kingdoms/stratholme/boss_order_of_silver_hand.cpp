@@ -138,18 +138,18 @@ struct boss_silver_hand_bosses : public CreatureScript
 
             switch (m_aSilverHandAbility[uiIndex].m_uiTargetType)
             {
-            case TARGET_TYPE_SELF:
-                pTarget = m_creature;
-                break;
-            case TARGET_TYPE_VICTIM:
-                pTarget = m_creature->getVictim();
-                break;
-            case TARGET_TYPE_RANDOM:
-                pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, m_aSilverHandAbility[uiIndex].m_uiSpellId, SELECT_FLAG_IN_LOS);
-                break;
-            case TARGET_TYPE_FRIENDLY:
-                pTarget = DoSelectLowestHpFriendly(10.0f);
-                break;
+                case TARGET_TYPE_SELF:
+                    pTarget = m_creature;
+                    break;
+                case TARGET_TYPE_VICTIM:
+                    pTarget = m_creature->getVictim();
+                    break;
+                case TARGET_TYPE_RANDOM:
+                    pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, m_aSilverHandAbility[uiIndex].m_uiSpellId, SELECT_FLAG_IN_LOS);
+                    break;
+                case TARGET_TYPE_FRIENDLY:
+                    pTarget = DoSelectLowestHpFriendly(10.0f);
+                    break;
             }
 
             if (pTarget)

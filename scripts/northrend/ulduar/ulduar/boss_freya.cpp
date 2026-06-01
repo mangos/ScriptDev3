@@ -364,10 +364,10 @@ struct boss_freya : public CreatureScript
                         // spawn chest loot
                         switch (m_pInstance->GetData(TYPE_FREYA_HARD))
                         {
-                        case 0: DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_CHEST_0 : SPELL_SUMMON_CHEST_0_H, CAST_TRIGGERED); break;
-                        case 1: DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_CHEST_1 : SPELL_SUMMON_CHEST_1_H, CAST_TRIGGERED); break;
-                        case 2: DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_CHEST_2 : SPELL_SUMMON_CHEST_2_H, CAST_TRIGGERED); break;
-                        case 3: DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_CHEST_3 : SPELL_SUMMON_CHEST_3_H, CAST_TRIGGERED); break;
+                            case 0: DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_CHEST_0 : SPELL_SUMMON_CHEST_0_H, CAST_TRIGGERED); break;
+                            case 1: DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_CHEST_1 : SPELL_SUMMON_CHEST_1_H, CAST_TRIGGERED); break;
+                            case 2: DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_CHEST_2 : SPELL_SUMMON_CHEST_2_H, CAST_TRIGGERED); break;
+                            case 3: DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SUMMON_CHEST_3 : SPELL_SUMMON_CHEST_3_H, CAST_TRIGGERED); break;
                         }
 
                         // check aura stacks for achiev
@@ -404,30 +404,30 @@ struct boss_freya : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_EONARS_GIFT:
-                pSummoned->CastSpell(pSummoned, SPELL_LIFEBINDERS_GIFT_VISUAL, true);
-                pSummoned->CastSpell(pSummoned, SPELL_AUTO_GROW, true);
-                pSummoned->CastSpell(pSummoned, SPELL_PHEROMONES, true);
-                break;
-            case NPC_DETONATING_LASHER:
-            case NPC_ANCIENT_CONSERVATOR:
-                pSummoned->AI()->AttackStart(m_creature->getVictim());
-                break;
-            case NPC_WATER_SPIRIT:
-                m_waterSpiritGuid = pSummoned->GetObjectGuid();
-                pSummoned->AI()->AttackStart(m_creature->getVictim());
-                break;
-            case NPC_STORM_LASHER:
-                m_stormLasherGuid = pSummoned->GetObjectGuid();
-                pSummoned->AI()->AttackStart(m_creature->getVictim());
-                break;
-            case NPC_SNAPLASHER:
-                m_snaplasherGuid = pSummoned->GetObjectGuid();
-                pSummoned->AI()->AttackStart(m_creature->getVictim());
-                break;
-            case NPC_NATURE_BOMB:
-                pSummoned->CastSpell(pSummoned, SPELL_NATURE_BOMB_GO, true);
-                break;
+                case NPC_EONARS_GIFT:
+                    pSummoned->CastSpell(pSummoned, SPELL_LIFEBINDERS_GIFT_VISUAL, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_AUTO_GROW, true);
+                    pSummoned->CastSpell(pSummoned, SPELL_PHEROMONES, true);
+                    break;
+                case NPC_DETONATING_LASHER:
+                case NPC_ANCIENT_CONSERVATOR:
+                    pSummoned->AI()->AttackStart(m_creature->getVictim());
+                    break;
+                case NPC_WATER_SPIRIT:
+                    m_waterSpiritGuid = pSummoned->GetObjectGuid();
+                    pSummoned->AI()->AttackStart(m_creature->getVictim());
+                    break;
+                case NPC_STORM_LASHER:
+                    m_stormLasherGuid = pSummoned->GetObjectGuid();
+                    pSummoned->AI()->AttackStart(m_creature->getVictim());
+                    break;
+                case NPC_SNAPLASHER:
+                    m_snaplasherGuid = pSummoned->GetObjectGuid();
+                    pSummoned->AI()->AttackStart(m_creature->getVictim());
+                    break;
+                case NPC_NATURE_BOMB:
+                    pSummoned->CastSpell(pSummoned, SPELL_NATURE_BOMB_GO, true);
+                    break;
             }
         }
 
@@ -435,17 +435,17 @@ struct boss_freya : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_DETONATING_LASHER:
-                pSummoned->CastSpell(m_creature, SPELL_ATTUNED_2_STACKS, true);
-                break;
-            case NPC_ANCIENT_CONSERVATOR:
-                pSummoned->CastSpell(m_creature, SPELL_ATTUNED_25_STACKS, true);
-                break;
-            case NPC_WATER_SPIRIT:
-            case NPC_STORM_LASHER:
-            case NPC_SNAPLASHER:
-                pSummoned->CastSpell(m_creature, SPELL_ATTUNED_10_STACKS, true);
-                break;
+                case NPC_DETONATING_LASHER:
+                    pSummoned->CastSpell(m_creature, SPELL_ATTUNED_2_STACKS, true);
+                    break;
+                case NPC_ANCIENT_CONSERVATOR:
+                    pSummoned->CastSpell(m_creature, SPELL_ATTUNED_25_STACKS, true);
+                    break;
+                case NPC_WATER_SPIRIT:
+                case NPC_STORM_LASHER:
+                case NPC_SNAPLASHER:
+                    pSummoned->CastSpell(m_creature, SPELL_ATTUNED_10_STACKS, true);
+                    break;
             }
         }
 
@@ -463,9 +463,9 @@ struct boss_freya : public CreatureScript
 
                 switch (spawnSpellsVector[uiIndex])
                 {
-                case SPELL_SUMMON_WAVE_1:  DoScriptText(SAY_ADDS_CONSERVATOR, m_creature); break;
-                case SPELL_SUMMON_WAVE_3:  DoScriptText(SAY_ADDS_TRIO, m_creature);        break;
-                case SPELL_SUMMON_WAVE_10: DoScriptText(SAY_ADDS_LASHER, m_creature);      break;
+                    case SPELL_SUMMON_WAVE_1:  DoScriptText(SAY_ADDS_CONSERVATOR, m_creature); break;
+                    case SPELL_SUMMON_WAVE_3:  DoScriptText(SAY_ADDS_TRIO, m_creature);        break;
+                    case SPELL_SUMMON_WAVE_10: DoScriptText(SAY_ADDS_LASHER, m_creature);      break;
                 }
 
                 DoCastSpellIfCan(m_creature, spawnSpellsVector[uiIndex], CAST_TRIGGERED);
@@ -482,9 +482,11 @@ struct boss_freya : public CreatureScript
 
                     // make sure we won't repeat the last spell
                     while (spawnSpellsVector[0] == uiLastSpell)
+                    {
                         //std::random_shuffle(spawnSpellsVector.begin(), spawnSpellsVector.end());
                         std::mt19937 rng(std::time(nullptr));
                         std::shuffle(spawnSpellsVector.begin(), spawnSpellsVector.end(), rng);
+                    }
                 }
             }
             else if (eventType == AI_EVENT_CUSTOM_B)
@@ -916,9 +918,9 @@ struct npc_snaplasher : public CreatureScript
     }
 };
 
-/*######
-## npc_storm_lasher
-######*/
+/** ######
+ *  ## npc_storm_lasher
+ *  ######*/
 struct npc_storm_lasher : public CreatureScript
 {
     npc_storm_lasher() : CreatureScript("npc_storm_lasher") {}

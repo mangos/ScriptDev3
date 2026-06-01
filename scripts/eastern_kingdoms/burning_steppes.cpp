@@ -108,54 +108,54 @@ struct npc_ragged_john : public CreatureScript
         pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So what did you do?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            pPlayer->SEND_GOSSIP_MENU(2714, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Start making sense, dwarf. I don't want to have anything to do with your cracker, your pappy, or any sort of 'discreditin'.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(2715, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ironfoe?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            pPlayer->SEND_GOSSIP_MENU(2716, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Interesting... continue, John.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
-            pPlayer->SEND_GOSSIP_MENU(2717, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 4:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So that's how Windsor died...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
-            pPlayer->SEND_GOSSIP_MENU(2718, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 5:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So how did he die?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
-            pPlayer->SEND_GOSSIP_MENU(2719, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 6:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ok, so where the hell is he? Wait a minute! Are you drunk?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
-            pPlayer->SEND_GOSSIP_MENU(2720, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 7:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "WHY is he in Blackrock Depths?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
-            pPlayer->SEND_GOSSIP_MENU(2721, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 8:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "300? So the Dark Irons killed him and dragged him into the Depths?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
-            pPlayer->SEND_GOSSIP_MENU(2722, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 9:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ahh... Ironfoe.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10);
-            pPlayer->SEND_GOSSIP_MENU(2723, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 10:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks, Ragged John. Your story was very uplifting and informative.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
-            pPlayer->SEND_GOSSIP_MENU(2725, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 11:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->AreaExploredOrEventHappens(4224);
-            break;
+            case GOSSIP_ACTION_INFO_DEF:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So what did you do?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                pPlayer->SEND_GOSSIP_MENU(2714, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Start making sense, dwarf. I don't want to have anything to do with your cracker, your pappy, or any sort of 'discreditin'.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(2715, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ironfoe?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+                pPlayer->SEND_GOSSIP_MENU(2716, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 3:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Interesting... continue, John.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+                pPlayer->SEND_GOSSIP_MENU(2717, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 4:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So that's how Windsor died...", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+                pPlayer->SEND_GOSSIP_MENU(2718, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 5:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So how did he die?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
+                pPlayer->SEND_GOSSIP_MENU(2719, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 6:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ok, so where the hell is he? Wait a minute! Are you drunk?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
+                pPlayer->SEND_GOSSIP_MENU(2720, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 7:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "WHY is he in Blackrock Depths?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
+                pPlayer->SEND_GOSSIP_MENU(2721, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 8:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "300? So the Dark Irons killed him and dragged him into the Depths?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
+                pPlayer->SEND_GOSSIP_MENU(2722, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 9:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ahh... Ironfoe.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10);
+                pPlayer->SEND_GOSSIP_MENU(2723, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 10:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks, Ragged John. Your story was very uplifting and informative.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
+                pPlayer->SEND_GOSSIP_MENU(2725, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 11:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                pPlayer->AreaExploredOrEventHappens(4224);
+                break;
         }
         return true;
     }
@@ -223,9 +223,8 @@ struct npc_grark_lorkrub : public CreatureScript
     struct npc_grark_lorkrubAI : public npc_escortAI, private DialogueHelper
     {
         npc_grark_lorkrubAI(Creature* pCreature) : npc_escortAI(pCreature),
-        DialogueHelper(aOutroDialogue)
-        {
-        }
+            DialogueHelper(aOutroDialogue)
+        {}
 
         ObjectGuid m_nuzarkGuid;
         ObjectGuid m_lexlortGuid;
@@ -271,66 +270,66 @@ struct npc_grark_lorkrub : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 1:
-                DoScriptText(SAY_START, m_creature);
-                break;
-            case 7:
-                DoScriptText(SAY_PAY, m_creature);
-                break;
-            case 12:
-                DoScriptText(SAY_FIRST_AMBUSH_START, m_creature);
-                SetEscortPaused(true);
+                case 1:
+                    DoScriptText(SAY_START, m_creature);
+                    break;
+                case 7:
+                    DoScriptText(SAY_PAY, m_creature);
+                    break;
+                case 12:
+                    DoScriptText(SAY_FIRST_AMBUSH_START, m_creature);
+                    SetEscortPaused(true);
 
-                m_creature->SummonCreature(NPC_BLACKROCK_AMBUSHER, -7844.3f, -1521.6f, 139.2f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_BLACKROCK_AMBUSHER, -7860.4f, -1507.8f, 141.0f, 6.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_BLACKROCK_RAIDER, -7845.6f, -1508.1f, 138.8f, 6.1f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_BLACKROCK_RAIDER, -7859.8f, -1521.8f, 139.2f, 6.2f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                break;
-            case 24:
-                DoScriptText(SAY_SEC_AMBUSH_START, m_creature);
-                SetEscortPaused(true);
+                    m_creature->SummonCreature(NPC_BLACKROCK_AMBUSHER, -7844.3f, -1521.6f, 139.2f, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_BLACKROCK_AMBUSHER, -7860.4f, -1507.8f, 141.0f, 6.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_BLACKROCK_RAIDER, -7845.6f, -1508.1f, 138.8f, 6.1f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_BLACKROCK_RAIDER, -7859.8f, -1521.8f, 139.2f, 6.2f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    break;
+                case 24:
+                    DoScriptText(SAY_SEC_AMBUSH_START, m_creature);
+                    SetEscortPaused(true);
 
-                m_creature->SummonCreature(NPC_BLACKROCK_AMBUSHER, -8035.3f, -1222.2f, 135.5f, 5.1f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_FLAMESCALE_DRAGONSPAWN, -8037.5f, -1216.9f, 135.8f, 5.1f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_BLACKROCK_AMBUSHER, -8009.5f, -1222.1f, 139.2f, 3.9f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                m_creature->SummonCreature(NPC_FLAMESCALE_DRAGONSPAWN, -8007.1f, -1219.4f, 140.1f, 3.9f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
-                break;
-            case 28:
-                m_creature->SummonCreature(NPC_SEARSCALE_DRAKE, -7897.8f, -1123.1f, 233.4f, 3.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_SEARSCALE_DRAKE, -7898.8f, -1125.1f, 193.9f, 3.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
-                m_creature->SummonCreature(NPC_SEARSCALE_DRAKE, -7895.6f, -1119.5f, 194.5f, 3.1f, TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
-                break;
-            case 30:
-            {
-                SetEscortPaused(true);
-                DoScriptText(SAY_THIRD_AMBUSH_START, m_creature);
-
-                Player* pPlayer = GetPlayerForEscort();
-                if (!pPlayer)
+                    m_creature->SummonCreature(NPC_BLACKROCK_AMBUSHER, -8035.3f, -1222.2f, 135.5f, 5.1f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_FLAMESCALE_DRAGONSPAWN, -8037.5f, -1216.9f, 135.8f, 5.1f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_BLACKROCK_AMBUSHER, -8009.5f, -1222.1f, 139.2f, 3.9f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    m_creature->SummonCreature(NPC_FLAMESCALE_DRAGONSPAWN, -8007.1f, -1219.4f, 140.1f, 3.9f, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
+                    break;
+                case 28:
+                    m_creature->SummonCreature(NPC_SEARSCALE_DRAKE, -7897.8f, -1123.1f, 233.4f, 3.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_SEARSCALE_DRAKE, -7898.8f, -1125.1f, 193.9f, 3.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
+                    m_creature->SummonCreature(NPC_SEARSCALE_DRAKE, -7895.6f, -1119.5f, 194.5f, 3.1f, TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
+                    break;
+                case 30:
                 {
-                    return;
-                }
+                    SetEscortPaused(true);
+                    DoScriptText(SAY_THIRD_AMBUSH_START, m_creature);
 
-                // Set all the dragons in combat
-                for (GuidList::const_iterator itr = m_lSearscaleGuidList.begin(); itr != m_lSearscaleGuidList.end(); ++itr)
-                {
-                    if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
+                    Player* pPlayer = GetPlayerForEscort();
+                    if (!pPlayer)
                     {
-                        pTemp->AI()->AttackStart(pPlayer);
+                        return;
                     }
-                }
-                break;
-            }
-            case 36:
-                DoScriptText(EMOTE_LAUGH, m_creature);
-                break;
-            case 45:
-                StartNextDialogueText(SAY_LAST_STAND);
-                SetEscortPaused(true);
 
-                m_creature->SummonCreature(NPC_HIGH_EXECUTIONER_NUZARK, -7532.3f, -1029.4f, 258.0f, 2.7f, TEMPSPAWN_TIMED_DESPAWN, 40000);
-                m_creature->SummonCreature(NPC_SHADOW_OF_LEXLORT, -7532.8f, -1032.9f, 258.2f, 2.5f, TEMPSPAWN_TIMED_DESPAWN, 40000);
-                break;
+                    // Set all the dragons in combat
+                    for (GuidList::const_iterator itr = m_lSearscaleGuidList.begin(); itr != m_lSearscaleGuidList.end(); ++itr)
+                    {
+                        if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
+                        {
+                            pTemp->AI()->AttackStart(pPlayer);
+                        }
+                    }
+                    break;
+                }
+                case 36:
+                    DoScriptText(EMOTE_LAUGH, m_creature);
+                    break;
+                case 45:
+                    StartNextDialogueText(SAY_LAST_STAND);
+                    SetEscortPaused(true);
+
+                    m_creature->SummonCreature(NPC_HIGH_EXECUTIONER_NUZARK, -7532.3f, -1029.4f, 258.0f, 2.7f, TEMPSPAWN_TIMED_DESPAWN, 40000);
+                    m_creature->SummonCreature(NPC_SHADOW_OF_LEXLORT, -7532.8f, -1032.9f, 258.2f, 2.5f, TEMPSPAWN_TIMED_DESPAWN, 40000);
+                    break;
             }
         }
 
@@ -338,44 +337,44 @@ struct npc_grark_lorkrub : public CreatureScript
         {
             switch (iEntry)
             {
-            case SAY_LEXLORT_1:
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                break;
-            case SAY_LEXLORT_3:
-                // Note: this part isn't very clear. Should he just simply attack him, or charge him?
-                if (Creature* pNuzark = m_creature->GetMap()->GetCreature(m_nuzarkGuid))
-                {
-                    pNuzark->HandleEmote(EMOTE_ONESHOT_ATTACK2HTIGHT);
-                }
-                break;
-            case NPC_GRARK_LORKRUB:
-                // Fake death creature when the axe is lowered. This will allow us to finish the event
-                m_creature->InterruptNonMeleeSpells(true);
-                m_creature->SetHealth(1);
-                m_creature->StopMoving();
-                m_creature->ClearComboPointHolders();
-                m_creature->RemoveAllAurasOnDeath();
-                m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
+                case SAY_LEXLORT_1:
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    break;
+                case SAY_LEXLORT_3:
+                    // Note: this part isn't very clear. Should he just simply attack him, or charge him?
+                    if (Creature* pNuzark = m_creature->GetMap()->GetCreature(m_nuzarkGuid))
+                    {
+                        pNuzark->HandleEmote(EMOTE_ONESHOT_ATTACK2HTIGHT);
+                    }
+                    break;
+                case NPC_GRARK_LORKRUB:
+                    // Fake death creature when the axe is lowered. This will allow us to finish the event
+                    m_creature->InterruptNonMeleeSpells(true);
+                    m_creature->SetHealth(1);
+                    m_creature->StopMoving();
+                    m_creature->ClearComboPointHolders();
+                    m_creature->RemoveAllAurasOnDeath();
+                    m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-                m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
+                    m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
 #endif
 
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->ClearAllReactives();
-                m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MoveIdle();
-                m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
-                break;
-            case SAY_LEXLORT_4:
-                // Finish the quest
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_PRECARIOUS_PREDICAMENT, m_creature);
-                }
-                // Kill self
-                m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
-                break;
+                    m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    m_creature->ClearAllReactives();
+                    m_creature->GetMotionMaster()->Clear();
+                    m_creature->GetMotionMaster()->MoveIdle();
+                    m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
+                    break;
+                case SAY_LEXLORT_4:
+                    // Finish the quest
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_PRECARIOUS_PREDICAMENT, m_creature);
+                    }
+                    // Kill self
+                    m_creature->DealDamage(m_creature, m_creature->GetHealth(), nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
+                    break;
             }
         }
 
@@ -383,31 +382,31 @@ struct npc_grark_lorkrub : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_HIGH_EXECUTIONER_NUZARK:
-                m_nuzarkGuid = pSummoned->GetObjectGuid();
-                break;
-            case NPC_SHADOW_OF_LEXLORT:
-                m_lexlortGuid = pSummoned->GetObjectGuid();
-                break;
-            case NPC_SEARSCALE_DRAKE:
-                // If it's the flying drake allow him to move in circles
-                if (m_bIsFirstSearScale)
-                {
-                    m_bIsFirstSearScale = false;
+                case NPC_HIGH_EXECUTIONER_NUZARK:
+                    m_nuzarkGuid = pSummoned->GetObjectGuid();
+                    break;
+                case NPC_SHADOW_OF_LEXLORT:
+                    m_lexlortGuid = pSummoned->GetObjectGuid();
+                    break;
+                case NPC_SEARSCALE_DRAKE:
+                    // If it's the flying drake allow him to move in circles
+                    if (m_bIsFirstSearScale)
+                    {
+                        m_bIsFirstSearScale = false;
 
-                    pSummoned->SetLevitate(true);
-                    // ToDo: this guy should fly in circles above the creature
-                }
-                m_lSearscaleGuidList.push_back(pSummoned->GetObjectGuid());
-                break;
+                        pSummoned->SetLevitate(true);
+                        // ToDo: this guy should fly in circles above the creature
+                    }
+                    m_lSearscaleGuidList.push_back(pSummoned->GetObjectGuid());
+                    break;
 
-            default:
-                // The hostile mobs should attack the player only
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pSummoned->AI()->AttackStart(pPlayer);
-                }
-                break;
+                default:
+                    // The hostile mobs should attack the player only
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pSummoned->AI()->AttackStart(pPlayer);
+                    }
+                    break;
             }
         }
 
@@ -417,18 +416,18 @@ struct npc_grark_lorkrub : public CreatureScript
 
             switch (m_uiKilledCreatures)
             {
-            case 4:
-                DoScriptText(SAY_FIRST_AMBUSH_END, m_creature);
-                SetEscortPaused(false);
-                break;
-            case 8:
-                DoScriptText(SAY_SEC_AMBUSH_END, m_creature);
-                SetEscortPaused(false);
-                break;
-            case 11:
-                DoScriptText(SAY_THIRD_AMBUSH_END, m_creature);
-                SetEscortPaused(false);
-                break;
+                case 4:
+                    DoScriptText(SAY_FIRST_AMBUSH_END, m_creature);
+                    SetEscortPaused(false);
+                    break;
+                case 8:
+                    DoScriptText(SAY_SEC_AMBUSH_END, m_creature);
+                    SetEscortPaused(false);
+                    break;
+                case 11:
+                    DoScriptText(SAY_THIRD_AMBUSH_END, m_creature);
+                    SetEscortPaused(false);
+                    break;
             }
         }
 
@@ -436,15 +435,15 @@ struct npc_grark_lorkrub : public CreatureScript
         {
             switch (uiEntry)
             {
-            case NPC_GRARK_LORKRUB:
-                return m_creature;
-            case NPC_HIGH_EXECUTIONER_NUZARK:
-                return m_creature->GetMap()->GetCreature(m_nuzarkGuid);
-            case NPC_SHADOW_OF_LEXLORT:
-                return m_creature->GetMap()->GetCreature(m_lexlortGuid);
+                case NPC_GRARK_LORKRUB:
+                    return m_creature;
+                case NPC_HIGH_EXECUTIONER_NUZARK:
+                    return m_creature->GetMap()->GetCreature(m_nuzarkGuid);
+                case NPC_SHADOW_OF_LEXLORT:
+                    return m_creature->GetMap()->GetCreature(m_lexlortGuid);
 
-            default:
-                return nullptr;
+                default:
+                    return nullptr;
             }
         }
 

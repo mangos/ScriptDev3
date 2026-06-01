@@ -172,9 +172,8 @@ struct boss_jindo : public CreatureScript
                     {
 #if defined (CLASSIC) || defined (TBC)
                         pSummoned->AI()->AttackStart(pTarget);
-#endif
-#if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                    pSummoned->CastSpell(pSummoned, SPELL_SHADE_OF_JINDO_PASSIVE, true);
+#else
+                        pSummoned->CastSpell(pSummoned, SPELL_SHADE_OF_JINDO_PASSIVE, true);
 #endif
                     }
 

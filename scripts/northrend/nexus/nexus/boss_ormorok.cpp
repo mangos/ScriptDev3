@@ -139,26 +139,26 @@ struct boss_ormorok : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_CRYSTALLINE_TANGLER:
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
-                {
-                    pSummoned->AI()->AttackStart(pTarget);
-                }
-                break;
-            case NPC_CRYSTAL_SPIKE_TRIGGER:
-                pSummoned->CastSpell(pSummoned, SPELL_CRYSTAL_SPIKE_PRE, true);
-                ++m_uiSpikeCount;
-                // no break;
-            case NPC_CRYSTAL_SPIKE_INITIAL:
-                // Update orientation so we can always face the boss
-                pSummoned->SetFacingToObject(m_creature);
+                case NPC_CRYSTALLINE_TANGLER:
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                    {
+                        pSummoned->AI()->AttackStart(pTarget);
+                    }
+                    break;
+                case NPC_CRYSTAL_SPIKE_TRIGGER:
+                    pSummoned->CastSpell(pSummoned, SPELL_CRYSTAL_SPIKE_PRE, true);
+                    ++m_uiSpikeCount;
+                    // no break;
+                case NPC_CRYSTAL_SPIKE_INITIAL:
+                    // Update orientation so we can always face the boss
+                    pSummoned->SetFacingToObject(m_creature);
 
-                // allow continuous summoning only until we reach the limit
-                if (m_uiSpikeCount < MAX_ALLOWED_SPIKES)
-                {
-                    pSummoned->CastSpell(pSummoned, SPELL_CRYSTAL_SPIKE_AURA, true);
-                }
-                break;
+                    // allow continuous summoning only until we reach the limit
+                    if (m_uiSpikeCount < MAX_ALLOWED_SPIKES)
+                    {
+                        pSummoned->CastSpell(pSummoned, SPELL_CRYSTAL_SPIKE_AURA, true);
+                    }
+                    break;
             }
         }
 

@@ -70,44 +70,48 @@ struct npc_forest_frog : public CreatureScript
                 uint32 cEntry = 0;
                 switch (urand(0, 10))
                 {
-                case 0: cEntry = 24024; break;              // Kraz      // wrong here?
-                case 1: cEntry = 24397; break;              // Mannuth
-                case 2: cEntry = 24403; break;              // Deez
-                case 3: cEntry = 24404; break;              // Galathryn
-                case 4: cEntry = 24405; break;              // Adarrah
-                case 5: cEntry = 24406; break;              // Fudgerick
-                case 6: cEntry = 24407; break;              // Darwen
-                case 7: cEntry = 24445; break;              // Mitzi
-                case 8: cEntry = 24448; break;              // Christian
-                case 9: cEntry = 24453; break;              // Brennan
-                case 10: cEntry = 24455; break;             // Hollee
+                    case 0: cEntry = 24024; break;              // Kraz      // wrong here?
+                    case 1: cEntry = 24397; break;              // Mannuth
+                    case 2: cEntry = 24403; break;              // Deez
+                    case 3: cEntry = 24404; break;              // Galathryn
+                    case 4: cEntry = 24405; break;              // Adarrah
+                    case 5: cEntry = 24406; break;              // Fudgerick
+                    case 6: cEntry = 24407; break;              // Darwen
+                    case 7: cEntry = 24445; break;              // Mitzi
+                    case 8: cEntry = 24448; break;              // Christian
+                    case 9: cEntry = 24453; break;              // Brennan
+                    case 10: cEntry = 24455; break;             // Hollee
                 }
 
                 if (!m_pInstance->GetData(TYPE_RAND_VENDOR_1))
-                if (!urand(0, 9))
                 {
-                    cEntry = 24408;
-                }                         // Gunter
+                    if (!urand(0, 9))
+                    {
+                        cEntry = 24408;
+                    }                         // Gunter
+                }
 
                 if (!m_pInstance->GetData(TYPE_RAND_VENDOR_2))
-                if (!urand(0, 9))
                 {
-                    cEntry = 24409;
-                }                         // Kyren
+                    if (!urand(0, 9))
+                    {
+                        cEntry = 24409;
+                    }                         // Kyren
 
-                if (cEntry)
-                {
-                    m_creature->UpdateEntry(cEntry);
-                }
+                    if (cEntry)
+                    {
+                        m_creature->UpdateEntry(cEntry);
+                    }
 
-                if (cEntry == 24408)
-                {
-                    m_pInstance->SetData(TYPE_RAND_VENDOR_1, DONE);
-                }
+                    if (cEntry == 24408)
+                    {
+                        m_pInstance->SetData(TYPE_RAND_VENDOR_1, DONE);
+                    }
 
-                if (cEntry == 24409)
-                {
-                    m_pInstance->SetData(TYPE_RAND_VENDOR_2, DONE);
+                    if (cEntry == 24409)
+                    {
+                        m_pInstance->SetData(TYPE_RAND_VENDOR_2, DONE);
+                    }
                 }
             }
         }
@@ -171,22 +175,22 @@ struct npc_harrison_jones_za : public CreatureScript
 
             switch (uiPointId)
             {
-            case 1:
-                DoScriptText(SAY_AT_GONG, m_creature);
+                case 1:
+                    DoScriptText(SAY_AT_GONG, m_creature);
 
-                m_pInstance->DoToggleGameObjectFlags(GO_STRANGE_GONG, GO_FLAG_NO_INTERACT, false);
+                    m_pInstance->DoToggleGameObjectFlags(GO_STRANGE_GONG, GO_FLAG_NO_INTERACT, false);
 
-                // Start bang gong for 2min
-                DoCastSpellIfCan(m_creature, SPELL_BANGING_THE_GONG);
-                SetEscortPaused(true);
-                break;
-            case 3:
-                DoScriptText(SAY_OPEN_ENTRANCE, m_creature);
-                break;
-            case 4:
-                m_pInstance->SetData(TYPE_EVENT_RUN, IN_PROGRESS);
-                // TODO: Spawn group of Amani'shi Savage and make them run to entrance
-                break;
+                    // Start bang gong for 2min
+                    DoCastSpellIfCan(m_creature, SPELL_BANGING_THE_GONG);
+                    SetEscortPaused(true);
+                    break;
+                case 3:
+                    DoScriptText(SAY_OPEN_ENTRANCE, m_creature);
+                    break;
+                case 4:
+                    m_pInstance->SetData(TYPE_EVENT_RUN, IN_PROGRESS);
+                    // TODO: Spawn group of Amani'shi Savage and make them run to entrance
+                    break;
             }
         }
 

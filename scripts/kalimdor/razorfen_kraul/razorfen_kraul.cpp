@@ -90,18 +90,18 @@ struct npc_willix_the_importer : public CreatureScript
         {
             switch (urand(0, 6))                                // Not always said
             {
-            case 0:
-                DoScriptText(SAY_WILLIX_AGGRO_1, m_creature, pWho);
-                break;
-            case 1:
-                DoScriptText(SAY_WILLIX_AGGRO_2, m_creature, pWho);
-                break;
-            case 2:
-                DoScriptText(SAY_WILLIX_AGGRO_3, m_creature, pWho);
-                break;
-            case 3:
-                DoScriptText(SAY_WILLIX_AGGRO_4, m_creature, pWho);
-                break;
+                case 0:
+                    DoScriptText(SAY_WILLIX_AGGRO_1, m_creature, pWho);
+                    break;
+                case 1:
+                    DoScriptText(SAY_WILLIX_AGGRO_2, m_creature, pWho);
+                    break;
+                case 2:
+                    DoScriptText(SAY_WILLIX_AGGRO_3, m_creature, pWho);
+                    break;
+                case 3:
+                    DoScriptText(SAY_WILLIX_AGGRO_4, m_creature, pWho);
+                    break;
             }
         }
 
@@ -114,43 +114,43 @@ struct npc_willix_the_importer : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 2:
-                DoScriptText(SAY_WILLIX_1, m_creature);
-                break;
-            case 6:
-                DoScriptText(SAY_WILLIX_2, m_creature);
-                break;
-            case 9:
-                DoScriptText(SAY_WILLIX_3, m_creature);
-                break;
-            case 14:
-                DoScriptText(SAY_WILLIX_4, m_creature);
-                // Summon 2 boars on the pathway
-                m_creature->SummonCreature(NPC_RAGING_AGAMAR, aBoarSpawn[0][0], aBoarSpawn[0][1], aBoarSpawn[0][2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
-                m_creature->SummonCreature(NPC_RAGING_AGAMAR, aBoarSpawn[1][0], aBoarSpawn[1][1], aBoarSpawn[1][2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
-                break;
-            case 25:
-                DoScriptText(SAY_WILLIX_5, m_creature);
-                break;
-            case 33:
-                DoScriptText(SAY_WILLIX_6, m_creature);
-                break;
-            case 44:
-                DoScriptText(SAY_WILLIX_7, m_creature);
-                // Summon 2 boars at the end
-                m_creature->SummonCreature(NPC_RAGING_AGAMAR, aBoarSpawn[2][0], aBoarSpawn[2][1], aBoarSpawn[2][2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
-                m_creature->SummonCreature(NPC_RAGING_AGAMAR, aBoarSpawn[3][0], aBoarSpawn[3][1], aBoarSpawn[3][2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
-                break;
-            case 45:
-                DoScriptText(SAY_WILLIX_END, m_creature);
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                // Complete event
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_WILLIX_THE_IMPORTER, m_creature);
-                }
-                SetEscortPaused(true);
-                break;
+                case 2:
+                    DoScriptText(SAY_WILLIX_1, m_creature);
+                    break;
+                case 6:
+                    DoScriptText(SAY_WILLIX_2, m_creature);
+                    break;
+                case 9:
+                    DoScriptText(SAY_WILLIX_3, m_creature);
+                    break;
+                case 14:
+                    DoScriptText(SAY_WILLIX_4, m_creature);
+                    // Summon 2 boars on the pathway
+                    m_creature->SummonCreature(NPC_RAGING_AGAMAR, aBoarSpawn[0][0], aBoarSpawn[0][1], aBoarSpawn[0][2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    m_creature->SummonCreature(NPC_RAGING_AGAMAR, aBoarSpawn[1][0], aBoarSpawn[1][1], aBoarSpawn[1][2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    break;
+                case 25:
+                    DoScriptText(SAY_WILLIX_5, m_creature);
+                    break;
+                case 33:
+                    DoScriptText(SAY_WILLIX_6, m_creature);
+                    break;
+                case 44:
+                    DoScriptText(SAY_WILLIX_7, m_creature);
+                    // Summon 2 boars at the end
+                    m_creature->SummonCreature(NPC_RAGING_AGAMAR, aBoarSpawn[2][0], aBoarSpawn[2][1], aBoarSpawn[2][2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    m_creature->SummonCreature(NPC_RAGING_AGAMAR, aBoarSpawn[3][0], aBoarSpawn[3][1], aBoarSpawn[3][2], 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 25000);
+                    break;
+                case 45:
+                    DoScriptText(SAY_WILLIX_END, m_creature);
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                    // Complete event
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_WILLIX_THE_IMPORTER, m_creature);
+                    }
+                    SetEscortPaused(true);
+                    break;
             }
         }
     };
@@ -253,7 +253,7 @@ struct npc_snufflenose_gopher : public CreatureScript
                 if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && (*itr)->IsWithinLOSInMap(m_creature) && (*itr)->GetDistanceZ(m_creature) <= 6.0f)
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-            if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && (*itr)->IsWithinLOSInMap(m_creature))
+                if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && (*itr)->IsWithinLOSInMap(m_creature))
 #endif
                 {
                     pNearestTubber = *itr;
@@ -295,7 +295,7 @@ struct spell_npc_snufflenose_gopher : public SpellScript
     bool EffectDummy(Unit* /*pCaster*/, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Object* pCreatureTarget, ObjectGuid /*originalCasterGuid*/) override
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-bool EffectDummyCreature_npc_snufflenose_gopher(Unit* /*pCaster*/, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
+    bool EffectDummyCreature_npc_snufflenose_gopher(Unit* /*pCaster*/, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
 #endif
     {
         // always check spellid and effectindex

@@ -38,7 +38,7 @@
 
 // for non-instantiable maps, ZoneScript provides excessive mechanic, but nevertheless
 
-/* *********************************************************
+/** *********************************************************
  *                  EASTERN KINGDOMS
  */
 struct map_eastern_kingdoms : public ZoneScript
@@ -53,12 +53,12 @@ struct map_eastern_kingdoms : public ZoneScript
         {
             switch (pCreature->GetEntry())
             {
-            case NPC_JONATHAN:
-            case NPC_WRYNN:
-            case NPC_BOLVAR:
-            case NPC_PRESTOR:
-            case NPC_WINDSOR:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                case NPC_JONATHAN:
+                case NPC_WRYNN:
+                case NPC_BOLVAR:
+                case NPC_PRESTOR:
+                case NPC_WINDSOR:
+                    m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             }
         }
 
@@ -71,7 +71,7 @@ struct map_eastern_kingdoms : public ZoneScript
     }
 };
 
-/* *********************************************************
+/** *********************************************************
  *                     KALIMDOR
  */
 struct map_kalimdor : public ZoneScript
@@ -101,56 +101,56 @@ struct map_kalimdor : public ZoneScript
         {
             switch (pCreature->GetEntry())
             {
-            case NPC_GREYMIST_COASTRUNNNER:
-                if (pCreature->IsTemporarySummon())         // Only count the ones summoned for Murkdeep quest
-                {
-                    ++m_uiMurkdeepAdds_KilledAddCount;
-
-                    // If all 3 coastrunners are killed, summon 2 warriors
-                    if (m_uiMurkdeepAdds_KilledAddCount == 3)
+                case NPC_GREYMIST_COASTRUNNNER:
+                    if (pCreature->IsTemporarySummon())         // Only count the ones summoned for Murkdeep quest
                     {
-                        float fX, fY, fZ;
-                        for (uint8 i = 0; i < 2; ++i)
+                        ++m_uiMurkdeepAdds_KilledAddCount;
+
+                        // If all 3 coastrunners are killed, summon 2 warriors
+                        if (m_uiMurkdeepAdds_KilledAddCount == 3)
                         {
-                            pCreature->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][0], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][1], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][2], 5.0f, fX, fY, fZ);
-
-                            if (Creature* pTemp = pCreature->SummonCreature(NPC_GREYMIST_WARRIOR, fX, fY, fZ, aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][3], TEMPSPAWN_DEAD_DESPAWN, 0))
+                            float fX, fY, fZ;
+                            for (uint8 i = 0; i < 2; ++i)
                             {
-                                pTemp->SetWalk(false);
-                                pTemp->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_MOVE][0], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][1], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][2], 5.0f, fX, fY, fZ);
-                                pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                                pCreature->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][0], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][1], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][2], 5.0f, fX, fY, fZ);
+
+                                if (Creature* pTemp = pCreature->SummonCreature(NPC_GREYMIST_WARRIOR, fX, fY, fZ, aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][3], TEMPSPAWN_DEAD_DESPAWN, 0))
+                                {
+                                    pTemp->SetWalk(false);
+                                    pTemp->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_MOVE][0], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][1], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][2], 5.0f, fX, fY, fZ);
+                                    pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                                }
                             }
+
+                            m_uiMurkdeepAdds_KilledAddCount = 0;
                         }
-
-                        m_uiMurkdeepAdds_KilledAddCount = 0;
                     }
-                }
-                break;
-            case NPC_GREYMIST_WARRIOR:
-                if (pCreature->IsTemporarySummon())         // Only count the ones summoned for Murkdeep quest
-                {
-                    ++m_uiMurkdeepAdds_KilledAddCount;
-
-                    // After the 2 warriors are killed, Murkdeep spawns, along with a hunter
-                    if (m_uiMurkdeepAdds_KilledAddCount == 2)
+                    break;
+                case NPC_GREYMIST_WARRIOR:
+                    if (pCreature->IsTemporarySummon())         // Only count the ones summoned for Murkdeep quest
                     {
-                        float fX, fY, fZ;
-                        for (uint8 i = 0; i < 2; ++i)
+                        ++m_uiMurkdeepAdds_KilledAddCount;
+
+                        // After the 2 warriors are killed, Murkdeep spawns, along with a hunter
+                        if (m_uiMurkdeepAdds_KilledAddCount == 2)
                         {
-                            pCreature->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][0], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][1], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][2], 5.0f, fX, fY, fZ);
-
-                            if (Creature* pTemp = pCreature->SummonCreature(!i ? NPC_MURKDEEP : NPC_GREYMIST_HUNTER, fX, fY, fZ, aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][3], TEMPSPAWN_DEAD_DESPAWN, 0))
+                            float fX, fY, fZ;
+                            for (uint8 i = 0; i < 2; ++i)
                             {
-                                pTemp->SetWalk(false);
-                                pTemp->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_MOVE][0], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][1], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][2], 5.0f, fX, fY, fZ);
-                                pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
-                            }
-                        }
+                                pCreature->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][0], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][1], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][2], 5.0f, fX, fY, fZ);
 
-                        m_uiMurkdeepAdds_KilledAddCount = 0;
+                                if (Creature* pTemp = pCreature->SummonCreature(!i ? NPC_MURKDEEP : NPC_GREYMIST_HUNTER, fX, fY, fZ, aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][3], TEMPSPAWN_DEAD_DESPAWN, 0))
+                                {
+                                    pTemp->SetWalk(false);
+                                    pTemp->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_MOVE][0], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][1], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][2], 5.0f, fX, fY, fZ);
+                                    pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                                }
+                            }
+
+                            m_uiMurkdeepAdds_KilledAddCount = 0;
+                        }
                     }
-                }
-                break;
+                    break;
             }
         }
 
@@ -164,7 +164,7 @@ struct map_kalimdor : public ZoneScript
 };
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-/* *********************************************************
+/** *********************************************************
  *                     OUTLAND
  */
 struct map_outland : public ZoneScript
@@ -194,18 +194,18 @@ struct map_outland : public ZoneScript
         {
             switch (pCreature->GetEntry())
             {
-            case NPC_IRESPEAKER:
-            case NPC_UNLEASHED_HELLION:
-                if (!GetSingleCreatureFromStorage(NPC_EMISSARY_OF_HATE, true))
-                {
-                    ++m_uiEmissaryOfHate_KilledAddCount;
-                    if (m_uiEmissaryOfHate_KilledAddCount == 6)
+                case NPC_IRESPEAKER:
+                case NPC_UNLEASHED_HELLION:
+                    if (!GetSingleCreatureFromStorage(NPC_EMISSARY_OF_HATE, true))
                     {
-                        pCreature->SummonCreature(NPC_EMISSARY_OF_HATE, aSpawnLocations[POS_IDX_EMISSARY_SPAWN][0], aSpawnLocations[POS_IDX_EMISSARY_SPAWN][1], aSpawnLocations[POS_IDX_EMISSARY_SPAWN][2], aSpawnLocations[POS_IDX_EMISSARY_SPAWN][3], TEMPSPAWN_DEAD_DESPAWN, 0);
-                        m_uiEmissaryOfHate_KilledAddCount = 0;
+                        ++m_uiEmissaryOfHate_KilledAddCount;
+                        if (m_uiEmissaryOfHate_KilledAddCount == 6)
+                        {
+                            pCreature->SummonCreature(NPC_EMISSARY_OF_HATE, aSpawnLocations[POS_IDX_EMISSARY_SPAWN][0], aSpawnLocations[POS_IDX_EMISSARY_SPAWN][1], aSpawnLocations[POS_IDX_EMISSARY_SPAWN][2], aSpawnLocations[POS_IDX_EMISSARY_SPAWN][3], TEMPSPAWN_DEAD_DESPAWN, 0);
+                            m_uiEmissaryOfHate_KilledAddCount = 0;
+                        }
                     }
-                }
-                break;
+                    break;
             }
         }
 
@@ -219,7 +219,7 @@ struct map_outland : public ZoneScript
 };
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-/* *********************************************************
+/** *********************************************************
  *                     NORTHREND
  */
 struct  map_northrend : public ZoneScript
@@ -266,16 +266,16 @@ void AddSC_world_map_scripts()
     //pNewScript->GetInstanceData = &GetInstanceData_world_map_kalimdor;
     //pNewScript->RegisterSelf();
 
-//#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
+    //#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "world_map_outland";
     //pNewScript->GetInstanceData = &GetInstanceData_world_map_outland;
     //pNewScript->RegisterSelf();
-//#endif
-//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
+    //#endif
+    //#if defined (WOTLK) || defined (CATA) || defined(MISTS)
     //pNewScript = new Script;
     //pNewScript->Name = "world_map_northrend";
     //pNewScript->GetInstanceData = &GetInstanceData_world_map_northrend;
     //pNewScript->RegisterSelf();
-//#endif
+    //#endif
 }

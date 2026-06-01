@@ -137,29 +137,29 @@ struct boss_saviana : public CreatureScript
 
             switch (uiPointId)
             {
-            case POINT_AIR:
-                if (DoCastSpellIfCan(m_creature, SPELL_CONFLAGRATION) == CAST_OK)
-                {
-                    DoScriptText(SAY_SPECIAL, m_creature);
-                    m_uiPhaseSwitchTimer = 6000;
-                    m_uiPhase = PHASE_AIR;
-                }
+                case POINT_AIR:
+                    if (DoCastSpellIfCan(m_creature, SPELL_CONFLAGRATION) == CAST_OK)
+                    {
+                        DoScriptText(SAY_SPECIAL, m_creature);
+                        m_uiPhaseSwitchTimer = 6000;
+                        m_uiPhase = PHASE_AIR;
+                    }
 
-                break;
-            case POINT_GROUND:
-                m_uiPhase = PHASE_GROUND;
-                m_uiPhaseSwitchTimer = 38000;
+                    break;
+                case POINT_GROUND:
+                    m_uiPhase = PHASE_GROUND;
+                    m_uiPhaseSwitchTimer = 38000;
 
-                SetCombatMovement(true);
-                m_creature->SetLevitate(false);
-                m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0);
+                    SetCombatMovement(true);
+                    m_creature->SetLevitate(false);
+                    m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0);
 
-                if (m_creature->getVictim())
-                {
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                }
+                    if (m_creature->getVictim())
+                    {
+                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                    }
 
-                break;
+                    break;
             }
         }
 
@@ -172,75 +172,75 @@ struct boss_saviana : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_GROUND:
+                case PHASE_GROUND:
 
-                if (m_uiFlameBreathTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BREATH) == CAST_OK)
+                    if (m_uiFlameBreathTimer < uiDiff)
                     {
-                        m_uiFlameBreathTimer = urand(20000, 25000);
+                        if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BREATH) == CAST_OK)
+                        {
+                            m_uiFlameBreathTimer = urand(20000, 25000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiFlameBreathTimer -= uiDiff;
-                }
-
-                if (m_uiEnrageTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
+                    else
                     {
-                        DoScriptText(EMOTE_ENRAGE, m_creature);
-                        m_uiEnrageTimer = urand(20000, 25000);
+                        m_uiFlameBreathTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiEnrageTimer -= uiDiff;
-                }
 
-                if (m_uiPhaseSwitchTimer < uiDiff)
-                {
-                    m_uiPhaseSwitchTimer = 0;
-                    m_uiPhase = PHASE_TRANSITION;
-
-                    SetCombatMovement(false);
-                    m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-                    m_creature->SetLevitate(true);
-
-                    m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MovePoint(POINT_AIR, aAirPositions[0], aAirPositions[1], aAirPositions[2]);
-                }
-                else
-                {
-                    m_uiPhaseSwitchTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-
-                break;
-            case PHASE_AIR:
-                if (m_uiPhaseSwitchTimer)
-                {
-                    if (m_uiPhaseSwitchTimer <= uiDiff)
+                    if (m_uiEnrageTimer < uiDiff)
                     {
-                        m_uiPhase = PHASE_TRANSITION;
+                        if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
+                        {
+                            DoScriptText(EMOTE_ENRAGE, m_creature);
+                            m_uiEnrageTimer = urand(20000, 25000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiEnrageTimer -= uiDiff;
+                    }
+
+                    if (m_uiPhaseSwitchTimer < uiDiff)
+                    {
                         m_uiPhaseSwitchTimer = 0;
+                        m_uiPhase = PHASE_TRANSITION;
 
-                        float fX, fY, fZ;
-                        m_creature->GetRespawnCoord(fX, fY, fZ);
+                        SetCombatMovement(false);
+                        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
+                        m_creature->SetLevitate(true);
+
                         m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MovePoint(POINT_GROUND, fX, fY, fZ);
+                        m_creature->GetMotionMaster()->MovePoint(POINT_AIR, aAirPositions[0], aAirPositions[1], aAirPositions[2]);
                     }
                     else
                     {
                         m_uiPhaseSwitchTimer -= uiDiff;
                     }
-                }
-                break;
-            case PHASE_TRANSITION:
-                // nothing here
-                break;
+
+                    DoMeleeAttackIfReady();
+
+                    break;
+                case PHASE_AIR:
+                    if (m_uiPhaseSwitchTimer)
+                    {
+                        if (m_uiPhaseSwitchTimer <= uiDiff)
+                        {
+                            m_uiPhase = PHASE_TRANSITION;
+                            m_uiPhaseSwitchTimer = 0;
+
+                            float fX, fY, fZ;
+                            m_creature->GetRespawnCoord(fX, fY, fZ);
+                            m_creature->GetMotionMaster()->Clear();
+                            m_creature->GetMotionMaster()->MovePoint(POINT_GROUND, fX, fY, fZ);
+                        }
+                        else
+                        {
+                            m_uiPhaseSwitchTimer -= uiDiff;
+                        }
+                    }
+                    break;
+                case PHASE_TRANSITION:
+                    // nothing here
+                    break;
             }
         }
     };

@@ -124,14 +124,14 @@ struct npc_beast_combat_stalker : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_GORMOK:     m_uiPhase = PHASE_GORMOK;  break;
-            case NPC_DREADSCALE: m_uiPhase = PHASE_WORMS;   break;
-            case NPC_ICEHOWL:    m_uiPhase = PHASE_ICEHOWL; break;
-            case NPC_ACIDMAW:
-                // Cast emerge and delayed set in combat?
-                pSummoned->SetInCombatWithZone();
-                m_aSummonedBossGuid[3] = pSummoned->GetObjectGuid();
-                return;
+                case NPC_GORMOK:     m_uiPhase = PHASE_GORMOK;  break;
+                case NPC_DREADSCALE: m_uiPhase = PHASE_WORMS;   break;
+                case NPC_ICEHOWL:    m_uiPhase = PHASE_ICEHOWL; break;
+                case NPC_ACIDMAW:
+                    // Cast emerge and delayed set in combat?
+                    pSummoned->SetInCombatWithZone();
+                    m_aSummonedBossGuid[3] = pSummoned->GetObjectGuid();
+                    return;
             }
 
             m_aSummonedBossGuid[m_uiPhase] = pSummoned->GetObjectGuid();
@@ -179,29 +179,29 @@ struct npc_beast_combat_stalker : public CreatureScript
 
             switch (pSummoned->GetEntry())
             {
-            case NPC_GORMOK:
-                if (m_uiPhase == PHASE_GORMOK)
-                {
-                    DoSummonNextBeast(NPC_DREADSCALE);
-                }
-                break;
+                case NPC_GORMOK:
+                    if (m_uiPhase == PHASE_GORMOK)
+                    {
+                        DoSummonNextBeast(NPC_DREADSCALE);
+                    }
+                    break;
 
-            case NPC_DREADSCALE:
-            case NPC_ACIDMAW:
-                if (m_bFirstWormDied && m_uiPhase == PHASE_WORMS)
-                {
-                    DoSummonNextBeast(NPC_ICEHOWL);
-                }
-                else
-                {
-                    m_bFirstWormDied = true;
-                }
-                break;
+                case NPC_DREADSCALE:
+                case NPC_ACIDMAW:
+                    if (m_bFirstWormDied && m_uiPhase == PHASE_WORMS)
+                    {
+                        DoSummonNextBeast(NPC_ICEHOWL);
+                    }
+                    else
+                    {
+                        m_bFirstWormDied = true;
+                    }
+                    break;
 
-            case NPC_ICEHOWL:
-                m_pInstance->SetData(TYPE_NORTHREND_BEASTS, DONE);
-                m_creature->ForcedDespawn();
-                break;
+                case NPC_ICEHOWL:
+                    m_pInstance->SetData(TYPE_NORTHREND_BEASTS, DONE);
+                    m_creature->ForcedDespawn();
+                    break;
             }
         }
 

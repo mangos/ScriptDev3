@@ -166,9 +166,9 @@ struct boss_bjarngrim : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
             }
         }
 
@@ -218,21 +218,21 @@ struct boss_bjarngrim : public CreatureScript
 
                 switch (m_uiStance)
                 {
-                case STANCE_DEFENSIVE:
-                    DoScriptText(SAY_DEFENSIVE_STANCE, m_creature);
-                    DoScriptText(EMOTE_DEFENSIVE_STANCE, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_DEFENSIVE_STANCE);
-                    break;
-                case STANCE_BERSERKER:
-                    DoScriptText(SAY_BERSEKER_STANCE, m_creature);
-                    DoScriptText(EMOTE_BERSEKER_STANCE, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_BERSEKER_STANCE);
-                    break;
-                case STANCE_BATTLE:
-                    DoScriptText(SAY_BATTLE_STANCE, m_creature);
-                    DoScriptText(EMOTE_BATTLE_STANCE, m_creature);
-                    DoCastSpellIfCan(m_creature, SPELL_BATTLE_STANCE);
-                    break;
+                    case STANCE_DEFENSIVE:
+                        DoScriptText(SAY_DEFENSIVE_STANCE, m_creature);
+                        DoScriptText(EMOTE_DEFENSIVE_STANCE, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_DEFENSIVE_STANCE);
+                        break;
+                    case STANCE_BERSERKER:
+                        DoScriptText(SAY_BERSEKER_STANCE, m_creature);
+                        DoScriptText(EMOTE_BERSEKER_STANCE, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_BERSEKER_STANCE);
+                        break;
+                    case STANCE_BATTLE:
+                        DoScriptText(SAY_BATTLE_STANCE, m_creature);
+                        DoScriptText(EMOTE_BATTLE_STANCE, m_creature);
+                        DoCastSpellIfCan(m_creature, SPELL_BATTLE_STANCE);
+                        break;
                 }
 
                 m_uiChangeStanceTimer = urand(20000, 25000);
@@ -245,121 +245,121 @@ struct boss_bjarngrim : public CreatureScript
 
             switch (m_uiStance)
             {
-            case STANCE_DEFENSIVE:
-                if (m_uiReflectionTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SPELL_REFLECTION) == CAST_OK)
+                case STANCE_DEFENSIVE:
+                    if (m_uiReflectionTimer < uiDiff)
                     {
-                        m_uiReflectionTimer = urand(8000, 9000);
+                        if (DoCastSpellIfCan(m_creature, SPELL_SPELL_REFLECTION) == CAST_OK)
+                        {
+                            m_uiReflectionTimer = urand(8000, 9000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiReflectionTimer -= uiDiff;
-                }
-
-                if (m_uiKnockAwayTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_KNOCK_AWAY) == CAST_OK)
+                    else
                     {
-                        m_uiKnockAwayTimer = urand(20000, 21000);
+                        m_uiReflectionTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiKnockAwayTimer -= uiDiff;
-                }
 
-                if (m_uiPummelTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PUMMEL) == CAST_OK)
+                    if (m_uiKnockAwayTimer < uiDiff)
                     {
-                        m_uiPummelTimer = urand(10000, 11000);
+                        if (DoCastSpellIfCan(m_creature, SPELL_KNOCK_AWAY) == CAST_OK)
+                        {
+                            m_uiKnockAwayTimer = urand(20000, 21000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiPummelTimer -= uiDiff;
-                }
-
-                if (m_uiIronformTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_IRONFORM) == CAST_OK)
+                    else
                     {
-                        m_uiIronformTimer = urand(25000, 26000);
+                        m_uiKnockAwayTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiIronformTimer -= uiDiff;
-                }
 
-                break;
-            case STANCE_BERSERKER:
-                if (m_uiInterceptTimer < uiDiff)
-                {
-                    // not much point is this, better random target and more often?
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_INTERCEPT) == CAST_OK)
+                    if (m_uiPummelTimer < uiDiff)
                     {
-                        m_uiInterceptTimer = urand(45000, 46000);
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PUMMEL) == CAST_OK)
+                        {
+                            m_uiPummelTimer = urand(10000, 11000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiInterceptTimer -= uiDiff;
-                }
-
-                if (m_uiWhirlwindTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_WHIRLWIND) == CAST_OK)
+                    else
                     {
-                        m_uiWhirlwindTimer = urand(10000, 11000);
+                        m_uiPummelTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiWhirlwindTimer -= uiDiff;
-                }
 
-                if (m_uiCleaveTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                    if (m_uiIronformTimer < uiDiff)
                     {
-                        m_uiCleaveTimer = urand(8000, 9000);
+                        if (DoCastSpellIfCan(m_creature, SPELL_IRONFORM) == CAST_OK)
+                        {
+                            m_uiIronformTimer = urand(25000, 26000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiCleaveTimer -= uiDiff;
-                }
-
-                break;
-            case STANCE_BATTLE:
-                if (m_uiMortalStrikeTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTAL_STRIKE) == CAST_OK)
+                    else
                     {
-                        m_uiMortalStrikeTimer = urand(20000, 21000);
+                        m_uiIronformTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiMortalStrikeTimer -= uiDiff;
-                }
 
-                if (m_uiSlamTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SLAM) == CAST_OK)
+                    break;
+                case STANCE_BERSERKER:
+                    if (m_uiInterceptTimer < uiDiff)
                     {
-                        m_uiSlamTimer = urand(15000, 16000);
+                        // not much point is this, better random target and more often?
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_INTERCEPT) == CAST_OK)
+                        {
+                            m_uiInterceptTimer = urand(45000, 46000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiSlamTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiInterceptTimer -= uiDiff;
+                    }
 
-                break;
+                    if (m_uiWhirlwindTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_WHIRLWIND) == CAST_OK)
+                        {
+                            m_uiWhirlwindTimer = urand(10000, 11000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiWhirlwindTimer -= uiDiff;
+                    }
+
+                    if (m_uiCleaveTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                        {
+                            m_uiCleaveTimer = urand(8000, 9000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiCleaveTimer -= uiDiff;
+                    }
+
+                    break;
+                case STANCE_BATTLE:
+                    if (m_uiMortalStrikeTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTAL_STRIKE) == CAST_OK)
+                        {
+                            m_uiMortalStrikeTimer = urand(20000, 21000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiMortalStrikeTimer -= uiDiff;
+                    }
+
+                    if (m_uiSlamTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SLAM) == CAST_OK)
+                        {
+                            m_uiSlamTimer = urand(15000, 16000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiSlamTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();

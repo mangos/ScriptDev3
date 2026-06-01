@@ -102,47 +102,47 @@ struct mob_stolen_soul : public CreatureScript
             {
                 switch (m_uiStolenClass)
                 {
-                case CLASS_WARRIOR:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTAL_STRIKE);
-                    m_uiSpellTimer = 6000;
-                    break;
-                case CLASS_PALADIN:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_HAMMER_OF_JUSTICE);
-                    m_uiSpellTimer = 6000;
-                    break;
-                case CLASS_HUNTER:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_FREEZING_TRAP);
-                    m_uiSpellTimer = 20000;
-                    break;
-                case CLASS_ROGUE:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_HEMORRHAGE);
-                    m_uiSpellTimer = 10000;
-                    break;
-                case CLASS_PRIEST:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIND_FLAY);
-                    m_uiSpellTimer = 5000;
-                    break;
-                case CLASS_SHAMAN:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROSTSHOCK);
-                    m_uiSpellTimer = 8000;
-                    break;
-                case CLASS_MAGE:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIREBALL);
-                    m_uiSpellTimer = 5000;
-                    break;
-                case CLASS_WARLOCK:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSE_OF_AGONY);
-                    m_uiSpellTimer = 20000;
-                    break;
-                case CLASS_DRUID:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_MOONFIRE);
-                    m_uiSpellTimer = 10000;
-                    break;
+                    case CLASS_WARRIOR:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTAL_STRIKE);
+                        m_uiSpellTimer = 6000;
+                        break;
+                    case CLASS_PALADIN:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_HAMMER_OF_JUSTICE);
+                        m_uiSpellTimer = 6000;
+                        break;
+                    case CLASS_HUNTER:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_FREEZING_TRAP);
+                        m_uiSpellTimer = 20000;
+                        break;
+                    case CLASS_ROGUE:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_HEMORRHAGE);
+                        m_uiSpellTimer = 10000;
+                        break;
+                    case CLASS_PRIEST:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIND_FLAY);
+                        m_uiSpellTimer = 5000;
+                        break;
+                    case CLASS_SHAMAN:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROSTSHOCK);
+                        m_uiSpellTimer = 8000;
+                        break;
+                    case CLASS_MAGE:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_FIREBALL);
+                        m_uiSpellTimer = 5000;
+                        break;
+                    case CLASS_WARLOCK:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_CURSE_OF_AGONY);
+                        m_uiSpellTimer = 20000;
+                        break;
+                    case CLASS_DRUID:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_MOONFIRE);
+                        m_uiSpellTimer = 10000;
+                        break;
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                case CLASS_DEATH_KNIGHT:
-                    DoCastSpellIfCan(m_creature->getVictim(), SPELL_PLAGUE_STRIKE);
-                    m_uiSpellTimer = 10000;
-                    break;
+                    case CLASS_DEATH_KNIGHT:
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_PLAGUE_STRIKE);
+                        m_uiSpellTimer = 10000;
+                        break;
 #endif
                 }
             }
@@ -230,9 +230,9 @@ struct boss_exarch_maladaar : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
+                case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
+                case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
+                case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
             }
         }
 

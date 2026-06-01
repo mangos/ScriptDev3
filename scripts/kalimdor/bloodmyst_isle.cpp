@@ -66,17 +66,17 @@ struct mob_webbed_creature : public CreatureScript
 
             switch (urand(0, 2))
             {
-            case 0:
-                uiSpawnCreatureEntry = NPC_EXPEDITION_RESEARCHER;
-                if (pKiller->GetTypeId() == TYPEID_PLAYER)
-                {
-                    ((Player*)pKiller)->KilledMonsterCredit(uiSpawnCreatureEntry, m_creature->GetObjectGuid());
-                }
-                break;
-            case 1:
-            case 2:
-                uiSpawnCreatureEntry = possibleSpawns[urand(0, 30)];
-                break;
+                case 0:
+                    uiSpawnCreatureEntry = NPC_EXPEDITION_RESEARCHER;
+                    if (pKiller->GetTypeId() == TYPEID_PLAYER)
+                    {
+                        ((Player*)pKiller)->KilledMonsterCredit(uiSpawnCreatureEntry, m_creature->GetObjectGuid());
+                    }
+                    break;
+                case 1:
+                case 2:
+                    uiSpawnCreatureEntry = possibleSpawns[urand(0, 30)];
+                    break;
             }
 
             if (uiSpawnCreatureEntry)

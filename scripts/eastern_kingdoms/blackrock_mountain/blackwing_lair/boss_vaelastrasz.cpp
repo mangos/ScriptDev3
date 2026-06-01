@@ -209,29 +209,29 @@ struct boss_vaelastrasz : public CreatureScript
                 {
                     switch (m_uiIntroPhase)
                     {
-                    case 0:
-                        m_creature->SummonCreature(NPC_LORD_VICTOR_NEFARIUS, aNefariusSpawnLoc[0], aNefariusSpawnLoc[1], aNefariusSpawnLoc[2], aNefariusSpawnLoc[3], TEMPSPAWN_TIMED_DESPAWN, 25000);
-                        m_uiIntroTimer = 1000;
-                        break;
-                    case 1:
-                        if (Creature* pNefarius = m_creature->GetMap()->GetCreature(m_nefariusGuid))
-                        {
-                            pNefarius->CastSpell(m_creature, SPELL_NEFARIUS_CORRUPTION, true);
-                            DoScriptText(SAY_NEFARIUS_CORRUPT_1, pNefarius);
-                        }
-                        m_uiIntroTimer = 16000;
-                        break;
-                    case 2:
-                        if (Creature* pNefarius = m_creature->GetMap()->GetCreature(m_nefariusGuid))
-                        {
-                            DoScriptText(SAY_NEFARIUS_CORRUPT_2, pNefarius);
-                        }
+                        case 0:
+                            m_creature->SummonCreature(NPC_LORD_VICTOR_NEFARIUS, aNefariusSpawnLoc[0], aNefariusSpawnLoc[1], aNefariusSpawnLoc[2], aNefariusSpawnLoc[3], TEMPSPAWN_TIMED_DESPAWN, 25000);
+                            m_uiIntroTimer = 1000;
+                            break;
+                        case 1:
+                            if (Creature* pNefarius = m_creature->GetMap()->GetCreature(m_nefariusGuid))
+                            {
+                                pNefarius->CastSpell(m_creature, SPELL_NEFARIUS_CORRUPTION, true);
+                                DoScriptText(SAY_NEFARIUS_CORRUPT_1, pNefarius);
+                            }
+                            m_uiIntroTimer = 16000;
+                            break;
+                        case 2:
+                            if (Creature* pNefarius = m_creature->GetMap()->GetCreature(m_nefariusGuid))
+                            {
+                                DoScriptText(SAY_NEFARIUS_CORRUPT_2, pNefarius);
+                            }
 
-                        // Set npc flags now
-                        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                        m_uiIntroTimer = 0;
-                        break;
+                            // Set npc flags now
+                            m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                            m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                            m_uiIntroTimer = 0;
+                            break;
                     }
                     ++m_uiIntroPhase;
                 }
@@ -248,30 +248,30 @@ struct boss_vaelastrasz : public CreatureScript
                 {
                     switch (m_uiSpeechNum)
                     {
-                    case 0:
-                        // 16 seconds till next line
-                        DoScriptText(SAY_LINE_2, m_creature);
-                        m_uiSpeechTimer = 16000;
-                        ++m_uiSpeechNum;
-                        break;
-                    case 1:
-                        // This one is actually 16 seconds but we only go to 10 seconds because he starts attacking after he says "I must fight this!"
-                        DoScriptText(SAY_LINE_3, m_creature);
-                        m_uiSpeechTimer = 10000;
-                        ++m_uiSpeechNum;
-                        break;
-                    case 2:
-                        m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_RESPAWN);
+                        case 0:
+                            // 16 seconds till next line
+                            DoScriptText(SAY_LINE_2, m_creature);
+                            m_uiSpeechTimer = 16000;
+                            ++m_uiSpeechNum;
+                            break;
+                        case 1:
+                            // This one is actually 16 seconds but we only go to 10 seconds because he starts attacking after he says "I must fight this!"
+                            DoScriptText(SAY_LINE_3, m_creature);
+                            m_uiSpeechTimer = 10000;
+                            ++m_uiSpeechNum;
+                            break;
+                        case 2:
+                            m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_RESPAWN);
 
-                        if (m_playerGuid)
-                        {
-                            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                            if (m_playerGuid)
                             {
-                                AttackStart(pPlayer);
+                                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                                {
+                                    AttackStart(pPlayer);
+                                }
                             }
-                        }
-                        m_uiSpeechTimer = 0;
-                        break;
+                            m_uiSpeechTimer = 0;
+                            break;
                     }
                 }
                 else
@@ -382,17 +382,17 @@ struct boss_vaelastrasz : public CreatureScript
         pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_VAEL_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_VAEL_2, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            if (boss_vaelastraszAI* pVaelAI = dynamic_cast<boss_vaelastraszAI*>(pCreature->AI()))
-            {
-                pVaelAI->BeginSpeech(pPlayer);
-            }
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_VAEL_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_VAEL_2, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                if (boss_vaelastraszAI* pVaelAI = dynamic_cast<boss_vaelastraszAI*>(pCreature->AI()))
+                {
+                    pVaelAI->BeginSpeech(pPlayer);
+                }
+                break;
         }
 
         return true;
@@ -436,10 +436,12 @@ struct at_vaelastrasz : public AreaTriggerScript
                 if (pInstance->GetData(TYPE_VAELASTRASZ) == NOT_STARTED)
                 {
                     if (Creature* pVaelastrasz = pInstance->GetSingleCreatureFromStorage(NPC_VAELASTRASZ))
+                    {
                         if (CreatureAI* pVaelAI = pVaelastrasz->AI())
                         {
                             pVaelAI->SendAIEvent(AI_EVENT_START_EVENT, pPlayer, pVaelastrasz);
                         }
+                    }
                 }
 
                 // ToDo: make goblins flee

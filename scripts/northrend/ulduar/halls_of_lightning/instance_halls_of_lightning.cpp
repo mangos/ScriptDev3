@@ -47,177 +47,177 @@ struct is_halls_of_lightning : public InstanceScript
 
     class instance_halls_of_lightning : public ScriptedInstance
     {
-    public:
-        instance_halls_of_lightning(Map* pMap) : ScriptedInstance(pMap),
-            m_bLightningStruck(false),
-            m_bIsShatterResistant(false)
-        {
-            Initialize();
-        }
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+        public:
+            instance_halls_of_lightning(Map* pMap) : ScriptedInstance(pMap),
+                m_bLightningStruck(false),
+                m_bIsShatterResistant(false)
             {
-            case NPC_BJARNGRIM:
-            case NPC_IONAR:
-            case NPC_VOLKHAN_ANVIL:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
+                Initialize();
             }
-        }
 
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
+            void Initialize() override
             {
-            case GO_VOLKHAN_DOOR:
-                if (m_auiEncounter[TYPE_VOLKHAN] == DONE)
-                {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-            case GO_IONAR_DOOR:
-                if (m_auiEncounter[TYPE_IONAR] == DONE)
-                {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-            case GO_LOKEN_THRONE:
-                break;
-
-            default:
-                return;
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
             }
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-        }
 
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
+            void OnCreatureCreate(Creature* pCreature) override
             {
-            case TYPE_BJARNGRIM:
-                if (uiData == SPECIAL)
+                switch (pCreature->GetEntry())
                 {
-                    m_bLightningStruck = true;
+                    case NPC_BJARNGRIM:
+                    case NPC_IONAR:
+                    case NPC_VOLKHAN_ANVIL:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
                 }
-                else if (uiData == FAIL)
+            }
+
+            void OnObjectCreate(GameObject* pGo) override
+            {
+                switch (pGo->GetEntry())
                 {
-                    m_bLightningStruck = false;
+                    case GO_VOLKHAN_DOOR:
+                        if (m_auiEncounter[TYPE_VOLKHAN] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    case GO_IONAR_DOOR:
+                        if (m_auiEncounter[TYPE_IONAR] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    case GO_LOKEN_THRONE:
+                        break;
+
+                    default:
+                        return;
                 }
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_VOLKHAN:
+                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+            }
+
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                switch (uiType)
+                {
+                    case TYPE_BJARNGRIM:
+                        if (uiData == SPECIAL)
+                        {
+                            m_bLightningStruck = true;
+                        }
+                        else if (uiData == FAIL)
+                        {
+                            m_bLightningStruck = false;
+                        }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_VOLKHAN:
+                        if (uiData == DONE)
+                        {
+                            DoUseDoorOrButton(GO_VOLKHAN_DOOR);
+                        }
+                        else if (uiData == IN_PROGRESS)
+                        {
+                            m_bIsShatterResistant = true;
+                        }
+                        else if (uiData == SPECIAL)
+                        {
+                            m_bIsShatterResistant = false;
+                        }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_IONAR:
+                        if (uiData == DONE)
+                        {
+                            DoUseDoorOrButton(GO_IONAR_DOOR);
+                        }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_LOKEN:
+                        if (uiData == IN_PROGRESS)
+                        {
+                            DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_LOKEN_ID);
+                        }
+                        else if (uiData == DONE)
+                        {
+                            if (GameObject* pGlobe = GetSingleGameObjectFromStorage(GO_LOKEN_THRONE))
+                            {
+                                pGlobe->SendGameObjectCustomAnim(pGlobe->GetObjectGuid());
+                            }
+                        }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                }
+
                 if (uiData == DONE)
                 {
-                    DoUseDoorOrButton(GO_VOLKHAN_DOOR);
+                    OUT_SAVE_INST_DATA;
+
+                    std::ostringstream saveStream;
+                    saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3];
+
+                    m_strInstData = saveStream.str();
+
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
                 }
-                else if (uiData == IN_PROGRESS)
+            }
+
+            uint32 GetData(uint32 uiType) const override
+            {
+                if (uiType < MAX_ENCOUNTER)
                 {
-                    m_bIsShatterResistant = true;
+                    return m_auiEncounter[uiType];
                 }
-                else if (uiData == SPECIAL)
+
+                return 0;
+            }
+
+            bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override
+            {
+                switch (uiCriteriaId)
                 {
-                    m_bIsShatterResistant = false;
+                    case ACHIEV_CRIT_LIGHTNING:
+                        return m_bLightningStruck;
+                    case ACHIEV_CRIT_RESISTANT:
+                        return m_bIsShatterResistant;
                 }
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_IONAR:
-                if (uiData == DONE)
+
+                return false;
+            }
+
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* chrIn) override
+            {
+                if (!chrIn)
                 {
-                    DoUseDoorOrButton(GO_IONAR_DOOR);
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
                 }
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_LOKEN:
-                if (uiData == IN_PROGRESS)
+
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+                loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3];
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 {
-                    DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_LOKEN_ID);
-                }
-                else if (uiData == DONE)
-                {
-                    if (GameObject* pGlobe = GetSingleGameObjectFromStorage(GO_LOKEN_THRONE))
+                    if (m_auiEncounter[i] == IN_PROGRESS)
                     {
-                        pGlobe->SendGameObjectCustomAnim(pGlobe->GetObjectGuid());
+                        m_auiEncounter[i] = NOT_STARTED;
                     }
                 }
-                m_auiEncounter[uiType] = uiData;
-                break;
+
+                OUT_LOAD_INST_DATA_COMPLETE;
             }
 
-            if (uiData == DONE)
-            {
-                OUT_SAVE_INST_DATA;
+        private:
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
 
-                std::ostringstream saveStream;
-                saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3];
-
-                m_strInstData = saveStream.str();
-
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
-            }
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType < MAX_ENCOUNTER)
-            {
-                return m_auiEncounter[uiType];
-            }
-
-            return 0;
-        }
-
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override
-        {
-            switch (uiCriteriaId)
-            {
-            case ACHIEV_CRIT_LIGHTNING:
-                return m_bLightningStruck;
-            case ACHIEV_CRIT_RESISTANT:
-                return m_bIsShatterResistant;
-            }
-
-            return false;
-        }
-
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
-            {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3];
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
-                {
-                    m_auiEncounter[i] = NOT_STARTED;
-                }
-            }
-
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
-
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
-
-        bool m_bLightningStruck;
-        bool m_bIsShatterResistant;
+            bool m_bLightningStruck;
+            bool m_bIsShatterResistant;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

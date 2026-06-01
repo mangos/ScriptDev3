@@ -180,9 +180,9 @@ struct boss_skadi : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_KILL_1, m_creature); break;
-            case 1: DoScriptText(SAY_KILL_2, m_creature); break;
-            case 2: DoScriptText(SAY_KILL_3, m_creature); break;
+                case 0: DoScriptText(SAY_KILL_1, m_creature); break;
+                case 1: DoScriptText(SAY_KILL_2, m_creature); break;
+                case 2: DoScriptText(SAY_KILL_3, m_creature); break;
             }
         }
 
@@ -217,12 +217,12 @@ struct boss_skadi : public CreatureScript
             // Move all the way to the entrance - the exact location is unk so use waypoint movement
             switch (pSummon->GetEntry())
             {
-            case NPC_YMIRJAR_HARPOONER:
-            case NPC_YMIRJAR_WARRIOR:
-            case NPC_YMIRJAR_WITCH_DOCTOR:
-                pSummon->SetWalk(false);
-                pSummon->GetMotionMaster()->MoveWaypoint();
-                break;
+                case NPC_YMIRJAR_HARPOONER:
+                case NPC_YMIRJAR_WARRIOR:
+                case NPC_YMIRJAR_WITCH_DOCTOR:
+                    pSummon->SetWalk(false);
+                    pSummon->GetMotionMaster()->MoveWaypoint();
+                    break;
             }
         }
 
@@ -459,38 +459,38 @@ struct npc_grauf : public CreatureScript
             // Another note: the pointId in script = pointId - 1 from DB
             switch (uiPointId)
             {
-            case 8:
-            case 21:
-                // TODO: choose the left / right patch random when core will support this
-                DoScriptText(EMOTE_HARPOON_RANGE, m_creature);
+                case 8:
+                case 21:
+                    // TODO: choose the left / right patch random when core will support this
+                    DoScriptText(EMOTE_HARPOON_RANGE, m_creature);
 
-                break;
-            case 10:                                        // left breath
-                if (DoCastSpellIfCan(m_creature, SPELL_FREEZING_CLOUD_LEFT) == CAST_OK)
-                {
-                    DoHandleBreathYell();
-                    DoScriptText(EMOTE_DEEP_BREATH, m_creature);
-                }
+                    break;
+                case 10:                                        // left breath
+                    if (DoCastSpellIfCan(m_creature, SPELL_FREEZING_CLOUD_LEFT) == CAST_OK)
+                    {
+                        DoHandleBreathYell();
+                        DoScriptText(EMOTE_DEEP_BREATH, m_creature);
+                    }
 
-                // Set the achiev as failed once we get to breath area
-                m_pInstance->SetData(TYPE_ACHIEV_LOVE_SKADI, uint32(false));
-                break;
-            case 13:                                        // left breath end
-                m_creature->RemoveAurasDueToSpell(SPELL_FREEZING_CLOUD_LEFT);
-                break;
-            case 23:                                        // right breath
-                if (DoCastSpellIfCan(m_creature, SPELL_FREEZING_CLOUD_RIGHT) == CAST_OK)
-                {
-                    DoHandleBreathYell();
-                    DoScriptText(EMOTE_DEEP_BREATH, m_creature);
-                }
+                    // Set the achiev as failed once we get to breath area
+                    m_pInstance->SetData(TYPE_ACHIEV_LOVE_SKADI, uint32(false));
+                    break;
+                case 13:                                        // left breath end
+                    m_creature->RemoveAurasDueToSpell(SPELL_FREEZING_CLOUD_LEFT);
+                    break;
+                case 23:                                        // right breath
+                    if (DoCastSpellIfCan(m_creature, SPELL_FREEZING_CLOUD_RIGHT) == CAST_OK)
+                    {
+                        DoHandleBreathYell();
+                        DoScriptText(EMOTE_DEEP_BREATH, m_creature);
+                    }
 
-                // Set the achiev as failed once we get to breath area
-                m_pInstance->SetData(TYPE_ACHIEV_LOVE_SKADI, uint32(false));
-                break;
-            case 26:                                        // right breath end
-                m_creature->RemoveAurasDueToSpell(SPELL_FREEZING_CLOUD_RIGHT);
-                break;
+                    // Set the achiev as failed once we get to breath area
+                    m_pInstance->SetData(TYPE_ACHIEV_LOVE_SKADI, uint32(false));
+                    break;
+                case 26:                                        // right breath end
+                    m_creature->RemoveAurasDueToSpell(SPELL_FREEZING_CLOUD_RIGHT);
+                    break;
             }
         }
 
@@ -506,23 +506,23 @@ struct npc_grauf : public CreatureScript
             {
                 switch (urand(0, 2))
                 {
-                case 0: DoScriptText(SAY_DRAKEBREATH_1, pSkadi); break;
-                case 1: DoScriptText(SAY_DRAKEBREATH_2, pSkadi); break;
-                case 2: DoScriptText(SAY_DRAKEBREATH_3, pSkadi); break;
+                    case 0: DoScriptText(SAY_DRAKEBREATH_1, pSkadi); break;
+                    case 1: DoScriptText(SAY_DRAKEBREATH_2, pSkadi); break;
+                    case 2: DoScriptText(SAY_DRAKEBREATH_3, pSkadi); break;
                 }
             }
         }
 
         // TODO: Enable the wrappers below, when they will be properly supported by the core
-        /*
-        void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
-        {
-        if (pPassenger->GetEntry() == NPC_SKADI)
-        {
-            m_uiFlightDelayTimer = 2000;
-        }
-        }
-        */
+        /**
+         * void PassengerBoarded(Unit* pPassenger, uint8 uiSeat) override
+         * {
+         *     if (pPassenger->GetEntry() == NPC_SKADI)
+         *     {
+         *         m_uiFlightDelayTimer = 2000;
+         *     }
+         * }
+         */
 
         void UpdateAI(const uint32 uiDiff) override
         {

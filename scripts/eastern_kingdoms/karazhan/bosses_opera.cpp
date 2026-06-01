@@ -1093,26 +1093,26 @@ struct boss_julianne : public CreatureScript
         {
             switch (eventType)
             {
-            case AI_EVENT_CUSTOM_A: // Wrapper to start phase 3
-                if (pSender->GetEntry() == NPC_ROMULO && pSender == pInvoker)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_UNDYING_LOVE) == CAST_OK)
+                case AI_EVENT_CUSTOM_A: // Wrapper to start phase 3
+                    if (pSender->GetEntry() == NPC_ROMULO && pSender == pInvoker)
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_FULL_HEALTH, CAST_TRIGGERED);
-                        DoScriptText(SAY_JULIANNE_RESURRECT, m_creature);
-                        DoRemoveFakeDeath();
+                        if (DoCastSpellIfCan(m_creature, SPELL_UNDYING_LOVE) == CAST_OK)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_FULL_HEALTH, CAST_TRIGGERED);
+                            DoScriptText(SAY_JULIANNE_RESURRECT, m_creature);
+                            DoRemoveFakeDeath();
+                        }
                     }
-                }
-                break;
-            case AI_EVENT_CUSTOM_B:
-                if (pSender == m_creature && pInvoker == m_creature)
-                {
-                    DoSetFakeDeath();
-                    DoScriptText(SAY_JULIANNE_DEATH01, m_creature);
-                }
-                break;
-            default:
-                break;
+                    break;
+                case AI_EVENT_CUSTOM_B:
+                    if (pSender == m_creature && pInvoker == m_creature)
+                    {
+                        DoSetFakeDeath();
+                        DoScriptText(SAY_JULIANNE_DEATH01, m_creature);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         void UpdateAI(const uint32 uiDiff) override

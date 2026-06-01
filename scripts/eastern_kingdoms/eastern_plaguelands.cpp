@@ -127,38 +127,42 @@ struct npc_eris_havenfire : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_INJURED_PEASANT:
-            case NPC_PLAGUED_PEASANT:
+                case NPC_INJURED_PEASANT:
+                case NPC_PLAGUED_PEASANT:
                 {
                     float fX, fY, fZ;
                     pSummoned->GetRandomPoint(aPeasantMoveLoc[0], aPeasantMoveLoc[1], aPeasantMoveLoc[2], 10.0f, fX, fY, fZ);
                     pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 }
                 break;
-            case NPC_SCOURGE_FOOTSOLDIER:
-            case NPC_THE_CLEANER:
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                case NPC_SCOURGE_FOOTSOLDIER:
+                case NPC_THE_CLEANER:
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                    {
+                        pSummoned->AI()->AttackStart(pPlayer);
+                    }
+                    break;
+                case NPC_SCOURGE_ARCHER:    // these should attack the peasants - who are not spawned yet
                 {
-                    pSummoned->AI()->AttackStart(pPlayer);
+                    /**   std::vector<ObjectGuid> peasantGUID;
+                     *    for (GuidList::const_iterator it = m_lSummonedGuidList.begin(); it != m_lSummonedGuidList.end(); ++it)
+                     *    {
+                     *        if ((*it).GetEntry() == NPC_INJURED_PEASANT || (*it).GetEntry() == NPC_PLAGUED_PEASANT)
+                     *        {
+                     *            if (Creature* peasant = m_creature->GetMap()->GetCreature(*it))
+                     *            {
+                     *                if (peasant->IsAlive() && pSummoned->IsInRange(peasant, 5.0f, 30.0f))
+                     *                {
+                     *                    peasantGUID.push_back(*it);
+                     *                }
+                     *            }
+                     *        }
+                     *    }
+                     *    ObjectGuid victimGUID = peasantGUID[urand(0, peasantGUID.size() - 1)];
+                     *    if (Creature* victim = m_creature->GetMap()->GetCreature(victimGUID))
+                     *        pSummoned->AI()->AttackStart(victim);   // ot Creature::Attack(victim, false) ? */
+                    break;
                 }
-                break;
-            case NPC_SCOURGE_ARCHER:    // these should attack the peasants - who are not spawned yet
-                //{
-                //    std::vector<ObjectGuid> peasantGUID;
-                //    for (GuidList::const_iterator it = m_lSummonedGuidList.begin(); it != m_lSummonedGuidList.end(); ++it)
-                //    {
-                //        if ((*it).GetEntry() == NPC_INJURED_PEASANT || (*it).GetEntry() == NPC_PLAGUED_PEASANT)
-                //        {
-                //            if (Creature* peasant = m_creature->GetMap()->GetCreature(*it))
-                //                if (peasant->IsAlive() && pSummoned->IsInRange(peasant, 5.0f, 30.0f))
-                //                    peasantGUID.push_back(*it);
-                //        }
-                //    }
-                //    ObjectGuid victimGUID = peasantGUID[urand(0, peasantGUID.size() - 1)];
-                //    if (Creature* victim = m_creature->GetMap()->GetCreature(victimGUID))
-                //        pSummoned->AI()->AttackStart(victim);   // ot Creature::Attack(victim, false) ?
-                //}
-                break;
             }
 
             m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
@@ -223,7 +227,7 @@ struct npc_eris_havenfire : public CreatureScript
 
             switch (uiSummonId)
             {
-            case NPC_SCOURGE_FOOTSOLDIER:
+                case NPC_SCOURGE_FOOTSOLDIER:
                 {
                     uint8 uiRand = urand(2, 3);
                     for (uint8 i = 0; i < uiRand; ++i)
@@ -231,31 +235,31 @@ struct npc_eris_havenfire : public CreatureScript
                         m_creature->GetRandomPoint(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2], 15.0f, fX, fY, fZ);
                         m_creature->SummonCreature(NPC_SCOURGE_FOOTSOLDIER, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
+                    break;
                 }
-                break;
-            case NPC_SCOURGE_ARCHER:
-                for (uint8 i = 0; i < MAX_ARCHERS; ++i)
-                {
-                    m_creature->SummonCreature(NPC_SCOURGE_ARCHER, aArcherSpawn[i][0], aArcherSpawn[i][1], aArcherSpawn[i][2], aArcherSpawn[i][3], TEMPSPAWN_DEAD_DESPAWN, 0);
-                }
-                break;
-            default:
-                for (uint8 i = 0; i < MAX_PEASANTS; ++i)
-                {
-                    uint32 uiSummonEntry = roll_chance_i(70) ? NPC_INJURED_PEASANT : NPC_PLAGUED_PEASANT;
-                    m_creature->GetRandomPoint(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2], 10.0f, fX, fY, fZ);
-                    if (Creature* pTemp = m_creature->SummonCreature(uiSummonEntry, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OR_DEAD_DESPAWN, 10*MINUTE*IN_MILLISECONDS))
+                case NPC_SCOURGE_ARCHER:
+                    for (uint8 i = 0; i < MAX_ARCHERS; ++i)
                     {
-                        // Only the first mob needs to yell
-                        if (!i)
+                        m_creature->SummonCreature(NPC_SCOURGE_ARCHER, aArcherSpawn[i][0], aArcherSpawn[i][1], aArcherSpawn[i][2], aArcherSpawn[i][3], TEMPSPAWN_DEAD_DESPAWN, 0);
+                    }
+                    break;
+                default:
+                    for (uint8 i = 0; i < MAX_PEASANTS; ++i)
+                    {
+                        uint32 uiSummonEntry = roll_chance_i(70) ? NPC_INJURED_PEASANT : NPC_PLAGUED_PEASANT;
+                        m_creature->GetRandomPoint(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2], 10.0f, fX, fY, fZ);
+                        if (Creature* pTemp = m_creature->SummonCreature(uiSummonEntry, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OR_DEAD_DESPAWN, 10*MINUTE*IN_MILLISECONDS))
                         {
-                            DoScriptText(aPeasantSpawnYells[urand(0, 2)], pTemp);
+                            // Only the first mob needs to yell
+                            if (!i)
+                            {
+                                DoScriptText(aPeasantSpawnYells[urand(0, 2)], pTemp);
+                            }
                         }
                     }
-                }
 
-                ++m_uiCurrentWave;
-                break;
+                    ++m_uiCurrentWave;
+                    break;
             }
         }
 
@@ -304,10 +308,12 @@ struct npc_eris_havenfire : public CreatureScript
                 }
 
                 if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
+                {
                     if (pTemp->IsAlive())
                     {
                         pTemp->ForcedDespawn();
                     }
+                }
             }
         }
 
@@ -319,19 +325,19 @@ struct npc_eris_havenfire : public CreatureScript
                 {
                     switch (m_uiPhase)
                     {
-                    case 0:
-                        DoSummonWave(NPC_SCOURGE_ARCHER);
-                        m_uiEventTimer = 5000;
-                        break;
-                    case 1:
-                        DoSummonWave();
-                        m_uiEventTimer = urand(60000, 80000);
-                        break;
-                    default:
-                        // The summoning timer of the soldiers isn't very clear
-                        DoSummonWave(NPC_SCOURGE_FOOTSOLDIER);
-                        m_uiEventTimer = urand(5000, 30000);
-                        break;
+                        case 0:
+                            DoSummonWave(NPC_SCOURGE_ARCHER);
+                            m_uiEventTimer = 5000;
+                            break;
+                        case 1:
+                            DoSummonWave();
+                            m_uiEventTimer = urand(60000, 80000);
+                            break;
+                        default:
+                            // The summoning timer of the soldiers isn't very clear
+                            DoSummonWave(NPC_SCOURGE_FOOTSOLDIER);
+                            m_uiEventTimer = urand(5000, 30000);
+                            break;
                     }
                     ++m_uiPhase;
                 }

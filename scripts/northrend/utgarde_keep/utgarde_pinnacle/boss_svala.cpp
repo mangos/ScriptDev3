@@ -229,9 +229,9 @@ struct boss_svala : public CreatureScript
 
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
+                case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+                case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
+                case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
             }
         }
 
@@ -271,31 +271,31 @@ struct boss_svala : public CreatureScript
 
                         switch (m_uiIntroCount)
                         {
-                        case 0:
-                            DoScriptText(SAY_INTRO_1, m_creature);
-                            break;
-                        case 1:
-                            DoScriptText(SAY_INTRO_2_ARTHAS, pArthas);
-                            break;
-                        case 2:
-                            DoCastSpellIfCan(m_creature, SPELL_TRANSFORMING_FLOATING);
-                            pArthas->CastSpell(m_creature, SPELL_TRANSFORMING_CHANNEL, false);
-                            DoMoveToPosition();
-                            break;
-                        case 3:
-                            DoCastSpellIfCan(m_creature, SPELL_TRANSFORMING);
-                            DoScriptText(SAY_INTRO_3, m_creature);
-                            break;
-                        case 4:
-                            DoScriptText(SAY_INTRO_4_ARTHAS, pArthas);
-                            break;
-                        case 5:
-                            DoScriptText(SAY_INTRO_5, m_creature);
-                            break;
-                        case 6:
-                            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                            m_bIsIntroDone = true;
-                            break;
+                            case 0:
+                                DoScriptText(SAY_INTRO_1, m_creature);
+                                break;
+                            case 1:
+                                DoScriptText(SAY_INTRO_2_ARTHAS, pArthas);
+                                break;
+                            case 2:
+                                DoCastSpellIfCan(m_creature, SPELL_TRANSFORMING_FLOATING);
+                                pArthas->CastSpell(m_creature, SPELL_TRANSFORMING_CHANNEL, false);
+                                DoMoveToPosition();
+                                break;
+                            case 3:
+                                DoCastSpellIfCan(m_creature, SPELL_TRANSFORMING);
+                                DoScriptText(SAY_INTRO_3, m_creature);
+                                break;
+                            case 4:
+                                DoScriptText(SAY_INTRO_4_ARTHAS, pArthas);
+                                break;
+                            case 5:
+                                DoScriptText(SAY_INTRO_5, m_creature);
+                                break;
+                            case 6:
+                                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                                m_bIsIntroDone = true;
+                                break;
                         }
 
                         ++m_uiIntroCount;
@@ -363,10 +363,10 @@ struct boss_svala : public CreatureScript
 
                         switch (urand(0, 3))
                         {
-                        case 0: DoScriptText(SAY_SACRIFICE_1, m_creature); break;
-                        case 1: DoScriptText(SAY_SACRIFICE_2, m_creature); break;
-                        case 2: DoScriptText(SAY_SACRIFICE_3, m_creature); break;
-                        case 3: DoScriptText(SAY_SACRIFICE_4, m_creature); break;
+                            case 0: DoScriptText(SAY_SACRIFICE_1, m_creature); break;
+                            case 1: DoScriptText(SAY_SACRIFICE_2, m_creature); break;
+                            case 2: DoScriptText(SAY_SACRIFICE_3, m_creature); break;
+                            case 3: DoScriptText(SAY_SACRIFICE_4, m_creature); break;
                         }
 
                         m_uiRitualStrikeTimer = 1000;

@@ -240,22 +240,22 @@ struct npc_lady_katrana_prestor : public CreatureScript //TODO localisation
         pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
-        case GOSSIP_ACTION_INFO_DEF:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            pPlayer->SEND_GOSSIP_MENU(2694, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(2695, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            pPlayer->SEND_GOSSIP_MENU(2696, pCreature->GetObjectGuid());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->AreaExploredOrEventHappens(4185);
-            break;
+            case GOSSIP_ACTION_INFO_DEF:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                pPlayer->SEND_GOSSIP_MENU(2694, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                pPlayer->SEND_GOSSIP_MENU(2695, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAT_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+                pPlayer->SEND_GOSSIP_MENU(2696, pCreature->GetObjectGuid());
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 3:
+                pPlayer->CLOSE_GOSSIP_MENU();
+                pPlayer->AreaExploredOrEventHappens(4185);
+                break;
         }
         return true;
     }
@@ -303,7 +303,7 @@ struct npc_squire_rowe : public CreatureScript
     struct npc_squire_roweAI : public npc_escortAI, private DialogueHelper
     {
         npc_squire_roweAI(Creature* m_creature) : npc_escortAI(m_creature),
-        DialogueHelper(aIntroDialogue)
+            DialogueHelper(aIntroDialogue)
         {
             m_bIsEventInProgress = false;
         }
@@ -356,18 +356,18 @@ struct npc_squire_rowe : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 2:
-                m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-                break;
-            case 3:
-                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                m_creature->SummonCreature(NPC_WINDSOR, aWindsorSpawnLoc[0], aWindsorSpawnLoc[1], aWindsorSpawnLoc[2], 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
-                break;
-            case 6:
-                DoScriptText(SAY_SIGNAL_SENT, m_creature);
-                m_creature->SetFacingTo(2.15f);
-                SetEscortPaused(true);
-                break;
+                case 2:
+                    m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    break;
+                case 3:
+                    m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+                    m_creature->SummonCreature(NPC_WINDSOR, aWindsorSpawnLoc[0], aWindsorSpawnLoc[1], aWindsorSpawnLoc[2], 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                    break;
+                case 6:
+                    DoScriptText(SAY_SIGNAL_SENT, m_creature);
+                    m_creature->SetFacingTo(2.15f);
+                    SetEscortPaused(true);
+                    break;
             }
         }
 
@@ -375,47 +375,47 @@ struct npc_squire_rowe : public CreatureScript
         {
             switch (iEntry)
             {
-            case NPC_WINDSOR_MOUNT:
-                if (Creature* pWindsor = m_creature->GetMap()->GetCreature(m_windsorGuid))
+                case NPC_WINDSOR_MOUNT:
+                    if (Creature* pWindsor = m_creature->GetMap()->GetCreature(m_windsorGuid))
+                    {
+                        pWindsor->Unmount();
+                        m_creature->SummonCreature(NPC_WINDSOR_MOUNT, pWindsor->GetPositionX() - 1.0f, pWindsor->GetPositionY() + 1.0f, pWindsor->GetPositionZ(), pWindsor->GetOrientation(), TEMPSPAWN_TIMED_DESPAWN, 30000);
+                    }
+                    break;
+                case SAY_DISMOUNT:
+                    if (Creature* pHorse = m_creature->GetMap()->GetCreature(m_horseGuid))
+                    {
+                        pHorse->SetWalk(false);
+                        pHorse->GetMotionMaster()->MovePoint(1, aWindsorSpawnLoc[0], aWindsorSpawnLoc[1], aWindsorSpawnLoc[2]);
+                    }
+                    break;
+                case QUEST_STORMWIND_RENDEZVOUS:
                 {
-                    pWindsor->Unmount();
-                    m_creature->SummonCreature(NPC_WINDSOR_MOUNT, pWindsor->GetPositionX() - 1.0f, pWindsor->GetPositionY() + 1.0f, pWindsor->GetPositionZ(), pWindsor->GetOrientation(), TEMPSPAWN_TIMED_DESPAWN, 30000);
-                }
-                break;
-            case SAY_DISMOUNT:
-                if (Creature* pHorse = m_creature->GetMap()->GetCreature(m_horseGuid))
-                {
-                    pHorse->SetWalk(false);
-                    pHorse->GetMotionMaster()->MovePoint(1, aWindsorSpawnLoc[0], aWindsorSpawnLoc[1], aWindsorSpawnLoc[2]);
-                }
-                break;
-            case QUEST_STORMWIND_RENDEZVOUS:
-            {
-                Creature* pWindsor = m_creature->GetMap()->GetCreature(m_windsorGuid);
-                Player* pPlayer = GetPlayerForEscort();
-                if (!pWindsor || !pPlayer)
-                {
+                    Creature* pWindsor = m_creature->GetMap()->GetCreature(m_windsorGuid);
+                    Player* pPlayer = GetPlayerForEscort();
+                    if (!pWindsor || !pPlayer)
+                    {
+                        break;
+                    }
+
+                    pWindsor->SetFacingToObject(pPlayer);
                     break;
                 }
-
-                pWindsor->SetFacingToObject(pPlayer);
-                break;
-            }
-            case QUEST_THE_GREAT_MASQUERADE:
-            {
-                Creature* pWindsor = m_creature->GetMap()->GetCreature(m_windsorGuid);
-                Player* pPlayer = GetPlayerForEscort();
-                if (!pWindsor || !pPlayer)
+                case QUEST_THE_GREAT_MASQUERADE:
                 {
+                    Creature* pWindsor = m_creature->GetMap()->GetCreature(m_windsorGuid);
+                    Player* pPlayer = GetPlayerForEscort();
+                    if (!pWindsor || !pPlayer)
+                    {
+                        break;
+                    }
+
+                    DoScriptText(SAY_WELCOME, pWindsor, pPlayer);
+                    // Allow players to finish quest and also finish the escort
+                    pWindsor->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                    SetEscortPaused(false);
                     break;
                 }
-
-                DoScriptText(SAY_WELCOME, pWindsor, pPlayer);
-                // Allow players to finish quest and also finish the escort
-                pWindsor->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                SetEscortPaused(false);
-                break;
-            }
             }
         }
 
@@ -701,61 +701,61 @@ struct npc_reginald_windsor : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 0:
-                if (!m_pScriptedMap)
-                {
-                    break;
-                }
-                // Prepare Jonathan for the first event
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    // Summon 3 guards on each side and move Jonathan in the middle
-                    for (uint8 i = 0; i < MAX_ROYAL_GUARDS; ++i)
+                case 0:
+                    if (!m_pScriptedMap)
                     {
-                        if (Creature* pTemp = m_creature->SummonCreature(NPC_GUARD_ROYAL, aGuardLocations[i][0], aGuardLocations[i][1], aGuardLocations[i][2], aGuardLocations[i][3], TEMPSPAWN_TIMED_DESPAWN, 180000))
-                        {
-                            m_guardsGuid[i] = pTemp->GetObjectGuid();
-                        }
+                        break;
                     }
+                    // Prepare Jonathan for the first event
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        // Summon 3 guards on each side and move Jonathan in the middle
+                        for (uint8 i = 0; i < MAX_ROYAL_GUARDS; ++i)
+                        {
+                            if (Creature* pTemp = m_creature->SummonCreature(NPC_GUARD_ROYAL, aGuardLocations[i][0], aGuardLocations[i][1], aGuardLocations[i][2], aGuardLocations[i][3], TEMPSPAWN_TIMED_DESPAWN, 180000))
+                            {
+                                m_guardsGuid[i] = pTemp->GetObjectGuid();
+                            }
+                        }
 
-                    pJonathan->SetWalk(false);
-                    pJonathan->Unmount();
-                    pJonathan->GetMotionMaster()->MovePoint(0, aMoveLocations[0][0], aMoveLocations[0][1], aMoveLocations[0][2]);
-                }
-                break;
-            case 1:
-                StartNextDialogueText(SAY_JON_DIALOGUE_1);
-                SetEscortPaused(true);
-                break;
-            case 3:
-                m_bCanGuardSalute = true;
-                break;
-            case 11:
-                if (!m_pScriptedMap)
-                {
+                        pJonathan->SetWalk(false);
+                        pJonathan->Unmount();
+                        pJonathan->GetMotionMaster()->MovePoint(0, aMoveLocations[0][0], aMoveLocations[0][1], aMoveLocations[0][2]);
+                    }
                     break;
-                }
-                // We can reset Jonathan now
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    pJonathan->SetWalk(true);
-                    pJonathan->SetStandState(UNIT_STAND_STATE_STAND);
-                    pJonathan->GetMotionMaster()->MoveTargetedHome();
-                }
-                break;
-            case 22:
-                SetEscortPaused(true);
-                m_creature->SetFacingTo(5.41f);
-                StartNextDialogueText(NPC_GUARD_ROYAL);
-                break;
-            case 24:
-                m_bCanGuardSalute = false;
-                break;
-            case 25:
-                StartNextDialogueText(NPC_WRYNN);
-                SetEscortPaused(true);
-                m_bCanGuardSalute = false;
-                break;
+                case 1:
+                    StartNextDialogueText(SAY_JON_DIALOGUE_1);
+                    SetEscortPaused(true);
+                    break;
+                case 3:
+                    m_bCanGuardSalute = true;
+                    break;
+                case 11:
+                    if (!m_pScriptedMap)
+                    {
+                        break;
+                    }
+                    // We can reset Jonathan now
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        pJonathan->SetWalk(true);
+                        pJonathan->SetStandState(UNIT_STAND_STATE_STAND);
+                        pJonathan->GetMotionMaster()->MoveTargetedHome();
+                    }
+                    break;
+                case 22:
+                    SetEscortPaused(true);
+                    m_creature->SetFacingTo(5.41f);
+                    StartNextDialogueText(NPC_GUARD_ROYAL);
+                    break;
+                case 24:
+                    m_bCanGuardSalute = false;
+                    break;
+                case 25:
+                    StartNextDialogueText(NPC_WRYNN);
+                    SetEscortPaused(true);
+                    m_bCanGuardSalute = false;
+                    break;
             }
         }
 
@@ -769,302 +769,305 @@ struct npc_reginald_windsor : public CreatureScript
             // Handle city gates royal guards
             switch (uiPointId)
             {
-            case 1:
-            case 2:
-                pSummoned->SetFacingTo(2.234f);
-                pSummoned->SetStandState(UNIT_STAND_STATE_KNEEL);
-                break;
-            case 3:
-            case 4:
-                pSummoned->SetFacingTo(5.375f);
-                pSummoned->SetStandState(UNIT_STAND_STATE_KNEEL);
-                break;
+                case 1:
+                case 2:
+                    pSummoned->SetFacingTo(2.234f);
+                    pSummoned->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    break;
+                case 3:
+                case 4:
+                    pSummoned->SetFacingTo(5.375f);
+                    pSummoned->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    break;
             }
         }
 
         void JustDidDialogueStep(int32 iEntry) override
         {
-            if (!m_pScriptedMap) return;
+            if (!m_pScriptedMap)
+            {
+                return;
+            }
 
             switch (iEntry)
             {
-            case SAY_WINDSOR_QUEST_ACCEPT:
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                {
-                    Start(false, pPlayer);
-                }
-                break;
-            // Set orientation and prepare the npcs for the next event
-            case SAY_WINDSOR_GET_READY:
-                m_creature->SetFacingTo(0.6f);
-                break;
-            case SAY_PRESTOR_SIEZE:
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                {
-                    Start(false, pPlayer);
-                }
-                break;
-            case SAY_JON_DIALOGUE_8:
-                // Turn left and move the guards
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    pJonathan->SetFacingTo(5.375f);
-                }
-                if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[5]))
-                {
-                    pGuard->SetFacingTo(2.234f);
-                    pGuard->SetStandState(UNIT_STAND_STATE_KNEEL);
-                }
-                if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[4]))
-                {
-                    pGuard->GetMotionMaster()->MovePoint(1, aMoveLocations[1][0], aMoveLocations[1][1], aMoveLocations[1][2]);
-                }
-                if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[3]))
-                {
-                    pGuard->GetMotionMaster()->MovePoint(2, aMoveLocations[2][0], aMoveLocations[2][1], aMoveLocations[2][2]);
-                }
-                break;
-            case SAY_JON_DIALOGUE_9:
-                // Turn right and move the guards
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    pJonathan->SetFacingTo(2.234f);
-                }
-                if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[2]))
-                {
-                    pGuard->SetFacingTo(5.375f);
-                    pGuard->SetStandState(UNIT_STAND_STATE_KNEEL);
-                }
-                if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[1]))
-                {
-                    pGuard->GetMotionMaster()->MovePoint(3, aMoveLocations[3][0], aMoveLocations[3][1], aMoveLocations[3][2]);
-                }
-                if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[0]))
-                {
-                    pGuard->GetMotionMaster()->MovePoint(4, aMoveLocations[4][0], aMoveLocations[4][1], aMoveLocations[4][2]);
-                }
-                break;
-            case SAY_JON_DIALOGUE_10:
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    pJonathan->SetFacingToObject(m_creature);
-                }
-                break;
-            case EMOTE_ONESHOT_SALUTE:
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    pJonathan->HandleEmote(EMOTE_ONESHOT_SALUTE);
-                }
-                break;
-            case NPC_JONATHAN:
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    pJonathan->SetWalk(true);
-                    pJonathan->GetMotionMaster()->MovePoint(0, aMoveLocations[5][0], aMoveLocations[5][1], aMoveLocations[5][2]);
-                }
-                break;
-            case EMOTE_ONESHOT_KNEEL:
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    pJonathan->SetFacingToObject(m_creature);
-                    pJonathan->SetStandState(UNIT_STAND_STATE_KNEEL);
-                }
-                break;
-            case SAY_WINDSOR_DIALOGUE_12:
-                if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
-                {
-                    m_creature->SetFacingToObject(pJonathan);
-                }
-                break;
-            case SAY_WINDSOR_DIALOGUE_13:
-                m_creature->SetFacingTo(0.6f);
-                break;
-            case EMOTE_ONESHOT_POINT:
-                m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
-                break;
-            case NPC_WINDSOR:
-                SetEscortPaused(false);
-                break;
-            case SAY_WINDSOR_BEFORE_KEEP:
-                m_bIsKeepReady = true;
-                m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                break;
-            case NPC_GUARD_CITY:
-                SetEscortPaused(false);
-                break;
-            case NPC_WRYNN:
-                // Remove npc flags during the event
-                if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
-                {
-                    pOnyxia->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
-                }
-                if (Creature* pWrynn = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_WRYNN))
-                {
-                    pWrynn->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                }
-                if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
-                {
-                    pBolvar->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                }
-                break;
-            case SAY_BOLVAR_KEEP_2:
-                if (Creature* pWrynn = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_WRYNN))
-                {
-                    pWrynn->SetWalk(false);
-                    pWrynn->ForcedDespawn(15000);
-                    pWrynn->GetMotionMaster()->MovePoint(0, aMoveLocations[6][0], aMoveLocations[6][1], aMoveLocations[6][2]);
-
-                    // Store all the nearby guards, in order to transform them into Onyxia guards
-                    std::list<Creature*> lGuardsList;
-                    GetCreatureListWithEntryInGrid(lGuardsList, pWrynn, NPC_GUARD_ROYAL, 25.0f);
-
-                    for (std::list<Creature*>::const_iterator itr = lGuardsList.begin(); itr != lGuardsList.end(); ++itr)
+                case SAY_WINDSOR_QUEST_ACCEPT:
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                     {
-                        m_lRoyalGuardsGuidList.push_back((*itr)->GetObjectGuid());
+                        Start(false, pPlayer);
                     }
-                }
-                break;
-            case SPELL_WINDSOR_READ:
-                DoCastSpellIfCan(m_creature, SPELL_WINDSOR_READ);
-                break;
-            case EMOTE_BOLVAR_GASP:
-                if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
-                {
-                    pOnyxia->UpdateEntry(NPC_LADY_ONYXIA);
-
-                    if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                    break;
+                // Set orientation and prepare the npcs for the next event
+                case SAY_WINDSOR_GET_READY:
+                    m_creature->SetFacingTo(0.6f);
+                    break;
+                case SAY_PRESTOR_SIEZE:
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                     {
-                        pBolvar->SetFacingToObject(pOnyxia);
+                        Start(false, pPlayer);
                     }
-                }
-                break;
-            case SAY_PRESTOR_KEEP_9:
-                if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
-                {
-                    pBolvar->SetWalk(false);
-                    pBolvar->GetMotionMaster()->MovePoint(0, aMoveLocations[7][0], aMoveLocations[7][1], aMoveLocations[7][2]);
-                }
-                break;
-            case SAY_BOLVAR_KEEP_10:
-                if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
-                {
+                    break;
+                case SAY_JON_DIALOGUE_8:
+                    // Turn left and move the guards
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        pJonathan->SetFacingTo(5.375f);
+                    }
+                    if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[5]))
+                    {
+                        pGuard->SetFacingTo(2.234f);
+                        pGuard->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    }
+                    if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[4]))
+                    {
+                        pGuard->GetMotionMaster()->MovePoint(1, aMoveLocations[1][0], aMoveLocations[1][1], aMoveLocations[1][2]);
+                    }
+                    if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[3]))
+                    {
+                        pGuard->GetMotionMaster()->MovePoint(2, aMoveLocations[2][0], aMoveLocations[2][1], aMoveLocations[2][2]);
+                    }
+                    break;
+                case SAY_JON_DIALOGUE_9:
+                    // Turn right and move the guards
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        pJonathan->SetFacingTo(2.234f);
+                    }
+                    if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[2]))
+                    {
+                        pGuard->SetFacingTo(5.375f);
+                        pGuard->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    }
+                    if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[1]))
+                    {
+                        pGuard->GetMotionMaster()->MovePoint(3, aMoveLocations[3][0], aMoveLocations[3][1], aMoveLocations[3][2]);
+                    }
+                    if (Creature* pGuard = m_creature->GetMap()->GetCreature(m_guardsGuid[0]))
+                    {
+                        pGuard->GetMotionMaster()->MovePoint(4, aMoveLocations[4][0], aMoveLocations[4][1], aMoveLocations[4][2]);
+                    }
+                    break;
+                case SAY_JON_DIALOGUE_10:
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        pJonathan->SetFacingToObject(m_creature);
+                    }
+                    break;
+                case EMOTE_ONESHOT_SALUTE:
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        pJonathan->HandleEmote(EMOTE_ONESHOT_SALUTE);
+                    }
+                    break;
+                case NPC_JONATHAN:
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        pJonathan->SetWalk(true);
+                        pJonathan->GetMotionMaster()->MovePoint(0, aMoveLocations[5][0], aMoveLocations[5][1], aMoveLocations[5][2]);
+                    }
+                    break;
+                case EMOTE_ONESHOT_KNEEL:
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        pJonathan->SetFacingToObject(m_creature);
+                        pJonathan->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    }
+                    break;
+                case SAY_WINDSOR_DIALOGUE_12:
+                    if (Creature* pJonathan = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_JONATHAN))
+                    {
+                        m_creature->SetFacingToObject(pJonathan);
+                    }
+                    break;
+                case SAY_WINDSOR_DIALOGUE_13:
+                    m_creature->SetFacingTo(0.6f);
+                    break;
+                case EMOTE_ONESHOT_POINT:
+                    m_creature->HandleEmote(EMOTE_ONESHOT_POINT);
+                    break;
+                case NPC_WINDSOR:
+                    SetEscortPaused(false);
+                    break;
+                case SAY_WINDSOR_BEFORE_KEEP:
+                    m_bIsKeepReady = true;
+                    m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                    m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                    break;
+                case NPC_GUARD_CITY:
+                    SetEscortPaused(false);
+                    break;
+                case NPC_WRYNN:
+                    // Remove npc flags during the event
                     if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
                     {
-                        pBolvar->SetFacingToObject(pOnyxia);
-                        DoScriptText(EMOTE_PRESTOR_LAUGH, pOnyxia);
+                        pOnyxia->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
                     }
-                }
-                break;
-            case SAY_PRESTOR_KEEP_11:
-                for (GuidList::const_iterator itr = m_lRoyalGuardsGuidList.begin(); itr != m_lRoyalGuardsGuidList.end(); ++itr)
-                {
-                    if (Creature* pGuard = m_creature->GetMap()->GetCreature(*itr))
+                    if (Creature* pWrynn = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_WRYNN))
                     {
-                        if (!pGuard->IsAlive())
-                        {
-                            continue;
-                        }
+                        pWrynn->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                    }
+                    if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                    {
+                        pBolvar->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                    }
+                    break;
+                case SAY_BOLVAR_KEEP_2:
+                    if (Creature* pWrynn = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_WRYNN))
+                    {
+                        pWrynn->SetWalk(false);
+                        pWrynn->ForcedDespawn(15000);
+                        pWrynn->GetMotionMaster()->MovePoint(0, aMoveLocations[6][0], aMoveLocations[6][1], aMoveLocations[6][2]);
 
-                        pGuard->UpdateEntry(NPC_GUARD_ONYXIA);
-                        DoScriptText(EMOTE_GUARD_TRANSFORM, pGuard);
+                        // Store all the nearby guards, in order to transform them into Onyxia guards
+                        std::list<Creature*> lGuardsList;
+                        GetCreatureListWithEntryInGrid(lGuardsList, pWrynn, NPC_GUARD_ROYAL, 25.0f);
+
+                        for (std::list<Creature*>::const_iterator itr = lGuardsList.begin(); itr != lGuardsList.end(); ++itr)
+                        {
+                            m_lRoyalGuardsGuidList.push_back((*itr)->GetObjectGuid());
+                        }
+                    }
+                    break;
+                case SPELL_WINDSOR_READ:
+                    DoCastSpellIfCan(m_creature, SPELL_WINDSOR_READ);
+                    break;
+                case EMOTE_BOLVAR_GASP:
+                    if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
+                    {
+                        pOnyxia->UpdateEntry(NPC_LADY_ONYXIA);
 
                         if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
                         {
-                            pGuard->AI()->AttackStart(pBolvar);
+                            pBolvar->SetFacingToObject(pOnyxia);
                         }
                     }
-                }
-                m_uiGuardCheckTimer = 1000;
-                break;
-            case SPELL_WINDSOR_DEATH:
-                if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
-                {
-                    pOnyxia->CastSpell(m_creature, SPELL_WINDSOR_DEATH, false);
-                }
-                break;
-            case SAY_WINDSOR_KEEP_12:
-                if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
-                {
-                    DoScriptText(SAY_PRESTOR_KEEP_13, pOnyxia);
-                }
+                    break;
+                case SAY_PRESTOR_KEEP_9:
+                    if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                    {
+                        pBolvar->SetWalk(false);
+                        pBolvar->GetMotionMaster()->MovePoint(0, aMoveLocations[7][0], aMoveLocations[7][1], aMoveLocations[7][2]);
+                    }
+                    break;
+                case SAY_BOLVAR_KEEP_10:
+                    if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                    {
+                        if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
+                        {
+                            pBolvar->SetFacingToObject(pOnyxia);
+                            DoScriptText(EMOTE_PRESTOR_LAUGH, pOnyxia);
+                        }
+                    }
+                    break;
+                case SAY_PRESTOR_KEEP_11:
+                    for (GuidList::const_iterator itr = m_lRoyalGuardsGuidList.begin(); itr != m_lRoyalGuardsGuidList.end(); ++itr)
+                    {
+                        if (Creature* pGuard = m_creature->GetMap()->GetCreature(*itr))
+                        {
+                            if (!pGuard->IsAlive())
+                            {
+                                continue;
+                            }
 
-                // Fake death
-                m_creature->InterruptNonMeleeSpells(true);
-                m_creature->SetHealth(0);
-                m_creature->StopMoving();
-                m_creature->ClearComboPointHolders();
-                m_creature->RemoveAllAurasOnDeath();
-                m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
+                            pGuard->UpdateEntry(NPC_GUARD_ONYXIA);
+                            DoScriptText(EMOTE_GUARD_TRANSFORM, pGuard);
 
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-                m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
+                            if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                            {
+                                pGuard->AI()->AttackStart(pBolvar);
+                            }
+                        }
+                    }
+                    m_uiGuardCheckTimer = 1000;
+                    break;
+                case SPELL_WINDSOR_DEATH:
+                    if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
+                    {
+                        pOnyxia->CastSpell(m_creature, SPELL_WINDSOR_DEATH, false);
+                    }
+                    break;
+                case SAY_WINDSOR_KEEP_12:
+                    if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
+                    {
+                        DoScriptText(SAY_PRESTOR_KEEP_13, pOnyxia);
+                    }
+
+                    // Fake death
+                    m_creature->InterruptNonMeleeSpells(true);
+                    m_creature->SetHealth(0);
+                    m_creature->StopMoving();
+                    m_creature->ClearComboPointHolders();
+                    m_creature->RemoveAllAurasOnDeath();
+#if defined (CLASSIC)
+                    m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_20_PERCENT, false);
+#else
+                    m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
 #endif
 
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->ClearAllReactives();
-                m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MoveIdle();
-                m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
-                break;
-            case SAY_PRESTOR_KEEP_14:
-                if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
-                {
-                    pOnyxia->ForcedDespawn(1000);
-                    pOnyxia->HandleEmote(EMOTE_ONESHOT_LIFTOFF);
-                    pOnyxia->CastSpell(pOnyxia, SPELL_ONYXIA_DESPAWN, false);
-                }
-                break;
-            case NPC_GUARD_ONYXIA:
-                if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
-                {
-                    pBolvar->GetMotionMaster()->MovePoint(0, aMoveLocations[7][0], aMoveLocations[7][1], aMoveLocations[7][2]);
-                }
-                break;
-            case NPC_BOLVAR:
-                if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
-                {
-                    pBolvar->SetWalk(true);
-                    pBolvar->GetMotionMaster()->MovePoint(0, aMoveLocations[8][0], aMoveLocations[8][1], aMoveLocations[8][2]);
-                }
-                break;
-            case SAY_BOLVAR_KEEP_15:
-                if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
-                {
-                    pBolvar->SetStandState(UNIT_STAND_STATE_KNEEL);
-                }
+                    m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    m_creature->ClearAllReactives();
+                    m_creature->GetMotionMaster()->Clear();
+                    m_creature->GetMotionMaster()->MoveIdle();
+                    m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
+                    break;
+                case SAY_PRESTOR_KEEP_14:
+                    if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
+                    {
+                        pOnyxia->ForcedDespawn(1000);
+                        pOnyxia->HandleEmote(EMOTE_ONESHOT_LIFTOFF);
+                        pOnyxia->CastSpell(pOnyxia, SPELL_ONYXIA_DESPAWN, false);
+                    }
+                    break;
+                case NPC_GUARD_ONYXIA:
+                    if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                    {
+                        pBolvar->GetMotionMaster()->MovePoint(0, aMoveLocations[7][0], aMoveLocations[7][1], aMoveLocations[7][2]);
+                    }
+                    break;
+                case NPC_BOLVAR:
+                    if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                    {
+                        pBolvar->SetWalk(true);
+                        pBolvar->GetMotionMaster()->MovePoint(0, aMoveLocations[8][0], aMoveLocations[8][1], aMoveLocations[8][2]);
+                    }
+                    break;
+                case SAY_BOLVAR_KEEP_15:
+                    if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                    {
+                        pBolvar->SetStandState(UNIT_STAND_STATE_KNEEL);
+                    }
 
-                DoScriptText(SAY_WINDSOR_KEEP_16, m_creature);
-                DoScriptText(EMOTE_WINDSOR_DIE, m_creature);
+                    DoScriptText(SAY_WINDSOR_KEEP_16, m_creature);
+                    DoScriptText(EMOTE_WINDSOR_DIE, m_creature);
 
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                {
-                    pPlayer->GroupEventHappens(QUEST_THE_GREAT_MASQUERADE, m_creature);
-                }
-                break;
-            case NPC_GUARD_PATROLLER:
-                // Reset Bolvar and Wrynn
-                if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
-                {
-                    pBolvar->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                    pBolvar->SetStandState(UNIT_STAND_STATE_STAND);
-                    pBolvar->GetMotionMaster()->MoveTargetedHome();
-                }
-                if (Creature* pWrynn = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_WRYNN))
-                {
-                    pWrynn->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                    pWrynn->Respawn();
-                    pWrynn->SetWalk(true);
-                    pWrynn->GetMotionMaster()->MoveTargetedHome();
-                }
-                // Onyxia will respawn by herself in about 30 min, so just reset flags
-                if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
-                {
-                    pOnyxia->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
-                }
-                // Allow creature to despawn
-                SetEscortPaused(false);
-                break;
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
+                    {
+                        pPlayer->GroupEventHappens(QUEST_THE_GREAT_MASQUERADE, m_creature);
+                    }
+                    break;
+                case NPC_GUARD_PATROLLER:
+                    // Reset Bolvar and Wrynn
+                    if (Creature* pBolvar = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_BOLVAR))
+                    {
+                        pBolvar->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                        pBolvar->SetStandState(UNIT_STAND_STATE_STAND);
+                        pBolvar->GetMotionMaster()->MoveTargetedHome();
+                    }
+                    if (Creature* pWrynn = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_WRYNN))
+                    {
+                        pWrynn->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                        pWrynn->Respawn();
+                        pWrynn->SetWalk(true);
+                        pWrynn->GetMotionMaster()->MoveTargetedHome();
+                    }
+                    // Onyxia will respawn by herself in about 30 min, so just reset flags
+                    if (Creature* pOnyxia = m_pScriptedMap->GetSingleCreatureFromStorage(NPC_PRESTOR))
+                    {
+                        pOnyxia->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
+                    }
+                    // Allow creature to despawn
+                    SetEscortPaused(false);
+                    break;
             }
         }
 
@@ -1232,23 +1235,23 @@ struct npc_tyrion_spybot : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 1:
-                SetEscortPaused(true);
-                uiTimer = 2000;
-                uiPhase = 1;
-                break;
-            case 5:
-                SetEscortPaused(true);
-                DoScriptText(SAY_SPYBOT_1, m_creature);
-                uiTimer = 2000;
-                uiPhase = 5;
-                break;
-            case 17:
-                SetEscortPaused(true);
-                DoScriptText(SAY_SPYBOT_3, m_creature);
-                uiTimer = 3000;
-                uiPhase = 8;
-                break;
+                case 1:
+                    SetEscortPaused(true);
+                    uiTimer = 2000;
+                    uiPhase = 1;
+                    break;
+                case 5:
+                    SetEscortPaused(true);
+                    DoScriptText(SAY_SPYBOT_1, m_creature);
+                    uiTimer = 2000;
+                    uiPhase = 5;
+                    break;
+                case 17:
+                    SetEscortPaused(true);
+                    DoScriptText(SAY_SPYBOT_3, m_creature);
+                    uiTimer = 3000;
+                    uiPhase = 8;
+                    break;
             }
         }
 
@@ -1260,75 +1263,78 @@ struct npc_tyrion_spybot : public CreatureScript
                 {
                     switch (uiPhase)
                     {
-                    case 1:
-                        DoScriptText(SAY_QUEST_ACCEPT_ATTACK, m_creature);
-                        uiTimer = 3000;
-                        uiPhase = 2;
-                        break;
-                    case 2:
-                        if (pTyrion)
-                        {
-                            DoScriptText(SAY_TYRION_1, pTyrion);
-                        }
-                        uiTimer = 3000;
-                        uiPhase = 3;
-                        break;
-                    case 3:
-                        m_creature->UpdateEntry(NPC_PRIESTESS_TYRIONA, ALLIANCE);
-                        uiTimer = 2000;
-                        uiPhase = 4;
-                        break;
-                    case 4:
-                        SetEscortPaused(false);
-                        uiPhase = 0;
-                        uiTimer = 0;
-                        break;
-                    case 5:
-                        /*if (Creature* pGuard = m_creature->FindNearestCreature(NPC_STORMWIND_ROYAL, 10.0f, true))
-                        DoScriptText(SAY_GUARD_1, pGuard);*/
-                        uiTimer = 3000;
-                        uiPhase = 6;
-                        break;
-                    case 6:
-                        DoScriptText(SAY_SPYBOT_2, m_creature);
-                        uiTimer = 3000;
-                        uiPhase = 7;
-                        break;
-                    case 7:
-                        SetEscortPaused(false);
-                        uiTimer = 0;
-                        uiPhase = 0;
-                        break;
-                    case 8:
-                        if (pLescovar)
-                        {
-                            DoScriptText(SAY_LESCOVAR_1, pLescovar);
-                        }
-                        uiTimer = 3000;
-                        uiPhase = 9;
-                        break;
-                    case 9:
-                        DoScriptText(SAY_SPYBOT_4, m_creature);
-                        uiTimer = 3000;
-                        uiPhase = 10;
-                        break;
-                    case 10:
-                        if (pLescovar && pLescovar->IsAlive())
-                        {
-                            if (Player* pPlayer = GetPlayerForEscort())
+                        case 1:
+                            DoScriptText(SAY_QUEST_ACCEPT_ATTACK, m_creature);
+                            uiTimer = 3000;
+                            uiPhase = 2;
+                            break;
+                        case 2:
+                            if (pTyrion)
                             {
-                                static_cast<npc_escortAI*>(pLescovar->AI())->Start(false, pPlayer, 0, false, false);
+                                DoScriptText(SAY_TYRION_1, pTyrion);
                             }
-                            //CAST_AI(npc_lord_gregor_lescovarAI, pLescovar->AI())->Start(false, false, pPlayer->GetGUID());
-                            //CAST_AI(npc_lord_gregor_lescovarAI, pLescovar->AI())->SetMaxPlayerDistance(200.0f);
-                        }
-                        //m_creature->DisappearAndDie();
-                        uiTimer = 0;
-                        uiPhase = 0;
-                        break;
+                            uiTimer = 3000;
+                            uiPhase = 3;
+                            break;
+                        case 3:
+                            m_creature->UpdateEntry(NPC_PRIESTESS_TYRIONA, ALLIANCE);
+                            uiTimer = 2000;
+                            uiPhase = 4;
+                            break;
+                        case 4:
+                            SetEscortPaused(false);
+                            uiPhase = 0;
+                            uiTimer = 0;
+                            break;
+                        case 5:
+                            /** if (Creature* pGuard = m_creature->FindNearestCreature(NPC_STORMWIND_ROYAL, 10.0f, true))
+                             * DoScriptText(SAY_GUARD_1, pGuard);*/
+                            uiTimer = 3000;
+                            uiPhase = 6;
+                            break;
+                        case 6:
+                            DoScriptText(SAY_SPYBOT_2, m_creature);
+                            uiTimer = 3000;
+                            uiPhase = 7;
+                            break;
+                        case 7:
+                            SetEscortPaused(false);
+                            uiTimer = 0;
+                            uiPhase = 0;
+                            break;
+                        case 8:
+                            if (pLescovar)
+                            {
+                                DoScriptText(SAY_LESCOVAR_1, pLescovar);
+                            }
+                            uiTimer = 3000;
+                            uiPhase = 9;
+                            break;
+                        case 9:
+                            DoScriptText(SAY_SPYBOT_4, m_creature);
+                            uiTimer = 3000;
+                            uiPhase = 10;
+                            break;
+                        case 10:
+                            if (pLescovar && pLescovar->IsAlive())
+                            {
+                                if (Player* pPlayer = GetPlayerForEscort())
+                                {
+                                    static_cast<npc_escortAI*>(pLescovar->AI())->Start(false, pPlayer, 0, false, false);
+                                }
+                                //CAST_AI(npc_lord_gregor_lescovarAI, pLescovar->AI())->Start(false, false, pPlayer->GetGUID());
+                                //CAST_AI(npc_lord_gregor_lescovarAI, pLescovar->AI())->SetMaxPlayerDistance(200.0f);
+                            }
+                            //m_creature->DisappearAndDie();
+                            uiTimer = 0;
+                            uiPhase = 0;
+                            break;
                     }
                 }
-                else uiTimer -= uiDiff;
+                else
+                {
+                    uiTimer -= uiDiff;
+                }
             }
 
             npc_escortAI::UpdateAI(uiDiff);

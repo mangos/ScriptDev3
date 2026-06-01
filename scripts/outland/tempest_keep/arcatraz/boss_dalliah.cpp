@@ -226,9 +226,9 @@ struct boss_dalliah : public CreatureScript
                     {
                         switch (urand(0, 2))
                         {
-                        case 0: DoScriptText(SAY_SOCCOTHRATES_TAUNT_1, pSoccothares); break;
-                        case 1: DoScriptText(SAY_SOCCOTHRATES_TAUNT_2, pSoccothares); break;
-                        case 2: DoScriptText(SAY_SOCCOTHRATES_TAUNT_3, pSoccothares); break;
+                            case 0: DoScriptText(SAY_SOCCOTHRATES_TAUNT_1, pSoccothares); break;
+                            case 1: DoScriptText(SAY_SOCCOTHRATES_TAUNT_2, pSoccothares); break;
+                            case 2: DoScriptText(SAY_SOCCOTHRATES_TAUNT_3, pSoccothares); break;
                         }
                     }
                 }

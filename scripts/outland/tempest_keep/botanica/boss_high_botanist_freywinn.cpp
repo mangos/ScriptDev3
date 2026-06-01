@@ -126,10 +126,10 @@ struct boss_high_botanist_freywinn : public CreatureScript
         {
             switch (urand(0, 3))
             {
-            case 0: DoCastSpellIfCan(m_creature, SPELL_PLANT_WHITE); break;
-            case 1: DoCastSpellIfCan(m_creature, SPELL_PLANT_GREEN); break;
-            case 2: DoCastSpellIfCan(m_creature, SPELL_PLANT_BLUE);  break;
-            case 3: DoCastSpellIfCan(m_creature, SPELL_PLANT_RED);   break;
+                case 0: DoCastSpellIfCan(m_creature, SPELL_PLANT_WHITE); break;
+                case 1: DoCastSpellIfCan(m_creature, SPELL_PLANT_GREEN); break;
+                case 2: DoCastSpellIfCan(m_creature, SPELL_PLANT_BLUE);  break;
+                case 3: DoCastSpellIfCan(m_creature, SPELL_PLANT_RED);   break;
             }
         }
 

@@ -139,18 +139,18 @@ struct boss_volazj : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0:
-                DoScriptText(SAY_SLAY_1, m_creature);
-                DoCastSpellIfCan(m_creature, SPELL_WHISPER_SLAY_1);
-                break;
-            case 1:
-                DoScriptText(SAY_SLAY_2, m_creature);
-                DoCastSpellIfCan(m_creature, SPELL_WHISPER_SLAY_2);
-                break;
-            case 2:
-                DoScriptText(SAY_SLAY_3, m_creature);
-                DoCastSpellIfCan(m_creature, SPELL_WHISPER_SLAY_3);
-                break;
+                case 0:
+                    DoScriptText(SAY_SLAY_1, m_creature);
+                    DoCastSpellIfCan(m_creature, SPELL_WHISPER_SLAY_1);
+                    break;
+                case 1:
+                    DoScriptText(SAY_SLAY_2, m_creature);
+                    DoCastSpellIfCan(m_creature, SPELL_WHISPER_SLAY_2);
+                    break;
+                case 2:
+                    DoScriptText(SAY_SLAY_3, m_creature);
+                    DoCastSpellIfCan(m_creature, SPELL_WHISPER_SLAY_3);
+                    break;
             }
         }
 

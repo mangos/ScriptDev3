@@ -40,128 +40,128 @@ struct is_the_eye : public InstanceScript
 
     class instance_the_eye : public ScriptedInstance
     {
-    public:
-        instance_the_eye(Map* pMap) : ScriptedInstance(pMap),
-            m_uiKaelthasEventPhase(0)
-        {
-            Initialize();
-        }
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        bool IsEncounterInProgress() const override
-        {
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+        public:
+            instance_the_eye(Map* pMap) : ScriptedInstance(pMap),
+                m_uiKaelthasEventPhase(0)
             {
-                if (m_auiEncounter[i] == IN_PROGRESS)
+                Initialize();
+            }
+
+            void Initialize() override
+            {
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+            }
+
+            bool IsEncounterInProgress() const override
+            {
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                 {
-                    return true;
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                switch (pCreature->GetEntry())
+                {
+                    case NPC_THALADRED:
+                    case NPC_TELONICUS:
+                    case NPC_CAPERNIAN:
+                    case NPC_SANGUINAR:
+                    case NPC_KAELTHAS:
+                        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                        break;
                 }
             }
 
-            return false;
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            switch (pCreature->GetEntry())
+            void OnObjectCreate(GameObject* pGo) override
             {
-            case NPC_THALADRED:
-            case NPC_TELONICUS:
-            case NPC_CAPERNIAN:
-            case NPC_SANGUINAR:
-            case NPC_KAELTHAS:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-                break;
-            }
-        }
-
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
-            {
-            case GO_ARCANE_DOOR_HORIZ_3:
-            case GO_ARCANE_DOOR_HORIZ_4:
-            case GO_KAEL_STATUE_LEFT:
-            case GO_KAEL_STATUE_RIGHT:
-            case GO_BRIDGE_WINDOW:
-                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-                break;
-            }
-        }
-
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
-            {
-            case TYPE_ALAR:
-            case TYPE_SOLARIAN:
-            case TYPE_VOIDREAVER:
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_KAELTHAS:
-                // Don't set the same data twice
-                if (m_auiEncounter[uiType] == uiData)
+                switch (pGo->GetEntry())
                 {
-                    break;
+                    case GO_ARCANE_DOOR_HORIZ_3:
+                    case GO_ARCANE_DOOR_HORIZ_4:
+                    case GO_KAEL_STATUE_LEFT:
+                    case GO_KAEL_STATUE_RIGHT:
+                    case GO_BRIDGE_WINDOW:
+                        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+                        break;
                 }
-                DoUseDoorOrButton(GO_ARCANE_DOOR_HORIZ_3);
-                DoUseDoorOrButton(GO_ARCANE_DOOR_HORIZ_4);
-                if (uiData == FAIL)
-                {
-                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_KAEL_STATUE_LEFT))
-                    {
-                        pGo->ResetDoorOrButton();
-                    }
-                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_KAEL_STATUE_RIGHT))
-                    {
-                        pGo->ResetDoorOrButton();
-                    }
-                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_BRIDGE_WINDOW))
-                    {
-                        pGo->ResetDoorOrButton();
-                    }
+            }
 
-                    // Respawn or reset the advisors
-                    for (uint8 i = 0; i < MAX_ADVISORS; ++i)
-                    {
-                        if (Creature* pTemp = GetSingleCreatureFromStorage(aAdvisors[i]))
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                switch (uiType)
+                {
+                    case TYPE_ALAR:
+                    case TYPE_SOLARIAN:
+                    case TYPE_VOIDREAVER:
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_KAELTHAS:
+                        // Don't set the same data twice
+                        if (m_auiEncounter[uiType] == uiData)
                         {
-                            if (!pTemp->IsAlive())
+                            break;
+                        }
+                        DoUseDoorOrButton(GO_ARCANE_DOOR_HORIZ_3);
+                        DoUseDoorOrButton(GO_ARCANE_DOOR_HORIZ_4);
+                        if (uiData == FAIL)
+                        {
+                            if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_KAEL_STATUE_LEFT))
                             {
-                                pTemp->Respawn();
+                                pGo->ResetDoorOrButton();
                             }
-                            else
+                            if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_KAEL_STATUE_RIGHT))
                             {
-                                pTemp->AI()->EnterEvadeMode();
+                                pGo->ResetDoorOrButton();
+                            }
+                            if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_BRIDGE_WINDOW))
+                            {
+                                pGo->ResetDoorOrButton();
+                            }
+
+                            // Respawn or reset the advisors
+                            for (uint8 i = 0; i < MAX_ADVISORS; ++i)
+                            {
+                                if (Creature* pTemp = GetSingleCreatureFromStorage(aAdvisors[i]))
+                                {
+                                    if (!pTemp->IsAlive())
+                                    {
+                                        pTemp->Respawn();
+                                    }
+                                    else
+                                    {
+                                        pTemp->AI()->EnterEvadeMode();
+                                    }
+                                }
                             }
                         }
-                    }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
                 }
-                m_auiEncounter[uiType] = uiData;
-                break;
             }
-        }
 
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType < MAX_ENCOUNTER)
+            uint32 GetData(uint32 uiType) const override
             {
-                return m_auiEncounter[uiType];
+                if (uiType < MAX_ENCOUNTER)
+                {
+                    return m_auiEncounter[uiType];
+                }
+
+                return 0;
             }
 
-            return 0;
-        }
+            // No Save or Load needed to current knowledge
 
-        // No Save or Load needed to current knowledge
+        private:
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
 
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-
-        uint32 m_uiKaelthasEventPhase;
+            uint32 m_uiKaelthasEventPhase;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

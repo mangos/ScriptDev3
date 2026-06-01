@@ -70,7 +70,7 @@ enum
     SPELL_FROST_BOMB            = 69846, // summons dummy target npc
     SPELL_FROST_BOMB_DMG        = 69845,
     SPELL_FROST_BOMB_VISUAL     = 70022, // circle mark
-// SPELL_FROST_BOMB_OTHER      = 70521, // no idea where it is used, wowhead says it is used by some other Sindragosa (37755)
+    // SPELL_FROST_BOMB_OTHER      = 70521, // no idea where it is used, wowhead says it is used by some other Sindragosa (37755)
 
     // Phase 3
     SPELL_MYSTIC_BUFFET         = 70128,
@@ -357,149 +357,149 @@ struct boss_sindragosa : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case SINDRAGOSA_PHASE_THREE:
-                // Ice Tomb
-                if (m_uiIceTombSingleTimer <= uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_ICE_TOMB_SINGLE, SELECT_FLAG_PLAYER))
+                case SINDRAGOSA_PHASE_THREE:
+                    // Ice Tomb
+                    if (m_uiIceTombSingleTimer <= uiDiff)
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_ICE_TOMB) == CAST_OK)
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_ICE_TOMB_SINGLE, SELECT_FLAG_PLAYER))
                         {
-                            m_uiIceTombSingleTimer = 15000;
+                            if (DoCastSpellIfCan(pTarget, SPELL_ICE_TOMB) == CAST_OK)
+                            {
+                                m_uiIceTombSingleTimer = 15000;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    m_uiIceTombSingleTimer -= uiDiff;
-                }
-
-                // no break
-            case SINDRAGOSA_PHASE_GROUND:
-                // Phase 1 only
-                if (m_uiPhase == SINDRAGOSA_PHASE_GROUND)
-                {
-                    // Health Check
-                    if (m_creature->GetHealthPercent() <= 30.0f)
+                    else
                     {
-                        if (DoCastSpellIfCan(m_creature, SPELL_MYSTIC_BUFFET) == CAST_OK)
+                        m_uiIceTombSingleTimer -= uiDiff;
+                    }
+
+                    // no break
+                case SINDRAGOSA_PHASE_GROUND:
+                    // Phase 1 only
+                    if (m_uiPhase == SINDRAGOSA_PHASE_GROUND)
+                    {
+                        // Health Check
+                        if (m_creature->GetHealthPercent() <= 30.0f)
                         {
-                            m_uiPhase = SINDRAGOSA_PHASE_THREE;
-                            DoScriptText(SAY_PHASE_3, m_creature);
+                            if (DoCastSpellIfCan(m_creature, SPELL_MYSTIC_BUFFET) == CAST_OK)
+                            {
+                                m_uiPhase = SINDRAGOSA_PHASE_THREE;
+                                DoScriptText(SAY_PHASE_3, m_creature);
+                            }
+                        }
+
+                        // Phase 2 (air)
+                        if (m_uiPhaseTimer <= uiDiff)
+                        {
+                            m_uiPhaseTimer = 33000;
+                            DoScriptText(SAY_TAKEOFF, m_creature);
+                            SetCombatMovement(false);
+                            m_creature->GetMotionMaster()->MovePoint(SINDRAGOSA_POINT_GROUND_CENTER, SindragosaPosition[0][0], SindragosaPosition[0][1], SindragosaPosition[0][2], false);
+                        }
+                        else
+                        {
+                            m_uiPhaseTimer -= uiDiff;
                         }
                     }
 
-                    // Phase 2 (air)
+                    // Cleave
+                    if (m_uiCleaveTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                        {
+                            m_uiCleaveTimer = urand(5000, 15000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiCleaveTimer -= uiDiff;
+                    }
+
+                    // Tail Smash
+                    if (m_uiTailSmashTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_TAIL_SMASH) == CAST_OK)
+                        {
+                            m_uiTailSmashTimer = urand(10000, 20000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiTailSmashTimer -= uiDiff;
+                    }
+
+                    // Frost Breath
+                    if (m_uiFrostBreathTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_BREATH) == CAST_OK)
+                        {
+                            m_uiFrostBreathTimer = urand(15000, 20000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiFrostBreathTimer -= uiDiff;
+                    }
+
+                    // Unchained Magic
+                    if (m_uiUnchainedMagicTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_UNCHAINED_MAGIC) == CAST_OK)
+                        {
+                            m_uiUnchainedMagicTimer = urand(40000, 60000);
+                            DoScriptText(SAY_UNCHAINED_MAGIC, m_creature);
+                        }
+                    }
+                    else
+                    {
+                        m_uiUnchainedMagicTimer -= uiDiff;
+                    }
+
+                    // Icy Grip and Blistering Cold
+                    if (m_uiIcyGripTimer <= uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_ICY_GRIP) == CAST_OK)
+                        {
+                            m_uiIcyGripTimer = 70000;
+                            DoScriptText(SAY_BLISTERING_COLD, m_creature);
+                        }
+                    }
+                    else
+                    {
+                        m_uiIcyGripTimer -= uiDiff;
+                    }
+
+                    DoMeleeAttackIfReady();
+                    break;
+                case SINDRAGOSA_PHASE_FLYING_TO_GROUND:
+                case SINDRAGOSA_PHASE_FLYING_TO_AIR:
+                    break;
+                case SINDRAGOSA_PHASE_AIR:
+                    // Phase One (ground)
                     if (m_uiPhaseTimer <= uiDiff)
                     {
-                        m_uiPhaseTimer = 33000;
-                        DoScriptText(SAY_TAKEOFF, m_creature);
-                        SetCombatMovement(false);
-                        m_creature->GetMotionMaster()->MovePoint(SINDRAGOSA_POINT_GROUND_CENTER, SindragosaPosition[0][0], SindragosaPosition[0][1], SindragosaPosition[0][2], false);
+                        m_uiPhase = SINDRAGOSA_PHASE_FLYING_TO_GROUND;
+                        m_uiPhaseTimer = 42000;
+                        m_creature->GetMotionMaster()->MovePoint(SINDRAGOSA_POINT_AIR_CENTER, SindragosaPosition[1][0], SindragosaPosition[1][1], SindragosaPosition[1][2], false);
                     }
                     else
                     {
                         m_uiPhaseTimer -= uiDiff;
                     }
-                }
 
-                // Cleave
-                if (m_uiCleaveTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                    // Frost Bomb
+                    if (m_uiFrostBombTimer <= uiDiff)
                     {
-                        m_uiCleaveTimer = urand(5000, 15000);
+                        DoFrostBomb();
+                        m_uiFrostBombTimer = 6000;
                     }
-                }
-                else
-                {
-                    m_uiCleaveTimer -= uiDiff;
-                }
-
-                // Tail Smash
-                if (m_uiTailSmashTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TAIL_SMASH) == CAST_OK)
+                    else
                     {
-                        m_uiTailSmashTimer = urand(10000, 20000);
+                        m_uiFrostBombTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiTailSmashTimer -= uiDiff;
-                }
 
-                // Frost Breath
-                if (m_uiFrostBreathTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_BREATH) == CAST_OK)
-                    {
-                        m_uiFrostBreathTimer = urand(15000, 20000);
-                    }
-                }
-                else
-                {
-                    m_uiFrostBreathTimer -= uiDiff;
-                }
-
-                // Unchained Magic
-                if (m_uiUnchainedMagicTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_UNCHAINED_MAGIC) == CAST_OK)
-                    {
-                        m_uiUnchainedMagicTimer = urand(40000, 60000);
-                        DoScriptText(SAY_UNCHAINED_MAGIC, m_creature);
-                    }
-                }
-                else
-                {
-                    m_uiUnchainedMagicTimer -= uiDiff;
-                }
-
-                // Icy Grip and Blistering Cold
-                if (m_uiIcyGripTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_ICY_GRIP) == CAST_OK)
-                    {
-                        m_uiIcyGripTimer = 70000;
-                        DoScriptText(SAY_BLISTERING_COLD, m_creature);
-                    }
-                }
-                else
-                {
-                    m_uiIcyGripTimer -= uiDiff;
-                }
-
-                DoMeleeAttackIfReady();
-                break;
-            case SINDRAGOSA_PHASE_FLYING_TO_GROUND:
-            case SINDRAGOSA_PHASE_FLYING_TO_AIR:
-                break;
-            case SINDRAGOSA_PHASE_AIR:
-                // Phase One (ground)
-                if (m_uiPhaseTimer <= uiDiff)
-                {
-                    m_uiPhase = SINDRAGOSA_PHASE_FLYING_TO_GROUND;
-                    m_uiPhaseTimer = 42000;
-                    m_creature->GetMotionMaster()->MovePoint(SINDRAGOSA_POINT_AIR_CENTER, SindragosaPosition[1][0], SindragosaPosition[1][1], SindragosaPosition[1][2], false);
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                // Frost Bomb
-                if (m_uiFrostBombTimer <= uiDiff)
-                {
-                    DoFrostBomb();
-                    m_uiFrostBombTimer = 6000;
-                }
-                else
-                {
-                    m_uiFrostBombTimer -= uiDiff;
-                }
-
-                break;
+                    break;
             }
 
             // evade on top of the stairs

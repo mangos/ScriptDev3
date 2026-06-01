@@ -133,7 +133,7 @@ struct mob_blood_elf_council_voice_trigger : public CreatureScript
     struct mob_blood_elf_council_voice_triggerAI : public ScriptedAI
     {
         mob_blood_elf_council_voice_triggerAI(Creature* pCreature) : ScriptedAI(pCreature),
-        m_councilDialogue(aCouncilDialogue)
+            m_councilDialogue(aCouncilDialogue)
         {
             m_pInstance = (ScriptedInstance*)(m_creature->GetInstanceData());
             m_councilDialogue.InitializeDialogueHelper(m_pInstance);
@@ -305,14 +305,14 @@ struct mob_illidari_council : public CreatureScript
             {
                 switch (eventType)
                 {
-                case AI_EVENT_CUSTOM_A:
-                    DoStartEvent();
-                    break;
-                case AI_EVENT_CUSTOM_B:
-                    DoEndEvent();
-                    break;
-                default:
-                    break;
+                    case AI_EVENT_CUSTOM_A:
+                        DoStartEvent();
+                        break;
+                    case AI_EVENT_CUSTOM_B:
+                        DoEndEvent();
+                        break;
+                    default:
+                        break;
                 }
             }
         }

@@ -139,9 +139,9 @@ struct boss_anubarak : public CreatureScript
         {
             switch (urand(0, 2))
             {
-            case 0: DoScriptText(SAY_KILL_1, m_creature); break;
-            case 1: DoScriptText(SAY_KILL_2, m_creature); break;
-            case 2: DoScriptText(SAY_KILL_3, m_creature); break;
+                case 0: DoScriptText(SAY_KILL_1, m_creature); break;
+                case 1: DoScriptText(SAY_KILL_2, m_creature); break;
+                case 2: DoScriptText(SAY_KILL_3, m_creature); break;
             }
         }
 
@@ -183,30 +183,30 @@ struct boss_anubarak : public CreatureScript
 
             switch (pSummoned->GetEntry())
             {
-            case NPC_ANUBAR_GUARDIAN:
-            case NPC_ANUBAR_VENOMANCER:
-                pSummoned->SetWalk(false);
-                if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_TRIGGER))))
-                {
-                    pSummoned->GetMotionMaster()->MovePoint(0, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
-                }
-                break;
-            case NPC_ANUBAR_DARTER:
-            case NPC_ANUBAR_ASSASSIN:
-                if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_TRIGGER))))
-                {
-                    float fX, fY, fZ;
-                    m_creature->GetRandomPoint(pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 15.0f, fX, fY, fZ);
-
+                case NPC_ANUBAR_GUARDIAN:
+                case NPC_ANUBAR_VENOMANCER:
                     pSummoned->SetWalk(false);
-                    pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
-                }
-                break;
-            case NPC_IMPALE_TARGET:
-                pSummoned->CastSpell(pSummoned, SPELL_IMPALE_VISUAL, true);
-                break;
-            default:
-                break;
+                    if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_TRIGGER))))
+                    {
+                        pSummoned->GetMotionMaster()->MovePoint(0, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                    }
+                    break;
+                case NPC_ANUBAR_DARTER:
+                case NPC_ANUBAR_ASSASSIN:
+                    if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_TRIGGER))))
+                    {
+                        float fX, fY, fZ;
+                        m_creature->GetRandomPoint(pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 15.0f, fX, fY, fZ);
+
+                        pSummoned->SetWalk(false);
+                        pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                    }
+                    break;
+                case NPC_IMPALE_TARGET:
+                    pSummoned->CastSpell(pSummoned, SPELL_IMPALE_VISUAL, true);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -225,9 +225,9 @@ struct boss_anubarak : public CreatureScript
                     {
                         switch (urand(0, 2))
                         {
-                        case 0: DoScriptText(SAY_LOCUST_1, m_creature); break;
-                        case 1: DoScriptText(SAY_LOCUST_2, m_creature); break;
-                        case 2: DoScriptText(SAY_LOCUST_3, m_creature); break;
+                            case 0: DoScriptText(SAY_LOCUST_1, m_creature); break;
+                            case 1: DoScriptText(SAY_LOCUST_2, m_creature); break;
+                            case 2: DoScriptText(SAY_LOCUST_3, m_creature); break;
                         }
 
                         m_uiLeechingSwarmTimer = 19000;
@@ -275,15 +275,15 @@ struct boss_anubarak : public CreatureScript
                     // Emerge timers aren't the same. They depend on the submerge phase
                     switch (m_uiSubmergePhase)
                     {
-                    case 1:
-                        m_uiEmergeTimer = 20000;
-                        break;
-                    case 2:
-                        m_uiEmergeTimer = 45000;
-                        break;
-                    case 3:
-                        m_uiEmergeTimer = 50000;
-                        break;
+                        case 1:
+                            m_uiEmergeTimer = 20000;
+                            break;
+                        case 2:
+                            m_uiEmergeTimer = 45000;
+                            break;
+                        case 3:
+                            m_uiEmergeTimer = 50000;
+                            break;
                     }
                     ++m_uiSubmergePhase;
                 }

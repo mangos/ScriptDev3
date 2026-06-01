@@ -40,153 +40,153 @@ struct is_sethekk_halls : public InstanceScript
 
     class instance_sethekk_halls : public ScriptedInstance
     {
-    public:
-        instance_sethekk_halls(Map* pMap) : ScriptedInstance(pMap)
-        {
-            Initialize();
-        }
-
-        ~instance_sethekk_halls() {}
-
-        void Initialize() override
-        {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        }
-
-        void OnCreatureCreate(Creature* pCreature) override
-        {
-            if (pCreature->GetEntry() == NPC_ANZU)
+        public:
+            instance_sethekk_halls(Map* pMap) : ScriptedInstance(pMap)
             {
-                m_mNpcEntryGuidStore[NPC_ANZU] = pCreature->GetObjectGuid();
-            }
-        }
-
-        void OnObjectCreate(GameObject* pGo) override
-        {
-            switch (pGo->GetEntry())
-            {
-            case GO_IKISS_DOOR:
-                if (m_auiEncounter[TYPE_IKISS] == DONE)
-                {
-                    pGo->SetGoState(GO_STATE_ACTIVE);
-                }
-                break;
-            case GO_IKISS_CHEST:
-                if (m_auiEncounter[TYPE_IKISS] == DONE)
-                {
-                    pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT | GO_FLAG_INTERACT_COND);
-                }
-                break;
-            case GO_RAVENS_CLAW:
-                break;
-
-            default:
-                return;
+                Initialize();
             }
 
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-        }
+            ~instance_sethekk_halls() {}
 
-        void SetData(uint32 uiType, uint32 uiData) override
-        {
-            switch (uiType)
+            void Initialize() override
             {
-            case TYPE_SYTH:
-                m_auiEncounter[uiType] = uiData;
-                break;
-            case TYPE_ANZU:
-                m_auiEncounter[uiType] = uiData;
-                // Respawn the Raven's Claw if event fails
-                if (uiData == FAIL)
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+            }
+
+            void OnCreatureCreate(Creature* pCreature) override
+            {
+                if (pCreature->GetEntry() == NPC_ANZU)
                 {
-                    if (GameObject* pClaw = GetSingleGameObjectFromStorage(GO_RAVENS_CLAW))
-                    {
-                        pClaw->Respawn();
-                    }
+                    m_mNpcEntryGuidStore[NPC_ANZU] = pCreature->GetObjectGuid();
                 }
-                break;
-            case TYPE_IKISS:
+            }
+
+            void OnObjectCreate(GameObject* pGo) override
+            {
+                switch (pGo->GetEntry())
+                {
+                    case GO_IKISS_DOOR:
+                        if (m_auiEncounter[TYPE_IKISS] == DONE)
+                        {
+                            pGo->SetGoState(GO_STATE_ACTIVE);
+                        }
+                        break;
+                    case GO_IKISS_CHEST:
+                        if (m_auiEncounter[TYPE_IKISS] == DONE)
+                        {
+                            pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT | GO_FLAG_INTERACT_COND);
+                        }
+                        break;
+                    case GO_RAVENS_CLAW:
+                        break;
+
+                    default:
+                        return;
+                }
+
+                m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+            }
+
+            void SetData(uint32 uiType, uint32 uiData) override
+            {
+                switch (uiType)
+                {
+                    case TYPE_SYTH:
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    case TYPE_ANZU:
+                        m_auiEncounter[uiType] = uiData;
+                        // Respawn the Raven's Claw if event fails
+                        if (uiData == FAIL)
+                        {
+                            if (GameObject* pClaw = GetSingleGameObjectFromStorage(GO_RAVENS_CLAW))
+                            {
+                                pClaw->Respawn();
+                            }
+                        }
+                        break;
+                    case TYPE_IKISS:
+                        if (uiData == DONE)
+                        {
+                            DoUseDoorOrButton(GO_IKISS_DOOR, DAY);
+                            DoToggleGameObjectFlags(GO_IKISS_CHEST, GO_FLAG_NO_INTERACT | GO_FLAG_INTERACT_COND, false);
+                        }
+                        m_auiEncounter[uiType] = uiData;
+                        break;
+                    default:
+                        return;
+                }
+
                 if (uiData == DONE)
                 {
-                    DoUseDoorOrButton(GO_IKISS_DOOR, DAY);
-                    DoToggleGameObjectFlags(GO_IKISS_CHEST, GO_FLAG_NO_INTERACT | GO_FLAG_INTERACT_COND, false);
+                    OUT_SAVE_INST_DATA;
+
+                    std::ostringstream saveStream;
+                    saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2];
+
+                    m_strInstData = saveStream.str();
+
+                    SaveToDB();
+                    OUT_SAVE_INST_DATA_COMPLETE;
                 }
-                m_auiEncounter[uiType] = uiData;
-                break;
-            default:
-                return;
             }
 
-            if (uiData == DONE)
+            uint32 GetData(uint32 uiType) const override
             {
-                OUT_SAVE_INST_DATA;
-
-                std::ostringstream saveStream;
-                saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2];
-
-                m_strInstData = saveStream.str();
-
-                SaveToDB();
-                OUT_SAVE_INST_DATA_COMPLETE;
-            }
-        }
-
-        uint32 GetData(uint32 uiType) const override
-        {
-            if (uiType < MAX_ENCOUNTER)
-            {
-                return m_auiEncounter[uiType];
-            }
-
-            return 0;
-        }
-
-        const char* Save() const override { return m_strInstData.c_str(); }
-        void Load(const char* chrIn) override
-        {
-            if (!chrIn)
-            {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
-            }
-
-            OUT_LOAD_INST_DATA(chrIn);
-
-            std::istringstream loadStream(chrIn);
-            loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2];
-
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            {
-                if (m_auiEncounter[i] == IN_PROGRESS)
+                if (uiType < MAX_ENCOUNTER)
                 {
-                    m_auiEncounter[i] = NOT_STARTED;
+                    return m_auiEncounter[uiType];
                 }
+
+                return 0;
             }
 
-            OUT_LOAD_INST_DATA_COMPLETE;
-        }
+            const char* Save() const override { return m_strInstData.c_str(); }
+            void Load(const char* chrIn) override
+            {
+                if (!chrIn)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+
+                OUT_LOAD_INST_DATA(chrIn);
+
+                std::istringstream loadStream(chrIn);
+                loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2];
+
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                {
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                    {
+                        m_auiEncounter[i] = NOT_STARTED;
+                    }
+                }
+
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
 
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const override
-        {
-            if (uiCriteriaId != ACHIEV_CRITA_TURKEY_TIME)
+            bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const override
             {
-                return false;
-            }
+                if (uiCriteriaId != ACHIEV_CRITA_TURKEY_TIME)
+                {
+                    return false;
+                }
 
-            if (!pSource)
-            {
-                return false;
-            }
+                if (!pSource)
+                {
+                    return false;
+                }
 
-            return pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_HAT, 1) && (pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_DRESS, 1)
-                    || pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_ROBE, 1) || pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_ATTIRE, 1));
-        }
+                return pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_HAT, 1) && (pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_DRESS, 1) ||
+                    pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_ROBE, 1) || pSource->HasItemOrGemWithIdEquipped(ITEM_PILGRIMS_ATTIRE, 1));
+            }
 #endif
 
-    private:
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-        std::string m_strInstData;
+        private:
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+            std::string m_strInstData;
     };
 
     InstanceData* GetInstanceData(Map* pMap) override

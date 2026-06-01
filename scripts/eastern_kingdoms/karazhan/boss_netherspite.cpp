@@ -25,13 +25,13 @@
  */
 
 /**
-* ScriptData
-* SDName:      Boss Netherspite
-* SD%Complete: 75
-* SDComment:   Nether portal partially implemented. Find spell ID for tail swipe added in patch 3.0.2
-* SDCategory:  Karazhan
-* EndScriptData
-*/
+ * ScriptData
+ * SDName:      Boss Netherspite
+ * SD%Complete: 75
+ * SDComment:   Nether portal partially implemented. Find spell ID for tail swipe added in patch 3.0.2
+ * SDCategory:  Karazhan
+ * EndScriptData
+ */
 
 #include "precompiled.h"
 #include "karazhan.h"
@@ -336,21 +336,21 @@ struct boss_netherspite : public CreatureScript
 
             switch (pSummoned->GetEntry())
             {
-            case NPC_VOID_ZONE:
-                pSummoned->CastSpell(pSummoned, SPELL_CONSUMPTION, true);
-                break;
-            case NPC_PORTAL_RED:
-                pSummoned->CastSpell(pSummoned, SPELL_RED_PORTAL, true);
-                m_portal[2] = pSummoned;
-                break;
-            case NPC_PORTAL_GREEN:
-                pSummoned->CastSpell(pSummoned, SPELL_GREEN_PORTAL, true);
-                m_portal[0] = pSummoned;
-                break;
-            case NPC_PORTAL_BLUE:
-                pSummoned->CastSpell(pSummoned, SPELL_BLUE_PORTAL, true);
-                m_portal[1] = pSummoned;
-                break;
+                case NPC_VOID_ZONE:
+                    pSummoned->CastSpell(pSummoned, SPELL_CONSUMPTION, true);
+                    break;
+                case NPC_PORTAL_RED:
+                    pSummoned->CastSpell(pSummoned, SPELL_RED_PORTAL, true);
+                    m_portal[2] = pSummoned;
+                    break;
+                case NPC_PORTAL_GREEN:
+                    pSummoned->CastSpell(pSummoned, SPELL_GREEN_PORTAL, true);
+                    m_portal[0] = pSummoned;
+                    break;
+                case NPC_PORTAL_BLUE:
+                    pSummoned->CastSpell(pSummoned, SPELL_BLUE_PORTAL, true);
+                    m_portal[1] = pSummoned;
+                    break;
             }
         }
 
@@ -528,117 +528,117 @@ struct boss_netherspite : public CreatureScript
     {
         return new boss_netherspiteAI(pCreature);
     }
-//#if defined (TODO)
-//        /*######
-//        ## npc_netherspite_portal
-//        ######*/
-//
-//        struct npc_netherspite_portalAI : public Scripted_NoMovementAI
-//        {
-//            npc_netherspite_portalAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
-//            {
-//                m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-//                Reset();
-//            }
-//
-//            ScriptedInstance* m_pInstance;
-//
-//            uint32 m_uiPassiveSpellTimer;
-//            uint32 m_uiOrientationTimer;
-//
-//            void Reset()
-//            {
-//                m_uiPassiveSpellTimer = 0;
-//                m_uiOrientationTimer = 0;
-//            }
-//#endif
-//#if defined (TBC)
-//            void MoveInLineOfSight(Unit* pWho) {}
-//            void AttackStart(Unit* pWho) {}
-//#endif
-//#if defined (WOTLK) || defined (CATA) || defined(MISTS)
-//            void MoveInLineOfSight(Unit* /*pWho*/) {}
-//            void AttackStart(Unit* /*pWho*/) {}
-//#endif
-//#if defined (TODO)
-//            void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
-//            {
-//                if (eventType == AI_EVENT_CUSTOM_A)
-//                {
-//                    if (pInvoker->GetEntry() != NPC_NETHERSPITE)
-//                        return;
-//
-//                    // update orientation every second to focus on Netherspite
-//                    m_uiOrientationTimer = 1000;
-//                    m_creature->SetFacingToObject(pInvoker);
-//
-//                    switch (m_creature->GetEntry())
-//                    {
-//                    case NPC_PORTAL_GREEN:
-//                        if (!m_creature->HasAura(SPELL_SERENITY_PASSIVE))
-//                            DoCastSpellIfCan(m_creature, SPELL_SERENITY_PASSIVE, CAST_TRIGGERED);
-//                        break;
-//                    case NPC_PORTAL_BLUE:
-//                        if (!m_creature->HasAura(SPELL_DOMINANCE_PASSIVE))
-//                            DoCastSpellIfCan(m_creature, SPELL_DOMINANCE_PASSIVE, CAST_TRIGGERED);
-//                        break;
-//                    case NPC_PORTAL_RED:
-//                        // Red portal spell is missing - handled in script
-//                        if (!m_uiPassiveSpellTimer)
-//                            m_uiPassiveSpellTimer = 1000;
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            void UpdateAI(const uint32 uiDiff)
-//            {
-//                if (m_uiPassiveSpellTimer)
-//                {
-//                    if (m_uiPassiveSpellTimer <= uiDiff)
-//                    {
-//                        if (DoCastSpellIfCan(m_creature, SPELL_NETHER_BEAM, CAST_TRIGGERED) == CAST_OK)
-//                            m_uiPassiveSpellTimer = 1000;
-//                    }
-//                    else
-//                        m_uiPassiveSpellTimer -= uiDiff;
-//                }
-//
-//                if (m_uiOrientationTimer)
-//                {
-//                    if (m_uiOrientationTimer <= uiDiff)
-//                    {
-//                        if (m_pInstance)
-//                        {
-//                            if (Creature* pNetherspite = m_pInstance->GetSingleCreatureFromStorage(NPC_NETHERSPITE))
-//                                m_creature->SetFacingToObject(pNetherspite);
-//                        }
-//                        m_uiOrientationTimer = 1000;
-//                    }
-//                    else
-//                        m_uiOrientationTimer -= uiDiff;
-//                }
-//            }
-//        }
-//
-//        CreatureAI* GetAI_npc_netherspite_portal(Creature* pCreature)
-//        {
-//            return new npc_netherspite_portalAI(pCreature);
-//        }
-//
-//        bool EffectScriptEffectCreature_spell_portal_attunement(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
-//        {
-//            if (uiSpellId == SPELL_PORTAL_ATTUNEMENT && uiEffIndex == EFFECT_INDEX_0)
-//            {
-//                if (pCreatureTarget->GetEntry() == NPC_PORTAL_RED || pCreatureTarget->GetEntry() == NPC_PORTAL_GREEN || pCreatureTarget->GetEntry() == NPC_PORTAL_BLUE)
-//                    pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget);
-//
-//                return true;
-//            }
-//
-//            return false;
-//        }
-//#endif
+    //#if defined (TODO)
+    //        /*######
+    //        ## npc_netherspite_portal
+    //        ######*/
+    //
+    //        struct npc_netherspite_portalAI : public Scripted_NoMovementAI
+    //        {
+    //            npc_netherspite_portalAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
+    //            {
+    //                m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+    //                Reset();
+    //            }
+    //
+    //            ScriptedInstance* m_pInstance;
+    //
+    //            uint32 m_uiPassiveSpellTimer;
+    //            uint32 m_uiOrientationTimer;
+    //
+    //            void Reset()
+    //            {
+    //                m_uiPassiveSpellTimer = 0;
+    //                m_uiOrientationTimer = 0;
+    //            }
+    //#endif
+    //#if defined (TBC)
+    //            void MoveInLineOfSight(Unit* pWho) {}
+    //            void AttackStart(Unit* pWho) {}
+    //#endif
+    //#if defined (WOTLK) || defined (CATA) || defined(MISTS)
+    //            void MoveInLineOfSight(Unit* /*pWho*/) {}
+    //            void AttackStart(Unit* /*pWho*/) {}
+    //#endif
+    //#if defined (TODO)
+    //            void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
+    //            {
+    //                if (eventType == AI_EVENT_CUSTOM_A)
+    //                {
+    //                    if (pInvoker->GetEntry() != NPC_NETHERSPITE)
+    //                        return;
+    //
+    //                    // update orientation every second to focus on Netherspite
+    //                    m_uiOrientationTimer = 1000;
+    //                    m_creature->SetFacingToObject(pInvoker);
+    //
+    //                    switch (m_creature->GetEntry())
+    //                    {
+    //                    case NPC_PORTAL_GREEN:
+    //                        if (!m_creature->HasAura(SPELL_SERENITY_PASSIVE))
+    //                            DoCastSpellIfCan(m_creature, SPELL_SERENITY_PASSIVE, CAST_TRIGGERED);
+    //                        break;
+    //                    case NPC_PORTAL_BLUE:
+    //                        if (!m_creature->HasAura(SPELL_DOMINANCE_PASSIVE))
+    //                            DoCastSpellIfCan(m_creature, SPELL_DOMINANCE_PASSIVE, CAST_TRIGGERED);
+    //                        break;
+    //                    case NPC_PORTAL_RED:
+    //                        // Red portal spell is missing - handled in script
+    //                        if (!m_uiPassiveSpellTimer)
+    //                            m_uiPassiveSpellTimer = 1000;
+    //                        break;
+    //                    }
+    //                }
+    //            }
+    //
+    //            void UpdateAI(const uint32 uiDiff)
+    //            {
+    //                if (m_uiPassiveSpellTimer)
+    //                {
+    //                    if (m_uiPassiveSpellTimer <= uiDiff)
+    //                    {
+    //                        if (DoCastSpellIfCan(m_creature, SPELL_NETHER_BEAM, CAST_TRIGGERED) == CAST_OK)
+    //                            m_uiPassiveSpellTimer = 1000;
+    //                    }
+    //                    else
+    //                        m_uiPassiveSpellTimer -= uiDiff;
+    //                }
+    //
+    //                if (m_uiOrientationTimer)
+    //                {
+    //                    if (m_uiOrientationTimer <= uiDiff)
+    //                    {
+    //                        if (m_pInstance)
+    //                        {
+    //                            if (Creature* pNetherspite = m_pInstance->GetSingleCreatureFromStorage(NPC_NETHERSPITE))
+    //                                m_creature->SetFacingToObject(pNetherspite);
+    //                        }
+    //                        m_uiOrientationTimer = 1000;
+    //                    }
+    //                    else
+    //                        m_uiOrientationTimer -= uiDiff;
+    //                }
+    //            }
+    //        }
+    //
+    //        CreatureAI* GetAI_npc_netherspite_portal(Creature* pCreature)
+    //        {
+    //            return new npc_netherspite_portalAI(pCreature);
+    //        }
+    //
+    //        bool EffectScriptEffectCreature_spell_portal_attunement(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
+    //        {
+    //            if (uiSpellId == SPELL_PORTAL_ATTUNEMENT && uiEffIndex == EFFECT_INDEX_0)
+    //            {
+    //                if (pCreatureTarget->GetEntry() == NPC_PORTAL_RED || pCreatureTarget->GetEntry() == NPC_PORTAL_GREEN || pCreatureTarget->GetEntry() == NPC_PORTAL_BLUE)
+    //                    pCreatureTarget->AI()->SendAIEvent(AI_EVENT_CUSTOM_A, pCaster, pCreatureTarget);
+    //
+    //                return true;
+    //            }
+    //
+    //            return false;
+    //        }
+    //#endif
 };
 
 /**
@@ -655,12 +655,12 @@ void AddSC_boss_netherspite()
     //pNewScript->GetAI = &GetAI_boss_netherspite;
     //pNewScript->RegisterSelf();
 
-//#if defined (TODO)
-//        pNewScript = new Script;
-//        pNewScript->Name = "npc_netherspite_portal";
-//        pNewScript->GetAI = &GetAI_npc_netherspite_portal;
-//        pNewScript->pEffectScriptEffectNPC = &EffectScriptEffectCreature_spell_portal_attunement;
-//        pNewScript->RegisterSelf();
-//#endif
+    //#if defined (TODO)
+    //        pNewScript = new Script;
+    //        pNewScript->Name = "npc_netherspite_portal";
+    //        pNewScript->GetAI = &GetAI_npc_netherspite_portal;
+    //        pNewScript->pEffectScriptEffectNPC = &EffectScriptEffectCreature_spell_portal_attunement;
+    //        pNewScript->RegisterSelf();
+    //#endif
 };
 

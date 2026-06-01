@@ -327,14 +327,14 @@ struct boss_deathbringer_saurfang : public CreatureScript
             // ToDo: enable this when blood power is fully supported by the core
             /*if (m_creature->GetPower(m_powerBloodPower) >= 100)
             {
-            if (Unit* pTarget = SelectRandomPlayerForMark())
-            {
-            if (DoCastSpellIfCan(pTarget, SPELL_MARK_FALLEN_CHAMPION) == CAST_OK)
-            {
-            DoScriptText(SAY_FALLENCHAMPION, m_creature);
-            m_creature->SetPower(m_powerBloodPower, 0);
-            }
-            }
+                if (Unit* pTarget = SelectRandomPlayerForMark())
+                {
+                    if (DoCastSpellIfCan(pTarget, SPELL_MARK_FALLEN_CHAMPION) == CAST_OK)
+                    {
+                        DoScriptText(SAY_FALLENCHAMPION, m_creature);
+                        m_creature->SetPower(m_powerBloodPower, 0);
+                    }
+                }
             }*/
 
             // Frenzy (soft enrage)

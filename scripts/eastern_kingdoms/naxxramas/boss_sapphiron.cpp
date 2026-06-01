@@ -186,152 +186,152 @@ struct boss_sapphiron : public CreatureScript
 
             switch (m_Phase)
             {
-            case PHASE_GROUND:
-                if (m_uiCleaveTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
+                case PHASE_GROUND:
+                    if (m_uiCleaveTimer < uiDiff)
                     {
-                        m_uiCleaveTimer = urand(5000, 10000);
-                    }
-                }
-                else
-                {
-                    m_uiCleaveTimer -= uiDiff;
-                }
-
-                if (m_uiTailSweepTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_TAIL_SWEEP) == CAST_OK)
-                    {
-                        m_uiTailSweepTimer = urand(7000, 10000);
-                    }
-                }
-                else
-                {
-                    m_uiTailSweepTimer -= uiDiff;
-                }
-
-                if (m_uiLifeDrainTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_LIFE_DRAIN) == CAST_OK)
-                    {
-                        m_uiLifeDrainTimer = 23000;
-                    }
-                }
-                else
-                {
-                    m_uiLifeDrainTimer -= uiDiff;
-                }
-
-                if (m_uiBlizzardTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_BLIZZARD) == CAST_OK)
-                    {
-                        m_uiBlizzardTimer = 20000;
-                    }
-                }
-                else
-                {
-                    m_uiBlizzardTimer -= uiDiff;
-                }
-
-                if (m_creature->GetHealthPercent() > 10.0f)
-                {
-                    if (m_uiFlyTimer < uiDiff)
-                    {
-                        m_Phase = PHASE_LIFT_OFF;
-                        m_creature->InterruptNonMeleeSpells(false);
-                        SetCombatMovement(false);
-                        m_creature->GetMotionMaster()->Clear(false);
-                        m_creature->GetMotionMaster()->MovePoint(1, aLiftOffPosition[0], aLiftOffPosition[1], aLiftOffPosition[2]);
-                        // TODO This should clear the target, too
-
-                        return;
-                    }
-                    else
-                    {
-                        m_uiFlyTimer -= uiDiff;
-                    }
-                }
-
-                // Only Phase in which we have melee attack!
-                DoMeleeAttackIfReady();
-                break;
-            case PHASE_LIFT_OFF:
-                break;
-            case PHASE_AIR_BOLTS:
-                if (m_uiIceboltCount == 5)
-                {
-                    if (m_uiFrostBreathTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_FROST_BREATH) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CLEAVE) == CAST_OK)
                         {
-                            DoCastSpellIfCan(m_creature, SPELL_FROST_BREATH_DUMMY, CAST_TRIGGERED);
-                            DoScriptText(EMOTE_BREATH, m_creature);
-                            m_Phase = PHASE_AIR_BREATH;
-                            m_uiFrostBreathTimer = 5000;
-                            m_uiLandTimer = 11000;
+                            m_uiCleaveTimer = urand(5000, 10000);
                         }
                     }
                     else
                     {
-                        m_uiFrostBreathTimer -= uiDiff;
+                        m_uiCleaveTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    if (m_uiIceboltTimer < uiDiff)
-                    {
-                        DoCastSpellIfCan(m_creature, SPELL_ICEBOLT);
 
-                        ++m_uiIceboltCount;
-                        m_uiIceboltTimer = 4000;
+                    if (m_uiTailSweepTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_TAIL_SWEEP) == CAST_OK)
+                        {
+                            m_uiTailSweepTimer = urand(7000, 10000);
+                        }
                     }
                     else
                     {
-                        m_uiIceboltTimer -= uiDiff;
+                        m_uiTailSweepTimer -= uiDiff;
                     }
-                }
 
-                break;
-            case PHASE_AIR_BREATH:
-                if (m_uiLandTimer)
-                {
-                    if (m_uiLandTimer <= uiDiff)
+                    if (m_uiLifeDrainTimer < uiDiff)
                     {
-                        // Begin Landing
-                        DoScriptText(EMOTE_GROUND, m_creature);
-                        m_creature->HandleEmote(EMOTE_ONESHOT_LAND);
-                        m_creature->SetLevitate(false);
+                        if (DoCastSpellIfCan(m_creature, SPELL_LIFE_DRAIN) == CAST_OK)
+                        {
+                            m_uiLifeDrainTimer = 23000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiLifeDrainTimer -= uiDiff;
+                    }
 
-                        m_Phase = PHASE_LANDING;
-                        m_uiLandTimer = 2000;
+                    if (m_uiBlizzardTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_BLIZZARD) == CAST_OK)
+                        {
+                            m_uiBlizzardTimer = 20000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiBlizzardTimer -= uiDiff;
+                    }
+
+                    if (m_creature->GetHealthPercent() > 10.0f)
+                    {
+                        if (m_uiFlyTimer < uiDiff)
+                        {
+                            m_Phase = PHASE_LIFT_OFF;
+                            m_creature->InterruptNonMeleeSpells(false);
+                            SetCombatMovement(false);
+                            m_creature->GetMotionMaster()->Clear(false);
+                            m_creature->GetMotionMaster()->MovePoint(1, aLiftOffPosition[0], aLiftOffPosition[1], aLiftOffPosition[2]);
+                            // TODO This should clear the target, too
+
+                            return;
+                        }
+                        else
+                        {
+                            m_uiFlyTimer -= uiDiff;
+                        }
+                    }
+
+                    // Only Phase in which we have melee attack!
+                    DoMeleeAttackIfReady();
+                    break;
+                case PHASE_LIFT_OFF:
+                    break;
+                case PHASE_AIR_BOLTS:
+                    if (m_uiIceboltCount == 5)
+                    {
+                        if (m_uiFrostBreathTimer < uiDiff)
+                        {
+                            if (DoCastSpellIfCan(m_creature, SPELL_FROST_BREATH) == CAST_OK)
+                            {
+                                DoCastSpellIfCan(m_creature, SPELL_FROST_BREATH_DUMMY, CAST_TRIGGERED);
+                                DoScriptText(EMOTE_BREATH, m_creature);
+                                m_Phase = PHASE_AIR_BREATH;
+                                m_uiFrostBreathTimer = 5000;
+                                m_uiLandTimer = 11000;
+                            }
+                        }
+                        else
+                        {
+                            m_uiFrostBreathTimer -= uiDiff;
+                        }
+                    }
+                    else
+                    {
+                        if (m_uiIceboltTimer < uiDiff)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_ICEBOLT);
+
+                            ++m_uiIceboltCount;
+                            m_uiIceboltTimer = 4000;
+                        }
+                        else
+                        {
+                            m_uiIceboltTimer -= uiDiff;
+                        }
+                    }
+
+                    break;
+                case PHASE_AIR_BREATH:
+                    if (m_uiLandTimer)
+                    {
+                        if (m_uiLandTimer <= uiDiff)
+                        {
+                            // Begin Landing
+                            DoScriptText(EMOTE_GROUND, m_creature);
+                            m_creature->HandleEmote(EMOTE_ONESHOT_LAND);
+                            m_creature->SetLevitate(false);
+
+                            m_Phase = PHASE_LANDING;
+                            m_uiLandTimer = 2000;
+                        }
+                        else
+                        {
+                            m_uiLandTimer -= uiDiff;
+                        }
+                    }
+
+                    break;
+                case PHASE_LANDING:
+                    if (m_uiLandTimer < uiDiff)
+                    {
+                        m_Phase = PHASE_GROUND;
+
+                        SetCombatMovement(true);
+                        m_creature->GetMotionMaster()->Clear(false);
+                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+
+                        m_uiFlyTimer = 67000;
+                        m_uiLandTimer = 0;
                     }
                     else
                     {
                         m_uiLandTimer -= uiDiff;
                     }
-                }
 
-                break;
-            case PHASE_LANDING:
-                if (m_uiLandTimer < uiDiff)
-                {
-                    m_Phase = PHASE_GROUND;
-
-                    SetCombatMovement(true);
-                    m_creature->GetMotionMaster()->Clear(false);
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-
-                    m_uiFlyTimer = 67000;
-                    m_uiLandTimer = 0;
-                }
-                else
-                {
-                    m_uiLandTimer -= uiDiff;
-                }
-
-                break;
+                    break;
             }
 
             // Enrage can happen in any phase

@@ -286,18 +286,18 @@ struct boss_flame_leviathan : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_THORIM_HAMMER_VEHICLE:
-                pSummoned->CastSpell(pSummoned, SPELL_LIGHTNING_SKYBEAM, true);
-                break;
-            case NPC_MIMIRON_INFERNO_VEHICLE:
-                pSummoned->CastSpell(pSummoned, SPELL_RED_SKYBEAM, true);
-                break;
-            case NPC_HODIR_FURY_VEHICLE:
-                pSummoned->CastSpell(pSummoned, SPELL_BLUE_SKYBEAM, true);
-                break;
-            case NPC_FREYA_WARD_VEHICLE:
-                pSummoned->CastSpell(pSummoned, SPELL_GREEN_SKYBEAM, true);
-                break;
+                case NPC_THORIM_HAMMER_VEHICLE:
+                    pSummoned->CastSpell(pSummoned, SPELL_LIGHTNING_SKYBEAM, true);
+                    break;
+                case NPC_MIMIRON_INFERNO_VEHICLE:
+                    pSummoned->CastSpell(pSummoned, SPELL_RED_SKYBEAM, true);
+                    break;
+                case NPC_HODIR_FURY_VEHICLE:
+                    pSummoned->CastSpell(pSummoned, SPELL_BLUE_SKYBEAM, true);
+                    break;
+                case NPC_FREYA_WARD_VEHICLE:
+                    pSummoned->CastSpell(pSummoned, SPELL_GREEN_SKYBEAM, true);
+                    break;
             }
         }
 
@@ -479,9 +479,9 @@ struct boss_flame_leviathan : public CreatureScript
                     {
                         switch (urand(0, 2))
                         {
-                        case 0: DoScriptText(SAY_CHANGE_1, m_creature); break;
-                        case 1: DoScriptText(SAY_CHANGE_2, m_creature); break;
-                        case 2: DoScriptText(SAY_CHANGE_3, m_creature); break;
+                            case 0: DoScriptText(SAY_CHANGE_1, m_creature); break;
+                            case 1: DoScriptText(SAY_CHANGE_2, m_creature); break;
+                            case 2: DoScriptText(SAY_CHANGE_3, m_creature); break;
                         }
                     }
                     m_uiPursueTimer = 30000;
@@ -559,47 +559,47 @@ struct boss_flame_leviathan : public CreatureScript
                         // yell hard mode start and start activating each tower one by one
                         switch (m_uiHardModeStep)
                         {
-                        case 0:
-                            DoScriptText(SAY_HARD_MODE, m_creature);
-                            m_uiHardModeTimer = 10000;
-                            ++m_uiHardModeStep;
-                            break;
-                        default:
-                            // iterate through all towers to check which is active; skip the ones which are deactivated without triggering the timer
-                            for (uint8 i = m_uiHardModeStep - 1; i < KEEPER_ENCOUNTER; ++i)
-                            {
-                                if (m_bUlduarTower[i])
+                            case 0:
+                                DoScriptText(SAY_HARD_MODE, m_creature);
+                                m_uiHardModeTimer = 10000;
+                                ++m_uiHardModeStep;
+                                break;
+                            default:
+                                // iterate through all towers to check which is active; skip the ones which are deactivated without triggering the timer
+                                for (uint8 i = m_uiHardModeStep - 1; i < KEEPER_ENCOUNTER; ++i)
                                 {
-                                    // yell tower active
-                                    DoScriptText(aLeviathanTowerYell[i], m_creature);
-                                    DoScriptText(aLeviathanTowerEmote[i], m_creature);
-
-                                    // activate the timer for each tower ability
-                                    switch (i)
+                                    if (m_bUlduarTower[i])
                                     {
-                                    case TOWER_ID_HODIR:    DoSpawnHodirFury();           break;
-                                    case TOWER_ID_FREYA:    DoSpawnFreyaWard();           break;
-                                    case TOWER_ID_MIMIRON:  DoSpawnMimironInferno();      break;
-                                    case TOWER_ID_THORIM:   m_uiThorimHammerTimer = 1000; break;
+                                        // yell tower active
+                                        DoScriptText(aLeviathanTowerYell[i], m_creature);
+                                        DoScriptText(aLeviathanTowerEmote[i], m_creature);
+
+                                        // activate the timer for each tower ability
+                                        switch (i)
+                                        {
+                                            case TOWER_ID_HODIR:    DoSpawnHodirFury();           break;
+                                            case TOWER_ID_FREYA:    DoSpawnFreyaWard();           break;
+                                            case TOWER_ID_MIMIRON:  DoSpawnMimironInferno();      break;
+                                            case TOWER_ID_THORIM:   m_uiThorimHammerTimer = 1000; break;
+                                        }
+
+                                        // reset timer and wait for another turn
+                                        m_uiHardModeTimer = 10000;
+                                        ++m_uiHardModeStep;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        ++m_uiHardModeStep;
                                     }
 
-                                    // reset timer and wait for another turn
-                                    m_uiHardModeTimer = 10000;
-                                    ++m_uiHardModeStep;
-                                    break;
+                                    // stop the timer after the final element
+                                    if (i == KEEPER_ENCOUNTER - 1)
+                                    {
+                                        m_uiHardModeTimer = 0;
+                                    }
                                 }
-                                else
-                                {
-                                    ++m_uiHardModeStep;
-                                }
-
-                                // stop the timer after the final element
-                                if (i == KEEPER_ENCOUNTER - 1)
-                                {
-                                    m_uiHardModeTimer = 0;
-                                }
-                            }
-                            break;
+                                break;
                         }
                     }
                 }

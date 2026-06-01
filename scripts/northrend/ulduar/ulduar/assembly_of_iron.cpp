@@ -262,12 +262,12 @@ struct boss_brundir : public CreatureScript
             // Check achiev criterias
             switch (pSpell->Id)
             {
-            case SPELL_CHAIN_LIGHTNING:
-            case SPELL_CHAIN_LIGHTNING_H:
-            case SPELL_LIGHTNING_WHIRL_DAMAGE:
-            case SPELL_LIGHTNING_WHIRL_DAMAGE_H:
-                m_pInstance->SetData(TYPE_ACHIEV_STUNNED, uint32(false));
-                break;
+                case SPELL_CHAIN_LIGHTNING:
+                case SPELL_CHAIN_LIGHTNING_H:
+                case SPELL_LIGHTNING_WHIRL_DAMAGE:
+                case SPELL_LIGHTNING_WHIRL_DAMAGE_H:
+                    m_pInstance->SetData(TYPE_ACHIEV_STUNNED, uint32(false));
+                    break;
             }
         }
 
@@ -281,29 +281,29 @@ struct boss_brundir : public CreatureScript
             switch (uiPointId)
             {
                 // After lift up follow a target and set the target change timer
-            case POINT_ID_LIFT_OFF:
-                // TODO: the boss should follow without changing his Z position - missing core feature
-                // Current implementation with move point is wrong
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER | SELECT_FLAG_NOT_IN_MELEE_RANGE))
-                {
-                    DoMoveToTarget(pTarget);
-                    m_followTargetGuid = pTarget->GetObjectGuid();
-                }
-                m_uiTendrilsTargetTimer = 5000;
-                m_uiTendrilsFollowTimer = 500;
-                break;
+                case POINT_ID_LIFT_OFF:
+                    // TODO: the boss should follow without changing his Z position - missing core feature
+                    // Current implementation with move point is wrong
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER | SELECT_FLAG_NOT_IN_MELEE_RANGE))
+                    {
+                        DoMoveToTarget(pTarget);
+                        m_followTargetGuid = pTarget->GetObjectGuid();
+                    }
+                    m_uiTendrilsTargetTimer = 5000;
+                    m_uiTendrilsFollowTimer = 500;
+                    break;
                 // After reached the land remove all the auras and resume basic combat
-            case POINT_ID_LAND:
-                m_creature->SetLevitate(false);
-                SetCombatMovement(true);
-                if (m_creature->getVictim())
-                {
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                }
+                case POINT_ID_LAND:
+                    m_creature->SetLevitate(false);
+                    SetCombatMovement(true);
+                    if (m_creature->getVictim())
+                    {
+                        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                    }
 
-                m_creature->RemoveAurasDueToSpell(SPELL_TENDRILS_VISUAL);
-                m_creature->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_LIGHTNING_TENDRILS : SPELL_LIGHTNING_TENDRILS_H);
-                break;
+                    m_creature->RemoveAurasDueToSpell(SPELL_TENDRILS_VISUAL);
+                    m_creature->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_LIGHTNING_TENDRILS : SPELL_LIGHTNING_TENDRILS_H);
+                    break;
             }
         }
 
@@ -342,130 +342,130 @@ struct boss_brundir : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_CHARGE_TWO:
+                case PHASE_CHARGE_TWO:
 
-                if (m_uiTendrilsTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_TENDRILS : SPELL_LIGHTNING_TENDRILS_H) == CAST_OK)
+                    if (m_uiTendrilsTimer < uiDiff)
                     {
-                        DoCastSpellIfCan(m_creature, SPELL_TENDRILS_VISUAL, CAST_TRIGGERED);
-                        DoScriptText(SAY_BRUNDIR_FLY, m_creature);
-                        SetCombatMovement(false);
-                        m_creature->SetLevitate(true);
-                        m_creature->GetMotionMaster()->MovePoint(POINT_ID_LIFT_OFF, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f);
-                        m_uiTendrilsTimer = 90000;
-                        m_uiTendrilsEndTimer = 25000;
-                    }
-                }
-                else
-                {
-                    m_uiTendrilsTimer -= uiDiff;
-                }
-
-                if (m_uiTendrilsEndTimer)
-                {
-                    if (m_uiTendrilsEndTimer <= uiDiff)
-                    {
-                        // Get proper Z position and land
-                        float fZ = m_creature->GetTerrain()->GetWaterOrGroundLevel(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
-                        m_creature->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_creature->GetPositionX(), m_creature->GetPositionY(), fZ);
-                        m_uiOverloadTimer = 40000;
-                        m_uiWhirlTimer = 15000;
-                        m_uiChainLightningTimer = 3000;
-                        m_uiTendrilsEndTimer = 0;
-                        m_uiTendrilsTargetTimer = 0;
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_TENDRILS : SPELL_LIGHTNING_TENDRILS_H) == CAST_OK)
+                        {
+                            DoCastSpellIfCan(m_creature, SPELL_TENDRILS_VISUAL, CAST_TRIGGERED);
+                            DoScriptText(SAY_BRUNDIR_FLY, m_creature);
+                            SetCombatMovement(false);
+                            m_creature->SetLevitate(true);
+                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_LIFT_OFF, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f);
+                            m_uiTendrilsTimer = 90000;
+                            m_uiTendrilsEndTimer = 25000;
+                        }
                     }
                     else
                     {
-                        m_uiTendrilsEndTimer -= uiDiff;
+                        m_uiTendrilsTimer -= uiDiff;
                     }
 
-                    // Change follow target every 5 seconds
-                    if (m_uiTendrilsTargetTimer)
+                    if (m_uiTendrilsEndTimer)
                     {
-                        if (m_uiTendrilsTargetTimer <= uiDiff)
+                        if (m_uiTendrilsEndTimer <= uiDiff)
                         {
-                            // TODO: the boss should follow without changing his Z position - missing core feature
-                            // Current implementation with move point is wrong
-                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER | SELECT_FLAG_NOT_IN_MELEE_RANGE))
-                            {
-                                DoMoveToTarget(pTarget);
-                                m_followTargetGuid = pTarget->GetObjectGuid();
-                            }
-                            m_uiTendrilsTargetTimer = 5000;
-                            m_uiTendrilsFollowTimer = 500;
+                            // Get proper Z position and land
+                            float fZ = m_creature->GetTerrain()->GetWaterOrGroundLevel(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_creature->GetPositionX(), m_creature->GetPositionY(), fZ);
+                            m_uiOverloadTimer = 40000;
+                            m_uiWhirlTimer = 15000;
+                            m_uiChainLightningTimer = 3000;
+                            m_uiTendrilsEndTimer = 0;
+                            m_uiTendrilsTargetTimer = 0;
                         }
                         else
                         {
-                            m_uiTendrilsTargetTimer -= uiDiff;
+                            m_uiTendrilsEndTimer -= uiDiff;
                         }
 
-                        // Workaround to follow the target
-                        if (m_uiTendrilsFollowTimer < uiDiff)
+                        // Change follow target every 5 seconds
+                        if (m_uiTendrilsTargetTimer)
                         {
-                            if (Unit* pTarget = m_creature->GetMap()->GetUnit(m_followTargetGuid))
+                            if (m_uiTendrilsTargetTimer <= uiDiff)
                             {
-                                DoMoveToTarget(pTarget);
+                                // TODO: the boss should follow without changing his Z position - missing core feature
+                                // Current implementation with move point is wrong
+                                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER | SELECT_FLAG_NOT_IN_MELEE_RANGE))
+                                {
+                                    DoMoveToTarget(pTarget);
+                                    m_followTargetGuid = pTarget->GetObjectGuid();
+                                }
+                                m_uiTendrilsTargetTimer = 5000;
+                                m_uiTendrilsFollowTimer = 500;
                             }
-                            m_uiTendrilsFollowTimer = 500;
+                            else
+                            {
+                                m_uiTendrilsTargetTimer -= uiDiff;
+                            }
+
+                            // Workaround to follow the target
+                            if (m_uiTendrilsFollowTimer < uiDiff)
+                            {
+                                if (Unit* pTarget = m_creature->GetMap()->GetUnit(m_followTargetGuid))
+                                {
+                                    DoMoveToTarget(pTarget);
+                                }
+                                m_uiTendrilsFollowTimer = 500;
+                            }
+                            else
+                            {
+                                m_uiTendrilsFollowTimer -= uiDiff;
+                            }
                         }
-                        else
+
+                        // no other spells during tendrils
+                        return;
+                    }
+
+                    // no break here; he uses the other spells as well
+                case PHASE_CHARGE_ONE:
+
+                    if (m_uiWhirlTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_WHIRL : SPELL_LIGHTNING_WHIRL_H) == CAST_OK)
                         {
-                            m_uiTendrilsFollowTimer -= uiDiff;
+                            DoScriptText(SAY_BRUNDIR_WHIRL, m_creature);
+                            m_uiWhirlTimer = 30000;
                         }
                     }
-
-                    // no other spells during tendrils
-                    return;
-                }
-
-                // no break here; he uses the other spells as well
-            case PHASE_CHARGE_ONE:
-
-                if (m_uiWhirlTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_WHIRL : SPELL_LIGHTNING_WHIRL_H) == CAST_OK)
+                    else
                     {
-                        DoScriptText(SAY_BRUNDIR_WHIRL, m_creature);
-                        m_uiWhirlTimer = 30000;
+                        m_uiWhirlTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiWhirlTimer -= uiDiff;
-                }
 
-                // no break here; he uses the other spells as well
-            case PHASE_NO_CHARGE:
+                    // no break here; he uses the other spells as well
+                case PHASE_NO_CHARGE:
 
-                if (m_uiChainLightningTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    if (m_uiChainLightningTimer < uiDiff)
                     {
-                        if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_CHAIN_LIGHTNING : SPELL_CHAIN_LIGHTNING_H) == CAST_OK)
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         {
-                            m_uiChainLightningTimer = 2000;
+                            if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_CHAIN_LIGHTNING : SPELL_CHAIN_LIGHTNING_H) == CAST_OK)
+                            {
+                                m_uiChainLightningTimer = 2000;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    m_uiChainLightningTimer -= uiDiff;
-                }
-
-                if (m_uiOverloadTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_OVERLOAD) == CAST_OK)
+                    else
                     {
-                        m_uiOverloadTimer = 80000;
+                        m_uiChainLightningTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiOverloadTimer -= uiDiff;
-                }
 
-                break;
+                    if (m_uiOverloadTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_OVERLOAD) == CAST_OK)
+                        {
+                            m_uiOverloadTimer = 80000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiOverloadTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();
@@ -625,68 +625,68 @@ struct boss_molgeim : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_CHARGE_TWO:
+                case PHASE_CHARGE_TWO:
 
-                if (m_uiRuneSummonTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_RUNE_OF_SUMMONING) == CAST_OK)
+                    if (m_uiRuneSummonTimer < uiDiff)
                     {
-                        DoScriptText(SAY_MOLGEIM_SURGE, m_creature);
-                        m_uiRuneSummonTimer = 30000;
-                    }
-                }
-                else
-                {
-                    m_uiRuneSummonTimer -= uiDiff;
-                }
-
-                // no break here; he uses the other spells as well
-            case PHASE_CHARGE_ONE:
-
-                if (m_uiRuneDeathTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    {
-                        if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_RUNE_OF_DEATH : SPELL_RUNE_OF_DEATH_H) == CAST_OK)
+                        if (DoCastSpellIfCan(m_creature, SPELL_RUNE_OF_SUMMONING) == CAST_OK)
                         {
-                            DoScriptText(SAY_MOLGEIM_DEATH_RUNE, m_creature);
-                            m_uiRuneDeathTimer = 30000;
+                            DoScriptText(SAY_MOLGEIM_SURGE, m_creature);
+                            m_uiRuneSummonTimer = 30000;
                         }
                     }
-                }
-                else
-                {
-                    m_uiRuneDeathTimer -= uiDiff;
-                }
-
-                // no break here; he uses the other spells as well
-            case PHASE_NO_CHARGE:
-
-                if (m_uiShieldTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SHIELD : SPELL_SHIELD_H) == CAST_OK)
+                    else
                     {
-                        m_uiShieldTimer = 40000;
+                        m_uiRuneSummonTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiShieldTimer -= uiDiff;
-                }
 
-                if (m_uiRunePowerTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_RUNE_OF_POWER) == CAST_OK)
+                    // no break here; he uses the other spells as well
+                case PHASE_CHARGE_ONE:
+
+                    if (m_uiRuneDeathTimer < uiDiff)
                     {
-                        m_uiRunePowerTimer = 45000;
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        {
+                            if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_RUNE_OF_DEATH : SPELL_RUNE_OF_DEATH_H) == CAST_OK)
+                            {
+                                DoScriptText(SAY_MOLGEIM_DEATH_RUNE, m_creature);
+                                m_uiRuneDeathTimer = 30000;
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    m_uiRunePowerTimer -= uiDiff;
-                }
+                    else
+                    {
+                        m_uiRuneDeathTimer -= uiDiff;
+                    }
 
-                break;
+                    // no break here; he uses the other spells as well
+                case PHASE_NO_CHARGE:
+
+                    if (m_uiShieldTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SHIELD : SPELL_SHIELD_H) == CAST_OK)
+                        {
+                            m_uiShieldTimer = 40000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiShieldTimer -= uiDiff;
+                    }
+
+                    if (m_uiRunePowerTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_RUNE_OF_POWER) == CAST_OK)
+                        {
+                            m_uiRunePowerTimer = 45000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiRunePowerTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();
@@ -808,61 +808,61 @@ struct boss_steelbreaker : public CreatureScript
 
             switch (m_uiPhase)
             {
-            case PHASE_CHARGE_TWO:
+                case PHASE_CHARGE_TWO:
 
-                if (m_uiPowerTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_OVERWHELMING_POWER : SPELL_OVERWHELMING_POWER_H) == CAST_OK)
+                    if (m_uiPowerTimer < uiDiff)
                     {
-                        DoScriptText(SAY_STEEL_OVERWHELM, m_creature);
-                        m_uiPowerTimer = m_bIsRegularMode ? 60000 : 35000;
+                        if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_OVERWHELMING_POWER : SPELL_OVERWHELMING_POWER_H) == CAST_OK)
+                        {
+                            DoScriptText(SAY_STEEL_OVERWHELM, m_creature);
+                            m_uiPowerTimer = m_bIsRegularMode ? 60000 : 35000;
+                        }
                     }
-                }
-                else
-                {
-                    m_uiPowerTimer -= uiDiff;
-                }
-
-                // no break here; he uses the other spells as well
-            case PHASE_CHARGE_ONE:
-
-                if (m_uiDisruptionTimer < uiDiff)
-                {
-                    // NOTE: This spell is not cast right: Normally it should be triggered by 64641 in core
-                    // Because of the poor target selection in core we'll implement it here with select flag targeting
-                    Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_NOT_IN_MELEE_RANGE);
-
-                    if (!pTarget)
+                    else
                     {
-                        pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+                        m_uiPowerTimer -= uiDiff;
                     }
 
-                    if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_STATIC_DISRUPTION : SPELL_STATIC_DISRUPTION_H) == CAST_OK)
+                    // no break here; he uses the other spells as well
+                case PHASE_CHARGE_ONE:
+
+                    if (m_uiDisruptionTimer < uiDiff)
                     {
-                        m_uiDisruptionTimer = urand(10000, 15000);
+                        // NOTE: This spell is not cast right: Normally it should be triggered by 64641 in core
+                        // Because of the poor target selection in core we'll implement it here with select flag targeting
+                        Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_NOT_IN_MELEE_RANGE);
+
+                        if (!pTarget)
+                        {
+                            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+                        }
+
+                        if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_STATIC_DISRUPTION : SPELL_STATIC_DISRUPTION_H) == CAST_OK)
+                        {
+                            m_uiDisruptionTimer = urand(10000, 15000);
+                        }
                     }
-                }
-                else
-                {
-                    m_uiDisruptionTimer -= uiDiff;
-                }
-
-                // no break here; he uses the other spells as well
-            case PHASE_NO_CHARGE:
-
-                if (m_uiFusionPunchTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FUSION_PUNCH : SPELL_FUSION_PUNCH_H) == CAST_OK)
+                    else
                     {
-                        m_uiFusionPunchTimer = 15000;
+                        m_uiDisruptionTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiFusionPunchTimer -= uiDiff;
-                }
 
-                break;
+                    // no break here; he uses the other spells as well
+                case PHASE_NO_CHARGE:
+
+                    if (m_uiFusionPunchTimer < uiDiff)
+                    {
+                        if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FUSION_PUNCH : SPELL_FUSION_PUNCH_H) == CAST_OK)
+                        {
+                            m_uiFusionPunchTimer = 15000;
+                        }
+                    }
+                    else
+                    {
+                        m_uiFusionPunchTimer -= uiDiff;
+                    }
+
+                    break;
             }
 
             DoMeleeAttackIfReady();

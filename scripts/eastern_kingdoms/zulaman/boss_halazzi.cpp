@@ -213,9 +213,9 @@ struct boss_halazzi : public CreatureScript
             // Each health level has it's own spell - but they all do the same thing
             switch (m_uiPhaseCounter)
             {
-            case 3: uiSpellId = SPELL_TRANSFORM_TO_LYNX_75; break;
-            case 2: uiSpellId = SPELL_TRANSFORM_TO_LYNX_50; break;
-            case 1: uiSpellId = SPELL_TRANSFORM_TO_LYNX_25; break;
+                case 3: uiSpellId = SPELL_TRANSFORM_TO_LYNX_75; break;
+                case 2: uiSpellId = SPELL_TRANSFORM_TO_LYNX_50; break;
+                case 1: uiSpellId = SPELL_TRANSFORM_TO_LYNX_25; break;
             }
 
             if (DoCastSpellIfCan(m_creature, uiSpellId) == CAST_OK)

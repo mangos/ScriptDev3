@@ -190,17 +190,17 @@ struct boss_eye_of_cthun : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_EYE_TENTACLE:
-                m_lEyeTentaclesList.push_back(pSummoned->GetObjectGuid());
-                // no break;
-            case NPC_CLAW_TENTACLE:
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                {
-                    pSummoned->AI()->AttackStart(pTarget);
-                }
+                case NPC_EYE_TENTACLE:
+                    m_lEyeTentaclesList.push_back(pSummoned->GetObjectGuid());
+                    // no break;
+                case NPC_CLAW_TENTACLE:
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        pSummoned->AI()->AttackStart(pTarget);
+                    }
 
-                pSummoned->SummonCreature(NPC_TENTACLE_PORTAL, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
-                break;
+                    pSummoned->SummonCreature(NPC_TENTACLE_PORTAL, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                    break;
             }
         }
 
@@ -283,64 +283,64 @@ struct boss_eye_of_cthun : public CreatureScript
 
             switch (m_Phase)
             {
-            case PHASE_EYE_NORMAL:
+                case PHASE_EYE_NORMAL:
 
-                if (m_uiBeamTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    if (m_uiBeamTimer < uiDiff)
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_EYE_BEAM) == CAST_OK)
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         {
-                            m_creature->SetTargetGuid(pTarget->GetObjectGuid());
-                            m_uiBeamTimer = 3000;
+                            if (DoCastSpellIfCan(pTarget, SPELL_EYE_BEAM) == CAST_OK)
+                            {
+                                m_creature->SetTargetGuid(pTarget->GetObjectGuid());
+                                m_uiBeamTimer = 3000;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    m_uiBeamTimer -= uiDiff;
-                }
-
-                if (m_uiDarkGlareTimer < uiDiff)
-                {
-                    // Cast the rotation spell
-                    if (DoCastSpellIfCan(m_creature, SPELL_ROTATE_TRIGGER) == CAST_OK)
+                    else
                     {
-                        // Remove the target focus but allow the boss to face the current victim
-                        m_creature->SetTargetGuid(ObjectGuid());
-                        m_creature->SetFacingToObject(m_creature->getVictim());
-
-                        // Switch to Dark Glare phase
-                        m_uiDarkGlareTimer = 45000;
-                        m_Phase = PHASE_EYE_DARK_GLARE;
+                        m_uiBeamTimer -= uiDiff;
                     }
-                }
-                else
-                {
-                    m_uiDarkGlareTimer -= uiDiff;
-                }
 
-                break;
-            case PHASE_EYE_DARK_GLARE:
+                    if (m_uiDarkGlareTimer < uiDiff)
+                    {
+                        // Cast the rotation spell
+                        if (DoCastSpellIfCan(m_creature, SPELL_ROTATE_TRIGGER) == CAST_OK)
+                        {
+                            // Remove the target focus but allow the boss to face the current victim
+                            m_creature->SetTargetGuid(ObjectGuid());
+                            m_creature->SetFacingToObject(m_creature->getVictim());
 
-                if (m_uiDarkGlareEndTimer < uiDiff)
-                {
-                    // Remove rotation auras
-                    m_creature->RemoveAurasDueToSpell(SPELL_ROTATE_360_LEFT);
-                    m_creature->RemoveAurasDueToSpell(SPELL_ROTATE_360_RIGHT);
+                            // Switch to Dark Glare phase
+                            m_uiDarkGlareTimer = 45000;
+                            m_Phase = PHASE_EYE_DARK_GLARE;
+                        }
+                    }
+                    else
+                    {
+                        m_uiDarkGlareTimer -= uiDiff;
+                    }
 
-                    // Switch to Eye Beam
-                    m_uiDarkGlareEndTimer = 40000;
-                    m_uiBeamTimer = 1000;
-                    m_Phase = PHASE_EYE_NORMAL;
-                }
-                else
-                {
-                    m_uiDarkGlareEndTimer -= uiDiff;
-                }
-                break;
-            default:    // should here an error to be roported? or just no special for other phases?
-                break;
+                    break;
+                case PHASE_EYE_DARK_GLARE:
+
+                    if (m_uiDarkGlareEndTimer < uiDiff)
+                    {
+                        // Remove rotation auras
+                        m_creature->RemoveAurasDueToSpell(SPELL_ROTATE_360_LEFT);
+                        m_creature->RemoveAurasDueToSpell(SPELL_ROTATE_360_RIGHT);
+
+                        // Switch to Eye Beam
+                        m_uiDarkGlareEndTimer = 40000;
+                        m_uiBeamTimer = 1000;
+                        m_Phase = PHASE_EYE_NORMAL;
+                    }
+                    else
+                    {
+                        m_uiDarkGlareEndTimer -= uiDiff;
+                    }
+                    break;
+                default:    // should here an error to be roported? or just no special for other phases?
+                    break;
             }
 
             if (m_uiClawTentacleTimer < uiDiff)
@@ -476,7 +476,7 @@ struct boss_cthun : public CreatureScript
             // Kill any player from the stomach on evade - this is because C'thun can not be soloed.
             for (GuidList::const_iterator itr = m_lPlayersInStomachList.begin(); itr != m_lPlayersInStomachList.end(); ++itr)
             {
-            // Workaround for missing spell 26648
+                // Workaround for missing spell 26648
                 if (Player* pPlayer = m_creature->GetMap()->GetPlayer(*itr))
                 {
 #if defined (CLASSIC)
@@ -512,24 +512,24 @@ struct boss_cthun : public CreatureScript
         {
             switch (pSummoned->GetEntry())
             {
-            case NPC_EYE_TENTACLE:
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                {
-                    pSummoned->AI()->AttackStart(pTarget);
-                }
+                case NPC_EYE_TENTACLE:
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        pSummoned->AI()->AttackStart(pTarget);
+                    }
 
-                m_lEyeTentaclesList.push_back(pSummoned->GetObjectGuid());
-                pSummoned->SummonCreature(NPC_TENTACLE_PORTAL, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
-                break;
-            case NPC_GIANT_EYE_TENTACLE:
-            case NPC_GIANT_CLAW_TENTACLE:
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                {
-                    pSummoned->AI()->AttackStart(pTarget);
-                }
+                    m_lEyeTentaclesList.push_back(pSummoned->GetObjectGuid());
+                    pSummoned->SummonCreature(NPC_TENTACLE_PORTAL, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                    break;
+                case NPC_GIANT_EYE_TENTACLE:
+                case NPC_GIANT_CLAW_TENTACLE:
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        pSummoned->AI()->AttackStart(pTarget);
+                    }
 
-                pSummoned->SummonCreature(NPC_GIANT_TENTACLE_PORTAL, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
-                break;
+                    pSummoned->SummonCreature(NPC_GIANT_TENTACLE_PORTAL, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                    break;
             }
         }
 
@@ -538,32 +538,32 @@ struct boss_cthun : public CreatureScript
             switch (pSummoned->GetEntry())
             {
                 // Handle portal despawn on tentacle kill
-            case NPC_EYE_TENTACLE:
-                if (Creature* pPortal = GetClosestCreatureWithEntry(pSummoned, NPC_TENTACLE_PORTAL, 5.0f))
-                {
-                    pPortal->ForcedDespawn();
-                }
-                break;
-            case NPC_GIANT_EYE_TENTACLE:
-            case NPC_GIANT_CLAW_TENTACLE:
-                if (Creature* pPortal = GetClosestCreatureWithEntry(pSummoned, NPC_GIANT_TENTACLE_PORTAL, 5.0f))
-                {
-                    pPortal->ForcedDespawn();
-                }
-                break;
-                // Handle the stomach tentacles kill
-            case NPC_FLESH_TENTACLE:
-                ++m_uiFleshTentaclesKilled;
-                if (m_uiFleshTentaclesKilled == MAX_FLESH_TENTACLES)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_CTHUN_VULNERABLE, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                case NPC_EYE_TENTACLE:
+                    if (Creature* pPortal = GetClosestCreatureWithEntry(pSummoned, NPC_TENTACLE_PORTAL, 5.0f))
                     {
-                        DoScriptText(EMOTE_WEAKENED, m_creature);
-                        m_uiPhaseTimer = 45000;
-                        m_Phase = PHASE_CTHUN_WEAKENED;
+                        pPortal->ForcedDespawn();
                     }
-                }
-                break;
+                    break;
+                case NPC_GIANT_EYE_TENTACLE:
+                case NPC_GIANT_CLAW_TENTACLE:
+                    if (Creature* pPortal = GetClosestCreatureWithEntry(pSummoned, NPC_GIANT_TENTACLE_PORTAL, 5.0f))
+                    {
+                        pPortal->ForcedDespawn();
+                    }
+                    break;
+                // Handle the stomach tentacles kill
+                case NPC_FLESH_TENTACLE:
+                    ++m_uiFleshTentaclesKilled;
+                    if (m_uiFleshTentaclesKilled == MAX_FLESH_TENTACLES)
+                    {
+                        if (DoCastSpellIfCan(m_creature, SPELL_CTHUN_VULNERABLE, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+                        {
+                            DoScriptText(EMOTE_WEAKENED, m_creature);
+                            m_uiPhaseTimer = 45000;
+                            m_Phase = PHASE_CTHUN_WEAKENED;
+                        }
+                    }
+                    break;
             }
         }
 
@@ -651,95 +651,95 @@ struct boss_cthun : public CreatureScript
 
             switch (m_Phase)
             {
-            case PHASE_TRANSITION:
+                case PHASE_TRANSITION:
 
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    // Note: we need to set the display id before casting the transform spell, in order to get the proper animation
-                    m_creature->SetDisplayId(DISPLAY_ID_CTHUN_BODY);
-
-                    // Transform and start C'thun phase
-                    if (DoCastSpellIfCan(m_creature, SPELL_TRANSFORM) == CAST_OK)
+                    if (m_uiPhaseTimer < uiDiff)
                     {
-                        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                        DoSpawnFleshTentacles();
+                        // Note: we need to set the display id before casting the transform spell, in order to get the proper animation
+                        m_creature->SetDisplayId(DISPLAY_ID_CTHUN_BODY);
 
-                        m_Phase = PHASE_CTHUN;
-                        m_uiPhaseTimer = 0;
-                    }
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
-
-                break;
-            case PHASE_CTHUN:
-
-                if (m_uiMouthTentacleTimer < uiDiff)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_IN_LOS))
-                    {
-                        // Cast the spell using the target as source
-                        pTarget->InterruptNonMeleeSpells(false);
-                        pTarget->CastSpell(pTarget, SPELL_MOUTH_TENTACLE, true, nullptr, nullptr, m_creature->GetObjectGuid());
-                        m_stomachEnterTargetGuid = pTarget->GetObjectGuid();
-
-                        m_uiStomachEnterTimer = 3800;
-                        m_uiMouthTentacleTimer = urand(13000, 15000);
-                    }
-                }
-                else
-                {
-                    m_uiMouthTentacleTimer -= uiDiff;
-                }
-
-                // Teleport the target to the stomach after a few seconds
-                if (m_uiStomachEnterTimer)
-                {
-                    if (m_uiStomachEnterTimer <= uiDiff)
-                    {
-                        // Check for valid player
-                        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_stomachEnterTargetGuid))
+                        // Transform and start C'thun phase
+                        if (DoCastSpellIfCan(m_creature, SPELL_TRANSFORM) == CAST_OK)
                         {
+                            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                            DoSpawnFleshTentacles();
 
-#if defined (CLASSIC)
-                            pPlayer->CastSpell(pPlayer, SPELL_DIGESTIVE_ACID_TELEPORT, true);
-#else
-                            DoTeleportPlayer(pPlayer, afCthunLocations[2][0], afCthunLocations[2][1], afCthunLocations[2][2], afCthunLocations[2][3]);
-#endif
-
-                            m_lPlayersInStomachList.push_back(pPlayer->GetObjectGuid());
+                            m_Phase = PHASE_CTHUN;
+                            m_uiPhaseTimer = 0;
                         }
-
-                        m_stomachEnterTargetGuid.Clear();
-                        m_uiStomachEnterTimer = 0;
                     }
                     else
                     {
-                        m_uiStomachEnterTimer -= uiDiff;
+                        m_uiPhaseTimer -= uiDiff;
                     }
-                }
 
-                break;
-            case PHASE_CTHUN_WEAKENED:
+                    break;
+                case PHASE_CTHUN:
 
-                // Handle Flesh Tentacles respawn when the vulnerability spell expires
-                if (m_uiPhaseTimer < uiDiff)
-                {
-                    DoSpawnFleshTentacles();
+                    if (m_uiMouthTentacleTimer < uiDiff)
+                    {
+                        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_IN_LOS))
+                        {
+                            // Cast the spell using the target as source
+                            pTarget->InterruptNonMeleeSpells(false);
+                            pTarget->CastSpell(pTarget, SPELL_MOUTH_TENTACLE, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                            m_stomachEnterTargetGuid = pTarget->GetObjectGuid();
 
-                    m_uiPhaseTimer = 0;
-                    m_Phase = PHASE_CTHUN;
-                }
-                else
-                {
-                    m_uiPhaseTimer -= uiDiff;
-                }
+                            m_uiStomachEnterTimer = 3800;
+                            m_uiMouthTentacleTimer = urand(13000, 15000);
+                        }
+                    }
+                    else
+                    {
+                        m_uiMouthTentacleTimer -= uiDiff;
+                    }
 
-                break;
-            default:
-                break;
+                    // Teleport the target to the stomach after a few seconds
+                    if (m_uiStomachEnterTimer)
+                    {
+                        if (m_uiStomachEnterTimer <= uiDiff)
+                        {
+                            // Check for valid player
+                            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_stomachEnterTargetGuid))
+                            {
+
+#if defined (CLASSIC)
+                                pPlayer->CastSpell(pPlayer, SPELL_DIGESTIVE_ACID_TELEPORT, true);
+#else
+                                DoTeleportPlayer(pPlayer, afCthunLocations[2][0], afCthunLocations[2][1], afCthunLocations[2][2], afCthunLocations[2][3]);
+#endif
+
+                                m_lPlayersInStomachList.push_back(pPlayer->GetObjectGuid());
+                            }
+
+                            m_stomachEnterTargetGuid.Clear();
+                            m_uiStomachEnterTimer = 0;
+                        }
+                        else
+                        {
+                            m_uiStomachEnterTimer -= uiDiff;
+                        }
+                    }
+
+                    break;
+                case PHASE_CTHUN_WEAKENED:
+
+                    // Handle Flesh Tentacles respawn when the vulnerability spell expires
+                    if (m_uiPhaseTimer < uiDiff)
+                    {
+                        DoSpawnFleshTentacles();
+
+                        m_uiPhaseTimer = 0;
+                        m_Phase = PHASE_CTHUN;
+                    }
+                    else
+                    {
+                        m_uiPhaseTimer -= uiDiff;
+                    }
+
+                    break;
+                default:
+                    break;
             }
 
             if (m_uiGiantClawTentacleTimer < uiDiff)

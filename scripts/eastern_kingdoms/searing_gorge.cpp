@@ -85,23 +85,23 @@ struct npc_dorius_stonetender : public CreatureScript
         {
             switch (uiPointId)
             {
-            case 20:
-                // ToDo: research if there is any text here!
-                float fX, fY, fZ;
-                for (uint8 i = 0; i < MAX_STEELSHIFTERS; ++i)
-                {
-                    m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 15.0f, i * M_PI_F / 2);
-                    m_creature->SummonCreature(NPC_DARK_IRON_STEELSHIFTER, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
-                }
-                break;
-            case 33:
-                // ToDo: research if there is any event and text here!
-                if (Player* pPlayer = GetPlayerForEscort())
-                {
-                    pPlayer->GroupEventHappens(QUEST_ID_SUNTARA_STONES, m_creature);
-                }
-                m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
-                break;
+                case 20:
+                    // ToDo: research if there is any text here!
+                    float fX, fY, fZ;
+                    for (uint8 i = 0; i < MAX_STEELSHIFTERS; ++i)
+                    {
+                        m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 15.0f, i * M_PI_F / 2);
+                        m_creature->SummonCreature(NPC_DARK_IRON_STEELSHIFTER, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+                    }
+                    break;
+                case 33:
+                    // ToDo: research if there is any event and text here!
+                    if (Player* pPlayer = GetPlayerForEscort())
+                    {
+                        pPlayer->GroupEventHappens(QUEST_ID_SUNTARA_STONES, m_creature);
+                    }
+                    m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
+                    break;
             }
         }
 

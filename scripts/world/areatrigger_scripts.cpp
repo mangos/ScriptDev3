@@ -35,26 +35,18 @@
 
 /**
  * ContentData
-#if defined (WOTLK)
- * at_aldurthar_gate                5284, 5285, 5286, 5287
-#endif
-#if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
- * at_coilfang_waterfall            4591
- * at_legion_teleporter             4560 Teleporter TO Invasion Point: Cataclysm
-#endif
+ * at_aldurthar_gate                5284, 5285, 5286, 5287 (WOTLK onwards)
+ * at_coilfang_waterfall            4591 (TBC and above)
+ * at_legion_teleporter             4560 Teleporter TO Invasion Point: Cataclysm (TBC and above)
  * at_ravenholdt
-#if defined (WOTLK)
- * at_spearborn_encampment          5030
- * at_warsong_farms
- * at_stormwright_shelf             5108
-#endif
+ * at_spearborn_encampment          5030 (WOTLK onwards)
+ * at_warsong_farms                      (WOTLK onwards)
+ * at_stormwright_shelf             5108 (WOTLK onwards)
  * at_childrens_week_spot           3546, 3547, 3548, 3549, 3550, 3552
  * at_scent_larkorwi                1726, 1727, 1728, 1729, 1730, 1731, 1732, 1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740
  * at_murkdeep                      1966
-#if defined (WOTLK)
- * at_hot_on_the_trail              5710, 5711, 5712, 5714, 5715, 5716
- * at_ancient_leaf                  3587
-#endif
+ * at_hot_on_the_trail              5710, 5711, 5712, 5714, 5715, 5716 (WOTLK onwards)
+ * at_ancient_leaf                  3587 (WOTLK onwards)
  * EndContentData
  */
 
@@ -236,7 +228,7 @@ struct at_spearborn_encampment : public AreaTriggerScript
 
     {
         if (pPlayer->GetQuestStatus(QUEST_MISTWHISPER_TREASURE) == QUEST_STATUS_INCOMPLETE &&
-                pPlayer->GetReqKillOrCastCurrentCount(QUEST_MISTWHISPER_TREASURE, NPC_TARTEK) == 0)
+            pPlayer->GetReqKillOrCastCurrentCount(QUEST_MISTWHISPER_TREASURE, NPC_TARTEK) == 0)
         {
             // can only spawn one at a time, it's not a too good solution
             if (GetClosestCreatureWithEntry(pPlayer, NPC_TARTEK, 50.0f))
