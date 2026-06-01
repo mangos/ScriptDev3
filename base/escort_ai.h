@@ -32,8 +32,8 @@
 
 struct Escort_Waypoint
 {
-    Escort_Waypoint(uint32 uiId, float fX, float fY, float fZ, uint32 uiWaitTime) :
-        uiId(uiId),
+    Escort_Waypoint(uint32 uiId, float fX, float fY, float fZ, uint32 uiWaitTime)
+        : uiId(uiId),
         fX(fX),
         fY(fY),
         fZ(fZ),
