@@ -299,6 +299,7 @@ void guardAI::DoReplyToTextEmote(uint32 uiTextEmote)
             break;
         case TEXTEMOTE_RUDE:
         case TEXTEMOTE_CHICKEN:
+        case TEXTEMOTE_RASP:
             m_creature->HandleEmote(EMOTE_ONESHOT_POINT);  // Respond with a point
             break;
     }
@@ -335,5 +336,50 @@ void guardAI_stormwind::ReceiveEmote(Player* pPlayer, uint32 uiTextEmote)
     if (pPlayer->GetTeam() == ALLIANCE)
     {
         DoReplyToTextEmote(uiTextEmote);  // Respond to the emote if the player is Alliance
+    }
+}
+
+/**
+ * @brief Handles emotes received by Ironforge guards.
+ *
+ * This method is called when an Ironforge guard receives an emote from a player.
+ * If the player is a member of the Alliance, the guard will respond to the emote.
+ *
+ * @param pPlayer Pointer to the player sending the emote.
+ * @param uiTextEmote The text emote ID.
+ */
+void guardAI_ironforge::ReceiveEmote(Player* pPlayer, uint32 uiTextEmote)
+{
+    if (pPlayer->GetTeam() == ALLIANCE)
+    {
+        // Respond to the emote if the player is Alliance
+        DoReplyToTextEmote(uiTextEmote);
+
+        std::string name = m_creature->GetName();
+        switch (uiTextEmote)
+        {
+            case TEXTEMOTE_WAVE:
+                m_creature->MonsterTextEmote(
+                    (name + " waves at you.").c_str(), pPlayer);
+                break;
+            case TEXTEMOTE_SALUTE:
+                m_creature->MonsterTextEmote(
+                    (name + " salutes you.").c_str(), pPlayer);
+                break;
+            case TEXTEMOTE_KISS:
+                m_creature->MonsterTextEmote(
+                    (name + " bows before you.").c_str(), pPlayer);
+                break;
+            case TEXTEMOTE_SHY:
+                m_creature->MonsterTextEmote(
+                    (name + " flexes at you.").c_str(), pPlayer);
+                break;
+            case TEXTEMOTE_RUDE:
+            case TEXTEMOTE_CHICKEN:
+            case TEXTEMOTE_RASP:
+                m_creature->MonsterTextEmote(
+                    (name + " points at you.").c_str(), pPlayer);
+                break;
+        }
     }
 }

@@ -91,6 +91,16 @@ struct guard_stormwind : public CreatureScript
     }
 };
 
+struct guard_ironforge : public CreatureScript
+{
+    guard_ironforge() : CreatureScript("guard_ironforge") {}
+
+    CreatureAI* GetAI(Creature* pCreature) override
+    {
+        return new guardAI_ironforge(pCreature);
+    }
+};
+
 // common AI Part
 struct guard_shattrath_asAI : public guardAI
 {
@@ -198,6 +208,8 @@ void AddSC_guards()
     s = new guard_orgrimmar();
     s->RegisterSelf();
     s = new guard_stormwind();
+    s->RegisterSelf();
+    s = new guard_ironforge();
     s->RegisterSelf();
 
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
