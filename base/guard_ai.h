@@ -116,6 +116,16 @@ struct guardAI_orgrimmar : public guardAI
     void ReceiveEmote(Player* pPlayer, uint32 uiTextEmote) override;
 };
 
+/// Ironforge Guard scripted text entries
+enum
+{
+    SAY_IRONFORGE_WAVE   = -1001000,
+    SAY_IRONFORGE_SALUTE = -1001001,
+    SAY_IRONFORGE_KISS   = -1001002,
+    SAY_IRONFORGE_SHY    = -1001003,
+    SAY_IRONFORGE_RUDE   = -1001004,
+};
+
 /**
  * @class guardAI_stormwind
  * @brief AI for Stormwind guards.
@@ -128,6 +138,27 @@ struct guardAI_stormwind : public guardAI
      * @param pCreature Pointer to the creature this AI is associated with.
      */
     guardAI_stormwind(Creature* pCreature) : guardAI(pCreature) {}
+
+    /**
+     * @brief Called when the guard receives an emote from a player.
+     * @param pPlayer Pointer to the player sending the emote.
+     * @param uiTextEmote The text emote ID.
+     */
+    void ReceiveEmote(Player* pPlayer, uint32 uiTextEmote) override;
+};
+
+/**
+ * @class guardAI_ironforge
+ * @brief AI for Ironforge guards.
+ */
+struct guardAI_ironforge : public guardAI
+{
+
+    /**
+     * @brief Constructor for guardAI_ironforge.
+     * @param pCreature Pointer to the creature this AI is associated with.
+     */
+    guardAI_ironforge(Creature* pCreature) : guardAI(pCreature) {}
 
     /**
      * @brief Called when the guard receives an emote from a player.
