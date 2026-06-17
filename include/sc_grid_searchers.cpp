@@ -89,7 +89,7 @@ Creature* GetClosestCreatureWithEntry(WorldObject* pSource, uint32 uiEntry, floa
  * @param uiEntry Entry ID of the GameObject.
  * @param fMaxSearchRange Maximum search range.
  */
-static void CheckPartialGridScanAnomaly(WorldObject* pSource)
+static void CheckPartialGridScanAnomaly(WorldObject* pSource, const char* tag)
 {
     if (!pSource || !pSource->GetMap())
     {
@@ -107,22 +107,32 @@ static void CheckPartialGridScanAnomaly(WorldObject* pSource)
         return;
     }
 
+    // Always count every real anomaly; rate-limit only the log line.
+    ++pSource->GetMap()->CellEnvStats().anomalyScanPartial;
+
     static std::set<uint64> warnedGrids;
-    uint64 gridKey = (uint64(pSource->GetMapId()) << 32) | (uint64(cell.GridX()) << 16) | uint64(cell.GridY());
+    uint64 tagHash = 5381;
+    for (const char* c = tag; c && *c; ++c)
+    {
+        tagHash = ((tagHash << 5) + tagHash) + uint64(*c);
+    }
+    uint64 gridKey = (uint64(pSource->GetMapId()) << 32)
+                     | (uint64(cell.GridX()) << 16)
+                     | uint64(cell.GridY());
+    gridKey ^= tagHash;
     if (warnedGrids.find(gridKey) != warnedGrids.end())
     {
         return;
     }
 
     warnedGrids.insert(gridKey);
-    ++pSource->GetMap()->CellEnvStats().anomalyScanPartial;
-    sLog.outError("[CellEnvelope][ANOMALY] whole-grid scan on partial grid[%u,%u] map %u — results may be incomplete",
-                  cell.GridX(), cell.GridY(), pSource->GetMapId());
+    sLog.outError("[CellEnvelope][ANOMALY] whole-grid scan on partial grid[%u,%u] map %u (tag: %s) — results may be incomplete",
+                  cell.GridX(), cell.GridY(), pSource->GetMapId(), tag ? tag : "?");
 }
 
 void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList , WorldObject* pSource, uint32 uiEntry, float fMaxSearchRange)
 {
-    CheckPartialGridScanAnomaly(pSource);
+    CheckPartialGridScanAnomaly(pSource, "GO");
 
     MaNGOS::GameObjectEntryInPosRangeCheck check(*pSource, uiEntry, pSource->GetPositionX(), pSource->GetPositionY(), pSource->GetPositionZ(), fMaxSearchRange);
     MaNGOS::GameObjectListSearcher<MaNGOS::GameObjectEntryInPosRangeCheck> searcher(lList, check);
@@ -142,7 +152,7 @@ void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList , WorldObjec
  */
 void GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, WorldObject* pSource, uint32 uiEntry, float fMaxSearchRange)
 {
-    CheckPartialGridScanAnomaly(pSource);
+    CheckPartialGridScanAnomaly(pSource, "Creature");
 
     MaNGOS::AllCreaturesOfEntryInRangeCheck check(pSource, uiEntry, fMaxSearchRange);
     MaNGOS::CreatureListSearcher<MaNGOS::AllCreaturesOfEntryInRangeCheck> searcher(lList, check);
