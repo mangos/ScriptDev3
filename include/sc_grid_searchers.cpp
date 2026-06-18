@@ -89,7 +89,7 @@ Creature* GetClosestCreatureWithEntry(WorldObject* pSource, uint32 uiEntry, floa
  * @param uiEntry Entry ID of the GameObject.
  * @param fMaxSearchRange Maximum search range.
  */
-#if defined(CLASSIC)
+#if defined(CLASSIC) || defined(TBC)
 static void CheckPartialGridScanAnomaly(WorldObject* pSource, const char* tag)
 {
     if (!pSource || !pSource->GetMap())
