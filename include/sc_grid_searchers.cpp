@@ -89,6 +89,7 @@ Creature* GetClosestCreatureWithEntry(WorldObject* pSource, uint32 uiEntry, floa
  * @param uiEntry Entry ID of the GameObject.
  * @param fMaxSearchRange Maximum search range.
  */
+#if defined(CLASSIC)
 static void CheckPartialGridScanAnomaly(WorldObject* pSource, const char* tag)
 {
     if (!pSource || !pSource->GetMap())
@@ -129,6 +130,9 @@ static void CheckPartialGridScanAnomaly(WorldObject* pSource, const char* tag)
     sLog.outError("[CellEnvelope][ANOMALY] whole-grid scan on partial grid[%u,%u] map %u (tag: %s) — results may be incomplete",
                   cell.GridX(), cell.GridY(), pSource->GetMapId(), tag ? tag : "?");
 }
+#else
+static void CheckPartialGridScanAnomaly(WorldObject* /*pSource*/, const char* /*tag*/) {}
+#endif
 
 void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList , WorldObject* pSource, uint32 uiEntry, float fMaxSearchRange)
 {
