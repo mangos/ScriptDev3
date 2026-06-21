@@ -229,7 +229,11 @@ struct boss_shade_of_aran : public CreatureScript
             }
 
             // Start drinking when below 20% mana
+#if !defined(MISTS)
+            if (!m_bIsDrinking && m_creature->powerType == POWER_MANA && (m_creature->GetPower(POWER_MANA) * 100 / m_creature->GetMaxPower(POWER_MANA)) < 20)
+#else
             if (!m_bIsDrinking && m_creature->GetPowerType() == POWER_MANA && (m_creature->GetPower(POWER_MANA) * 100 / m_creature->GetMaxPower(POWER_MANA)) < 20)
+#endif
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_MASS_POLYMORPH) == CAST_OK)
                 {

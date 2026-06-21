@@ -258,7 +258,7 @@ struct boss_mandokir : public CreatureScript
 
                 // Could use this instead of hard coded timer for the above (but no script access),
                 // but would still a hack since we should better use the dummy, at aura removal
-                // SpellDurationEntry* const pDuration = sSpellDurationStore.LookupEntry(pSpell->DurationIndex);
+                // SpellDurationEntry* const pDuration = sSpellDurationStore.LookupEntry(pSpell->GetDurationIndex());
             }
         }
 
