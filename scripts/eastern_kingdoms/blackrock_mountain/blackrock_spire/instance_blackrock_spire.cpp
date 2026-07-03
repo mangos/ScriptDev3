@@ -943,7 +943,7 @@ struct at_blackrock_spire : public AreaTriggerScript
             return false;
         }
 
-        switch (pAt->id)
+        switch (pAt->ID)
         {
             case AREATRIGGER_ENTER_UBRS:
                 if (InstanceData* pInstance = pPlayer->GetInstanceData())

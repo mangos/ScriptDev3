@@ -278,7 +278,7 @@ struct at_ring_of_law : public AreaTriggerScript
             pInstance->SetData(TYPE_RING_OF_LAW, pInstance->GetData(TYPE_RING_OF_LAW) == DATA_BANNER_BEFORE_EVENT ? SPECIAL : IN_PROGRESS);
 
             pPlayer->SummonCreature(NPC_GRIMSTONE, aSpawnPositions[POS_GRIMSTONE][0], aSpawnPositions[POS_GRIMSTONE][1], aSpawnPositions[POS_GRIMSTONE][2], aSpawnPositions[POS_GRIMSTONE][3], TEMPSPAWN_DEAD_DESPAWN, 0);
-            pInstance->SetData(TYPE_SIGNAL, pAt->id);
+            pInstance->SetData(TYPE_SIGNAL, pAt->ID);
             pInstance->SetArenaCenterCoords(pAt->x, pAt->y, pAt->z);
 
             return false;

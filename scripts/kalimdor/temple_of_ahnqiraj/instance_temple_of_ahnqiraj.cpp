@@ -380,16 +380,16 @@ struct at_temple_ahnqiraj : public AreaTriggerScript
             return false;
         }
 
-        if (pAt->id == AREATRIGGER_TWIN_EMPERORS)
+        if (pAt->ID == AREATRIGGER_TWIN_EMPERORS)
         {
 
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
             {
-                pInstance->SetData(TYPE_SIGNAL, pAt->id);
+                pInstance->SetData(TYPE_SIGNAL, pAt->ID);
             }
         }
 
-        if (pAt->id == AREATRIGGER_SARTURA)
+        if (pAt->ID == AREATRIGGER_SARTURA)
         {
 
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
