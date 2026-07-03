@@ -417,18 +417,18 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Check if the spell meets our range requirements
-        if (fRangeMin && pTempRange->maxRange < fRangeMin)
+        if (fRangeMin && pTempRange->RangeMax < fRangeMin)
         {
             continue;
         }
 
-        if (fRangeMax && pTempRange->maxRange > fRangeMax)
+        if (fRangeMax && pTempRange->RangeMax > fRangeMax)
         {
             continue;
         }
 
         // Check if our target is in range
-        if (m_creature->IsWithinDistInMap(pTarget, pTempRange->minRange) || !m_creature->IsWithinDistInMap(pTarget, pTempRange->maxRange))
+        if (m_creature->IsWithinDistInMap(pTarget, pTempRange->RangeMin) || !m_creature->IsWithinDistInMap(pTarget, pTempRange->RangeMax))
         {
             continue;
         }
@@ -493,7 +493,7 @@ bool ScriptedAI::CanCast(Unit* pTarget, SpellEntry const* pSpellEntry, bool bTri
     }
 
     // Unit is out of range of this spell
-    if (!m_creature->IsInRange(pTarget, pTempRange->minRange, pTempRange->maxRange))
+    if (!m_creature->IsInRange(pTarget, pTempRange->RangeMin, pTempRange->RangeMax))
     {
         return false;
     }
