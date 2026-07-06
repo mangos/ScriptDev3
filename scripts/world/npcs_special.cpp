@@ -829,7 +829,7 @@ struct npc_injured_patient : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pCaster->GetTypeId() == TYPEID_PLAYER && m_creature->IsAlive() && pSpell->Id == 20804)
+            if (pCaster->GetTypeId() == TYPEID_PLAYER && m_creature->IsAlive() && pSpell->ID == 20804)
             {
                 Player* pPlayer = static_cast<Player*>(pCaster);
                 if (pPlayer->GetQuestStatus(6624) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(6622) == QUEST_STATUS_INCOMPLETE)
@@ -1001,7 +1001,7 @@ struct npc_garments_of_quests : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_LESSER_HEAL_R2 || pSpell->Id == SPELL_FORTITUDE_R1)
+            if (pSpell->ID == SPELL_LESSER_HEAL_R2 || pSpell->ID == SPELL_FORTITUDE_R1)
             {
                 // not while in combat
                 if (m_creature->IsInCombat())
@@ -1022,12 +1022,12 @@ struct npc_garments_of_quests : public CreatureScript
                         case ENTRY_SHAYA:
                             if (((Player*)pCaster)->GetQuestStatus(QUEST_MOON) == QUEST_STATUS_INCOMPLETE)
                             {
-                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                if (m_bIsHealed && !m_bCanRun && pSpell->ID == SPELL_FORTITUDE_R1)
                                 {
                                     DoScriptText(SAY_SHAYA_THANKS, m_creature, pCaster);
                                     m_bCanRun = true;
                                 }
-                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                else if (!m_bIsHealed && pSpell->ID == SPELL_LESSER_HEAL_R2)
                                 {
                                     m_playerGuid = pCaster->GetObjectGuid();
                                     m_creature->SetStandState(UNIT_STAND_STATE_STAND);
@@ -1039,12 +1039,12 @@ struct npc_garments_of_quests : public CreatureScript
                         case ENTRY_ROBERTS:
                             if (((Player*)pCaster)->GetQuestStatus(QUEST_LIGHT_1) == QUEST_STATUS_INCOMPLETE)
                             {
-                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                if (m_bIsHealed && !m_bCanRun && pSpell->ID == SPELL_FORTITUDE_R1)
                                 {
                                     DoScriptText(SAY_ROBERTS_THANKS, m_creature, pCaster);
                                     m_bCanRun = true;
                                 }
-                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                else if (!m_bIsHealed && pSpell->ID == SPELL_LESSER_HEAL_R2)
                                 {
                                     m_playerGuid = pCaster->GetObjectGuid();
                                     m_creature->SetStandState(UNIT_STAND_STATE_STAND);
@@ -1056,12 +1056,12 @@ struct npc_garments_of_quests : public CreatureScript
                         case ENTRY_DOLF:
                             if (((Player*)pCaster)->GetQuestStatus(QUEST_LIGHT_2) == QUEST_STATUS_INCOMPLETE)
                             {
-                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                if (m_bIsHealed && !m_bCanRun && pSpell->ID == SPELL_FORTITUDE_R1)
                                 {
                                     DoScriptText(SAY_DOLF_THANKS, m_creature, pCaster);
                                     m_bCanRun = true;
                                 }
-                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                else if (!m_bIsHealed && pSpell->ID == SPELL_LESSER_HEAL_R2)
                                 {
                                     m_playerGuid = pCaster->GetObjectGuid();
                                     m_creature->SetStandState(UNIT_STAND_STATE_STAND);
@@ -1073,12 +1073,12 @@ struct npc_garments_of_quests : public CreatureScript
                         case ENTRY_KORJA:
                             if (((Player*)pCaster)->GetQuestStatus(QUEST_SPIRIT) == QUEST_STATUS_INCOMPLETE)
                             {
-                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                if (m_bIsHealed && !m_bCanRun && pSpell->ID == SPELL_FORTITUDE_R1)
                                 {
                                     DoScriptText(SAY_KORJA_THANKS, m_creature, pCaster);
                                     m_bCanRun = true;
                                 }
-                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                else if (!m_bIsHealed && pSpell->ID == SPELL_LESSER_HEAL_R2)
                                 {
                                     m_playerGuid = pCaster->GetObjectGuid();
                                     m_creature->SetStandState(UNIT_STAND_STATE_STAND);
@@ -1090,12 +1090,12 @@ struct npc_garments_of_quests : public CreatureScript
                         case ENTRY_DG_KEL:
                             if (((Player*)pCaster)->GetQuestStatus(QUEST_DARKNESS) == QUEST_STATUS_INCOMPLETE)
                             {
-                                if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
+                                if (m_bIsHealed && !m_bCanRun && pSpell->ID == SPELL_FORTITUDE_R1)
                                 {
                                     DoScriptText(SAY_DG_KEL_THANKS, m_creature, pCaster);
                                     m_bCanRun = true;
                                 }
-                                else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
+                                else if (!m_bIsHealed && pSpell->ID == SPELL_LESSER_HEAL_R2)
                                 {
                                     m_playerGuid = pCaster->GetObjectGuid();
                                     m_creature->SetStandState(UNIT_STAND_STATE_STAND);
@@ -1730,11 +1730,11 @@ struct npc_burster_worm : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if ((pSpell->Id == SPELL_TUNNEL_BORE || pSpell->Id == SPELL_BONE_BORE) && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if ((pSpell->ID == SPELL_TUNNEL_BORE || pSpell->ID == SPELL_BONE_BORE) && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 // remove auras straight on spell hit
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->RemoveAurasDueToSpell(pSpell->Id == SPELL_TUNNEL_BORE ? SPELL_TUNNEL_BORE_PASSIVE : SPELL_TUNNEL_BORE_BONE_PASSIVE);
+                m_creature->RemoveAurasDueToSpell(pSpell->ID == SPELL_TUNNEL_BORE ? SPELL_TUNNEL_BORE_PASSIVE : SPELL_TUNNEL_BORE_BONE_PASSIVE);
                 m_creature->RemoveAurasDueToSpell(SPELL_SANDWORM_SUBMERGE_VISUAL);
 
                 AttackStart(pTarget);

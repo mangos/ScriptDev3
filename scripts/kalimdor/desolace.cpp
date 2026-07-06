@@ -104,7 +104,7 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, SpellEntry const* pSpell) override
         {
-            if (pSpell->Id == SPELL_KODO_KOMBO_GOSSIP)
+            if (pSpell->ID == SPELL_KODO_KOMBO_GOSSIP)
             {
                 m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                 m_uiDespawnTimer = 60000;

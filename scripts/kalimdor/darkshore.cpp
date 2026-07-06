@@ -119,7 +119,7 @@ struct npc_kerlonian : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (HasFollowState(STATE_FOLLOW_INPROGRESS | STATE_FOLLOW_PAUSED) && pSpell->Id == SPELL_AWAKEN)
+            if (HasFollowState(STATE_FOLLOW_INPROGRESS | STATE_FOLLOW_PAUSED) && pSpell->ID == SPELL_AWAKEN)
             {
                 ClearSleeping();
             }

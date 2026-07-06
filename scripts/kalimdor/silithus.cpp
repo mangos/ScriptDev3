@@ -976,7 +976,7 @@ struct npc_solenor_the_slayer : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
 
-            if (pSpell && pSpell->Id == 14268)   // Wing Clip (Rank 3)
+            if (pSpell && pSpell->ID == 14268)   // Wing Clip (Rank 3)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_CRIPPLING_CLIP, CAST_TRIGGERED) == CAST_OK)
                 {

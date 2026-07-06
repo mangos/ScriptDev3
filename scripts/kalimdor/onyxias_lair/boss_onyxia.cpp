@@ -289,14 +289,14 @@ struct boss_onyxia : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_BREATH_EAST_TO_WEST ||
-                pSpell->Id == SPELL_BREATH_WEST_TO_EAST ||
-                pSpell->Id == SPELL_BREATH_SE_TO_NW ||
-                pSpell->Id == SPELL_BREATH_NW_TO_SE ||
-                pSpell->Id == SPELL_BREATH_SW_TO_NE ||
-                pSpell->Id == SPELL_BREATH_NE_TO_SW ||
-                pSpell->Id == SPELL_BREATH_SOUTH_TO_NORTH ||
-                pSpell->Id == SPELL_BREATH_NORTH_TO_SOUTH)
+            if (pSpell->ID == SPELL_BREATH_EAST_TO_WEST ||
+                pSpell->ID == SPELL_BREATH_WEST_TO_EAST ||
+                pSpell->ID == SPELL_BREATH_SE_TO_NW ||
+                pSpell->ID == SPELL_BREATH_NW_TO_SE ||
+                pSpell->ID == SPELL_BREATH_SW_TO_NE ||
+                pSpell->ID == SPELL_BREATH_NE_TO_SW ||
+                pSpell->ID == SPELL_BREATH_SOUTH_TO_NORTH ||
+                pSpell->ID == SPELL_BREATH_NORTH_TO_SOUTH)
             {
                 // This was sent with SendMonsterMove - which resulted in better speed than now
                 m_creature->GetMotionMaster()->MovePoint(m_uiMovePoint, aMoveData[m_uiMovePoint].fX, aMoveData[m_uiMovePoint].fY, aMoveData[m_uiMovePoint].fZ);

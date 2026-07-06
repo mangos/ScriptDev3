@@ -704,7 +704,7 @@ struct npc_artorius_the_doombringer : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == 13555 || pSpell->Id == 25295)             // Serpent Sting (Rank 8 or Rank 9)
+            if (pSpell->ID == 13555 || pSpell->ID == 25295)             // Serpent Sting (Rank 8 or Rank 9)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_STINGING_TRAUMA, CAST_TRIGGERED) == CAST_OK)
                 {
