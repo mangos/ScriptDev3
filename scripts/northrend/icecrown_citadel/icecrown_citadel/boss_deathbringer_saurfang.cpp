@@ -132,11 +132,7 @@ struct boss_deathbringer_saurfang : public CreatureScript
         boss_deathbringer_saurfangAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-#if !defined(MISTS)
-            m_powerBloodPower = m_creature->powerType;
-#else
             m_powerBloodPower = m_creature->GetPowerType();
-#endif
             m_bIsIntroDone = false;
         }
 
