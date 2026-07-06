@@ -906,7 +906,7 @@ struct is_naxxramas : public InstanceScript
             // kel
             void SetChamberCenterCoords(AreaTriggerEntry const *at)
             {
-                m_uiChanberCenterAT = at->ID;
+                m_uiChanberCenterAT = SD3_AreaTriggerId(at);
             }
 
             void GetChamberCenterCoords(float& fX, float& fY, float& fZ) { fX = m_fChamberCenterX; fY = m_fChamberCenterY; fZ = m_fChamberCenterZ; }
@@ -1070,7 +1070,7 @@ struct at_naxxramas : public AreaTriggerScript
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
         ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData();
-        switch (pAt->ID)
+        switch (SD3_AreaTriggerId(pAt))
         {
             case AREATRIGGER_KELTHUZAD:
                 if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
@@ -1080,7 +1080,7 @@ struct at_naxxramas : public AreaTriggerScript
 
                 if (pInstance)
                 {
-                    pInstance->SetData(TYPE_SIGNAL_1, pAt->ID); //it is unclear why do not hardcode AREATRIGGER_KELTHUZAD constant into the single place it used: boss_kelthuzad::JustSummoned
+                    pInstance->SetData(TYPE_SIGNAL_1, SD3_AreaTriggerId(pAt)); //it is unclear why do not hardcode AREATRIGGER_KELTHUZAD constant into the single place it used: boss_kelthuzad::JustSummoned
 
                     if (pInstance->GetData(TYPE_KELTHUZAD) == NOT_STARTED)
                     {

@@ -423,7 +423,7 @@ struct at_vaelastrasz : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->ID == AREATRIGGER_VAEL_INTRO)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_VAEL_INTRO)
         {
             if (pPlayer->isGameMaster() || pPlayer->IsDead())
             {

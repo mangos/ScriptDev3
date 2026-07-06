@@ -71,7 +71,7 @@ struct at_childrens_week_spot : public AreaTriggerScript
     {
         for (uint8 i = 0; i < 6; ++i)
         {
-            if (pAt->ID == TriggerOrphanSpell[i][0] &&
+            if (SD3_AreaTriggerId(pAt) == TriggerOrphanSpell[i][0] &&
                 pPlayer->GetMiniPet() && pPlayer->GetMiniPet()->GetEntry() == TriggerOrphanSpell[i][1])
             {
                 pPlayer->CastSpell(pPlayer, TriggerOrphanSpell[i][2], true);

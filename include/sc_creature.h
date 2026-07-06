@@ -107,6 +107,37 @@ inline uint32 SD3_SpellEffectApplyAuraName(SpellEntry const* pSpell, uint8 index
 }
 #endif
 
+// AreaTriggerEntry / SpellRangeEntry accessors (cross-expansion compatibility).
+// mangos-zero (CLASSIC) renamed these DBC fields to their .dbd names; the other
+// cores keep the legacy names. Same per-expansion resolution as the SpellEntry
+// helpers above so shared scripts compile on every core.
+inline uint32 SD3_AreaTriggerId(AreaTriggerEntry const* pAt)
+{
+#if defined (CLASSIC)
+    return pAt->ID;
+#else
+    return pAt->id;
+#endif
+}
+
+inline float SD3_SpellRangeMin(SpellRangeEntry const* pRange)
+{
+#if defined (CLASSIC)
+    return pRange->RangeMin;
+#else
+    return pRange->minRange;
+#endif
+}
+
+inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
+{
+#if defined (CLASSIC)
+    return pRange->RangeMax;
+#else
+    return pRange->maxRange;
+#endif
+}
+
 // Spell targets used by SelectSpell
 enum SelectTarget
 {

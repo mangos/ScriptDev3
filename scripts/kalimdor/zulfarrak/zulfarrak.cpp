@@ -113,7 +113,7 @@ struct at_zulfarrak : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->ID == AREATRIGGER_ANTUSUL)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_ANTUSUL)
         {
             if (pPlayer->isGameMaster() || pPlayer->IsDead())
             {
