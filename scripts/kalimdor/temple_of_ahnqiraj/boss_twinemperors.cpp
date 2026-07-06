@@ -162,7 +162,7 @@ struct boss_twin_emperorsAI : public ScriptedAI
 
     void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
-        if (pSpell->Id == SPELL_TWIN_TELEPORT)
+        if (SD3_SpellId(pSpell) == SPELL_TWIN_TELEPORT)
         {
             DoTeleportAbility();
             DoResetThreat();

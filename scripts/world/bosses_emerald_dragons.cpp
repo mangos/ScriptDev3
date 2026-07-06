@@ -315,7 +315,7 @@ struct boss_lethon : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             // Summon a shade for each player hit
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpell->Id == SPELL_DRAW_SPIRIT)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpell) == SPELL_DRAW_SPIRIT)
             {
                 // Summon this way, to be able to cast the shade visual spell with player as original caster
                 // This might not be supported currently by core, but this spell's visual should be dependend on the player

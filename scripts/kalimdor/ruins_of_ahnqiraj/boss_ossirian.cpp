@@ -192,7 +192,7 @@ struct boss_ossirian : public CreatureScript
                 bool bIsWeaknessSpell = false;
                 for (uint8 i = 0; i < countof(aWeaknessSpell); ++i)
                 {
-                    if (pSpell->Id == aWeaknessSpell[i])
+                    if (SD3_SpellId(pSpell) == aWeaknessSpell[i])
                     {
                         bIsWeaknessSpell = true;
                         break;

@@ -926,7 +926,7 @@ struct at_stomach_cthun : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->id == AREATRIGGER_STOMACH_1)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_STOMACH_1)
         {
             if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
             {

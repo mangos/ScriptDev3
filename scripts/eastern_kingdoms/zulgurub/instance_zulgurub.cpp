@@ -312,7 +312,7 @@ struct at_zulgurub : public AreaTriggerScript
 
     bool AreaTrigger_at_zulgurub(Player* pPlayer, AreaTriggerEntry const* pAt)
     {
-        if (pAt->id == AREATRIGGER_ENTER || pAt->id == AREATRIGGER_ALTAR)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_ENTER || SD3_AreaTriggerId(pAt) == AREATRIGGER_ALTAR)
         {
             if (pPlayer->isGameMaster() || pPlayer->IsDead())
             {
@@ -321,7 +321,7 @@ struct at_zulgurub : public AreaTriggerScript
 
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
             {
-                pInstance->SetData(TYPE_SIGNAL_1, pAt->id);
+                pInstance->SetData(TYPE_SIGNAL_1, SD3_AreaTriggerId(pAt));
             }
         }
 

@@ -247,7 +247,7 @@ struct boss_mandokir : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_WATCH)
+            if (SD3_SpellId(pSpell) == SPELL_WATCH)
             {
                 DoScriptText(SAY_WATCH, m_creature, pTarget);
                 DoScriptText(SAY_WATCH_WHISPER, m_creature, pTarget);

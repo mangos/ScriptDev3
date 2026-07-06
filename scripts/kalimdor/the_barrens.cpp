@@ -256,7 +256,7 @@ struct npc_taskmaster_fizzule : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pCaster->GetTypeId() == TYPEID_PLAYER && (pSpell->Id == SPELL_FLARE || pSpell->Id == SPELL_FOLLY))
+            if (pCaster->GetTypeId() == TYPEID_PLAYER && (SD3_SpellId(pSpell) == SPELL_FLARE || SD3_SpellId(pSpell) == SPELL_FOLLY))
             {
                 ++m_uiFlareCount;
 

@@ -30,6 +30,114 @@
 #include "Chat.h"
 #include "DBCStores.h"  // Mostly only used for Lookup access, but a few cases really do use the DBC-Stores
 
+// -------------------------------------------------------------------------
+// SpellEntry field accessors (cross-expansion compatibility)
+//
+// ScriptDev3 is a single repository shared by every mangos core (Zero/One/Two/
+// Three/Four). mangos-zero (CLASSIC) aligned its SpellEntry struct field names to
+// the build-exact 1.12 .dbd names; the other cores keep the legacy field names
+// (and the later cores expose GetXxx() accessor methods). These helpers resolve
+// each field per expansion so shared scripts compile and behave identically on
+// every core - each build only ever compiles its own branch.
+// -------------------------------------------------------------------------
+inline uint32 SD3_SpellId(SpellEntry const* pSpell)
+{
+#if defined (CLASSIC)
+    return pSpell->ID;
+#else
+    return pSpell->Id;
+#endif
+}
+
+inline uint32 SD3_SpellManaCost(SpellEntry const* pSpell)
+{
+#if defined (CATA) || defined (MISTS)
+    return pSpell->GetManaCost();
+#elif defined (CLASSIC)
+    return pSpell->ManaCost;
+#else   // TBC, WOTLK
+    return pSpell->manaCost;
+#endif
+}
+
+inline uint32 SD3_SpellPowerType(SpellEntry const* pSpell)
+{
+#if defined (MISTS)
+    return pSpell->GetPowerType();
+#elif defined (CLASSIC)
+    return pSpell->PowerType;
+#else   // TBC, WOTLK, CATA
+    return pSpell->powerType;
+#endif
+}
+
+inline uint32 SD3_SpellRangeIndex(SpellEntry const* pSpell)
+{
+#if defined (MISTS)
+    return pSpell->GetRangeIndex();
+#elif defined (CLASSIC)
+    return pSpell->RangeIndex;
+#else   // TBC, WOTLK, CATA
+    return pSpell->rangeIndex;
+#endif
+}
+
+// Effect-array accessors - used only on the non-CATA/MISTS path (CATA/MISTS
+// expose GetEffect*ByIndex() with their own SpellEffect null-checks and stay
+// inline at the call sites). CATA/MISTS SpellEntry has no EffectImplicitTargetA/
+// EffectApplyAuraName member at all, so these helpers are only defined for the
+// cores that have those fields (Zero/One/Two).
+#if !defined (CATA) && !defined (MISTS)
+inline uint32 SD3_SpellEffectImplicitTargetA(SpellEntry const* pSpell, uint8 index)
+{
+#if defined (CLASSIC)
+    return pSpell->ImplicitTargetA[index];
+#else   // TBC, WOTLK
+    return pSpell->EffectImplicitTargetA[index];
+#endif
+}
+
+inline uint32 SD3_SpellEffectApplyAuraName(SpellEntry const* pSpell, uint8 index)
+{
+#if defined (CLASSIC)
+    return pSpell->EffectAura[index];
+#else   // TBC, WOTLK
+    return pSpell->EffectApplyAuraName[index];
+#endif
+}
+#endif
+
+// AreaTriggerEntry / SpellRangeEntry accessors (cross-expansion compatibility).
+// mangos-zero (CLASSIC) renamed these DBC fields to their .dbd names; the other
+// cores keep the legacy names. Same per-expansion resolution as the SpellEntry
+// helpers above so shared scripts compile on every core.
+inline uint32 SD3_AreaTriggerId(AreaTriggerEntry const* pAt)
+{
+#if defined (CLASSIC)
+    return pAt->ID;
+#else
+    return pAt->id;
+#endif
+}
+
+inline float SD3_SpellRangeMin(SpellRangeEntry const* pRange)
+{
+#if defined (CLASSIC)
+    return pRange->RangeMin;
+#else
+    return pRange->minRange;
+#endif
+}
+
+inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
+{
+#if defined (CLASSIC)
+    return pRange->RangeMax;
+#else
+    return pRange->maxRange;
+#endif
+}
+
 // Spell targets used by SelectSpell
 enum SelectTarget
 {

@@ -682,7 +682,7 @@ struct npc_klinfran_the_crazed : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell && pSpell->Id == 14277)   // Scorpid Sting (Rank 4)
+            if (pSpell && SD3_SpellId(pSpell) == 14277)   // Scorpid Sting (Rank 4)
             {
                 m_creature->RemoveAurasDueToSpell(SPELL_DEMONIC_FRENZY);
                 DoCastSpellIfCan(m_creature, SPELL_ENTROPIC_STING, CAST_TRIGGERED);
