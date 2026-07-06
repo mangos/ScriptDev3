@@ -171,7 +171,7 @@ struct boss_scarlet_commander_mograine : public CreatureScript
         void SpellHit(Unit* /*pWho*/, const SpellEntry* pSpell) override
         {
             // When hit with ressurection say text
-            if (pSpell->ID == SPELL_SCARLETRESURRECTION)
+            if (SD3_SpellId(pSpell) == SPELL_SCARLETRESURRECTION)
             {
                 DoScriptText(SAY_MO_RESSURECTED, m_creature);
                 m_bFakeDeath = false;

@@ -134,7 +134,7 @@ struct npc_rizzle_sprysprocket : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->ID == SPELL_SURRENDER)
+            if (SD3_SpellId(pSpell) == SPELL_SURRENDER)
             {
                 SetEscortPaused(true);
                 DoScriptText(SAY_END, m_creature);
@@ -145,7 +145,7 @@ struct npc_rizzle_sprysprocket : public CreatureScript
         // this may be wrong (and doesn't work)
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpell->ID == SPELL_FROST_GRENADE)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpell) == SPELL_FROST_GRENADE)
             {
                 DoScriptText(SAY_WHISPER_CHILL, m_creature, pTarget);
             }
@@ -380,7 +380,7 @@ struct mobs_spitelashes : public CreatureScript
 
             // Creature get polymorphed into a sheep and after 5 secs despawns
             if (pCaster->GetTypeId() == TYPEID_PLAYER && ((Player*)pCaster)->GetQuestStatus(QUEST_FRAGMENTED_MAGIC) == QUEST_STATUS_INCOMPLETE &&
-                (pSpell->ID == 118 || pSpell->ID == 12824 || pSpell->ID == 12825 || pSpell->ID == 12826))
+                (SD3_SpellId(pSpell) == 118 || SD3_SpellId(pSpell) == 12824 || SD3_SpellId(pSpell) == 12825 || SD3_SpellId(pSpell) == 12826))
             {
                 m_uiMorphTimer = 5000;
             }

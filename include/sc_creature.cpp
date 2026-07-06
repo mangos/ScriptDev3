@@ -150,7 +150,7 @@ void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
     const SpellEntry* potentialSpell = m_creature->ReachWithSpellAttack(victim);
     if (potentialSpell)
     {
-        m_creature->CastSpell(victim, potentialSpell->Id, true);
+        m_creature->CastSpell(victim, SD3_SpellId(potentialSpell), true);
     }
 #endif
 }
@@ -373,43 +373,24 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Make sure that the spell uses the requested amount of power
-#if defined (CATA) || defined (MISTS)
-        if (uiPowerCostMin &&  pTempSpell->GetManaCost() < uiPowerCostMin)
-#else
-        if (uiPowerCostMin &&  pTempSpell->ManaCost < uiPowerCostMin)
-#endif
+        if (uiPowerCostMin && SD3_SpellManaCost(pTempSpell) < uiPowerCostMin)
         {
             continue;
         }
 
-#if defined (CATA) || defined (MISTS)
-        if (uiPowerCostMax && pTempSpell->GetManaCost() > uiPowerCostMax)
-#else
-        if (uiPowerCostMax && pTempSpell->ManaCost > uiPowerCostMax)
-#endif
+        if (uiPowerCostMax && SD3_SpellManaCost(pTempSpell) > uiPowerCostMax)
         {
             continue;
         }
 
         // Continue if we don't have the mana to actually cast this spell
-#if defined (CATA)
-        if (pTempSpell->GetManaCost() > m_creature->GetPower((Powers)pTempSpell->PowerType))
-#elif defined (MISTS)
-        if (pTempSpell->GetManaCost() > m_creature->GetPower((Powers)pTempSpell->GetPowerType()))
-#else
-        if (pTempSpell->ManaCost > m_creature->GetPower((Powers)pTempSpell->PowerType))
-#endif
-
+        if (SD3_SpellManaCost(pTempSpell) > m_creature->GetPower((Powers)SD3_SpellPowerType(pTempSpell)))
         {
             continue;
         }
 
         // Get the Range
-#if defined(MISTS)
-        pTempRange = GetSpellRangeStore()->LookupEntry(pTempSpell->GetRangeIndex());
-#else
-        pTempRange = GetSpellRangeStore()->LookupEntry(pTempSpell->RangeIndex);
-#endif
+        pTempRange = GetSpellRangeStore()->LookupEntry(SD3_SpellRangeIndex(pTempSpell));
         // Spell has invalid range store so we can't use it
         if (!pTempRange)
         {
@@ -469,22 +450,12 @@ bool ScriptedAI::CanCast(Unit* pTarget, SpellEntry const* pSpellEntry, bool bTri
     }
 
     // Check for power
-#if defined (CATA)
-    if (!bTriggered && m_creature->GetPower((Powers)pSpellEntry->PowerType) < pSpellEntry->GetManaCost())
-#elif defined (MISTS)
-    if (!bTriggered && m_creature->GetPower((Powers)pSpellEntry->GetPowerType()) < pSpellEntry->GetManaCost())
-#else
-    if (!bTriggered && m_creature->GetPower((Powers)pSpellEntry->PowerType) < pSpellEntry->ManaCost)
-#endif
+    if (!bTriggered && m_creature->GetPower((Powers)SD3_SpellPowerType(pSpellEntry)) < SD3_SpellManaCost(pSpellEntry))
     {
         return false;
     }
 
-#if defined(MISTS)
-    SpellRangeEntry const* pTempRange = GetSpellRangeStore()->LookupEntry(pSpellEntry->GetRangeIndex());
-#else
-    SpellRangeEntry const* pTempRange = GetSpellRangeStore()->LookupEntry(pSpellEntry->RangeIndex);
-#endif
+    SpellRangeEntry const* pTempRange = GetSpellRangeStore()->LookupEntry(SD3_SpellRangeIndex(pSpellEntry));
 
     // Spell has invalid range store so we can't use it
     if (!pTempRange)
@@ -536,7 +507,7 @@ void FillSpellSummary()
 #if defined (CATA) || defined (MISTS)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SELF)
 #else
-            if (pTempSpell->ImplicitTargetA[j] == TARGET_SELF)
+            if (SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_SELF)
 #endif
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SELF - 1);
@@ -550,8 +521,8 @@ void FillSpellSummary()
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_ENEMY - 1);
             }
 #else
-            if (pTempSpell->ImplicitTargetA[j] == TARGET_CHAIN_DAMAGE ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_CURRENT_ENEMY_COORDINATES)
+            if (SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_CHAIN_DAMAGE ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_CURRENT_ENEMY_COORDINATES)
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_ENEMY - 1);
             }
@@ -567,10 +538,10 @@ void FillSpellSummary()
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_ENEMY - 1);
             }
 #else
-            if (pTempSpell->ImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_CASTER_COORDINATES ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
+            if (SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_ALL_ENEMY_IN_AREA ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_CASTER_COORDINATES ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_ENEMY - 1);
             }
@@ -588,12 +559,12 @@ void FillSpellSummary()
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_ENEMY - 1);
             }
 #else
-            if (pTempSpell->ImplicitTargetA[j] == TARGET_CHAIN_DAMAGE ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_CURRENT_ENEMY_COORDINATES ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_CASTER_COORDINATES ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
+            if (SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_CHAIN_DAMAGE ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_CURRENT_ENEMY_COORDINATES ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_ALL_ENEMY_IN_AREA ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_CASTER_COORDINATES ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_ENEMY - 1);
             }
@@ -608,9 +579,9 @@ void FillSpellSummary()
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_FRIEND - 1);
             }
 #else
-            if (pTempSpell->ImplicitTargetA[j] == TARGET_SELF ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_SINGLE_FRIEND ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_SINGLE_PARTY)
+            if (SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_SELF ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_SINGLE_FRIEND ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_SINGLE_PARTY)
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_FRIEND - 1);
             }
@@ -625,9 +596,9 @@ void FillSpellSummary()
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_FRIEND - 1);
             }
 #else
-            if (pTempSpell->ImplicitTargetA[j] == TARGET_ALL_PARTY_AROUND_CASTER ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_AREAEFFECT_PARTY ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_CASTER_COORDINATES)
+            if (SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_ALL_PARTY_AROUND_CASTER ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_AREAEFFECT_PARTY ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_CASTER_COORDINATES)
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_FRIEND - 1);
             }
@@ -645,12 +616,12 @@ void FillSpellSummary()
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_FRIEND - 1);
             }
 #else
-            if (pTempSpell->ImplicitTargetA[j] == TARGET_SELF ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_SINGLE_FRIEND ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_SINGLE_PARTY ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_ALL_PARTY_AROUND_CASTER ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_AREAEFFECT_PARTY ||
-                pTempSpell->ImplicitTargetA[j] == TARGET_CASTER_COORDINATES)
+            if (SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_SELF ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_SINGLE_FRIEND ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_SINGLE_PARTY ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_ALL_PARTY_AROUND_CASTER ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_AREAEFFECT_PARTY ||
+                SD3_SpellEffectImplicitTargetA(pTempSpell, j) == TARGET_CASTER_COORDINATES)
             {
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_FRIEND - 1);
             }
@@ -688,7 +659,7 @@ void FillSpellSummary()
             if (pTempSpell->Effect[j] == SPELL_EFFECT_HEAL ||
                 pTempSpell->Effect[j] == SPELL_EFFECT_HEAL_MAX_HEALTH ||
                 pTempSpell->Effect[j] == SPELL_EFFECT_HEAL_MECHANICAL ||
-                (pTempSpell->Effect[j] == SPELL_EFFECT_APPLY_AURA  && pTempSpell->EffectAura[j] == 8))
+                (pTempSpell->Effect[j] == SPELL_EFFECT_APPLY_AURA  && SD3_SpellEffectApplyAuraName(pTempSpell, j) == 8))
             {
                 SpellSummary[i].Effects |= 1 << (SELECT_EFFECT_HEALING - 1);
             }

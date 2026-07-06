@@ -1858,7 +1858,7 @@ struct boss_plugger_spazzringAI : public ScriptedAI
     {
         if (pCaster->GetTypeId() == TYPEID_PLAYER)
         {
-            if (pSpell->ID == SPELL_PICKPOCKET)
+            if (SD3_SpellId(pSpell) == SPELL_PICKPOCKET)
             {
                 m_uiPickpocketTimer = 5000;
             }

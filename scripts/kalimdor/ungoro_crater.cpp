@@ -226,7 +226,7 @@ struct npc_ringo : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (HasFollowState(STATE_FOLLOW_INPROGRESS | STATE_FOLLOW_PAUSED) && pSpell->ID == SPELL_REVIVE_RINGO)
+            if (HasFollowState(STATE_FOLLOW_INPROGRESS | STATE_FOLLOW_PAUSED) && SD3_SpellId(pSpell) == SPELL_REVIVE_RINGO)
             {
                 ClearFaint();
             }
@@ -666,7 +666,7 @@ struct npc_simone_the_seductressAI : public ScriptedAI
 
     void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
-        if (pSpell && pSpell->ID == 14280)   // Viper Sting (Rank 3)
+        if (pSpell && SD3_SpellId(pSpell) == 14280)   // Viper Sting (Rank 3)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_SILENCE, CAST_TRIGGERED) == CAST_OK)
             {
