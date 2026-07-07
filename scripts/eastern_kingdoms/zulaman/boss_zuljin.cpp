@@ -307,7 +307,7 @@ struct boss_zuljin : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_SPIRIT_DRAIN)
+            if (SD3_SpellId(pSpell) == SPELL_SPIRIT_DRAIN)
             {
                 DoCastSpellIfCan(m_creature, aZuljinPhases[m_uiPhase].uiSpiritSpellId, CAST_INTERRUPT_PREVIOUS);
                 DoScriptText(aZuljinPhases[m_uiPhase].iYellId, m_creature);
@@ -338,7 +338,7 @@ struct boss_zuljin : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pSpellEntry->Id == SPELL_CLAW_RAGE && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if (SD3_SpellId(pSpellEntry) == SPELL_CLAW_RAGE && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 DoCastSpellIfCan(m_creature, SPELL_CLAW_RAGE_TRIGGER, CAST_TRIGGERED);
                 m_uiLynxRushTimer += 8000;
@@ -573,7 +573,7 @@ struct npc_feather_vortex : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pSpellEntry->Id == SPELL_CYCLONE && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
+            if (SD3_SpellId(pSpellEntry) == SPELL_CYCLONE && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
             {
                 if (Creature* pZuljin = m_pInstance->GetSingleCreatureFromStorage(NPC_ZULJIN))
                 {

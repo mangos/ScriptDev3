@@ -118,7 +118,7 @@ struct npc_forest_frog : public CreatureScript
 
         void SpellHit(Unit* caster, const SpellEntry* spell) override
         {
-            if (spell->Id == SPELL_REMOVE_AMANI_CURSE && caster->GetTypeId() == TYPEID_PLAYER && m_creature->GetEntry() == NPC_FOREST_FROG)
+            if (SD3_SpellId(spell) == SPELL_REMOVE_AMANI_CURSE && caster->GetTypeId() == TYPEID_PLAYER && m_creature->GetEntry() == NPC_FOREST_FROG)
             {
                 // increase or decrease chance of mojo?
                 if (!urand(0, 49))

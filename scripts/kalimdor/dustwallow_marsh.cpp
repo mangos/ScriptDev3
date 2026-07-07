@@ -1115,7 +1115,7 @@ struct boss_tethyr : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
             // spout on cannon
-            if (pCaster->GetEntry() == NPC_THERAMORE_CANNON && pSpell->Id == SPELL_CANNON_BLAST_DMG)
+            if (pCaster->GetEntry() == NPC_THERAMORE_CANNON && SD3_SpellId(pSpell) == SPELL_CANNON_BLAST_DMG)
             {
                 if (m_uiPhase == PHASE_SPOUT)
                 {

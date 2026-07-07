@@ -44,6 +44,8 @@ inline uint32 SD3_SpellId(SpellEntry const* pSpell)
 {
 #if defined (CLASSIC)
     return pSpell->ID;
+#elif defined (TBC)
+    return pSpell->ID;
 #else
     return pSpell->Id;
 #endif
@@ -55,7 +57,9 @@ inline uint32 SD3_SpellManaCost(SpellEntry const* pSpell)
     return pSpell->GetManaCost();
 #elif defined (CLASSIC)
     return pSpell->ManaCost;
-#else   // TBC, WOTLK
+#elif defined (TBC)
+    return pSpell->ManaCost;
+#else   // WOTLK
     return pSpell->manaCost;
 #endif
 }
@@ -66,7 +70,9 @@ inline uint32 SD3_SpellPowerType(SpellEntry const* pSpell)
     return pSpell->GetPowerType();
 #elif defined (CLASSIC)
     return pSpell->PowerType;
-#else   // TBC, WOTLK, CATA
+#elif defined (TBC)
+    return pSpell->PowerType;
+#else   // WOTLK, CATA
     return pSpell->powerType;
 #endif
 }
@@ -77,7 +83,9 @@ inline uint32 SD3_SpellRangeIndex(SpellEntry const* pSpell)
     return pSpell->GetRangeIndex();
 #elif defined (CLASSIC)
     return pSpell->RangeIndex;
-#else   // TBC, WOTLK, CATA
+#elif defined (TBC)
+    return pSpell->RangeIndex;
+#else   // WOTLK, CATA
     return pSpell->rangeIndex;
 #endif
 }
@@ -92,7 +100,9 @@ inline uint32 SD3_SpellEffectImplicitTargetA(SpellEntry const* pSpell, uint8 ind
 {
 #if defined (CLASSIC)
     return pSpell->ImplicitTargetA[index];
-#else   // TBC, WOTLK
+#elif defined (TBC)
+    return pSpell->ImplicitTargetA[index];
+#else   // WOTLK
     return pSpell->EffectImplicitTargetA[index];
 #endif
 }
@@ -101,7 +111,9 @@ inline uint32 SD3_SpellEffectApplyAuraName(SpellEntry const* pSpell, uint8 index
 {
 #if defined (CLASSIC)
     return pSpell->EffectAura[index];
-#else   // TBC, WOTLK
+#elif defined (TBC)
+    return pSpell->EffectAura[index];
+#else   // WOTLK
     return pSpell->EffectApplyAuraName[index];
 #endif
 }

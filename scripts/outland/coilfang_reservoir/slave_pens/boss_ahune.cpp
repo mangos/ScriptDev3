@@ -156,7 +156,7 @@ struct boss_ahune : public CreatureScript
 
         void SpellHit(Unit* /*pSource*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_SUBMERGE)
+            if (SD3_SpellId(pSpell) == SPELL_SUBMERGE)
             {
                 // Note: the following spell breaks the visual. Needs to be fixed!
                 // DoCastSpellIfCan(m_creature, SPELL_AHUNE_SELF_STUN, CAST_TRIGGERED);

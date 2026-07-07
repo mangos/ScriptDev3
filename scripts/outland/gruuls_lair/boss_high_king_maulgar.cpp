@@ -383,7 +383,7 @@ struct boss_kiggler_the_crazed : public CreatureScript
         {
             // Spell currently not supported by core. Knock back effect should lower threat
             // Workaround in script:
-            if (pSpell->Id == SPELL_ARCANE_EXPLOSION)
+            if (SD3_SpellId(pSpell) == SPELL_ARCANE_EXPLOSION)
             {
                 if (pVictim->GetTypeId() != TYPEID_PLAYER)
                 {

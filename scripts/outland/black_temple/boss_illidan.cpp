@@ -1539,7 +1539,7 @@ struct boss_maiev : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_CAGE_TRAP)
+            if (SD3_SpellId(pSpell) == SPELL_CAGE_TRAP)
             {
                 // Yell only the first time
                 if (!m_bHasYelledTrap)

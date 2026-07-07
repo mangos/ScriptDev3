@@ -122,7 +122,7 @@ struct boss_fathomlord_karathress : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            switch (pSpell->Id)
+            switch (SD3_SpellId(pSpell))
             {
                 case SPELL_POWER_OF_SHARKKIS:
                     DoScriptText(SAY_GAIN_ABILITY1, m_creature);

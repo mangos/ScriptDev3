@@ -328,7 +328,7 @@ struct boss_kaelthas : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // Handle summon weapons event
-            if (pSpell->Id == SPELL_SUMMON_WEAPONS)
+            if (SD3_SpellId(pSpell) == SPELL_SUMMON_WEAPONS)
             {
                 for (uint8 i = 0; i < MAX_WEAPONS; ++i)
                 {
@@ -343,7 +343,7 @@ struct boss_kaelthas : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             // Handle gravity lapse teleport - each player hit has his own teleport spell
-            if (pSpell->Id == SPELL_GRAVITY_LAPSE && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if (SD3_SpellId(pSpell) == SPELL_GRAVITY_LAPSE && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 DoCastSpellIfCan(pTarget, m_auiSpellGravityLapseTeleport[m_uiGravityIndex], CAST_TRIGGERED);
                 pTarget->CastSpell(pTarget, SPELL_GRAVITY_LAPSE_KNOCKBACK, true, nullptr, nullptr, m_creature->GetObjectGuid());
@@ -898,7 +898,7 @@ struct advisor_base_ai : public ScriptedAI
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         // Remove fake death
-        if (pSpell->Id == SPELL_RESURRECTION && pCaster->GetEntry() == NPC_KAELTHAS)
+        if (SD3_SpellId(pSpell) == SPELL_RESURRECTION && pCaster->GetEntry() == NPC_KAELTHAS)
         {
             m_creature->SetStandState(UNIT_STAND_STATE_STAND);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);

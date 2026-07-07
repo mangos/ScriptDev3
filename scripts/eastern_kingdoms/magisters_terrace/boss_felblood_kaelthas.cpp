@@ -293,7 +293,7 @@ struct boss_felblood_kaelthas : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             // Handle Gravity Lapse on targets
-            if (pSpell->Id == SPELL_GRAVITY_LAPSE && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if (SD3_SpellId(pSpell) == SPELL_GRAVITY_LAPSE && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 DoCastSpellIfCan(pTarget, aGravityLapseSpells[m_uiGravityIndex], CAST_TRIGGERED);
                 pTarget->CastSpell(pTarget, SPELL_GRAVITY_LAPSE_FLY, true, 0, 0, m_creature->GetObjectGuid());

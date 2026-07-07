@@ -436,7 +436,7 @@ struct npc_portal_target : public CreatureScript
         {
             // These spells are dummies, but are used only to init the timers
             // They could use the EffectDummyCreature to handle this, but this makes code easier
-            switch (pSpell->Id)
+            switch (SD3_SpellId(pSpell))
             {
                 // Init sentinel summon timer
                 case SPELL_OPEN_PORTAL:

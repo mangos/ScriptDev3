@@ -1362,7 +1362,7 @@ struct boss_romulo : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
             // remove fake death on res
-            if (pSpell->Id == SPELL_UNDYING_LOVE && pCaster->GetEntry() == NPC_JULIANNE)
+            if (SD3_SpellId(pSpell) == SPELL_UNDYING_LOVE && pCaster->GetEntry() == NPC_JULIANNE)
             {
                 DoRemoveFakeDeath();
             }

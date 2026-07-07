@@ -279,7 +279,7 @@ struct boss_brutallus : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             // Fake death Madrigosa when charged
-            if (pTarget->GetEntry() == NPC_MADRIGOSA && pSpell->Id == SPELL_CHARGE)
+            if (pTarget->GetEntry() == NPC_MADRIGOSA && SD3_SpellId(pSpell) == SPELL_CHARGE)
             {
                 DoScriptText(YELL_MADR_DEATH, pTarget);
                 pTarget->InterruptNonMeleeSpells(true);

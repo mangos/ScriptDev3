@@ -309,7 +309,7 @@ struct npc_demoniac_scryer : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if (pTarget->GetEntry() == NPC_HELLFIRE_WARDLING && pSpell->Id == SPELL_SUCKER_DESPAWN_MOB)
+            if (pTarget->GetEntry() == NPC_HELLFIRE_WARDLING && SD3_SpellId(pSpell) == SPELL_SUCKER_DESPAWN_MOB)
             {
                 ((Creature*)pTarget)->ForcedDespawn();
             }
