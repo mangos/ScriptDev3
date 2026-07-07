@@ -124,6 +124,8 @@ inline float SD3_SpellRangeMin(SpellRangeEntry const* pRange)
 {
 #if defined (CLASSIC)
     return pRange->RangeMin;
+#elif defined (TBC)
+    return pRange->RangeMin;
 #else
     return pRange->minRange;
 #endif
@@ -132,6 +134,8 @@ inline float SD3_SpellRangeMin(SpellRangeEntry const* pRange)
 inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
 {
 #if defined (CLASSIC)
+    return pRange->RangeMax;
+#elif defined (TBC)
     return pRange->RangeMax;
 #else
     return pRange->maxRange;
