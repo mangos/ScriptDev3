@@ -514,7 +514,7 @@ struct npc_amanishi_hatcher : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpell) override
         {
-            if ((pSpell->Id != SPELL_HATCH_EGG_1 && pSpell->Id != SPELL_HATCH_EGG_2) || pTarget->GetEntry() != NPC_DRAGONHAWK_EGG)
+            if ((SD3_SpellId(pSpell) != SPELL_HATCH_EGG_1 && SD3_SpellId(pSpell) != SPELL_HATCH_EGG_2) || pTarget->GetEntry() != NPC_DRAGONHAWK_EGG)
             {
                 return;
             }

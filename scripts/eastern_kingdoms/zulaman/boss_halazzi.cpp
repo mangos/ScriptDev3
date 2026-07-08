@@ -186,7 +186,7 @@ struct boss_halazzi : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_TRANSFIGURE_TRANSFORM)
+            if (SD3_SpellId(pSpell) == SPELL_TRANSFIGURE_TRANSFORM)
             {
                 DoCastSpellIfCan(m_creature, SPELL_HALAZZI_TRANSFORM_SUMMON, CAST_TRIGGERED);
                 m_creature->UpdateEntry(NPC_HALAZZI_TROLL);

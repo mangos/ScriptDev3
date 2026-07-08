@@ -116,7 +116,7 @@ struct boss_najentus : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (m_bIsShielded && pSpell->Id == SPELL_HURL_SPINE)
+            if (m_bIsShielded && SD3_SpellId(pSpell) == SPELL_HURL_SPINE)
             {
                 if (m_creature->HasAura(SPELL_TIDAL_SHIELD))
                 {

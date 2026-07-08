@@ -122,7 +122,7 @@ struct npc_draenei_survivor : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
 #if defined (CLASSIC) || defined (TBC)
-            if (pSpell->Id == 28880)
+            if (SD3_SpellId(pSpell) == 28880)
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
             if (pSpell->IsFitToFamilyMask(UI64LIT(0x0000000000000000), 0x080000000))

@@ -137,7 +137,7 @@ struct boss_gruul : public CreatureScript
         {
             // This to emulate effect1 (77) of SPELL_GROUND_SLAM, knock back to any direction
             // It's initially wrong, since this will cause fall damage, which is by comments, not intended.
-            if (pSpell->Id == SPELL_GROUND_SLAM)
+            if (SD3_SpellId(pSpell) == SPELL_GROUND_SLAM)
             {
                 if (pTarget->GetTypeId() == TYPEID_PLAYER)
                 {
@@ -150,7 +150,7 @@ struct boss_gruul : public CreatureScript
             }
 
             // this part should be in mangos
-            if (pSpell->Id == SPELL_SHATTER)
+            if (SD3_SpellId(pSpell) == SPELL_SHATTER)
             {
                 // this spell must have custom handling in mangos, dealing damage based on distance
                 pTarget->CastSpell(pTarget, SPELL_SHATTER_EFFECT, true);

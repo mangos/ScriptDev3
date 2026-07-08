@@ -122,7 +122,7 @@ struct mobs_nether_drake : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_T_PHASE_MODULATOR && pCaster->GetTypeId() == TYPEID_PLAYER)
+            if (SD3_SpellId(pSpell) == SPELL_T_PHASE_MODULATOR && pCaster->GetTypeId() == TYPEID_PLAYER)
             {
                 // we are nihil, so say before transform
                 if (m_creature->GetEntry() == NPC_NIHIL)

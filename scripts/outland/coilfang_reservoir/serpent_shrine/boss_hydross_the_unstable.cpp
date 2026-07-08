@@ -197,7 +197,7 @@ struct boss_hydross_the_unstable : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             // Purify elementals and make them go to exit
-            if (pSpell->Id == SPELL_PURIFY_ELEMENTAL)
+            if (SD3_SpellId(pSpell) == SPELL_PURIFY_ELEMENTAL)
             {
                 ((Creature*)pTarget)->UpdateEntry(NPC_PURIFIED_ELEMENTAL);
                 pTarget->GetMotionMaster()->MovePoint(POINT_ID_ELEMENTAL_EXIT, aElementalExitPoint[0], aElementalExitPoint[1], aElementalExitPoint[2]);

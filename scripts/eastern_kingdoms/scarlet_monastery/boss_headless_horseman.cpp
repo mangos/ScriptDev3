@@ -202,7 +202,7 @@ struct boss_headless_horseman : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_HORSEMAN_SUMMON)
+            if (SD3_SpellId(pSpell) == SPELL_HORSEMAN_SUMMON)
             {
                 DoScriptText(SAY_SPROUTING_PUMPKINS, m_creature);
             }

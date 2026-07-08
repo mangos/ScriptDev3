@@ -326,7 +326,7 @@ struct npc_nagrand_captive : public CreatureScript
 
         void SpellHitTarget(Unit* /*pTarget*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_CHAIN_LIGHTNING)
+            if (SD3_SpellId(pSpell) == SPELL_CHAIN_LIGHTNING)
             {
                 if (urand(0, 9))
                 {

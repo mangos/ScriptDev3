@@ -450,7 +450,7 @@ struct npc_image_of_medivh : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_FIREBALL_REFLECT && pCaster->GetEntry() == NPC_IMAGE_OF_ARCANAGOS)
+            if (SD3_SpellId(pSpell) == SPELL_FIREBALL_REFLECT && pCaster->GetEntry() == NPC_IMAGE_OF_ARCANAGOS)
             {
                 StartNextDialogueText(SPELL_MANA_SHIELD);
                 DoCastSpellIfCan(m_creature, SPELL_MANA_SHIELD);
@@ -517,7 +517,7 @@ struct npc_image_arcanagos : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_FIREBALL && pCaster->GetEntry() == NPC_IMAGE_OF_MEDIVH)
+            if (SD3_SpellId(pSpell) == SPELL_FIREBALL && pCaster->GetEntry() == NPC_IMAGE_OF_MEDIVH)
             {
                 // !!!Workaround Alert!!! - the spell should be cast on Medivh without changing the unit flags!
                 pCaster->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);

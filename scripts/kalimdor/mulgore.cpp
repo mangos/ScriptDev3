@@ -88,7 +88,7 @@ struct npc_kyle_the_frenzied : public CreatureScript
 
         void SpellHit(Unit* pCaster, SpellEntry const* pSpell) override
         {
-            if (!m_creature->getVictim() && !m_bEvent && pSpell->Id == SPELL_LUNCH)
+            if (!m_creature->getVictim() && !m_bEvent && SD3_SpellId(pSpell) == SPELL_LUNCH)
             {
                 if (pCaster->GetTypeId() == TYPEID_PLAYER)
                 {

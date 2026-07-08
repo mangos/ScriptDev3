@@ -192,7 +192,7 @@ struct boss_malchezaar : public CreatureScript
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
             // Target selection is already handled properly in core (doesn't affect tank)
-            if (pSpellEntry->Id == SPELL_ENFEEBLE && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if (SD3_SpellId(pSpellEntry) == SPELL_ENFEEBLE && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 // Workaround to handle health set to 1
                 m_aEnfeebleTargetGuid[m_uiEnfeebleIndex] = pTarget->GetObjectGuid();

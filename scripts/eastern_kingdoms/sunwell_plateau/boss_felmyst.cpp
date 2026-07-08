@@ -330,7 +330,7 @@ struct boss_felmyst : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpell->Id == SPELL_ENCAPSULATE_CHANNEL)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpell) == SPELL_ENCAPSULATE_CHANNEL)
             {
                 pTarget->CastSpell(pTarget, SPELL_ENCAPSULATE, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }

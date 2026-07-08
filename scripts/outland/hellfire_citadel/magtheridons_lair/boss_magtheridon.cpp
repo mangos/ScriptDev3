@@ -171,7 +171,7 @@ struct boss_magtheridon : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // When banished by the cubes
-            if (pSpell->Id == SPELL_SHADOW_CAGE)
+            if (SD3_SpellId(pSpell) == SPELL_SHADOW_CAGE)
             {
                 DoScriptText(SAY_BANISH, m_creature);
             }
@@ -587,7 +587,7 @@ struct npc_target_trigger : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // Workaround for missing core support for this type of dummy aura
-            if (pSpell->Id == SPELL_QUAKE_EFFECT)
+            if (SD3_SpellId(pSpell) == SPELL_QUAKE_EFFECT)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_DEBRIS_VISUAL) == CAST_OK)
                 {

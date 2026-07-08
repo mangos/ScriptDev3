@@ -98,7 +98,7 @@ struct mob_mature_netherwing_drake : public CreatureScript
                 return;
             }
 
-            if (pCaster->GetTypeId() == TYPEID_PLAYER && pSpell->Id == SPELL_PLACE_CARCASS && !m_creature->HasAura(SPELL_JUST_EATEN))
+            if (pCaster->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpell) == SPELL_PLACE_CARCASS && !m_creature->HasAura(SPELL_JUST_EATEN))
             {
                 m_playerGuid = pCaster->GetObjectGuid();
                 m_uiEatTimer = 5000;
@@ -234,7 +234,7 @@ struct mob_enslaved_netherwing_drake : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_HIT_FORCE_OF_NELTHARAKU && !m_uiFlyTimer)
+            if (SD3_SpellId(pSpell) == SPELL_HIT_FORCE_OF_NELTHARAKU && !m_uiFlyTimer)
             {
                 if (Player* pPlayer = pCaster->GetCharmerOrOwnerPlayerOrPlayerItself())
                 {

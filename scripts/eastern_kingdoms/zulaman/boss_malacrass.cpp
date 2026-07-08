@@ -352,7 +352,7 @@ struct boss_malacrass : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             // Set the player's class when hit with soul siphon
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpell->Id == SPELL_SIPHON_SOUL)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpell) == SPELL_SIPHON_SOUL)
             {
                 m_uiPlayerClass = ((Player*)pTarget)->getClass();
                 m_bCanUsePlayerSpell = true;
