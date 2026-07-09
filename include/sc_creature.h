@@ -104,8 +104,10 @@ inline uint32 SD3_SpellVisual(SpellEntry const* pSpell, uint8 index)
     return pSpell->SpellVisualID;
 #elif defined (WOTLK)
     return pSpell->SpellVisualID[index];
-#else   // CATA, MISTS
+#elif defined (CATA)
     return pSpell->SpellVisual[index];
+#else   // MISTS (SpellVisual member replaced by GetSpellVisual API)
+    return pSpell->GetSpellVisual(index);
 #endif
 }
 
@@ -216,7 +218,7 @@ inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
 // as the AreaTrigger/SpellRange helpers above.
 inline uint32 SD3_FactionTemplateFaction(FactionTemplateEntry const* pFT)
 {
-#if defined (WOTLK)
+#if defined (WOTLK) || defined (CLASSIC)
     return pFT->Faction;
 #else
     return pFT->faction;
