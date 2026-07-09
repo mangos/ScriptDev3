@@ -135,7 +135,7 @@ struct boss_bronjahm : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pTarget == m_creature && pSpellEntry->Id == SPELL_TELEPORT)
+            if (pTarget == m_creature && SD3_SpellId(pSpellEntry) == SPELL_TELEPORT)
             {
                 // Say Text and cast Soulstorm
                 DoScriptText(SAY_SOULSTORM, m_creature);

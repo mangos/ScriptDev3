@@ -177,7 +177,7 @@ struct boss_ignis : public CreatureScript
             }
 
             // Handle the case when passenger is loaded to the second seat
-            if (pSpell->Id == SPELL_GRAB_POT)
+            if (SD3_SpellId(pSpell) == SPELL_GRAB_POT)
             {
                 DoCastSpellIfCan(pCaster, SPELL_SLAG_POT, CAST_TRIGGERED);
             }
@@ -329,7 +329,7 @@ struct npc_iron_construct : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_HEAT)
+            if (SD3_SpellId(pSpell) == SPELL_HEAT)
             {
                 if (SpellAuraHolder* pHeatAura = m_creature->GetSpellAuraHolder(SPELL_HEAT))
                 {

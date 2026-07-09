@@ -662,7 +662,7 @@ struct npc_death_knight_initiate : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_DUEL_TRIGGERED)
+            if (SD3_SpellId(pSpell) == SPELL_DUEL_TRIGGERED)
             {
                 SendAIEvent(AI_EVENT_START_EVENT, pCaster, m_creature);
             }
@@ -1240,7 +1240,7 @@ struct npc_unworthy_initiate : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_CHAINED_PESANT_BREATH)
+            if (SD3_SpellId(pSpell) == SPELL_CHAINED_PESANT_BREATH)
             {
                 pCaster->InterruptNonMeleeSpells(true);
                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);

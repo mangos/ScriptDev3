@@ -1142,7 +1142,7 @@ struct at_naxxramas : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->id == AREATRIGGER_KELTHUZAD)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_KELTHUZAD)
         {
             if (pPlayer->isGameMaster() || !pPlayer->IsAlive())
             {
@@ -1169,7 +1169,7 @@ struct at_naxxramas : public AreaTriggerScript
             }
         }
 
-        if (pAt->id == AREATRIGGER_THADDIUS_DOOR)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_THADDIUS_DOOR)
         {
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
             {

@@ -207,7 +207,7 @@ struct boss_svala : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_TRANSFORMING)
+            if (SD3_SpellId(pSpell) == SPELL_TRANSFORMING)
             {
                 if (pArthas)
                 {

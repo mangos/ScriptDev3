@@ -227,7 +227,7 @@ struct boss_brundir : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // Increase the phase when hit with the supercharge spell by his brothers
-            if (pSpell->Id == SPELL_SUPERCHARGE)
+            if (SD3_SpellId(pSpell) == SPELL_SUPERCHARGE)
             {
                 // Not sure if there is a spell for this, so we are doing it here
                 m_creature->SetHealth(m_creature->GetMaxHealth());
@@ -260,7 +260,7 @@ struct boss_brundir : public CreatureScript
             }
 
             // Check achiev criterias
-            switch (pSpell->Id)
+            switch (SD3_SpellId(pSpell))
             {
                 case SPELL_CHAIN_LIGHTNING:
                 case SPELL_CHAIN_LIGHTNING_H:
@@ -583,7 +583,7 @@ struct boss_molgeim : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // Increase the phase when hit with the supercharge spell by his brothers
-            if (pSpell->Id == SPELL_SUPERCHARGE)
+            if (SD3_SpellId(pSpell) == SPELL_SUPERCHARGE)
             {
                 // Not sure if there is a spell for this, so we are doing it here
                 m_creature->SetHealth(m_creature->GetMaxHealth());
@@ -779,7 +779,7 @@ struct boss_steelbreaker : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // Increase the phase when hit with the supercharge spell by his brothers
-            if (pSpell->Id == SPELL_SUPERCHARGE)
+            if (SD3_SpellId(pSpell) == SPELL_SUPERCHARGE)
             {
                 // Not sure if there is a spell for this, so we are doing it here
                 m_creature->SetHealth(m_creature->GetMaxHealth());

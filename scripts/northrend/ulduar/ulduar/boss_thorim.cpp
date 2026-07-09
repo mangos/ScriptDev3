@@ -363,7 +363,7 @@ struct boss_thorim : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // hard mode is failed; despawn Sif
-            if (pSpell->Id == SPELL_TOUCH_OF_DOMINION_AURA && m_pInstance)
+            if (SD3_SpellId(pSpell) == SPELL_TOUCH_OF_DOMINION_AURA && m_pInstance)
             {
                 m_pInstance->SetData(TYPE_THORIM_HARD, FAIL);
 
@@ -445,7 +445,7 @@ struct boss_thorim : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pSpellEntry->Id == SPELL_LIGHTNING_CHARGE_DAMAGE && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if (SD3_SpellId(pSpellEntry) == SPELL_LIGHTNING_CHARGE_DAMAGE && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 if (m_pInstance)
                 {
@@ -980,12 +980,12 @@ struct npc_runic_colossus : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // start runic smash event
-            if (pSpell->Id == SPELL_RUNIC_SMASH_L && m_pInstance)
+            if (SD3_SpellId(pSpell) == SPELL_RUNIC_SMASH_L && m_pInstance)
             {
                 m_pInstance->SetData(TYPE_DATA_THORIM_SMASH_SIDE, uint32(true));
                 m_bSmashActive = true;
             }
-            else if (pSpell->Id == SPELL_RUNIC_SMASH_R && m_pInstance)
+            else if (SD3_SpellId(pSpell) == SPELL_RUNIC_SMASH_R && m_pInstance)
             {
                 m_pInstance->SetData(TYPE_DATA_THORIM_SMASH_SIDE, uint32(false));
                 m_bSmashActive = true;
@@ -994,7 +994,7 @@ struct npc_runic_colossus : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if ((pSpellEntry->Id == SPELL_CHARGE || pSpellEntry->Id == SPELL_CHARGE_H) && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if ((SD3_SpellId(pSpellEntry) == SPELL_CHARGE || SD3_SpellId(pSpellEntry) == SPELL_CHARGE_H) && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 m_uiSmashTimer = 1000;
             }
@@ -1136,7 +1136,7 @@ struct npc_thunder_orb : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // cast visual on the lower Orb
-            if (pSpell->Id == SPELL_CHARGE_ORB)
+            if (SD3_SpellId(pSpell) == SPELL_CHARGE_ORB)
             {
                 if (Creature* pOrb = GetClosestCreatureWithEntry(m_creature, NPC_THUNDER_ORB, 25.0f, true, false, true))
                 {
@@ -1144,7 +1144,7 @@ struct npc_thunder_orb : public CreatureScript
                 }
             }
             // SPECIAL NOTE: this aura has a duration lower than the trigger period for the next spell; so we need to force this by timer
-            else if (pSpell->Id == SPELL_LIGHTNING_ORG_CHARGED)
+            else if (SD3_SpellId(pSpell) == SPELL_LIGHTNING_ORG_CHARGED)
             {
                 m_uiTriggerTimer = 8000;
             }

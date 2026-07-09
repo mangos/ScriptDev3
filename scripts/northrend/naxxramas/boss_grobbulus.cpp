@@ -152,7 +152,7 @@ struct boss_grobbulus : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if ((pSpell->Id == SPELL_SLIME_SPRAY || pSpell->Id == SPELL_SLIME_SPRAY_H) && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if ((SD3_SpellId(pSpell) == SPELL_SLIME_SPRAY || SD3_SpellId(pSpell) == SPELL_SLIME_SPRAY_H) && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 m_creature->SummonCreature(NPC_FALLOUT_SLIME, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 10 * IN_MILLISECONDS);
             }

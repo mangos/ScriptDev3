@@ -828,7 +828,7 @@ struct three_nature_alliesAI : public ScriptedAI
 
     void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
-        if (pSpell->Id == SPELL_FULL_HEAL)
+        if (SD3_SpellId(pSpell) == SPELL_FULL_HEAL)
         {
             m_bIsFakeDeath = false;
             DoResetThreat();

@@ -747,7 +747,7 @@ struct npc_dark_matter : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_DARK_MATTER_START)
+            if (SD3_SpellId(pSpell) == SPELL_DARK_MATTER_START)
             {
                 m_uiSummonTimer = 5000;
             }

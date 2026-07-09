@@ -478,7 +478,7 @@ struct boss_heart_deconstructor : public CreatureScript
         // TODO: Use the dummy effect on target when proper targeting will be supported in core
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pTarget->GetEntry() == NPC_XT_TOY_PILE && pSpellEntry->Id == SPELL_ENERGY_ORB)
+            if (pTarget->GetEntry() == NPC_XT_TOY_PILE && SD3_SpellId(pSpellEntry) == SPELL_ENERGY_ORB)
             {
                 // spawn a bunch of scrap bots
                 for (uint8 i = 0; i < MAX_SCRAPBOTS; ++i)

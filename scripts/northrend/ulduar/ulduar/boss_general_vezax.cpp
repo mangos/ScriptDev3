@@ -229,7 +229,7 @@ struct boss_general_vezax : public CreatureScript
             }
 
             // Check achiev criterias
-            if (pSpell->Id == SPELL_SHADOW_CRASH_DAMAGE)
+            if (SD3_SpellId(pSpell) == SPELL_SHADOW_CRASH_DAMAGE)
             {
                 m_pInstance->SetData(TYPE_ACHIEV_SHADOWDODGER, uint32(false));
             }

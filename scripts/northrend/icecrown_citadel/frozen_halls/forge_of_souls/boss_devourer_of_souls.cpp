@@ -213,7 +213,7 @@ struct boss_devourer_of_souls : public CreatureScript
 
         void SpellHitTarget(Unit* /*pTarget*/, SpellEntry const* pSpellEntry) override
         {
-            switch (pSpellEntry->Id)
+            switch (SD3_SpellId(pSpellEntry))
             {
                 // If we hit a target with phantom blast, the achievement_criteria is failed
                 case SPELL_PHANTOM_BLAST:

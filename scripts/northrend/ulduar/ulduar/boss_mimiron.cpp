@@ -980,7 +980,7 @@ struct boss_leviathan_mk2 : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // self repair succesfull; resume fight
-            if (pSpell->Id == SPELL_SELF_REPAIR)
+            if (SD3_SpellId(pSpell) == SPELL_SELF_REPAIR)
             {
                 m_creature->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
                 SetCombatMovement(true);
@@ -1327,7 +1327,7 @@ struct boss_vx001 : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // self repair succesfull; resume fight
-            if (pSpell->Id == SPELL_SELF_REPAIR)
+            if (SD3_SpellId(pSpell) == SPELL_SELF_REPAIR)
             {
                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
                 m_uiPhase = PHASE_FULL_ROBOT;
@@ -1668,12 +1668,12 @@ struct boss_aerial_unit : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
             // self repair succesfull; resume fight
-            if (pSpell->Id == SPELL_SELF_REPAIR)
+            if (SD3_SpellId(pSpell) == SPELL_SELF_REPAIR)
             {
                 m_uiPhase = PHASE_FULL_ROBOT;
                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
             }
-            else if (pSpell->Id == SPELL_MAGNETIC_CORE_PULL && pCaster->GetEntry() == NPC_MAGNETIC_CORE)
+            else if (SD3_SpellId(pSpell) == SPELL_MAGNETIC_CORE_PULL && pCaster->GetEntry() == NPC_MAGNETIC_CORE)
             {
                 DoCastSpellIfCan(m_creature, SPELL_MAGNETIC_CORE_VISUAL, CAST_INTERRUPT_PREVIOUS);
                 m_uiMagneticTimer = 20000;

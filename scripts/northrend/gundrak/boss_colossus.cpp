@@ -241,7 +241,7 @@ struct boss_drakkari_colossus : public CreatureScript
 
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_MERGE)
+            if (SD3_SpellId(pSpell) == SPELL_MERGE)
             {
                 // re-activate colossus here
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);

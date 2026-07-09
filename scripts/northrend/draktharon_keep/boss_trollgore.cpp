@@ -132,7 +132,7 @@ struct boss_trollgore : public CreatureScript
 
         void SpellHit(Unit* /*pTarget*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_CONSUME_BUFF || pSpell->Id == SPELL_CONSUME_BUFF_H)
+            if (SD3_SpellId(pSpell) == SPELL_CONSUME_BUFF || SD3_SpellId(pSpell) == SPELL_CONSUME_BUFF_H)
             {
                 ++m_uiConsumeStacks;
 

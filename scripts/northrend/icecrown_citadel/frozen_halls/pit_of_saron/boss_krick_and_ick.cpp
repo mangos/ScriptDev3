@@ -440,7 +440,7 @@ struct npc_exploding_orb : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_HASTY_GROW)
+            if (SD3_SpellId(pSpell) == SPELL_HASTY_GROW)
             {
                 ++m_uiGrowCount;
 

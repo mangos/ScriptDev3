@@ -343,7 +343,7 @@ struct boss_flame_leviathan : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pTarget->IsVehicle() && pSpellEntry->Id == SPELL_PURSUED)
+            if (pTarget->IsVehicle() && SD3_SpellId(pSpellEntry) == SPELL_PURSUED)
             {
                 m_creature->FixateTarget(pTarget);
 

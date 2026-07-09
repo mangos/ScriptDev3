@@ -168,7 +168,7 @@ struct npc_collapsing_icicle : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             // Mark the achiev failed
-            if (pSpell->Id == SPELL_ICE_SHARDS_H && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
+            if (SD3_SpellId(pSpell) == SPELL_ICE_SHARDS_H && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
             {
                 m_pInstance->SetData(TYPE_ACHIEV_DONT_LOOK_UP, uint32(false));
             }
@@ -206,7 +206,7 @@ struct at_pit_of_saron : public AreaTriggerScript
             return false;
         }
 
-        if (pAt->id == AREATRIGGER_ID_TUNNEL_START)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_ID_TUNNEL_START)
         {
             if (pInstance->GetData(TYPE_GARFROST) != DONE || pInstance->GetData(TYPE_KRICK) != DONE ||
                 pInstance->GetData(TYPE_AMBUSH) != NOT_STARTED)
@@ -215,7 +215,7 @@ struct at_pit_of_saron : public AreaTriggerScript
             pInstance->SetData(TYPE_AMBUSH, IN_PROGRESS);
             return true;
         }
-        else if (pAt->id == AREATRIGGER_ID_TUNNEL_END)
+        else if (SD3_AreaTriggerId(pAt) == AREATRIGGER_ID_TUNNEL_END)
         {
             if (pInstance->GetData(TYPE_AMBUSH) != IN_PROGRESS)
             {

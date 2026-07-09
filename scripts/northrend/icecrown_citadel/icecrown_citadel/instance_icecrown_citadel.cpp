@@ -702,8 +702,8 @@ struct at_icecrown_citadel : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->id == AREATRIGGER_MARROWGAR_INTRO || pAt->id == AREATRIGGER_DEATHWHISPER_INTRO ||
-            pAt->id == AREATRIGGER_SINDRAGOSA_PLATFORM)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_MARROWGAR_INTRO || SD3_AreaTriggerId(pAt) == AREATRIGGER_DEATHWHISPER_INTRO ||
+            SD3_AreaTriggerId(pAt) == AREATRIGGER_SINDRAGOSA_PLATFORM)
         {
             if (pPlayer->isGameMaster() || pPlayer->IsDead())
             {
@@ -712,7 +712,7 @@ struct at_icecrown_citadel : public AreaTriggerScript
 
             if (InstanceData* pInstance = pPlayer->GetInstanceData())
             {
-                pInstance->SetData(TYPE_DATA_AREATRIGGERS, pAt->id);
+                pInstance->SetData(TYPE_DATA_AREATRIGGERS, SD3_AreaTriggerId(pAt));
                 pInstance->SetData64(TYPE_DATA_AREATRIGGERS, pPlayer->GetObjectGuid().GetRawValue());
             }
         }

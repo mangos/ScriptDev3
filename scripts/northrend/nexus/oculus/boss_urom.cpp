@@ -285,7 +285,7 @@ struct boss_urom : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            switch (pSpell->Id)
+            switch (SD3_SpellId(pSpell))
             {
                 case SPELL_SUMMON_MENAGERIE_3:
                 case SPELL_SUMMON_MENAGERIE_2:

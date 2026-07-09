@@ -166,7 +166,7 @@ struct boss_telestra : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            switch (pSpell->Id)
+            switch (SD3_SpellId(pSpell))
             {
                 // eventAi must make sure clones cast spells when each of them die
                 case SPELL_FIRE_DIES:

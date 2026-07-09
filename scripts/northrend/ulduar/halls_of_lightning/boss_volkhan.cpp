@@ -440,7 +440,7 @@ struct mob_molten_golem : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // This is the dummy effect of the spells - Note: should be handled as a dummy effect in core
-            if (pSpell->Id == SPELL_SHATTER || pSpell->Id == SPELL_SHATTER_H)
+            if (SD3_SpellId(pSpell) == SPELL_SHATTER || SD3_SpellId(pSpell) == SPELL_SHATTER_H)
             {
                 if (m_creature->GetEntry() == NPC_BRITTLE_GOLEM)
                 {

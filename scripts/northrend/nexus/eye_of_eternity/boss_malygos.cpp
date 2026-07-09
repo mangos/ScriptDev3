@@ -374,7 +374,7 @@ struct boss_malygos : public CreatureScript
         void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
         {
             // Handle yell on Power Spark hit
-            if (pSpell->Id == SPELL_POWER_SPARK_MALYGOS && pCaster->GetEntry() == NPC_POWER_SPARK && m_uiPhase == PHASE_FLOOR)
+            if (SD3_SpellId(pSpell) == SPELL_POWER_SPARK_MALYGOS && pCaster->GetEntry() == NPC_POWER_SPARK && m_uiPhase == PHASE_FLOOR)
             {
                 DoScriptText(SAY_SPARK_BUFF, m_creature);
             }
@@ -700,7 +700,7 @@ struct npc_wyrmrest_skytalon : public CreatureScript
                 return;
             }
 
-            if (pSpell->Id == 56071)
+            if (SD3_SpellId(pSpell) == 56071)
             {
                 DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
             }

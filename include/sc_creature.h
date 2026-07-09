@@ -46,6 +46,8 @@ inline uint32 SD3_SpellId(SpellEntry const* pSpell)
     return pSpell->ID;
 #elif defined (TBC)
     return pSpell->ID;
+#elif defined (WOTLK)
+    return pSpell->ID;
 #else
     return pSpell->Id;
 #endif
@@ -58,6 +60,8 @@ inline uint32 SD3_SpellManaCost(SpellEntry const* pSpell)
 #elif defined (CLASSIC)
     return pSpell->ManaCost;
 #elif defined (TBC)
+    return pSpell->ManaCost;
+#elif defined (WOTLK)
     return pSpell->ManaCost;
 #else   // WOTLK
     return pSpell->manaCost;
@@ -72,6 +76,8 @@ inline uint32 SD3_SpellPowerType(SpellEntry const* pSpell)
     return pSpell->PowerType;
 #elif defined (TBC)
     return pSpell->PowerType;
+#elif defined (WOTLK)
+    return pSpell->PowerType;
 #else   // WOTLK, CATA
     return pSpell->powerType;
 #endif
@@ -85,8 +91,23 @@ inline uint32 SD3_SpellRangeIndex(SpellEntry const* pSpell)
     return pSpell->RangeIndex;
 #elif defined (TBC)
     return pSpell->RangeIndex;
+#elif defined (WOTLK)
+    return pSpell->RangeIndex;
 #else   // WOTLK, CATA
     return pSpell->rangeIndex;
+#endif
+}
+
+inline uint32 SD3_SpellVisual(SpellEntry const* pSpell, uint8 index)
+{
+#if defined (CLASSIC) || defined (TBC)
+    return pSpell->SpellVisualID;
+#elif defined (WOTLK)
+    return pSpell->SpellVisualID[index];
+#elif defined (CATA)
+    return pSpell->SpellVisual[index];
+#else   // MISTS (SpellVisual member replaced by GetSpellVisual API)
+    return pSpell->GetSpellVisual(index);
 #endif
 }
 
@@ -102,6 +123,8 @@ inline uint32 SD3_SpellEffectImplicitTargetA(SpellEntry const* pSpell, uint8 ind
     return pSpell->ImplicitTargetA[index];
 #elif defined (TBC)
     return pSpell->ImplicitTargetA[index];
+#elif defined (WOTLK)
+    return pSpell->ImplicitTargetA[index];
 #else   // WOTLK
     return pSpell->EffectImplicitTargetA[index];
 #endif
@@ -112,6 +135,8 @@ inline uint32 SD3_SpellEffectApplyAuraName(SpellEntry const* pSpell, uint8 index
 #if defined (CLASSIC)
     return pSpell->EffectAura[index];
 #elif defined (TBC)
+    return pSpell->EffectAura[index];
+#elif defined (WOTLK)
     return pSpell->EffectAura[index];
 #else   // WOTLK
     return pSpell->EffectApplyAuraName[index];
@@ -127,8 +152,37 @@ inline uint32 SD3_AreaTriggerId(AreaTriggerEntry const* pAt)
 {
 #if defined (CLASSIC)
     return pAt->ID;
+#elif defined (WOTLK)
+    return pAt->ID;
 #else
     return pAt->id;
+#endif
+}
+
+inline float SD3_AreaTriggerX(AreaTriggerEntry const* pAt)
+{
+#if defined (WOTLK)
+    return pAt->Pos_0;
+#else
+    return pAt->x;
+#endif
+}
+
+inline float SD3_AreaTriggerY(AreaTriggerEntry const* pAt)
+{
+#if defined (WOTLK)
+    return pAt->Pos_1;
+#else
+    return pAt->y;
+#endif
+}
+
+inline float SD3_AreaTriggerZ(AreaTriggerEntry const* pAt)
+{
+#if defined (WOTLK)
+    return pAt->Pos_2;
+#else
+    return pAt->z;
 #endif
 }
 
@@ -138,6 +192,8 @@ inline float SD3_SpellRangeMin(SpellRangeEntry const* pRange)
     return pRange->RangeMin;
 #elif defined (TBC)
     return pRange->RangeMin;
+#elif defined (WOTLK)
+    return pRange->RangeMin_0;
 #else
     return pRange->minRange;
 #endif
@@ -149,8 +205,23 @@ inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
     return pRange->RangeMax;
 #elif defined (TBC)
     return pRange->RangeMax;
+#elif defined (WOTLK)
+    return pRange->RangeMax_0;
 #else
     return pRange->maxRange;
+#endif
+}
+
+// FactionTemplateEntry accessor (cross-expansion compatibility).
+// mangos-two (WOTLK) renamed this DBC field to its .dbd name (Faction);
+// the other cores keep the legacy name. Same per-expansion resolution
+// as the AreaTrigger/SpellRange helpers above.
+inline uint32 SD3_FactionTemplateFaction(FactionTemplateEntry const* pFT)
+{
+#if defined (WOTLK) || defined (CLASSIC)
+    return pFT->Faction;
+#else
+    return pFT->faction;
 #endif
 }
 
