@@ -279,7 +279,7 @@ struct at_ring_of_law : public AreaTriggerScript
 
             pPlayer->SummonCreature(NPC_GRIMSTONE, aSpawnPositions[POS_GRIMSTONE][0], aSpawnPositions[POS_GRIMSTONE][1], aSpawnPositions[POS_GRIMSTONE][2], aSpawnPositions[POS_GRIMSTONE][3], TEMPSPAWN_DEAD_DESPAWN, 0);
             pInstance->SetData(TYPE_SIGNAL, SD3_AreaTriggerId(pAt));
-            pInstance->SetArenaCenterCoords(pAt->x, pAt->y, pAt->z);
+            pInstance->SetArenaCenterCoords(SD3_AreaTriggerX(pAt), SD3_AreaTriggerY(pAt), SD3_AreaTriggerZ(pAt));
 
             return false;
         }

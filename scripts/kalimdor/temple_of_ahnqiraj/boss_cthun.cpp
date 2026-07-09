@@ -942,7 +942,7 @@ struct at_stomach_cthun : public AreaTriggerScript
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
             pPlayer->GetMotionMaster()->MoveJump(afCthunLocations[3][0], afCthunLocations[3][1], afCthunLocations[3][2], pPlayer->GetSpeed(MOVE_RUN) * 5, 0);
         }
-        else if (pAt->id == AREATRIGGER_STOMACH_2)
+        else if (SD3_AreaTriggerId(pAt) == AREATRIGGER_STOMACH_2)
         {
 #endif
             if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())

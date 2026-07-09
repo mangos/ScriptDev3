@@ -120,7 +120,7 @@ struct go_ethereum_prison : public GameObjectScript
 
                 if (FactionTemplateEntry const* pFaction = pCreature->getFactionTemplateEntry())
                 {
-                    switch (pFaction->faction)
+                    switch (SD3_FactionTemplateFaction(pFaction))
                     {
                         case FACTION_LC:   uiSpell = SPELL_REP_LC;   break;
                         case FACTION_SHAT: uiSpell = SPELL_REP_SHAT; break;

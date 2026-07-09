@@ -480,7 +480,7 @@ struct at_dark_portal : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->id == AREATRIGGER_MEDIVH || pAt->id == AREATRIGGER_ENTER)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_MEDIVH || SD3_AreaTriggerId(pAt) == AREATRIGGER_ENTER)
         {
             if (pPlayer->isGameMaster() || pPlayer->IsDead())
             {
@@ -489,7 +489,7 @@ struct at_dark_portal : public AreaTriggerScript
 
             if (InstanceData* pInstance = pPlayer->GetInstanceData())
             {
-                pInstance->SetData(TYPE_HANDLE_AREATRIGGER, pAt->id);
+                pInstance->SetData(TYPE_HANDLE_AREATRIGGER, SD3_AreaTriggerId(pAt));
             }
         }
 

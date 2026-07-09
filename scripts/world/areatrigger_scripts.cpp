@@ -106,7 +106,7 @@ struct at_aldurthar_gate : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        switch (pAt->id)
+        switch (SD3_AreaTriggerId(pAt))
         {
             case TRIGGER_SOUTH:     pPlayer->KilledMonsterCredit(NPC_SOUTH_GATE);     break;
             case TRIGGER_CENTRAL:   pPlayer->KilledMonsterCredit(NPC_CENTRAL_GATE);   break;
@@ -236,7 +236,7 @@ struct at_spearborn_encampment : public AreaTriggerScript
                 return false;
             }
 
-            pPlayer->SummonCreature(NPC_TARTEK, pAt->x, pAt->y, pAt->z, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, MINUTE * IN_MILLISECONDS);
+            pPlayer->SummonCreature(NPC_TARTEK, SD3_AreaTriggerX(pAt), SD3_AreaTriggerY(pAt), SD3_AreaTriggerZ(pAt), 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, MINUTE * IN_MILLISECONDS);
         }
 
         return false;
@@ -267,7 +267,7 @@ struct at_warsong_farms : public AreaTriggerScript
     {
         if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_THE_WARSONG_FARMS) == QUEST_STATUS_INCOMPLETE)
         {
-            switch (pAt->id)
+            switch (SD3_AreaTriggerId(pAt))
             {
                 case AT_SLAUGHTERHOUSE: pPlayer->KilledMonsterCredit(NPC_CREDIT_SLAUGHTERHOUSE); break;
                 case AT_GRAINERY:       pPlayer->KilledMonsterCredit(NPC_CREDIT_GRAINERY);       break;
@@ -301,7 +301,7 @@ struct at_waygate : public AreaTriggerScript
     {
         if (!pPlayer->IsDead() && pPlayer->GetQuestStatus(QUEST_THE_MARKERS_OVERLOOK) == QUEST_STATUS_COMPLETE && pPlayer->GetQuestStatus(QUEST_THE_MARKERS_PERCH) == QUEST_STATUS_COMPLETE)
         {
-            switch (pAt->id)
+            switch (SD3_AreaTriggerId(pAt))
             {
                 case AT_WAYGATE_SHOLOZAR: pPlayer->CastSpell(pPlayer, SPELL_SHOLOZAR_TO_UNGORO_TELEPORT, false); break;
                 case AT_WAYGATE_UNGORO: pPlayer->CastSpell(pPlayer, SPELL_UNGORO_TO_SHOLOZAR_TELEPORT, false); break;
@@ -358,7 +358,7 @@ struct at_scent_larkorwi : public AreaTriggerScript
         {
             if (!GetClosestCreatureWithEntry(pPlayer, NPC_LARKORWI_MATE, 25.0f, false, false))
             {
-                pPlayer->SummonCreature(NPC_LARKORWI_MATE, pAt->x, pAt->y, pAt->z, 3.3f, TEMPSPAWN_TIMED_OOC_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
+                pPlayer->SummonCreature(NPC_LARKORWI_MATE, SD3_AreaTriggerX(pAt), SD3_AreaTriggerY(pAt), SD3_AreaTriggerZ(pAt), 3.3f, TEMPSPAWN_TIMED_OOC_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
             }
         }
 
@@ -450,7 +450,7 @@ struct at_hot_on_the_trail : public AreaTriggerScript
 
         for (uint8 i = 0; i < 6; ++i)
         {
-            if (pAt->id == aHotOnTrailValues[i].uiAtEntry)
+            if (SD3_AreaTriggerId(pAt) == aHotOnTrailValues[i].uiAtEntry)
             {
                 if (pPlayer->GetQuestStatus(aHotOnTrailValues[i].uiQuestEntry) == QUEST_STATUS_INCOMPLETE &&
                     pPlayer->GetReqKillOrCastCurrentCount(aHotOnTrailValues[i].uiQuestEntry, aHotOnTrailValues[i].uiCreditEntry) == 0)

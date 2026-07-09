@@ -1302,7 +1302,7 @@ struct at_culling_of_stratholme : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->id == AREATRIGGER_INN)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_INN)
         {
             if (pPlayer->isGameMaster() || pPlayer->IsDead())
             {
@@ -1311,7 +1311,7 @@ struct at_culling_of_stratholme : public AreaTriggerScript
 
             if (InstanceData* pInstance = pPlayer->GetInstanceData())
             {
-                pInstance->SetData(TYPE_DO_AREATRIGGER, pAt->id);
+                pInstance->SetData(TYPE_DO_AREATRIGGER, SD3_AreaTriggerId(pAt));
             }
         }
 

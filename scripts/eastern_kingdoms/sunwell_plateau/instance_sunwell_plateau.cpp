@@ -673,7 +673,7 @@ struct at_sunwell_plateau : public AreaTriggerScript
 
     bool OnTrigger(Player* pPlayer, AreaTriggerEntry const* pAt) override
     {
-        if (pAt->id == AREATRIGGER_TWINS)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_TWINS)
         {
             if (pPlayer->isGameMaster() || pPlayer->IsDead())
             {

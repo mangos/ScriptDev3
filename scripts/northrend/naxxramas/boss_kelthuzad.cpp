@@ -643,9 +643,9 @@ struct boss_kelthuzad : public CreatureScript
         {
             if (AreaTriggerEntry const* at = sAreaTriggerStore.LookupEntry(AREATRIGGER_KELTHUZAD))
             {
-                x = at->x;
-                y = at->y;
-                z = at->z;
+                x = SD3_AreaTriggerX(at);
+                y = SD3_AreaTriggerY(at);
+                z = SD3_AreaTriggerZ(at);
             }
         }
 };

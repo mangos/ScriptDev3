@@ -1248,12 +1248,12 @@ struct npc_innkeeper : public CreatureScript
         // Should only apply to innkeeper close to start areas.
         if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetAreaId()))
         {
-#if defined (TBC)
+#if defined (TBC) || defined (WOTLK)
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
             if (pAreaEntry->Flags & AREA_FLAG_LOWLEVEL)
-#elif defined (WOTLK) || defined (CATA) || defined(MISTS)
+#elif defined (CATA) || defined(MISTS)
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
-            if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
+            if (pAreaEntry->Flags & AREA_FLAG_LOWLEVEL)
 #endif
             {
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);

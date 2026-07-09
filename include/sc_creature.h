@@ -150,8 +150,37 @@ inline uint32 SD3_AreaTriggerId(AreaTriggerEntry const* pAt)
 {
 #if defined (CLASSIC)
     return pAt->ID;
+#elif defined (WOTLK)
+    return pAt->ID;
 #else
     return pAt->id;
+#endif
+}
+
+inline float SD3_AreaTriggerX(AreaTriggerEntry const* pAt)
+{
+#if defined (WOTLK)
+    return pAt->Pos_0;
+#else
+    return pAt->x;
+#endif
+}
+
+inline float SD3_AreaTriggerY(AreaTriggerEntry const* pAt)
+{
+#if defined (WOTLK)
+    return pAt->Pos_1;
+#else
+    return pAt->y;
+#endif
+}
+
+inline float SD3_AreaTriggerZ(AreaTriggerEntry const* pAt)
+{
+#if defined (WOTLK)
+    return pAt->Pos_2;
+#else
+    return pAt->z;
 #endif
 }
 
@@ -161,6 +190,8 @@ inline float SD3_SpellRangeMin(SpellRangeEntry const* pRange)
     return pRange->RangeMin;
 #elif defined (TBC)
     return pRange->RangeMin;
+#elif defined (WOTLK)
+    return pRange->RangeMin_0;
 #else
     return pRange->minRange;
 #endif
@@ -172,8 +203,23 @@ inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
     return pRange->RangeMax;
 #elif defined (TBC)
     return pRange->RangeMax;
+#elif defined (WOTLK)
+    return pRange->RangeMax_0;
 #else
     return pRange->maxRange;
+#endif
+}
+
+// FactionTemplateEntry accessor (cross-expansion compatibility).
+// mangos-two (WOTLK) renamed this DBC field to its .dbd name (Faction);
+// the other cores keep the legacy name. Same per-expansion resolution
+// as the AreaTrigger/SpellRange helpers above.
+inline uint32 SD3_FactionTemplateFaction(FactionTemplateEntry const* pFT)
+{
+#if defined (WOTLK)
+    return pFT->Faction;
+#else
+    return pFT->faction;
 #endif
 }
 

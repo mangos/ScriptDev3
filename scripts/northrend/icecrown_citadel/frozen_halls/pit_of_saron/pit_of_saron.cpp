@@ -206,7 +206,7 @@ struct at_pit_of_saron : public AreaTriggerScript
             return false;
         }
 
-        if (pAt->id == AREATRIGGER_ID_TUNNEL_START)
+        if (SD3_AreaTriggerId(pAt) == AREATRIGGER_ID_TUNNEL_START)
         {
             if (pInstance->GetData(TYPE_GARFROST) != DONE || pInstance->GetData(TYPE_KRICK) != DONE ||
                 pInstance->GetData(TYPE_AMBUSH) != NOT_STARTED)
@@ -215,7 +215,7 @@ struct at_pit_of_saron : public AreaTriggerScript
             pInstance->SetData(TYPE_AMBUSH, IN_PROGRESS);
             return true;
         }
-        else if (pAt->id == AREATRIGGER_ID_TUNNEL_END)
+        else if (SD3_AreaTriggerId(pAt) == AREATRIGGER_ID_TUNNEL_END)
         {
             if (pInstance->GetData(TYPE_AMBUSH) != IN_PROGRESS)
             {
