@@ -46,6 +46,8 @@ inline uint32 SD3_SpellId(SpellEntry const* pSpell)
     return pSpell->ID;
 #elif defined (TBC)
     return pSpell->ID;
+#elif defined (WOTLK)
+    return pSpell->ID;
 #else
     return pSpell->Id;
 #endif
@@ -58,6 +60,8 @@ inline uint32 SD3_SpellManaCost(SpellEntry const* pSpell)
 #elif defined (CLASSIC)
     return pSpell->ManaCost;
 #elif defined (TBC)
+    return pSpell->ManaCost;
+#elif defined (WOTLK)
     return pSpell->ManaCost;
 #else   // WOTLK
     return pSpell->manaCost;
@@ -72,6 +76,8 @@ inline uint32 SD3_SpellPowerType(SpellEntry const* pSpell)
     return pSpell->PowerType;
 #elif defined (TBC)
     return pSpell->PowerType;
+#elif defined (WOTLK)
+    return pSpell->PowerType;
 #else   // WOTLK, CATA
     return pSpell->powerType;
 #endif
@@ -85,8 +91,21 @@ inline uint32 SD3_SpellRangeIndex(SpellEntry const* pSpell)
     return pSpell->RangeIndex;
 #elif defined (TBC)
     return pSpell->RangeIndex;
+#elif defined (WOTLK)
+    return pSpell->RangeIndex;
 #else   // WOTLK, CATA
     return pSpell->rangeIndex;
+#endif
+}
+
+inline uint32 SD3_SpellVisual(SpellEntry const* pSpell, uint8 index)
+{
+#if defined (CLASSIC) || defined (TBC)
+    return pSpell->SpellVisualID;
+#elif defined (WOTLK)
+    return pSpell->SpellVisualID[index];
+#else   // CATA, MISTS
+    return pSpell->SpellVisual[index];
 #endif
 }
 
@@ -102,6 +121,8 @@ inline uint32 SD3_SpellEffectImplicitTargetA(SpellEntry const* pSpell, uint8 ind
     return pSpell->ImplicitTargetA[index];
 #elif defined (TBC)
     return pSpell->ImplicitTargetA[index];
+#elif defined (WOTLK)
+    return pSpell->ImplicitTargetA[index];
 #else   // WOTLK
     return pSpell->EffectImplicitTargetA[index];
 #endif
@@ -112,6 +133,8 @@ inline uint32 SD3_SpellEffectApplyAuraName(SpellEntry const* pSpell, uint8 index
 #if defined (CLASSIC)
     return pSpell->EffectAura[index];
 #elif defined (TBC)
+    return pSpell->EffectAura[index];
+#elif defined (WOTLK)
     return pSpell->EffectAura[index];
 #else   // WOTLK
     return pSpell->EffectApplyAuraName[index];

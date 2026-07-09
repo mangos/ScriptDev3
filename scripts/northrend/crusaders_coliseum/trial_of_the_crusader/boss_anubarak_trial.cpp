@@ -242,7 +242,7 @@ struct boss_anubarak_trial : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_SUBMERGE)
+            if (SD3_SpellId(pSpell) == SPELL_SUBMERGE)
             {
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
@@ -482,7 +482,7 @@ struct npc_anubarak_trial_spike : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_PURSUING_SPIKES_DUMMY && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if (SD3_SpellId(pSpell) == SPELL_PURSUING_SPIKES_DUMMY && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 DoScriptText(EMOTE_PURSUE, m_creature, pTarget);
                 DoCastSpellIfCan(pTarget, SPELL_MARK, CAST_TRIGGERED);

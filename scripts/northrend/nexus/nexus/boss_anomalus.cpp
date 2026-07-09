@@ -260,7 +260,7 @@ struct mob_chaotic_rift : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
             // When hit with Charge Rift cast the Charged Rift spells
-            if (pSpell->Id == SPELL_CHARGE_RIFT)
+            if (SD3_SpellId(pSpell) == SPELL_CHARGE_RIFT)
             {
                 DoCastSpellIfCan(m_creature, SPELL_CHARGED_RIFT_AURA, CAST_TRIGGERED);
                 DoCastSpellIfCan(m_creature, SPELL_CHARGED_RIFT_SUMMON_AURA, CAST_TRIGGERED);

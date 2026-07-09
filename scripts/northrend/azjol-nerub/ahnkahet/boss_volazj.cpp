@@ -211,7 +211,7 @@ struct boss_volazj : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_INSANITY && pTarget->GetTypeId() == TYPEID_PLAYER)
+            if (SD3_SpellId(pSpell) == SPELL_INSANITY && pTarget->GetTypeId() == TYPEID_PLAYER)
             {
                 // Apply this only for the first target hit
                 if (!m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE))

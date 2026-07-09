@@ -768,7 +768,7 @@ struct npc_worm_hole : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_WORM_HOLE_PHASE)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpellEntry) == SPELL_WORM_HOLE_PHASE)
             {
                 pTarget->CastSpell(pTarget, SPELL_BLACK_HOLE_DMG, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }
@@ -836,7 +836,7 @@ struct npc_black_hole : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_BLACK_HOLE_PHASE)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpellEntry) == SPELL_BLACK_HOLE_PHASE)
             {
                 pTarget->CastSpell(pTarget, SPELL_BLACK_HOLE_DMG, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }

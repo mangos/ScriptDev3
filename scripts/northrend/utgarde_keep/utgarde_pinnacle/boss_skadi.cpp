@@ -198,7 +198,7 @@ struct boss_skadi : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_SKADI_TELEPORT)
+            if (SD3_SpellId(pSpell) == SPELL_SKADI_TELEPORT)
             {
                 m_uiPhase = PHASE_NORMAL_COMBAT;
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
@@ -416,7 +416,7 @@ struct npc_grauf : public CreatureScript
                 return;
             }
 
-            if (pSpell->Id == SPELL_LAUNCH_HARPOON)
+            if (SD3_SpellId(pSpell) == SPELL_LAUNCH_HARPOON)
             {
                 if (m_creature->GetHealth() < m_creature->GetMaxHealth() * 0.35f)
                 {
@@ -441,7 +441,7 @@ struct npc_grauf : public CreatureScript
                 m_creature->DealDamage(m_creature, m_creature->GetMaxHealth() * 0.35f, nullptr, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, nullptr, false);
             }
             // TODO: Temporary workaround - please remove when the boarding wrappers are implemented in core
-            else if (pSpell->Id == SPELL_RIDE_VEHICLE && pCaster->GetEntry() == NPC_SKADI)
+            else if (SD3_SpellId(pSpell) == SPELL_RIDE_VEHICLE && pCaster->GetEntry() == NPC_SKADI)
             {
                 m_uiFlightDelayTimer = 2000;
             }

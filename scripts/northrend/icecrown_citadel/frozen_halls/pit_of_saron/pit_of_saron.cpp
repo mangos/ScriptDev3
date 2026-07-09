@@ -168,7 +168,7 @@ struct npc_collapsing_icicle : public CreatureScript
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
             // Mark the achiev failed
-            if (pSpell->Id == SPELL_ICE_SHARDS_H && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
+            if (SD3_SpellId(pSpell) == SPELL_ICE_SHARDS_H && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
             {
                 m_pInstance->SetData(TYPE_ACHIEV_DONT_LOOK_UP, uint32(false));
             }

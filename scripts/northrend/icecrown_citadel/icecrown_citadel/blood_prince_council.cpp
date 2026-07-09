@@ -615,7 +615,7 @@ struct blood_prince_council_baseAI : public ScriptedAI
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         // When hit by the Invocation spell, then set the health of the blood control npc
-        if (pSpell->Id == m_uiInvocationSpellEntry)
+        if (SD3_SpellId(pSpell) == m_uiInvocationSpellEntry)
         {
             m_creature->SetHealth(pCaster->GetHealth());
             DoScriptText(EMOTE_INVOCATION, m_creature);

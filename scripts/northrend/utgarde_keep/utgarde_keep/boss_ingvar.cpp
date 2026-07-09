@@ -172,7 +172,7 @@ struct boss_ingvar : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_TRANSFORM)
+            if (SD3_SpellId(pSpell) == SPELL_TRANSFORM)
             {
                 DoScriptText(SAY_AGGRO_SECOND, m_creature);
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);

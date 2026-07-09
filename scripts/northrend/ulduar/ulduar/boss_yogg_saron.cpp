@@ -932,7 +932,7 @@ struct npc_voice_yogg_saron : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_INSANE && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
+            if (SD3_SpellId(pSpell) == SPELL_INSANE && pTarget->GetTypeId() == TYPEID_PLAYER && m_pInstance)
             {
                 if (Creature* pYogg = m_pInstance->GetSingleCreatureFromStorage(NPC_YOGGSARON))
                 {
@@ -1663,7 +1663,7 @@ struct npc_ominous_cloud : public CreatureScript
 
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
         {
-            if (pSpell->Id == SPELL_SUMMON_GUARDIAN_YOGG)
+            if (SD3_SpellId(pSpell) == SPELL_SUMMON_GUARDIAN_YOGG)
             {
                 m_uiDelayTimer = 10000;
             }

@@ -142,7 +142,7 @@ struct boss_faerlina : public CreatureScript
         void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpellEntry) override
         {
             // Check if we hit with Widow's Embrave
-            if (pSpellEntry->Id == SPELL_WIDOWS_EMBRACE || pSpellEntry->Id == SPELL_WIDOWS_EMBRACE_H)
+            if (SD3_SpellId(pSpellEntry) == SPELL_WIDOWS_EMBRACE || SD3_SpellId(pSpellEntry) == SPELL_WIDOWS_EMBRACE_H)
             {
                 bool bIsFrenzyRemove = false;
 

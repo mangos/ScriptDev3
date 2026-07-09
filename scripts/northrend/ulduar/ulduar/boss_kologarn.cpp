@@ -578,7 +578,7 @@ struct npc_focused_eyebeam : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && (pSpellEntry->Id == SPELL_EYEBEAM_DAMAGE || pSpellEntry->Id == SPELL_EYEBEAM_DAMAGE_H) && m_pInstance)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && (SD3_SpellId(pSpellEntry) == SPELL_EYEBEAM_DAMAGE || SD3_SpellId(pSpellEntry) == SPELL_EYEBEAM_DAMAGE_H) && m_pInstance)
             {
                 m_pInstance->SetData(TYPE_ACHIEV_LOOKS_KILL, uint32(false));
             }

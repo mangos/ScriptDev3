@@ -190,7 +190,7 @@ struct boss_baltharus : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_ENERVATING_BRAND_PL)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpellEntry) == SPELL_ENERVATING_BRAND_PL)
             {
                 pTarget->CastSpell(m_creature, SPELL_SIPHONED_MIGHT, true);
             }
@@ -307,7 +307,7 @@ struct npc_baltharus_clone : public CreatureScript
 
         void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
         {
-            if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpellEntry->Id == SPELL_ENERVATING_BRAND_PL)
+            if (pTarget->GetTypeId() == TYPEID_PLAYER && SD3_SpellId(pSpellEntry) == SPELL_ENERVATING_BRAND_PL)
             {
                 pTarget->CastSpell(m_creature, SPELL_SIPHONED_MIGHT, true);
             }

@@ -122,7 +122,7 @@ struct npc_oculus_drake : public CreatureScript
                 return;
             }
 
-            if (pSpell->Id == 49464 || pSpell->Id == 49346 || pSpell->Id == 49460)
+            if (SD3_SpellId(pSpell) == 49464 || SD3_SpellId(pSpell) == 49346 || SD3_SpellId(pSpell) == 49460)
             {
                 DoCastSpellIfCan(m_creature, SPELL_FLIGHT, CAST_TRIGGERED);
             }
