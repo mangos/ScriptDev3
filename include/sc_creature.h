@@ -48,6 +48,8 @@ inline uint32 SD3_SpellId(SpellEntry const* pSpell)
     return pSpell->ID;
 #elif defined (WOTLK)
     return pSpell->ID;
+#elif defined (MISTS)
+    return pSpell->ID;
 #else
     return pSpell->Id;
 #endif
@@ -154,6 +156,8 @@ inline uint32 SD3_AreaTriggerId(AreaTriggerEntry const* pAt)
     return pAt->ID;
 #elif defined (WOTLK)
     return pAt->ID;
+#elif defined (MISTS)
+    return pAt->ID;
 #else
     return pAt->id;
 #endif
@@ -219,6 +223,8 @@ inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
 inline uint32 SD3_FactionTemplateFaction(FactionTemplateEntry const* pFT)
 {
 #if defined (WOTLK) || defined (CLASSIC)
+    return pFT->Faction;
+#elif defined (MISTS)
     return pFT->Faction;
 #else
     return pFT->faction;
