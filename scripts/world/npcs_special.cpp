@@ -1251,7 +1251,10 @@ struct npc_innkeeper : public CreatureScript
 #if defined (TBC) || defined (WOTLK)
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
             if (pAreaEntry->Flags & AREA_FLAG_LOWLEVEL)
-#elif defined (CATA) || defined(MISTS)
+#elif defined (MISTS)
+            // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
+            if (pAreaEntry->Flags & AREA_FLAG_LOWLEVEL)
+#elif defined (CATA)
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
             if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
 #endif
