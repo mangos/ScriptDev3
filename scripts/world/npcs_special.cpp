@@ -1256,7 +1256,7 @@ struct npc_innkeeper : public CreatureScript
             if (pAreaEntry->Flags & AREA_FLAG_LOWLEVEL)
 #elif defined (CATA)
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
-            if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
+            if (pAreaEntry->Flags & AREA_FLAG_LOWLEVEL)
 #endif
             {
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);

@@ -156,6 +156,8 @@ inline uint32 SD3_AreaTriggerId(AreaTriggerEntry const* pAt)
     return pAt->ID;
 #elif defined (WOTLK)
     return pAt->ID;
+#elif defined (CATA)
+    return pAt->ID;
 #elif defined (MISTS)
     return pAt->ID;
 #else
@@ -167,6 +169,8 @@ inline float SD3_AreaTriggerX(AreaTriggerEntry const* pAt)
 {
 #if defined (WOTLK)
     return pAt->Pos_0;
+#elif defined (CATA)
+    return pAt->PosX;
 #else
     return pAt->x;
 #endif
@@ -176,6 +180,8 @@ inline float SD3_AreaTriggerY(AreaTriggerEntry const* pAt)
 {
 #if defined (WOTLK)
     return pAt->Pos_1;
+#elif defined (CATA)
+    return pAt->PosY;
 #else
     return pAt->y;
 #endif
@@ -185,6 +191,8 @@ inline float SD3_AreaTriggerZ(AreaTriggerEntry const* pAt)
 {
 #if defined (WOTLK)
     return pAt->Pos_2;
+#elif defined (CATA)
+    return pAt->PosZ;
 #else
     return pAt->z;
 #endif
@@ -223,6 +231,8 @@ inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
 inline uint32 SD3_FactionTemplateFaction(FactionTemplateEntry const* pFT)
 {
 #if defined (WOTLK) || defined (CLASSIC)
+    return pFT->Faction;
+#elif defined (CATA)
     return pFT->Faction;
 #elif defined (MISTS)
     return pFT->Faction;
