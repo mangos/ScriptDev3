@@ -48,6 +48,8 @@ inline uint32 SD3_SpellId(SpellEntry const* pSpell)
     return pSpell->ID;
 #elif defined (WOTLK)
     return pSpell->ID;
+#elif defined (CATA)
+    return pSpell->ID;
 #elif defined (MISTS)
     return pSpell->ID;
 #else
@@ -74,6 +76,8 @@ inline uint32 SD3_SpellPowerType(SpellEntry const* pSpell)
 {
 #if defined (MISTS)
     return pSpell->GetPowerType();
+#elif defined (CATA)
+    return pSpell->PowerType;
 #elif defined (CLASSIC)
     return pSpell->PowerType;
 #elif defined (TBC)
@@ -89,6 +93,8 @@ inline uint32 SD3_SpellRangeIndex(SpellEntry const* pSpell)
 {
 #if defined (MISTS)
     return pSpell->GetRangeIndex();
+#elif defined (CATA)
+    return pSpell->RangeIndex;
 #elif defined (CLASSIC)
     return pSpell->RangeIndex;
 #elif defined (TBC)
@@ -107,7 +113,7 @@ inline uint32 SD3_SpellVisual(SpellEntry const* pSpell, uint8 index)
 #elif defined (WOTLK)
     return pSpell->SpellVisualID[index];
 #elif defined (CATA)
-    return pSpell->SpellVisual[index];
+    return pSpell->SpellVisualID[index];
 #else   // MISTS (SpellVisual member replaced by GetSpellVisual API)
     return pSpell->GetSpellVisual(index);
 #endif
@@ -206,6 +212,8 @@ inline float SD3_SpellRangeMin(SpellRangeEntry const* pRange)
     return pRange->RangeMin;
 #elif defined (WOTLK)
     return pRange->RangeMin_0;
+#elif defined (CATA)
+    return pRange->RangeMin_0;
 #else
     return pRange->minRange;
 #endif
@@ -218,6 +226,8 @@ inline float SD3_SpellRangeMax(SpellRangeEntry const* pRange)
 #elif defined (TBC)
     return pRange->RangeMax;
 #elif defined (WOTLK)
+    return pRange->RangeMax_0;
+#elif defined (CATA)
     return pRange->RangeMax_0;
 #else
     return pRange->maxRange;
