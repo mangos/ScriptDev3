@@ -75,12 +75,12 @@ struct boss_emperor_dagran_thaurissan : public CreatureScript
 
         void Aggro(Unit* /*pWho*/) override
         {
-            uint32 uiTextId;
+            int32 uiTextId;
             switch (urand(0, 2))
             {
                 case 0: uiTextId = YELL_AGGRO_1; break;
                 case 1: uiTextId = YELL_AGGRO_2; break;
-                case 2: uiTextId = YELL_AGGRO_3; break;
+                default: uiTextId = YELL_AGGRO_3; break;
             }
             DoScriptText(uiTextId, m_creature);
             m_creature->CallForHelp(VISIBLE_RANGE);

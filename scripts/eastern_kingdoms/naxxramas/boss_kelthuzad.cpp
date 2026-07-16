@@ -280,13 +280,15 @@ struct boss_kelthuzad : public CreatureScript
 
             float fAngle = GetLocationAngle(packId + 1);
 
-            float fX, fY, fZ;
-            if (AreaTriggerEntry const *at = sAreaTriggerStore.LookupEntry(m_pInstance->GetData(TYPE_SIGNAL_1)))
+            AreaTriggerEntry const *at = sAreaTriggerStore.LookupEntry(m_pInstance->GetData(TYPE_SIGNAL_1));
+            if (!at)
             {
-                fX = at->x;
-                fY = at->y;
-                fZ = at->z;
+                return;
             }
+
+            float fX = at->x;
+            float fY = at->y;
+            float fZ = at->z;
 
             fX += M_F_RANGE * cos(fAngle);
             fY += M_F_RANGE * sin(fAngle);
@@ -327,13 +329,15 @@ struct boss_kelthuzad : public CreatureScript
 
             float fAngle = GetLocationAngle(urand(1, 7));
 
-            float fX, fY, fZ;
-            if (AreaTriggerEntry const *at = sAreaTriggerStore.LookupEntry(m_pInstance->GetData(TYPE_SIGNAL_1)))
+            AreaTriggerEntry const *at = sAreaTriggerStore.LookupEntry(m_pInstance->GetData(TYPE_SIGNAL_1));
+            if (!at)
             {
-                fX = at->x;
-                fY = at->y;
-                fZ = at->z;
+                return;
             }
+
+            float fX = at->x;
+            float fY = at->y;
+            float fZ = at->z;
 
             fX += M_F_RANGE * cos(fAngle);
             fY += M_F_RANGE * sin(fAngle);
