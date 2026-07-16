@@ -319,7 +319,7 @@ struct is_trial_of_the_crusader : public InstanceScript
                     case TYPE_FACTION_CHAMPIONS:
                         if (uiData == SPECIAL)
                         {
-                            StartNextDialogueText(m_auiEncounter[uiType] != FAIL ? uint8(SAY_TIRION_PVP_INTRO_1) : uint8(TYPE_FACTION_CHAMPIONS));
+                            StartNextDialogueText(m_auiEncounter[uiType] != FAIL ? int32(SAY_TIRION_PVP_INTRO_1) : int32(TYPE_FACTION_CHAMPIONS));
                         }
                         else if (uiData == FAIL)
                         {

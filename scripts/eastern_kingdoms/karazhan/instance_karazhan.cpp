@@ -788,15 +788,15 @@ struct is_karazhan : public InstanceScript
                     }
                     else
                     {
-                        searcher->getFaction() == FACTION_ID_CHESS_ALLIANCE ? FACTION_ID_CHESS_HORDE : FACTION_ID_CHESS_ALLIANCE;
+                        uiTeam = searcher->getFaction() == FACTION_ID_CHESS_ALLIANCE ? FACTION_ID_CHESS_HORDE : FACTION_ID_CHESS_ALLIANCE;
                     }
 
                     // Get the list of enemies
                     GuidList lTempList;
                     std::vector<Creature*> vTargets;
-                    vTargets.reserve(lTempList.size());
 
                     lTempList = uiTeam == FACTION_ID_CHESS_ALLIANCE ? m_lChessPiecesAlliance : m_lChessPiecesHorde;
+                    vTargets.reserve(lTempList.size());
                     for (GuidList::const_iterator itr = lTempList.begin(); itr != lTempList.end(); ++itr)
                     {
                         Creature* pTemp = searcher->GetMap()->GetCreature(*itr);

@@ -230,7 +230,7 @@ void instance_blackrock_depths::OnCreatureDeath(Creature* pCreature)
             // of Shadowforge Senators in the Throne Room
             if (Creature* pDagran = GetSingleCreatureFromStorage(NPC_EMPEROR))
             {
-                uint32 uiTextId;
+                int32 uiTextId;
 
                 if (!pDagran->IsAlive())
                 {
@@ -247,7 +247,7 @@ void instance_blackrock_depths::OnCreatureDeath(Creature* pCreature)
                     case 0: uiTextId = YELL_SENATOR_1; break;
                     case 1: uiTextId = YELL_SENATOR_2; break;
                     case 2: uiTextId = YELL_SENATOR_3; break;
-                    case 3: uiTextId = YELL_SENATOR_4; break;
+                    default: uiTextId = YELL_SENATOR_4; break;
                 }
                 DoScriptText(uiTextId, pDagran);
                 m_uiDagranTimer = 30000;    // set a timer of 30 sec to avoid Emperor Thaurissan to spam yells in case many senators are killed in a short amount of time
@@ -681,7 +681,7 @@ void instance_blackrock_depths::HandleBarPatrons(uint8 uiEventType)
                     {
                         if (pPatron->GetPositionZ() > pGo->GetPositionZ() - 1 && pPatron->IsWithinDist2d(pGo->GetPositionX(), pGo->GetPositionY(), 18.0f))
                         {
-                            uint32 uiTextId = 0;
+                            int32 uiTextId = 0;
                             switch (urand(0, 4))
                             {
                                 case 0: uiTextId = SAY_PISSED_PATRON_3; break;
