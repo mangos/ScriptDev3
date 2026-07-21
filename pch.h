@@ -24,24 +24,13 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef SC_PRECOMPILED_H
-#define SC_PRECOMPILED_H
+#ifndef SC_PCH_H
+#define SC_PCH_H
 
-#include "system/ScriptDevMgr.h"
-#include "Object.h"
-#include "ObjectGuid.h"
-#include "Unit.h"
-#include "Creature.h"
-#include "CreatureAI.h"
-#include "GameObject.h"
-#include "sc_creature.h"
-#include "sc_gossip.h"
-#include "sc_grid_searchers.h"
-#include "sc_instance.h"
-#include "SpellAuras.h"
-#include "World.h"
-
-// sc_gossip.h:             ADD_GOSSIP_ITEM_EXTENDED outcommented box-money (Required until professions are fixed)
-// sc_creature.cpp:         Used in ScriptedAI::SelectSpell, outcommented SchoolMask
+// CMake precompiles this file; every script source includes precompiled.h.
+// Both used to carry their own copy of the list under the SAME guard
+// (SC_PRECOMPILED_H), so whichever the compiler saw first silently suppressed
+// the other and the two lists drifted apart. One list now, here.
+#include "precompiled.h"
 
 #endif
