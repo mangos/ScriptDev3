@@ -27,7 +27,9 @@
 #ifndef SC_SCRIPTMGR_H
 #define SC_SCRIPTMGR_H
 
-#include "Common.h"
+#include "Platform/Define.h"
+#include "Common/ServerDefines.h"
+#include "Common/TimeConstants.h"
 #include "DBCStructure.h"
 #include "ScriptMgr.h"
 #include "QuestDef.h"

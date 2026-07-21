@@ -49,4 +49,18 @@
 #include "SpellAuras.h"
 #include "World.h"
 
+// Common.h is being retired across the cores; these are the pieces the scripts
+// used to receive through it. Named here once rather than in 490 script files.
+#include "Common/TimeConstants.h"
+#include "Utilities/MathDefines.h"
+#include "Utilities/Util.h"
+
+#include <algorithm>
+#include <cmath>
+#include <list>
+#include <set>
+#include <sstream>
+#include <string>
+#include <vector>
+
 #endif
