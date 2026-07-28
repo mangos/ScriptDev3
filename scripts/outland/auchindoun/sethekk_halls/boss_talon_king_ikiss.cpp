@@ -102,7 +102,7 @@ struct boss_talon_king_ikiss : public CreatureScript
         {
             if (!m_creature->getVictim() && pWho->IsTargetableForAttack() && (m_creature->IsHostileTo(pWho)) && pWho->isInAccessablePlaceFor(m_creature))
             {
-                if (!m_bIntro && m_creature->IsWithinDistInMap(pWho, 100.0f))
+                if (!m_bIntro && InReach(*m_creature, *pWho, 100.0f))
                 {
                     m_bIntro = true;
                     DoScriptText(SAY_INTRO, m_creature);

@@ -122,7 +122,7 @@ struct boss_grandmaster_vorpil : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // not sure about right radius
-            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && pWho->IsWithinDistInMap(m_creature, 50.0f) && pWho->IsWithinLOSInMap(m_creature))
+            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*pWho, *m_creature, 50.0f) && HasLineOfSight(*pWho, *m_creature))
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 m_bHasDoneIntro = true;
@@ -205,8 +205,11 @@ struct boss_grandmaster_vorpil : public CreatureScript
 
                 if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                 {
-                    pTarget->GetRandomPoint(aVorpilTeleportLoc[0], aVorpilTeleportLoc[1], aVorpilTeleportLoc[2], 4.0f, fX, fY, fZ);
-                    DoTeleportPlayer(pTarget, fX, fY, fZ, m_creature->GetAngle(fX, fY));
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pTarget, Geometry::Vector3(aVorpilTeleportLoc[0], aVorpilTeleportLoc[1], aVorpilTeleportLoc[2]), 4.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
+                    DoTeleportPlayer(pTarget, fX, fY, fZ, m_creature->Where().BearingTo(Geometry::Vector2(fX, fY)));
                 }
             }
         }
@@ -331,7 +334,7 @@ struct npc_void_traveler : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasExploded && pWho->GetEntry() == NPC_VORPIL && pWho->IsWithinDistInMap(m_creature, 3.0f))
+            if (!m_bHasExploded && pWho->GetEntry() == NPC_VORPIL && InReach(*pWho, *m_creature, 3.0f))
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_SHADOW_NOVA) == CAST_OK)
                 {

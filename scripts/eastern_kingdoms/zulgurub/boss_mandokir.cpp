@@ -293,7 +293,7 @@ struct boss_mandokir : public CreatureScript
                     // If threat is higher that previously saved, mandokir will act
                     if (pWatchTarget && pWatchTarget->IsAlive() && m_creature->GetThreatManager().getThreat(pWatchTarget) > m_fTargetThreat)
                     {
-                        if (!m_creature->IsWithinLOSInMap(pWatchTarget))
+                        if (!HasLineOfSight(*m_creature, *pWatchTarget))
                         {
                             m_creature->CastSpell(pWatchTarget, SPELL_SUMMON_PLAYER, true);
                         }
@@ -359,7 +359,7 @@ struct boss_mandokir : public CreatureScript
                     {
                         Unit* pTarget = m_creature->GetMap()->GetUnit((*i)->getUnitGuid());
 
-                        if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && m_creature->CanReachWithMeleeAttack(pTarget))
+                        if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && InMeleeReach(*m_creature, *pTarget))
                         {
                             ++uiTargetInRangeCount;
                         }

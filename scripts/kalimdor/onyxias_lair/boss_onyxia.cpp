@@ -258,7 +258,10 @@ struct boss_onyxia : public CreatureScript
             {
                 // Get some random point near the center
                 float fX, fY, fZ;
-                pSummoned->GetRandomPoint(pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 20.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pSummoned, Geometry::Vector3(pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z()), 20.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
             }
             else
@@ -477,7 +480,7 @@ struct boss_onyxia : public CreatureScript
                         if (m_pInstance)
                         {
                             Creature* pOnyTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_ONYXIA_TRIGGER);
-                            if (pOnyTrigger && !m_creature->IsWithinDistInMap(pOnyTrigger, 90.0f, false))
+                            if (pOnyTrigger && !InReach(*m_creature, *pOnyTrigger, 90.0f, false))
                             {
                                 DoCastSpellIfCan(m_creature, SPELL_BREATH_ENTRANCE);
                             }
@@ -518,12 +521,12 @@ struct boss_onyxia : public CreatureScript
                         DoScriptText(SAY_PHASE_3_TRANS, m_creature);
 
 #if defined (CLASSIC) || defined (TBC)
-                        float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                        float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
 #endif
 #if defined (WOTLK) || defined (CATA) || defined (MISTS)
-                        float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                        float fGroundZ = m_creature->GetMap()->GetHeight(m_creature->GetPhaseMask(), m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
 #endif
-                        m_creature->GetMotionMaster()->MoveFlyOrLand(POINT_ID_LAND, m_creature->GetPositionX(), m_creature->GetPositionY(), fGroundZ, false);
+                        m_creature->GetMotionMaster()->MoveFlyOrLand(POINT_ID_LAND, m_creature->Where().X(), m_creature->Where().Y(), fGroundZ, false);
                         return;
                     }
 

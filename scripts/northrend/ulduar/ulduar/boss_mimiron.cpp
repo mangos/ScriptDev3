@@ -324,7 +324,7 @@ struct boss_mimiron : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 70.0f))
+            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 70.0f))
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 m_bHasDoneIntro = true;
@@ -1679,7 +1679,7 @@ struct boss_aerial_unit : public CreatureScript
                 m_uiMagneticTimer = 20000;
 
                 m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MovePoint(0, pCaster->GetPositionX(), pCaster->GetPositionY(), pCaster->GetPositionZ());
+                m_creature->GetMotionMaster()->MovePoint(0, pCaster->Where().X(), pCaster->Where().Y(), pCaster->Where().Z());
             }
         }
 
@@ -1742,7 +1742,7 @@ struct boss_aerial_unit : public CreatureScript
                 if (m_uiMagneticTimer <= uiDiff)
                 {
                     m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), afAerialMovePos[2]);
+                    m_creature->GetMotionMaster()->MovePoint(0, m_creature->Where().X(), m_creature->Where().Y(), afAerialMovePos[2]);
 
                     m_creature->RemoveAurasDueToSpell(SPELL_MAGNETIC_CORE_VISUAL);
                     m_uiMagneticTimer = 0;
@@ -1768,13 +1768,13 @@ struct boss_aerial_unit : public CreatureScript
                 // move to a closer point to target
                 if (m_uiCombatMoveTimer < uiDiff)
                 {
-                    if (m_creature->GetDistance(m_creature->getVictim()) > 30.0f)
+                    if (m_creature->Where().DistanceTo(m_creature->getVictim()->Where()) > 30.0f)
                     {
                         float fX, fY, fZ;
-                        m_creature->getVictim()->GetContactPoint(m_creature, fX, fY, fZ, 3 * ATTACK_DISTANCE);
+                        ContactPointNear(*m_creature->getVictim(), m_creature, fX, fY, fZ, 3 * ATTACK_DISTANCE);
 
                         m_creature->GetMotionMaster()->Clear();
-                        m_creature->GetMotionMaster()->MovePoint(0, fX, fY, m_creature->GetPositionZ());
+                        m_creature->GetMotionMaster()->MovePoint(0, fX, fY, m_creature->Where().Z());
                     }
                     m_uiCombatMoveTimer = 2000;
                 }

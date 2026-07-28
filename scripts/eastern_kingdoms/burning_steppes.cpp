@@ -58,7 +58,7 @@ struct npc_ragged_john : public CreatureScript
         {
             if (who->HasAura(16468, EFFECT_INDEX_0))
             {
-                if (who->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(who, 15) && who->isInAccessablePlaceFor(m_creature))
+                if (who->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *who, 15) && who->isInAccessablePlaceFor(m_creature))
                 {
                     DoCastSpellIfCan(who, 16472);
                     ((Player*)who)->AreaExploredOrEventHappens(4866);
@@ -67,13 +67,13 @@ struct npc_ragged_john : public CreatureScript
 
             if (!m_creature->getVictim() && who->IsTargetableForAttack() && (m_creature->IsHostileTo(who)) && who->isInAccessablePlaceFor(m_creature))
             {
-                if (!m_creature->CanFly() && m_creature->GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE)
+                if (!m_creature->CanFly() && m_creature->Where().HeightGapTo(who->Where()) > CREATURE_Z_ATTACK_RANGE)
                 {
                     return;
                 }
 
                 float attackRadius = m_creature->GetAttackDistance(who);
-                if (m_creature->IsWithinDistInMap(who, attackRadius) && m_creature->IsWithinLOSInMap(who))
+                if (InReach(*m_creature, *who, attackRadius) && HasLineOfSight(*m_creature, *who))
                 {
                     who->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
                     AttackStart(who);
@@ -659,7 +659,7 @@ struct npc_klinfran_the_crazed : public CreatureScript
 
             if (triggered)
             {
-                Creature* creature_the_cleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetAngle(playerFacing), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
+                Creature* creature_the_cleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().BearingTo(playerFacing->Where()), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
                 if (creature_the_cleaner)
                 {
                     DoScriptText(SAY_THE_CLEANER_AGGRO, creature_the_cleaner);

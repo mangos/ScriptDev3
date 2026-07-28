@@ -138,7 +138,7 @@ struct boss_tyrannus : public CreatureScript
                 {
                     float fX, fY, fZ;
                     pGeneral->SetWalk(false);
-                    m_creature->GetContactPoint(pGeneral, fX, fY, fZ, INTERACTION_DISTANCE);
+                    ContactPointNear(*m_creature, pGeneral, fX, fY, fZ, INTERACTION_DISTANCE);
                     pGeneral->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                 }
             }
@@ -304,7 +304,7 @@ struct boss_rimefang_pos : public CreatureScript
             }
 
             // Start the intro when possible
-            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 85.0f) && m_creature->IsWithinLOSInMap(pWho))
+            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 85.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 m_pInstance->SetData(TYPE_TYRANNUS, SPECIAL);
                 m_bHasDoneIntro = true;
@@ -312,7 +312,7 @@ struct boss_rimefang_pos : public CreatureScript
             }
 
             // Check for out of range players - ToDo: confirm the distance
-            if (m_pInstance->GetData(TYPE_TYRANNUS) == IN_PROGRESS && pWho->GetTypeId() == TYPEID_PLAYER && !m_creature->IsWithinDistInMap(pWho, DEFAULT_VISIBILITY_INSTANCE))
+            if (m_pInstance->GetData(TYPE_TYRANNUS) == IN_PROGRESS && pWho->GetTypeId() == TYPEID_PLAYER && !InReach(*m_creature, *pWho, DEFAULT_VISIBILITY_INSTANCE))
             {
                 DoCastSpellIfCan(pWho, SPELL_KILLING_ICE);
             }
@@ -354,7 +354,7 @@ struct boss_rimefang_pos : public CreatureScript
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_ICY_BLAST) == CAST_OK)
                     {
-                        m_creature->SummonCreature(NPC_ICY_BLAST, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSPAWN_TIMED_DESPAWN, 90000);
+                        m_creature->SummonCreature(NPC_ICY_BLAST, pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z(), 0, TEMPSPAWN_TIMED_DESPAWN, 90000);
                         m_uiIcyBlastTimer = 8000;
                     }
                 }

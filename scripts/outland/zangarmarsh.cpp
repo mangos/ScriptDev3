@@ -267,7 +267,7 @@ struct npc_fhwoor : public CreatureScript
             if (m_bIsAmbush)
             {
                 float fX, fY, fZ;
-                m_creature->GetContactPoint(pSummoned, fX, fY, fZ);
+                ContactPointNear(*m_creature, pSummoned, fX, fY, fZ);
                 pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
             }
         }

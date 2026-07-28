@@ -340,7 +340,10 @@ struct is_zulfarrak : public InstanceScript
                                     return;
                                 }
 
-                                pBly->GetRandomPoint(pBly->GetPositionX(), pBly->GetPositionY(), pBly->GetPositionZ(), 4.0f, fX, fY, fZ);
+                                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pBly, Geometry::Vector3(pBly->Where().X(), pBly->Where().Y(), pBly->Where().Z()), 4.0f);
+                                fX = randSpot1.x;
+                                fY = randSpot1.y;
+                                fZ = randSpot1.z;
                                 pTroll->SetWalk(false);
                                 pTroll->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                             }

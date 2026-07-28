@@ -263,7 +263,7 @@ struct boss_devourer_of_souls : public CreatureScript
                 {
                     if (Unit* pTarget = m_creature->GetMap()->GetUnit(targetGuid))
                     {
-                        m_creature->SetFacingTo(m_creature->GetAngle(pTarget));
+                        m_creature->SetFacingTo(m_creature->Where().BearingTo(pTarget->Where()));
                     }
                 }
 

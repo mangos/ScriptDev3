@@ -101,9 +101,9 @@ struct is_old_hillsbrad : public InstanceScript
                         break;
                     case NPC_ORC_PRISONER:
                         // Sort the orcs which are inside the houses
-                        if (pCreature->GetPositionZ() > 53.4f)
+                        if (pCreature->Where().Z() > 53.4f)
                         {
-                            if (pCreature->GetPositionY() > 150.0f)
+                            if (pCreature->Where().Y() > 150.0f)
                             {
                                 m_lLeftPrisonersList.push_back(pCreature->GetObjectGuid());
                             }
@@ -201,7 +201,10 @@ struct is_old_hillsbrad : public InstanceScript
                                     {
                                         if (Creature* pOrc = instance->GetCreature(*itr))
                                         {
-                                            pOrc->GetRandomPoint(afInstanceLoc[0][0], afInstanceLoc[0][1], afInstanceLoc[0][2], 10.0f, fX, fY, fZ);
+                                            const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*pOrc, Geometry::Vector3(afInstanceLoc[0][0], afInstanceLoc[0][1], afInstanceLoc[0][2]), 10.0f);
+                                            fX = randSpot2.x;
+                                            fY = randSpot2.y;
+                                            fZ = randSpot2.z;
                                             pOrc->SetWalk(false);
                                             pOrc->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                         }
@@ -210,7 +213,10 @@ struct is_old_hillsbrad : public InstanceScript
                                     {
                                         if (Creature* pOrc = instance->GetCreature(*itr))
                                         {
-                                            pOrc->GetRandomPoint(afInstanceLoc[1][0], afInstanceLoc[1][1], afInstanceLoc[1][2], 10.0f, fX, fY, fZ);
+                                            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pOrc, Geometry::Vector3(afInstanceLoc[1][0], afInstanceLoc[1][1], afInstanceLoc[1][2]), 10.0f);
+                                            fX = randSpot1.x;
+                                            fY = randSpot1.y;
+                                            fZ = randSpot1.z;
                                             pOrc->SetWalk(false);
                                             pOrc->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                         }

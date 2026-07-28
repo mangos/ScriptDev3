@@ -165,7 +165,7 @@ struct boss_shazzrah : public CreatureScript
                     // manual, until added effect of dummy properly -- TODO REMOVE HACK
                     if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     {
-                        m_creature->NearTeleportTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), m_creature->GetOrientation());
+                        m_creature->NearTeleportTo(pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z(), m_creature->Where().Facing());
                     }
                     DoResetThreat();
 

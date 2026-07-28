@@ -184,7 +184,7 @@ struct npc_daphne_stilwell : public CreatureScript
             {
                 m_uiShootTimer = 1000;
 
-                if (!m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+                if (!InMeleeReach(*m_creature, *m_creature->getVictim()))
                 {
                     DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHOOT);
                 }

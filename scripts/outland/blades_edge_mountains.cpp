@@ -183,7 +183,7 @@ struct mobs_nether_drake : public CreatureScript
                             // take off to location above
                             m_creature->SetLevitate(true);
                             m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
-                            m_creature->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX() + 50.0f, m_creature->GetPositionY(), m_creature->GetPositionZ() + 50.0f);
+                            m_creature->GetMotionMaster()->MovePoint(1, m_creature->Where().X() + 50.0f, m_creature->Where().Y(), m_creature->Where().Z() + 50.0f);
                             break;
                     }
                     ++m_uiNihilSpeechPhase;
@@ -275,7 +275,7 @@ struct npc_daranelle : public CreatureScript
         {
             if (pWho->GetTypeId() == TYPEID_PLAYER)
             {
-                if (pWho->HasAura(SPELL_LASHHAN_CHANNEL, EFFECT_INDEX_0) && m_creature->IsWithinDistInMap(pWho, 10.0f))
+                if (pWho->HasAura(SPELL_LASHHAN_CHANNEL, EFFECT_INDEX_0) && InReach(*m_creature, *pWho, 10.0f))
                 {
                     DoScriptText(SAY_SPELL_INFLUENCE, m_creature, pWho);
 
@@ -332,7 +332,7 @@ struct npc_bloodmaul_stout_trigger : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (m_bHasValidOgre && pWho->GetObjectGuid() == m_selectedOgreGuid && m_creature->IsWithinDistInMap(pWho, 3.5f))
+            if (m_bHasValidOgre && pWho->GetObjectGuid() == m_selectedOgreGuid && InReach(*m_creature, *pWho, 3.5f))
             {
                 // This part it's not 100% accurate - most of it is guesswork
                 // Some animations or spells may be missing
@@ -401,7 +401,7 @@ struct npc_bloodmaul_stout_trigger : public CreatureScript
                     // Move ogre to the point
                     float fX, fY, fZ;
                     pOgre->GetMotionMaster()->MoveIdle();
-                    m_creature->GetContactPoint(pOgre, fX, fY, fZ);
+                    ContactPointNear(*m_creature, pOgre, fX, fY, fZ);
                     pOgre->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
 
                     switch (urand(0, 2))
@@ -672,7 +672,7 @@ struct npc_simon_game_bunny : public CreatureScript
                         if (Player* pMember = pRef->getSource())
                         {
                             // distance check - they need to be close to the Apexis
-                            if (!pMember->IsWithinDistInMap(m_creature, 20.0f))
+                            if (!InReach(*pMember, *m_creature, 20.0f))
                             {
                                 continue;
                             }

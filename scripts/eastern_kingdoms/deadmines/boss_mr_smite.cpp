@@ -149,7 +149,7 @@ struct boss_mr_smite : public CreatureScript
             m_uiPhase = PHASE_EQUIP_NULL;
 
             float fX, fY, fZ;
-            pChest->GetContactPoint(m_creature, fX, fY, fZ, CONTACT_DISTANCE);
+            ContactPointNear(*pChest, m_creature, fX, fY, fZ, CONTACT_DISTANCE);
 
             m_creature->GetMotionMaster()->Clear();
             m_creature->SetFacingToObject(pChest);

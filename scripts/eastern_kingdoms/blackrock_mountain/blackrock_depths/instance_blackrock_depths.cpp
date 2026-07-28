@@ -97,7 +97,7 @@ void instance_blackrock_depths::OnCreatureCreate(Creature* pCreature)
 
         case NPC_WARBRINGER_CONST:
             // Golems not in the Relict Vault?
-            if (std::abs(pCreature->GetPositionZ() - aVaultPositions[2]) > 1.0f || !pCreature->IsWithinDist2d(aVaultPositions[0], aVaultPositions[1], 20.0f))
+            if (std::abs(pCreature->Where().Z() - aVaultPositions[2]) > 1.0f || !pCreature->Where().WithinDist(Geometry::Vector2(aVaultPositions[0], aVaultPositions[1]), 20.0f))
             {
                 break;
             }
@@ -115,8 +115,8 @@ void instance_blackrock_depths::OnCreatureCreate(Creature* pCreature)
         case NPC_ANVILRAGE_SOLDIER:
         case NPC_ANVILRAGE_MEDIC:
         case NPC_ANVILRAGE_OFFICER:
-            if (pCreature->GetPositionZ() < aArenaCrowdVolume->m_fCenterZ || pCreature->GetPositionZ() > aArenaCrowdVolume->m_fCenterZ + aArenaCrowdVolume->m_uiHeight ||
-                !pCreature->IsWithinDist2d(aArenaCrowdVolume->m_fCenterX, aArenaCrowdVolume->m_fCenterY, aArenaCrowdVolume->m_uiRadius))
+            if (pCreature->Where().Z() < aArenaCrowdVolume->m_fCenterZ || pCreature->Where().Z() > aArenaCrowdVolume->m_fCenterZ + aArenaCrowdVolume->m_uiHeight ||
+                !pCreature->Where().WithinDist(Geometry::Vector2(aArenaCrowdVolume->m_fCenterX, aArenaCrowdVolume->m_fCenterY), aArenaCrowdVolume->m_uiRadius))
             {
                 break;
             }
@@ -511,7 +511,10 @@ void instance_blackrock_depths::SetData(uint32 uiType, uint32 uiData)
                         for (uint8 i = 0; i < MAX_CRONIES; ++i)
                         {
                             float fX, fY, fZ;
-                            pPlugger->GetRandomPoint(aHurleyPositions[0], aHurleyPositions[1], aHurleyPositions[2], 2.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*pPlugger, Geometry::Vector3(aHurleyPositions[0], aHurleyPositions[1], aHurleyPositions[2]), 2.0f);
+                            fX = randSpot3.x;
+                            fY = randSpot3.y;
+                            fZ = randSpot3.z;
                             Creature* pSummoned = pPlugger->SummonCreature(NPC_BLACKBREATH_CRONY, fX, fY, fZ, aHurleyPositions[3], TEMPSPAWN_DEAD_DESPAWN, 0);
                             pSummoned->SetWalk(false);
                             // The cronies should not engage anyone until their boss does so
@@ -679,7 +682,7 @@ void instance_blackrock_depths::HandleBarPatrons(uint8 uiEventType)
                 {
                     if (Creature* pPatron = instance->GetCreature(*itr))
                     {
-                        if (pPatron->GetPositionZ() > pGo->GetPositionZ() - 1 && pPatron->IsWithinDist2d(pGo->GetPositionX(), pGo->GetPositionY(), 18.0f))
+                        if (pPatron->Where().Z() > pGo->Where().Z() - 1 && pPatron->Where().WithinDist(Geometry::Vector2(pGo->Where().X(), pGo->Where().Y()), 18.0f))
                         {
                             int32 uiTextId = 0;
                             switch (urand(0, 4))
@@ -748,12 +751,18 @@ void instance_blackrock_depths::HandleBarPatrol(uint8 uiStep)
                 {
                     float fX, fY, fZ;
                     // spawn them behind the bar door
-                    pPlugger->GetRandomPoint(aBarPatrolPositions[0][0], aBarPatrolPositions[0][1], aBarPatrolPositions[0][2], 2.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*pPlugger, Geometry::Vector3(aBarPatrolPositions[0][0], aBarPatrolPositions[0][1], aBarPatrolPositions[0][2]), 2.0f);
+                    fX = randSpot2.x;
+                    fY = randSpot2.y;
+                    fZ = randSpot2.z;
                     if (Creature* pSummoned = pPlugger->SummonCreature(aBarPatrolId[i], fX, fY, fZ, aBarPatrolPositions[0][3], TEMPSPAWN_DEAD_DESPAWN, 0))
                     {
                         m_sBarPatrolGuids.insert(pSummoned->GetObjectGuid());
                         // move them to the Grim Guzzler
-                        pPlugger->GetRandomPoint(aBarPatrolPositions[1][0], aBarPatrolPositions[1][1], aBarPatrolPositions[1][2], 2.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pPlugger, Geometry::Vector3(aBarPatrolPositions[1][0], aBarPatrolPositions[1][1], aBarPatrolPositions[1][2]), 2.0f);
+                        fX = randSpot1.x;
+                        fY = randSpot1.y;
+                        fZ = randSpot1.z;
                         pSummoned->GetMotionMaster()->MoveIdle();
                         pSummoned->GetMotionMaster()->MovePoint(0,fX, fY, fZ);
                     }

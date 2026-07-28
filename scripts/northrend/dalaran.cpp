@@ -62,7 +62,7 @@ struct npc_dalaran_guardian_mage : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+            if (m_creature->Where().HeightGapTo(pWho->Where()) > CREATURE_Z_ATTACK_RANGE)
             {
                 return;
             }
@@ -74,17 +74,17 @@ struct npc_dalaran_guardian_mage : public CreatureScript
                     pWho->HasAura(SPELL_SUNREAVER_DISGUISE_1) || pWho->HasAura(SPELL_SUNREAVER_DISGUISE_2))
                     return;
 
-                if (m_creature->IsWithinDistInMap(pWho, m_creature->GetAttackDistance(pWho)) && m_creature->IsWithinLOSInMap(pWho))
+                if (InReach(*m_creature, *pWho, m_creature->GetAttackDistance(pWho)) && HasLineOfSight(*m_creature, *pWho))
                 {
                     if (Player* pPlayer = pWho->GetCharmerOrOwnerPlayerOrPlayerItself())
                     {
                         // it's mentioned that pet may also be teleported, if so, we need to tune script to apply to those in addition.
 
-                        if (pPlayer->GetAreaId() == AREA_ID_SILVER_ENCLAVE)
+                        if (pPlayer->GetTerrain()->GetAreaId(pPlayer->Where().X(), pPlayer->Where().Y(), pPlayer->Where().Z()) == AREA_ID_SILVER_ENCLAVE)
                         {
                             DoCastSpellIfCan(pPlayer, SPELL_TRESPASSER_A);
                         }
-                        else if (pPlayer->GetAreaId() == AREA_ID_SUNREAVER)
+                        else if (pPlayer->GetTerrain()->GetAreaId(pPlayer->Where().X(), pPlayer->Where().Y(), pPlayer->Where().Z()) == AREA_ID_SUNREAVER)
                         {
                             DoCastSpellIfCan(pPlayer, SPELL_TRESPASSER_H);
                         }

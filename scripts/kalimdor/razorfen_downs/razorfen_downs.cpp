@@ -134,7 +134,7 @@ struct npc_belnistrasz : public CreatureScript
         {
             if (m_uiRitualPhase > 7)
             {
-                pSummoner->SummonCreature(NPC_PLAGUEMAW_THE_ROTTING, pSummoner->GetPositionX(), pSummoner->GetPositionY(), pSummoner->GetPositionZ(), pSummoner->GetOrientation(), TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
+                pSummoner->SummonCreature(NPC_PLAGUEMAW_THE_ROTTING, pSummoner->Where().X(), pSummoner->Where().Y(), pSummoner->Where().Z(), pSummoner->Where().Facing(), TEMPSPAWN_TIMED_OOC_DESPAWN, 60000);
                 return;
             }
 
@@ -145,7 +145,7 @@ struct npc_belnistrasz : public CreatureScript
                 // ref TARGET_RANDOM_CIRCUMFERENCE_POINT
                 float angle = 2.0f * M_PI_F * rand_norm_f();
                 float fX, fZ, fY;
-                pSummoner->GetClosePoint(fX, fZ, fY, 0.0f, 2.0f, angle);
+                ClosePointNear(*pSummoner, fX, fZ, fY, 0.0f, 2.0f, angle);
 
                 switch (i)
                 {

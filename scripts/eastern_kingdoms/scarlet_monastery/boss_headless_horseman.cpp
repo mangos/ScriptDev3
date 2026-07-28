@@ -246,7 +246,10 @@ struct boss_headless_horseman : public CreatureScript
             if (m_creature->HasAura(SPELL_BODY_STAGE_1))
             {
                 float fX, fY, fZ;
-                m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 15.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 15.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 m_creature->SummonCreature(NPC_HEAD_OF_HORSEMAN, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
             }
 
@@ -474,7 +477,7 @@ struct boss_head_of_horseman : public CreatureScript
 
                 // run around the graveyard
                 m_creature->SetWalk(false);
-                m_creature->GetMotionMaster()->MoveRandomAroundPoint(pInvoker->GetPositionX(), pInvoker->GetPositionY(), pInvoker->GetPositionZ(), 40.0f);
+                m_creature->GetMotionMaster()->MoveRandomAroundPoint(pInvoker->Where().X(), pInvoker->Where().Y(), pInvoker->Where().Z(), 40.0f);
             }
             // rejoin head by force - body healed
             else if (eventType == AI_EVENT_CUSTOM_B)

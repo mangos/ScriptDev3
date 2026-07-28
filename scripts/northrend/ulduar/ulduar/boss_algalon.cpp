@@ -206,7 +206,7 @@ struct boss_algalon : public CreatureScript
             m_bEventFinished = false;
 
             // start intro event on first spawn
-            if (pCreature->GetPositionZ() > 450.0f)
+            if (pCreature->Where().Z() > 450.0f)
             {
                 DoStartIntroEvent();
             }
@@ -362,7 +362,7 @@ struct boss_algalon : public CreatureScript
                 case NPC_COLLAPSING_STAR:
                     // cast Collapse and move around spawn point
                     pSummoned->CastSpell(pSummoned, SPELL_COLLAPSE, true);
-                    pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 30.0f);
+                    pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->Where().X(), pSummoned->Where().Y(), pSummoned->Where().Z(), 30.0f);
                     ++m_uiActiveStars;
                     m_lSummonedGuids.push_back(pSummoned->GetObjectGuid());
                     break;
@@ -412,7 +412,7 @@ struct boss_algalon : public CreatureScript
             StartNextDialogueText(SAY_INTRO_1);
             m_creature->SetLevitate(false);
             m_creature->RemoveAurasDueToSpell(SPELL_RIDE_LIGHTNING);
-            m_creature->SetRespawnCoord(afAlgalonMovePos[0], afAlgalonMovePos[1], afAlgalonMovePos[2], afAlgalonMovePos[3]);
+            m_creature->SetSpawn(Geometry::Vector3(afAlgalonMovePos[0], afAlgalonMovePos[1], afAlgalonMovePos[2]), afAlgalonMovePos[3]);
         }
 
         void JustDidDialogueStep(int32 iEntry) override
@@ -514,7 +514,10 @@ struct boss_algalon : public CreatureScript
         void DoSpawnCollapsingStar()
         {
             float fX, fY, fZ;
-            m_creature->GetRandomPoint(afAlgalonMovePos[0], afAlgalonMovePos[1], afAlgalonMovePos[2], 30.0f, fX, fY, fZ);
+            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(afAlgalonMovePos[0], afAlgalonMovePos[1], afAlgalonMovePos[2]), 30.0f);
+            fX = randSpot1.x;
+            fY = randSpot1.y;
+            fZ = randSpot1.z;
             m_creature->SummonCreature(NPC_COLLAPSING_STAR, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
         }
 
@@ -818,7 +821,7 @@ struct npc_black_hole : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // despawn when a Living Constellation is nearby
-            if (!m_bIsDespawned && pWho->GetEntry() == NPC_LIVING_CONSTELLATION && pWho->IsWithinDistInMap(m_creature, 6.0f))
+            if (!m_bIsDespawned && pWho->GetEntry() == NPC_LIVING_CONSTELLATION && InReach(*pWho, *m_creature, 6.0f))
             {
                 DoCastSpellIfCan(m_creature, SPELL_BLACK_HOLE_CREDIT, CAST_TRIGGERED);
                 pWho->CastSpell(m_creature, SPELL_BLACK_HOLE_DESPAWN, true);

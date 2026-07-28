@@ -379,7 +379,7 @@ struct npc_squire_rowe : public CreatureScript
                     if (Creature* pWindsor = m_creature->GetMap()->GetCreature(m_windsorGuid))
                     {
                         pWindsor->Unmount();
-                        m_creature->SummonCreature(NPC_WINDSOR_MOUNT, pWindsor->GetPositionX() - 1.0f, pWindsor->GetPositionY() + 1.0f, pWindsor->GetPositionZ(), pWindsor->GetOrientation(), TEMPSPAWN_TIMED_DESPAWN, 30000);
+                        m_creature->SummonCreature(NPC_WINDSOR_MOUNT, pWindsor->Where().X() - 1.0f, pWindsor->Where().Y() + 1.0f, pWindsor->Where().Z(), pWindsor->Where().Facing(), TEMPSPAWN_TIMED_DESPAWN, 30000);
                     }
                     break;
                 case SAY_DISMOUNT:
@@ -689,8 +689,8 @@ struct npc_reginald_windsor : public CreatureScript
         {
             // Note: this implementation is not the best; It should be better handled by the guard script
             if (m_bCanGuardSalute && (pWho->GetEntry() == NPC_GUARD_CITY || pWho->GetEntry() == NPC_GUARD_ROYAL ||
-                pWho->GetEntry() == NPC_GUARD_PATROLLER) && pWho->IsWithinDistInMap(m_creature, 15.0f) &&
-                m_sGuardsSalutedGuidSet.find(pWho->GetObjectGuid()) == m_sGuardsSalutedGuidSet.end() && pWho->IsWithinLOSInMap(m_creature))
+                pWho->GetEntry() == NPC_GUARD_PATROLLER) && InReach(*pWho, *m_creature, 15.0f) &&
+                m_sGuardsSalutedGuidSet.find(pWho->GetObjectGuid()) == m_sGuardsSalutedGuidSet.end() && HasLineOfSight(*pWho, *m_creature))
             {
                 DoScriptText(aGuardSalute[urand(0, MAX_GUARD_SALUTES - 1)], pWho);
                 m_sGuardsSalutedGuidSet.insert(pWho->GetObjectGuid());

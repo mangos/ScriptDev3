@@ -589,7 +589,10 @@ struct npc_keeper_remulos : public CreatureScript
                     {
                         for (uint8 i = 0; i < MAX_SHADOWS; ++i)
                         {
-                            m_creature->GetRandomPoint(aShadowsLocations[uiSummonPoint].m_fX, aShadowsLocations[uiSummonPoint].m_fY, aShadowsLocations[uiSummonPoint].m_fZ, 10.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aShadowsLocations[uiSummonPoint].m_fX, aShadowsLocations[uiSummonPoint].m_fY, aShadowsLocations[uiSummonPoint].m_fZ), 10.0f);
+                            fX = randSpot3.x;
+                            fY = randSpot3.y;
+                            fZ = randSpot3.z;
                             m_creature->SummonCreature(NPC_NIGHTMARE_PHANTASM, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
                         }
 
@@ -824,7 +827,10 @@ struct boss_eranikus : public CreatureScript
             float fX, fY, fZ;
             for (uint8 j = 0; j < MAX_PRIESTESS; ++j)
             {
-                m_creature->GetRandomPoint(aTyrandeLocations[0].m_fX, aTyrandeLocations[0].m_fY, aTyrandeLocations[0].m_fZ, 10.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aTyrandeLocations[0].m_fX, aTyrandeLocations[0].m_fY, aTyrandeLocations[0].m_fZ), 10.0f);
+                fX = randSpot2.x;
+                fY = randSpot2.y;
+                fZ = randSpot2.z;
                 m_creature->SummonCreature(NPC_ELUNE_PRIESTESS, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
             }
         }
@@ -842,7 +848,10 @@ struct boss_eranikus : public CreatureScript
                     m_lPriestessList.push_back(pSummoned->GetObjectGuid());
                     float fX, fY, fZ;
                     pSummoned->SetWalk(false);
-                    m_creature->GetRandomPoint(aTyrandeLocations[1].m_fX, aTyrandeLocations[1].m_fY, aTyrandeLocations[1].m_fZ, 10.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aTyrandeLocations[1].m_fX, aTyrandeLocations[1].m_fY, aTyrandeLocations[1].m_fZ), 10.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     pSummoned->GetMotionMaster()->MovePoint(POINT_ID_TYRANDE_HEAL, fX, fY, fZ);
                     break;
             }

@@ -87,7 +87,7 @@ struct npc_aged_dying_ancient_kodo : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (pWho->GetEntry() == NPC_SMEED && m_creature->IsWithinDistInMap(pWho, 10.0f) && !m_creature->HasAura(SPELL_KODO_KOMBO_GOSSIP))
+            if (pWho->GetEntry() == NPC_SMEED && InReach(*m_creature, *pWho, 10.0f) && !m_creature->HasAura(SPELL_KODO_KOMBO_GOSSIP))
             {
                 switch (urand(0, 2))
                 {
@@ -356,7 +356,10 @@ struct npc_melizza_brimbuzzle : public CreatureScript
                         {
                             // Summon 2 Marauders on each point
                             float fX, fY, fZ;
-                            m_creature->GetRandomPoint(aMarauderSpawn[i].m_fX, aMarauderSpawn[i].m_fY, aMarauderSpawn[i].m_fZ, 7.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot5 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aMarauderSpawn[i].m_fX, aMarauderSpawn[i].m_fY, aMarauderSpawn[i].m_fZ), 7.0f);
+                            fX = randSpot5.x;
+                            fY = randSpot5.y;
+                            fZ = randSpot5.z;
                             m_creature->SummonCreature(NPC_MARAUDINE_MARAUDER, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
                         }
                     }
@@ -365,10 +368,16 @@ struct npc_melizza_brimbuzzle : public CreatureScript
                     for (uint8 i = 0; i < MAX_WRANGLERS; ++i)
                     {
                         float fX, fY, fZ;
-                        m_creature->GetRandomPoint(wranglerSpawn.m_fX, wranglerSpawn.m_fY, wranglerSpawn.m_fZ, 10.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot4 = RandomGroundPointNear(*m_creature, Geometry::Vector3(wranglerSpawn.m_fX, wranglerSpawn.m_fY, wranglerSpawn.m_fZ), 10.0f);
+                        fX = randSpot4.x;
+                        fY = randSpot4.y;
+                        fZ = randSpot4.z;
                         m_creature->SummonCreature(NPC_MARAUDINE_BONEPAW, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
 
-                        m_creature->GetRandomPoint(wranglerSpawn.m_fX, wranglerSpawn.m_fY, wranglerSpawn.m_fZ, 10.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*m_creature, Geometry::Vector3(wranglerSpawn.m_fX, wranglerSpawn.m_fY, wranglerSpawn.m_fZ), 10.0f);
+                        fX = randSpot3.x;
+                        fY = randSpot3.y;
+                        fZ = randSpot3.z;
                         m_creature->SummonCreature(NPC_MARAUDINE_WRANGLER, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
                     break;
@@ -541,7 +550,10 @@ struct npc_cork_gizelton : public CreatureScript
                     for (uint8 i = 0; i < 4; ++i)
                     {
                         float fX, fY, fZ;
-                        m_creature->GetRandomPoint(aAmbushLocsBodyGuard[i + 4 * uiAmbushPoint].m_fX, aAmbushLocsBodyGuard[i + 4 * uiAmbushPoint].m_fY, aAmbushLocsBodyGuard[i + 4 * uiAmbushPoint].m_fZ, 7.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aAmbushLocsBodyGuard[i + 4 * uiAmbushPoint].m_fX, aAmbushLocsBodyGuard[i + 4 * uiAmbushPoint].m_fY, aAmbushLocsBodyGuard[i + 4 * uiAmbushPoint].m_fZ), 7.0f);
+                        fX = randSpot2.x;
+                        fY = randSpot2.y;
+                        fZ = randSpot2.z;
                         m_creature->SummonCreature(AmbushersBodyguard[i], fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
                     break;
@@ -550,7 +562,10 @@ struct npc_cork_gizelton : public CreatureScript
                     for (uint8 i = 0; i < 3; ++i)
                     {
                         float fX, fY, fZ;
-                        m_creature->GetRandomPoint(aAmbushLocsGizelton[i + 3 * uiAmbushPoint].m_fX, aAmbushLocsGizelton[i + 3 * uiAmbushPoint].m_fY, aAmbushLocsGizelton[i + 3 * uiAmbushPoint].m_fZ, 7.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aAmbushLocsGizelton[i + 3 * uiAmbushPoint].m_fX, aAmbushLocsGizelton[i + 3 * uiAmbushPoint].m_fY, aAmbushLocsGizelton[i + 3 * uiAmbushPoint].m_fZ), 7.0f);
+                        fX = randSpot1.x;
+                        fY = randSpot1.y;
+                        fZ = randSpot1.z;
                         m_creature->SummonCreature(AmbushersGizleton[i], fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
                     break;

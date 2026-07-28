@@ -94,7 +94,7 @@ struct map_ebon_hold : public ZoneScript
                 case NPC_FLESH_BEHEMOTH:
                 case NPC_RAMPAGING_ABOMINATION:
                     m_lArmyGuids.remove(pCreature->GetObjectGuid());// if remove respawning on reset won't work! (are there any spawned by default?) ?? - unclear related to ResetBattle()
-                    if (Creature* pTemp = pCreature->SummonCreature(pCreature->GetEntry(), pCreature->GetPositionX(), pCreature->GetPositionY(), pCreature->GetPositionZ(), pCreature->GetOrientation(), TEMPSPAWN_CORPSE_DESPAWN, 0))
+                    if (Creature* pTemp = pCreature->SummonCreature(pCreature->GetEntry(), pCreature->Where().X(), pCreature->Where().Y(), pCreature->Where().Z(), pCreature->Where().Facing(), TEMPSPAWN_CORPSE_DESPAWN, 0))
                     {
                         // the new summoned mob should attack
                         Creature* pDarion = GetSingleCreatureFromStorage(NPC_HIGHLORD_DARION_MOGRAINE);
@@ -321,7 +321,10 @@ struct map_ebon_hold : public ZoneScript
                     if (Creature* pTemp = instance->GetCreature(*itr))
                     {
                         pTemp->SetWalk(false);
-                        pTemp->GetRandomPoint(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ, 30.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pTemp, Geometry::Vector3(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ), 30.0f);
+                        fX = randSpot1.x;
+                        fY = randSpot1.y;
+                        fZ = randSpot1.z;
                         pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                     }
                 }

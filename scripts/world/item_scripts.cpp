@@ -154,7 +154,7 @@ struct item_ogre_brew : public ItemScript
     bool OnUse(Player* pPlayer, Item* pItem, const SpellCastTargets&) override
     {
         uint32 itemId = pItem->GetEntry();
-        uint32 pZoneId = pPlayer->GetZoneId();
+        uint32 pZoneId = pPlayer->GetTerrain()->GetZoneId(pPlayer->Where().X(), pPlayer->Where().Y(), pPlayer->Where().Z());
 
         if (itemId == BLUE_OGRE_BREW || itemId == RED_OGRE_BREW)    //an excessive check of DB sanity, may be dropped
         {
@@ -287,12 +287,12 @@ struct item_petrov_cluster_bombs : public ItemScript
 
     bool OnUse(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
     {
-        if (pPlayer->GetZoneId() != ZONE_ID_HOWLING)
+        if (pPlayer->GetTerrain()->GetZoneId(pPlayer->Where().X(), pPlayer->Where().Y(), pPlayer->Where().Z()) != ZONE_ID_HOWLING)
         {
             return false;
         }
 
-        if (!pPlayer->GetTransport() || pPlayer->GetAreaId() != AREA_ID_SHATTERED_STRAITS)
+        if (!pPlayer->GetTransport() || pPlayer->GetTerrain()->GetAreaId(pPlayer->Where().X(), pPlayer->Where().Y(), pPlayer->Where().Z()) != AREA_ID_SHATTERED_STRAITS)
         {
             pPlayer->SendEquipError(EQUIP_ERR_NONE, pItem, nullptr);
 

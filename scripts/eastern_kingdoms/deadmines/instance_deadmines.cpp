@@ -237,13 +237,13 @@ struct is_deadmines : public InstanceScript
                                     if (Creature* pi1 = GetClosestCreatureWithEntry(pDoor, NPC_PIRATE, 40.0f))
                                     {
                                         pi1->SetWalk(false);
-                                        pi1->GetMotionMaster()->MovePoint(0, pDoor->GetPositionX(), pDoor->GetPositionY(), pDoor->GetPositionZ());
+                                        pi1->GetMotionMaster()->MovePoint(0, pDoor->Where().X(), pDoor->Where().Y(), pDoor->Where().Z());
                                     }
 
                                     if (Creature* pi2 = GetClosestCreatureWithEntry(pDoor, NPC_SQUALLSHAPER, 40.0f))
                                     {
                                         pi2->SetWalk(false);
-                                        pi2->GetMotionMaster()->MovePoint(0, pDoor->GetPositionX(), pDoor->GetPositionY(), pDoor->GetPositionZ());
+                                        pi2->GetMotionMaster()->MovePoint(0, pDoor->Where().X(), pDoor->Where().Y(), pDoor->Where().Z());
                                     }
                                 }
 

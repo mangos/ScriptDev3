@@ -140,8 +140,11 @@ struct boss_akilzon : public CreatureScript
             for (uint32 i = 0; i < MAX_EAGLE_COUNT; ++i)
             {
                 float fX, fY, fZ;
-                m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f, 30.0f, fX, fY, fZ);
-                m_creature->SummonCreature(NPC_SOARING_EAGLE, fX, fY, fZ, m_creature->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 15.0f), 30.0f);
+                fX = randSpot2.x;
+                fY = randSpot2.y;
+                fZ = randSpot2.z;
+                m_creature->SummonCreature(NPC_SOARING_EAGLE, fX, fY, fZ, m_creature->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
             }
         }
 
@@ -307,7 +310,10 @@ struct mob_soaring_eagle : public CreatureScript
             if (Creature* pAzkil = m_pInstance->GetSingleCreatureFromStorage(NPC_AKILZON))
             {
                 float fX, fY, fZ;
-                pAzkil->GetRandomPoint(pAzkil->GetPositionX(), pAzkil->GetPositionY(), pAzkil->GetPositionZ() + 15.0f, 30.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pAzkil, Geometry::Vector3(pAzkil->Where().X(), pAzkil->Where().Y(), pAzkil->Where().Z() + 15.0f), 30.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
 
                 m_creature->SetWalk(false);
                 m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);

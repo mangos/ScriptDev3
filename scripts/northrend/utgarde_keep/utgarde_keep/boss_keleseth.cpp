@@ -367,7 +367,9 @@ struct boss_keleseth : public CreatureScript
                 {
                     // DoCastSpellIfCan(pTombTarget, SPELL_SUMMON_FROST_TOMB);
                     float fPosX, fPosY, fPosZ;
-                    pTombTarget->GetPosition(fPosX, fPosY, fPosZ);
+                    fPosX = pTombTarget->Where().X();
+                    fPosY = pTombTarget->Where().Y();
+                    fPosZ = pTombTarget->Where().Z();
 
                     if (Creature* pFrostTomb = m_creature->SummonCreature(NPC_FROST_TOMB, fPosX, fPosY, fPosZ, 0, TEMPSPAWN_TIMED_DESPAWN, 20000))
                     {

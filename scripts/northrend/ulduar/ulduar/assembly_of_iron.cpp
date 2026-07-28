@@ -313,7 +313,7 @@ struct boss_brundir : public CreatureScript
             if (pTarget)
             {
                 m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MovePoint(0, pTarget->GetPositionX(), pTarget->GetPositionY(), m_creature->GetPositionZ());
+                m_creature->GetMotionMaster()->MovePoint(0, pTarget->Where().X(), pTarget->Where().Y(), m_creature->Where().Z());
             }
         }
 
@@ -352,7 +352,7 @@ struct boss_brundir : public CreatureScript
                             DoScriptText(SAY_BRUNDIR_FLY, m_creature);
                             SetCombatMovement(false);
                             m_creature->SetLevitate(true);
-                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_LIFT_OFF, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f);
+                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_LIFT_OFF, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 15.0f);
                             m_uiTendrilsTimer = 90000;
                             m_uiTendrilsEndTimer = 25000;
                         }
@@ -367,8 +367,8 @@ struct boss_brundir : public CreatureScript
                         if (m_uiTendrilsEndTimer <= uiDiff)
                         {
                             // Get proper Z position and land
-                            float fZ = m_creature->GetTerrain()->GetWaterOrGroundLevel(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
-                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_creature->GetPositionX(), m_creature->GetPositionY(), fZ);
+                            float fZ = m_creature->GetTerrain()->GetWaterOrGroundLevel(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
+                            m_creature->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_creature->Where().X(), m_creature->Where().Y(), fZ);
                             m_uiOverloadTimer = 40000;
                             m_uiWhirlTimer = 15000;
                             m_uiChainLightningTimer = 3000;

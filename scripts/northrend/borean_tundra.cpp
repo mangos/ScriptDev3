@@ -90,7 +90,7 @@ struct npc_nesingwary_trapper : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_uiPhase && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 20.0f))
+            if (!m_uiPhase && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 20.0f))
             {
                 m_uiPhase = 1;
                 m_uiPhaseTimer = 1000;
@@ -144,7 +144,7 @@ struct npc_nesingwary_trapper : public CreatureScript
                             if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
                             {
                                 float fX, fY, fZ;
-                                pTrap->GetContactPoint(m_creature, fX, fY, fZ);
+                                ContactPointNear(*pTrap, m_creature, fX, fY, fZ);
 
                                 m_creature->SetWalk(false);
                                 m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
@@ -298,7 +298,7 @@ struct spell_throw_wolf_batt : public SpellScript
                 pCreatureTarget->GetMotionMaster()->MoveIdle();
 
                 float fX, fY, fZ;
-                pCaster->GetContactPoint(pCreatureTarget, fX, fY, fZ, CONTACT_DISTANCE);
+                ContactPointNear(*pCaster, pCreatureTarget, fX, fY, fZ, CONTACT_DISTANCE);
                 pCreatureTarget->GetMotionMaster()->MovePoint(POINT_DEST, fX, fY, fZ);
                 return true;
             }
@@ -672,7 +672,7 @@ struct aura_arcane_chains_cancel : public AuraScript
 
             // follow the caster
             ((Player*)pCaster)->KilledMonsterCredit(NPC_CAPTURED_BERYL_SORCERER);
-            pCreature->GetMotionMaster()->MoveFollow(pCaster, pCreature->GetDistance(pCaster), M_PI_F - pCreature->GetAngle(pCaster));
+            pCreature->GetMotionMaster()->MoveFollow(pCaster, pCreature->Where().DistanceTo(pCaster->Where()), M_PI_F - pCreature->Where().BearingTo(pCaster->Where()));
             return true;
         }
 
@@ -754,7 +754,7 @@ struct npc_nexus_drake_hatchling : public CreatureScript
                 return;
             }
 
-            if (pWho->GetEntry() == NPC_COLDARRA_DRAKE_HUNT_INVISMAN && m_creature->IsWithinDistInMap(pWho, 20.0f))
+            if (pWho->GetEntry() == NPC_COLDARRA_DRAKE_HUNT_INVISMAN && InReach(*m_creature, *pWho, 20.0f))
             {
                 Player* pPlayer = GetLeaderForFollower();
                 if (!pPlayer || !pPlayer->HasAura(SPELL_DRAKE_HATCHLING_SUBDUED))
@@ -981,7 +981,7 @@ struct spell_drake_turn_in : public SpellScript
             // Inform Raelorasz and move in front of him
             pCreatureTarget->CastSpell(pRaelorasz, SPELL_DRAKE_COMPLETION_PING, true);
             float fX, fY, fZ;
-            pRaelorasz->GetContactPoint(pCreatureTarget, fX, fY, fZ, CONTACT_DISTANCE);
+            ContactPointNear(*pRaelorasz, pCreatureTarget, fX, fY, fZ, CONTACT_DISTANCE);
             pCreatureTarget->GetMotionMaster()->Clear(true, true);
             pCreatureTarget->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
         }
@@ -1141,8 +1141,8 @@ struct aura_reinforced_net : public AuraScript
             pCreature->GetMotionMaster()->Clear();
             pCreature->SetWalk(false);
 
-            float fGroundZ = pCreature->GetMap()->GetHeight(pCreature->GetPhaseMask(), pCreature->GetPositionX(), pCreature->GetPositionY(), pCreature->GetPositionZ());
-            pCreature->GetMotionMaster()->MovePoint(1, pCreature->GetPositionX(), pCreature->GetPositionY(), fGroundZ);
+            float fGroundZ = pCreature->GetMap()->GetHeight(pCreature->GetPhaseMask(), pCreature->Where().X(), pCreature->Where().Y(), pCreature->Where().Z());
+            pCreature->GetMotionMaster()->MovePoint(1, pCreature->Where().X(), pCreature->Where().Y(), fGroundZ);
             return true;
         }
 
@@ -1304,14 +1304,14 @@ struct npc_jenny : public CreatureScript
                 return;
             }
 
-            if (pWho->GetEntry() == NPC_FEZZIX && m_creature->IsWithinDistInMap(pWho, 10.0f))
+            if (pWho->GetEntry() == NPC_FEZZIX && InReach(*m_creature, *pWho, 10.0f))
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_JENNY_CREDIT) == CAST_OK)
                 {
                     SetFollowComplete(true);
 
                     float fX, fY, fZ;
-                    pWho->GetContactPoint(m_creature, fX, fY, fZ);
+                    ContactPointNear(*pWho, m_creature, fX, fY, fZ);
                     m_creature->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                     m_creature->ForcedDespawn(15000);
 

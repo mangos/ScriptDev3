@@ -100,7 +100,7 @@ struct is_serpentshrine_cavern : public InstanceScript
                     case NPC_VASHJIR_HONOR_GUARD:
                     case NPC_GREYHEART_TECHNICIAN:
                         // Filter only the mobs spawned on the platforms
-                        if (pCreature->GetPositionZ() > 0)
+                        if (pCreature->Where().Z() > 0)
                         {
                             m_sPlatformMobsGUIDSet.insert(pCreature->GetObjectGuid());
                         }

@@ -227,7 +227,7 @@ struct boss_ionar : public CreatureScript
                             pSparkAI->SetCombatMovement(false);
                         }
 
-                        pSpark->GetMotionMaster()->MovePoint(POINT_CALLBACK, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                        pSpark->GetMotionMaster()->MovePoint(POINT_CALLBACK, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
                     }
                 }
             }

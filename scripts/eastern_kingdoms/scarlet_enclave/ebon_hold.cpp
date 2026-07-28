@@ -212,7 +212,7 @@ struct npc_a_special_surprise : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (m_playerGuid || pWho->GetTypeId() != TYPEID_PLAYER || !pWho->IsWithinDist(m_creature, INTERACTION_DISTANCE))
+            if (m_playerGuid || pWho->GetTypeId() != TYPEID_PLAYER || !pWho->Where().WithinDist(m_creature->Where(), INTERACTION_DISTANCE))
             {
                 return;
             }
@@ -1555,7 +1555,10 @@ struct npc_scarlet_ghoul : public CreatureScript
                 }
 
                 float fX, fY, fZ;
-                m_creature->GetRandomPoint(aPitPosition[0], aPitPosition[1], aPitPosition[2], 10.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot9 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aPitPosition[0], aPitPosition[1], aPitPosition[2]), 10.0f);
+                fX = randSpot9.x;
+                fY = randSpot9.y;
+                fZ = randSpot9.z;
                 m_bIsJumping = true;
                 m_creature->GetMotionMaster()->MoveJump(fX, fY, fZ, 24.21229f, 6.0f, 1);
             }
@@ -1918,7 +1921,10 @@ struct npc_highlord_darion_mograine : public CreatureScript
                         for (uint8 i = 0; i < MAX_WARRIORS_SUMMONED_PER_TURN + 1; ++i)
                         {
                             uint32 uiSummonEntry = urand(0, 1) ? NPC_VOLATILE_GHOUL : NPC_WARRIOR_OF_THE_FROZEN_WASTES;
-                            m_creature->GetRandomPoint(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ, 30.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot8 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ), 30.0f);
+                            fX = randSpot8.x;
+                            fY = randSpot8.y;
+                            fZ = randSpot8.z;
                             m_creature->SummonCreature(uiSummonEntry, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 5000);
                         }
                     }
@@ -1938,7 +1944,10 @@ struct npc_highlord_darion_mograine : public CreatureScript
                         float fX, fY, fZ;
                         for (uint8 i = 0; i < MAX_WARRIORS_SUMMONED_PER_TURN; i++)
                         {
-                            m_creature->GetRandomPoint(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ, 30.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot7 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ), 30.0f);
+                            fX = randSpot7.x;
+                            fY = randSpot7.y;
+                            fZ = randSpot7.z;
                             m_creature->SummonCreature(NPC_DEFENDER_OF_THE_LIGHT, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 5000);
                         }
                     }
@@ -2119,7 +2128,10 @@ struct npc_highlord_darion_mograine : public CreatureScript
                     float fX, fY, fZ;
                     for (uint8 i = 0; i < 5 * MAX_WARRIORS_SUMMONED_PER_TURN; ++i)
                     {
-                        m_creature->GetRandomPoint(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ, 30.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot6 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ), 30.0f);
+                        fX = randSpot6.x;
+                        fY = randSpot6.y;
+                        fZ = randSpot6.z;
                         m_creature->SummonCreature(NPC_DEFENDER_OF_THE_LIGHT, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 5000);
                     }
                     break;
@@ -2234,7 +2246,7 @@ struct npc_highlord_darion_mograine : public CreatureScript
             for (Map::PlayerList::const_iterator itr = PlayerList.begin(); itr != PlayerList.end(); ++itr)
             {
                 Player* pPlayer = itr->getSource();
-                if (pPlayer && pPlayer->GetQuestStatus(QUEST_ID_LIGHT_OF_DAWN) == QUEST_STATUS_INCOMPLETE && pPlayer->IsAlive() && m_creature->IsWithinDistInMap(pPlayer, 50.0f))
+                if (pPlayer && pPlayer->GetQuestStatus(QUEST_ID_LIGHT_OF_DAWN) == QUEST_STATUS_INCOMPLETE && pPlayer->IsAlive() && InReach(*m_creature, *pPlayer, 50.0f))
                 {
                     pPlayer->CastSpell(pPlayer, SPELL_THE_LIGHT_OF_DAWN_CREDIT, true);
                 }
@@ -2313,7 +2325,10 @@ struct npc_highlord_darion_mograine : public CreatureScript
                                 for (uint8 i = 0; i < MAX_WARRIORS_SUMMONED_PER_TURN; ++i)
                                 {
                                     uint32 uiSummonEntry = urand(0, 1) ? NPC_VOLATILE_GHOUL : NPC_WARRIOR_OF_THE_FROZEN_WASTES;
-                                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 50.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot5 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 50.0f);
+                                    fX = randSpot5.x;
+                                    fY = randSpot5.y;
+                                    fZ = randSpot5.z;
                                     m_creature->SummonCreature(uiSummonEntry, fX, fY, fZ, 4.7f, TEMPSPAWN_CORPSE_DESPAWN, 0);
                                 }
                                 m_uiEventTimer = 6000;
@@ -2345,19 +2360,28 @@ struct npc_highlord_darion_mograine : public CreatureScript
                                 if (Creature* pKoltira = m_pInstance->GetSingleCreatureFromStorage(NPC_KOLTIRA_DEATHWEAVER))
                                 {
                                     pKoltira->SetWalk(false);
-                                    m_creature->GetRandomPoint(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ, 30.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot4 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ), 30.0f);
+                                    fX = randSpot4.x;
+                                    fY = randSpot4.y;
+                                    fZ = randSpot4.z;
                                     pKoltira->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                 }
                                 if (Creature* pThassarian = m_pInstance->GetSingleCreatureFromStorage(NPC_THASSARIAN))
                                 {
                                     pThassarian->SetWalk(false);
-                                    m_creature->GetRandomPoint(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ, 30.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ), 30.0f);
+                                    fX = randSpot3.x;
+                                    fY = randSpot3.y;
+                                    fZ = randSpot3.z;
                                     pThassarian->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                 }
                                 if (Creature* pOrbaz = m_pInstance->GetSingleCreatureFromStorage(NPC_ORBAZ_BLOODBANE))
                                 {
                                     pOrbaz->SetWalk(false);
-                                    m_creature->GetRandomPoint(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ, 30.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ), 30.0f);
+                                    fX = randSpot2.x;
+                                    fY = randSpot2.y;
+                                    fZ = randSpot2.z;
                                     pOrbaz->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                 }
 
@@ -2367,7 +2391,10 @@ struct npc_highlord_darion_mograine : public CreatureScript
                                     if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
                                     {
                                         pTemp->SetWalk(false);
-                                        m_creature->GetRandomPoint(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ, 30.0f, fX, fY, fZ);
+                                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ), 30.0f);
+                                        fX = randSpot1.x;
+                                        fY = randSpot1.y;
+                                        fZ = randSpot1.z;
                                         pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                     }
                                 }
@@ -2483,7 +2510,7 @@ struct npc_highlord_darion_mograine : public CreatureScript
                                     pTirion->SetWalk(true);
                                     if (GameObject* pLight = m_pInstance->GetSingleGameObjectFromStorage(GO_LIGHT_OF_DAWN))
                                     {
-                                        pTirion->GetMotionMaster()->MovePoint(POINT_MOVE_OTHER, pLight->GetPositionX(), pLight->GetPositionY(), pLight->GetPositionZ());
+                                        pTirion->GetMotionMaster()->MovePoint(POINT_MOVE_OTHER, pLight->Where().X(), pLight->Where().Y(), pLight->Where().Z());
                                     }
                                 }
                                 m_uiEventTimer = 15000;
@@ -2620,7 +2647,7 @@ struct npc_highlord_darion_mograine : public CreatureScript
                                 if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(NPC_THE_LICH_KING))
                                 {
                                     float fX, fY, fZ;
-                                    pLichKing->GetContactPoint(m_creature, fX, fY, fZ);
+                                    ContactPointNear(*pLichKing, m_creature, fX, fY, fZ);
                                     for (GuidList::const_iterator itr = m_lDefendersGUIDs.begin(); itr != m_lDefendersGUIDs.end(); ++itr)
                                     {
                                         if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
@@ -2798,7 +2825,7 @@ struct npc_highlord_darion_mograine : public CreatureScript
                                 {
                                     float fX, fY, fZ;
                                     pTirion->SetWalk(false);
-                                    m_creature->GetContactPoint(pTirion, fX, fY, fZ, INTERACTION_DISTANCE);
+                                    ContactPointNear(*m_creature, pTirion, fX, fY, fZ, INTERACTION_DISTANCE);
                                     pTirion->GetMotionMaster()->MovePoint(POINT_MOVE_OTHER, fX, fY, fZ);
                                 }
                                 // make champions stand
@@ -3021,7 +3048,7 @@ struct npc_highlord_darion_mograine : public CreatureScript
                     }
 
                     // make sure that darion always stays in the area
-                    if (!m_creature->IsWithinDist2d(aEventLocations[1].m_fX, aEventLocations[1].m_fY, 50.0f))
+                    if (!m_creature->Where().WithinDist(Geometry::Vector2(aEventLocations[1].m_fX, aEventLocations[1].m_fY), 50.0f))
                     {
                         SetCombatMovement(false);
                         m_creature->GetMotionMaster()->MovePoint(POINT_MOVE_RETURN_BATTLE, aEventLocations[1].m_fX, aEventLocations[1].m_fY, aEventLocations[1].m_fZ);
@@ -3402,7 +3429,7 @@ struct npc_acherus_deathcharger : public CreatureScript
             if (pSummoned->GetEntry() == NPC_SALANAR_THE_HORSEMAN)
             {
                 float fX, fY, fZ;
-                m_creature->GetContactPoint(pSummoned, fX, fY, fZ, INTERACTION_DISTANCE);
+                ContactPointNear(*m_creature, pSummoned, fX, fY, fZ, INTERACTION_DISTANCE);
                 pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
 
                 m_salaranGuid = pSummoned->GetObjectGuid();

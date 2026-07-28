@@ -304,7 +304,7 @@ struct mob_steamrigger_mechanic : public CreatureScript
                 {
                     // Channel the repair spell on Steamrigger
                     // This will also stop creature movement and will allow them to continue to follow the boss after channeling is finished or the boss is out of range
-                    if (m_creature->IsWithinDistInMap(pWho, 2 * INTERACTION_DISTANCE))
+                    if (InReach(*m_creature, *pWho, 2 * INTERACTION_DISTANCE))
                     {
                         DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_REPAIR : SPELL_REPAIR_H);
                     }

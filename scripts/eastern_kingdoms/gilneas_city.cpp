@@ -178,7 +178,7 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
 
         void Aggro(Unit* who) override
         {
-            if (!m_creature->CanReachWithMeleeAttack(who) && !m_creature->CanUseEquippedWeapon(RANGED_ATTACK))
+            if (!InMeleeReach(*m_creature, *who) && !m_creature->CanUseEquippedWeapon(RANGED_ATTACK))
             {
                 IsSelfRooted = true;
             }
@@ -239,7 +239,7 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
             }
 
             // Equipped ranged weapon usable and not close to victim
-            if (m_creature->GetCombatDistance(m_creature->getVictim(), false) > 0 && m_creature->CanUseEquippedWeapon(RANGED_ATTACK) )
+            if (CombatDistanceBetween(*m_creature, *m_creature->getVictim(), false) > 0 && m_creature->CanUseEquippedWeapon(RANGED_ATTACK) )
             {
                 // Make sure our attack is ready
                 if (m_creature->isAttackReady(RANGED_ATTACK))
@@ -251,7 +251,7 @@ struct npc_prince_liam_greymane_phase2 : public CreatureScript
                 }
 
             }
-            else if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            else if (InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 // If we are within range melee the target
                 // Make sure our attack is ready
@@ -309,7 +309,7 @@ struct rampaging_worgen : public CreatureScript
 
         void Aggro(Unit* who) override
         {
-            if (!m_creature->CanReachWithMeleeAttack(who))
+            if (!InMeleeReach(*m_creature, *who))
             {
                 IsSelfRooted = true;
             }
@@ -352,7 +352,7 @@ struct rampaging_worgen : public CreatureScript
             }
 
             // If we are within range melee the target
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 // Make sure our attack is ready
                 if (m_creature->isAttackReady())

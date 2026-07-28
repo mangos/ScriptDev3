@@ -111,7 +111,7 @@ struct go_ethereum_prison : public GameObjectScript
         uint8 uiRandom = urand(0, countof(uiNpcPrisonEntry) - 1);
 
         if (Creature* pCreature = pPlayer->SummonCreature(uiNpcPrisonEntry[uiRandom],
-            pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), pGo->GetAngle(pPlayer),
+            pGo->Where().X(), pGo->Where().Y(), pGo->Where().Z(), pGo->Where().BearingTo(pPlayer->Where()),
             TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
         {
             if (!pCreature->IsHostileTo(pPlayer))
@@ -164,7 +164,7 @@ struct go_ethereum_stasis : public GameObjectScript
         uint8 uiRandom = urand(0, countof(uiNpcStasisEntry) - 1);
 
         pPlayer->SummonCreature(uiNpcStasisEntry[uiRandom],
-            pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), pGo->GetAngle(pPlayer),
+            pGo->Where().X(), pGo->Where().Y(), pGo->Where().Z(), pGo->Where().BearingTo(pPlayer->Where()),
             TEMPSPAWN_TIMED_OOC_DESPAWN, 30000);
 
         return false;

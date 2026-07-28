@@ -38,7 +38,7 @@
 
 static bool sortFromEastToWest(GameObject* pFirst, GameObject* pSecond)
 {
-    return pFirst && pSecond && pFirst->GetPositionY() < pSecond->GetPositionY();
+    return pFirst && pSecond && pFirst->Where().Y() < pSecond->Where().Y();
 }
 
 struct is_gnomeregan : public InstanceScript
@@ -131,7 +131,7 @@ struct is_gnomeregan : public InstanceScript
                                 {
                                     for (std::list<GameObject*>::iterator itr = lExplosiveCharges.begin(); itr != lExplosiveCharges.end(); ++itr)
                                     {
-                                        if ((*itr)->GetDistanceOrder(pCaveInSouth, pCaveInNorth) && uiCounterSouth < MAX_EXPLOSIVES_PER_SIDE)
+                                        if ((*itr)->Where().IsNearer(pCaveInSouth->Where(), pCaveInNorth->Where()) && uiCounterSouth < MAX_EXPLOSIVES_PER_SIDE)
                                         {
                                             m_aExplosiveSortedGuids[0][uiCounterSouth] = (*itr)->GetObjectGuid();
                                             ++uiCounterSouth;

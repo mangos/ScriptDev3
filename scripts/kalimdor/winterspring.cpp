@@ -369,7 +369,7 @@ struct npc_ranshalla : public CreatureScript
                     // summon the Voice of Elune
                     if (GameObject* pAltar = m_creature->GetMap()->GetGameObject(m_altarGuid))
                     {
-                        if (Creature* pVoice = m_creature->SummonCreature(NPC_VOICE_ELUNE, pAltar->GetPositionX(), pAltar->GetPositionY(), pAltar->GetPositionZ(), 0, TEMPSPAWN_TIMED_DESPAWN, 30000))
+                        if (Creature* pVoice = m_creature->SummonCreature(NPC_VOICE_ELUNE, pAltar->Where().X(), pAltar->Where().Y(), pAltar->Where().Z(), 0, TEMPSPAWN_TIMED_DESPAWN, 30000))
                         {
                             m_voiceEluneGuid = pVoice->GetObjectGuid();
                         }
@@ -681,7 +681,7 @@ struct npc_artorius_the_doombringer : public CreatureScript
 
             if (triggered)
             {
-                Creature* creature_the_cleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetAngle(playerFacing), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
+                Creature* creature_the_cleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().BearingTo(playerFacing->Where()), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
                 if (creature_the_cleaner)
                 {
                     DoScriptText(SAY_THE_CLEANER_AGGRO, creature_the_cleaner);
@@ -786,7 +786,7 @@ struct npc_artorius_the_doombringer : public CreatureScript
                 m_uiDemonic_Doom_Timer = 7500;
                 // only attempt to cast this once every 7.5 seconds to give the hunter some leeway
                 // LOWER max range for lag...
-                if (m_creature->IsWithinDistInMap(m_creature->getVictim(), 25))
+                if (InReach(*m_creature, *m_creature->getVictim(), 25))
                 {
                     DoCastSpellIfCan(m_creature->getVictim(), SPELL_DEMONIC_DOOM);
                 }

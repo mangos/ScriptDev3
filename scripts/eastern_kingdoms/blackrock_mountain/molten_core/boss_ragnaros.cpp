@@ -335,7 +335,10 @@ struct boss_ragnaros : public CreatureScript
                 float fX, fY, fZ;
                 for (uint8 i = 0; i < MAX_ADDS_IN_SUBMERGE; ++i)
                 {
-                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 30.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 30.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     m_creature->SummonCreature(NPC_SON_OF_FLAME, fX, fY, fZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 1000);
                 }
 
@@ -354,7 +357,7 @@ struct boss_ragnaros : public CreatureScript
                 return;
             }
 
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 // Make sure our attack is ready
                 if (m_creature->isAttackReady())

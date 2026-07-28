@@ -261,7 +261,7 @@ struct boss_thaddius : public CreatureScript
 
             // Ball Lightning if target not in melee range
             // TODO: Verify, likely that the boss should attack any enemy in melee range before starting to cast
-            if (!m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (!InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 if (m_uiBallLightningTimer < uiDiff)
                 {
@@ -402,7 +402,7 @@ struct npc_tesla_coil : public CreatureScript
                 return false;
             }
 
-            m_bToFeugen = m_creature->GetDistanceOrder(pNoxTeslaFeugen, pNoxTeslaStalagg);
+            m_bToFeugen = m_creature->Where().IsNearer(pNoxTeslaFeugen->Where(), pNoxTeslaStalagg->Where());
 
             if (DoCastSpellIfCan(m_creature, m_bToFeugen ? SPELL_FEUGEN_CHAIN : SPELL_STALAGG_CHAIN) == CAST_OK)
             {

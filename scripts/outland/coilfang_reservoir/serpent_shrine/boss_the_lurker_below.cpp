@@ -289,7 +289,7 @@ struct boss_the_lurker_below : public CreatureScript
                         }
 
                         // If we are within range melee the target
-                        if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+                        if (InMeleeReach(*m_creature, *m_creature->getVictim()))
                         {
                             DoMeleeAttackIfReady();
                         }

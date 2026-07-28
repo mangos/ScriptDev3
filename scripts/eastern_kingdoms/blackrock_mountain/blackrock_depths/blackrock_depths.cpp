@@ -175,7 +175,7 @@ struct at_shadowforge_bridge : public AreaTriggerScript
                 pMasterGuard->GetMotionMaster()->MoveWaypoint();
                 DoDisplayText(pMasterGuard, SAY_GUARD_AGGRO, pPlayer);
                 float fX, fY, fZ;
-                pPlayer->GetContactPoint(pMasterGuard, fX, fY, fZ);
+                ContactPointNear(*pPlayer, pMasterGuard, fX, fY, fZ);
                 pMasterGuard->GetMotionMaster()->MovePoint(1,fX, fY, fZ);
 
                 if (Creature* pSlaveGuard = pPyromancer->SummonCreature(NPC_ANVILRAGE_GUARDMAN, aGuardSpawnPositions[1][0], aGuardSpawnPositions[1][1], aGuardSpawnPositions[1][2], aGuardSpawnPositions[1][3], TEMPSPAWN_DEAD_DESPAWN, 0))
@@ -352,7 +352,10 @@ struct npc_grimstone : public CreatureScript
             float fX, fY, fZ;
             float fcX, fcY, fcZ;
             m_pInstance->GetArenaCenterCoords(fX, fY, fZ);
-            m_creature->GetRandomPoint(fX, fY, fZ, 10.0f, fcX, fcY, fcZ);
+            const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(fX, fY, fZ), 10.0f);
+            fcX = randSpot2.x;
+            fcY = randSpot2.y;
+            fcZ = randSpot2.z;
             pSummoned->GetMotionMaster()->MovePoint(1, fcX, fcY, fcZ);
 
             ++m_uiAliveSummonedMob;
@@ -403,7 +406,10 @@ struct npc_grimstone : public CreatureScript
             float fX, fY, fZ;
             for (uint8 i = 0; i < uiNpcPerWave; ++i)
             {
-                m_creature->GetRandomPoint(aSpawnPositions[uiPosition][0], aSpawnPositions[uiPosition][1], aSpawnPositions[uiPosition][2], 2.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aSpawnPositions[uiPosition][0], aSpawnPositions[uiPosition][1], aSpawnPositions[uiPosition][2]), 2.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 m_creature->SummonCreature(uiEntry, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
             }
         }
@@ -882,7 +888,7 @@ struct npc_mistress_nagmaraAI : public ScriptedAI
             case 0:     // Phase 0 : Nagmara patrols in the bar to serve patrons or is following Rocknot passively
                 break;
             case 1:     // Phase 1 : Nagmara is moving towards Rocknot
-                if (m_creature->IsWithinDist2d(pRocknot->GetPositionX(), pRocknot->GetPositionY(), 5.0f))
+                if (m_creature->Where().WithinDist(Geometry::Vector2(pRocknot->Where().X(), pRocknot->Where().Y()), 5.0f))
                 {
                     m_creature->GetMotionMaster()->MoveIdle();
                     m_creature->SetFacingToObject(pRocknot);

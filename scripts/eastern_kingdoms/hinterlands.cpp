@@ -97,7 +97,10 @@ struct npc_00x09hl : public CreatureScript
                     for (uint8 i = 0; i < 3; ++i)
                     {
                         float fX, fY, fZ;
-                        m_creature->GetRandomPoint(147.927444f, -3851.513428f, 130.893f, 7.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(147.927444f, -3851.513428f, 130.893f), 7.0f);
+                        fX = randSpot2.x;
+                        fY = randSpot2.y;
+                        fZ = randSpot2.z;
 
                         m_creature->SummonCreature(NPC_MARAUDING_OWL, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 25000);
                     }
@@ -106,7 +109,10 @@ struct npc_00x09hl : public CreatureScript
                     for (uint8 i = 0; i < 3; ++i)
                     {
                         float fX, fY, fZ;
-                        m_creature->GetRandomPoint(-141.151581f, -4291.213867f, 120.130f, 7.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(-141.151581f, -4291.213867f, 120.130f), 7.0f);
+                        fX = randSpot1.x;
+                        fY = randSpot1.y;
+                        fZ = randSpot1.z;
 
                         m_creature->SummonCreature(NPC_VILE_AMBUSHER, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 25000);
                     }
@@ -126,7 +132,7 @@ struct npc_00x09hl : public CreatureScript
 
         void JustSummoned(Creature* pSummoned) override
         {
-            pSummoned->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+            pSummoned->GetMotionMaster()->MovePoint(0, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
         }
     };
 

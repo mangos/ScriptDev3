@@ -112,7 +112,7 @@ struct boss_krikthir : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bIntroSpeech && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, DEFAULT_VISIBILITY_INSTANCE) && m_creature->IsWithinLOSInMap(pWho))
+            if (!m_bIntroSpeech && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, DEFAULT_VISIBILITY_INSTANCE) && HasLineOfSight(*m_creature, *pWho))
             {
                 switch (urand(0, 2))
                 {

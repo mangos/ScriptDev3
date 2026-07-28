@@ -187,7 +187,7 @@ struct boss_jedoga : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 110.0f) && m_creature->IsWithinLOSInMap(pWho))
+            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 110.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 switch (urand(0, 4))
                 {
@@ -215,7 +215,10 @@ struct boss_jedoga : public CreatureScript
                 for (uint8 i = 0; i < MAX_VOLUNTEERS_PER_SIDE; ++i)
                 {
                     // In order to get a good movement position we need to handle the coordinates calculation here, inside the iteration.
-                    m_creature->GetRandomPoint(aVolunteerPosition[j][0], aVolunteerPosition[j][1], aVolunteerPosition[j][2], 10.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot = RandomGroundPointNear(*m_creature, Geometry::Vector3(aVolunteerPosition[j][0], aVolunteerPosition[j][1], aVolunteerPosition[j][2]), 10.0f);
+                    fX = randSpot.x;
+                    fY = randSpot.y;
+                    fZ = randSpot.z;
                     if (Creature* pVolunteer = m_creature->SummonCreature(NPC_TWILIGHT_VOLUNTEER, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0))
                     {
                         // Adjust coordinates based on the wave number and side
@@ -230,17 +233,20 @@ struct boss_jedoga : public CreatureScript
                             fAngle = i < 7 ? (i - 10) * (3 * M_PI_F / 35) : 3 * M_PI_F / 2 - (i - 6) * (M_PI_F / 16);
                         }
 
-                        m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, fDist, fAngle);
+                        FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, fDist, fAngle);
                         pVolunteer->GetMotionMaster()->MovePoint(POINT_ID_PREPARE, fX, fY, fZ);
                     }
                 }
             }
 
             // Summon one more Volunteer for the center position
-            m_creature->GetRandomPoint(aVolunteerPosition[0][0], aVolunteerPosition[0][1], aVolunteerPosition[0][2], 10.0f, fX, fY, fZ);
+            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aVolunteerPosition[0][0], aVolunteerPosition[0][1], aVolunteerPosition[0][2]), 10.0f);
+            fX = randSpot1.x;
+            fY = randSpot1.y;
+            fZ = randSpot1.z;
             if (Creature* pVolunteer = m_creature->SummonCreature(NPC_TWILIGHT_VOLUNTEER, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0))
             {
-                m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 20.0f, 7 * M_PI_F / 4);
+                FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 20.0f, 7 * M_PI_F / 4);
                 pVolunteer->GetMotionMaster()->MovePoint(POINT_ID_PREPARE, fX, fY, fZ);
             }
         }
@@ -312,7 +318,7 @@ struct boss_jedoga : public CreatureScript
                 case POINT_ID_SACRIFICE:
                     DoCastSpellIfCan(m_creature, SPELL_HOVER_FALL);
                     m_creature->SetLevitate(true);
-                    m_creature->GetMotionMaster()->MovePoint(POINT_ID_LEVITATE, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 10.0f);
+                    m_creature->GetMotionMaster()->MovePoint(POINT_ID_LEVITATE, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 10.0f);
                     break;
 
                 // Call a volunteer to sacrifice

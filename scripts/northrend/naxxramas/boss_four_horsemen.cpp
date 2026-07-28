@@ -238,7 +238,7 @@ struct boss_lady_blaumeux : CreatureScript
             if (m_uiShadowBoltTimer < uiDiff)
             {
                 // If we can find a target in range of 45.0f, then cast Shadowbolt
-                if (m_creature->IsWithinDist(m_creature->getVictim(), 45.0f))
+                if (m_creature->Where().WithinDist(m_creature->getVictim()->Where(), 45.0f))
                 {
                     DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SHADOW_BOLT : SPELL_SHADOW_BOLT_H);
                 }
@@ -662,7 +662,7 @@ struct boss_sir_zeliek :CreatureScript
             if (m_uiHolyBoltTimer < uiDiff)
             {
                 // If we can find a target in range of 45.0f, then cast Holy Bolt
-                if (m_creature->IsWithinDist(m_creature->getVictim(), 45.0f))
+                if (m_creature->Where().WithinDist(m_creature->getVictim()->Where(), 45.0f))
                 {
                     DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_HOLY_BOLT : SPELL_HOLY_BOLT_H);
                 }

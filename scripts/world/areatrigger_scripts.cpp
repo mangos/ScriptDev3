@@ -402,12 +402,18 @@ struct at_murkdeep : public AreaTriggerScript
             for (uint8 i = 0; i < 3; ++i)
             {
                 // Spawn locations are defined in World Maps Scripts.h
-                pPlayer->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][0], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][1], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][2], 5.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*pPlayer, Geometry::Vector3(aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][0], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][1], aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][2]), 5.0f);
+                fX = randSpot2.x;
+                fY = randSpot2.y;
+                fZ = randSpot2.z;
 
                 if (Creature* pTemp = pPlayer->SummonCreature(NPC_GREYMIST_COASTRUNNNER, fX, fY, fZ, aSpawnLocations[POS_IDX_MURKDEEP_SPAWN][3], TEMPSPAWN_DEAD_DESPAWN, 0))
                 {
                     pTemp->SetWalk(false);
-                    pTemp->GetRandomPoint(aSpawnLocations[POS_IDX_MURKDEEP_MOVE][0], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][1], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][2], 5.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pTemp, Geometry::Vector3(aSpawnLocations[POS_IDX_MURKDEEP_MOVE][0], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][1], aSpawnLocations[POS_IDX_MURKDEEP_MOVE][2]), 5.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                 }
             }

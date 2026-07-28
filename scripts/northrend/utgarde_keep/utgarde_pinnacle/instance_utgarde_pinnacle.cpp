@@ -83,11 +83,11 @@ struct is_pinnacle : public InstanceScript
                         m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
                         break;
                     case NPC_WORLD_TRIGGER:
-                        if (pCreature->GetPositionX() < 250.0f)
+                        if (pCreature->Where().X() < 250.0f)
                         {
                             m_gortokEventTriggerGuid = pCreature->GetObjectGuid();
                         }
-                        else if (pCreature->GetPositionX() > 400.0f && pCreature->GetPositionX() < 500.0f)
+                        else if (pCreature->Where().X() > 400.0f && pCreature->Where().X() < 500.0f)
                         {
                             m_skadiMobsTriggerGuid = pCreature->GetObjectGuid();
                         }

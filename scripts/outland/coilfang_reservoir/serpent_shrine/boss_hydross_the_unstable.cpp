@@ -210,7 +210,7 @@ struct boss_hydross_the_unstable : public CreatureScript
             float fX, fY, fZ;
             for (uint8 i = 0; i < MAX_HYDROSS_ADDS; ++i)
             {
-                m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 10, M_PI_F / 2 * i);
+                FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 10, M_PI_F / 2 * i);
                 m_creature->SummonCreature(m_bCorruptedForm ? NPC_PURE_SPAWN : NPC_TAINTED_SPAWN, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
             }
         }
@@ -280,9 +280,11 @@ struct boss_hydross_the_unstable : public CreatureScript
                 if (m_uiPosCheckTimer < uiDiff)
                 {
                     float fPosX, fPosY, fPosZ;
-                    m_creature->GetCombatStartPosition(fPosX, fPosY, fPosZ);
+                    fPosX = m_creature->CombatAnchor().x;
+                    fPosY = m_creature->CombatAnchor().y;
+                    fPosZ = m_creature->CombatAnchor().z;
 
-                    if (m_creature->IsWithinDist2d(fPosX, fPosY, SWITCH_RADIUS))
+                    if (m_creature->Where().WithinDist(Geometry::Vector2(fPosX, fPosY), SWITCH_RADIUS))
                     {
                         DoScriptText(SAY_SWITCH_TO_CLEAN, m_creature);
                         m_creature->RemoveAurasDueToSpell(SPELL_CORRUPTION);
@@ -329,9 +331,11 @@ struct boss_hydross_the_unstable : public CreatureScript
                 if (m_uiPosCheckTimer < uiDiff)
                 {
                     float fPosX, fPosY, fPosZ;
-                    m_creature->GetCombatStartPosition(fPosX, fPosY, fPosZ);
+                    fPosX = m_creature->CombatAnchor().x;
+                    fPosY = m_creature->CombatAnchor().y;
+                    fPosZ = m_creature->CombatAnchor().z;
 
-                    if (!m_creature->IsWithinDist2d(fPosX, fPosY, SWITCH_RADIUS))
+                    if (!m_creature->Where().WithinDist(Geometry::Vector2(fPosX, fPosY), SWITCH_RADIUS))
                     {
                         if (DoCastSpellIfCan(m_creature, SPELL_CORRUPTION) == CAST_OK)
                         {

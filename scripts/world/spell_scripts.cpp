@@ -125,7 +125,7 @@ struct spell_cast_fishing_net : public SpellScript
                 }
                 else
                 {
-                    if (Creature* pShark = pCaster->SummonCreature(NPC_REEF_SHARK, pGOTarget->GetPositionX(), pGOTarget->GetPositionY(), pGOTarget->GetPositionZ(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
+                    if (Creature* pShark = pCaster->SummonCreature(NPC_REEF_SHARK, pGOTarget->Where().X(), pGOTarget->Where().Y(), pGOTarget->Where().Z(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
                     {
                         pShark->AI()->AttackStart(pCaster);
                     }
@@ -149,7 +149,7 @@ struct spell_cast_fishing_net : public SpellScript
 
                 if (urand(0, 2))
                 {
-                    if (Creature* pMurloc = pCaster->SummonCreature(NPC_ANGRY_MURLOC, pCaster->GetPositionX(), pCaster->GetPositionY() + 20.0f, pCaster->GetPositionZ(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 10000))
+                    if (Creature* pMurloc = pCaster->SummonCreature(NPC_ANGRY_MURLOC, pCaster->Where().X(), pCaster->Where().Y() + 20.0f, pCaster->Where().Z(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 10000))
                     {
                         pMurloc->AI()->AttackStart(pCaster);
                     }
@@ -1019,7 +1019,7 @@ struct spell_fumping : public SpellScript
             {
                 case 0:
                 {
-                    if (Creature* pHaishulud = pCaster->SummonCreature(SPELL_SUMMON_HAISHULUD, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
+                    if (Creature* pHaishulud = pCaster->SummonCreature(SPELL_SUMMON_HAISHULUD, pCreatureTarget->Where().X(), pCreatureTarget->Where().Y(), pCreatureTarget->Where().Z(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
                     {
                         pHaishulud->AI()->AttackStart(pCaster);
                     }
@@ -1028,7 +1028,7 @@ struct spell_fumping : public SpellScript
                 case 1:
                     for (int i = 0; i < 2; ++i)
                     {
-                        if (Creature* pSandGnome = pCaster->SummonCreature(NPC_SAND_GNOME, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
+                        if (Creature* pSandGnome = pCaster->SummonCreature(NPC_SAND_GNOME, pCreatureTarget->Where().X(), pCreatureTarget->Where().Y(), pCreatureTarget->Where().Z(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
                         {
                             pSandGnome->AI()->AttackStart(pCaster);
                         }
@@ -1037,7 +1037,7 @@ struct spell_fumping : public SpellScript
                 case 2:
                     for (int i = 0; i < 2; ++i)
                     {
-                        if (Creature* pMatureBoneSifter = pCaster->SummonCreature(NPC_MATURE_BONE_SIFTER, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
+                        if (Creature* pMatureBoneSifter = pCaster->SummonCreature(NPC_MATURE_BONE_SIFTER, pCreatureTarget->Where().X(), pCreatureTarget->Where().Y(), pCreatureTarget->Where().Z(), 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 30000))
                         {
                             pMatureBoneSifter->AI()->AttackStart(pCaster);
                         }

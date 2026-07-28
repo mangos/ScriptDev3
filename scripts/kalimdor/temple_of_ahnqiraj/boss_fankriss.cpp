@@ -190,7 +190,10 @@ struct boss_fankriss : public CreatureScript
                         float fX, fY, fZ;
                         for (uint8 i = 0; i < 4; ++i)
                         {
-                            m_creature->GetRandomPoint(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 3.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z()), 3.0f);
+                            fX = randSpot1.x;
+                            fY = randSpot1.y;
+                            fZ = randSpot1.z;
                             m_creature->SummonCreature(NPC_VEKNISS_HATCHLING, fX, fY, fZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 10000);
                         }
                         m_uiEntangleSummonTimer = 0;

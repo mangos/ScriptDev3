@@ -513,8 +513,8 @@ struct npc_teleportation_portal : public CreatureScript
                             uint32 uiSummonId = aTrashPortalNpcs[i];
 
                             // Summon the trash pack around the portal
-                            m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 3.0f, M_PI_F / 2 * i);
-                            pController->SummonCreature(uiSummonId, fX, fY, fZ, m_creature->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600 * IN_MILLISECONDS);
+                            FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 3.0f, M_PI_F / 2 * i);
+                            pController->SummonCreature(uiSummonId, fX, fY, fZ, m_creature->Where().Facing(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600 * IN_MILLISECONDS);
                         }
 
                         // If this is a trash portal, set the current number in the
@@ -525,7 +525,7 @@ struct npc_teleportation_portal : public CreatureScript
                     }
                     else
                     {
-                        pController->SummonCreature(NPC_AZURE_SABOTEUR, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600 * IN_MILLISECONDS);
+                        pController->SummonCreature(NPC_AZURE_SABOTEUR, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().Facing(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 600 * IN_MILLISECONDS);
                     }
 
                     m_creature->ForcedDespawn(5000);
@@ -544,7 +544,7 @@ struct npc_teleportation_portal : public CreatureScript
                 // Allow the normal mobs to be summoned by the event controller
                 if (Creature* pController = m_pInstance->GetSingleCreatureFromStorage(NPC_EVENT_CONTROLLER))
                 {
-                    pController->SummonCreature(m_pInstance->GetData(TYPE_DATA_GET_MOB_NORMAL), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                    pController->SummonCreature(m_pInstance->GetData(TYPE_DATA_GET_MOB_NORMAL), m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
                 }
             }
         }

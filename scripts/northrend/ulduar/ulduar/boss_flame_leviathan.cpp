@@ -451,7 +451,10 @@ struct boss_flame_leviathan : public CreatureScript
             if (Creature* pOrbital = m_pInstance->GetSingleCreatureFromStorage(NPC_ORBITAL_SUPPORT))
             {
                 float fX, fY, fZ;
-                m_creature->GetRandomPoint(pOrbital->GetPositionX(), pOrbital->GetPositionY(), pOrbital->GetPositionZ(), 150.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(pOrbital->Where().X(), pOrbital->Where().Y(), pOrbital->Where().Z()), 150.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 m_creature->SummonCreature(NPC_THORIM_HAMMER_VEHICLE, fX, fY, fZ, 0, TEMPSPAWN_TIMED_DESPAWN, 8000);
             }
         }
@@ -707,7 +710,7 @@ struct npc_hodir_fury_reticle : public CreatureScript
                         {
                             if (Unit* pTarget = pLeviathan->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                             {
-                                m_creature->GetMotionMaster()->MovePoint(1, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+                                m_creature->GetMotionMaster()->MovePoint(1, pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z());
                             }
                         }
                     }

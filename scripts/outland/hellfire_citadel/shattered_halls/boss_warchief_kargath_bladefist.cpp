@@ -279,7 +279,7 @@ struct boss_warchief_kargath_bladefist : public CreatureScript
                             randy = (rand() % 40);
                             x = 210 + randx;
                             y = -60 - randy;
-                            m_creature->GetMotionMaster()->MovePoint(1, x, y, m_creature->GetPositionZ());
+                            m_creature->GetMotionMaster()->MovePoint(1, x, y, m_creature->Where().Z());
                             m_uiWaitTimer = 0;
                         }
                     }

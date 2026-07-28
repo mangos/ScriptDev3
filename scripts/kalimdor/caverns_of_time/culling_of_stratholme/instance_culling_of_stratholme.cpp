@@ -189,7 +189,7 @@ static sBurningScourgeSpawnLoc m_aBurningScourgeLocs[MAX_BURNING_SCOURGE_POS] =
 // Sorting function
 static bool sortFromEastToWest(Creature* pFirst, Creature* pSecond)
 {
-    return pFirst && pSecond && pFirst->GetPositionY() < pSecond->GetPositionY();
+    return pFirst && pSecond && pFirst->Where().Y() < pSecond->Where().Y();
 }
 
 struct is_culling_of_stratholme : public InstanceScript
@@ -318,7 +318,7 @@ struct is_culling_of_stratholme : public InstanceScript
                         break;
                     case NPC_LORDAERON_FOOTMAN:
                     case NPC_HIGH_ELF_MAGE_PRIEST:
-                        if (pCreature->GetPositionX() > 2000.0f)
+                        if (pCreature->Where().X() > 2000.0f)
                         {
                             m_luiGateSoldiersGUIDs.push_back(pCreature->GetObjectGuid());
                         }
@@ -941,15 +941,15 @@ struct is_culling_of_stratholme : public InstanceScript
                         // spawn the knights
                         if (Creature* pKnight = pSummoner->SummonCreature(NPC_KNIGHT_SILVERHAND, m_aIntroActorsSpawnLocs[2].m_fX, m_aIntroActorsSpawnLocs[2].m_fY, m_aIntroActorsSpawnLocs[2].m_fZ, m_aIntroActorsSpawnLocs[2].m_fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000))
                         {
-                            pKnight->GetMotionMaster()->MoveFollow(pUther, pKnight->GetDistance(pUther), 2 * M_PI_F - pKnight->GetAngle(pUther));
+                            pKnight->GetMotionMaster()->MoveFollow(pUther, pKnight->Where().DistanceTo(pUther->Where()), 2 * M_PI_F - pKnight->Where().BearingTo(pUther->Where()));
                         }
                         if (Creature* pKnight = pSummoner->SummonCreature(NPC_KNIGHT_SILVERHAND, m_aIntroActorsSpawnLocs[3].m_fX, m_aIntroActorsSpawnLocs[3].m_fY, m_aIntroActorsSpawnLocs[3].m_fZ, m_aIntroActorsSpawnLocs[3].m_fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000))
                         {
-                            pKnight->GetMotionMaster()->MoveFollow(pUther, pKnight->GetDistance(pUther), 2 * M_PI_F - pKnight->GetAngle(pUther));
+                            pKnight->GetMotionMaster()->MoveFollow(pUther, pKnight->Where().DistanceTo(pUther->Where()), 2 * M_PI_F - pKnight->Where().BearingTo(pUther->Where()));
                         }
                         if (Creature* pKnight = pSummoner->SummonCreature(NPC_KNIGHT_SILVERHAND, m_aIntroActorsSpawnLocs[4].m_fX, m_aIntroActorsSpawnLocs[4].m_fY, m_aIntroActorsSpawnLocs[4].m_fZ, m_aIntroActorsSpawnLocs[4].m_fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 10000))
                         {
-                            pKnight->GetMotionMaster()->MoveFollow(pUther, pKnight->GetDistance(pUther), 2 * M_PI_F - pKnight->GetAngle(pUther));
+                            pKnight->GetMotionMaster()->MoveFollow(pUther, pKnight->Where().DistanceTo(pUther->Where()), 2 * M_PI_F - pKnight->Where().BearingTo(pUther->Where()));
                         }
                     }
                 }
@@ -1000,11 +1000,14 @@ struct is_culling_of_stratholme : public InstanceScript
                     {
                         for (uint8 j = 0; j < 3; ++j)
                         {
-                            pSummoner->GetRandomPoint(m_aBurningScourgeLocs[i].m_fX, m_aBurningScourgeLocs[i].m_fY, m_aBurningScourgeLocs[i].m_fZ, 5.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot4 = RandomGroundPointNear(*pSummoner, Geometry::Vector3(m_aBurningScourgeLocs[i].m_fX, m_aBurningScourgeLocs[i].m_fY, m_aBurningScourgeLocs[i].m_fZ), 5.0f);
+                            fX = randSpot4.x;
+                            fY = randSpot4.y;
+                            fZ = randSpot4.z;
 
                             if (Creature* pUndead = pSummoner->SummonCreature(uiEntry, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0))
                             {
-                                pUndead->GetMotionMaster()->MoveRandomAroundPoint(pUndead->GetPositionX(), pUndead->GetPositionY(), pUndead->GetPositionZ(), 10.0f);
+                                pUndead->GetMotionMaster()->MoveRandomAroundPoint(pUndead->Where().X(), pUndead->Where().Y(), pUndead->Where().Z(), 10.0f);
                             }
                         }
                     }
@@ -1013,18 +1016,21 @@ struct is_culling_of_stratholme : public InstanceScript
                     {
                         if (Creature* pUndead = pSummoner->SummonCreature(uiEntry, m_aBurningScourgeLocs[i].m_fX, m_aBurningScourgeLocs[i].m_fY, m_aBurningScourgeLocs[i].m_fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0))
                         {
-                            pUndead->GetMotionMaster()->MoveRandomAroundPoint(pUndead->GetPositionX(), pUndead->GetPositionY(), pUndead->GetPositionZ(), 10.0f);
+                            pUndead->GetMotionMaster()->MoveRandomAroundPoint(pUndead->Where().X(), pUndead->Where().Y(), pUndead->Where().Z(), 10.0f);
                         }
                     }
 
                     // spawn a few random zombies
                     for (uint8 j = 0; j < 5; ++j)
                     {
-                        pSummoner->GetRandomPoint(m_aBurningScourgeLocs[i].m_fX, m_aBurningScourgeLocs[i].m_fY, m_aBurningScourgeLocs[i].m_fZ, 20.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*pSummoner, Geometry::Vector3(m_aBurningScourgeLocs[i].m_fX, m_aBurningScourgeLocs[i].m_fY, m_aBurningScourgeLocs[i].m_fZ), 20.0f);
+                        fX = randSpot3.x;
+                        fY = randSpot3.y;
+                        fZ = randSpot3.z;
 
                         if (Creature* pUndead = pSummoner->SummonCreature(NPC_ZOMBIE, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0))
                         {
-                            pUndead->GetMotionMaster()->MoveRandomAroundPoint(pUndead->GetPositionX(), pUndead->GetPositionY(), pUndead->GetPositionZ(), 10.0f);
+                            pUndead->GetMotionMaster()->MoveRandomAroundPoint(pUndead->Where().X(), pUndead->Where().Y(), pUndead->Where().Z(), 10.0f);
                         }
                     }
                 }
@@ -1166,7 +1172,10 @@ struct is_culling_of_stratholme : public InstanceScript
                     // random position around point
                     else
                     {
-                        pSummoner->GetRandomPoint(m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fX, m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fY, m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fZ, 5.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*pSummoner, Geometry::Vector3(m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fX, m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fY, m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fZ), 5.0f);
+                        fX = randSpot2.x;
+                        fY = randSpot2.y;
+                        fZ = randSpot2.z;
                     }
 
                     // special requirement for acolytes - spawn a pack of 4
@@ -1174,7 +1183,10 @@ struct is_culling_of_stratholme : public InstanceScript
                     {
                         for (uint8 j = 0; j < 4; ++j)
                         {
-                            pSummoner->GetRandomPoint(m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fX, m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fY, m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fZ, 5.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pSummoner, Geometry::Vector3(m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fX, m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fY, m_aScourgeWavesLocs[m_uiCurrentUndeadPos].m_fZ), 5.0f);
+                            fX = randSpot1.x;
+                            fY = randSpot1.y;
+                            fZ = randSpot1.z;
                             pSummoner->SummonCreature(uiEntry, fX, fY, fZ, fO, TEMPSPAWN_DEAD_DESPAWN, 0);
                         }
                     }

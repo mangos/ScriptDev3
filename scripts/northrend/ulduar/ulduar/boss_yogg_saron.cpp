@@ -373,7 +373,7 @@ struct boss_sara : public CreatureScript
             // start the encounter on range check
             // ToDo: research if there is any intro available before the actual encounter starts
             if (m_uiPhase == PHASE_INTRO && pWho->GetTypeId() == TYPEID_PLAYER && pWho->IsAlive() && !((Player*)pWho)->isGameMaster() &&
-                m_creature->IsWithinDistInMap(pWho, 70.0f) && pWho->IsWithinLOSInMap(m_creature))
+                InReach(*m_creature, *pWho, 70.0f) && HasLineOfSight(*pWho, *m_creature))
             {
                 m_uiPhase = PHASE_SARA;
                 DoScriptText(SAY_SARA_AGGRO, m_creature);
@@ -442,7 +442,7 @@ struct boss_sara : public CreatureScript
                 {
                     float fDist = frand(30.0f, 45.0f);
                     float fAng = frand(0, 2 * M_PI_F);
-                    m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, fDist, fAng);
+                    FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, fDist, fAng);
                     m_creature->SummonCreature(NPC_DEATH_RAY, fX, fY, fZ, 0, TEMPSPAWN_TIMED_DESPAWN, 20000);
                 }
 
@@ -1056,7 +1056,7 @@ struct npc_voice_yogg_saron : public CreatureScript
                     for (uint8 i = 0; i < m_uiMaxPortals; ++i)
                     {
                         fAng = (2 * M_PI_F / m_uiMaxPortals) * i;
-                        m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 22.0f, fAng);
+                        FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 22.0f, fAng);
                         m_creature->SummonCreature(NPC_DESCEND_INTO_MADNESS, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
                     }
 
@@ -1651,7 +1651,7 @@ struct npc_ominous_cloud : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_uiDelayTimer && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && m_creature->IsWithinDistInMap(pWho, 7.0f))
+            if (!m_uiDelayTimer && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && InReach(*m_creature, *pWho, 7.0f))
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_BOIL_OMNIOUSLY) == CAST_OK)
                 {
@@ -1730,7 +1730,7 @@ struct npc_death_ray : public CreatureScript
                     if (DoCastSpellIfCan(m_creature, SPELL_DEATH_RAY_VISUAL_DAMAGE, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
                     {
                         DoCastSpellIfCan(m_creature, SPELL_DEATH_RAY_TRIGG, CAST_TRIGGERED);
-                        m_creature->GetMotionMaster()->MoveRandomAroundPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f);
+                        m_creature->GetMotionMaster()->MoveRandomAroundPoint(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), 10.0f);
                         m_uiDeathRayTimer = 0;
                     }
                 }

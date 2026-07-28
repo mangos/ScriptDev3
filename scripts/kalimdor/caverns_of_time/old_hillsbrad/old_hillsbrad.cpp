@@ -487,7 +487,7 @@ struct npc_thrall_old_hillsbrad : public CreatureScript
                     // For the summons corresponding to the Epoch event, handle movement
                     if (m_pInstance && m_pInstance->GetData(TYPE_ESCORT_INN) == DONE)
                     {
-                        pSummoned->GetMotionMaster()->MovePoint(1, pSummoned->GetPositionX(), pSummoned->GetPositionY() - 10.0f, pSummoned->GetPositionZ());
+                        pSummoned->GetMotionMaster()->MovePoint(1, pSummoned->Where().X(), pSummoned->Where().Y() - 10.0f, pSummoned->Where().Z());
 
                         // Transform on timer
                         if (!m_uiEpochAttackTimer)
@@ -560,7 +560,7 @@ struct npc_thrall_old_hillsbrad : public CreatureScript
                         // Allow these to follow Skarloc and attack only on command
                         if (Creature* pSkarloc = m_pInstance->GetSingleCreatureFromStorage(NPC_SKARLOC))
                         {
-                            pSummoned->GetMotionMaster()->MoveFollow(pSkarloc, 5.0f, pSummoned->GetAngle(pSkarloc) + M_PI_F);
+                            pSummoned->GetMotionMaster()->MoveFollow(pSkarloc, 5.0f, pSummoned->Where().BearingTo(pSkarloc->Where()) + M_PI_F);
                         }
 
                         pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
@@ -718,7 +718,10 @@ struct npc_thrall_old_hillsbrad : public CreatureScript
                         if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
                         {
                             pTemp->SetWalk(false);
-                            pTemp->GetRandomPoint(2480.19f, 696.15f, 55.78f, 5.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pTemp, Geometry::Vector3(2480.19f, 696.15f, 55.78f), 5.0f);
+                            fX = randSpot1.x;
+                            fY = randSpot1.y;
+                            fZ = randSpot1.z;
                             pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                             pTemp->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
                         }

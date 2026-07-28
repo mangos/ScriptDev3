@@ -70,7 +70,7 @@ struct npc_depleted_war_golem : public CreatureScript
             if (pVictim->GetTypeId() == TYPEID_UNIT && pVictim->GetEntry() == NPC_LIGHTNING_SENTRY)
             {
                 // Is distance expected?
-                if (m_creature->IsWithinDistInMap(pVictim, 10.0f))
+                if (InReach(*m_creature, *pVictim, 10.0f))
                 {
                     m_creature->CastSpell(m_creature, SPELL_CHARGE_GOLEM, true);
                 }
@@ -493,7 +493,7 @@ struct npc_emily : public CreatureScript
                     if (Creature* pFloppy = m_creature->GetMap()->GetCreature(m_floppyGuid))
                     {
                         float fX, fY, fZ;
-                        pFloppy->GetContactPoint(pSummoned, fX, fY, fZ);
+                        ContactPointNear(*pFloppy, pSummoned, fX, fY, fZ);
                         pSummoned->SetWalk(false);
                         pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                     }
@@ -511,7 +511,7 @@ struct npc_emily : public CreatureScript
                     // resume follow after vehicle unboard
                     if (Creature* pFloppy = m_creature->GetMap()->GetCreature(m_floppyGuid))
                     {
-                        pFloppy->GetMotionMaster()->MoveFollow(m_creature, pFloppy->GetDistance(m_creature), M_PI_F - pFloppy->GetAngle(m_creature));
+                        pFloppy->GetMotionMaster()->MoveFollow(m_creature, pFloppy->Where().DistanceTo(m_creature->Where()), M_PI_F - pFloppy->Where().BearingTo(m_creature->Where()));
                     }
                     break;
                 case NPC_HUNGRY_WORG:

@@ -704,7 +704,7 @@ struct boss_crone : public CreatureScript
         {
             pSummoned->CastSpell(pSummoned, SPELL_CYCLONE, true);
             pSummoned->CastSpell(pSummoned, SPELL_CYCLONE_VISUAL, true);
-            pSummoned->GetMotionMaster()->MoveRandomAroundPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 15.0f);
+            pSummoned->GetMotionMaster()->MoveRandomAroundPoint(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), 15.0f);
         }
 
         void UpdateAI(const uint32 uiDiff) override

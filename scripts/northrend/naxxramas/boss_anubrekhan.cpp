@@ -156,7 +156,7 @@ struct boss_anubrekhan : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasTaunted && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 110.0f) && m_creature->IsWithinLOSInMap(pWho))
+            if (!m_bHasTaunted && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 110.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 m_introDialogue.StartNextDialogueText(SAY_GREET);
                 m_bHasTaunted = true;

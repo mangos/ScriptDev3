@@ -95,7 +95,7 @@ struct npc_kitten : public CreatureScript
             // should not have npcflag by default, so set when expected
             if (!m_creature->getVictim() && !m_creature->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP) && HasFollowState(STATE_FOLLOW_INPROGRESS) && pWho->GetEntry() == NPC_WINNA)
             {
-                if (m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+                if (InReach(*m_creature, *pWho, INTERACTION_DISTANCE))
                 {
                     m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                 }
@@ -416,7 +416,7 @@ struct npc_kroshius : public CreatureScript
                             m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_COMBAT_STOP | TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_TOGGLE_OOC_NOT_ATTACK | TEMPFACTION_TOGGLE_PASSIVE);
                             if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                             {
-                                if (m_creature->IsWithinDistInMap(pPlayer, 30.0f))
+                                if (InReach(*m_creature, *pPlayer, 30.0f))
                                 {
                                     AttackStart(pPlayer);
                                 }
@@ -1072,7 +1072,9 @@ struct go_corrupted_plant : public GameObjectScript
     {
         // acquire plant's coordinates
         float fX, fY, fZ;
-        pGo->GetPosition(fX, fY, fZ);
+        fX = pGo->Where().X();
+        fY = pGo->Where().Y();
+        fZ = pGo->Where().Z();
 
         uint32 uQuestId = pQuest->GetQuestId();
 

@@ -236,7 +236,7 @@ struct boss_grand_warlock_nethekurse : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bIntroOnce && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && m_creature->IsWithinDistInMap(pWho, 50.0f) && m_creature->IsWithinLOSInMap(pWho))
+            if (!m_bIntroOnce && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && InReach(*m_creature, *pWho, 50.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 m_bIntroOnce = true;
@@ -454,7 +454,7 @@ struct mob_fel_orc_convert : public CreatureScript
             if (m_pInstance)
             {
                 Creature* pKurse = m_pInstance->GetSingleCreatureFromStorage(NPC_NETHEKURSE);
-                if (pKurse && m_creature->IsWithinDist(pKurse, 45.0f))
+                if (pKurse && m_creature->Where().WithinDist(pKurse->Where(), 45.0f))
                 {
                     SendAIEvent(AI_EVENT_CUSTOM_A, pWho, pKurse);
 

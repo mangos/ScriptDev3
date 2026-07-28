@@ -571,13 +571,13 @@ struct mob_zealot_lorkhan : public CreatureScript
                             switch (urand(0, 1))
                             {
                                 case 0:
-                                    if (pThekal && m_creature->IsWithinDistInMap(pThekal, 3 * ATTACK_DISTANCE))
+                                    if (pThekal && InReach(*m_creature, *pThekal, 3 * ATTACK_DISTANCE))
                                     {
                                         DoCastSpellIfCan(pThekal, SPELL_GREATER_HEAL);
                                     }
                                     break;
                                 case 1:
-                                    if (pZath && m_creature->IsWithinDistInMap(pZath, 3 * ATTACK_DISTANCE))
+                                    if (pZath && InReach(*m_creature, *pZath, 3 * ATTACK_DISTANCE))
                                     {
                                         DoCastSpellIfCan(pZath, SPELL_GREATER_HEAL);
                                     }

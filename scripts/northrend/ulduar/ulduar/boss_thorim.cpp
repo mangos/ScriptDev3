@@ -314,7 +314,7 @@ struct boss_thorim : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // spawn the arena npcs only when players are close to Thorim in order to avoid the possible bugs
-            if (!m_bArenaSpawned && pWho->GetTypeId() == TYPEID_PLAYER && pWho->IsAlive() && !((Player*)pWho)->isGameMaster() && m_creature->IsWithinDistInMap(pWho, DEFAULT_VISIBILITY_INSTANCE))
+            if (!m_bArenaSpawned && pWho->GetTypeId() == TYPEID_PLAYER && pWho->IsAlive() && !((Player*)pWho)->isGameMaster() && InReach(*m_creature, *pWho, DEFAULT_VISIBILITY_INSTANCE))
             {
                 if (m_pInstance && m_pInstance->GetData(TYPE_THORIM) != DONE)
                 {
@@ -508,7 +508,7 @@ struct boss_thorim : public CreatureScript
             {
                 if (Unit* pTarget = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid()))
                 {
-                    if (pTarget->GetTypeId() == TYPEID_PLAYER && pTarget->IsWithinDistInMap(pTrigger, 50.0f) && pTarget->IsWithinLOSInMap(pTrigger))
+                    if (pTarget->GetTypeId() == TYPEID_PLAYER && InReach(*pTarget, *pTrigger, 50.0f) && HasLineOfSight(*pTarget, *pTrigger))
                     {
                         suitableTargets.push_back(pTarget);
                     }
@@ -542,21 +542,21 @@ struct boss_thorim : public CreatureScript
                 case 1:                     // warbringers (along with champions or evokers)
                     if (Creature* pBunny = SelectRandomUpperBunny())
                     {
-                        m_creature->SummonCreature(NPC_DARK_RUNE_WARBRINGER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                        m_creature->SummonCreature(NPC_DARK_RUNE_WARBRINGER, pBunny->Where().X(), pBunny->Where().Y(), pBunny->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
                     // warbringers can have another buddy summoned at the same time
                     if (roll_chance_i(75))
                     {
                         if (Creature* pBunny = SelectRandomUpperBunny())
                         {
-                            m_creature->SummonCreature(roll_chance_i(70) ? NPC_DARK_RUNE_CHAMPION : NPC_DARK_RUNE_EVOKER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                            m_creature->SummonCreature(roll_chance_i(70) ? NPC_DARK_RUNE_CHAMPION : NPC_DARK_RUNE_EVOKER, pBunny->Where().X(), pBunny->Where().Y(), pBunny->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                         }
                     }
                     break;
                 case 2:                     // evokers alone
                     if (Creature* pBunny = SelectRandomUpperBunny())
                     {
-                        m_creature->SummonCreature(NPC_DARK_RUNE_EVOKER, pBunny->GetPositionX(), pBunny->GetPositionY(), pBunny->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                        m_creature->SummonCreature(NPC_DARK_RUNE_EVOKER, pBunny->Where().X(), pBunny->Where().Y(), pBunny->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
                     break;
             }
@@ -968,7 +968,7 @@ struct npc_runic_colossus : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (!m_bSmashStarted && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
-                m_creature->IsWithinDistInMap(pWho, 80.0f) && m_creature->IsWithinLOSInMap(pWho))
+                InReach(*m_creature, *pWho, 80.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 m_uiRunicSmashTimer = 1000;
                 m_bSmashStarted = true;

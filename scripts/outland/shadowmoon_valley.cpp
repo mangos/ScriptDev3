@@ -137,7 +137,7 @@ struct mob_mature_netherwing_drake : public CreatureScript
                         m_creature->GetMotionMaster()->MoveIdle();
 
                         float fX, fY, fZ;
-                        pGo->GetContactPoint(m_creature, fX, fY, fZ, CONTACT_DISTANCE);
+                        ContactPointNear(*pGo, m_creature, fX, fY, fZ, CONTACT_DISTANCE);
 
                         m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                     }
@@ -284,11 +284,16 @@ struct mob_enslaved_netherwing_drake : public CreatureScript
                                 // Get an escape position
                                 if (Creature* pEscapeDummy = GetClosestCreatureWithEntry(m_creature, NPC_ESCAPE_DUMMY, 50.0f))
                                 {
-                                    pEscapeDummy->GetPosition(fX, fY, fZ);
+                                    fX = pEscapeDummy->Where().X();
+                                    fY = pEscapeDummy->Where().Y();
+                                    fZ = pEscapeDummy->Where().Z();
                                 }
                                 else
                                 {
-                                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot6 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 20.0f);
+                                    fX = randSpot6.x;
+                                    fY = randSpot6.y;
+                                    fZ = randSpot6.z;
                                     fZ += 25;
                                 }
 
@@ -427,7 +432,7 @@ struct npc_dragonmaw_peon : public CreatureScript
                         if (pMutton)
                         {
                             float fX, fY, fZ;
-                            pMutton->GetContactPoint(m_creature, fX, fY, fZ, CONTACT_DISTANCE);
+                            ContactPointNear(*pMutton, m_creature, fX, fY, fZ, CONTACT_DISTANCE);
 
                             m_creature->SetWalk(false);
                             m_creature->GetMotionMaster()->MovePoint(POINT_DEST, fX, fY, fZ);
@@ -754,7 +759,10 @@ struct npc_wilda : public CreatureScript
         {
             // unknown where they actually appear
             float fX, fY, fZ;
-            m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 15.0f, fX, fY, fZ);
+            const Geometry::Vector3 randSpot5 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 15.0f);
+            fX = randSpot5.x;
+            fY = randSpot5.y;
+            fZ = randSpot5.z;
 
             m_creature->SummonCreature(NPC_COILSKAR_ASSASSIN, fX, fY, fZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 5000);
         }
@@ -767,7 +775,10 @@ struct npc_wilda : public CreatureScript
             float fX, fY, fZ;
             for (uint8 i = 0; i < uiCount; ++i)
             {
-                m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot4 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 10.0f);
+                fX = randSpot4.x;
+                fY = randSpot4.y;
+                fZ = randSpot4.z;
                 m_creature->SummonCreature(NPC_COILSKAR_ASSASSIN, fX, fY, fZ, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 10000);
             }
 
@@ -829,7 +840,7 @@ struct npc_wilda : public CreatureScript
             for (std::list<Creature*>::const_iterator itr = lSpiritsInRange.begin(); itr != lSpiritsInRange.end(); ++itr)
             {
                 (*itr)->RemoveAurasDueToSpell(SPELL_WATER_BUBBLE);
-                (*itr)->GetMotionMaster()->MoveFollow(m_creature, m_creature->GetDistance(*itr) * 0.25f, M_PI_F/2 + m_creature->GetAngle(*itr));
+                (*itr)->GetMotionMaster()->MoveFollow(m_creature, m_creature->Where().DistanceTo((*itr)->Where()) * 0.25f, M_PI_F/2 + m_creature->Where().BearingTo((*itr)->Where()));
                 (*itr)->SetLevitate(false);
             }
         }
@@ -1130,7 +1141,9 @@ struct mob_torloth : public CreatureScript
                         SetCombatMovement(true);
                         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                         float fLocX, fLocY, fLocZ;
-                        pTarget->GetPosition(fLocX, fLocY, fLocZ);
+                        fLocX = pTarget->Where().X();
+                        fLocY = pTarget->Where().Y();
+                        fLocZ = pTarget->Where().Z();
                         m_creature->GetMotionMaster()->MovePoint(0, fLocX, fLocY, fLocZ);
                     }
                     break;
@@ -1344,7 +1357,9 @@ struct npc_lord_illidan_stormrage : public CreatureScript
             else
             {
                 float fLocX, fLocY, fLocZ;
-                p->GetPosition(fLocX, fLocY, fLocZ);
+                fLocX = p->Where().X();
+                fLocY = p->Where().Y();
+                fLocZ = p->Where().Z();
                 pSummoned->GetMotionMaster()->MovePoint(0, fLocX, fLocY, fLocZ);
             }
         }
@@ -1391,7 +1406,7 @@ struct npc_lord_illidan_stormrage : public CreatureScript
                         }
 
                         // we left event area fail quest
-                        if (!pMember->IsWithinDistInMap(m_creature, EVENT_AREA_RADIUS))
+                        if (!InReach(*pMember, *m_creature, EVENT_AREA_RADIUS))
                         {
                             pMember->FailQuest(QUEST_BATTLE_OF_THE_CRIMSON_WATCH);
                             ++uiFailedMemberCount;
@@ -1421,7 +1436,7 @@ struct npc_lord_illidan_stormrage : public CreatureScript
                     m_bEventFailed = true;
                 }
             }
-            else if (pPlayer->IsDead() || !pPlayer->IsWithinDistInMap(m_creature, EVENT_AREA_RADIUS))
+            else if (pPlayer->IsDead() || !InReach(*pPlayer, *m_creature, EVENT_AREA_RADIUS))
             {
                 pPlayer->FailQuest(QUEST_BATTLE_OF_THE_CRIMSON_WATCH);
                 m_bEventFailed = true;
@@ -1572,7 +1587,7 @@ struct npc_totem_of_spirits : public CreatureScript
             if (uiEntry == NPC_EARTHEN_SOUL || uiEntry == NPC_FIERY_SOUL || uiEntry == NPC_WATERY_SOUL || uiEntry == NPC_AIRY_SOUL)
             {
                 // Only when it's close to the totem
-                if (!pWho->IsWithinDistInMap(m_creature, 1.5f))
+                if (!InReach(*pWho, *m_creature, 1.5f))
                 {
                     return;
                 }
@@ -1618,7 +1633,7 @@ struct npc_totem_of_spirits : public CreatureScript
         {
             // After summoning the spirit soul, make it move towards the totem
             float fX, fY, fZ;
-            m_creature->GetContactPoint(pSummoned, fX, fY, fZ);
+            ContactPointNear(*m_creature, pSummoned, fX, fY, fZ);
             pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
         }
     };
@@ -1702,7 +1717,7 @@ struct aura_elemental_sieve : public AuraScript
         if (uiSoulEntry)
         {
             pCreature->CastSpell(pCreature, SPELL_CALL_TO_THE_SPIRITS, true);
-            pCreature->SummonCreature(uiSoulEntry, pCaster->GetPositionX(), pCaster->GetPositionY(), pCaster->GetPositionZ(), 0, TEMPSPAWN_TIMED_OOC_OR_CORPSE_DESPAWN, 10000);
+            pCreature->SummonCreature(uiSoulEntry, pCaster->Where().X(), pCaster->Where().Y(), pCaster->Where().Z(), 0, TEMPSPAWN_TIMED_OOC_OR_CORPSE_DESPAWN, 10000);
         }
 
         return true;
@@ -2196,7 +2211,7 @@ struct npc_domesticated_felboar : public CreatureScript
                 float fX, fY, fZ;
                 m_creature->SetWalk(false);
                 m_creature->GetMotionMaster()->MoveIdle();
-                pSender->GetContactPoint(m_creature, fX, fY, fZ);
+                ContactPointNear(*pSender, m_creature, fX, fY, fZ);
                 m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
             }
         }
@@ -2312,7 +2327,7 @@ struct npc_veneratus_spawn_node : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // Check for the spirit hunter in order to spawn Veneratus; this will replace missing spells 36614 (dummy periodic spell) and 36616 (summon spell)
-            if (pWho->GetEntry() == NPC_SPIRIT_HUNTER && m_creature->IsWithinDistInMap(pWho, 40.0f) && m_creature->IsWithinLOSInMap(pWho))
+            if (pWho->GetEntry() == NPC_SPIRIT_HUNTER && InReach(*m_creature, *pWho, 40.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 DoScriptText(SAY_VENERATUS_SPAWN, pWho);
                 DoSpawnCreature(NPC_VENERATUS, 0, 0, 0, 0, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);

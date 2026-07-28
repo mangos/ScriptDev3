@@ -65,8 +65,11 @@ struct boss_ambassador_flamelash : public CreatureScript
         void SummonSpirits()
         {
             float fX, fY, fZ;
-            m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 30.0f, fX, fY, fZ);
-            m_creature->SummonCreature(NPC_BURNING_SPIRIT, fX, fY, fZ, m_creature->GetAngle(fX, fY) + M_PI_F, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
+            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 30.0f);
+            fX = randSpot1.x;
+            fY = randSpot1.y;
+            fZ = randSpot1.z;
+            m_creature->SummonCreature(NPC_BURNING_SPIRIT, fX, fY, fZ, m_creature->Where().BearingTo(Geometry::Vector2(fX, fY)) + M_PI_F, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
         }
 
         void Aggro(Unit* /*pWho*/) override
@@ -76,7 +79,7 @@ struct boss_ambassador_flamelash : public CreatureScript
 
         void JustSummoned(Creature* pSummoned) override
         {
-            pSummoned->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+            pSummoned->GetMotionMaster()->MovePoint(1, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
         }
 
         void SummonedMovementInform(Creature* pSummoned, uint32 /*uiMotionType*/, uint32 uiPointId) override

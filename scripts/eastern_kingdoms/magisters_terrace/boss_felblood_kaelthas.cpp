@@ -212,7 +212,7 @@ struct boss_felblood_kaelthas : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (!m_bHasTaunted && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
-                m_creature->IsWithinDistInMap(pWho, 40.0) && m_creature->IsWithinLOSInMap(pWho))
+                InReach(*m_creature, *pWho, 40.0) && HasLineOfSight(*m_creature, *pWho))
             {
                 StartNextDialogueText(SAY_INTRO_1);
                 m_creature->HandleEmote(EMOTE_STATE_TALK);

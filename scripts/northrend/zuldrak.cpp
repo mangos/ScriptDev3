@@ -263,7 +263,7 @@ struct npc_decaying_ghoul : public CreatureScript
                 float fX, fY, fZ;
                 m_creature->SetWalk(false);
                 m_creature->GetMotionMaster()->Clear();
-                pInvoker->GetContactPoint(m_creature, fX, fY, fZ);
+                ContactPointNear(*pInvoker, m_creature, fX, fY, fZ);
 
                 m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 m_feedingBunnyGuid = pInvoker->GetObjectGuid();

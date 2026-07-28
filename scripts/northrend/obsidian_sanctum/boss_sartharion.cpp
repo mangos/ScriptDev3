@@ -991,12 +991,18 @@ struct mob_tenebron : public CreatureScript
                 float fX, fY, fZ;
                 for (uint8 i = 0; i < MAX_TWILIGHT_EGGS; ++i)
                 {
-                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot4 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 20.0f);
+                    fX = randSpot4.x;
+                    fY = randSpot4.y;
+                    fZ = randSpot4.z;
                     m_creature->SummonCreature(uiSpawnEntry, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                 }
 
                 // spawn the controller as well in order to eject players from twilight realm
-                m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 20.0f);
+                fX = randSpot3.x;
+                fY = randSpot3.y;
+                fZ = randSpot3.z;
                 m_creature->SummonCreature(NPC_TWILIGHT_EGG_CONTROLLER, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
 
                 // used only for visual - the result is handled by the Twilight eggs script
@@ -1143,7 +1149,10 @@ struct mob_shadron : public CreatureScript
                     }
 
                     float fX, fY, fZ;
-                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 20.0f);
+                    fX = randSpot2.x;
+                    fY = randSpot2.y;
+                    fZ = randSpot2.z;
                     m_creature->SummonCreature(uiSpawnEntry, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
 
                     m_uiAcolyteShadronTimer = 0;
@@ -1269,7 +1278,10 @@ struct mob_vesperon : public CreatureScript
                     }
 
                     float fX, fY, fZ;
-                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 20.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     m_creature->SummonCreature(uiSpawnEntry, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
 
                     m_uiAcolyteVesperonTimer = 0;
@@ -1449,8 +1461,8 @@ struct npc_flame_tsunami : public CreatureScript
                 {
                     // Note: currently the way in which spell 60241 works is unk, so for the moment we'll use simple movement
                     m_creature->SetWalk(false);
-                    m_creature->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX() < 3250.0f ? m_creature->GetPositionX() + 86.5f : m_creature->GetPositionX() - 86.5f,
-                        m_creature->GetPositionY(), m_creature->GetPositionZ());
+                    m_creature->GetMotionMaster()->MovePoint(1, m_creature->Where().X() < 3250.0f ? m_creature->Where().X() + 86.5f : m_creature->Where().X() - 86.5f,
+                        m_creature->Where().Y(), m_creature->Where().Z());
 
                     m_uiTsunamiTimer = 0;
                 }

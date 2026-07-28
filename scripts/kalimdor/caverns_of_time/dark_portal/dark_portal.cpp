@@ -71,7 +71,7 @@ struct npc_medivh_black_morass : public CreatureScript
             if (pSummoned->GetEntry() != NPC_TIME_RIFT && pSummoned->GetEntry() != NPC_COUNCIL_ENFORCER)
             {
                 float fX, fY, fZ;
-                m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 20.0f, m_creature->GetAngle(pSummoned));
+                FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 20.0f, m_creature->Where().BearingTo(pSummoned->Where()));
                 pSummoned->SetWalk(false);
                 pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
             }
@@ -212,8 +212,11 @@ struct npc_time_rift : public CreatureScript
             }
 
             float fX, fY, fZ;
-            m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f, fX, fY, fZ);
-            pSummoner->SummonCreature(uiCreatureEntry, fX, fY, fZ, m_creature->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 10.0f);
+            fX = randSpot1.x;
+            fY = randSpot1.y;
+            fZ = randSpot1.z;
+            pSummoner->SummonCreature(uiCreatureEntry, fX, fY, fZ, m_creature->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
         }
 
         void ReceiveAIEvent(AIEventType eventType, Creature *pSender, Unit *pInvoker, uint32 /*data*/) override
@@ -325,7 +328,7 @@ struct npc_time_rift : public CreatureScript
                         if (Creature* pMedivh = m_pInstance->GetSingleCreatureFromStorage(NPC_MEDIVH))
                         {
                             float fX, fY, fZ;
-                            pMedivh->GetNearPoint(pMedivh, fX, fY, fZ, 0, 20.0f, pMedivh->GetAngle(pSummoned));
+                            FindFreeSpotNear(*pMedivh, pMedivh, fX, fY, fZ, 0, 20.0f, pMedivh->Where().BearingTo(pSummoned->Where()));
                             pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                         }
                     }

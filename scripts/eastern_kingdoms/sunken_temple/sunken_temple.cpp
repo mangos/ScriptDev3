@@ -302,7 +302,7 @@ struct spell_summon_hakkar : public SpellScript
             }
 
             // Actually summon the avatar of Hakkar and cast some visuals
-            if (Creature *pAvatar = pCaster->SummonCreature(NPC_AVATAR_OF_HAKKAR, pCaster->GetPositionX(), pCaster->GetPositionY(), pCaster->GetPositionZ(), pCaster->GetOrientation(), TEMPSPAWN_CORPSE_TIMED_DESPAWN, 1 * DAY*IN_MILLISECONDS))
+            if (Creature *pAvatar = pCaster->SummonCreature(NPC_AVATAR_OF_HAKKAR, pCaster->Where().X(), pCaster->Where().Y(), pCaster->Where().Z(), pCaster->Where().Facing(), TEMPSPAWN_CORPSE_TIMED_DESPAWN, 1 * DAY*IN_MILLISECONDS))
             {
                 pAvatar->CastSpell(pAvatar, SPELL_AVATAR_SUMMONED, true);
             }

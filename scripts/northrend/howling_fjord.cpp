@@ -266,7 +266,7 @@ struct npc_daegarn : public CreatureScript
                 return;
             }
 
-            if (pSummoned->IsWithinDistInMap(pPlayer, 75.0f))   // ~the radius of the ring
+            if (InReach(*pSummoned, *pPlayer, 75.0f))   // ~the radius of the ring
             {
                 pSummoned->AI()->AttackStart(pPlayer);
             }
@@ -607,7 +607,7 @@ struct npc_lich_king_village : public CreatureScript
         {
             if (!m_bEventInProgress && pWho->GetTypeId() == TYPEID_PLAYER)
             {
-                if (pWho->IsAlive() && m_creature->IsWithinDistInMap(pWho, 15.0) && pWho->HasAura(SPELL_ECHO_OF_YMIRON))
+                if (pWho->IsAlive() && InReach(*m_creature, *pWho, 15.0) && pWho->HasAura(SPELL_ECHO_OF_YMIRON))
                 {
                     m_pHeldPlayer = pWho->GetObjectGuid();
                     m_bEventInProgress = true;
@@ -731,7 +731,7 @@ struct  npc_king_ymiron : public CreatureScript
             if (!m_bEventInit && pWho->GetTypeId() == TYPEID_PLAYER)
             {
                 // Get all the citizen around the king for future use
-                if (pWho->IsAlive() && m_creature->IsWithinDistInMap(pWho, 60.0) && ((Player*)pWho)->GetQuestStatus(QUEST_ID_ANGUISH_OF_NIFFLEVAR) == QUEST_STATUS_INCOMPLETE &&
+                if (pWho->IsAlive() && InReach(*m_creature, *pWho, 60.0) && ((Player*)pWho)->GetQuestStatus(QUEST_ID_ANGUISH_OF_NIFFLEVAR) == QUEST_STATUS_INCOMPLETE &&
                     pWho->HasAura(SPELL_ECHO_OF_YMIRON_NIFFLEVAR))
                 {
                     std::list<Creature*> lCrowdList;
@@ -888,7 +888,7 @@ struct npc_firecrackers_bunny : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (m_bHasValidBat && pWho->GetObjectGuid() == m_selectedBatGuid && m_creature->IsWithinDistInMap(pWho, 3.5f))
+            if (m_bHasValidBat && pWho->GetObjectGuid() == m_selectedBatGuid && InReach(*m_creature, *pWho, 3.5f))
             {
                 // spawn the Guano loot
                 pWho->GetMotionMaster()->MoveIdle();
@@ -940,7 +940,7 @@ struct npc_firecrackers_bunny : public CreatureScript
                     float fX, fY, fZ;
                     pBat->SetWalk(false);
                     pBat->GetMotionMaster()->Clear();
-                    m_creature->GetContactPoint(pBat, fX, fY, fZ);
+                    ContactPointNear(*m_creature, pBat, fX, fY, fZ);
                     pBat->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
 
                     m_selectedBatGuid = pBat->GetObjectGuid();

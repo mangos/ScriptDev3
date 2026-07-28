@@ -204,7 +204,7 @@ struct boss_bronjahm : public CreatureScript
 
                 // Use ShadowBolt as default attack if victim is not in range
                 // TODO - not entirely clear how this works in case the tank is out of shadow-bolt range
-                if (!m_uiShadowboltTimer && !m_creature->CanReachWithMeleeAttack(m_creature->getVictim()) && m_creature->GetCombatDistance(m_creature->getVictim(), false) < 20.0f)
+                if (!m_uiShadowboltTimer && !InMeleeReach(*m_creature, *m_creature->getVictim()) && CombatDistanceBetween(*m_creature, *m_creature->getVictim(), false) < 20.0f)
                 {
                     if (IsCombatMovement())
                     {
@@ -283,7 +283,7 @@ struct npc_corrupted_soul_fragment : public CreatureScript
         {
             if (pWho->GetEntry() == NPC_BRONJAHM)
             {
-                if (m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+                if (InReach(*m_creature, *pWho, INTERACTION_DISTANCE))
                 {
                     DoCastSpellIfCan(pWho, SPELL_CONSUME_SOUL_TRIGGER, CAST_TRIGGERED);
 

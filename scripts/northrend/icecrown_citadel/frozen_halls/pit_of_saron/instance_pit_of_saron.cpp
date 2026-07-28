@@ -284,9 +284,9 @@ struct is_pit_of_saron : public InstanceScript
                         }
                         break;
                     case NPC_GENERAL_BUNNY:
-                        if (pCreature->GetPositionY() < 130.0f)
+                        if (pCreature->Where().Y() < 130.0f)
                         {
-                            if (pCreature->GetOrientation() != 0)
+                            if (pCreature->Where().Facing() != 0)
                             {
                                 m_lArcaneShieldBunniesGuidList.push_back(pCreature->GetObjectGuid());
                             }
@@ -622,7 +622,7 @@ struct is_pit_of_saron : public InstanceScript
                         {
                             pKrick->CastSpell(pKrick, SPELL_STRANGULATING, true);
                             pKrick->SetLevitate(true);
-                            pKrick->GetMotionMaster()->MovePoint(0, pKrick->GetPositionX(), pKrick->GetPositionY(), pKrick->GetPositionZ() + 5.0f);
+                            pKrick->GetMotionMaster()->MovePoint(0, pKrick->Where().X(), pKrick->Where().Y(), pKrick->Where().Z() + 5.0f);
                         }
                         break;
                     case SAY_TYRANNUS_KRICK_2:

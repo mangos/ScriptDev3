@@ -190,7 +190,7 @@ struct boss_anubarak_trial : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (!m_bDidIntroYell && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
-                !m_creature->IsInEvadeMode() && pWho->IsWithinDistInMap(m_creature, 100) && pWho->IsWithinLOSInMap(m_creature))
+                !m_creature->IsInEvadeMode() && InReach(*pWho, *m_creature, 100) && HasLineOfSight(*pWho, *m_creature))
             {
                 DoScriptText(SAY_INTRO, m_creature);
 
@@ -633,7 +633,7 @@ struct npc_anubarak_trial_frostsphere : public CreatureScript
         {
             m_bPermafrost = false;
 
-            m_creature->GetMotionMaster()->MoveRandomAroundPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 15.0f);
+            m_creature->GetMotionMaster()->MoveRandomAroundPoint(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), 15.0f);
         }
 
         void MoveInLineOfSight(Unit* /*pWho*/) override {}
@@ -667,12 +667,12 @@ struct npc_anubarak_trial_frostsphere : public CreatureScript
 
             // Set proper Z position
             m_creature->SetWalk(false);
-            float fZ = pDoneBy->GetPositionZ();
+            float fZ = pDoneBy->Where().Z();
             MaNGOS::NormalizeMapCoord(fZ);
 
             // Note: This should be fall movement
             m_creature->GetMotionMaster()->Clear();
-            m_creature->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX(), m_creature->GetPositionY(), fZ);
+            m_creature->GetMotionMaster()->MovePoint(1, m_creature->Where().X(), m_creature->Where().Y(), fZ);
             m_bPermafrost = true;
         }
 

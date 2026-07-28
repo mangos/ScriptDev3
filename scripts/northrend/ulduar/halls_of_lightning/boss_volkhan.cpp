@@ -275,7 +275,7 @@ struct boss_volkhan : public CreatureScript
                         if (Creature* pAnvil = m_pInstance->GetSingleCreatureFromStorage(NPC_VOLKHAN_ANVIL))
                         {
                             float fX, fY, fZ;
-                            pAnvil->GetContactPoint(m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
+                            ContactPointNear(*pAnvil, m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
                             m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                         }
                         else

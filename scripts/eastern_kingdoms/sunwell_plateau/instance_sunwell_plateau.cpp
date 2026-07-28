@@ -229,13 +229,13 @@ struct is_sunwell_plateau : public InstanceScript
                         break;
                     case NPC_WORLD_TRIGGER:
                         // sort triggers for flightpath
-                        if (pCreature->GetPositionZ() < 51.0f)
+                        if (pCreature->Where().Z() < 51.0f)
                         {
                             m_lAllFlightTriggersList.push_back(pCreature->GetObjectGuid());
                         }
                         break;
                     case NPC_WORLD_TRIGGER_LARGE:
-                        if (pCreature->GetPositionY() < 523.0f)
+                        if (pCreature->Where().Y() < 523.0f)
                         {
                             m_lBackdoorTriggersList.push_back(pCreature->GetObjectGuid());
                         }
@@ -253,7 +253,7 @@ struct is_sunwell_plateau : public InstanceScript
                     {
                         if (Creature* pController = GetSingleCreatureFromStorage(NPC_KILJAEDEN_CONTROLLER))
                         {
-                            if (Creature* pKiljaeden = pController->SummonCreature(NPC_KILJAEDEN, pController->GetPositionX(), pController->GetPositionY(), pController->GetPositionZ(), pController->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0))
+                            if (Creature* pKiljaeden = pController->SummonCreature(NPC_KILJAEDEN, pController->Where().X(), pController->Where().Y(), pController->Where().Z(), pController->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0))
                             {
                                 pKiljaeden->SetInCombatWithZone();
                             }
@@ -595,7 +595,7 @@ struct is_sunwell_plateau : public InstanceScript
                 lTriggers.sort(sortByPositionX);
                 for (std::list<Creature*>::iterator itr = lTriggers.begin(); itr != lTriggers.end(); ++itr)
                 {
-                    if ((*itr)->GetPositionY() < 600.0f)
+                    if ((*itr)->Where().Y() < 600.0f)
                     {
                         m_vRightFlightTriggersVect.push_back((*itr)->GetObjectGuid());
                     }
@@ -608,7 +608,7 @@ struct is_sunwell_plateau : public InstanceScript
 
             static bool sortByPositionX(Creature* pFirst, Creature* pSecond)
             {
-                return pFirst && pSecond && pFirst->GetPositionX() > pSecond->GetPositionX();
+                return pFirst && pSecond && pFirst->Where().X() > pSecond->Where().X();
             }
 
             ObjectGuid SelectFelmystFlightTrigger(bool bLeftSide) const

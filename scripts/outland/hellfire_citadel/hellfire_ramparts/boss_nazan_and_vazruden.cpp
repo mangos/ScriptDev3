@@ -135,7 +135,7 @@ struct boss_vazruden_herald : public CreatureScript
         {
             if (m_bIsEventInProgress && !m_lastSeenPlayerGuid && pWho->GetTypeId() == TYPEID_PLAYER && pWho->IsAlive() && !((Player*)pWho)->isGameMaster())
             {
-                if (m_creature->IsWithinDistInMap(pWho, 40.0f))
+                if (InReach(*m_creature, *pWho, 40.0f))
                 {
                     m_lastSeenPlayerGuid = pWho->GetObjectGuid();
                 }
@@ -175,7 +175,7 @@ struct boss_vazruden_herald : public CreatureScript
 
                 if (m_pInstance->GetData(TYPE_NAZAN) == SPECIAL)
                 {
-                    m_creature->SetCombatStartPosition(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                    m_creature->SetCombatAnchor(Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()));
                     m_uiMovementTimer = 1000;
                     m_bIsEventInProgress = true;
                 }
@@ -239,7 +239,9 @@ struct boss_vazruden_herald : public CreatureScript
         void DoMoveToAir()
         {
             float fX, fY, fZ;
-            m_creature->GetCombatStartPosition(fX, fY, fZ);
+            fX = m_creature->CombatAnchor().x;
+            fY = m_creature->CombatAnchor().y;
+            fZ = m_creature->CombatAnchor().z;
 
             // Remove Idle MMGen
             if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() == IDLE_MOTION_TYPE)

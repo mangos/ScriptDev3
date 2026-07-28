@@ -100,7 +100,7 @@ struct npc_kerlonian : public CreatureScript
 
             if (!m_creature->getVictim() && !HasFollowState(STATE_FOLLOW_COMPLETE) && pWho->GetEntry() == NPC_LILADRIS)
             {
-                if (m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE * 5))
+                if (InReach(*m_creature, *pWho, INTERACTION_DISTANCE * 5))
                 {
                     if (Player* pPlayer = GetLeaderForFollower())
                     {
@@ -387,7 +387,7 @@ struct npc_threshwackonator : public CreatureScript
 
             if (!m_creature->getVictim() && !HasFollowState(STATE_FOLLOW_COMPLETE) && pWho->GetEntry() == NPC_GELKAK)
             {
-                if (m_creature->IsWithinDistInMap(pWho, 10.0f))
+                if (InReach(*m_creature, *pWho, 10.0f))
                 {
                     DoScriptText(SAY_AT_CLOSE, pWho);
                     DoAtEnd();
@@ -745,7 +745,7 @@ struct npc_rabid_bear : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (!m_uiCheckTimer && pWho->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_THARNARIUN_TREETENDER &&
-                pWho->IsWithinDist(m_creature, 2 * INTERACTION_DISTANCE, false))
+                pWho->Where().WithinDist(m_creature->Where(), 2 * INTERACTION_DISTANCE, false))
             {
                 // Possible related spell: 9455 9372
                 m_creature->ForcedDespawn(1000);

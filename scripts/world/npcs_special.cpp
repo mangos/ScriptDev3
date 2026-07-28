@@ -212,7 +212,7 @@ struct npc_air_force_bots : public CreatureScript
                 {
                     case SPAWNTYPE_ALARMBOT:
                     {
-                        if (!pWho->IsWithinDistInMap(m_creature, RANGE_GUARDS_MARK))
+                        if (!InReach(*pWho, *m_creature, RANGE_GUARDS_MARK))
                         {
                             return;
                         }
@@ -257,7 +257,7 @@ struct npc_air_force_bots : public CreatureScript
                     }
                     case SPAWNTYPE_TRIPWIRE_ROOFTOP:
                     {
-                        if (!pWho->IsWithinDistInMap(m_creature, RANGE_TRIPWIRE))
+                        if (!InReach(*pWho, *m_creature, RANGE_TRIPWIRE))
                         {
                             return;
                         }
@@ -688,10 +688,10 @@ struct npc_doctor : public CreatureScript
         void ReceiveAIEvent(AIEventType eventType, Creature* pSender, Unit* pInvoker, uint32 /*uiMiscValue*/) override
         {
             Location *loc = new Location();
-            loc->x = pSender->GetPositionX();
-            loc->y = pSender->GetPositionY();
-            loc->z = pSender->GetPositionZ();
-            loc->o = pSender->GetOrientation();
+            loc->x = pSender->Where().X();
+            loc->y = pSender->Where().Y();
+            loc->z = pSender->Where().Z();
+            loc->o = pSender->Where().Facing();
             if (eventType == AI_EVENT_CUSTOM_A && pInvoker->GetTypeId() == TYPEID_PLAYER)
             {
                 PatientSaved(pSender, pInvoker->ToPlayer(), loc);
@@ -893,10 +893,10 @@ struct npc_injured_patient : public CreatureScript
                 {
                     m_pCoord = new Location();
                 }
-                m_pCoord->x = m_creature->GetPositionX();
-                m_pCoord->y = m_creature->GetPositionY();
-                m_pCoord->z = m_creature->GetPositionZ();
-                m_pCoord->o = m_creature->GetOrientation();
+                m_pCoord->x = m_creature->Where().X();
+                m_pCoord->y = m_creature->Where().Y();
+                m_pCoord->z = m_creature->Where().Z();
+                m_pCoord->o = m_creature->Where().Facing();
                 m_doctorGuid = pSender->GetObjectGuid();
             }
         }
@@ -1246,7 +1246,7 @@ struct npc_innkeeper : public CreatureScript
         }
 
         // Should only apply to innkeeper close to start areas.
-        if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetAreaId()))
+        if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetTerrain()->GetAreaId(pCreature->Where().X(), pCreature->Where().Y(), pCreature->Where().Z())))
         {
 #if defined (TBC) || defined (WOTLK)
             // Note: this area flag doesn't exist in 1.12.1. The behavior of this gossip require additional research
@@ -1344,10 +1344,10 @@ struct npc_spring_rabbit : public CreatureScript
             m_uiStep = 1;
             m_uiStepTimer = 30000;
             // Calculate meeting position
-            float m_fMoveAngle = m_creature->GetAngle(pPartner);
-            float fDist = m_creature->GetDistance(pPartner);
+            float m_fMoveAngle = m_creature->Where().BearingTo(pPartner->Where());
+            float fDist = m_creature->Where().DistanceTo(pPartner->Where());
             float fX, fY, fZ;
-            m_creature->GetNearPoint(m_creature, fX, fY, fZ, m_creature->GetObjectBoundingRadius(), fDist * 0.5f, m_fMoveAngle);
+            FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, m_creature->Where().Extent(), fDist * 0.5f, m_fMoveAngle);
 
             m_creature->GetMotionMaster()->Clear();
             m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
@@ -1377,7 +1377,7 @@ struct npc_spring_rabbit : public CreatureScript
                 return;
             }
 
-            if (pWho->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_SPRING_RABBIT && CanStartWhatRabbitsDo() && m_creature->IsFriendlyTo(pWho) && m_creature->IsWithinDistInMap(pWho, DIST_START_EVENT, true))
+            if (pWho->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_SPRING_RABBIT && CanStartWhatRabbitsDo() && m_creature->IsFriendlyTo(pWho) && InReach(*m_creature, *pWho, DIST_START_EVENT, true))
             {
                 if (npc_spring_rabbitAI* pOtherBunnyAI = GetPartnerAI((Creature*)pWho))
                 {
@@ -1424,7 +1424,7 @@ struct npc_spring_rabbit : public CreatureScript
             {
                 if (pOtherBunnyAI->ReachedMeetingPlace())
                 {
-                    m_creature->SetFacingTo(pOtherBunnyAI->m_creature->GetOrientation());
+                    m_creature->SetFacingTo(pOtherBunnyAI->m_creature->Where().Facing());
                     m_uiStepTimer = 3000;
                 }
                 else
@@ -1843,7 +1843,7 @@ struct npc_burster_worm : public CreatureScript
                 }
 
                 // If we are within range melee the target
-                if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+                if (InMeleeReach(*m_creature, *m_creature->getVictim()))
                 {
                     DoMeleeAttackIfReady();
                 }
@@ -1855,7 +1855,7 @@ struct npc_burster_worm : public CreatureScript
                     }
 
                     // if target not in range, submerge and chase
-                    if (!m_creature->IsInRange(m_creature->getVictim(), 0, 50.0f))
+                    if (!m_creature->Where().WithinRange(m_creature->getVictim()->Where(), 0, 50.0f))
                     {
                         if (DoCastSpellIfCan(m_creature, SPELL_SANDWORM_SUBMERGE_VISUAL, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
                         {
@@ -1899,7 +1899,7 @@ struct npc_burster_worm : public CreatureScript
             // chase target
             else if (m_uiPhase == PHASE_CHASE)
             {
-                if (m_creature->IsInRange(m_creature->getVictim(), 0, 5.0f))
+                if (m_creature->Where().WithinRange(m_creature->getVictim()->Where(), 0, 5.0f))
                 {
                     m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                     m_creature->RemoveAurasDueToSpell(SPELL_TUNNEL_BORE_PASSIVE);

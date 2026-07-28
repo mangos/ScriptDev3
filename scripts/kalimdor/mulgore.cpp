@@ -159,7 +159,7 @@ struct npc_kyle_the_frenzied : public CreatureScript
                                     m_bIsMovingToLunch = true;
 
                                     float fX, fY, fZ;
-                                    pGo->GetContactPoint(m_creature, fX, fY, fZ, CONTACT_DISTANCE);
+                                    ContactPointNear(*pGo, m_creature, fX, fY, fZ, CONTACT_DISTANCE);
 
                                     m_creature->GetMotionMaster()->MovePoint(POINT_ID, fX, fY, fZ);
                                 }

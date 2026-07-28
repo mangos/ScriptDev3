@@ -79,7 +79,7 @@ struct npc_the_scourge_cauldron : public CreatureScript
 
             if (who->GetTypeId() == TYPEID_PLAYER)
             {
-                switch (m_creature->GetAreaId())
+                switch (m_creature->GetTerrain()->GetAreaId(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()))
                 {
                     case 199:                                   // felstone
                         if (((Player*)who)->GetQuestStatus(5216) == QUEST_STATUS_INCOMPLETE ||
@@ -531,10 +531,10 @@ struct npc_taelan_fordring : public CreatureScript
 
                     // summon additional crimson elites
                     float fX, fY, fZ;
-                    pSummoned->GetNearPoint(pSummoned, fX, fY, fZ, 0, 5.0f, M_PI_F * 1.25f);
-                    pSummoned->SummonCreature(NPC_CRIMSON_ELITE, fX, fY, fZ, pSummoned->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
-                    pSummoned->GetNearPoint(pSummoned, fX, fY, fZ, 0, 5.0f, 0);
-                    pSummoned->SummonCreature(NPC_CRIMSON_ELITE, fX, fY, fZ, pSummoned->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
+                    FindFreeSpotNear(*pSummoned, pSummoned, fX, fY, fZ, 0, 5.0f, M_PI_F * 1.25f);
+                    pSummoned->SummonCreature(NPC_CRIMSON_ELITE, fX, fY, fZ, pSummoned->Where().Facing(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
+                    FindFreeSpotNear(*pSummoned, pSummoned, fX, fY, fZ, 0, 5.0f, 0);
+                    pSummoned->SummonCreature(NPC_CRIMSON_ELITE, fX, fY, fZ, pSummoned->Where().Facing(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 15 * MINUTE*IN_MILLISECONDS);
                     break;
                 case NPC_TIRION_FORDRING:
                     m_tirionGuid = pSummoned->GetObjectGuid();
@@ -605,7 +605,7 @@ struct npc_taelan_fordring : public CreatureScript
                     {
                         if (Creature* pCavalier = m_creature->GetMap()->GetCreature(*itr))
                         {
-                            m_creature->GetContactPoint(pCavalier, fX, fY, fZ);
+                            ContactPointNear(*m_creature, pCavalier, fX, fY, fZ);
                             pCavalier->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                         }
                     }
@@ -1129,7 +1129,7 @@ struct npc_tirion_fordring : public CreatureScript
             if (Creature* pTaelan = m_creature->GetMap()->GetCreature(m_taelanGuid))
             {
                 float fX, fY, fZ;
-                pTaelan->GetContactPoint(m_creature, fX, fY, fZ);
+                ContactPointNear(*pTaelan, m_creature, fX, fY, fZ);
                 m_creature->GetMotionMaster()->MovePoint(200, fX, fY, fZ);
             }
 
@@ -1162,7 +1162,7 @@ struct npc_tirion_fordring : public CreatureScript
                     if (Creature* pTaelan = m_creature->GetMap()->GetCreature(m_taelanGuid))
                     {
                         float fX, fY, fZ;
-                        pTaelan->GetContactPoint(m_creature, fX, fY, fZ);
+                        ContactPointNear(*pTaelan, m_creature, fX, fY, fZ);
                         m_creature->GetMotionMaster()->MovePoint(100, fX, fY, fZ);
                     }
                     break;

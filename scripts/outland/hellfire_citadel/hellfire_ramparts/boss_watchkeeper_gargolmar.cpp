@@ -96,7 +96,7 @@ struct boss_watchkeeper_gargolmar : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasTaunted && m_creature->IsWithinDistInMap(pWho, 60.0f))
+            if (!m_bHasTaunted && InReach(*m_creature, *pWho, 60.0f))
             {
                 DoScriptText(SAY_TAUNT, m_creature);
                 m_bHasTaunted = true;

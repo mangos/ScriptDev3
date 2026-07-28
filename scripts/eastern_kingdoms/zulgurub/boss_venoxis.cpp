@@ -171,7 +171,7 @@ struct boss_venoxis : public CreatureScript
                     {
                         if (Unit* pTempTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid()))
                         {
-                            if (pTempTarget->GetTypeId() == TYPEID_PLAYER && m_creature->CanReachWithMeleeAttack(pTempTarget))
+                            if (pTempTarget->GetTypeId() == TYPEID_PLAYER && InMeleeReach(*m_creature, *pTempTarget))
                             {
                                 ++uiTargetsInRange;
                             }

@@ -691,12 +691,18 @@ struct is_blackrock_spire : public InstanceScript
                                 continue;
                             }
 
-                            pNefarius->GetRandomPoint(aStadiumLocs[0].m_fX, aStadiumLocs[0].m_fY, aStadiumLocs[0].m_fZ, 7.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*pNefarius, Geometry::Vector3(aStadiumLocs[0].m_fX, aStadiumLocs[0].m_fY, aStadiumLocs[0].m_fZ), 7.0f);
+                            fX = randSpot3.x;
+                            fY = randSpot3.y;
+                            fZ = randSpot3.z;
                             fX = std::min(aStadiumLocs[0].m_fX, fX);    // Halfcircle - suits better the rectangular form
                             if (Creature* pTemp = pNefarius->SummonCreature(aStadiumEventNpcs[m_uiStadiumWaves][i], fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0))
                             {
                                 // Get some point in the center of the stadium
-                                pTemp->GetRandomPoint(aStadiumLocs[2].m_fX, aStadiumLocs[2].m_fY, aStadiumLocs[2].m_fZ, 5.0f, fX, fY, fZ);
+                                const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*pTemp, Geometry::Vector3(aStadiumLocs[2].m_fX, aStadiumLocs[2].m_fY, aStadiumLocs[2].m_fZ), 5.0f);
+                                fX = randSpot2.x;
+                                fY = randSpot2.y;
+                                fZ = randSpot2.z;
                                 fX = std::min(aStadiumLocs[2].m_fX, fX);// Halfcircle - suits better the rectangular form
 
                                 pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
@@ -758,13 +764,16 @@ struct is_blackrock_spire : public InstanceScript
                     for (uint8 i = 0; i < 2; ++i)
                     {
                         float fX, fY, fZ;
-                        pSummoner->GetRandomPoint(rookeryEventSpawnPos[0], rookeryEventSpawnPos[1], rookeryEventSpawnPos[2], 2.5f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pSummoner, Geometry::Vector3(rookeryEventSpawnPos[0], rookeryEventSpawnPos[1], rookeryEventSpawnPos[2]), 2.5f);
+                        fX = randSpot1.x;
+                        fY = randSpot1.y;
+                        fZ = randSpot1.z;
                         // Summon Rookery Hatchers in first wave, else random
                         pSummoned = pSummoner->SummonCreature(urand(0, 1) && m_uiFlamewreathWaveCount ? NPC_ROOKERY_GUARDIAN : NPC_ROOKERY_HATCHER, fX, fY, fZ, 0.0, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 300000);
                         if (pSummoned)
                         {
-                            pSummoner->GetContactPoint(pSummoned, fX, fY, fZ);
-                            pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, pSummoner->GetPositionZ());
+                            ContactPointNear(*pSummoner, pSummoned, fX, fY, fZ);
+                            pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, pSummoner->Where().Z());
                         }
                     }
                     if (pSummoned && m_uiFlamewreathWaveCount == 0)
@@ -791,7 +800,7 @@ struct is_blackrock_spire : public InstanceScript
                 {
                     if (Creature* pSolakar = pSummoner->SummonCreature(NPC_SOLAKAR_FLAMEWREATH, rookeryEventSpawnPos[0], rookeryEventSpawnPos[1], rookeryEventSpawnPos[2], 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, HOUR * IN_MILLISECONDS))
                     {
-                        pSolakar->GetMotionMaster()->MovePoint(1, pSummoner->GetPositionX(), pSummoner->GetPositionY(), pSummoner->GetPositionZ());
+                        pSolakar->GetMotionMaster()->MovePoint(1, pSummoner->Where().X(), pSummoner->Where().Y(), pSummoner->Where().Z());
                     }
                     SetData(TYPE_FLAMEWREATH, SPECIAL);
                     m_uiFlamewreathEventTimer = 0;
@@ -875,7 +884,7 @@ struct is_blackrock_spire : public InstanceScript
                         for (GuidList::const_iterator itr = m_lRoomEventMobGUIDList.begin(); itr != m_lRoomEventMobGUIDList.end(); ++itr)
                         {
                             Creature* pCreature = instance->GetCreature(*itr);
-                            if (pCreature && pCreature->IsAlive() && pCreature->GetDistance(pRune) < 10.0f)
+                            if (pCreature && pCreature->IsAlive() && pCreature->Where().DistanceTo(pRune->Where()) < 10.0f)
                             {
                                 m_alRoomEventMobGUIDSorted[i].push_back(*itr);
                             }

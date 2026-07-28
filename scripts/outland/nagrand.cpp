@@ -321,7 +321,7 @@ struct npc_nagrand_captive : public CreatureScript
             }
 
             pSummoned->SetWalk(false);
-            pSummoned->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+            pSummoned->GetMotionMaster()->MovePoint(0, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
         }
 
         void SpellHitTarget(Unit* /*pTarget*/, const SpellEntry* pSpell) override
@@ -423,7 +423,7 @@ struct npc_creditmarker_visit_with_ancestors : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 30.0f))
+            if (pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 30.0f))
             {
                 if (((Player*)pWho)->GetQuestStatus(QUEST_VISIT_WITH_ANCESTORS) == QUEST_STATUS_INCOMPLETE)
                 {

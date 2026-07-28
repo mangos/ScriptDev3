@@ -84,17 +84,17 @@ struct is_ahnkahet : public InstanceScript
                         break;
                     case NPC_JEDOGA_CONTROLLER:
                         // Sort the controllers based on their purpose
-                        if (pCreature->GetPositionZ() > 30.0f)
+                        if (pCreature->Where().Z() > 30.0f)
                         {
                             // Used for Taldaram visual
                             m_lJedogaControllersGuidList.push_back(pCreature->GetObjectGuid());
                         }
-                        else if (pCreature->GetPositionZ() > 20.0f)
+                        else if (pCreature->Where().Z() > 20.0f)
                         {
                             // Used for Jedoga visual
                             m_lJedogaEventControllersGuidList.push_back(pCreature->GetObjectGuid());
                         }
-                        else if (pCreature->GetPositionZ() < -16.0f)
+                        else if (pCreature->Where().Z() < -16.0f)
                         {
                             // Used for Jedoga sacrifice
                             m_jedogaSacrificeController = pCreature->GetObjectGuid();

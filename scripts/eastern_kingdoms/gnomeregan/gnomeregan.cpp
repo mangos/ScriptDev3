@@ -204,7 +204,7 @@ struct npc_blastmaster_emi_shortfuse : public CreatureScript
                     if (GameObject* pDoor = m_pInstance->GetSingleGameObjectFromStorage(m_uiPhase > 20 ? GO_CAVE_IN_NORTH : GO_CAVE_IN_SOUTH))
                     {
                         float fX, fY, fZ;
-                        pDoor->GetNearPoint(pDoor, fX, fY, fZ, 0.0f, 2.0f, frand(0.0f, 2 * M_PI_F));
+                        FindFreeSpotNear(*pDoor, pDoor, fX, fY, fZ, 0.0f, 2.0f, frand(0.0f, 2 * M_PI_F));
                         pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                     }
                     break;
@@ -756,7 +756,7 @@ struct npc_kernobee : public CreatureScript
             if (m_uiCheckEndposTimer < uiDiff)
             {
                 m_uiCheckEndposTimer = 500;
-                if (m_creature->IsWithinDist3d(aKernobeePositions[0][0], aKernobeePositions[0][1], aKernobeePositions[0][2], 2 * INTERACTION_DISTANCE))
+                if (m_creature->Where().WithinDist(Geometry::Vector3(aKernobeePositions[0][0], aKernobeePositions[0][1], aKernobeePositions[0][2]), 2 * INTERACTION_DISTANCE))
                 {
                     SetFollowComplete(true);
                     if (Player* pPlayer = GetLeaderForFollower())

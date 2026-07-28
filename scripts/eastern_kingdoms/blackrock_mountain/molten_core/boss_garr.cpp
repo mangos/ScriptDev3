@@ -114,7 +114,7 @@ struct boss_garr : public CreatureScript
         {
             if (type == AI_EVENT_CUSTOM_B && pSender == m_creature)
             {
-                if (Creature* spawn = m_creature->SummonCreature(NPC_FIRESWORN, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSPAWN_CORPSE_DESPAWN, true))
+                if (Creature* spawn = m_creature->SummonCreature(NPC_FIRESWORN, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().Facing(), TEMPSPAWN_CORPSE_DESPAWN, true))
                 {
                     spawn->SetOwnerGuid(ObjectGuid());  // trying to prevent despawn of the summon at Garr death
                 }
@@ -266,7 +266,7 @@ struct mob_firesworn : public CreatureScript
 #endif
                 // Distance guesswork, but should be ok
                 Creature* pGarr = m_pInstance->GetSingleCreatureFromStorage(NPC_GARR);
-                if (pGarr && pGarr->IsAlive() && !m_creature->IsWithinDist2d(pGarr->GetPositionX(), pGarr->GetPositionY(), 50.0f))
+                if (pGarr && pGarr->IsAlive() && !m_creature->Where().WithinDist(Geometry::Vector2(pGarr->Where().X(), pGarr->Where().Y()), 50.0f))
                 {
                     DoCastSpellIfCan(m_creature, SPELL_SEPARATION_ANXIETY, CAST_TRIGGERED);
                 }

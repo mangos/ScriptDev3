@@ -151,7 +151,7 @@ struct is_karazhan : public InstanceScript
                         m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
                         break;
                     case NPC_NIGHTBANE_HELPER:
-                        if (pCreature->GetPositionZ() < 100.0f)
+                        if (pCreature->Where().Z() < 100.0f)
                         {
                             m_lNightbaneGroundTriggers.push_back(pCreature->GetObjectGuid());
                         }
@@ -161,7 +161,7 @@ struct is_karazhan : public InstanceScript
                         }
                         break;
                     case NPC_INVISIBLE_STALKER:
-                        if (pCreature->GetPositionY() < -1870.0f)
+                        if (pCreature->Where().Y() < -1870.0f)
                         {
                             m_lChessHordeStalkerList.push_back(pCreature->GetObjectGuid());
                         }
@@ -171,7 +171,7 @@ struct is_karazhan : public InstanceScript
                         }
                         break;
                     case NPC_CHESS_STATUS_BAR:
-                        if (pCreature->GetPositionY() < -1870.0f)
+                        if (pCreature->Where().Y() < -1870.0f)
                         {
                             m_HordeStatusGuid = pCreature->GetObjectGuid();
                         }
@@ -761,7 +761,7 @@ struct is_karazhan : public InstanceScript
                         {
                             if (Creature* pTrigger = instance->GetCreature(*itr))
                             {
-                                if (!pChosenTrigger || nightbane->GetDistanceOrder(pTrigger, pChosenTrigger, false))
+                                if (!pChosenTrigger || nightbane->Where().IsNearer(pTrigger->Where(), pChosenTrigger->Where(), false))
                                 {
                                     pChosenTrigger = pTrigger;
                                 }
@@ -803,7 +803,7 @@ struct is_karazhan : public InstanceScript
                         if (pTemp && pTemp->IsAlive())
                         {
                             // check for specified range targets and angle; Note: to be checked if the angle is right
-                            if (m_uiChessRange && !searcher->IsInFrontInMap(pTemp, float(m_uiChessRange), M_PI_F/m_uiChessArcPart))
+                            if (m_uiChessRange && !InFrontPhased(*searcher, *pTemp, float(m_uiChessRange), M_PI_F/m_uiChessArcPart))
                             {
                                 continue;
                             }

@@ -388,7 +388,7 @@ struct npc_khadgars_servant : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_uiRandomTalkCooldown && pWho->GetTypeId() == TYPEID_UNIT && m_creature->IsWithinDistInMap(pWho, 10.0f))
+            if (!m_uiRandomTalkCooldown && pWho->GetTypeId() == TYPEID_UNIT && InReach(*m_creature, *pWho, 10.0f))
             {
                 switch (pWho->GetEntry())
                 {

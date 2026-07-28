@@ -178,7 +178,10 @@ struct boss_jeklik : public CreatureScript
         {
             // Override MMaps, and teleport to original position
             float fX, fY, fZ, fO;
-            m_creature->GetRespawnCoord(fX, fY, fZ, &fO);
+            fX = m_creature->Spawn().X();
+            fY = m_creature->Spawn().Y();
+            fZ = m_creature->Spawn().Z();
+            fO = m_creature->Spawn().Facing();
             m_creature->NearTeleportTo(fX, fY, fZ, fO);
 
             ScriptedAI::EnterEvadeMode();
@@ -348,7 +351,7 @@ struct boss_jeklik : public CreatureScript
                         {
                             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                             {
-                                m_creature->SummonCreature(NPC_BAT_RIDER, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ() + 15.0f, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                m_creature->SummonCreature(NPC_BAT_RIDER, pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z() + 15.0f, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                             }
                         }
                         DoScriptText(SAY_RAIN_FIRE, m_creature);

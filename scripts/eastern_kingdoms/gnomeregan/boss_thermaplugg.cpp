@@ -146,9 +146,9 @@ struct boss_thermaplugg : public CreatureScript
                 m_pInstance->SetData(TYPE_THERMAPLUGG, IN_PROGRESS);
             }
 
-            m_afSpawnPos[0] = m_creature->GetPositionX();
-            m_afSpawnPos[1] = m_creature->GetPositionY();
-            m_afSpawnPos[2] = m_creature->GetPositionZ();
+            m_afSpawnPos[0] = m_creature->Where().X();
+            m_afSpawnPos[1] = m_creature->Where().Y();
+            m_afSpawnPos[2] = m_creature->Where().Z();
         }
 
         void JustReachedHome() override
@@ -176,8 +176,8 @@ struct boss_thermaplugg : public CreatureScript
                 m_lSummonedBombGUIDs.push_back(pSummoned->GetObjectGuid());
                 // calculate point for falling down
                 float fX, fY;
-                fX = 0.2 * m_afSpawnPos[0] + 0.8 * pSummoned->GetPositionX();
-                fY = 0.2 * m_afSpawnPos[1] + 0.8 * pSummoned->GetPositionY();
+                fX = 0.2 * m_afSpawnPos[0] + 0.8 * pSummoned->Where().X();
+                fY = 0.2 * m_afSpawnPos[1] + 0.8 * pSummoned->Where().Y();
                 pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, m_afSpawnPos[2] - 2.0f);
             }
         }
@@ -298,8 +298,8 @@ struct boss_thermaplugg : public CreatureScript
                             float fX = 0.0f, fY = 0.0f;
                             if (GameObject* pFace = m_creature->GetMap()->GetGameObject(m_asBombFaces[i].m_gnomeFaceGuid))
                             {
-                                fX = 0.35 * m_afSpawnPos[0] + 0.65 * pFace->GetPositionX();
-                                fY = 0.35 * m_afSpawnPos[1] + 0.65 * pFace->GetPositionY();
+                                fX = 0.35 * m_afSpawnPos[0] + 0.65 * pFace->Where().X();
+                                fY = 0.35 * m_afSpawnPos[1] + 0.65 * pFace->Where().Y();
                             }
                             m_creature->SummonCreature(NPC_WALKING_BOMB, fX, fY, fBombSpawnZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
                             m_asBombFaces[i].m_uiBombTimer = urand(10000, 25000);   // TODO

@@ -318,7 +318,10 @@ void hyjalAI::JustSummoned(Creature* pSummoned)
     if (pMove)
     {
         float fX, fY, fZ;
-        pSummoned->GetRandomPoint(pMove->m_fX, pMove->m_fY, pMove->m_fZ, 10.0f, fX, fY, fZ);
+        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pSummoned, Geometry::Vector3(pMove->m_fX, pMove->m_fY, pMove->m_fZ), 10.0f);
+        fX = randSpot1.x;
+        fY = randSpot1.y;
+        fZ = randSpot1.z;
 
         pSummoned->SetWalk(false);
         pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
@@ -553,7 +556,7 @@ void hyjalAI::UpdateAI(const uint32 uiDiff)
                     }
 
                     pTemp->SetWalk(false);
-                    pTemp->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                    pTemp->GetMotionMaster()->MovePoint(1, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
                 }
             }
             m_uiWaveMoveTimer = 10000;

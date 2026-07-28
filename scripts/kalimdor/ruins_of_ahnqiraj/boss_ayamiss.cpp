@@ -113,7 +113,7 @@ struct boss_ayamiss : public CreatureScript
         void Aggro(Unit* /*pWho*/) override
         {
             m_creature->SetLevitate(true);
-            m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f);
+            m_creature->GetMotionMaster()->MovePoint(0, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 15.0f);
         }
 
         void JustSummoned(Creature* pSummoned) override
@@ -214,7 +214,10 @@ struct boss_ayamiss : public CreatureScript
                 float fX, fY, fZ;
                 for (uint8 i = 0; i < 2; ++i)
                 {
-                    m_creature->GetRandomPoint(aAyamissSpawnLocs[2].m_fX, aAyamissSpawnLocs[2].m_fY, aAyamissSpawnLocs[2].m_fZ, 80.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aAyamissSpawnLocs[2].m_fX, aAyamissSpawnLocs[2].m_fY, aAyamissSpawnLocs[2].m_fZ), 80.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     m_creature->SummonCreature(NPC_SWARMER, fX, fY, aAyamissSpawnLocs[2].m_fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
                 }
                 m_uiSummonSwarmerTimer = 5000;

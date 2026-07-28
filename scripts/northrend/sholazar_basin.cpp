@@ -282,13 +282,13 @@ struct npc_injured_rainspeaker : public CreatureScript
                     DoScriptText(SAY_END_2, m_creature);
 
                     // location behind
-                    float fAngle = m_creature->GetOrientation();
+                    float fAngle = m_creature->Where().Facing();
                     fAngle += M_PI_F;
 
                     float fX, fY, fZ;
-                    m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0.0f, 15.0f, fAngle);
+                    FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0.0f, 15.0f, fAngle);
 
-                    m_creature->SummonCreature(NPC_FRENZYHEART_TRACKER, fX, fY, fZ, m_creature->GetOrientation(), TEMPSPAWN_TIMED_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_FRENZYHEART_TRACKER, fX, fY, fZ, m_creature->Where().Facing(), TEMPSPAWN_TIMED_DESPAWN, 30000);
                     break;
                 }
             }

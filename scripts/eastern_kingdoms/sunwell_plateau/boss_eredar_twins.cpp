@@ -490,7 +490,7 @@ struct boss_sacrolash : public CreatureScript
             {
                 if (Unit* pTempTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid()))
                 {
-                    if (!pTempTarget->IsWithinDistInMap(m_creature, fDist))
+                    if (!InReach(*pTempTarget, *m_creature, fDist))
                     {
                         m_vRangeTargets.push_back(pTempTarget);
                     }
@@ -611,7 +611,7 @@ struct boss_sacrolash : public CreatureScript
             }
 
             // Overwrite the melee attack in order to apply the dark strike
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 // Make sure our attack is ready and we aren't currently casting
                 if (m_creature->isAttackReady() && !m_creature->IsNonMeleeSpellCasted(false))
@@ -685,7 +685,7 @@ struct npc_shadow_image : public CreatureScript
                     case SPELL_SHADOWFURY:
                         if (m_uiAbilityTimer < uiDiff)
                         {
-                            if (m_creature->IsWithinDistInMap(m_creature->getVictim(), INTERACTION_DISTANCE))
+                            if (InReach(*m_creature, *m_creature->getVictim(), INTERACTION_DISTANCE))
                             {
                                 if (DoCastSpellIfCan(m_creature, SPELL_SHADOWFURY) == CAST_OK)
                                 {

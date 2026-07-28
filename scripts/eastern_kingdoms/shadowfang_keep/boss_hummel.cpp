@@ -225,7 +225,7 @@ struct npc_valentine_boss_manager : public CreatureScript
                 if (GameObject* pVials = m_pInstance->GetSingleGameObjectFromStorage(GO_APOTHECARE_VIALS))
                 {
                     float fX, fY, fZ;
-                    pVials->GetContactPoint(pBaxter, fX, fY, fZ, CONTACT_DISTANCE);
+                    ContactPointNear(*pVials, pBaxter, fX, fY, fZ, CONTACT_DISTANCE);
                     pBaxter->SetWalk(false);
                     pBaxter->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 }
@@ -245,7 +245,7 @@ struct npc_valentine_boss_manager : public CreatureScript
                 if (GameObject* pChemistry = m_pInstance->GetSingleGameObjectFromStorage(GO_CHEMISTRY_SET))
                 {
                     float fX, fY, fZ;
-                    pChemistry->GetContactPoint(pFrye, fX, fY, fZ, CONTACT_DISTANCE);
+                    ContactPointNear(*pChemistry, pFrye, fX, fY, fZ, CONTACT_DISTANCE);
                     pFrye->SetWalk(false);
                     pFrye->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 }

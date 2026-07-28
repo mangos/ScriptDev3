@@ -414,7 +414,7 @@ struct boss_lady_vashj : public CreatureScript
                 }
 
                 // If we are within range melee the target
-                if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+                if (InMeleeReach(*m_creature, *m_creature->getVictim()))
                 {
                     DoMeleeAttackIfReady();
                 }
@@ -526,7 +526,7 @@ struct mob_enchanted_elemental : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // Buff Lady Vashj on range check - spell has script target
-            if (pWho->GetEntry() == NPC_LADYVASHJ && pWho->IsWithinDistInMap(m_creature, INTERACTION_DISTANCE) && pWho->IsWithinLOSInMap(m_creature))
+            if (pWho->GetEntry() == NPC_LADYVASHJ && InReach(*pWho, *m_creature, INTERACTION_DISTANCE) && HasLineOfSight(*pWho, *m_creature))
             {
                 DoCastSpellIfCan(m_creature, SPELL_SURGE, CAST_TRIGGERED);
             }

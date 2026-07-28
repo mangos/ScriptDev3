@@ -211,7 +211,7 @@ struct boss_supremus : public CreatureScript
             {
                 Unit* pUnit = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
 
-                if (pUnit && m_creature->CanReachWithMeleeAttack(pUnit))
+                if (pUnit && InMeleeReach(*m_creature, *pUnit))
                 {
                     if (pUnit->GetHealth() > uiHealth)
                     {
@@ -342,7 +342,7 @@ struct boss_supremus : public CreatureScript
 
                 if (m_uiMoltenPunchTimer < uiDiff)
                 {
-                    if (m_creature->GetCombatDistance(m_creature->getVictim(), false) < RANGE_MOLTEN_PUNCH)
+                    if (CombatDistanceBetween(*m_creature, *m_creature->getVictim(), false) < RANGE_MOLTEN_PUNCH)
                     {
                         DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHARGE);
                         DoScriptText(EMOTE_PUNCH_GROUND, m_creature);
@@ -355,9 +355,9 @@ struct boss_supremus : public CreatureScript
                 }
 
                 /** Not understood how this really must work
-                 * if (m_creature->GetSpeedRate(MOVE_RUN) > SPEED_CHASE && m_creature->GetCombatDistance(m_creature->getVictim()) < RANGE_MIN_DASHING)
+                 * if (m_creature->GetSpeedRate(MOVE_RUN) > SPEED_CHASE && CombatDistanceBetween(*m_creature, *m_creature->getVictim()) < RANGE_MIN_DASHING)
                  *     m_creature->SetSpeedRate(MOVE_RUN, SPEED_CHASE);
-                 * else if (m_creature->GetCombatDistance(m_creature->getVictim()) > RANGE_MOLTEN_PUNCH)
+                 * else if (CombatDistanceBetween(*m_creature, *m_creature->getVictim()) > RANGE_MOLTEN_PUNCH)
                  *     m_creature->SetSpeedRate(MOVE_RUN, SPEED_DASHING);
                  */
             }

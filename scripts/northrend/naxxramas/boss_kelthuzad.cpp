@@ -303,7 +303,10 @@ struct boss_kelthuzad : public CreatureScript
                 }
 
                 float fNewX, fNewY, fNewZ;
-                m_creature->GetRandomPoint(fX, fY, fZ, 12.0f, fNewX, fNewY, fNewZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(fX, fY, fZ), 12.0f);
+                fNewX = randSpot1.x;
+                fNewY = randSpot1.y;
+                fNewZ = randSpot1.z;
 
                 m_creature->SummonCreature(uiNpcEntry, fNewX, fNewY, fNewZ, fAngle + M_PI_F, TEMPSPAWN_CORPSE_DESPAWN, 5000);
             }

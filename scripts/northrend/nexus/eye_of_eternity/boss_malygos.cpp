@@ -245,7 +245,7 @@ struct boss_malygos : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && m_creature->IsWithinDistInMap(pWho, 110.0f))
+            if (!m_bHasDoneIntro && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && InReach(*m_creature, *pWho, 110.0f))
             {
                 StartNextDialogueText(SAY_INTRO_1);
                 m_bHasDoneIntro = true;
@@ -424,14 +424,20 @@ struct boss_malygos : public CreatureScript
             float fX, fY, fZ;
             for (uint8 i = 0; i < m_uiMaxNexusLords; ++i)
             {
-                m_creature->GetRandomPoint(aCenterMovePos[0], aCenterMovePos[1], aCenterMovePos[2], 50.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aCenterMovePos[0], aCenterMovePos[1], aCenterMovePos[2]), 50.0f);
+                fX = randSpot2.x;
+                fY = randSpot2.y;
+                fZ = randSpot2.z;
                 m_creature->SummonCreature(NPC_HOVER_DISK, fX, fY, fZ + 30.0f, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
                 m_creature->SummonCreature(NPC_NEXUS_LORD, fX, fY, fZ + 30.0f, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
             }
 
             for (uint8 i = 0; i < m_uiMaxScions; ++i)
             {
-                m_creature->GetRandomPoint(aCenterMovePos[0], aCenterMovePos[1], aCenterMovePos[2], 50.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aCenterMovePos[0], aCenterMovePos[1], aCenterMovePos[2]), 50.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 m_creature->SummonCreature(NPC_HOVER_DISK, fX, fY, fZ + 30.0f, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
                 m_creature->SummonCreature(NPC_SCION_OF_ETERNITY, fX, fY, fZ + 30.0f, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
             }
@@ -649,7 +655,7 @@ struct npc_power_spark : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (pWho->GetEntry() == NPC_MALYGOS && m_creature->CanReachWithMeleeAttack(pWho))
+            if (pWho->GetEntry() == NPC_MALYGOS && InMeleeReach(*m_creature, *pWho))
             {
                 DoCastSpellIfCan(m_creature, SPELL_POWER_SPARK_MALYGOS, CAST_TRIGGERED);
                 m_creature->ForcedDespawn();
@@ -777,7 +783,7 @@ struct event_go_focusing_iris : public MapEventScript
 
             // Enter combat area - Move to ground point first, then start chasing target
             float fX, fY, fZ;
-            pTrigger->GetNearPoint(pTrigger, fX, fY, fZ, 0, 30.0f, pTrigger->GetAngle(pMalygos));
+            FindFreeSpotNear(*pTrigger, pTrigger, fX, fY, fZ, 0, 30.0f, pTrigger->Where().BearingTo(pMalygos->Where()));
             pMalygos->GetMotionMaster()->MovePoint(POINT_ID_COMBAT, fX, fY, fZ);
             pMalygos->AI()->AttackStart((Player*)pSource);
 

@@ -375,7 +375,7 @@ struct boss_alar : public CreatureScript
                 {
                     if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     {
-                        m_creature->SummonCreature(NPC_FLAME_PATCH, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSPAWN_TIMED_DESPAWN, 30000);
+                        m_creature->SummonCreature(NPC_FLAME_PATCH, pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z(), 0, TEMPSPAWN_TIMED_DESPAWN, 30000);
                         m_uiFlamePatchTimer = 30000;
                     }
                 }
@@ -438,7 +438,7 @@ struct boss_alar : public CreatureScript
                         {
                             if (DoCastSpellIfCan(pTarget, SPELL_DIVE_BOMB) == CAST_OK)
                             {
-                                m_creature->Relocate(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+                                m_creature->Place().MoveTo(pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z());
                                 m_uiRebirthTimer = 2000;
                                 m_uiDiveBombTimer = 0;
                             }
@@ -463,7 +463,10 @@ struct boss_alar : public CreatureScript
                             float fX, fY, fZ;
                             for (uint8 i = 0; i < 2; ++i)
                             {
-                                m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 5.0f, fX, fY, fZ);
+                                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 5.0f);
+                                fX = randSpot1.x;
+                                fY = randSpot1.y;
+                                fZ = randSpot1.z;
                                 m_creature->SummonCreature(NPC_EMBER_OF_ALAR, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                             }
 
@@ -485,7 +488,7 @@ struct boss_alar : public CreatureScript
             {
                 if (m_uiRangeCheckTimer <= uiDiff)
                 {
-                    if (!m_creature->IsWithinDistInMap(m_creature->getVictim(), ATTACK_DISTANCE))
+                    if (!InReach(*m_creature, *m_creature->getVictim(), ATTACK_DISTANCE))
                     {
                         DoCastSpellIfCan(m_creature, SPELL_FLAME_BUFFET);
                     }

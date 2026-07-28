@@ -111,7 +111,7 @@ struct boss_zumrah : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasTurnedHostile && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 9.0f) && m_creature->IsWithinLOSInMap(pWho))
+            if (!m_bHasTurnedHostile && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 9.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_NONE);
                 DoScriptText(SAY_INTRO, m_creature);
@@ -145,7 +145,7 @@ struct boss_zumrah : public CreatureScript
                     m_pInstance->SetData64(TYPE_SIGNAL, m_creature->GetObjectGuid().GetRawValue());
                     if (GameObject* pGrave = m_pInstance->instance->GetGameObject(ObjectGuid(m_pInstance->GetData64(TYPE_SIGNAL))))
                     {
-                        m_creature->CastSpell(pGrave->GetPositionX(), pGrave->GetPositionY(), pGrave->GetPositionZ(), SPELL_SUMMON_ZOMBIES, true, nullptr, nullptr, pGrave->GetObjectGuid());
+                        m_creature->CastSpell(pGrave->Where().X(), pGrave->Where().Y(), pGrave->Where().Z(), SPELL_SUMMON_ZOMBIES, true, nullptr, nullptr, pGrave->GetObjectGuid());
                         pGrave->SetLootState(GO_JUST_DEACTIVATED);
 
                         if (roll_chance_i(30))

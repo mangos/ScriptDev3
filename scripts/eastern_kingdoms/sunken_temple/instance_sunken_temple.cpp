@@ -376,14 +376,14 @@ struct is_sunken_temple : public InstanceScript
                             {
                                 if (GameObject* pCircle = instance->GetGameObject(*itr))
                                 {
-                                    pShade->SummonCreature(NPC_HAKKARI_MINION, pCircle->GetPositionX(), pCircle->GetPositionY(), pCircle->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                    pShade->SummonCreature(NPC_HAKKARI_MINION, pCircle->Where().X(), pCircle->Where().Y(), pCircle->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                                 }
                             }
 
                             // Summon Bloodkeeper at random circle
                             if (GameObject* pCircle = instance->GetGameObject(m_vuiCircleGUIDs[urand(0, m_vuiCircleGUIDs.size() - 1)]))
                             {
-                                pShade->SummonCreature(NPC_BLOODKEEPER, pCircle->GetPositionX(), pCircle->GetPositionY(), pCircle->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                pShade->SummonCreature(NPC_BLOODKEEPER, pCircle->Where().X(), pCircle->Where().Y(), pCircle->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                             }
 
                             m_bCanSummonBloodkeeper = false;
@@ -400,7 +400,7 @@ struct is_sunken_temple : public InstanceScript
                                 // Summon a Bloodkeeper
                                 if (GameObject* pCircle = instance->GetGameObject(m_vuiCircleGUIDs[urand(0, m_vuiCircleGUIDs.size() - 1)]))
                                 {
-                                    pShade->SummonCreature(NPC_BLOODKEEPER, pCircle->GetPositionX(), pCircle->GetPositionY(), pCircle->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                    pShade->SummonCreature(NPC_BLOODKEEPER, pCircle->Where().X(), pCircle->Where().Y(), pCircle->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                                 }
 
                                 m_bCanSummonBloodkeeper = false;
@@ -411,7 +411,7 @@ struct is_sunken_temple : public InstanceScript
                             {
                                 if (GameObject* pCircle = instance->GetGameObject(m_vuiCircleGUIDs[urand(0, m_vuiCircleGUIDs.size() - 1)]))
                                 {
-                                    pShade->SummonCreature(NPC_HAKKARI_MINION, pCircle->GetPositionX(), pCircle->GetPositionY(), pCircle->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                    pShade->SummonCreature(NPC_HAKKARI_MINION, pCircle->Where().X(), pCircle->Where().Y(), pCircle->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                                 }
                             }
                             m_uiAvatarSummonTimer = urand(3000, 15000);

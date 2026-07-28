@@ -385,7 +385,7 @@ struct npc_infantry : public CreatureScript
             {
                 if (Creature* pLeader = m_creature->GetMap()->GetCreature(m_squadLeaderGuid))
                 {
-                    m_creature->GetMotionMaster()->MoveFollow(pLeader, m_creature->GetDistance(pLeader), M_PI_F / 2 + m_creature->GetAngle(pLeader));
+                    m_creature->GetMotionMaster()->MoveFollow(pLeader, m_creature->Where().DistanceTo(pLeader->Where()), M_PI_F / 2 + m_creature->Where().BearingTo(pLeader->Where()));
                 }
             }
             else
@@ -405,7 +405,7 @@ struct npc_infantry : public CreatureScript
             if (eventType == AI_EVENT_CUSTOM_A && (pSender->GetEntry() == NPC_SKYBREAKER_SQUAD_LEADER || pSender->GetEntry() == NPC_KORKRON_SQUAD_LEADER))
             {
                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                m_creature->GetMotionMaster()->MoveFollow(pSender, m_creature->GetDistance(pSender), M_PI_F / 2 + m_creature->GetAngle(pSender));
+                m_creature->GetMotionMaster()->MoveFollow(pSender, m_creature->Where().DistanceTo(pSender->Where()), M_PI_F / 2 + m_creature->Where().BearingTo(pSender->Where()));
                 m_squadLeaderGuid = pSender->GetObjectGuid();
                 m_bEscortActive = true;
             }

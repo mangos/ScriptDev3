@@ -250,10 +250,10 @@ struct npc_snufflenose_gopher : public CreatureScript
             for (std::list<GameObject*>::const_iterator itr = lTubbersInRange.begin(); itr != lTubbersInRange.end(); ++itr)
             {
 #if defined (CLASSIC) || defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
-                if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && (*itr)->IsWithinLOSInMap(m_creature) && (*itr)->GetDistanceZ(m_creature) <= 6.0f)
+                if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && HasLineOfSight(*(*itr), *m_creature) && (*itr)->Where().HeightGapTo(m_creature->Where()) <= 6.0f)
 #endif
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
-                if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && (*itr)->IsWithinLOSInMap(m_creature))
+                if (!(*itr)->isSpawned() && (*itr)->HasFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND) && HasLineOfSight(*(*itr), *m_creature))
 #endif
                 {
                     pNearestTubber = *itr;
@@ -268,7 +268,7 @@ struct npc_snufflenose_gopher : public CreatureScript
             m_targetTubberGuid = pNearestTubber->GetObjectGuid();
 
             float fX, fY, fZ;
-            pNearestTubber->GetContactPoint(m_creature, fX, fY, fZ);
+            ContactPointNear(*pNearestTubber, m_creature, fX, fY, fZ);
             m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
             m_bIsMovementActive = true;
         }

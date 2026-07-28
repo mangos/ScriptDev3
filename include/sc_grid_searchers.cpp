@@ -100,7 +100,7 @@ static void CheckPartialGridScanAnomaly(WorldObject* pSource, const char* tag)
         return;
     }
 
-    CellPair p = MaNGOS::ComputeCellPair(pSource->GetPositionX(), pSource->GetPositionY());
+    CellPair p = MaNGOS::ComputeCellPair(pSource->Where().X(), pSource->Where().Y());
     Cell cell(p);
     if (!pSource->GetMap()->IsGridEnvelope(cell.GridX(), cell.GridY()))
     {
@@ -134,7 +134,7 @@ void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList , WorldObjec
 {
     CheckPartialGridScanAnomaly(pSource, "GO");
 
-    MaNGOS::GameObjectEntryInPosRangeCheck check(*pSource, uiEntry, pSource->GetPositionX(), pSource->GetPositionY(), pSource->GetPositionZ(), fMaxSearchRange);
+    MaNGOS::GameObjectEntryInPosRangeCheck check(*pSource, uiEntry, pSource->Where().X(), pSource->Where().Y(), pSource->Where().Z(), fMaxSearchRange);
     MaNGOS::GameObjectListSearcher<MaNGOS::GameObjectEntryInPosRangeCheck> searcher(lList, check);
 
     Cell::VisitGridObjects(pSource, searcher, fMaxSearchRange);

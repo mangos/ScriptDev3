@@ -355,7 +355,7 @@ struct boss_majordomo : public CreatureScript
                             {
                                 if (GameObject* pGo = m_pInstance->GetSingleGameObjectFromStorage(GO_LAVA_STEAM))
                                 {
-                                    m_creature->SummonCreature(NPC_RAGNAROS, pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), fmod(m_creature->GetOrientation() + M_PI, 2 * M_PI), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 2 * HOUR * IN_MILLISECONDS);
+                                    m_creature->SummonCreature(NPC_RAGNAROS, pGo->Where().X(), pGo->Where().Y(), pGo->Where().Z(), fmod(m_creature->Where().Facing() + M_PI, 2 * M_PI), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 2 * HOUR * IN_MILLISECONDS);
                                 }
                             }
                             ++m_uiSpeech;

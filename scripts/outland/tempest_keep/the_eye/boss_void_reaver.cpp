@@ -159,7 +159,7 @@ struct boss_void_reaver : public CreatureScript
                 {
                     if (Unit* pTarget = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid()))
                     {
-                        if (pTarget->GetTypeId() == TYPEID_PLAYER && !pTarget->IsWithinDist(m_creature, 18.0f))
+                        if (pTarget->GetTypeId() == TYPEID_PLAYER && !pTarget->Where().WithinDist(m_creature->Where(), 18.0f))
                         {
                             suitableTargets.push_back(pTarget);
                         }
@@ -176,7 +176,7 @@ struct boss_void_reaver : public CreatureScript
 
                     if (pTarget)
                     {
-                        m_creature->SummonCreature(NPC_ARCANE_ORB_TARGET, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                        m_creature->SummonCreature(NPC_ARCANE_ORB_TARGET, pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z(), 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
                     }
 
                     m_uiArcaneOrbTimer = 3000;

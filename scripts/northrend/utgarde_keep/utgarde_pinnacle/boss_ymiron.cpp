@@ -389,7 +389,7 @@ struct boss_ymiron : public CreatureScript
                     {
                         float fX, fY, fZ;
                         m_uiCurrentSpiritGuid = pSpirit->GetObjectGuid();
-                        pSpirit->GetContactPoint(m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
+                        ContactPointNear(*pSpirit, m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
                         m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                     }
                 }

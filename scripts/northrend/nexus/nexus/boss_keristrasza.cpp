@@ -224,7 +224,7 @@ struct boss_keristrasza : public CreatureScript
                                 {
                                     if (Player* pMember = pRef->getSource())
                                     {
-                                        if (pMember->IsAlive() && pMember->IsWithinDistInMap(m_creature, 50.0f))
+                                        if (pMember->IsAlive() && InReach(*pMember, *m_creature, 50.0f))
                                         {
                                             m_creature->CastSpell(pMember, SPELL_CRYSTAL_CHAINS, true);
                                         }
