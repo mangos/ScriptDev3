@@ -611,7 +611,7 @@ struct boss_sacrolash : public CreatureScript
             }
 
             // Overwrite the melee attack in order to apply the dark strike
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 // Make sure our attack is ready and we aren't currently casting
                 if (m_creature->isAttackReady() && !m_creature->IsNonMeleeSpellCasted(false))

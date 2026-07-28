@@ -228,7 +228,9 @@ struct boss_saviana : public CreatureScript
                             m_uiPhaseSwitchTimer = 0;
 
                             float fX, fY, fZ;
-                            m_creature->GetRespawnCoord(fX, fY, fZ);
+                            fX = m_creature->Spawn().X();
+                            fY = m_creature->Spawn().Y();
+                            fZ = m_creature->Spawn().Z();
                             m_creature->GetMotionMaster()->Clear();
                             m_creature->GetMotionMaster()->MovePoint(POINT_GROUND, fX, fY, fZ);
                         }

@@ -359,7 +359,7 @@ struct boss_mandokir : public CreatureScript
                     {
                         Unit* pTarget = m_creature->GetMap()->GetUnit((*i)->getUnitGuid());
 
-                        if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && m_creature->CanReachWithMeleeAttack(pTarget))
+                        if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && InMeleeReach(*m_creature, *pTarget))
                         {
                             ++uiTargetInRangeCount;
                         }

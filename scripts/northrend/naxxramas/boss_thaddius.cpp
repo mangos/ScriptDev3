@@ -258,7 +258,7 @@ struct boss_thaddius : public CreatureScript
 
             // Ball Lightning if target not in melee range
             // TODO: Verify, likely that the boss should attack any enemy in melee range before starting to cast
-            if (!m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (!InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 if (m_uiBallLightningTimer < uiDiff)
                 {

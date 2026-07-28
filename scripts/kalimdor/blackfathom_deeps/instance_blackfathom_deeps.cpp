@@ -300,7 +300,11 @@ struct is_blackfathom_deeps : public InstanceScript
 
                 float fX_resp, fY_resp, fZ_resp;
 
-                pKelris->GetRespawnCoord(fX_resp, fY_resp, fZ_resp);
+                fX_resp = pKelris->Spawn().X();
+
+                fY_resp = pKelris->Spawn().Y();
+
+                fZ_resp = pKelris->Spawn().Z();
 
                 for (uint8 i = 0; i < countof(aWaveSummonInformation); ++i)
                 {

@@ -192,7 +192,9 @@ struct boss_viscidus : public CreatureScript
             if (pSummoned->GetEntry() == NPC_GLOB_OF_VISCIDUS)
             {
                 float fX, fY, fZ;
-                m_creature->GetRespawnCoord(fX, fY, fZ);
+                fX = m_creature->Spawn().X();
+                fY = m_creature->Spawn().Y();
+                fZ = m_creature->Spawn().Z();
                 pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 m_lGlobesGuidList.push_back(pSummoned->GetObjectGuid());
             }
@@ -381,7 +383,10 @@ struct boss_viscidus : public CreatureScript
 
                     // Teleport to room center
                     float fX, fY, fZ, fO;
-                    m_creature->GetRespawnCoord(fX, fY, fZ, &fO);
+                    fX = m_creature->Spawn().X();
+                    fY = m_creature->Spawn().Y();
+                    fZ = m_creature->Spawn().Z();
+                    fO = m_creature->Spawn().Facing();
                     m_creature->NearTeleportTo(fX, fY, fZ, fO);
                     m_uiExplodeDelayTimer = 0;
                 }

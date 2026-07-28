@@ -576,7 +576,7 @@ struct aura_dummy_npc_brutallus_cloud : public AuraScript
                     if (Creature* pMadrigosa = pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
                     {
                         // Set respawn pos to current pos
-                        pMadrigosa->SetRespawnCoord(pMadrigosa->GetPositionX(), pMadrigosa->GetPositionY(), pMadrigosa->GetPositionZ(), pMadrigosa->GetOrientation());
+                        pMadrigosa->SetSpawn(Geometry::Vector3(pMadrigosa->GetPositionX(), pMadrigosa->GetPositionY(), pMadrigosa->GetPositionZ()), pMadrigosa->GetOrientation());
 
                         pMadrigosa->CastSpell(pMadrigosa, SPELL_FELBLAZE_PREVIZUAL, true);
                         pMadrigosa->ForcedDespawn(10000);

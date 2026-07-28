@@ -292,7 +292,7 @@ struct boss_skeram : public CreatureScript
             // Earth Shock is cast every 1.2s on the victim if Skeram can't reach them or they are not auto attacking him
             if (m_uiEarthShockTimer < uiDiff)
             {
-                if (!m_creature->CanReachWithMeleeAttack(m_creature->getVictim()) || !m_creature->getVictim()->hasUnitState(UNIT_STAT_MELEE_ATTACKING))
+                if (!InMeleeReach(*m_creature, *m_creature->getVictim()) || !m_creature->getVictim()->hasUnitState(UNIT_STAT_MELEE_ATTACKING))
                 {
                     if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_EARTH_SHOCK) == CAST_OK)
                     {

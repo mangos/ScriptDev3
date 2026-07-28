@@ -125,7 +125,7 @@ struct boss_murmur : public CreatureScript
             }
 
             // Resonance_Timer - cast if no target is in range
-            if (!m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (!InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 if (m_uiResonanceTimer < uiDiff)
                 {

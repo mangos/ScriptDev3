@@ -1211,7 +1211,7 @@ struct npc_garaxxas : public CreatureScript
 
         bool UpdateCompanionAI(const uint32 uiDiff)
         {
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 if (m_uiWingClipTimer < uiDiff)
                 {

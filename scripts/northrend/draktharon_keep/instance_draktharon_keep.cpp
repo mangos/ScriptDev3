@@ -383,7 +383,9 @@ struct is_draktharon_keep : public InstanceScript
 
                 // Find the crystal channel target (above Novos)
                 float fNovosX, fNovosY, fNovosZ;
-                pNovos->GetRespawnCoord(fNovosX, fNovosY, fNovosZ);
+                fNovosX = pNovos->Spawn().X();
+                fNovosY = pNovos->Spawn().Y();
+                fNovosZ = pNovos->Spawn().Z();
                 for (GuidList::iterator itr = m_lNovosDummyGuids.begin(); itr != m_lNovosDummyGuids.end();)
                 {
                     Creature* pDummy = instance->GetCreature(*itr);

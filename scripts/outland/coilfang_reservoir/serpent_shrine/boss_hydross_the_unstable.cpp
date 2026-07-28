@@ -280,7 +280,9 @@ struct boss_hydross_the_unstable : public CreatureScript
                 if (m_uiPosCheckTimer < uiDiff)
                 {
                     float fPosX, fPosY, fPosZ;
-                    m_creature->GetCombatStartPosition(fPosX, fPosY, fPosZ);
+                    fPosX = m_creature->CombatAnchor().x;
+                    fPosY = m_creature->CombatAnchor().y;
+                    fPosZ = m_creature->CombatAnchor().z;
 
                     if (m_creature->IsWithinDist2d(fPosX, fPosY, SWITCH_RADIUS))
                     {
@@ -329,7 +331,9 @@ struct boss_hydross_the_unstable : public CreatureScript
                 if (m_uiPosCheckTimer < uiDiff)
                 {
                     float fPosX, fPosY, fPosZ;
-                    m_creature->GetCombatStartPosition(fPosX, fPosY, fPosZ);
+                    fPosX = m_creature->CombatAnchor().x;
+                    fPosY = m_creature->CombatAnchor().y;
+                    fPosZ = m_creature->CombatAnchor().z;
 
                     if (!m_creature->IsWithinDist2d(fPosX, fPosY, SWITCH_RADIUS))
                     {

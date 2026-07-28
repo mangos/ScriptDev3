@@ -58,7 +58,7 @@ struct generic_creature : public CreatureScript
 
         void Aggro(Unit* who) override
         {
-            if (!m_creature->CanReachWithMeleeAttack(who))
+            if (!InMeleeReach(*m_creature, *who))
             {
                 IsSelfRooted = true;
             }
@@ -119,7 +119,7 @@ struct generic_creature : public CreatureScript
             }
 
             // If we are within range melee the target
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 // Make sure our attack is ready
                 if (m_creature->isAttackReady())

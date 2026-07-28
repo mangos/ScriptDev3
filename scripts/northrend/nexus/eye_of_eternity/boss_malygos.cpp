@@ -649,7 +649,7 @@ struct npc_power_spark : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (pWho->GetEntry() == NPC_MALYGOS && m_creature->CanReachWithMeleeAttack(pWho))
+            if (pWho->GetEntry() == NPC_MALYGOS && InMeleeReach(*m_creature, *pWho))
             {
                 DoCastSpellIfCan(m_creature, SPELL_POWER_SPARK_MALYGOS, CAST_TRIGGERED);
                 m_creature->ForcedDespawn();

@@ -2087,7 +2087,7 @@ struct is_ulduar : public InstanceScript
                             pLeviathan->SetSpeedRate(MOVE_RUN, fSpeedRate);
 
                             // modify respawn / home position to the center of arena
-                            pLeviathan->SetRespawnCoord(afLeviathanMovePos[0], afLeviathanMovePos[1], afLeviathanMovePos[2], afLeviathanMovePos[3]);
+                            pLeviathan->SetSpawn(Geometry::Vector3(afLeviathanMovePos[0], afLeviathanMovePos[1], afLeviathanMovePos[2]), afLeviathanMovePos[3]);
                         }
 
                         // Note: starting 4.x this gate is a GO 33 and it's destroyed at this point

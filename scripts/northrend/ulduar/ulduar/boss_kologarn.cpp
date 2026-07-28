@@ -528,7 +528,7 @@ struct boss_kologarn : public CreatureScript
             }
 
             // melee range check
-            if (!m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
+            if (!InMeleeReach(*m_creature, *m_creature->getVictim()))
             {
                 if (m_uiPetrifyingBreathTimer < uiDiff)
                 {

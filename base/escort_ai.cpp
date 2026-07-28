@@ -118,7 +118,7 @@ void npc_escortAI::AttackStart(Unit* pWho)
 void npc_escortAI::EnterCombat(Unit* pEnemy)
 {
     // Store combat start position
-    m_creature->SetCombatStartPosition(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+    m_creature->SetCombatAnchor(Geometry::Vector3(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ()));
 
     if (!pEnemy)
     {
@@ -286,7 +286,9 @@ void npc_escortAI::EnterEvadeMode()
             AddEscortState(STATE_ESCORT_RETURNING);
 
             float fPosX, fPosY, fPosZ;
-            m_creature->GetCombatStartPosition(fPosX, fPosY, fPosZ);
+            fPosX = m_creature->CombatAnchor().x;
+            fPosY = m_creature->CombatAnchor().y;
+            fPosZ = m_creature->CombatAnchor().z;
             m_creature->GetMotionMaster()->MovePoint(POINT_LAST_POINT, fPosX, fPosY, fPosZ);
         }
     }
@@ -341,7 +343,9 @@ bool npc_escortAI::MoveToNextWaypoint()
         if (m_bCanReturnToStart)
         {
             float fRetX, fRetY, fRetZ;
-            m_creature->GetRespawnCoord(fRetX, fRetY, fRetZ);
+            fRetX = m_creature->Spawn().X();
+            fRetY = m_creature->Spawn().Y();
+            fRetZ = m_creature->Spawn().Z();
 
             m_creature->GetMotionMaster()->MovePoint(POINT_HOME, fRetX, fRetY, fRetZ);
 
@@ -470,7 +474,7 @@ void npc_escortAI::MovementInform(uint32 uiMoveType, uint32 uiPointId)
         debug_log("SD3: EscortAI waypoint %u reached.", CurrentWP->uiId);
 
         // In case we were moving while in combat, we should evade back to this position
-        m_creature->SetCombatStartPosition(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+        m_creature->SetCombatAnchor(Geometry::Vector3(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ()));
 
         // Call WP function
         WaypointReached(CurrentWP->uiId);

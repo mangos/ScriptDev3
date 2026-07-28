@@ -552,7 +552,9 @@ struct boss_razorscale : public CreatureScript
                                     m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
 
                                     float fX, fY, fZ;
-                                    m_creature->GetRespawnCoord(fX, fY, fZ);
+                                    fX = m_creature->Spawn().X();
+                                    fY = m_creature->Spawn().Y();
+                                    fZ = m_creature->Spawn().Z();
 
                                     // use upgraded speed rate for FlyOrLand. This isn't supported by DB but it's confirmed to happen on retail
                                     uint32 uiSpeedRate = m_creature->GetSpeedRate(MOVE_RUN);

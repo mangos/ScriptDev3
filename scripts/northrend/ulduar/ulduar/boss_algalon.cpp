@@ -412,7 +412,7 @@ struct boss_algalon : public CreatureScript
             StartNextDialogueText(SAY_INTRO_1);
             m_creature->SetLevitate(false);
             m_creature->RemoveAurasDueToSpell(SPELL_RIDE_LIGHTNING);
-            m_creature->SetRespawnCoord(afAlgalonMovePos[0], afAlgalonMovePos[1], afAlgalonMovePos[2], afAlgalonMovePos[3]);
+            m_creature->SetSpawn(Geometry::Vector3(afAlgalonMovePos[0], afAlgalonMovePos[1], afAlgalonMovePos[2]), afAlgalonMovePos[3]);
         }
 
         void JustDidDialogueStep(int32 iEntry) override

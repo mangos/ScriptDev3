@@ -339,7 +339,9 @@ struct is_blood_furnace : public InstanceScript
                         {
                             float dx, dy;
                             float fRespX, fRespY, fRespZ;
-                            broggok->GetRespawnCoord(fRespX, fRespY, fRespZ);
+                            fRespX = broggok->Spawn().X();
+                            fRespY = broggok->Spawn().Y();
+                            fRespZ = broggok->Spawn().Z();
                             GetMovementDistanceForIndex(uiData, dx, dy);
                             broggok->GetMotionMaster()->MovePoint(POINT_EVENT_COMBAT, dx, dy, fRespZ);
                         }

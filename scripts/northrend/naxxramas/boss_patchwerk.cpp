@@ -141,7 +141,7 @@ struct boss_patchwerk : public CreatureScript
 
                     if (Unit* pTempTarget = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid()))
                     {
-                        if (m_creature->CanReachWithMeleeAttack(pTempTarget))
+                        if (InMeleeReach(*m_creature, *pTempTarget))
                         {
                             if (pTempTarget->GetHealth() > uiHighestHP)
                             {

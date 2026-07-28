@@ -165,7 +165,9 @@ struct boss_sjonnir : public CreatureScript
 
                     // Always move to the center of the room
                     float fX, fY, fZ;
-                    m_creature->GetRespawnCoord(fX, fY, fZ);
+                    fX = m_creature->Spawn().X();
+                    fY = m_creature->Spawn().Y();
+                    fZ = m_creature->Spawn().Z();
 
                     pSummoned->SetWalk(false);
                     pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);

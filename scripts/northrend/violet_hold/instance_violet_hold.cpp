@@ -962,7 +962,10 @@ struct is_violet_hold : public InstanceScript
                                     }
 
                                     // Spawn a ghost guard for each original guard
-                                    pGuard->GetRespawnCoord(fX, fY, fZ, &fO);
+                                    fX = pGuard->Spawn().X();
+                                    fY = pGuard->Spawn().Y();
+                                    fZ = pGuard->Spawn().Z();
+                                    fO = pGuard->Spawn().Facing();
                                     pGuard->SummonCreature(NPC_ARAKKOA_GUARD, fX, fY, fZ, fO, TEMPSPAWN_DEAD_DESPAWN, 0);
                                 }
                             }
@@ -1001,7 +1004,10 @@ struct is_violet_hold : public InstanceScript
 
                 if (Creature* pBoss = GetSingleCreatureFromStorage(uiEntry))
                 {
-                    pBoss->GetRespawnCoord(pBossSpawn->fX, pBossSpawn->fY, pBossSpawn->fZ, &(pBossSpawn->fO));
+                    pBossSpawn->fX = pBoss->Spawn().X();
+                    pBossSpawn->fY = pBoss->Spawn().Y();
+                    pBossSpawn->fZ = pBoss->Spawn().Z();
+                    pBossSpawn->fO = pBoss->Spawn().Facing();
                 }
 
                 return pBossSpawn;

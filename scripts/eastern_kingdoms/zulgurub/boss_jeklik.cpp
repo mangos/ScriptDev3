@@ -178,7 +178,10 @@ struct boss_jeklik : public CreatureScript
         {
             // Override MMaps, and teleport to original position
             float fX, fY, fZ, fO;
-            m_creature->GetRespawnCoord(fX, fY, fZ, &fO);
+            fX = m_creature->Spawn().X();
+            fY = m_creature->Spawn().Y();
+            fZ = m_creature->Spawn().Z();
+            fO = m_creature->Spawn().Facing();
             m_creature->NearTeleportTo(fX, fY, fZ, fO);
 
             ScriptedAI::EnterEvadeMode();

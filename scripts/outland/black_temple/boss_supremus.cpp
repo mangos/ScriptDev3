@@ -211,7 +211,7 @@ struct boss_supremus : public CreatureScript
             {
                 Unit* pUnit = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
 
-                if (pUnit && m_creature->CanReachWithMeleeAttack(pUnit))
+                if (pUnit && InMeleeReach(*m_creature, *pUnit))
                 {
                     if (pUnit->GetHealth() > uiHealth)
                     {
@@ -342,7 +342,7 @@ struct boss_supremus : public CreatureScript
 
                 if (m_uiMoltenPunchTimer < uiDiff)
                 {
-                    if (m_creature->GetCombatDistance(m_creature->getVictim(), false) < RANGE_MOLTEN_PUNCH)
+                    if (CombatDistanceBetween(*m_creature, *m_creature->getVictim(), false) < RANGE_MOLTEN_PUNCH)
                     {
                         DoCastSpellIfCan(m_creature->getVictim(), SPELL_CHARGE);
                         DoScriptText(EMOTE_PUNCH_GROUND, m_creature);
