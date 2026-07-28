@@ -181,7 +181,7 @@ struct go_gordunni_trap : public GameObjectScript
 
     bool OnUse(Player* pPlayer, GameObject* pGo) override
     {
-        pPlayer->CastSpell(pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), urand(0, 1) ? 19394 : 11756, false);
+        pPlayer->CastSpell(pGo->Where().X(), pGo->Where().Y(), pGo->Where().Z(), urand(0, 1) ? 19394 : 11756, false);
         pGo->SetLootState(GO_JUST_DEACTIVATED);
         return true;
     }
@@ -235,7 +235,7 @@ struct npc_shay_leafrunner : public CreatureScript
         {
             FollowerAI::MoveInLineOfSight(pWho);
 
-            if (!m_bIsComplete && pWho->GetEntry() == NPC_ROCKBITER && m_creature->IsWithinDistInMap(pWho, 20.0f))
+            if (!m_bIsComplete && pWho->GetEntry() == NPC_ROCKBITER && InReach(*m_creature, *pWho, 20.0f))
             {
                 Player* pPlayer = GetLeaderForFollower();
                 if (!pPlayer)
@@ -255,10 +255,10 @@ struct npc_shay_leafrunner : public CreatureScript
 
                 // move to Rockbiter
                 float fX, fY, fZ;
-                pWho->GetContactPoint(m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
+                ContactPointNear(*pWho, m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
                 m_creature->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
             }
-            else if (m_bIsRecalled && pWho->GetTypeId() == TYPEID_PLAYER && pWho->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+            else if (m_bIsRecalled && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*pWho, *pWho, INTERACTION_DISTANCE))
             {
                 m_uiWanderTimer = 60000;
                 m_bIsRecalled = false;
@@ -310,7 +310,7 @@ struct npc_shay_leafrunner : public CreatureScript
                         }
 
                         float fX, fY, fZ;
-                        m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, frand(25.0f, 40.0f), frand(0, 2 * M_PI_F));
+                        FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, frand(25.0f, 40.0f), frand(0, 2 * M_PI_F));
                         m_creature->GetMotionMaster()->MoveRandomAroundPoint(fX, fY, fZ, 20.0f);
                     }
                     else

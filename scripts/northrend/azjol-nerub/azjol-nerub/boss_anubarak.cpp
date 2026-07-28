@@ -165,7 +165,7 @@ struct boss_anubarak : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bDoneIntro && m_creature->IsWithinDistInMap(pWho, 60.0f))
+            if (!m_bDoneIntro && InReach(*m_creature, *pWho, 60.0f))
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 m_bDoneIntro = true;
@@ -188,7 +188,7 @@ struct boss_anubarak : public CreatureScript
                     pSummoned->SetWalk(false);
                     if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_TRIGGER))))
                     {
-                        pSummoned->GetMotionMaster()->MovePoint(0, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                        pSummoned->GetMotionMaster()->MovePoint(0, pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z());
                     }
                     break;
                 case NPC_ANUBAR_DARTER:
@@ -196,7 +196,10 @@ struct boss_anubarak : public CreatureScript
                     if (Creature* pTrigger = m_creature->GetMap()->GetCreature(ObjectGuid(m_pInstance->GetData64(DATA64_ANUB_TRIGGER))))
                     {
                         float fX, fY, fZ;
-                        m_creature->GetRandomPoint(pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 15.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z()), 15.0f);
+                        fX = randSpot1.x;
+                        fY = randSpot1.y;
+                        fZ = randSpot1.z;
 
                         pSummoned->SetWalk(false);
                         pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);

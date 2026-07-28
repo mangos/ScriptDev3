@@ -109,11 +109,11 @@ struct is_halls_of_stone : public InstanceScript
                     case NPC_WORLDTRIGGER:     m_lWorldtriggerGUIDs.push_back(pCreature->GetObjectGuid()); break;
                     case NPC_LIGHTNING_STALKER:
                         // Sort the dwarf summoning stalkers
-                        if (pCreature->GetPositionY() > 400.0f)
+                        if (pCreature->Where().Y() > 400.0f)
                         {
                             m_protectorStalkerGuid = pCreature->GetObjectGuid();
                         }
-                        else if (pCreature->GetPositionY() > 380.0f)
+                        else if (pCreature->Where().Y() > 380.0f)
                         {
                             m_stormcallerStalkerGuid = pCreature->GetObjectGuid();
                         }
@@ -556,7 +556,7 @@ struct is_halls_of_stone : public InstanceScript
                 SortHelper(WorldObject const* pRef) : m_pRef(pRef) {}
                 bool operator()(WorldObject* pLeft, WorldObject* pRight)
                 {
-                    return m_pRef->GetDistanceOrder(pLeft, pRight);
+                    return m_pRef->Where().IsNearer(pLeft->Where(), pRight->Where());
                 }
                 WorldObject const* m_pRef;
             };

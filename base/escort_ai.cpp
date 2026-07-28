@@ -87,7 +87,7 @@ bool npc_escortAI::IsVisible(Unit* pWho) const
         return false;
     }
 
-    return m_creature->IsWithinDist(pWho, VISIBLE_RANGE) && pWho->IsVisibleForOrDetect(m_creature, m_creature, true);
+    return m_creature->Where().WithinDist(pWho->Where(), VISIBLE_RANGE) && pWho->IsVisibleForOrDetect(m_creature, m_creature, true);
 }
 
 void npc_escortAI::AttackStart(Unit* pWho)
@@ -118,7 +118,7 @@ void npc_escortAI::AttackStart(Unit* pWho)
 void npc_escortAI::EnterCombat(Unit* pEnemy)
 {
     // Store combat start position
-    m_creature->SetCombatAnchor(Geometry::Vector3(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ()));
+    m_creature->SetCombatAnchor(Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()));
 
     if (!pEnemy)
     {
@@ -163,7 +163,7 @@ bool npc_escortAI::AssistPlayerInCombat(Unit* pWho)
     }
 
     // too far away and no free sight?
-    if (m_creature->IsWithinDistInMap(pWho, MAX_PLAYER_DISTANCE) && m_creature->IsWithinLOSInMap(pWho))
+    if (InReach(*m_creature, *pWho, MAX_PLAYER_DISTANCE) && HasLineOfSight(*m_creature, *pWho))
     {
         // already fighting someone?
         if (!m_creature->getVictim())
@@ -197,7 +197,7 @@ void npc_escortAI::MoveInLineOfSight(Unit* pWho)
             return;
         }
 
-        if (!m_creature->CanFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+        if (!m_creature->CanFly() && m_creature->Where().HeightGapTo(pWho->Where()) > CREATURE_Z_ATTACK_RANGE)
         {
             return;
         }
@@ -205,7 +205,7 @@ void npc_escortAI::MoveInLineOfSight(Unit* pWho)
         if (m_creature->IsHostileTo(pWho))
         {
             float fAttackRadius = m_creature->GetAttackDistance(pWho);
-            if (m_creature->IsWithinDistInMap(pWho, fAttackRadius) && m_creature->IsWithinLOSInMap(pWho))
+            if (InReach(*m_creature, *pWho, fAttackRadius) && HasLineOfSight(*m_creature, *pWho))
             {
                 if (!m_creature->getVictim())
                 {
@@ -309,7 +309,7 @@ bool npc_escortAI::IsPlayerOrGroupInRange()
             for (GroupReference* pRef = pGroup->GetFirstMember(); pRef != nullptr; pRef = pRef->next())
             {
                 Player* pMember = pRef->getSource();
-                if (pMember && m_creature->IsWithinDistInMap(pMember, MAX_PLAYER_DISTANCE))
+                if (pMember && InReach(*m_creature, *pMember, MAX_PLAYER_DISTANCE))
                 {
                     return true;
                 }
@@ -317,7 +317,7 @@ bool npc_escortAI::IsPlayerOrGroupInRange()
         }
         else
         {
-            if (m_creature->IsWithinDistInMap(pPlayer, MAX_PLAYER_DISTANCE))
+            if (InReach(*m_creature, *pPlayer, MAX_PLAYER_DISTANCE))
             {
                 return true;
             }
@@ -474,7 +474,7 @@ void npc_escortAI::MovementInform(uint32 uiMoveType, uint32 uiPointId)
         debug_log("SD3: EscortAI waypoint %u reached.", CurrentWP->uiId);
 
         // In case we were moving while in combat, we should evade back to this position
-        m_creature->SetCombatAnchor(Geometry::Vector3(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ()));
+        m_creature->SetCombatAnchor(Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()));
 
         // Call WP function
         WaypointReached(CurrentWP->uiId);

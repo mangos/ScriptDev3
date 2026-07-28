@@ -121,7 +121,7 @@ struct boss_hadronox : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // Force the spiders to attack him
-            if (pWho->GetTypeId() == TYPEID_UNIT && m_creature->IsWithinDistInMap(pWho, 2 * ATTACK_DISTANCE) && !pWho->getVictim())
+            if (pWho->GetTypeId() == TYPEID_UNIT && InReach(*m_creature, *pWho, 2 * ATTACK_DISTANCE) && !pWho->getVictim())
             {
                 for (uint8 i = 0; i < MAX_SPIDERS; ++i)
                 {

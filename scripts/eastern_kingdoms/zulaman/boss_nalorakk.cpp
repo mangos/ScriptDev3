@@ -109,7 +109,7 @@ struct boss_nalorakk : public CreatureScript
                 return;
             }
 
-            if (pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && m_creature->IsWithinDistInMap(pWho, aBearEventInfo[m_uiCurrentWave].fAggroDist))
+            if (pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && InReach(*m_creature, *pWho, aBearEventInfo[m_uiCurrentWave].fAggroDist))
             {
                 DoScriptText(aBearEventInfo[m_uiCurrentWave].iYellId, m_creature);
                 m_pInstance->SetData64(TYPE_BEAR_PHASE, pWho->GetObjectGuid().GetRawValue());

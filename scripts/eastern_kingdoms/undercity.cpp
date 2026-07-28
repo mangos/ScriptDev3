@@ -102,7 +102,7 @@ struct npc_lady_sylvanas_windrunner : public CreatureScript
                 pSummoned->CastSpell(pSummoned, SPELL_HIGHBORNE_AURA, false);
 
                 pSummoned->SetLevitate(true);
-                pSummoned->GetMotionMaster()->MovePoint(0, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() + 5.0f);
+                pSummoned->GetMotionMaster()->MovePoint(0, pSummoned->Where().X(), pSummoned->Where().Y(), pSummoned->Where().Z() + 5.0f);
             }
         }
 
@@ -120,7 +120,10 @@ struct npc_lady_sylvanas_windrunner : public CreatureScript
                 if (m_uiLamentEventTimer <= uiDiff)
                 {
                     float fX, fY, fZ;
-                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 20.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     m_creature->SummonCreature(NPC_HIGHBORNE_BUNNY, fX, fY, fZ + 15.0f, 0, TEMPSPAWN_TIMED_DESPAWN, 3000);
 
                     m_uiLamentEventTimer = 2000;

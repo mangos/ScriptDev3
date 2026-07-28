@@ -152,7 +152,10 @@ struct boss_ossirian : public CreatureScript
                 // Summon a new crystal trigger at some position depending on m_uiCrystalPosition
                 // Note: the summon points seem to be very random; requires additional research
                 float fX, fY, fZ;
-                m_creature->GetRandomPoint(aCrystalSpawnPos[0], aCrystalSpawnPos[1], aCrystalSpawnPos[2], 100.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aCrystalSpawnPos[0], aCrystalSpawnPos[1], aCrystalSpawnPos[2]), 100.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 m_creature->SummonCreature(NPC_OSSIRIAN_TRIGGER, fX, fY, fZ, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
             }
             if (!pOssirianTrigger)
@@ -214,7 +217,7 @@ struct boss_ossirian : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // TODO: Range guesswork
-            if (!m_bSaidIntro && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 75.0f, false))
+            if (!m_bSaidIntro && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 75.0f, false))
             {
                 switch (urand(0, 2))
                 {

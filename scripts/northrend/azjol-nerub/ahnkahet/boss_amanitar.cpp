@@ -154,7 +154,10 @@ struct boss_amanitar : public CreatureScript
             for (uint8 i = 0; i < uiMaxMushrooms; ++i)
             {
                 uint32 uiMushroomEntry = roll_chance_i(33) ? NPC_HEALTHY_MUSHROOM : NPC_POISONOUS_MUSHROOM;
-                m_creature->GetRandomPoint(aMushroomPos[0], aMushroomPos[1], aMushroomPos[2], 30.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aMushroomPos[0], aMushroomPos[1], aMushroomPos[2]), 30.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 m_creature->SummonCreature(uiMushroomEntry, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
             }
         }

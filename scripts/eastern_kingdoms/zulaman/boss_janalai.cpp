@@ -238,7 +238,7 @@ struct boss_janalai : public CreatureScript
                 case NPC_HATCHLING:
                     pSummoned->SetInCombatWithZone();
                     // Count the Hatched eggs
-                    pSummoned->GetPositionY() > 1100.0f ? ++m_uiEggsHatchedLeft : ++m_uiEggsHatchedRight;
+                    pSummoned->Where().Y() > 1100.0f ? ++m_uiEggsHatchedLeft : ++m_uiEggsHatchedRight;
                     // Notify the script when all the eggs were hatched
                     if (m_uiEggsHatchedRight == MAX_EGGS_ON_SIDE && m_uiEggsHatchedLeft == MAX_EGGS_ON_SIDE)
                     {

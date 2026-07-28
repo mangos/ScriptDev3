@@ -210,7 +210,7 @@ struct boss_high_astromancer_solarian : public CreatureScript
         void DoSummonSpotlight(float fRadius, float fAngle, uint8 uiRandPoint)
         {
             float fX, fY, fZ;
-            m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, fRadius, fAngle * uiRandPoint);
+            FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, fRadius, fAngle * uiRandPoint);
             m_creature->SummonCreature(NPC_ASTROMANCER_SOLARIAN_SPOTLIGHT, fX, fY, fZ, 0, TEMPSPAWN_TIMED_DESPAWN, 30000);
         }
 
@@ -329,7 +329,7 @@ struct boss_high_astromancer_solarian : public CreatureScript
                         // Solarian casts Arcane Missiles on on random targets in the raid.
                         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                         {
-                            if (!m_creature->HasInArc(2.5f, pTarget))
+                            if (!m_creature->Where().HasInArc(pTarget->Where(), 2.5f))
                             {
                                 pTarget = m_creature->getVictim();
                             }
@@ -386,7 +386,7 @@ struct boss_high_astromancer_solarian : public CreatureScript
                                 {
                                     for (uint8 j = 0; j < MAX_AGENTS; ++j)
                                     {
-                                        m_creature->SummonCreature(NPC_SOLARIUM_AGENT, pSpotlight->GetPositionX(), pSpotlight->GetPositionY(), pSpotlight->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                        m_creature->SummonCreature(NPC_SOLARIUM_AGENT, pSpotlight->Where().X(), pSpotlight->Where().Y(), pSpotlight->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                                     }
                                 }
                             }
@@ -414,13 +414,13 @@ struct boss_high_astromancer_solarian : public CreatureScript
                             {
                                 if (Creature* pSpotlight = m_creature->GetMap()->GetCreature(m_vSpotLightsGuidVector[i]))
                                 {
-                                    m_creature->SummonCreature(NPC_SOLARIUM_PRIEST, pSpotlight->GetPositionX(), pSpotlight->GetPositionY(), pSpotlight->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                    m_creature->SummonCreature(NPC_SOLARIUM_PRIEST, pSpotlight->Where().X(), pSpotlight->Where().Y(), pSpotlight->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                                 }
                             }
                             // Teleport the boss at the last portal
                             if (Creature* pSpotlight = m_creature->GetMap()->GetCreature(m_vSpotLightsGuidVector[2]))
                             {
-                                m_creature->NearTeleportTo(pSpotlight->GetPositionX(), pSpotlight->GetPositionY(), pSpotlight->GetPositionZ(), pSpotlight->GetOrientation(), true);
+                                m_creature->NearTeleportTo(pSpotlight->Where().X(), pSpotlight->Where().Y(), pSpotlight->Where().Z(), pSpotlight->Where().Facing(), true);
                             }
 
                             SetCombatMovement(true);

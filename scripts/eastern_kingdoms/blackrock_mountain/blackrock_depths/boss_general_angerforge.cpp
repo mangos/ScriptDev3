@@ -71,7 +71,10 @@ struct boss_general_angerforge : public CreatureScript
         void SummonAdd(uint32 uiEntry)
         {
             float fX, fY, fZ;
-            m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, fX, fY, fZ);
+            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 20.0f);
+            fX = randSpot1.x;
+            fY = randSpot1.y;
+            fZ = randSpot1.z;
             m_creature->SummonCreature(uiEntry, fX, fY, fZ, 0.0f, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
         }
 

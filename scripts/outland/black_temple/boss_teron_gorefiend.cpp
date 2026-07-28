@@ -122,7 +122,7 @@ struct boss_teron_gorefiend : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bIntroDone && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 60.0f))
+            if (!m_bIntroDone && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 60.0f))
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 m_bIntroDone = true;

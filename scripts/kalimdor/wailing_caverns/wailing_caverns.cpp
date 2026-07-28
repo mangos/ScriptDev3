@@ -256,7 +256,7 @@ struct npc_disciple_of_naralex : public CreatureScript
         void DoSpawnMob(uint32 uiEntry, float fDistance, float fAngle)
         {
             float fX, fY, fZ;
-            m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, fDistance, fAngle);
+            FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, fDistance, fAngle);
 
             m_creature->SummonCreature(uiEntry, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 20000);
         }

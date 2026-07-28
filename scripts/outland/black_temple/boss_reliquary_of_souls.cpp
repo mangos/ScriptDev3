@@ -176,7 +176,7 @@ struct boss_reliquary_of_souls : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_uiPhase == PHASE_0_NOT_BEGUN && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
-                m_creature->IsWithinDistInMap(pWho, m_creature->GetAttackDistance(pWho)) && m_creature->IsWithinLOSInMap(pWho))
+                InReach(*m_creature, *pWho, m_creature->GetAttackDistance(pWho)) && HasLineOfSight(*m_creature, *pWho))
             {
                 // Start phase 1
                 m_uiPhase = PHASE_1_SUFFERING;
@@ -445,7 +445,7 @@ struct essence_base_AI : public ScriptedAI
         // Move to home position
         if (Creature* pReliquary = m_pInstance->GetSingleCreatureFromStorage(NPC_RELIQUARY_OF_SOULS))
         {
-            m_creature->GetMotionMaster()->MovePoint(1, pReliquary->GetPositionX(), pReliquary->GetPositionY(), pReliquary->GetPositionZ());
+            m_creature->GetMotionMaster()->MovePoint(1, pReliquary->Where().X(), pReliquary->Where().Y(), pReliquary->Where().Z());
         }
 
         m_bIsPhaseFinished = true;

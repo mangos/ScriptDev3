@@ -269,7 +269,7 @@ struct boss_skadi : public CreatureScript
                 m_IntroMobs = true;
                 for (uint8 i = 0; i < MAX_INTRO_MOBS; ++i)
                 {
-                    if (Creature* pYmirjar = m_creature->SummonCreature(aSkadiIntroData[i].uiCreatureId, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0))
+                    if (Creature* pYmirjar = m_creature->SummonCreature(aSkadiIntroData[i].uiCreatureId, pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0))
                     {
                         pYmirjar->SetWalk(false);
                         pYmirjar->GetMotionMaster()->MovePoint(1, aSkadiIntroData[i].fX, aSkadiIntroData[i].fY, aSkadiIntroData[i].fZ);
@@ -575,14 +575,14 @@ struct aura_skadi_cloud : public AuraScript
         // apply auras based on creature position
         if (pAura->GetId() == SPELL_CLOUD_AURA_LEFT)
         {
-            if (pTarget->GetPositionY() > -511.0f)
+            if (pTarget->Where().Y() > -511.0f)
             {
                 pTarget->CastSpell(pTarget, SPELL_CLOUD_AURA_DAMAGE, true);
             }
         }
         else if (pAura->GetId() == SPELL_CLOUD_AURA_RIGHT)
         {
-            if (pTarget->GetPositionY() < -511.0f)
+            if (pTarget->Where().Y() < -511.0f)
             {
                 pTarget->CastSpell(pTarget, SPELL_CLOUD_AURA_DAMAGE, true);
             }

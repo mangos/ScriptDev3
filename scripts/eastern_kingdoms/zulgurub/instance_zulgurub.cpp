@@ -73,7 +73,7 @@ struct is_zulgurub : public InstanceScript
                         m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
                         break;
                     case NPC_PANTHER_TRIGGER:
-                        if (pCreature->GetPositionY() < -1626)
+                        if (pCreature->Where().Y() < -1626)
                         {
                             m_lLeftPantherTriggerGUIDList.push_back(pCreature->GetObjectGuid());
                         }

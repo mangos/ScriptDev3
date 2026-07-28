@@ -155,7 +155,7 @@ struct boss_novos : public CreatureScript
             if (pWho->GetEntry() == NPC_HULKING_CORPSE || pWho->GetEntry() == NPC_FETID_TROLL_CORPSE || pWho->GetEntry() == NPC_RISON_SHADOWCASTER)
             {
                 // Add reached ground, and the failure has not yet been reported
-                if (pWho->GetPositionZ() < m_creature->GetPositionZ() + 1.5f && m_pInstance && m_pInstance->GetData(TYPE_NOVOS) == IN_PROGRESS)
+                if (pWho->Where().Z() < m_creature->Where().Z() + 1.5f && m_pInstance && m_pInstance->GetData(TYPE_NOVOS) == IN_PROGRESS)
                 {
                     m_pInstance->SetData(TYPE_NOVOS, SPECIAL);
                 }
@@ -253,7 +253,10 @@ struct boss_novos : public CreatureScript
                     {
                         float fX, fY, fZ;
                         ++m_uiSummonedHandlers;
-                        m_creature->GetRandomPoint(aHandlerSummonPos[m_uiSummonedHandlers % 2][0], aHandlerSummonPos[m_uiSummonedHandlers % 2][1], aHandlerSummonPos[m_uiSummonedHandlers % 2][2], 10.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aHandlerSummonPos[m_uiSummonedHandlers % 2][0], aHandlerSummonPos[m_uiSummonedHandlers % 2][1], aHandlerSummonPos[m_uiSummonedHandlers % 2][2]), 10.0f);
+                        fX = randSpot2.x;
+                        fY = randSpot2.y;
+                        fZ = randSpot2.z;
                         m_creature->SummonCreature(NPC_CRYSTAL_HANDLER, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
 
                         DoScriptText(SAY_ADDS, m_creature);
@@ -423,7 +426,10 @@ struct npc_crystal_channel_target : public CreatureScript
                     // Let them move down the stairs
                     float fX, fY, fZ;
 
-                    m_creature->GetRandomPoint(0.70 * pNovos->GetPositionX() + 0.30 * pSummoned->GetPositionX(), 0.70 * pNovos->GetPositionY() + 0.30 * pSummoned->GetPositionY(), pNovos->GetPositionZ() + 1.5f, 4.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(0.70 * pNovos->Where().X() + 0.30 * pSummoned->Where().X(), 0.70 * pNovos->Where().Y() + 0.30 * pSummoned->Where().Y(), pNovos->Where().Z() + 1.5f), 4.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 }
             }

@@ -53,7 +53,7 @@ struct ObjectDistanceOrder
      */
     bool operator()(const WorldObject* pLeft, const WorldObject* pRight) const
     {
-        return m_pSource->GetDistanceOrder(pLeft, pRight);
+        return m_pSource->Where().IsNearer(pLeft->Where(), pRight->Where());
     }
 };
 
@@ -79,7 +79,7 @@ struct ObjectDistanceOrderReversed
      */
     bool operator()(const WorldObject* pLeft, const WorldObject* pRight) const
     {
-        return !m_pSource->GetDistanceOrder(pLeft, pRight);
+        return !m_pSource->Where().IsNearer(pLeft->Where(), pRight->Where());
     }
 };
 

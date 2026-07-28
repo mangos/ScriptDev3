@@ -101,7 +101,7 @@ bool FollowerAI::AssistPlayerInCombat(Unit* pWho)
     }
 
     // too far away and no free sight?
-    if (m_creature->IsWithinDistInMap(pWho, MAX_PLAYER_DISTANCE) && m_creature->IsWithinLOSInMap(pWho))
+    if (InReach(*m_creature, *pWho, MAX_PLAYER_DISTANCE) && HasLineOfSight(*m_creature, *pWho))
     {
         // already fighting someone?
         if (!m_creature->getVictim())
@@ -135,7 +135,7 @@ void FollowerAI::MoveInLineOfSight(Unit* pWho)
             return;
         }
 
-        if (!m_creature->CanFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+        if (!m_creature->CanFly() && m_creature->Where().HeightGapTo(pWho->Where()) > CREATURE_Z_ATTACK_RANGE)
         {
             return;
         }
@@ -143,7 +143,7 @@ void FollowerAI::MoveInLineOfSight(Unit* pWho)
         if (m_creature->IsHostileTo(pWho))
         {
             float fAttackRadius = m_creature->GetAttackDistance(pWho);
-            if (m_creature->IsWithinDistInMap(pWho, fAttackRadius) && m_creature->IsWithinLOSInMap(pWho))
+            if (InReach(*m_creature, *pWho, fAttackRadius) && HasLineOfSight(*m_creature, *pWho))
             {
                 if (!m_creature->getVictim())
                 {
@@ -268,7 +268,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
                     {
                         Player* pMember = pRef->getSource();
 
-                        if (pMember && m_creature->IsWithinDistInMap(pMember, MAX_PLAYER_DISTANCE))
+                        if (pMember && InReach(*m_creature, *pMember, MAX_PLAYER_DISTANCE))
                         {
                             bIsMaxRangeExceeded = false;
                             break;
@@ -277,7 +277,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
                 }
                 else
                 {
-                    if (m_creature->IsWithinDistInMap(pPlayer, MAX_PLAYER_DISTANCE))
+                    if (InReach(*m_creature, *pPlayer, MAX_PLAYER_DISTANCE))
                     {
                         bIsMaxRangeExceeded = false;
                     }
@@ -391,7 +391,7 @@ Player* FollowerAI::GetLeaderForFollower()
                 {
                     Player* pMember = pRef->getSource();
 
-                    if (pMember && pMember->IsAlive() && m_creature->IsWithinDistInMap(pMember, MAX_PLAYER_DISTANCE))
+                    if (pMember && pMember->IsAlive() && InReach(*m_creature, *pMember, MAX_PLAYER_DISTANCE))
                     {
                         debug_log("SD3: FollowerAI GetLeader changed and returned new leader.");
                         m_leaderGuid = pMember->GetObjectGuid();

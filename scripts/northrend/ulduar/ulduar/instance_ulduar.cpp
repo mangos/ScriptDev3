@@ -344,7 +344,7 @@ struct is_ulduar : public InstanceScript
                         break;
 
                     case NPC_ULDUAR_COLOSSUS:
-                        if (pCreature->GetPositionX() > 300.0f)
+                        if (pCreature->Where().X() > 300.0f)
                         {
                             m_sColossusGuidSet.insert(pCreature->GetObjectGuid());
                         }
@@ -360,7 +360,7 @@ struct is_ulduar : public InstanceScript
                         return;
                     case NPC_RAZORSCALE_CONTROLLER:
                         // sort the controllers which are assigned to harpoons and allow the central one into the mail guid store
-                        if (pCreature->GetPositionY() > -145.0f)
+                        if (pCreature->Where().Y() > -145.0f)
                         {
                             m_lHarpoonDummyGuids.push_back(pCreature->GetObjectGuid());
                             return;
@@ -370,7 +370,7 @@ struct is_ulduar : public InstanceScript
                         m_vToyPileGuidVector.push_back(pCreature->GetObjectGuid());
                         return;
                     case NPC_RUBBLE_STALKER:
-                        if (pCreature->GetPositionY() > -10.0f)
+                        if (pCreature->Where().Y() > -10.0f)
                         {
                             m_rightKoloStalkerGuid = pCreature->GetObjectGuid();
                         }
@@ -381,18 +381,18 @@ struct is_ulduar : public InstanceScript
                         return;
                     case NPC_THORIM_EVENT_BUNNY:
                         // sort the event bunnies between the arena and tribune spawns; the platform spawns are ignored for the moment
-                        if (pCreature->GetPositionZ() < 420.0f)
+                        if (pCreature->Where().Z() < 420.0f)
                         {
                             m_lThorimBunniesGuids.push_back(pCreature->GetObjectGuid());
                         }
-                        else if (pCreature->GetPositionZ() > 438.5f)
+                        else if (pCreature->Where().Z() > 438.5f)
                         {
                             m_lUpperBunniesGuids.push_back(pCreature->GetObjectGuid());
                         }
                         return;
                     case NPC_THUNDER_ORB:
                         // get only the upper ones; the lower ones are searched dynamically in order to be paired correctly
-                        if (pCreature->GetPositionZ() > 430.0f)
+                        if (pCreature->Where().Z() > 430.0f)
                         {
                             m_lUpperThunderOrbsGuids.push_back(pCreature->GetObjectGuid());
                         }
@@ -407,7 +407,7 @@ struct is_ulduar : public InstanceScript
                         m_lOminousCloudsGuids.push_back(pCreature->GetObjectGuid());
                         return;
                     case NPC_VEZAX_BUNNY:
-                        if (pCreature->GetPositionY() < 100.0f)
+                        if (pCreature->Where().Y() < 100.0f)
                         {
                             m_animusVezaxBunnyGuid = pCreature->GetObjectGuid();
                         }
@@ -1363,7 +1363,7 @@ struct is_ulduar : public InstanceScript
                             {
                                 if (Creature* pEngineer = instance->GetCreature(*itr))
                                 {
-                                    pHarpoon->GetNearPoint(pHarpoon, fX, fY, fZ, 0, INTERACTION_DISTANCE, M_PI_F / 4 * uiIndex);
+                                    FindFreeSpotNear(*pHarpoon, pHarpoon, fX, fY, fZ, 0, INTERACTION_DISTANCE, M_PI_F / 4 * uiIndex);
 
                                     // ToDo: maybe there should be some emotes here
                                     pEngineer->SetWalk(false);
@@ -1392,7 +1392,7 @@ struct is_ulduar : public InstanceScript
                             {
                                 if (Creature* pTrapper = instance->GetCreature(*itr))
                                 {
-                                    pController->GetNearPoint(pController, fX, fY, fZ, 0, 50.0f, M_PI_F / 4 * uiIndex);
+                                    FindFreeSpotNear(*pController, pController, fX, fY, fZ, 0, 50.0f, M_PI_F / 4 * uiIndex);
 
                                     pTrapper->SetWalk(false);
                                     uiSpeedRate = pTrapper->GetSpeedRate(MOVE_RUN);
@@ -1453,7 +1453,7 @@ struct is_ulduar : public InstanceScript
 
                             for (uint8 i = 0; i < uiMaxCommoners; ++i)
                             {
-                                thorim->SummonCreature(NPC_DARK_RUNE_COMMONER, vBunnies[i]->GetPositionX(), vBunnies[i]->GetPositionY(), vBunnies[i]->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                thorim->SummonCreature(NPC_DARK_RUNE_COMMONER, vBunnies[i]->Where().X(), vBunnies[i]->Where().Y(), vBunnies[i]->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                             }
                         }
                         return;
@@ -1661,8 +1661,8 @@ struct is_ulduar : public InstanceScript
                                 if (Creature* pBunny = m_creature->GetMap()->GetCreature(*itr))
                                 {
                                     // use 12 and 16 as multipliers in order to get the perfect combination
-                                    if (pBunny->GetPositionY() > m_creature->GetPositionY() + 12 * m_uiThorimSmashIndex &&
-                                        pBunny->GetPositionY() < m_creature->GetPositionY() + 16 * m_uiThorimSmashIndex)
+                                    if (pBunny->Where().Y() > m_creature->Where().Y() + 12 * m_uiThorimSmashIndex &&
+                                        pBunny->Where().Y() < m_creature->Where().Y() + 16 * m_uiThorimSmashIndex)
                                         pBunny->CastSpell(pBunny, SPELL_RUNIC_SMASH, false);
                                 }
                             }

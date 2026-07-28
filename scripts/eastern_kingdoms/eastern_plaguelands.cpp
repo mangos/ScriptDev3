@@ -131,7 +131,10 @@ struct npc_eris_havenfire : public CreatureScript
                 case NPC_PLAGUED_PEASANT:
                 {
                     float fX, fY, fZ;
-                    pSummoned->GetRandomPoint(aPeasantMoveLoc[0], aPeasantMoveLoc[1], aPeasantMoveLoc[2], 10.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*pSummoned, Geometry::Vector3(aPeasantMoveLoc[0], aPeasantMoveLoc[1], aPeasantMoveLoc[2]), 10.0f);
+                    fX = randSpot3.x;
+                    fY = randSpot3.y;
+                    fZ = randSpot3.z;
                     pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 }
                 break;
@@ -151,7 +154,7 @@ struct npc_eris_havenfire : public CreatureScript
                      *        {
                      *            if (Creature* peasant = m_creature->GetMap()->GetCreature(*it))
                      *            {
-                     *                if (peasant->IsAlive() && pSummoned->IsInRange(peasant, 5.0f, 30.0f))
+                     *                if (peasant->IsAlive() && pSummoned->Where().WithinRange(peasant->Where(), 5.0f, 30.0f))
                      *                {
                      *                    peasantGUID.push_back(*it);
                      *                }
@@ -232,7 +235,10 @@ struct npc_eris_havenfire : public CreatureScript
                     uint8 uiRand = urand(2, 3);
                     for (uint8 i = 0; i < uiRand; ++i)
                     {
-                        m_creature->GetRandomPoint(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2], 15.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2]), 15.0f);
+                        fX = randSpot2.x;
+                        fY = randSpot2.y;
+                        fZ = randSpot2.z;
                         m_creature->SummonCreature(NPC_SCOURGE_FOOTSOLDIER, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
                     break;
@@ -247,7 +253,10 @@ struct npc_eris_havenfire : public CreatureScript
                     for (uint8 i = 0; i < MAX_PEASANTS; ++i)
                     {
                         uint32 uiSummonEntry = roll_chance_i(70) ? NPC_INJURED_PEASANT : NPC_PLAGUED_PEASANT;
-                        m_creature->GetRandomPoint(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2], 10.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aPeasantSpawnLoc[0], aPeasantSpawnLoc[1], aPeasantSpawnLoc[2]), 10.0f);
+                        fX = randSpot1.x;
+                        fY = randSpot1.y;
+                        fZ = randSpot1.z;
                         if (Creature* pTemp = m_creature->SummonCreature(uiSummonEntry, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OR_DEAD_DESPAWN, 10*MINUTE*IN_MILLISECONDS))
                         {
                             // Only the first mob needs to yell

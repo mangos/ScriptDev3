@@ -162,7 +162,10 @@ struct go_stratholme_postbox : public GameObjectScript
         float fX, fY, fZ;
         for (uint8 i = 0; i < 3; ++i)
         {
-            pPlayer->GetRandomPoint(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 3.0f, fX, fY, fZ);
+            const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*pPlayer, Geometry::Vector3(pPlayer->Where().X(), pPlayer->Where().Y(), pPlayer->Where().Z()), 3.0f);
+            fX = randSpot2.x;
+            fY = randSpot2.y;
+            fZ = randSpot2.z;
             pPlayer->SummonCreature(NPC_UNDEAD_POSTMAN, fX, fY, fZ, 0.0f, TEMPSPAWN_DEAD_DESPAWN, 0);
         }
 
@@ -322,7 +325,10 @@ struct mobs_spectral_ghostly_citizen : public CreatureScript
                 for (uint32 i = 0; i < 4; ++i)
                 {
                     float x, y, z;
-                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 20.0f, x, y, z);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 20.0f);
+                    x = randSpot1.x;
+                    y = randSpot1.y;
+                    z = randSpot1.z;
 
                     // 100%, 50%, 33%, 25% chance to spawn
                     uint32 j = urand(0, i);
@@ -364,7 +370,7 @@ struct mobs_spectral_ghostly_citizen : public CreatureScript
                     EnterEvadeMode();
                     break;
                 case TEXTEMOTE_RUDE:
-                    if (m_creature->IsWithinDistInMap(pPlayer, INTERACTION_DISTANCE))
+                    if (InReach(*m_creature, *pPlayer, INTERACTION_DISTANCE))
                     {
                         m_creature->CastSpell(pPlayer, SPELL_SLAP, false);
                     }

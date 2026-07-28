@@ -75,7 +75,7 @@ struct npc_ranger_lilatha : public CreatureScript
             {
                 if (!m_heliosGuid && pUnit->GetEntry() == NPC_CAPTAIN_HELIOS)
                 {
-                    if (m_creature->IsWithinDistInMap(pUnit, 30.0f))
+                    if (InReach(*m_creature, *pUnit, 30.0f))
                     {
                         m_heliosGuid = pUnit->GetObjectGuid();
                     }

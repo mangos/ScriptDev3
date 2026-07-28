@@ -95,7 +95,7 @@ struct npc_lazy_peon : public CreatureScript
 
                 float fX, fY, fZ;
                 m_creature->SetWalk(false);
-                pLumber->GetContactPoint(m_creature, fX, fY, fZ, CONTACT_DISTANCE);
+                ContactPointNear(*pLumber, m_creature, fX, fY, fZ, CONTACT_DISTANCE);
 
                 if (pInvoker->GetTypeId() == TYPEID_PLAYER)
                 {

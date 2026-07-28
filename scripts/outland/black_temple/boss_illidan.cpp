@@ -599,7 +599,7 @@ struct boss_illidan_stormrage : public CreatureScript
 
                         // Move towards target (which is stunned)
                         float fX, fY, fZ;
-                        pTarget->GetContactPoint(pSummoned, fX, fY, fZ);
+                        ContactPointNear(*pTarget, pSummoned, fX, fY, fZ);
                         pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                     }
                     break;
@@ -1171,7 +1171,7 @@ struct npc_akama_illidan : public CreatureScript
             }
 
             // Star the event
-            if (pWho->GetTypeId() == TYPEID_PLAYER && pWho->IsWithinDistInMap(m_creature, 70.0f) && pWho->IsWithinLOSInMap(m_creature))
+            if (pWho->GetTypeId() == TYPEID_PLAYER && InReach(*pWho, *m_creature, 70.0f) && HasLineOfSight(*pWho, *m_creature))
             {
                 Start(true);
             }
@@ -1261,7 +1261,7 @@ struct npc_akama_illidan : public CreatureScript
                         if (Creature* pIllidan = m_pInstance->GetSingleCreatureFromStorage(NPC_ILLIDAN_STORMRAGE))
                         {
                             float fX, fY, fZ;
-                            pIllidan->GetContactPoint(m_creature, fX, fY, fZ);
+                            ContactPointNear(*pIllidan, m_creature, fX, fY, fZ);
                             m_creature->GetMotionMaster()->MovePoint(100, fX, fY, fZ);
                         }
                     }
@@ -1417,7 +1417,7 @@ struct npc_akama_illidan : public CreatureScript
     bool OnGossipHello(Player* pPlayer, Creature* pCreature) override
     {
         // Before climbing the stairs
-        if (pCreature->GetPositionZ() < 300.0f)
+        if (pCreature->Where().Z() < 300.0f)
         {
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_PREPARE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
             pPlayer->SEND_GOSSIP_MENU(TEXT_ID_AKAMA_ILLIDAN_PREPARE, pCreature->GetObjectGuid());
@@ -1632,7 +1632,7 @@ struct npc_cage_trap_trigger : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bActive && pWho->GetEntry() == NPC_ILLIDAN_STORMRAGE && m_creature->IsWithinDistInMap(pWho, 3.0f))
+            if (!m_bActive && pWho->GetEntry() == NPC_ILLIDAN_STORMRAGE && InReach(*m_creature, *pWho, 3.0f))
             {
                 pWho->CastSpell(pWho, SPELL_CAGED, true);
 
@@ -1768,7 +1768,7 @@ struct npc_flame_of_azzinoth : public CreatureScript
                 {
                     if (Unit* pTarget = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid()))
                     {
-                        if (pTarget->GetTypeId() == TYPEID_PLAYER && !pTarget->IsWithinDist(m_creature, 30.0f))
+                        if (pTarget->GetTypeId() == TYPEID_PLAYER && !pTarget->Where().WithinDist(m_creature->Where(), 30.0f))
                         {
                             suitableTargets.push_back(pTarget);
                         }

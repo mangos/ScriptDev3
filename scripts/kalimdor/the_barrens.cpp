@@ -161,7 +161,7 @@ struct npc_gilthares : public CreatureScript
             }
 
             // only aggro text if not player and only in this area
-            if (pWho->GetTypeId() != TYPEID_PLAYER && m_creature->GetAreaId() == AREA_MERCHANT_COAST)
+            if (pWho->GetTypeId() != TYPEID_PLAYER && m_creature->GetTerrain()->GetAreaId(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()) == AREA_MERCHANT_COAST)
             {
                 // appears to be pretty much random (possible only if escorter not in combat with pWho yet?)
                 switch (urand(0, 3))
@@ -1280,7 +1280,7 @@ struct horde_defender : public CreatureScript
                 m_creature->IsHostileTo(u) && u->isInAccessablePlaceFor(m_creature))
             {
                 float attackRadius = 38.0f;
-                if (m_creature->IsWithinDistInMap(u, attackRadius) && m_creature->IsWithinLOSInMap(u))
+                if (InReach(*m_creature, *u, attackRadius) && HasLineOfSight(*m_creature, *u))
                 {
                     if (!m_creature->getVictim())
                     {
@@ -1363,7 +1363,7 @@ struct kolkar_invader : public CreatureScript
                 m_creature->IsHostileTo(u) && u->isInAccessablePlaceFor(m_creature))
             {
                 float attackRadius = 38.0f;
-                if (m_creature->IsWithinDistInMap(u, attackRadius) && m_creature->IsWithinLOSInMap(u))
+                if (InReach(*m_creature, *u, attackRadius) && HasLineOfSight(*m_creature, *u))
                 {
                     if (!m_creature->getVictim())
                     {

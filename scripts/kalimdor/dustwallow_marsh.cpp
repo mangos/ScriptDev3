@@ -1123,11 +1123,11 @@ struct boss_tethyr : public CreatureScript
                 }
 
                 // not all cannons have same distance range
-                uint8 uiDistMod = pCaster->GetPositionY() > -4650.0f ? 6 : 5;
+                uint8 uiDistMod = pCaster->Where().Y() > -4650.0f ? 6 : 5;
 
                 float fX, fY, fZ;
-                pCaster->GetContactPoint(m_creature, fX, fY, fZ, uiDistMod * ATTACK_DISTANCE);
-                m_creature->GetMotionMaster()->MovePoint(1, fX, fY, m_creature->GetPositionZ());
+                ContactPointNear(*pCaster, m_creature, fX, fY, fZ, uiDistMod * ATTACK_DISTANCE);
+                m_creature->GetMotionMaster()->MovePoint(1, fX, fY, m_creature->Where().Z());
 
                 m_uiWaterBoltTimer = 10000;
             }

@@ -63,7 +63,7 @@ bool ScriptedAI::IsVisible(Unit* pWho) const
         return false;
     }
 
-    return m_creature->IsWithinDist(pWho, VISIBLE_RANGE) && pWho->IsVisibleForOrDetect(m_creature, m_creature, true);
+    return m_creature->Where().WithinDist(pWho->Where(), VISIBLE_RANGE) && pWho->IsVisibleForOrDetect(m_creature, m_creature, true);
 }
 
 /**
@@ -75,12 +75,12 @@ void ScriptedAI::MoveInLineOfSight(Unit* pWho)
     if (m_creature->CanInitiateAttack() && pWho->IsTargetableForAttack() &&
         m_creature->IsHostileTo(pWho) && pWho->isInAccessablePlaceFor(m_creature))
     {
-        if (!m_creature->CanFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+        if (!m_creature->CanFly() && m_creature->Where().HeightGapTo(pWho->Where()) > CREATURE_Z_ATTACK_RANGE)
         {
             return;
         }
 
-        if (m_creature->IsWithinDistInMap(pWho, m_creature->GetAttackDistance(pWho)) && m_creature->IsWithinLOSInMap(pWho))
+        if (InReach(*m_creature, *pWho, m_creature->GetAttackDistance(pWho)) && HasLineOfSight(*m_creature, *pWho))
         {
             if (!m_creature->getVictim())
             {
@@ -286,7 +286,7 @@ void ScriptedAI::DoPlaySoundToSet(WorldObject* pSource, uint32 uiSoundId)
  */
 Creature* ScriptedAI::DoSpawnCreature(uint32 uiId, float fX, float fY, float fZ, float fAngle, uint32 uiType, uint32 uiDespawntime)
 {
-    return m_creature->SummonCreature(uiId, m_creature->GetPositionX() + fX, m_creature->GetPositionY() + fY, m_creature->GetPositionZ() + fZ, fAngle, (TempSpawnType)uiType, uiDespawntime);
+    return m_creature->SummonCreature(uiId, m_creature->Where().X() + fX, m_creature->Where().Y() + fY, m_creature->Where().Z() + fZ, fAngle, (TempSpawnType)uiType, uiDespawntime);
 }
 
 /**
@@ -409,7 +409,7 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
         }
 
         // Check if our target is in range
-        if (m_creature->IsWithinDistInMap(pTarget, SD3_SpellRangeMin(pTempRange)) || !m_creature->IsWithinDistInMap(pTarget, SD3_SpellRangeMax(pTempRange)))
+        if (InReach(*m_creature, *pTarget, SD3_SpellRangeMin(pTempRange)) || !InReach(*m_creature, *pTarget, SD3_SpellRangeMax(pTempRange)))
         {
             continue;
         }
@@ -464,7 +464,7 @@ bool ScriptedAI::CanCast(Unit* pTarget, SpellEntry const* pSpellEntry, bool bTri
     }
 
     // Unit is out of range of this spell
-    if (!m_creature->IsInRange(pTarget, SD3_SpellRangeMin(pTempRange), SD3_SpellRangeMax(pTempRange)))
+    if (!m_creature->Where().WithinRange(pTarget->Where(), SD3_SpellRangeMin(pTempRange), SD3_SpellRangeMax(pTempRange)))
     {
         return false;
     }
@@ -871,9 +871,9 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
         return false;
     }
 
-    float fX = m_creature->GetPositionX();
-    float fY = m_creature->GetPositionY();
-    float fZ = m_creature->GetPositionZ();
+    float fX = m_creature->Where().X();
+    float fY = m_creature->Where().Y();
+    float fZ = m_creature->Where().Z();
 
     switch (m_creature->GetEntry())
     {
@@ -885,7 +885,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             break;
 #if defined (TBC) || defined (WOTLK) || defined (CATA) || defined(MISTS)
         case NPC_VOID_REAVER:  // void reaver (calculate from center of room)
-            if (m_creature->GetDistance2d(432.59f, 371.93f) < 105.0f)
+            if (m_creature->Where().DistanceTo(Geometry::Vector2(432.59f, 371.93f)) < 105.0f)
             {
                 return false;
             }
@@ -908,7 +908,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             fX = m_creature->Spawn().X();
             fY = m_creature->Spawn().Y();
             fZ = m_creature->Spawn().Z();
-            if (m_creature->GetDistance2d(fX, fY) < 70.0f)
+            if (m_creature->Where().DistanceTo(Geometry::Vector2(fX, fY)) < 70.0f)
             {
                 return false;
             }

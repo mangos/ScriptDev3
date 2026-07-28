@@ -73,7 +73,7 @@ struct npc_floating_spirit : public CreatureScript
             m_creature->SetLevitate(true);
             m_creature->ForcedDespawn(5000);
 
-            m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 50.0f);
+            m_creature->GetMotionMaster()->MovePoint(0, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 50.0f);
         }
     };
 
@@ -162,11 +162,11 @@ struct npc_injured_miner : public CreatureScript
                 SetEscortPaused(true);
 
                 // set alternative waypoints if required
-                if (m_creature->GetPositionX() > 6650.0f)
+                if (m_creature->Where().X() > 6650.0f)
                 {
                     SetCurrentWaypoint(7);
                 }
-                else if (m_creature->GetPositionX() > 6635.0f)
+                else if (m_creature->Where().X() > 6635.0f)
                 {
                     SetCurrentWaypoint(35);
                 }

@@ -312,7 +312,7 @@ struct boss_brutallus : public CreatureScript
                 case NPC_MADRIGOSA:
                     if (Creature* pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_FLIGHT_TRIGGER_LEFT))
                     {
-                        m_creature->SummonCreature(NPC_MADRIGOSA, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                        m_creature->SummonCreature(NPC_MADRIGOSA, pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
                     m_bIsIntroInProgress = true;
                     break;
@@ -576,7 +576,7 @@ struct aura_dummy_npc_brutallus_cloud : public AuraScript
                     if (Creature* pMadrigosa = pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
                     {
                         // Set respawn pos to current pos
-                        pMadrigosa->SetSpawn(Geometry::Vector3(pMadrigosa->GetPositionX(), pMadrigosa->GetPositionY(), pMadrigosa->GetPositionZ()), pMadrigosa->GetOrientation());
+                        pMadrigosa->SetSpawn(Geometry::Vector3(pMadrigosa->Where().X(), pMadrigosa->Where().Y(), pMadrigosa->Where().Z()), pMadrigosa->Where().Facing());
 
                         pMadrigosa->CastSpell(pMadrigosa, SPELL_FELBLAZE_PREVIZUAL, true);
                         pMadrigosa->ForcedDespawn(10000);

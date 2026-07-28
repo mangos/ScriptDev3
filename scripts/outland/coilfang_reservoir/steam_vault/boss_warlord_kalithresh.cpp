@@ -125,7 +125,7 @@ struct boss_warlord_kalithresh : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasTaunted && m_creature->IsWithinDistInMap(pWho, 40.0f))
+            if (!m_bHasTaunted && InReach(*m_creature, *pWho, 40.0f))
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 m_bHasTaunted = true;
@@ -191,7 +191,7 @@ struct boss_warlord_kalithresh : public CreatureScript
                     if (Creature* pDistiller = GetClosestCreatureWithEntry(m_creature, NPC_NAGA_DISTILLER, 100.0f))
                     {
                         float fX, fY, fZ;
-                        pDistiller->GetContactPoint(m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
+                        ContactPointNear(*pDistiller, m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
                         m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                         SetCombatMovement(false);
                         m_distillerGuid = pDistiller->GetObjectGuid();

@@ -216,8 +216,10 @@ struct boss_taldaram : public CreatureScript
                 {
                     pOrb->CastSpell(pOrb, m_bIsRegularMode ? SPELL_FLAME_SPHERE_PERIODIC : SPELL_FLAME_SPHERE_PERIODIC_H, true);
 
-                    pOrb->GetNearPoint2D(fX, fY, 70.0f, (2 * M_PI_F / 3)*uiIndex);
-                    pOrb->GetMotionMaster()->MovePoint(0, fX, fY, pOrb->GetPositionZ());
+                    const Geometry::Vector3 near2d1 = pOrb->Where().PointAt(70.0f, (2 * M_PI_F / 3)*uiIndex);
+                    fX = near2d1.x;
+                    fY = near2d1.y;
+                    pOrb->GetMotionMaster()->MovePoint(0, fX, fY, pOrb->Where().Z());
                 }
                 ++uiIndex;
             }
@@ -305,13 +307,13 @@ struct boss_taldaram : public CreatureScript
                     m_lFlameOrbsGuidList.clear();
 
                     // Flame speres are summoned above the boss
-                    m_creature->CastSpell(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_1, true);
+                    m_creature->CastSpell(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_1, true);
 
                     // 2 more spheres on heroic
                     if (!m_bIsRegularMode)
                     {
-                        m_creature->CastSpell(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_2, true);
-                        m_creature->CastSpell(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_3, true);
+                        m_creature->CastSpell(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_2, true);
+                        m_creature->CastSpell(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_3, true);
                     }
 
                     m_uiFlameOrbTimer = urand(50000, 60000);

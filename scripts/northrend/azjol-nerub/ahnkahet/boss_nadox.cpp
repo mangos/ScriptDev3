@@ -91,7 +91,9 @@ struct mob_ahnkahar_egg : public CreatureScript
                 if (Creature* pElderNadox = m_pInstance->GetSingleCreatureFromStorage(NPC_ELDER_NADOX))
                 {
                     float fPosX, fPosY, fPosZ;
-                    pElderNadox->GetPosition(fPosX, fPosY, fPosZ);
+                    fPosX = pElderNadox->Where().X();
+                    fPosY = pElderNadox->Where().Y();
+                    fPosZ = pElderNadox->Where().Z();
                     pSummoned->SetWalk(false);
                     pSummoned->GetMotionMaster()->MovePoint(0, fPosX, fPosY, fPosZ);
                 }
@@ -255,7 +257,7 @@ struct boss_nadox : public CreatureScript
                 }
             }
 
-            if (!m_bBerserk && m_creature->GetPositionZ() < 24.0)
+            if (!m_bBerserk && m_creature->Where().Z() < 24.0)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_BERSERK) == CAST_OK)
                 {

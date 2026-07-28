@@ -210,7 +210,10 @@ struct boss_heigan : public CreatureScript
                     {
                         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_PLAYER))
                         {
-                            m_creature->GetRandomPoint(aTunnelLoc[0], aTunnelLoc[1], aTunnelLoc[2], 5.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aTunnelLoc[0], aTunnelLoc[1], aTunnelLoc[2]), 5.0f);
+                            fX = randSpot1.x;
+                            fY = randSpot1.y;
+                            fZ = randSpot1.z;
                             pTarget->NearTeleportTo(fX, fY, fZ, aTunnelLoc[3]);
                         }
                     }

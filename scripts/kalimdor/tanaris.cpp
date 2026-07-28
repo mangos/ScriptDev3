@@ -247,7 +247,7 @@ struct npc_custodian_of_time : public CreatureScript
                 {
                     float fRadius = 10.0f;
 
-                    if (m_creature->IsWithinDistInMap(pWho, fRadius))
+                    if (InReach(*m_creature, *pWho, fRadius))
                     {
                         Start(false, (Player*)pWho);
                     }
@@ -500,7 +500,7 @@ struct npc_tooga : public CreatureScript
 
             if (!m_creature->getVictim() && !HasFollowState(STATE_FOLLOW_COMPLETE | STATE_FOLLOW_POSTEVENT) && pWho->GetEntry() == NPC_TORTA)
             {
-                if (m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+                if (InReach(*m_creature, *pWho, INTERACTION_DISTANCE))
                 {
                     if (Player* pPlayer = GetLeaderForFollower())
                     {
@@ -666,9 +666,9 @@ struct go_inconspicuous_landmark : public GameObjectScript
         Creature * pCreature;
         for (int i = 0; i < iTotalPirates; i++)
         {
-            float fPlayerX = pPlayer->GetPositionX();
-            float fPlayerY = pPlayer->GetPositionY();
-            float fPlayerZ = pPlayer->GetPositionZ();
+            float fPlayerX = pPlayer->Where().X();
+            float fPlayerY = pPlayer->Where().Y();
+            float fPlayerZ = pPlayer->Where().Z();
             // Pirate's spawn location
             float fX = fPlayerX + rand() % 30 + 8;
             float fY = fPlayerY + rand() % 30 + 8;

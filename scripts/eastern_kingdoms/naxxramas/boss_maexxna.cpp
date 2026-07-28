@@ -98,7 +98,7 @@ struct npc_web_wrap : public CreatureScript
 
                 // NOTE: This implementation may not be 100% correct, but it gets very close to the expected result
 
-                float fDist = m_creature->GetDistance2d(pVictim);
+                float fDist = m_creature->Where().DistanceTo(pVictim->Where(), false);
                 // Switch the speed multiplier based on the distance from the web wrap
                 uint32 uiEffectMiscValue = 500;
                 if (fDist < 25.0f)
@@ -119,7 +119,7 @@ struct npc_web_wrap : public CreatureScript
 
                 // Jump movement not supported on 2.4.3
                 // float fSpeed = fDist * (uiEffectMiscValue * 0.01f);
-                // pVictim->GetMotionMaster()->MoveJump(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), fSpeed, 0.0f);
+                // pVictim->GetMotionMaster()->MoveJump(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), fSpeed, 0.0f);
 
                 m_victimGuid = pVictim->GetObjectGuid();
                 m_uiWebWrapTimer = uiEffectMiscValue == 200 ? 1000 : 2000;

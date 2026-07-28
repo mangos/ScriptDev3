@@ -167,7 +167,7 @@ struct npc_queen_lanathel_intro : public CreatureScript
         {
             // The range distance is not sure
             if (!m_bEventStarted && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
-                pWho->IsWithinDistInMap(m_creature, 100.0f) && pWho->IsWithinLOSInMap(m_creature))
+                InReach(*pWho, *m_creature, 100.0f) && HasLineOfSight(*pWho, *m_creature))
             {
                 StartNextDialogueText(SAY_COUNCIL_INTRO_1);
                 m_bEventStarted = true;
@@ -290,7 +290,7 @@ struct npc_ball_of_flame : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (!m_bHasFlamesCasted && pWho->GetTypeId() == TYPEID_PLAYER && pWho->GetGUIDLow() == m_uiTargetGuidLow &&
-                pWho->IsWithinDist(m_creature, ATTACK_DISTANCE))
+                pWho->Where().WithinDist(m_creature->Where(), ATTACK_DISTANCE))
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_FLAMES) == CAST_OK)
                 {
@@ -412,7 +412,7 @@ struct npc_dark_nucleus : public CreatureScript
 
             if (m_uiDistanceCheck < uiDiff)
             {
-                if (m_creature->GetDistance(m_creature->getVictim()) < 15.0f)
+                if (m_creature->Where().DistanceTo(m_creature->getVictim()->Where()) < 15.0f)
                 {
                     DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOW_RESONANCE_BUFF);
                 }
@@ -730,13 +730,13 @@ struct boss_valanar_icc : public CreatureScript
         {
             if (pSummoned->GetEntry() == NPC_KINETIC_BOMB_TARGET)
             {
-                pSummoned->CastSpell(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() + 20.0f, SPELL_KINETIC_BOMB, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                pSummoned->CastSpell(pSummoned->Where().X(), pSummoned->Where().Y(), pSummoned->Where().Z() + 20.0f, SPELL_KINETIC_BOMB, true, nullptr, nullptr, m_creature->GetObjectGuid());
             }
             else if (pSummoned->GetEntry() == NPC_KINETIC_BOMB)
             {
                 // Handle Kinetic bomb movement
                 pSummoned->SetLevitate(true);
-                pSummoned->GetMotionMaster()->MovePoint(1, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() - 20.0f, false);
+                pSummoned->GetMotionMaster()->MovePoint(1, pSummoned->Where().X(), pSummoned->Where().Y(), pSummoned->Where().Z() - 20.0f, false);
             }
         }
 

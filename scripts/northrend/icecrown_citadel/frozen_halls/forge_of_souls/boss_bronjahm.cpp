@@ -283,7 +283,7 @@ struct npc_corrupted_soul_fragment : public CreatureScript
         {
             if (pWho->GetEntry() == NPC_BRONJAHM)
             {
-                if (m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+                if (InReach(*m_creature, *pWho, INTERACTION_DISTANCE))
                 {
                     DoCastSpellIfCan(pWho, SPELL_CONSUME_SOUL_TRIGGER, CAST_TRIGGERED);
 

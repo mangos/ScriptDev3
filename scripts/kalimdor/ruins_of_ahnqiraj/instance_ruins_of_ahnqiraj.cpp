@@ -307,7 +307,7 @@ struct is_ruins_of_ahnqiraj : public InstanceScript
                     {
                         if (Creature* pKaldorei = instance->GetCreature(*itr))
                         {
-                            pKaldorei->GetMotionMaster()->MoveFollow(general, pKaldorei->GetDistance(general), pKaldorei->GetAngle(general));
+                            pKaldorei->GetMotionMaster()->MoveFollow(general, pKaldorei->Where().DistanceTo(general->Where()), pKaldorei->Where().BearingTo(general->Where()));
                         }
                     }
                 }
@@ -452,7 +452,10 @@ struct is_ruins_of_ahnqiraj : public InstanceScript
                             }
 
                             pTemp->SetWalk(false);
-                            pTemp->GetRandomPoint(aAndorovMoveLocs[4].m_fX, aAndorovMoveLocs[4].m_fY, aAndorovMoveLocs[4].m_fZ, 10.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pTemp, Geometry::Vector3(aAndorovMoveLocs[4].m_fX, aAndorovMoveLocs[4].m_fY, aAndorovMoveLocs[4].m_fZ), 10.0f);
+                            fX = randSpot1.x;
+                            fY = randSpot1.y;
+                            fZ = randSpot1.z;
                             pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                         }
                     }

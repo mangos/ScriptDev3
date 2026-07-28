@@ -142,7 +142,7 @@ struct is_dark_portal : public InstanceScript
                         if (Creature* pMedivh = GetSingleCreatureFromStorage(NPC_MEDIVH))
                         {
                             float fX, fY, fZ;
-                            pMedivh->GetNearPoint(pMedivh, fX, fY, fZ, 0, 20.0f, pMedivh->GetAngle(pCreature));
+                            FindFreeSpotNear(*pMedivh, pMedivh, fX, fY, fZ, 0, 20.0f, pMedivh->Where().BearingTo(pCreature->Where()));
                             pCreature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                         }
                         break;

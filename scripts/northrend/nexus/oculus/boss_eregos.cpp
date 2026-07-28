@@ -326,7 +326,7 @@ struct npc_planar_anomaly : public CreatureScript
             // Check for the players mounted on the vehicles
             if (pWho->GetTypeId() == TYPEID_PLAYER)
             {
-                if (m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+                if (InReach(*m_creature, *pWho, INTERACTION_DISTANCE))
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_PLANAR_BLAST) == CAST_OK)
                     {

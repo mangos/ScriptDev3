@@ -178,7 +178,10 @@ struct boss_sjonnir : public CreatureScript
                 {
                     // Move to a random point around the room in order to start the attack
                     float fX, fY, fZ;
-                    pSummoned->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pSummoned, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 10.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
 
                     pSummoned->SetWalk(false);
                     pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
@@ -194,7 +197,7 @@ struct boss_sjonnir : public CreatureScript
                 return;
             }
 
-            pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 10.0f);
+            pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->Where().X(), pSummoned->Where().Y(), pSummoned->Where().Z(), 10.0f);
         }
 
         void KilledUnit(Unit* /*pVictim*/) override

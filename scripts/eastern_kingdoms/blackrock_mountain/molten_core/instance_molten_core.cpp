@@ -311,7 +311,7 @@ struct is_molten_core : public InstanceScript
                             ObjectGuid guid = *it;
                             if (Creature* firesworn = instance->GetCreature(guid))
                             {
-                                if (firesworn->IsAlive() && firesworn->IsWithinDistInMap(garr, 20.0f, false))
+                                if (firesworn->IsAlive() && InReach(*firesworn, *garr, 20.0f, false))
                                 {
                                     return guid.GetRawValue();
                                 }

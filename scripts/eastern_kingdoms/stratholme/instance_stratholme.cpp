@@ -70,7 +70,7 @@ struct ZigguratStore
 
 static bool sortByHeight(Creature* pFirst, Creature* pSecond)
 {
-    return pFirst && pSecond && pFirst->GetPositionZ() > pSecond->GetPositionZ();
+    return pFirst && pSecond && pFirst->Where().Z() > pSecond->Where().Z();
 }
 
 struct is_stratholme : public InstanceScript
@@ -128,7 +128,7 @@ struct is_stratholme : public InstanceScript
                     case NPC_CRIMSON_GUARDSMAN:
                     case NPC_CRIMSON_CONJURER:
                         // Only store those in the yard
-                        if (pCreature->IsWithinDist2d(aTimmyLocation[1].m_fX, aTimmyLocation[1].m_fY, 40.0f))
+                        if (pCreature->Where().WithinDist(Geometry::Vector2(aTimmyLocation[1].m_fX, aTimmyLocation[1].m_fY), 40.0f))
                         {
                             m_suiCrimsonLowGuids.insert(pCreature->GetGUIDLow());
                         }
@@ -331,7 +331,10 @@ struct is_stratholme : public InstanceScript
                                 for (uint8 i = 0; i < 5; ++i)
                                 {
                                     float fX, fY, fZ;
-                                    pBaron->GetRandomPoint(aStratholmeLocation[6].m_fX, aStratholmeLocation[6].m_fY, aStratholmeLocation[6].m_fZ, 5.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot4 = RandomGroundPointNear(*pBaron, Geometry::Vector3(aStratholmeLocation[6].m_fX, aStratholmeLocation[6].m_fY, aStratholmeLocation[6].m_fZ), 5.0f);
+                                    fX = randSpot4.x;
+                                    fY = randSpot4.y;
+                                    fZ = randSpot4.z;
                                     if (Creature* pTemp = pBaron->SummonCreature(NPC_BLACK_GUARD, aStratholmeLocation[6].m_fX, aStratholmeLocation[6].m_fY, aStratholmeLocation[6].m_fZ, aStratholmeLocation[6].m_fO, TEMPSPAWN_DEAD_DESPAWN, 0))
                                     {
                                         m_luiGuardGUIDs.push_back(pTemp->GetObjectGuid());
@@ -692,7 +695,10 @@ struct is_stratholme : public InstanceScript
                                 if (pGuard && pGuard->IsAlive() && !pGuard->IsInCombat())
                                 {
                                     float fX, fY, fZ;
-                                    pGuard->GetRandomPoint(aStratholmeLocation[5].m_fX, aStratholmeLocation[5].m_fY, aStratholmeLocation[5].m_fZ, 10.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*pGuard, Geometry::Vector3(aStratholmeLocation[5].m_fX, aStratholmeLocation[5].m_fY, aStratholmeLocation[5].m_fZ), 10.0f);
+                                    fX = randSpot3.x;
+                                    fY = randSpot3.y;
+                                    fZ = randSpot3.z;
                                     pGuard->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                 }
                             }
@@ -818,7 +824,10 @@ struct is_stratholme : public InstanceScript
                                 if (Creature* pTemp = pBaron->SummonCreature(NPC_MINDLESS_UNDEAD, aStratholmeLocation[4].m_fX, aStratholmeLocation[4].m_fY, aStratholmeLocation[4].m_fZ, aStratholmeLocation[4].m_fO, TEMPSPAWN_DEAD_DESPAWN, 0))
                                 {
                                     float fX, fY, fZ;
-                                    pBaron->GetRandomPoint(aStratholmeLocation[5].m_fX, aStratholmeLocation[5].m_fY, aStratholmeLocation[5].m_fZ, 20.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*pBaron, Geometry::Vector3(aStratholmeLocation[5].m_fX, aStratholmeLocation[5].m_fY, aStratholmeLocation[5].m_fZ), 20.0f);
+                                    fX = randSpot2.x;
+                                    fY = randSpot2.y;
+                                    fZ = randSpot2.z;
                                     pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                     m_luiUndeadGUIDs.push_back(pTemp->GetObjectGuid());
                                     ++m_uiMindlessCount;
@@ -857,7 +866,10 @@ struct is_stratholme : public InstanceScript
                                 if (GameObject* pDoor = GetSingleGameObjectFromStorage(GO_PORT_SLAUGTHER))
                                 {
                                     float fX, fY, fZ;
-                                    pAbom->GetRandomPoint(pDoor->GetPositionX(), pDoor->GetPositionY(), pDoor->GetPositionZ(), 10.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pAbom, Geometry::Vector3(pDoor->Where().X(), pDoor->Where().Y(), pDoor->Where().Z()), 10.0f);
+                                    fX = randSpot1.x;
+                                    fY = randSpot1.y;
+                                    fZ = randSpot1.z;
                                     pAbom->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                                 }
                             }
@@ -883,16 +895,9 @@ struct is_stratholme : public InstanceScript
                     {
                         if (Player* pPlayer = itr->getSource())
                         {
-                            // Acquire player's coordinates
-                            float fPlayerXposition = pPlayer->GetPositionX();
-                            float fPlayerYposition = pPlayer->GetPositionY();
-                            float fPlayerZposition = pPlayer->GetPositionZ();
-
-                            // Check if player is near The Unforgiven
-                            // If a player is near, then we do not need to check other player locations, therefore stop checking - break out of this
-                            // TODO: IsNearWaypoint is missing from TWO
-
-                            if (pPlayer->IsNearWaypoint(fPlayerXposition, fPlayerYposition, fPlayerZposition, aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ, 4, 4, 4))
+                            // If a player is near The Unforgiven we need check no further, so break out below.
+                            if (pPlayer->Where().WithinBox(Geometry::Vector3(aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ),
+                                                           Geometry::Vector3(4.0f, 4.0f, 4.0f)))
                             {
                                 Creature* pTheUnforgiven = pPlayer->SummonCreature(NPC_THE_UNFORGIVEN, aStratholmeLocation[9].m_fX, aStratholmeLocation[9].m_fY, aStratholmeLocation[9].m_fZ, aStratholmeLocation[9].m_fO, TEMPSPAWN_CORPSE_TIMED_DESPAWN, 7200000);
                                 pTheUnforgiven->SetRespawnTime(1800); // 30 minutes
@@ -969,7 +974,7 @@ struct is_stratholme : public InstanceScript
                     {
                         if (GameObject* pZigguratDoor = instance->GetGameObject(m_zigguratStorage[i].m_doorGuid))
                         {
-                            if ((*itr)->IsAlive() && (*itr)->IsWithinDistInMap(pZigguratDoor, 35.0f, false))
+                            if ((*itr)->IsAlive() && InReach(*(*itr), *pZigguratDoor, 35.0f, false))
                             {
                                 m_zigguratStorage[i].m_lZigguratAcolyteGuid.push_back((*itr)->GetObjectGuid());
                                 itr = lAcolytes.erase(itr);
@@ -1006,7 +1011,7 @@ struct is_stratholme : public InstanceScript
                     {
                         if (GameObject* pZigguratDoor = instance->GetGameObject(m_zigguratStorage[i].m_doorGuid))
                         {
-                            if (pCrystal->IsWithinDistInMap(pZigguratDoor, 50.0f, false))
+                            if (InReach(*pCrystal, *pZigguratDoor, 50.0f, false))
                             {
                                 m_zigguratStorage[i].m_crystalGuid = pCrystal->GetObjectGuid();
                                 itr = m_luiCrystalGUIDs.erase(itr);

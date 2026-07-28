@@ -377,7 +377,7 @@ struct boss_krick : public CreatureScript
                 {
                     float fX, fY, fZ;
                     pSummoned->SetWalk(false);
-                    m_creature->GetContactPoint(pSummoned, fX, fY, fZ, 2 * INTERACTION_DISTANCE);
+                    ContactPointNear(*m_creature, pSummoned, fX, fY, fZ, 2 * INTERACTION_DISTANCE);
                     pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                     break;
                 }

@@ -1004,8 +1004,8 @@ struct is_naxxramas : public InstanceScript
                         if (Creature* pTrigger = instance->GetCreature(*itr))
                         {
                             GothTrigger pGt;
-                            pGt.bIsAnchorHigh = (pTrigger->GetPositionZ() >= (pGoth->GetPositionZ() - 5.0f));
-                            pGt.bIsRightSide = pCombatGate->GetPositionY() >= pTrigger->GetPositionY();
+                            pGt.bIsAnchorHigh = (pTrigger->Where().Z() >= (pGoth->Where().Z() - 5.0f));
+                            pGt.bIsRightSide = pCombatGate->Where().Y() >= pTrigger->Where().Y();
 
                             m_mGothTriggerMap[pTrigger->GetObjectGuid()] = pGt;
                         }
@@ -1090,7 +1090,7 @@ struct is_naxxramas : public InstanceScript
                 {
                     if (Creature* pPos = instance->GetCreature(*itr))
                     {
-                        pGoth->SummonCreature(uiSummonEntry, pPos->GetPositionX(), pPos->GetPositionY(), pPos->GetPositionZ(), pPos->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                        pGoth->SummonCreature(uiSummonEntry, pPos->Where().X(), pPos->Where().Y(), pPos->Where().Z(), pPos->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
                 }
             }

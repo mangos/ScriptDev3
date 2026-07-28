@@ -151,7 +151,10 @@ struct boss_anzu : public CreatureScript
                 float fX, fY, fZ;
                 for (uint8 i = 0; i < MAX_BROODS; ++i)
                 {
-                    m_creature->GetRandomPoint(pClaw->GetPositionX(), pClaw->GetPositionY(), pClaw->GetPositionZ(), 7.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(pClaw->Where().X(), pClaw->Where().Y(), pClaw->Where().Z()), 7.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     m_creature->SummonCreature(NPC_BROOD_OF_ANZU, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
                 }
             }
@@ -163,7 +166,7 @@ struct boss_anzu : public CreatureScript
             for (uint8 i = 0; i < 3; ++i)
             {
                 fAng = 2 * M_PI_F / 3 * i;
-                m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 15.0f, fAng);
+                FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 15.0f, fAng);
                 m_creature->SummonCreature(aSpiritsEntries[i], fX, fY, fZ, fAng + M_PI_F, TEMPSPAWN_CORPSE_DESPAWN, 0);
             }
         }

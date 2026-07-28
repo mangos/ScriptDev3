@@ -210,7 +210,7 @@ struct npc_akama : public CreatureScript
                             if (Creature* pShade = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADE_OF_AKAMA))
                             {
                                 float fX, fY, fZ;
-                                m_creature->GetContactPoint(pShade, fX, fY, fZ);
+                                ContactPointNear(*m_creature, pShade, fX, fY, fZ);
                                 pShade->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                             }
                         }
@@ -254,7 +254,7 @@ struct npc_akama : public CreatureScript
                     {
                         if (Creature* pShade = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADE_OF_AKAMA))
                         {
-                            pShade->GetNearPoint(pShade, fX, fY, fZ, 0, 20.0f, pShade->GetAngle(pSummoned));
+                            FindFreeSpotNear(*pShade, pShade, fX, fY, fZ, 0, 20.0f, pShade->Where().BearingTo(pSummoned->Where()));
                             pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                         }
                     }
@@ -265,7 +265,7 @@ struct npc_akama : public CreatureScript
                     float fX, fY, fZ;
                     m_lBrokenGUIDList.push_back(pSummoned->GetObjectGuid());
 
-                    m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 30.0f, m_creature->GetAngle(pSummoned));
+                    FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 30.0f, m_creature->Where().BearingTo(pSummoned->Where()));
                     pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                     break;
                 }
@@ -387,7 +387,10 @@ struct npc_akama : public CreatureScript
                 float fX, fY, fZ;
                 for (uint8 i = 0; i < countof(auiRandSpawnEntry); ++i)
                 {
-                    pGenerator->GetRandomPoint(pGenerator->GetPositionX(), pGenerator->GetPositionY(), pGenerator->GetPositionZ(), 5.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pGenerator, Geometry::Vector3(pGenerator->Where().X(), pGenerator->Where().Y(), pGenerator->Where().Z()), 5.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     m_creature->SummonCreature(auiRandSpawnEntry[i], fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                 }
             }

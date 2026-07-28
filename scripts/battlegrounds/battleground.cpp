@@ -139,7 +139,7 @@ struct npc_spirit_guide : public CreatureScript
             for (Map::PlayerList::const_iterator itr = PlayerList.begin(); itr != PlayerList.end(); ++itr)
             {
                 Player* pPlayer = itr->getSource();
-                if (!pPlayer || !pPlayer->IsWithinDistInMap(m_creature, 20.0f) || !pPlayer->HasAura(SPELL_WAITING_TO_RESURRECT))
+                if (!pPlayer || !InReach(*pPlayer, *m_creature, 20.0f) || !pPlayer->HasAura(SPELL_WAITING_TO_RESURRECT))
                 {
                     continue;
                 }

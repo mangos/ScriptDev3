@@ -39,7 +39,7 @@ typedef std::pair<uint8, uint32> TypeTimerPair;
 
 static bool sortFromEastToWest(Creature* pFirst, Creature* pSecond)
 {
-    return pFirst && pSecond && pFirst->GetPositionY() < pSecond->GetPositionY();
+    return pFirst && pSecond && pFirst->Where().Y() < pSecond->Where().Y();
 }
 
 struct is_gundrak : public InstanceScript
@@ -84,7 +84,7 @@ struct is_gundrak : public InstanceScript
 
                     case NPC_LIVIN_MOJO:
                         // Store only the Mojos used to activate the Colossus
-                        if (pCreature->GetPositionX() > 1650.0f)
+                        if (pCreature->Where().X() > 1650.0f)
                         {
                             m_sColossusMojosGuids.insert(pCreature->GetObjectGuid());
                         }
@@ -499,7 +499,7 @@ struct is_gundrak : public InstanceScript
                     float fHeight = 10.0f;                              // A bit higher than the altar is needed
                     if (GameObject* pCollusAltar = GetSingleGameObjectFromStorage(GO_ALTAR_OF_COLOSSUS))
                     {
-                        fHeight += pCollusAltar->GetPositionZ();
+                        fHeight += pCollusAltar->Where().Z();
                     }
 
                     std::list<Creature*> lStalkerTargets, lStalkerCasters;
@@ -507,7 +507,7 @@ struct is_gundrak : public InstanceScript
                     {
                         if (Creature* pStalker = instance->GetCreature(*itr))
                         {
-                            if (pStalker->GetPositionZ() > fHeight)
+                            if (pStalker->Where().Z() > fHeight)
                             {
                                 lStalkerTargets.push_back(pStalker);
                             }

@@ -69,7 +69,7 @@ struct npc_mist : public CreatureScript
 
             if (!m_creature->getVictim() && !HasFollowState(STATE_FOLLOW_COMPLETE) && pWho->GetEntry() == NPC_ARYNIA)
             {
-                if (m_creature->IsWithinDistInMap(pWho, 10.0f))
+                if (InReach(*m_creature, *pWho, 10.0f))
                 {
                     DoScriptText(SAY_AT_HOME, pWho);
                     DoComplete();

@@ -123,7 +123,10 @@ struct boss_coren_direbrew : public CreatureScript
             if (m_creature->GetHealthPercent() < 66.0f && m_uiPhase == 0)
             {
                 float fX, fY, fZ;
-                m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10, fX, fY, fZ);
+                const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 10);
+                fX = randSpot2.x;
+                fY = randSpot2.y;
+                fZ = randSpot2.z;
                 m_creature->SummonCreature(NPC_ILSA_DIREBREW, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                 m_uiPhase = 1;
             }
@@ -132,7 +135,10 @@ struct boss_coren_direbrew : public CreatureScript
             if (m_creature->GetHealthPercent() < 33.0f && m_uiPhase == 1)
             {
                 float fX, fY, fZ;
-                m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 10, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 10);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 m_creature->SummonCreature(NPC_URSULA_DIREBREW, fX, fY, fZ, 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                 m_uiPhase = 2;
             }

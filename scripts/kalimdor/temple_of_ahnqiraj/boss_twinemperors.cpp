@@ -255,7 +255,7 @@ struct boss_veknilash : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (m_pInstance && m_pInstance->GetData(TYPE_TWINS) == IN_PROGRESS && pWho->GetEntry() == NPC_VEKLOR && pWho->IsWithinDistInMap(m_creature, 60.0f))
+            if (m_pInstance && m_pInstance->GetData(TYPE_TWINS) == IN_PROGRESS && pWho->GetEntry() == NPC_VEKLOR && InReach(*pWho, *m_creature, 60.0f))
             {
                 DoCastSpellIfCan(pWho, SPELL_HEAL_BROTHER);
             }
@@ -327,10 +327,12 @@ struct boss_veknilash : public CreatureScript
             if (Creature* pVeklor = m_pInstance->GetSingleCreatureFromStorage(NPC_VEKLOR))
             {
                 float fTargetX, fTargetY, fTargetZ, fTargetOrient;
-                pVeklor->GetPosition(fTargetX, fTargetY, fTargetZ);
-                fTargetOrient = pVeklor->GetOrientation();
+                fTargetX = pVeklor->Where().X();
+                fTargetY = pVeklor->Where().Y();
+                fTargetZ = pVeklor->Where().Z();
+                fTargetOrient = pVeklor->Where().Facing();
 
-                pVeklor->NearTeleportTo(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), true);
+                pVeklor->NearTeleportTo(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().Facing(), true);
                 m_creature->NearTeleportTo(fTargetX, fTargetY, fTargetZ, fTargetOrient, true);
             }
         }
@@ -399,7 +401,7 @@ struct boss_veklor : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (m_pInstance && m_pInstance->GetData(TYPE_TWINS) == IN_PROGRESS && pWho->GetEntry() == NPC_VEKNILASH && pWho->IsWithinDistInMap(m_creature, 60.0f))
+            if (m_pInstance && m_pInstance->GetData(TYPE_TWINS) == IN_PROGRESS && pWho->GetEntry() == NPC_VEKNILASH && InReach(*pWho, *m_creature, 60.0f))
             {
                 DoCastSpellIfCan(pWho, SPELL_HEAL_BROTHER);
             }

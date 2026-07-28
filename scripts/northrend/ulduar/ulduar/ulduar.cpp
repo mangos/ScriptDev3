@@ -487,7 +487,7 @@ struct npc_storm_tempered_keeper : public CreatureScript
                     }
 
                     // check if buddy is withind distance or alive
-                    if (!pBuddy->IsWithinDistInMap(m_creature, MAX_KEEPER_DISTANCE))
+                    if (!InReach(*pBuddy, *m_creature, MAX_KEEPER_DISTANCE))
                     {
                         if (DoCastSpellIfCan(m_creature, SPELL_SEPARATION_ANXIETY) == CAST_OK)
                         {
@@ -571,7 +571,7 @@ struct npc_charged_sphere : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // cast supercharged if reached the buddy
-            if (!m_bIsCharged && pWho->GetEntry() == m_uiBuddyEntry && pWho->IsAlive() && pWho->IsWithinDistInMap(m_creature, 5.0f))
+            if (!m_bIsCharged && pWho->GetEntry() == m_uiBuddyEntry && pWho->IsAlive() && InReach(*pWho, *m_creature, 5.0f))
             {
                 DoCastSpellIfCan(pWho, SPELL_SUPERCHARGED, CAST_TRIGGERED);
                 m_creature->ForcedDespawn(1000);

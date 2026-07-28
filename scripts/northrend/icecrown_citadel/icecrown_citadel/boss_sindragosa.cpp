@@ -314,7 +314,7 @@ struct boss_sindragosa : public CreatureScript
             }
             else if (uiPointId == SINDRAGOSA_POINT_AIR_PHASE_2)
             {
-                m_creature->SetOrientation(M_PI_F); // face the platform
+                m_creature->Place().Face(M_PI_F); // face the platform
                 m_uiFrostBombTimer = 10000; // set initial Frost Bomb timer
                 DoCastSpellIfCan(m_creature, SPELL_ICE_TOMB);
                 m_uiPhase = SINDRAGOSA_PHASE_AIR;
@@ -690,7 +690,7 @@ struct npc_rimefang_icc : public CreatureScript
                     m_uiPhase = RIMEFANG_PHASE_FLYING;
                     SetFlying(true);
                     SetCombatMovement(false);
-                    m_creature->GetMotionMaster()->MovePoint(RIMEFANG_POINT_AIR, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 20.0f, false);
+                    m_creature->GetMotionMaster()->MovePoint(RIMEFANG_POINT_AIR, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 20.0f, false);
                     return;
                 }
                 else
@@ -718,7 +718,7 @@ struct npc_rimefang_icc : public CreatureScript
                                 m_uiIcyBlastCounter = 0;
                                 m_uiIcyBlastTimer = 0;
                                 m_uiPhase = RIMEFANG_PHASE_FLYING;
-                                m_creature->GetMotionMaster()->MovePoint(RIMEFANG_POINT_GROUND, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() - 20.0f, false);
+                                m_creature->GetMotionMaster()->MovePoint(RIMEFANG_POINT_GROUND, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() - 20.0f, false);
                             }
                         }
                     }

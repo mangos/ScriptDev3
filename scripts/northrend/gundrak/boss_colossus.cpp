@@ -374,7 +374,7 @@ struct npc_living_mojo : public CreatureScript
         {
             m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
             m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-            m_bIsPartOfColossus = pCreature->GetPositionX() > 1650.0f ? true : false;
+            m_bIsPartOfColossus = pCreature->Where().X() > 1650.0f ? true : false;
         }
 
         ScriptedInstance* m_pInstance;
@@ -436,11 +436,15 @@ struct npc_living_mojo : public CreatureScript
                 if (m_pInstance)
                 {
                     float fX, fY, fZ;
-                    m_creature->GetPosition(fX, fY, fZ);
+                    fX = m_creature->Where().X();
+                    fY = m_creature->Where().Y();
+                    fZ = m_creature->Where().Z();
 
                     if (Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
                     {
-                        pColossus->GetPosition(fX, fY, fZ);
+                        fX = pColossus->Where().X();
+                        fY = pColossus->Where().Y();
+                        fZ = pColossus->Where().Z();
                     }
 
                     m_creature->SetWalk(false);

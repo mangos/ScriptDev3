@@ -167,7 +167,10 @@ struct boss_jindo : public CreatureScript
                 if (DoCastSpellIfCan(pTarget, SPELL_DELUSIONS_OF_JINDO) == CAST_OK)
                 {
                     float fX, fY, fZ;
-                    m_creature->GetRandomPoint(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 5.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(pTarget->Where().X(), pTarget->Where().Y(), pTarget->Where().Z()), 5.0f);
+                    fX = randSpot2.x;
+                    fY = randSpot2.y;
+                    fZ = randSpot2.z;
                     if (Creature* pSummoned = m_creature->SummonCreature(NPC_SHADE_OF_JINDO, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 15000))
                     {
 #if defined (CLASSIC) || defined (TBC)
@@ -196,7 +199,10 @@ struct boss_jindo : public CreatureScript
                     float fX, fY, fZ;
                     for (uint8 i = 0; i < MAX_SKELETONS; ++i)
                     {
-                        m_creature->GetRandomPoint(aPitTeleportLocs[0], aPitTeleportLocs[1], aPitTeleportLocs[2], 4.0f, fX, fY, fZ);
+                        const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aPitTeleportLocs[0], aPitTeleportLocs[1], aPitTeleportLocs[2]), 4.0f);
+                        fX = randSpot1.x;
+                        fY = randSpot1.y;
+                        fZ = randSpot1.z;
                         if (Creature* pSummoned = m_creature->SummonCreature(NPC_SACRIFICED_TROLL, fX, fY, fZ, 0.0f, TEMPSPAWN_TIMED_OOC_DESPAWN, 15000))
                         {
                             pSummoned->AI()->AttackStart(pTarget);

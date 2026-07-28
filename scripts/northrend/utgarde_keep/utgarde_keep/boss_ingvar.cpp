@@ -200,7 +200,7 @@ struct boss_ingvar : public CreatureScript
                     // This is not blizzlike - npc should be summoned above the boss and should move slower
                     pSummoned->CastSpell(pSummoned, SPELL_ASTRAL_TELEPORT, false);
                     pSummoned->SetLevitate(true);
-                    pSummoned->GetMotionMaster()->MovePoint(POINT_ID_ANNHYLDE, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ() + 15.0f);
+                    pSummoned->GetMotionMaster()->MovePoint(POINT_ID_ANNHYLDE, pSummoned->Where().X(), pSummoned->Where().Y(), pSummoned->Where().Z() + 15.0f);
                     break;
 
                 case NPC_GROUND_VISUAL:
@@ -446,7 +446,7 @@ struct npc_annhylde : public CreatureScript
                                 pIngvar->CastSpell(pIngvar, SPELL_TRANSFORM, false);
                             }
                             // despawn the creature
-                            m_creature->GetMotionMaster()->MovePoint(2, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 50);
+                            m_creature->GetMotionMaster()->MovePoint(2, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 50);
                             m_creature->ForcedDespawn(5000);
                             m_uiResurrectTimer = 0;
                             break;

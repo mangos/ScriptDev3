@@ -176,9 +176,11 @@ struct boss_lord_marrowgar : public CreatureScript
                 pSummoned->CastSpell(pSummoned, SPELL_COLDFLAME_AURA, true);
 
                 float fX, fY;
-                float fZ = pSummoned->GetPositionZ();
+                float fZ = pSummoned->Where().Z();
                 // Note: the NearPoint2D function may not be correct here, because we may use a wrong Z value
-                m_creature->GetNearPoint2D(fX, fY, 80.0f, m_creature->GetAngle(pSummoned));
+                const Geometry::Vector3 near2d2 = m_creature->Where().PointAt(80.0f, m_creature->Where().BearingTo(pSummoned->Where()));
+                fX = near2d2.x;
+                fY = near2d2.y;
                 pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ, false);
             }
         }
@@ -249,7 +251,9 @@ struct boss_lord_marrowgar : public CreatureScript
                         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
                         {
                             float fX, fY, fZ;
-                            pTarget->GetPosition(fX, fY, fZ);
+                            fX = pTarget->Where().X();
+                            fY = pTarget->Where().Y();
+                            fZ = pTarget->Where().Z();
                             m_creature->GetMotionMaster()->Clear();
                             m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                             m_uiBoneStormChargeTimer = 3000;

@@ -675,11 +675,11 @@ struct is_naxxramas : public InstanceScript
                                             uiNpcEntry = NPC_SPECT_RIDER;
                                         }
 
-                                        pGoth->SummonCreature(uiNpcEntry, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), pCreatureTarget->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                                        pGoth->SummonCreature(uiNpcEntry, pCreatureTarget->Where().X(), pCreatureTarget->Where().Y(), pCreatureTarget->Where().Z(), pCreatureTarget->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
 
                                         if (uiNpcEntry == NPC_SPECT_RIDER)
                                         {
-                                            pGoth->SummonCreature(NPC_SPECT_HORSE, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), pCreatureTarget->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                                            pGoth->SummonCreature(NPC_SPECT_HORSE, pCreatureTarget->Where().X(), pCreatureTarget->Where().Y(), pCreatureTarget->Where().Z(), pCreatureTarget->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
                                         }
                                         break;
                                     }
@@ -893,7 +893,7 @@ struct is_naxxramas : public InstanceScript
             {
                 if (GameObject* pCombatGate = GetSingleGameObjectFromStorage(GO_MILI_GOTH_COMBAT_GATE))
                 {
-                    return (pCombatGate->GetPositionY() >= pUnit->GetPositionY());
+                    return (pCombatGate->Where().Y() >= pUnit->Where().Y());
                 }
 
                 script_error_log("left/right side check, Gothik combat area failed.");
@@ -1022,7 +1022,7 @@ struct is_naxxramas : public InstanceScript
                     if (Creature* pTrigger = instance->GetCreature(*itr))
                     {
                         GothTrigger pGt;
-                        pGt.bIsAnchorHigh = (pTrigger->GetPositionZ() >= (pGoth->GetPositionZ() - 5.0f));
+                        pGt.bIsAnchorHigh = (pTrigger->Where().Z() >= (pGoth->Where().Z() - 5.0f));
                         pGt.bIsRightSide = IsInRightSideGothArea(pTrigger);
 
                         m_mGothTriggerMap[pTrigger->GetObjectGuid()] = pGt;

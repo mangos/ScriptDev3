@@ -253,7 +253,7 @@ struct boss_kaelthas : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_uiPhase == PHASE_0_NOT_BEGUN && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
-                m_creature->IsWithinDistInMap(pWho, m_creature->GetAttackDistance(pWho)) && m_creature->IsWithinLOSInMap(pWho))
+                InReach(*m_creature, *pWho, m_creature->GetAttackDistance(pWho)) && HasLineOfSight(*m_creature, *pWho))
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 m_uiPhase = PHASE_1_ADVISOR;
@@ -365,7 +365,7 @@ struct boss_kaelthas : public CreatureScript
                 {
                     // ToDo: also start channeling to the giant crystals nearby
                     m_creature->SetLevitate(true);
-                    m_creature->GetMotionMaster()->MovePoint(POINT_ID_AIR, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 30.0f, false);
+                    m_creature->GetMotionMaster()->MovePoint(POINT_ID_AIR, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z() + 30.0f, false);
                     m_uiPhaseTimer = 0;
                     m_uiPhase = PHASE_6_FLYING;
                 }
@@ -1171,7 +1171,7 @@ struct boss_grand_astromancer_capernian : public CreatureScript
             {
                 Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
 
-                if (pTarget && m_creature->IsWithinDistInMap(pTarget, 30.0f))
+                if (pTarget && InReach(*m_creature, *pTarget, 30.0f))
                 {
                     DoCastSpellIfCan(pTarget, SPELL_CONFLAGRATION);
                 }

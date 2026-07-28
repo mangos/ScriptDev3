@@ -208,7 +208,7 @@ struct npc_ringo : public CreatureScript
 
             if (!m_creature->getVictim() && !HasFollowState(STATE_FOLLOW_COMPLETE) && pWho->GetEntry() == NPC_SPRAGGLE)
             {
-                if (m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+                if (InReach(*m_creature, *pWho, INTERACTION_DISTANCE))
                 {
                     if (Player* pPlayer = GetLeaderForFollower())
                     {
@@ -536,7 +536,7 @@ struct npc_simone_the_seductressAI : public ScriptedAI
             {
                 pPrecious->ForcedDespawn();
                 Creature* pPreciousNew = m_creature->SummonCreature(NPC_PRECIOUS_THE_DEVOURER,
-                    m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetAngle(m_creature), TEMPSPAWN_DEAD_DESPAWN, 0, true);
+                    m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().BearingTo(m_creature->Where()), TEMPSPAWN_DEAD_DESPAWN, 0, true);
 
                 if (pPreciousNew)
                 {
@@ -554,7 +554,7 @@ struct npc_simone_the_seductressAI : public ScriptedAI
         else
         {
             Creature* pPreciousNew = m_creature->SummonCreature(NPC_PRECIOUS_THE_DEVOURER,
-                m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetAngle(m_creature), TEMPSPAWN_DEAD_DESPAWN, 0, true);
+                m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().BearingTo(m_creature->Where()), TEMPSPAWN_DEAD_DESPAWN, 0, true);
 
             if (pPreciousNew)
             {
@@ -618,7 +618,7 @@ struct npc_simone_the_seductressAI : public ScriptedAI
 
         if (triggered)
         {
-            Creature* pCleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetAngle(m_creature), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
+            Creature* pCleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().BearingTo(m_creature->Where()), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
             if (pCleaner)
             {
                 ThreatList const& SimonetList = m_creature->GetThreatManager().getThreatList();
@@ -805,7 +805,7 @@ struct npc_simone_the_inconspicuousAI : public ScriptedAI
         else
         {
             pPrecious = m_creature->SummonCreature(NPC_PRECIOUS,
-                m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
             pPrecious->GetMotionMaster()->MoveFollow(m_creature, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
         }
     }
@@ -815,7 +815,7 @@ struct npc_simone_the_inconspicuousAI : public ScriptedAI
         if (m_creature->GetMap()->GetPlayer(m_playerGuid))
         {
             Creature* pDemon = m_creature->SummonCreature(NPC_SIMONE_THE_SEDUCTRESS,
-                m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
             Creature* pPrecious = GetClosestCreatureWithEntry(m_creature, NPC_PRECIOUS, 100.0f);
 
             if (pDemon)
@@ -832,7 +832,7 @@ struct npc_simone_the_inconspicuousAI : public ScriptedAI
             if (pDemon && pPrecious)
             {
                 Creature* pPreciousDevourer = m_creature->SummonCreature(NPC_PRECIOUS_THE_DEVOURER,
-                    pPrecious->GetPositionX(), pPrecious->GetPositionY(), pPrecious->GetPositionZ(), pPrecious->GetAngle(pPrecious), TEMPSPAWN_DEAD_DESPAWN, 0, true);
+                    pPrecious->Where().X(), pPrecious->Where().Y(), pPrecious->Where().Z(), pPrecious->Where().BearingTo(pPrecious->Where()), TEMPSPAWN_DEAD_DESPAWN, 0, true);
 
                 if (pPreciousDevourer)
                 {

@@ -129,7 +129,7 @@ struct spell_pos_summon_undead : public SpellScript
             float fX, fY, fZ;
             for (uint8 i = 0; i < 4; ++i)
             {
-                pCreatureTarget->GetNearPoint(pCreatureTarget, fX, fY, fZ, 0, frand(8.0f, 12.0f), M_PI_F * 0.5f * i);
+                FindFreeSpotNear(*pCreatureTarget, pCreatureTarget, fX, fY, fZ, 0, frand(8.0f, 12.0f), M_PI_F * 0.5f * i);
                 pCreatureTarget->SummonCreature(i % 2 ? NPC_YMIRJAR_WRATHBRINGER : NPC_YMIRJAR_FLAMEBEARER, fX, fY, fZ, 3.75f, TEMPSPAWN_DEAD_DESPAWN, 0);
             }
 

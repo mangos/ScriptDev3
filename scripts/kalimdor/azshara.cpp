@@ -110,7 +110,7 @@ struct npc_rizzle_sprysprocket : public CreatureScript
         {
             if (HasEscortState(STATE_ESCORT_ESCORTING) && pUnit->GetTypeId() == TYPEID_PLAYER)
             {
-                if (!HasEscortState(STATE_ESCORT_PAUSED) && m_creature->IsWithinDistInMap(pUnit, INTERACTION_DISTANCE) && m_creature->IsWithinLOSInMap(pUnit))
+                if (!HasEscortState(STATE_ESCORT_PAUSED) && InReach(*m_creature, *pUnit, INTERACTION_DISTANCE) && HasLineOfSight(*m_creature, *pUnit))
                 {
                     if (((Player*)pUnit)->GetQuestStatus(QUEST_MOONSTONE) == QUEST_STATUS_INCOMPLETE)
                     {
@@ -252,7 +252,7 @@ struct npc_depth_charge : public CreatureScript
                 return;
             }
 
-            if (m_creature->IsWithinDistInMap(pUnit, INTERACTION_DISTANCE) && m_creature->IsWithinLOSInMap(pUnit))
+            if (InReach(*m_creature, *pUnit, INTERACTION_DISTANCE) && HasLineOfSight(*m_creature, *pUnit))
             {
                 m_creature->CastSpell(pUnit, SPELL_TRAP, false);
             }

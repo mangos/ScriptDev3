@@ -217,7 +217,7 @@ struct boss_exarch_maladaar : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasTaunted && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 150.0f) && m_creature->IsWithinLOSInMap(pWho))
+            if (!m_bHasTaunted && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 150.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 m_bHasTaunted = true;

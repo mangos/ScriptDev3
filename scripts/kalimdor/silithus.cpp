@@ -300,7 +300,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                         if (Creature* pMerithra = m_creature->GetMap()->GetCreature(m_merithraGuid))
                         {
                             pMerithra->SetWalk(false);
-                            pMerithra->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                            pMerithra->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z());
                         }
                     }
                     break;
@@ -323,7 +323,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                         if (Creature* pArygos = m_creature->GetMap()->GetCreature(m_arygosGuid))
                         {
                             pArygos->SetWalk(false);
-                            pArygos->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                            pArygos->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z());
                         }
                     }
                     break;
@@ -374,7 +374,7 @@ struct npc_anachronos_the_ancient : public CreatureScript
                         if (Creature* pCaelestrasz = m_creature->GetMap()->GetCreature(m_CaelestraszGuid))
                         {
                             pCaelestrasz->SetWalk(false);
-                            pCaelestrasz->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ());
+                            pCaelestrasz->GetMotionMaster()->MovePoint(POINT_ID_DRAGON_ATTACK, pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z());
                         }
                     }
                     break;
@@ -524,7 +524,10 @@ struct npc_anachronos_the_ancient : public CreatureScript
             float fX, fY, fZ;
             for (uint8 i = 0; i < MAX_CONQUERORS; ++i)
             {
-                m_creature->GetRandomPoint(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ, 20.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot5 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ), 20.0f);
+                fX = randSpot5.x;
+                fY = randSpot5.y;
+                fZ = randSpot5.z;
                 m_creature->SummonCreature(NPC_ANUBISATH_CONQUEROR, fX, fY, fZ, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
             }
         }
@@ -535,20 +538,32 @@ struct npc_anachronos_the_ancient : public CreatureScript
             // Summon kaldorei warriors
             for (uint8 i = 0; i < MAX_KALDOREI; ++i)
             {
-                m_creature->GetRandomPoint(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ, 10.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot4 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ), 10.0f);
+                fX = randSpot4.x;
+                fY = randSpot4.y;
+                fZ = randSpot4.z;
                 m_creature->SummonCreature(NPC_KALDOREI_INFANTRY, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
             }
 
             // Summon Qiraji warriors
             for (uint8 i = 0; i < MAX_QIRAJI; ++i)
             {
-                m_creature->GetRandomPoint(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ, 15.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot3 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ), 15.0f);
+                fX = randSpot3.x;
+                fY = randSpot3.y;
+                fZ = randSpot3.z;
                 m_creature->SummonCreature(NPC_QIRAJI_WASP, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
 
-                m_creature->GetRandomPoint(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ, 15.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot2 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ), 15.0f);
+                fX = randSpot2.x;
+                fY = randSpot2.y;
+                fZ = randSpot2.z;
                 m_creature->SummonCreature(NPC_QIRAJI_DRONE, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
 
-                m_creature->GetRandomPoint(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ, 15.0f, fX, fY, fZ);
+                const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(aEternalBoardMovement[10].m_fX, aEternalBoardMovement[10].m_fY, aEternalBoardMovement[10].m_fZ), 15.0f);
+                fX = randSpot1.x;
+                fY = randSpot1.y;
+                fZ = randSpot1.z;
                 m_creature->SummonCreature(NPC_QIRAJI_TANK, fX, fY, fZ, 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
             }
         }
@@ -759,7 +774,7 @@ struct go_crystalline_tear : public GameObjectScript
                 return true;
             }
 
-            if (Creature* pAnachronos = pPlayer->SummonCreature(NPC_ANACHRONOS_THE_ANCIENT, pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), 3.75f, TEMPSPAWN_CORPSE_DESPAWN, 0))
+            if (Creature* pAnachronos = pPlayer->SummonCreature(NPC_ANACHRONOS_THE_ANCIENT, pGo->Where().X(), pGo->Where().Y(), pGo->Where().Z(), 3.75f, TEMPSPAWN_CORPSE_DESPAWN, 0))
             {
                 // Send the player's guid in order to handle the quest complete
                 if (CreatureAI* pAnachronosAI = pAnachronos->AI())
@@ -952,7 +967,7 @@ struct npc_solenor_the_slayer : public CreatureScript
 
             if (triggered)
             {
-                Creature* creature_the_cleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetAngle(playerFacing), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
+                Creature* creature_the_cleaner = m_creature->SummonCreature(NPC_THE_CLEANER, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z(), m_creature->Where().BearingTo(playerFacing->Where()), TEMPSPAWN_CORPSE_DESPAWN, 20 * MINUTE * IN_MILLISECONDS);
                 if (creature_the_cleaner)
                 {
                     DoScriptText(SAY_THE_CLEANER_AGGRO, creature_the_cleaner);
@@ -1075,7 +1090,7 @@ struct npc_solenor_the_slayer : public CreatureScript
                 if (Unit* pUnit = m_creature->getVictim())
                 {
 
-                    if (m_creature->GetDistance2d(pUnit) > 5.0f)
+                    if (m_creature->Where().DistanceTo(pUnit->Where(), false) > 5.0f)
                     {
                         if (DoCastSpellIfCan(pUnit, SPELL_DREADFUL_FRIGHT) == CAST_OK)
                         {

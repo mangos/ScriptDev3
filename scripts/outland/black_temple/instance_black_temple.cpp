@@ -322,7 +322,10 @@ struct is_black_temple : public InstanceScript
                             {
                                 for (uint8 j = 0; j < 4; ++j)
                                 {
-                                    pGenerator->GetRandomPoint(pGenerator->GetPositionX(), pGenerator->GetPositionY(), pGenerator->GetPositionZ(), 10.0f, fX, fY, fZ);
+                                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pGenerator, Geometry::Vector3(pGenerator->Where().X(), pGenerator->Where().Y(), pGenerator->Where().Z()), 10.0f);
+                                    fX = randSpot1.x;
+                                    fY = randSpot1.y;
+                                    fZ = randSpot1.z;
                                     akama->SummonCreature(NPC_ASH_BROKEN, fX, fY, fZ, 0, TEMPSPAWN_TIMED_DESPAWN, 10 * MINUTE * IN_MILLISECONDS);
                                 }
                             }

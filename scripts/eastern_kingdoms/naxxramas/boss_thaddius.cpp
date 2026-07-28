@@ -402,7 +402,7 @@ struct npc_tesla_coil : public CreatureScript
                 return false;
             }
 
-            m_bToFeugen = m_creature->GetDistanceOrder(pNoxTeslaFeugen, pNoxTeslaStalagg);
+            m_bToFeugen = m_creature->Where().IsNearer(pNoxTeslaFeugen->Where(), pNoxTeslaStalagg->Where());
 
             if (DoCastSpellIfCan(m_creature, m_bToFeugen ? SPELL_FEUGEN_CHAIN : SPELL_STALAGG_CHAIN) == CAST_OK)
             {

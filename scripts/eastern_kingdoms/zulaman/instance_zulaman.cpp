@@ -146,19 +146,19 @@ struct is_zulaman : public InstanceScript
                     case NPC_TRIBES_MAN:
                     case NPC_WARBRINGER:
                     case NPC_AXETHROWER:
-                        if (pCreature->GetPositionZ() > 10.0f && pCreature->GetPositionZ() < 15.0f)
+                        if (pCreature->Where().Z() > 10.0f && pCreature->Where().Z() < 15.0f)
                         {
                             m_aNalorakkEvent[0].sBearTrashGuidSet.insert(pCreature->GetObjectGuid());
                         }
-                        else if (pCreature->GetPositionZ() > 25.0f && pCreature->GetPositionZ() < 30.0f)
+                        else if (pCreature->Where().Z() > 25.0f && pCreature->Where().Z() < 30.0f)
                         {
                             m_aNalorakkEvent[1].sBearTrashGuidSet.insert(pCreature->GetObjectGuid());
                         }
-                        else if (pCreature->GetPositionZ() > 40.0f && pCreature->GetPositionZ() < 41.0f)
+                        else if (pCreature->Where().Z() > 40.0f && pCreature->Where().Z() < 41.0f)
                         {
                             m_aNalorakkEvent[2].sBearTrashGuidSet.insert(pCreature->GetObjectGuid());
                         }
-                        else if (pCreature->GetPositionZ() > 41.0f)
+                        else if (pCreature->Where().Z() > 41.0f)
                         {
                             m_aNalorakkEvent[3].sBearTrashGuidSet.insert(pCreature->GetObjectGuid());
                         }
@@ -497,7 +497,10 @@ struct is_zulaman : public InstanceScript
                         if (!m_uiBearEventPhase)
                         {
                             float fX, fY, fZ;
-                            pTemp->GetRandomPoint(35.31f, 1412.24f, 2.04f, 3.0f, fX, fY, fZ);
+                            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pTemp, Geometry::Vector3(35.31f, 1412.24f, 2.04f), 3.0f);
+                            fX = randSpot1.x;
+                            fY = randSpot1.y;
+                            fZ = randSpot1.z;
                             pTemp->GetMotionMaster()->MoveJump(fX, fY, fZ, pTemp->GetSpeed(MOVE_RUN) * 2, 5.0f);
                         }
 #endif

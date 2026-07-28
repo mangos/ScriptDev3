@@ -62,7 +62,7 @@ struct is_dire_maul : public InstanceScript
             {
                 // figure where to enter to set library doors accordingly
                 // Enter DM North first
-                if (pPlayer->IsWithinDist2d(260.0f, -20.0f, 20.0f) && m_auiEncounter[TYPE_WARPWOOD] != DONE)
+                if (pPlayer->Where().WithinDist(Geometry::Vector2(260.0f, -20.0f), 20.0f) && m_auiEncounter[TYPE_WARPWOOD] != DONE)
                 {
                     m_bDoNorthBeforeWest = true;
                 }
@@ -608,7 +608,7 @@ struct is_dire_maul : public InstanceScript
                                 continue;
                             }
 
-                            if (pGuard->IsWithinDist2d(pGenerator->GetPositionX(), pGenerator->GetPositionY(), 20.0f))
+                            if (pGuard->Where().WithinDist(Geometry::Vector2(pGenerator->Where().X(), pGenerator->Where().Y()), 20.0f))
                             {
                                 m_sSortedGeneratorGuards[i].insert(pGuard->GetGUIDLow());
                                 m_lGeneratorGuardGUIDs.erase(itr++);

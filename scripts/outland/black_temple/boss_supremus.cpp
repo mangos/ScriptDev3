@@ -355,9 +355,9 @@ struct boss_supremus : public CreatureScript
                 }
 
                 /** Not understood how this really must work
-                 * if (m_creature->GetSpeedRate(MOVE_RUN) > SPEED_CHASE && m_creature->GetCombatDistance(m_creature->getVictim()) < RANGE_MIN_DASHING)
+                 * if (m_creature->GetSpeedRate(MOVE_RUN) > SPEED_CHASE && CombatDistanceBetween(*m_creature, *m_creature->getVictim()) < RANGE_MIN_DASHING)
                  *     m_creature->SetSpeedRate(MOVE_RUN, SPEED_CHASE);
-                 * else if (m_creature->GetCombatDistance(m_creature->getVictim()) > RANGE_MOLTEN_PUNCH)
+                 * else if (CombatDistanceBetween(*m_creature, *m_creature->getVictim()) > RANGE_MOLTEN_PUNCH)
                  *     m_creature->SetSpeedRate(MOVE_RUN, SPEED_DASHING);
                  */
             }

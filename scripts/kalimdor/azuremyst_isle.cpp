@@ -103,7 +103,7 @@ struct npc_draenei_survivor : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             if (m_bCanSayHelp && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsFriendlyTo(pWho) &&
-                m_creature->IsWithinDistInMap(pWho, 25.0f))
+                InReach(*m_creature, *pWho, 25.0f))
             {
                 // Random switch between 4 texts
                 switch (urand(0, 3))

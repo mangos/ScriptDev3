@@ -290,7 +290,7 @@ struct npc_kiljaeden_controller : public CreatureScript
                     if (Creature* pEntropius = m_creature->GetMap()->GetCreature(m_EntropiusGuid))
                     {
                         pEntropius->SetWalk(false);
-                        pEntropius->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX(), m_creature->GetPositionY(), 35.0f);
+                        pEntropius->GetMotionMaster()->MovePoint(1, m_creature->Where().X(), m_creature->Where().Y(), 35.0f);
                     }
                     break;
                 case POINT_MOVE_LIADRIN:
@@ -305,7 +305,7 @@ struct npc_kiljaeden_controller : public CreatureScript
                         pEntropius->CastSpell(pEntropius, SPELL_BLAZE_TO_LIGHT, true);
                         pEntropius->RemoveAurasDueToSpell(SPELL_ENTROPIUS_BODY);
                         pEntropius->SetWalk(true);
-                        pEntropius->GetMotionMaster()->MovePoint(2, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                        pEntropius->GetMotionMaster()->MovePoint(2, m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
                     }
                     break;
                 case POINT_EVENT_EXIT:
@@ -515,7 +515,7 @@ struct boss_kiljaeden : public CreatureScript
             {
                 DoScriptText(SAY_KALECGOS_INTRO, pSummoned);
                 pSummoned->CastSpell(pSummoned, SPELL_ARCANE_BOLT, true);
-                pSummoned->GetMotionMaster()->MoveRandomAroundPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), pSummoned->GetPositionZ(), 30.0f);
+                pSummoned->GetMotionMaster()->MoveRandomAroundPoint(m_creature->Where().X(), m_creature->Where().Y(), pSummoned->Where().Z(), 30.0f);
             }
             else if (pSummoned->GetEntry() == NPC_SHIELD_ORB)
             {
@@ -523,18 +523,20 @@ struct boss_kiljaeden : public CreatureScript
 
                 // Start the movement of the shadow orb - calculate new position based on the angle between the boss and orb
                 float fX, fY, fAng;
-                fAng = m_creature->GetAngle(pSummoned) + M_PI_F / 8;
+                fAng = m_creature->Where().BearingTo(pSummoned->Where()) + M_PI_F / 8;
                 // Normalize angle
                 if (fAng > 2 * M_PI_F)
                 {
                     fAng = fAng - 2 * M_PI_F;
                 }
 
-                m_creature->GetNearPoint2D(fX, fY, 25.0f, fAng);
+                const Geometry::Vector3 near2d3 = m_creature->Where().PointAt(25.0f, fAng);
+                fX = near2d3.x;
+                fY = near2d3.y;
 
                 // Move to new position
                 pSummoned->GetMotionMaster()->Clear();
-                pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, pSummoned->GetPositionZ());
+                pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, pSummoned->Where().Z());
             }
             else if (pSummoned->GetEntry() == NPC_SINISTER_REFLECTION)
             {
@@ -790,7 +792,9 @@ struct boss_kiljaeden : public CreatureScript
                         {
                             // Get some random coords for the Orb
                             float fX, fY, fZ;
-                            m_creature->GetNearPoint2D(fX, fY, 25.0f, frand(0, 2 * M_PI_F));
+                            const Geometry::Vector3 near2d2 = m_creature->Where().PointAt(25.0f, frand(0, 2 * M_PI_F));
+                            fX = near2d2.x;
+                            fY = near2d2.y;
                             fZ = frand(35.0f, 45.0f);
 
                             m_creature->SummonCreature(NPC_SHIELD_ORB, fX, fY, fZ, 0, TEMPSPAWN_CORPSE_DESPAWN, 0);
@@ -877,18 +881,20 @@ struct npc_shield_orb : public CreatureScript
             {
                 // Calculate new position based on the angle between the boss and self
                 float fX, fY, fAng;
-                fAng = pSummoner->GetAngle(m_creature) + M_PI_F / 8;
+                fAng = pSummoner->Where().BearingTo(m_creature->Where()) + M_PI_F / 8;
                 // Normalize angle
                 if (fAng > 2 * M_PI_F)
                 {
                     fAng = fAng - 2 * M_PI_F;
                 }
 
-                pSummoner->GetNearPoint2D(fX, fY, 25.0f, fAng);
+                const Geometry::Vector3 near2d1 = pSummoner->Where().PointAt(25.0f, fAng);
+                fX = near2d1.x;
+                fY = near2d1.y;
 
                 // Move to new position
                 m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MovePoint(1, fX, fY, m_creature->GetPositionZ());
+                m_creature->GetMotionMaster()->MovePoint(1, fX, fY, m_creature->Where().Z());
             }
         }
 

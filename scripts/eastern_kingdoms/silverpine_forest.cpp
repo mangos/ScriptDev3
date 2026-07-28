@@ -500,7 +500,10 @@ struct npc_deathstalker_faerleia : public CreatureScript
 #if defined (WOTLK) || defined (CATA) || defined(MISTS)
             // put them on correct waypoints later on
             float fX, fY, fZ;
-            pSummoned->GetRandomPoint(m_afMoveCoords[0], m_afMoveCoords[1], m_afMoveCoords[2], 10.0f, fX, fY, fZ);
+            const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*pSummoned, Geometry::Vector3(m_afMoveCoords[0], m_afMoveCoords[1], m_afMoveCoords[2]), 10.0f);
+            fX = randSpot1.x;
+            fY = randSpot1.y;
+            fZ = randSpot1.z;
             pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
 #endif
         }

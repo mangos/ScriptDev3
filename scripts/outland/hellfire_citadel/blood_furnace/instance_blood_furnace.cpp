@@ -57,7 +57,7 @@ struct SortByAngle
     SortByAngle(WorldObject const* pRef) : m_pRef(pRef) {}
     bool operator()(WorldObject* pLeft, WorldObject* pRight)
     {
-        return m_pRef->GetAngle(pLeft) < m_pRef->GetAngle(pRight);
+        return m_pRef->Where().BearingTo(pLeft->Where()) < m_pRef->Where().BearingTo(pRight->Where());
     }
     WorldObject const* m_pRef;
 };
@@ -479,13 +479,13 @@ struct is_blood_furnace : public InstanceScript
 
                 if (uiIndex < MAX_ORC_WAVES)
                 {
-                    dx = (pDoor[0]->GetPositionX() + pDoor[1]->GetPositionX()) / 2 - pDoor[uiIndex % 2]->GetPositionX();
-                    dy = (pDoor[0]->GetPositionY() + pDoor[1]->GetPositionY()) / 2 - pDoor[uiIndex % 2]->GetPositionY();
+                    dx = (pDoor[0]->Where().X() + pDoor[1]->Where().X()) / 2 - pDoor[uiIndex % 2]->Where().X();
+                    dy = (pDoor[0]->Where().Y() + pDoor[1]->Where().Y()) / 2 - pDoor[uiIndex % 2]->Where().Y();
                 }
                 else
                 {
-                    dx = (pDoor[0]->GetPositionX() + pDoor[1]->GetPositionX()) / 2;
-                    dy = (pDoor[0]->GetPositionY() + pDoor[1]->GetPositionY()) / 2;
+                    dx = (pDoor[0]->Where().X() + pDoor[1]->Where().X()) / 2;
+                    dy = (pDoor[0]->Where().Y() + pDoor[1]->Where().Y()) / 2;
                 }
             }
 
@@ -501,7 +501,7 @@ struct is_blood_furnace : public InstanceScript
                         {
                             if (GameObject* pDoor = instance->GetGameObject(m_aBroggokEvent[i].m_cellGuid))
                             {
-                                if (pOrc->IsWithinDistInMap(pDoor, 15.0f))
+                                if (InReach(*pOrc, *pDoor, 15.0f))
                                 {
                                     m_aBroggokEvent[i].m_sSortedOrcGuids.insert(pOrc->GetObjectGuid());
                                     if (!pOrc->IsAlive())
@@ -530,7 +530,7 @@ struct is_blood_furnace : public InstanceScript
                     if (Creature* pBroggok = GetSingleCreatureFromStorage(NPC_BROGGOK))
                     {
                         pBroggok->SetWalk(false);
-                        pBroggok->GetMotionMaster()->MovePoint(0, dx, dy, pBroggok->GetPositionZ());
+                        pBroggok->GetMotionMaster()->MovePoint(0, dx, dy, pBroggok->Where().Z());
                     }
                 }
                 else
@@ -553,7 +553,7 @@ struct is_blood_furnace : public InstanceScript
 
                             // Move them out of the cages
                             pOrc->SetWalk(false);
-                            pOrc->GetMotionMaster()->MovePoint(0, pOrc->GetPositionX() + dx, pOrc->GetPositionY() + dy, pOrc->GetPositionZ());
+                            pOrc->GetMotionMaster()->MovePoint(0, pOrc->Where().X() + dx, pOrc->Where().Y() + dy, pOrc->Where().Z());
                         }
                     }
                 }

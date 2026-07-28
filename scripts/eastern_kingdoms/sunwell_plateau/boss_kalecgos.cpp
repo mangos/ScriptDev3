@@ -253,7 +253,10 @@ struct boss_kalecgos : public CreatureScript
                 if (m_uiExitTimer <= uiDiff)
                 {
                     float fX, fY, fZ;
-                    m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 30.0f, fX, fY, fZ);
+                    const Geometry::Vector3 randSpot1 = RandomGroundPointNear(*m_creature, Geometry::Vector3(m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z()), 30.0f);
+                    fX = randSpot1.x;
+                    fY = randSpot1.y;
+                    fZ = randSpot1.z;
                     fZ = 70.0f;
 
                     m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_FLY_ANIM);
@@ -482,7 +485,7 @@ struct boss_sathrovarr : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // !!! Workaround which ejects the players from the spectral realm !!!
-            if (pWho->GetTypeId() == TYPEID_PLAYER && pWho->IsWithinLOSInMap(m_creature) && pWho->IsWithinDistInMap(m_creature, 75.0f))
+            if (pWho->GetTypeId() == TYPEID_PLAYER && HasLineOfSight(*pWho, *m_creature) && InReach(*pWho, *m_creature, 75.0f))
             {
                 if (!pWho->HasAura(SPELL_SPECTRAL_REALM_AURA))
                 {

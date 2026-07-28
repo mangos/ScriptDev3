@@ -411,7 +411,7 @@ struct go_manaforge_control_console : public GameObjectScript
 
         Creature* pManaforge = nullptr;
 
-        switch (pGo->GetAreaId())
+        switch (pGo->GetTerrain()->GetAreaId(pGo->Where().X(), pGo->Where().Y(), pGo->Where().Z()))
         {
             case 3726:                                          // b'naar
                 if ((pPlayer->GetQuestStatus(QUEST_SHUTDOWN_BNAAR_ALDOR) == QUEST_STATUS_INCOMPLETE ||
@@ -870,7 +870,7 @@ struct npc_maxx_a_million_escort : public CreatureScript
             {
                 case 1:
                     // turn 90 degrees , towards doorway.
-                    m_creature->SetFacingTo(m_creature->GetOrientation() + (M_PI_F / 2));
+                    m_creature->SetFacingTo(m_creature->Where().Facing() + (M_PI_F / 2));
                     DoScriptText(SAY_START, m_creature);
                     m_uiSubEventTimer = 3000;
                     m_uiSubEvent = 1;
@@ -1017,7 +1017,7 @@ struct npc_zeppit : public CreatureScript
             if (pVictim->GetTypeId() == TYPEID_UNIT && pVictim->GetEntry() == NPC_WARP_CHASER)
             {
                 // Distance not known, be assumed to be ~10 yards, possibly a bit less.
-                if (m_creature->IsWithinDistInMap(pVictim, 10.0f))
+                if (InReach(*m_creature, *pVictim, 10.0f))
                 {
                     DoScriptText(EMOTE_GATHER_BLOOD, m_creature);
                     m_creature->CastSpell(m_creature, SPELL_GATHER_WARP_BLOOD, false);
@@ -1100,7 +1100,7 @@ struct npc_protectorate_demolitionist : public CreatureScript
             {
                 if (pWho->HasAura(SPELL_PROTECTORATE) && ((Player*)pWho)->GetQuestStatus(QUEST_ID_DELIVERING_MESSAGE) == QUEST_STATUS_INCOMPLETE)
                 {
-                    if (m_creature->IsWithinDistInMap(pWho, 10.0f))
+                    if (InReach(*m_creature, *pWho, 10.0f))
                     {
                         m_creature->SetFactionTemporary(FACTION_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
                         Start(false, (Player*)pWho);
@@ -1411,7 +1411,7 @@ struct npc_drijya : public CreatureScript
         {
             if (Creature* pTrigger = m_creature->GetMap()->GetCreature(m_explodeTriggerGuid))
             {
-                m_creature->SummonCreature(uiEntry, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), pTrigger->GetOrientation(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 10000);
+                m_creature->SummonCreature(uiEntry, pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z(), pTrigger->Where().Facing(), TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 10000);
             }
         }
 
@@ -1731,7 +1731,7 @@ struct npc_dimensius : public CreatureScript
                 float fX, fY, fZ;
                 for (uint8 i = 0; i < 4; ++i)
                 {
-                    m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 30.0f, i * (M_PI_F / 2));
+                    FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 30.0f, i * (M_PI_F / 2));
                     m_creature->SummonCreature(NPC_SPAWN_OF_DIMENSIUS, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_OR_DEAD_DESPAWN, 120000);
                 }
 

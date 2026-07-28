@@ -147,7 +147,7 @@ struct boss_archimonde : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // If the boss reaches the tree during the fight, then he enrages - the distance is not very clear
-            if (!m_bIsEnraged && pWho->GetEntry() == NPC_CHANNEL_TARGET && pWho->IsWithinDistInMap(m_creature, 75.0f))
+            if (!m_bIsEnraged && pWho->GetEntry() == NPC_CHANNEL_TARGET && InReach(*pWho, *m_creature, 75.0f))
             {
                 m_uiEnrageTimer = 1000;
                 m_bIsEnraged = true;
@@ -286,7 +286,7 @@ struct boss_archimonde : public CreatureScript
                     if (m_uiSummonWispTimer < uiDiff)
                     {
                         float fX, fY, fZ;
-                        m_creature->GetNearPoint(m_creature, fX, fY, fZ, 0, 75.0f, urand(0, 1) ? frand(0, 2.8f) : frand(4.3f, M_PI_F * 2));
+                        FindFreeSpotNear(*m_creature, m_creature, fX, fY, fZ, 0, 75.0f, urand(0, 1) ? frand(0, 2.8f) : frand(4.3f, M_PI_F * 2));
                         m_creature->SummonCreature(NPC_ANCIENT_WISP, fX, fY, fZ, 0, TEMPSPAWN_TIMED_OOC_DESPAWN, 15000);
                         m_uiSummonWispTimer = urand(1000, 1500);
                     }
@@ -442,7 +442,7 @@ struct npc_doomfire_spirit : public CreatureScript
                 if (Creature* pDoomfire = m_creature->GetMap()->GetCreature(m_doomfireGuid))
                 {
                     float fX, fY, fZ;
-                    pDoomfire->GetNearPoint(pDoomfire, fX, fY, fZ, 0, 30.0f, m_fAngle + frand(0, M_PI_F * .5));
+                    FindFreeSpotNear(*pDoomfire, pDoomfire, fX, fY, fZ, 0, 30.0f, m_fAngle + frand(0, M_PI_F * .5));
                     pDoomfire->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                 }
 

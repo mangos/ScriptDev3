@@ -805,7 +805,7 @@ struct is_violet_hold : public InstanceScript
                             {
                                 if (Creature* pAdd = instance->GetCreature(*itr))
                                 {
-                                    fMoveX = (pData->fX - pAdd->GetPositionX()) * .25;
+                                    fMoveX = (pData->fX - pAdd->Where().X()) * .25;
                                     pAdd->GetMotionMaster()->MovePoint(0, pData->fX - fMoveX, pData->fY, pData->fZ);
                                     pAdd->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
                                 }

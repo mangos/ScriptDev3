@@ -356,7 +356,7 @@ struct npc_hungry_nether_ray : public CreatureScript
             if (pVictim->GetTypeId() == TYPEID_UNIT && pVictim->GetEntry() == NPC_BLACK_WARP_CHASER)
             {
                 // Distance expected?
-                if (m_creature->IsWithinDistInMap(pVictim, 10.0f))
+                if (InReach(*m_creature, *pVictim, 10.0f))
                 {
                     DoScriptText(EMOTE_FEED, m_creature);
                     m_creature->CastSpell(m_creature, SPELL_FEED_CREDIT, true);
@@ -457,7 +457,7 @@ struct npc_letoll : public CreatureScript
                         continue;
                     }
 
-                    if ((*itr)->IsAlive() && (*itr)->IsWithinDistInMap(m_creature, 20.0f))
+                    if ((*itr)->IsAlive() && InReach(*(*itr), *m_creature, 20.0f))
                     {
                         return (*itr);
                     }
@@ -1257,7 +1257,7 @@ struct npc_cenarion_sparrowhawk : public CreatureScript
             if (Creature* pStoneTrigger = GetClosestCreatureWithEntry(m_creature, NPC_SKETTIS_RAVEN_STONE, 80.0f))
             {
                 m_currentStone = pStoneTrigger->GetObjectGuid();
-                pStoneTrigger->GetContactPoint(m_creature, fX, fY, fZ);
+                ContactPointNear(*pStoneTrigger, m_creature, fX, fY, fZ);
 
                 m_creature->SetWalk(false);
                 m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
@@ -1333,19 +1333,19 @@ struct npc_skyguard_prisoner : public CreatureScript
                 Start(false, (Player*)pInvoker, GetQuestTemplateStore(uiMiscValue));
 
                 // ToDo: add additional WP when DB will support it
-                if (m_creature->GetPositionZ() < 310.0f)
+                if (m_creature->Where().Z() < 310.0f)
                 {
                     SetEscortPaused(true);
                     //SetCurrentWaypoint(WP_ID_SPAWN_1);
                     //SetEscortPaused(false);
-                    script_error_log("NPC entry %u, location %f, %f, %f does not have waypoints implemented for current spawn location. Please contact customer support!", m_creature->GetEntry(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                    script_error_log("NPC entry %u, location %f, %f, %f does not have waypoints implemented for current spawn location. Please contact customer support!", m_creature->GetEntry(), m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
                 }
-                else if (m_creature->GetPositionZ() < 330.0f)
+                else if (m_creature->Where().Z() < 330.0f)
                 {
                     SetEscortPaused(true);
                     //SetCurrentWaypoint(WP_ID_SPAWN_2);
                     //SetEscortPaused(false);
-                    script_error_log("NPC entry %u, location %f, %f, %f does not have waypoints implemented for current spawn location. Please contact customer support!", m_creature->GetEntry(), m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                    script_error_log("NPC entry %u, location %f, %f, %f does not have waypoints implemented for current spawn location. Please contact customer support!", m_creature->GetEntry(), m_creature->Where().X(), m_creature->Where().Y(), m_creature->Where().Z());
                 }
                 // else just use standard WP
 

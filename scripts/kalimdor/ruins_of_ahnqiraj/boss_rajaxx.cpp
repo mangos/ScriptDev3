@@ -118,7 +118,7 @@ struct npc_general_andorov : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // If Rajaxx is in range attack him
-            if (pWho->GetEntry() == NPC_RAJAXX && m_creature->IsWithinDistInMap(pWho, 50.0f))
+            if (pWho->GetEntry() == NPC_RAJAXX && InReach(*m_creature, *pWho, 50.0f))
             {
                 AttackStart(pWho);
             }
@@ -386,7 +386,7 @@ struct npc_kaldorei_elite : public CreatureScript
                 {
                     if (pAndorov->IsAlive())
                     {
-                        m_creature->GetMotionMaster()->MoveFollow(pAndorov, m_creature->GetDistance(pAndorov), m_creature->GetAngle(pAndorov));
+                        m_creature->GetMotionMaster()->MoveFollow(pAndorov, m_creature->Where().DistanceTo(pAndorov->Where()), m_creature->Where().BearingTo(pAndorov->Where()));
                     }
                 }
             }

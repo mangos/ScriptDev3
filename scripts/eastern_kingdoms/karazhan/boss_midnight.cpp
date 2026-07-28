@@ -176,7 +176,7 @@ struct boss_midnight : public CreatureScript
                     m_uiPhase = 2;
 
                     SetCombatMovement(false);
-                    m_creature->GetMotionMaster()->MovePoint(1, pInvoker->GetPositionX(), pInvoker->GetPositionY(), pInvoker->GetPositionZ());
+                    m_creature->GetMotionMaster()->MovePoint(1, pInvoker->Where().X(), pInvoker->Where().Y(), pInvoker->Where().Z());
                 }
             }
         }

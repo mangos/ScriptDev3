@@ -48,7 +48,7 @@ ScriptedPetAI::ScriptedPetAI(Creature* pCreature) : CreatureAI(pCreature)
  */
 bool ScriptedPetAI::IsVisible(Unit* pWho) const
 {
-    return pWho && m_creature->IsWithinDist(pWho, VISIBLE_RANGE) &&
+    return pWho && m_creature->Where().WithinDist(pWho->Where(), VISIBLE_RANGE) &&
         pWho->IsVisibleForOrDetect(m_creature, m_creature, true);
 }
 
@@ -71,12 +71,12 @@ void ScriptedPetAI::MoveInLineOfSight(Unit* pWho)
     if (m_creature->CanInitiateAttack() && pWho->IsTargetableForAttack() &&
         m_creature->IsHostileTo(pWho) && pWho->isInAccessablePlaceFor(m_creature))
     {
-        if (!m_creature->CanFly() && m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+        if (!m_creature->CanFly() && m_creature->Where().HeightGapTo(pWho->Where()) > CREATURE_Z_ATTACK_RANGE)
         {
             return;
         }
 
-        if (m_creature->IsWithinDistInMap(pWho, m_creature->GetAttackDistance(pWho)) && m_creature->IsWithinLOSInMap(pWho))
+        if (InReach(*m_creature, *pWho, m_creature->GetAttackDistance(pWho)) && HasLineOfSight(*m_creature, *pWho))
         {
             pWho->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
             AttackStart(pWho);

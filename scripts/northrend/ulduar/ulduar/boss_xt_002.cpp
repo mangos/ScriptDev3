@@ -452,7 +452,7 @@ struct boss_heart_deconstructor : public CreatureScript
                 if (Creature* pDeconstructor = m_pInstance->GetSingleCreatureFromStorage(NPC_XT002))
                 {
                     float fX, fY, fZ;
-                    pDeconstructor->GetContactPoint(pSummoned, fX, fY, fZ, INTERACTION_DISTANCE);
+                    ContactPointNear(*pDeconstructor, pSummoned, fX, fY, fZ, INTERACTION_DISTANCE);
                     pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                 }
             }
@@ -557,7 +557,7 @@ struct npc_scrapbot : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bIsHealed && pWho->GetEntry() == NPC_XT002 && pWho->IsAlive() && pWho->IsWithinDistInMap(m_creature, 10.0f))
+            if (!m_bIsHealed && pWho->GetEntry() == NPC_XT002 && pWho->IsAlive() && InReach(*pWho, *m_creature, 10.0f))
             {
                 DoCastSpellIfCan(pWho, SPELL_RIDE_VEHICLE_SCRAPBOT, CAST_TRIGGERED);
                 pWho->CastSpell(m_creature, SPELL_SCRAP_REPAIR, true);

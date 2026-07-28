@@ -151,7 +151,7 @@ struct boss_forgemaster_garfrost : public CreatureScript
                 {
                     float fX, fY, fZ;
                     pSummoned->SetWalk(false);
-                    m_creature->GetContactPoint(pSummoned, fX, fY, fZ, 4 * INTERACTION_DISTANCE);
+                    ContactPointNear(*m_creature, pSummoned, fX, fY, fZ, 4 * INTERACTION_DISTANCE);
                     pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                     break;
                 }

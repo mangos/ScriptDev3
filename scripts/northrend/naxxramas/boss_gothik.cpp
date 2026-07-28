@@ -447,7 +447,7 @@ struct boss_gothik : public CreatureScript
                 {
                     if (GameObject* pCombatGate = m_pInstance->GetSingleGameObjectFromStorage(GO_MILI_GOTH_COMBAT_GATE))
                     {
-                        return (pCombatGate->GetPositionY() >= pUnit->GetPositionY());
+                        return (pCombatGate->Where().Y() >= pUnit->Where().Y());
                     }
                 }
 
@@ -583,11 +583,11 @@ struct spell_x_to_skull : public SpellScript
                 uiNpcEntry = NPC_SPECT_RIDER;
             }
 
-            pGoth->SummonCreature(uiNpcEntry, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), pCreatureTarget->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+            pGoth->SummonCreature(uiNpcEntry, pCreatureTarget->Where().X(), pCreatureTarget->Where().Y(), pCreatureTarget->Where().Z(), pCreatureTarget->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
 
             if (uiNpcEntry == NPC_SPECT_RIDER)
             {
-                pGoth->SummonCreature(NPC_SPECT_HORSE, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), pCreatureTarget->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                pGoth->SummonCreature(NPC_SPECT_HORSE, pCreatureTarget->Where().X(), pCreatureTarget->Where().Y(), pCreatureTarget->Where().Z(), pCreatureTarget->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
             }
         }
         return true;

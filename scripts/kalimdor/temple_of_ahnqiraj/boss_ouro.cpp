@@ -157,7 +157,7 @@ struct boss_ouro : public CreatureScript
                     m_ouroTriggerGuid = pSummoned->GetObjectGuid();
                     // no break;
                 case NPC_DIRT_MOUND:
-                    pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 40.0f);
+                    pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->Where().X(), pSummoned->Where().Y(), pSummoned->Where().Z(), 40.0f);
                     break;
             }
         }
@@ -296,7 +296,7 @@ struct boss_ouro : public CreatureScript
                     // Teleport to the trigger in order to get a new location
                     if (Creature* pTrigger = m_creature->GetMap()->GetCreature(m_ouroTriggerGuid))
                     {
-                        m_creature->NearTeleportTo(pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 0);
+                        m_creature->NearTeleportTo(pTrigger->Where().X(), pTrigger->Where().Y(), pTrigger->Where().Z(), 0);
                     }
 
                     if (DoCastSpellIfCan(m_creature, SPELL_BIRTH) == CAST_OK)
@@ -348,7 +348,7 @@ struct npc_ouro_spawner : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // Spawn Ouro on LoS check
-            if (!m_bHasSummoned && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && m_creature->IsWithinDistInMap(pWho, 50.0f))
+            if (!m_bHasSummoned && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && InReach(*m_creature, *pWho, 50.0f))
             {
 
 #if defined (CLASSIC)

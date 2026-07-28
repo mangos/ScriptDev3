@@ -88,7 +88,7 @@ struct boss_aeonus : public CreatureScript
             // Despawn Time Keeper
             if (pWho->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_TIME_KEEPER)
             {
-                if (m_creature->IsWithinDistInMap(pWho, 20.0f))
+                if (InReach(*m_creature, *pWho, 20.0f))
                 {
                     if (DoCastSpellIfCan(pWho, SPELL_BANISH_HELPER) == CAST_OK)
                     {

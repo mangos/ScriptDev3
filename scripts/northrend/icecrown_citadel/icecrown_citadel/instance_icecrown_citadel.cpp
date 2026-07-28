@@ -74,7 +74,7 @@ struct sortFromNorthToSouth
     {
         Unit *pFirst = _map->GetUnit(uiLeft);
         Unit *pSecond = _map->GetUnit(uiRight);
-        return pFirst && pSecond && pFirst->GetPositionX() < pSecond->GetPositionX();
+        return pFirst && pSecond && pFirst->Where().X() < pSecond->Where().X();
     }
     private:
         Map *_map;
@@ -155,11 +155,11 @@ struct is_icecrown_citadel : public InstanceScript
                         m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
                         break;
                     case NPC_DEATHWHISPER_SPAWN_STALKER:
-                        if (pCreature->GetPositionZ() > 60.0f)
+                        if (pCreature->Where().Z() > 60.0f)
                         {
                             m_middleStalkerGuid = pCreature->GetObjectGuid();
                         }
-                        else if (pCreature->GetPositionY() < 2215.0f)
+                        else if (pCreature->Where().Y() < 2215.0f)
                         {
                             m_lRightStalkers.push_back(pCreature->GetObjectGuid());
                         }
@@ -578,17 +578,17 @@ struct is_icecrown_citadel : public InstanceScript
                     {
                         if (Creature* pStalker = instance->GetCreature(*lcit))
                         {
-                            lady->SummonCreature(aLeftSummonedCultists[i], pStalker->GetPositionX(), pStalker->GetPositionY(), pStalker->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                            lady->SummonCreature(aLeftSummonedCultists[i], pStalker->Where().X(), pStalker->Where().Y(), pStalker->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                         }
                         if (Creature* pStalker = instance->GetCreature(*rcit))
                         {
-                            lady->SummonCreature(aRightSummonedCultists[i], pStalker->GetPositionX(), pStalker->GetPositionY(), pStalker->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                            lady->SummonCreature(aRightSummonedCultists[i], pStalker->Where().X(), pStalker->Where().Y(), pStalker->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                         }
                     }
 
                     if (Creature* pStalker = instance->GetCreature(m_middleStalkerGuid))
                     {
-                        lady->SummonCreature(roll_chance_i(50) ? NPC_CULT_FANATIC : NPC_CULT_ADHERENT, pStalker->GetPositionX(), pStalker->GetPositionY(), pStalker->GetPositionZ(), 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                        lady->SummonCreature(roll_chance_i(50) ? NPC_CULT_FANATIC : NPC_CULT_ADHERENT, pStalker->Where().X(), pStalker->Where().Y(), pStalker->Where().Z(), 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
                     }
                 }
                 // On 10 man mode we summon on the left or on the right
@@ -599,7 +599,7 @@ struct is_icecrown_citadel : public InstanceScript
                     {
                         if (Creature* pStalker = instance->GetCreature(m_middleStalkerGuid))
                         {
-                            lady->SummonCreature(roll_chance_i(50) ? NPC_CULT_FANATIC : NPC_CULT_ADHERENT, pStalker->GetPositionX(), pStalker->GetPositionY(), pStalker->GetPositionZ(), 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
+                            lady->SummonCreature(roll_chance_i(50) ? NPC_CULT_FANATIC : NPC_CULT_ADHERENT, pStalker->Where().X(), pStalker->Where().Y(), pStalker->Where().Z(), 0.0f, TEMPSPAWN_CORPSE_DESPAWN, 0);
                         }
                     }
                     else
@@ -609,7 +609,7 @@ struct is_icecrown_citadel : public InstanceScript
                         {
                             if (Creature* pStalker = instance->GetCreature(*cit))
                             {
-                                lady->SummonCreature(m_bIsLeftSideSummon ? aLeftSummonedCultists[i] : aRightSummonedCultists[i], pStalker->GetPositionX(), pStalker->GetPositionY(), pStalker->GetPositionZ(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
+                                lady->SummonCreature(m_bIsLeftSideSummon ? aLeftSummonedCultists[i] : aRightSummonedCultists[i], pStalker->Where().X(), pStalker->Where().Y(), pStalker->Where().Z(), 0, TEMPSPAWN_DEAD_DESPAWN, 0);
                             }
                         }
 

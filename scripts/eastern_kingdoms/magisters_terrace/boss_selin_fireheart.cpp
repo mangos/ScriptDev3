@@ -115,7 +115,7 @@ struct boss_selin_fireheart : public CreatureScript
 
                 float fX, fY, fZ;
                 SetCombatMovement(false);
-                m_creature->GetContactPoint(pCrystal, fX, fY, fZ, INTERACTION_DISTANCE);
+                ContactPointNear(*m_creature, pCrystal, fX, fY, fZ, INTERACTION_DISTANCE);
                 m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 m_bDrainingCrystal = true;
 
@@ -322,7 +322,7 @@ struct mob_fel_crystal : public CreatureScript
         void MoveInLineOfSight(Unit* pWho) override
         {
             // Cosmetic spell
-            if (m_sWretchedGuids.find(pWho->GetObjectGuid()) == m_sWretchedGuids.end() && pWho->IsWithinDist(m_creature, 5.0f) && pWho->IsAlive() &&
+            if (m_sWretchedGuids.find(pWho->GetObjectGuid()) == m_sWretchedGuids.end() && pWho->Where().WithinDist(m_creature->Where(), 5.0f) && pWho->IsAlive() &&
                 (pWho->GetEntry() == NPC_SKULER || pWho->GetEntry() == NPC_BRUISER || pWho->GetEntry() == NPC_HUSK))
             {
                 pWho->CastSpell(m_creature, SPELL_FEL_CRYSTAL_COSMETIC, false);

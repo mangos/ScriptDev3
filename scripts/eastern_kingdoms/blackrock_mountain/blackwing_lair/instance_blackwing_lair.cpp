@@ -78,7 +78,7 @@ struct is_blackwing_lair : public InstanceScript
                 {
                     case NPC_BLACKWING_TECHNICIAN:
                         // Sort creatures so we can get only the ones near Vaelastrasz
-                        if (pCreature->IsWithinDist2d(aNefariusSpawnLoc[0], aNefariusSpawnLoc[1], 50.0f))
+                        if (pCreature->Where().WithinDist(Geometry::Vector2(aNefariusSpawnLoc[0], aNefariusSpawnLoc[1]), 50.0f))
                         {
                             m_lTechnicianGuids.push_back(pCreature->GetObjectGuid());
                         }
@@ -435,7 +435,7 @@ struct is_blackwing_lair : public InstanceScript
                             return;
                         }
 
-                        pRazorgore->SummonCreature(aRazorgoreSpawns[i], pGenerator->GetPositionX(), pGenerator->GetPositionY(), pGenerator->GetPositionZ(), pGenerator->GetOrientation(), TEMPSPAWN_DEAD_DESPAWN, 0);
+                        pRazorgore->SummonCreature(aRazorgoreSpawns[i], pGenerator->Where().X(), pGenerator->Where().Y(), pGenerator->Where().Z(), pGenerator->Where().Facing(), TEMPSPAWN_DEAD_DESPAWN, 0);
                     }
 
                     m_uiDefenseTimer = 20000;

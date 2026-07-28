@@ -120,7 +120,7 @@ struct boss_soccothrates : public CreatureScript
 
         void MoveInLineOfSight(Unit* pWho) override
         {
-            if (!m_bHasYelledIntro && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 75.0f) && m_creature->IsWithinLOSInMap(pWho))
+            if (!m_bHasYelledIntro && pWho->GetTypeId() == TYPEID_PLAYER && InReach(*m_creature, *pWho, 75.0f) && HasLineOfSight(*m_creature, *pWho))
             {
                 StartNextDialogueText(SAY_SOCCOTHRATES_INTRO_1);
                 m_bHasYelledIntro = true;

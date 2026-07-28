@@ -549,7 +549,7 @@ struct npc_chess_piece_genericAI : public ScriptedAI
                             DoCastSpellIfCan(pTarget, SPELL_MOVE_GENERIC, CAST_TRIGGERED | CAST_INTERRUPT_PREVIOUS);
                         }
 
-                        m_fCurrentOrientation = m_creature->GetOrientation();
+                        m_fCurrentOrientation = m_creature->Where().Facing();
                     }
                 }
 
@@ -584,7 +584,7 @@ struct npc_chess_piece_genericAI : public ScriptedAI
                 if (Creature* pSquare = m_creature->GetMap()->GetCreature(m_currentSquareGuid))
                 {
                     DoCastSpellIfCan(pSquare, SPELL_MOVE_MARKER, CAST_TRIGGERED);
-                    m_creature->GetMotionMaster()->MovePoint(1, pSquare->GetPositionX(), pSquare->GetPositionY(), pSquare->GetPositionZ());
+                    m_creature->GetMotionMaster()->MovePoint(1, pSquare->Where().X(), pSquare->Where().Y(), pSquare->Where().Z());
                 }
                 m_uiMoveTimer = 0;
             }

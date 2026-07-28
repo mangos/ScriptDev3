@@ -156,7 +156,7 @@ struct is_uldaman : public InstanceScript
                         {
                             // If he's not available, then get a random player, within a reasonamble distance in map
                             pPlayer = GetPlayerInMap(true, false);
-                            if (!pPlayer || !pPlayer->IsWithinDistInMap(pKeeper, 50.0f))
+                            if (!pPlayer || !InReach(*pPlayer, *pKeeper, 50.0f))
                             {
                                 SetData(TYPE_ALTAR_EVENT, NOT_STARTED);
                                 return;

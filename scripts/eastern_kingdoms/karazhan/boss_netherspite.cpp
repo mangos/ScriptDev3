@@ -394,7 +394,7 @@ struct boss_netherspite : public CreatureScript
 
             if (m_portal[portalIndex] && pPlayer)
             {
-                float delta = m_portal[portalIndex]->GetDistance2d(pPlayer) + pPlayer->GetDistance2d(m_creature) - m_portal[portalIndex]->GetDistance2d(m_creature);
+                float delta = m_portal[portalIndex]->Where().DistanceTo(pPlayer->Where(), false) + pPlayer->Where().DistanceTo(m_creature->Where(), false) - m_portal[portalIndex]->Where().DistanceTo(m_creature->Where(), false);
 
                 if (delta >= -beamHitbox && delta <= 0)
                 {
@@ -414,9 +414,9 @@ struct boss_netherspite : public CreatureScript
             {
                 if (Player* pPlayer = itr->getSource())
                 {
-                    if (m_portal[portalIndex] && !pPlayer->HasAura(auiPortalVector[PORTAL_DEBUFF][portalIndex]) && IsPlayerPositionBetweenPortalAndNetherspite(portalIndex, pPlayer) && m_portal[portalIndex]->GetDistance2d(m_creature) > m_portal[portalIndex]->GetDistance2d(pPlayer))
+                    if (m_portal[portalIndex] && !pPlayer->HasAura(auiPortalVector[PORTAL_DEBUFF][portalIndex]) && IsPlayerPositionBetweenPortalAndNetherspite(portalIndex, pPlayer) && m_portal[portalIndex]->Where().DistanceTo(m_creature->Where(), false) > m_portal[portalIndex]->Where().DistanceTo(pPlayer->Where(), false))
                     {
-                        if (!closestPlayer || m_portal[portalIndex]->GetDistance2d(closestPlayer) > m_portal[portalIndex]->GetDistance2d(pPlayer))
+                        if (!closestPlayer || m_portal[portalIndex]->Where().DistanceTo(closestPlayer->Where(), false) > m_portal[portalIndex]->Where().DistanceTo(pPlayer->Where(), false))
                         {
                             closestPlayer = pPlayer;
                         }

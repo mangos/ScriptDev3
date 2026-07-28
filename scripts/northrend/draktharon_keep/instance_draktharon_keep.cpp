@@ -224,7 +224,7 @@ struct is_draktharon_keep : public InstanceScript
                         m_lNovosDummyGuids.push_back(pCreature->GetObjectGuid());
                         break;
                     case NPC_WORLD_TRIGGER:
-                        if (pCreature->GetPositionZ() > 30.0f)
+                        if (pCreature->Where().Z() > 30.0f)
                         {
                             m_vTriggerGuids.push_back(pCreature->GetObjectGuid());
                         }
@@ -305,7 +305,7 @@ struct is_draktharon_keep : public InstanceScript
                             Creature* pDummy = instance->GetCreature(m_aNovosCrystalInfo[i].m_channelGuid);
                             // Return the nearest 'unused' crystal dummy
                             // unused means, that the crystal was not already used, and the dummy-npc doesn't have the aura that will trigger the use on remove
-                            if (pDummy && !m_aNovosCrystalInfo[i].m_bWasUsed && (!pTarget || pCrystalHandler->GetDistanceOrder(pDummy, pTarget)) && !pDummy->HasAura(aCrystalHandlerDeathSpells[i]))
+                            if (pDummy && !m_aNovosCrystalInfo[i].m_bWasUsed && (!pTarget || pCrystalHandler->Where().IsNearer(pDummy->Where(), pTarget->Where())) && !pDummy->HasAura(aCrystalHandlerDeathSpells[i]))
                             {
                                 pTarget = pDummy;
                                 m_uiNovosCrystalIndex = i;
@@ -370,7 +370,7 @@ struct is_draktharon_keep : public InstanceScript
                         }
 
                         // Check if dummy fits to crystal
-                        if (pCrystal->IsWithinDistInMap(pDummy, INTERACTION_DISTANCE, false))
+                        if (InReach(*pCrystal, *pDummy, INTERACTION_DISTANCE, false))
                         {
                             m_aNovosCrystalInfo[i].m_channelGuid = pDummy->GetObjectGuid();
                             m_lNovosDummyGuids.erase(itr);
@@ -396,7 +396,7 @@ struct is_draktharon_keep : public InstanceScript
                     }
 
                     // As the wanted dummy is exactly above Novos, check small range, and only 2d
-                    if (pDummy->IsWithinDist2d(fNovosX, fNovosY, 5.0f))
+                    if (pDummy->Where().WithinDist(Geometry::Vector2(fNovosX, fNovosY), 5.0f))
                     {
                         m_novosChannelGuid = pDummy->GetObjectGuid();
                         m_lNovosDummyGuids.erase(itr);
@@ -417,7 +417,7 @@ struct is_draktharon_keep : public InstanceScript
                     }
 
                     // The wanted dummies are quite above Novos
-                    if (pDummy->GetPositionZ() > fNovosZ + 20.0f)
+                    if (pDummy->Where().Z() > fNovosZ + 20.0f)
                     {
                         m_vSummonDummyGuids.push_back(pDummy->GetObjectGuid());
                         m_lNovosDummyGuids.erase(itr++);

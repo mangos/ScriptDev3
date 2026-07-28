@@ -631,7 +631,7 @@ struct boss_krosh_firehand : public CreatureScript
                 {
                     Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
 
-                    if (pUnit && pUnit->IsWithinDistInMap(m_creature, 15.0f))
+                    if (pUnit && InReach(*pUnit, *m_creature, 15.0f))
                     {
                         DoCastSpellIfCan(m_creature, SPELL_BLAST_WAVE, CAST_INTERRUPT_PREVIOUS);
                         break;
