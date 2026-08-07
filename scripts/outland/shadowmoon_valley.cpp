@@ -377,11 +377,6 @@ struct npc_dragonmaw_peon : public CreatureScript
             }
         }
 
-        bool SetPlayerTarget(ObjectGuid playerGuid)
-        {
-            // Check if event already started
-        }
-
         void MovementInform(uint32 uiType, uint32 uiPointId) override
         {
             if (uiType != POINT_MOTION_TYPE)
